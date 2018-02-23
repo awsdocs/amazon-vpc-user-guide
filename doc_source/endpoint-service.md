@@ -14,7 +14,7 @@ The following are the general steps to enable service consumers to connect to yo
 
 1. A service consumer that has been granted permissions creates an interface endpoint to your service, optionally in each Availability Zone in which you've configured your service\.
 
-1. To activate the connection, accept the interface endpoint connection request\. By default, connection requests are automatically accepted\. However, you can configure the acceptance settings for your endpoint service so that you manually accept any connection requests\.
+1. To activate the connection, accept the interface endpoint connection request\. By default, connection requests are not automatically accepted\. You can configure the acceptance settings for your endpoint service so that you manually accept any connection requests\.
 
 The combination of permissions and acceptance settings can help you control which service consumers \(AWS principals\) can access to your service\. For example, you can grant permissions to selected principals that you trust and automatically accept connection requests, or you can grant permissions to a wider group of principals and manually accept connection requests that you trust\.
 
