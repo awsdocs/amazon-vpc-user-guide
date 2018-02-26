@@ -12,7 +12,7 @@ An endpoint network interface is a requester\-managed network interface\. You ca
 
 1. Specify the security groups to associate with the endpoint network interface\. The security group rules control the traffic to the endpoint network interface from resources in your VPC\. If you do not specify a security group, we associate the default security group for the VPC\.
 
-1. \(Optional; AWS services and AWS Marketplace partner services only\) Enable private DNS for the endpoint to enable you to make requests to the service using its default DNS hostname\.
+1. \(Optional; AWS services and AWS Marketplace partner services only\) Enable [private DNS](#vpce-private-dns) for the endpoint to enable you to make requests to the service using its default DNS hostname\.
 
 1. After you create the interface endpoint, it's available to use when it's accepted by the service provider\. The service provider must configure the service to accept requests automatically or manually\. AWS services and AWS Marketplace services generally accept all endpoint requests automatically\. For more information about the lifecycle of an endpoint, see [Interface Endpoint Lifecycle](#vpce-interface-lifecycle)\.
 
@@ -96,7 +96,7 @@ You are charged for creating and using an interface endpoint to a service\. Hour
 
 To create an interface endpoint, you must specify the VPC in which to create the interface endpoint, and the service to which to establish the connection\. 
 
-If you're connecting to an AWS service or AWS Marketplace partner service, you can enable private DNS for the interface endpoint\. This enables you to make requests to the service using its default DNS name instead of the endpoint\-specific DNS hostnames that we generate when you create the interface endpoint\.
+If you're connecting to an AWS service or AWS Marketplace partner service, you can enable [private DNS](#vpce-private-dns) for the interface endpoint\. This enables you to make requests to the service using its default DNS name instead of the endpoint\-specific DNS hostnames that we generate when you create the interface endpoint\.
 
 For specific information for AWS services, see [VPC Endpoints](vpc-endpoints.md)\.
 

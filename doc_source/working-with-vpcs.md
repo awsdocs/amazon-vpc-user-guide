@@ -106,7 +106,7 @@ After you've created a subnet, you can do the following:
 
 ## Associating a Secondary IPv4 CIDR Block with Your VPC<a name="add-ipv4-cidr"></a>
 
-You can add another IPv4 CIDR block to your VPC\. Ensure that you have read the applicable restrictions\.
+You can add another IPv4 CIDR block to your VPC\. Ensure that you have read the applicable [restrictions](VPC_Subnets.md#vpc-resize)\.
 
 After you've associated a CIDR block, the status goes to `associating`\. The CIDR block is ready to use when it's in the `associated` state\.
 
@@ -190,7 +190,7 @@ After you've created your subnet and configured your routing, you can launch an 
 
 1. Follow the directions in the wizard\. Select an AMI and an instance type and choose **Next: Configure Instance Details**\.
 **Note**  
-If you want your instance to communicate over IPv6, you must select a supported instance type\. All current generation instance types, except M3 and G2, support IPv6 addresses\.
+If you want your instance to communicate over IPv6, you must select a supported instance type\. All current generation instance types support IPv6 addresses\.
 
 1. On the **Configure Instance Details** page, ensure that you have selected the required VPC in the **Network** list, then select the subnet in to which to launch the instance\. Keep the other default settings on this page and choose **Next: Add Storage**\. 
 

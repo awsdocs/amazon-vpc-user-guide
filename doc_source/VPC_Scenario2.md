@@ -130,7 +130,7 @@ AWS provides two features that you can use to increase security in your VPC: *se
 
 For scenario 2, you'll use security groups but not network ACLs\. If you'd like to use a network ACL, see [Recommended Rules for Scenario 2](VPC_Appendix_NACLs.md#VPC_Appendix_NACLs_Scenario_2)\.
 
-Your VPC comes with a default security group\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. For this scenario, we recommend that you create the following security groups instead of using the default security group:
+Your VPC comes with a [default security group](VPC_SecurityGroups.md#DefaultSecurityGroup)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. For this scenario, we recommend that you create the following security groups instead of using the default security group:
 
 + **WebServerSG**: Specify this security group when you launch the web servers in the public subnet\.
 
@@ -152,7 +152,7 @@ These recommendations include both SSH and RDP access, and both Microsoft SQL Se
 |  Source  |  Protocol  |  Port Range  |  Comments  | 
 |  0\.0\.0\.0/0  |  TCP  |  80  |  Allow inbound HTTP access to the web servers from any IPv4 address\.  | 
 |  0\.0\.0\.0/0  |  TCP  |  443  |  Allow inbound HTTPS access to the web servers from any IPv4 address\.  | 
-|  Your home network's public IPv4 address range  |  TCP  |  22  |  Allow inbound SSH access to Linux instances from your home network \(over the Internet gateway\)\. You can get the public IPv4 address of your local computer using a service such as [http://checkip\.amazonaws\.com](http://checkip.amazonaws.com)\. If you are connecting through an ISP or from behind your firewall without a static IP address, you need to find out the range of IP addresses used by client computers\.   | 
+|  Your home network's public IPv4 address range  |  TCP  |  22  |  Allow inbound SSH access to Linux instances from your home network \(over the Internet gateway\)\. You can get the public IPv4 address of your local computer using a service such as [http://checkip\.amazonaws\.com](http://checkip.amazonaws.com) or [https://checkip\.amazonaws\.com](https://checkip.amazonaws.com)\. If you are connecting through an ISP or from behind your firewall without a static IP address, you need to find out the range of IP addresses used by client computers\.   | 
 |  Your home network's public IPv4 address range  |  TCP  |  3389  |  Allow inbound RDP access to Windows instances from your home network \(over the Internet gateway\)\.  | 
 |   **Outbound**   | 
 |  Destination  |  Protocol  |  Port Range  |  Comments  | 
@@ -233,9 +233,9 @@ These procedures include optional steps for enabling and configuring IPv6 commun
 
 1. Choose **Allocate New Address**\.
 
-1. Choose **Yes, Allocate**\.
+1. Choose **Allocate**\.
 **Note**  
-If your account supports EC2\-Classic, first choose **EC2\-VPC** from the **Network platform** list\.
+If your account supports EC2\-Classic, first choose **VPC** from the **Network platform** list\.
 
 **To create a VPC**
 

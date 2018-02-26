@@ -16,8 +16,7 @@ This scenario can also be optionally configured for IPv6—you can use the VPC w
 
 The following diagram shows the key components of the configuration for this scenario\.
 
-![\[Diagram for scenario 3: VPC with public and private subnets and
-						VPN access\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/Case3_Diagram.png)
+![\[Diagram for scenario 3: VPC with public and private subnets and VPN access\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/Case3_Diagram.png)
 
 **Important**  
 For this scenario, the* [Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/)* describes what your network administrator needs to do to configure the Amazon VPC customer gateway on your side of the VPN connection\.
@@ -145,7 +144,7 @@ AWS provides two features that you can use to increase security in your VPC: *se
 
 For scenario 3, you'll use security groups but not network ACLs\. If you'd like to use a network ACL, see [Recommended Rules for Scenario 3](VPC_Appendix_NACLs.md#VPC_Appendix_NACLs_Scenario_3)\.
 
-Your VPC comes with a default security group\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. For this scenario, we recommend that you create the following security groups instead of using the default security group:
+Your VPC comes with a [default security group](VPC_SecurityGroups.md#DefaultSecurityGroup)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. For this scenario, we recommend that you create the following security groups instead of using the default security group:
 
 + **WebServerSG**: Specify this security group when you launch web servers in the public subnet\.
 

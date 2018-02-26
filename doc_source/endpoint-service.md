@@ -1,6 +1,6 @@
 # VPC Endpoint Services \(AWS PrivateLink\)<a name="endpoint-service"></a>
 
-You can create your own application in your VPC and configure it as an AWS PrivateLink\-powered service \(referred to as an *endpoint service*\)\. Other AWS principals can create a connection from their VPC to your endpoint service using an interface VPC endpoint\. You are the *service provider*, and the AWS principals that create connections to your service are *service consumers*\.
+You can create your own application in your VPC and configure it as an AWS PrivateLink\-powered service \(referred to as an *endpoint service*\)\. Other AWS principals can create a connection from their VPC to your endpoint service using an [interface VPC endpoint](vpce-interface.md)\. You are the *service provider*, and the AWS principals that create connections to your service are *service consumers*\.
 
 The following are the general steps to create an endpoint service\.
 
@@ -14,9 +14,9 @@ The following are the general steps to enable service consumers to connect to yo
 
 1. A service consumer that has been granted permissions creates an interface endpoint to your service, optionally in each Availability Zone in which you've configured your service\.
 
-1. To activate the connection, accept the interface endpoint connection request\. By default, connection requests are automatically accepted\. However, you can configure the acceptance settings for your endpoint service so that you manually accept any connection requests\.
+1. To activate the connection, accept the interface endpoint connection request\. By default, connection requests must be manually accepted\. However, you can configure the acceptance settings for your endpoint service so that any connection requests are automatically accepted\.
 
-The combination of permissions and acceptance settings can help you control which service consumers \(AWS principals\) can access to your service\. For example, you can grant permissions to selected principals that you trust and automatically accept connection requests, or you can grant permissions to a wider group of principals and manually accept connection requests that you trust\.
+The combination of permissions and acceptance settings can help you control which service consumers \(AWS principals\) can access to your service\. For example, you can grant permissions to selected principals that you trust and automatically accept all connection requests, or you can grant permissions to a wider group of principals and manually accept specific connection requests that you trust\.
 
 In the following diagram, the account owner of VPC B is a service provider, and has a service running on instances in subnet B\. The owner of VPC B has a service endpoint \(vpce\-svc\-1234\) with an associated Network Load Balancer that points to the instances in subnet B as targets\. Instances in subnet A of VPC A use an interface endpoint to access the services in subnet B\.
 
@@ -48,10 +48,10 @@ To use endpoint services, you need to be aware of the current limitations:
 
 You can create an endpoint service configuration using the Amazon VPC console or the command line\. Before you begin, ensure that you have created one or more Network Load Balancers in your VPC for your service\. For more information, see [Getting Started with Network Load Balancers](http://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancer-getting-started.html) in the *User Guide for Network Load Balancers*\.
 
-In your configuration, you can optionally specify that any interface endpoint connection requests to your service must be manually accepted by you\. You can create a notification to receive alerts when there are connection requests\. If you do not accept a connection, service consumers cannot access your service\.
+In your configuration, you can optionally specify that any interface endpoint connection requests to your service must be manually accepted by you\. You can [create a notification](#create-notification-endpoint-service) to receive alerts when there are connection requests\. If you do not accept a connection, service consumers cannot access your service\.
 
 **Note**  
-Regardless of the acceptance settings, service consumers must also have permissions to create a connection to your service\.
+Regardless of the acceptance settings, service consumers must also have [permissions](#add-endpoint-service-permissions) to create a connection to your service\.
 
 **To create an endpoint service using the console**
 

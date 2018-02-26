@@ -18,6 +18,6 @@ The following is a high\-level summary of the differences between NAT instances 
 | Flow logs | Use flow logs to capture the traffic\. | Use flow logs to capture the traffic\. | 
 | Port forwarding | Not supported\. | Manually customize the configuration to support port forwarding\. | 
 | Bastion servers | Not supported\. | Use as a bastion server\. | 
-| Traffic metrics | View CloudWatch metrics for the NAT gateway\. | View CloudWatch metrics for the instance\. | 
+| Traffic metrics | View [CloudWatch metrics for the NAT gateway](vpc-nat-gateway-cloudwatch.md)\. | View CloudWatch metrics for the instance\. | 
 | Timeout behavior | When a connection times out, a NAT gateway returns an RST packet to any resources behind the NAT gateway that attempt to continue the connection \(it does not send a FIN packet\)\. | When a connection times out, a NAT instance sends a FIN packet to resources behind the NAT instance to close the connection\. | 
 | IP fragmentation | Supports forwarding of IP fragmented packets for the UDP protocol\. Does not support fragmentation for the TCP and ICMP protocols\. Fragmented packets for these protocols will get dropped\.  | Supports reassembly of IP fragmented packets for the UDP, TCP, and ICMP protocols\. | 

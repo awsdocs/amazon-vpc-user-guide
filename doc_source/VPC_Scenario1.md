@@ -79,7 +79,7 @@ AWS provides two features that you can use to increase security in your VPC: *se
 
 For this scenario, you use a security group but not a network ACL\. If you'd like to use a network ACL, see [Recommended Rules for Scenario 1](VPC_Appendix_NACLs.md#VPC_Appendix_NACLs_Scenario_1)\.
 
-Your VPC comes with a default security group\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. You can add rules to the default security group, but the rules may not be suitable for other instances that you launch into the VPC\. Instead, we recommend that you create a custom security group for your web server\.
+Your VPC comes with a [default security group](VPC_SecurityGroups.md#DefaultSecurityGroup)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. You can add rules to the default security group, but the rules may not be suitable for other instances that you launch into the VPC\. Instead, we recommend that you create a custom security group for your web server\.
 
 For this scenario, create a security group named `WebServerSG`\. When you create a security group, it has a single outbound rule that allows all traffic to leave the instances\. You must modify the rules to enable inbound traffic and restrict the outbound traffic as needed\. You specify this security group when you launch instances into the VPC\. 
 
@@ -92,7 +92,7 @@ The following are the inbound and outbound rules for IPv4 traffic for the WebSer
 |  Source  |  Protocol  |  Port Range  |  Comments  | 
 |  0\.0\.0\.0/0  |  TCP  |  80  |  Allow inbound HTTP access to the web servers from any IPv4 address\.  | 
 |  0\.0\.0\.0/0  |  TCP  |  443  |  Allow inbound HTTPS access to the web servers from any IPv4 address  | 
-|  Public IPv4 address range of your network   |  TCP  |  22  |  \(Linux instances\) Allow inbound SSH access from your network over IPv4\. You can get the public IPv4 address of your local computer using a service such as [http://checkip\.amazonaws\.com](http://checkip.amazonaws.com)\. If you are connecting through an ISP or from behind your firewall without a static IP address, you need to find out the range of IP addresses used by client computers\.   | 
+|  Public IPv4 address range of your network   |  TCP  |  22  |  \(Linux instances\) Allow inbound SSH access from your network over IPv4\. You can get the public IPv4 address of your local computer using a service such as [http://checkip\.amazonaws\.com](http://checkip.amazonaws.com) or [https://checkip\.amazonaws\.com](https://checkip.amazonaws.com)\. If you are connecting through an ISP or from behind your firewall without a static IP address, you need to find out the range of IP addresses used by client computers\.   | 
 |  Public IPv4 address range of your network   |  TCP  |  3389  |  \(Windows instances\) Allow inbound RDP access from your network over IPv4\.  | 
 | The security group ID \(sg\-xxxxxxxx\) | All | All | \(Optional\) Allow inbound traffic from other instances associated with this security group\. This rule is automatically added to the default security group for the VPC; for any custom security group you create, you must manually add the rule to allow this type of communication\. | 
 | Outbound \(Optional\) | 
@@ -136,7 +136,7 @@ These procedures include optional steps for enabling and configuring IPv6 commun
 
 1. \(Optional, IPv6\-only\) For **IPv6 CIDR block**, choose **Amazon\-provided IPv6 CIDR block**\. For **Public subnet's IPv6 CIDR**, choose **Specify a custom IPv6 CIDR** and specify the hexadecimal pair value for your subnet, or leave the default value \(`00`\)\.
 
-1. You can leave the rest of the default settings, and choose **Create VPC**\.
+1. You can leave the rest of the default settings, and choose **Create VPC**\.<a name="vpc-scenario-1-create-web-server-group"></a>
 
 **To create the WebServerSG security group**
 
@@ -168,7 +168,7 @@ These procedures include optional steps for enabling and configuring IPv6 commun
 
 1. Choose **Save**\.
 
-1. \(Optional\) On the **Outbound Rules** tab, choose **Edit**\. Locate the default rule that enables all outbound traffic, choose **Remove**, and then choose **Save**\.
+1. \(Optional\) On the **Outbound Rules** tab, choose **Edit**\. Locate the default rule that enables all outbound traffic, choose **Remove**, and then choose **Save**\.<a name="vpc-scenario-1-launch-instance"></a>
 
 **To launch an instance into the VPC**
 

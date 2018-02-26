@@ -24,9 +24,9 @@ The following table summarizes the differences between IPv4 and IPv6 in Amazon E
 | The subnet CIDR block size can be from /16 to /28\. | The subnet CIDR block size is fixed at /64\. | 
 | You can choose the private IPv4 CIDR block for your VPC\. | We choose the IPv6 CIDR block for your VPC from Amazon's pool of IPv6 addresses\. You cannot select your own range\. | 
 | There is a distinction between private and public IP addresses\. To enable communication with the Internet, a public IPv4 address is mapped to the primary private IPv4 address through network address translation \(NAT\)\.  | No distinction between public and private IP addresses\. IPv6 addresses are public\. | 
-| Supported on all instance types\. | Supported on all current generation instance types, except M3 and G2\. For more information, see [Amazon EC2 Instance Types](https://aws.amazon.com/ec2/instance-types/)\. | 
+| Supported on all instance types\. | Supported on all current generation instance types and the C3, R3, and I2 previous generation instance types\. For more information, see [Instance Types](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)\. | 
 | Supported in EC2\-Classic, and EC2\-Classic connections with a VPC via ClassicLink\. | Not supported in EC2\-Classic, and not supported for EC2\-Classic connections with a VPC via ClassicLink\. | 
-| Supported on all AMIs\. | Automatically supported on AMIs that are configured for DHCPv6\. Amazon Linux versions 2016\.09\.0 and later and Windows Server 2008 R2 and later are configured for DHCPv6\. For other AMIs, you must manually configure your instance to recognize any assigned IPv6 addresses\. | 
+| Supported on all AMIs\. | Automatically supported on AMIs that are configured for DHCPv6\. Amazon Linux versions 2016\.09\.0 and later and Windows Server 2008 R2 and later are configured for DHCPv6\. For other AMIs, you must [manually configure your instance](vpc-migrate-ipv6.md#vpc-migrate-ipv6-dhcpv6) to recognize any assigned IPv6 addresses\. | 
 | An instance receives an Amazon\-provided private DNS hostname that corresponds to its private IPv4 address, and if applicable, a public DNS hostname that corresponds to its public IPv4 or Elastic IP address\. | Amazon\-provided DNS hostnames are not supported\. | 
 | Elastic IPv4 addresses are supported\. | Elastic IPv6 addresses are not supported\.  | 
 | Supported for VPC VPN connections and customer gateways, NAT devices, and VPC endpoints\. | Not supported for VPC VPN connections and customer gateways, NAT devices, and VPC endpoints\. | 
@@ -175,7 +175,7 @@ This feature is only available during launch\. However, whether or not you assig
 
 ### Assigning an IPv6 Address During Instance Launch<a name="vpc-ipv6-during-launch"></a>
 
-You can auto\-assign an IPv6 address to your instance during launch\. To do this, you must launch your instance into a VPC and subnet that has an associated IPv6 CIDR block\. The IPv6 address is assigned from the range of the subnet, and is assigned to the primary network interface \(eth0\)\. 
+You can auto\-assign an IPv6 address to your instance during launch\. To do this, you must launch your instance into a VPC and subnet that has an [associated IPv6 CIDR block](working-with-vpcs.md#vpc-associate-ipv6-cidr)\. The IPv6 address is assigned from the range of the subnet, and is assigned to the primary network interface \(eth0\)\. 
 
 **To auto\-assign an IPv6 address to an instance during launch**
 
@@ -215,7 +215,7 @@ For more information about assigning multiple IPv6 addresses to your instance du
 
 ### Assigning an IPv6 Address to an Instance<a name="vpc-assign-ipv6-instance"></a>
 
-If your instance is in a VPC and subnet with an associated IPv6 CIDR block, you can use the Amazon EC2 console to assign an IPv6 address to your instance from the range of the subnet\. 
+If your instance is in a VPC and subnet with an [associated IPv6 CIDR block](working-with-vpcs.md#vpc-associate-ipv6-cidr), you can use the Amazon EC2 console to assign an IPv6 address to your instance from the range of the subnet\. 
 
 **To associate an IPv6 address with your instance**
 

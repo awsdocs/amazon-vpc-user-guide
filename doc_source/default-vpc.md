@@ -2,7 +2,7 @@
 
 If you created your AWS account after 2013\-12\-04, it supports only EC2\-VPC\. In this case, you have a *default VPC* in each AWS Region\. A default VPC is ready for you to use so that you don't have to create and configure your own VPC\. You can immediately start launching Amazon EC2 instances into your default VPC\. You can also use services such as Elastic Load Balancing, Amazon RDS, and Amazon EMR in your default VPC\.
 
-A default VPC is suitable for getting started quickly, and for launching public instances such as a blog or simple website\. You can modify the components of your default VPC as needed\. If you prefer to create a nondefault VPC that suits your specific requirements; for example, using your preferred CIDR block range and subnet sizes, see the example scenarios\.
+A default VPC is suitable for getting started quickly, and for launching public instances such as a blog or simple website\. You can modify the components of your default VPC as needed\. If you prefer to create a nondefault VPC that suits your specific requirements; for example, using your preferred CIDR block range and subnet sizes, see the [example scenarios](VPC_Scenarios.md)\.
 
 
 + [Default VPC Components](#default-vpc-components)
@@ -21,7 +21,7 @@ When we create a default VPC, we do the following to set it up for you:
 
 + Create a size `/20` default subnet in each Availability Zone\. This provides up to 4,096 addresses per subnet, a few of which are reserved for our use\.
 
-+ Create an internet gateway and connect it to your default VPC\.
++ Create an [internet gateway](VPC_Internet_Gateway.md) and connect it to your default VPC\.
 
 + Create a main route table for your default VPC with a rule that sends all IPv4 traffic destined for the internet to the internet gateway\.
 
@@ -178,7 +178,7 @@ If you delete a default subnet, you can create a new one\. For more information,
 
 If you delete your default VPC, you can create a new one\. You cannot restore a previous default VPC that you deleted, and you cannot mark an existing nondefault VPC as a default VPC\. If your account supports EC2\-Classic, you cannot use these procedures to create a default VPC in a region that supports EC2\-Classic\.
 
-When you create a default VPC, it is created with the standard components of a default VPC, including a default subnet in each Availability Zone\. You cannot specify your own components\. The subnet CIDR blocks of your new default VPC may not map to the same Availability Zones as your previous default VPC\. For example, if the subnet with CIDR block `172.31.0.0/20` was created in `us-east-2a` in your previous default VPC, it may be created in `us-east-2b` in your new default VPC\.
+When you create a default VPC, it is created with the standard [components](#default-vpc-components) of a default VPC, including a default subnet in each Availability Zone\. You cannot specify your own components\. The subnet CIDR blocks of your new default VPC may not map to the same Availability Zones as your previous default VPC\. For example, if the subnet with CIDR block `172.31.0.0/20` was created in `us-east-2a` in your previous default VPC, it may be created in `us-east-2b` in your new default VPC\.
 
 If you already have a default VPC in the region, you cannot create another one\. 
 
@@ -231,7 +231,7 @@ When you create a default subnet, it is created with a size `/20` IPv4 CIDR bloc
 
 + You cannot create a default subnet in a nondefault VPC\.
 
-If there is not enough address space in your default VPC to create a size `/20` CIDR block, the request fails\. If you need more address space, you can add an IPv4 CIDR block to your VPC\.
+If there is not enough address space in your default VPC to create a size `/20` CIDR block, the request fails\. If you need more address space, you can [add an IPv4 CIDR block to your VPC](VPC_Subnets.md#vpc-resize)\.
 
 If you've associated an IPv6 CIDR block with your default VPC, the new default subnet does not automatically receive an IPv6 CIDR block\. Instead, you can associate an IPv6 CIDR block with the default subnet after you create it\. For more information, see [Associating an IPv6 CIDR Block with Your Subnet](working-with-vpcs.md#subnet-associate-ipv6-cidr)\.
 

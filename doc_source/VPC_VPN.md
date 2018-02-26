@@ -198,7 +198,7 @@ We recommend that you use BGP\-capable devices, when available, because the BGP 
 
 ### Route Tables and VPN Route Priority<a name="vpn-route-priority"></a>
 
-Route tables determine where network traffic is directed\. In your route table, you must add a route for your network and specify the virtual private gateway as the target\. This enables traffic destined for your network to route via the virtual private gateway and over one of the VPN tunnels\. You can enable route propagation for your route table to automatically propagate your network routes to the table for you\.
+[Route tables](VPC_Route_Tables.md) determine where network traffic is directed\. In your route table, you must add a route for your network and specify the virtual private gateway as the target\. This enables traffic destined for your network to route via the virtual private gateway and over one of the VPN tunnels\. You can enable route propagation for your route table to automatically propagate your network routes to the table for you\.
 
 Only IP prefixes that are known to the virtual private gateway, whether through BGP advertisements or static route entry, can receive traffic from your VPC\. The virtual private gateway does not route any other traffic destined outside of received BGP advertisements, static route entries, or its attached VPC CIDR\.
 

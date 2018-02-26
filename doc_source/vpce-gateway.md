@@ -50,7 +50,7 @@ The following rules apply:
 
 + You can have multiple endpoint routes to different services in a route table, and you can have multiple endpoint routes to the same service in different route tables, but you cannot have multiple endpoints to the same service in a single route table\. For example, if you have two endpoints to Amazon S3 in your VPC, you cannot use the same route table for both endpoints\. 
 
-+ You cannot explicitly add, modify, or delete an endpoint route in your route table by using the route table APIs, or by using the Route Tables page in the Amazon VPC console\. You can only add an endpoint route by associating a route table with an endpoint\. To change the route tables that are associated with your endpoint, you can modify the endpoint\. 
++ You cannot explicitly add, modify, or delete an endpoint route in your route table by using the route table APIs, or by using the Route Tables page in the Amazon VPC console\. You can only add an endpoint route by associating a route table with an endpoint\. To change the route tables that are associated with your endpoint, you can [modify the endpoint](#modify-gateway-endpoint)\. 
 
 + An endpoint route is automatically deleted when you remove the route table association from the endpoint \(by modifying the endpoint\), or when you delete your endpoint\. 
 

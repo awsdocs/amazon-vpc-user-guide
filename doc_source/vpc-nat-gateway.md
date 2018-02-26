@@ -147,7 +147,7 @@ The following example demonstrates how to test if your instance in a private sub
 
 1. Configure SSH agent forwarding on your local computer, and connect to your bastion host in the public subnet\. For more information, see [To configure SSH agent forwarding for Linux or macOS](#ssh-forwarding-linux) or [To configure SSH agent forwarding for Windows \(PuTTY\)](#ssh-forwarding-windows)\.
 
-1. From your bastion host, connect to your instance in the private subnet, and then test the internet connection from your instance in the private subnet\. For more information, see [To test the internet connection](#test-internet-connection)\.
+1. From your bastion host, connect to your instance in the private subnet, and then test the internet connection from your instance in the private subnet\. For more information, see [To test the internet connection](#test-internet-connection)\.<a name="ssh-forwarding-linux"></a>
 
 **To configure SSH agent forwarding for Linux or macOS**
 
@@ -169,7 +169,7 @@ The following example demonstrates how to test if your instance in a private sub
 
    ```
    ssh -A ec2-user@54.0.0.123
-   ```
+   ```<a name="ssh-forwarding-windows"></a>
 
 **To configure SSH agent forwarding for Windows \(PuTTY\)**
 
@@ -179,7 +179,7 @@ The following example demonstrates how to test if your instance in a private sub
 
 1. Start Pageant, right\-click the Pageant icon on the taskbar \(it may be hidden\), and choose **Add Key**\. Select the \.ppk file that you created, type the passphrase if necessary, and choose **Open**\.
 
-1. Start a PuTTY session and connect to your instance in the public subnet using its public IP address\. For more information, see [Starting a PuTTY Session](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html#putty-ssh)\. In the **Auth** category, ensure that you select the **Allow agent forwarding** option, and leave the **Private key file for authentication** box blank\.
+1. Start a PuTTY session and connect to your instance in the public subnet using its public IP address\. For more information, see [Starting a PuTTY Session](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html#putty-ssh)\. In the **Auth** category, ensure that you select the **Allow agent forwarding** option, and leave the **Private key file for authentication** box blank\.<a name="test-internet-connection"></a>
 
 **To test the internet connection**
 
