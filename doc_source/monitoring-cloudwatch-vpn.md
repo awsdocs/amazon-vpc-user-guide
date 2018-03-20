@@ -53,6 +53,11 @@ You can filter the Amazon VPC VPN data using the following dimensions\.
 
 You can create a CloudWatch alarm that sends an Amazon SNS message when the alarm changes state\. An alarm watches a single metric over a time period you specify, and sends a notification to an Amazon SNS topic based on the value of the metric relative to a given threshold over a number of time periods\. 
 
+**Important**
+Please kindly note that VPN CloudWatch metrics will not be supported for our legacy VPN version (VPN connections using Virtual Private Gateways (VGWs) created prior to Oct 28, 2015, are running on our legacy VPN version.)\.
+
+
+
 For example, you can create an alarm that monitors the state of a VPN tunnel and sends a notification when the tunnel state is DOWN for 3 consecutive 5\-minute periods\.
 
 **To create an alarm for tunnel state**
