@@ -18,7 +18,7 @@ After you've created an endpoint, you can modify the endpoint policy that's atta
 
 There is no additional charge for using gateway endpoints\. Standard charges for data transfer and resource usage apply\. For more information about pricing, see [Amazon EC2 Pricing](http://aws.amazon.com/ec2/pricing/)\.
 
-
+**Topics**
 + [Routing for Gateway Endpoints](#vpc-endpoints-routing)
 + [Gateway Endpoint Limitations](#vpc-endpoints-limitations)
 + [Endpoints for Amazon S3](vpc-endpoints-s3.md)
@@ -47,11 +47,8 @@ To view the current public IP address range for a service, you can use the [desc
 The range of public IP addresses for a service may change from time to time\. Consider the implications before you make routing or other decisions based on the current IP address range for a service\.
 
 The following rules apply:
-
 + You can have multiple endpoint routes to different services in a route table, and you can have multiple endpoint routes to the same service in different route tables, but you cannot have multiple endpoints to the same service in a single route table\. For example, if you have two endpoints to Amazon S3 in your VPC, you cannot use the same route table for both endpoints\. 
-
 + You cannot explicitly add, modify, or delete an endpoint route in your route table by using the route table APIs, or by using the Route Tables page in the Amazon VPC console\. You can only add an endpoint route by associating a route table with an endpoint\. To change the route tables that are associated with your endpoint, you can [modify the endpoint](#modify-gateway-endpoint)\. 
-
 + An endpoint route is automatically deleted when you remove the route table association from the endpoint \(by modifying the endpoint\), or when you delete your endpoint\. 
 
 We use the most specific route that matches the traffic to determine how to route the traffic \(longest prefix match\)\. If you have an existing route in your route table for all internet traffic \(`0.0.0.0/0`\) that points to an internet gateway, the endpoint route takes precedence for all traffic destined for the service, because the IP address range for the service is more specific than `0.0.0.0/0`\. All other internet traffic goes to your internet gateway, including traffic that's destined for the service in other regions\. 
@@ -107,21 +104,13 @@ To ensure that all traffic destined for Amazon S3 in the same region is routed v
 ## Gateway Endpoint Limitations<a name="vpc-endpoints-limitations"></a>
 
 To use gateway endpoints, you need to be aware of the current limitations:
-
 + You cannot use a prefix list ID in an outbound rule in a network ACL to allow or deny outbound traffic to the service specified in an endpoint\. If your network ACL rules restrict traffic, you must specify the CIDR block \(IP address range\) for the service instead\. You can, however, use a prefix list ID in an outbound security group rule\. For more information, see [Security Groups](vpc-endpoints-access.md#vpc-endpoints-security-groups)\. 
-
 + Endpoints are supported within the same region only\. You cannot create an endpoint between a VPC and a service in a different region\.
-
 + You cannot tag an endpoint\.
-
 + Endpoints support IPv4 traffic only\.
-
 + You cannot transfer an endpoint from one VPC to another, or from one service to another\.
-
 + You have a limit on the number of endpoints you can create per VPC\. For more information, see [VPC Endpoints](VPC_Appendix_Limits.md#vpc-limits-endpoints)\.
-
 + Endpoint connections cannot be extended out of a VPC\. Resources on the other side of a VPN connection, VPC peering connection, AWS Direct Connect connection, or ClassicLink connection in your VPC cannot use the endpoint to communicate with resources in the endpoint service\. 
-
 + You must enable DNS resolution in your VPC, or if you're using your own DNS server, ensure that DNS requests to the required service \(such as Amazon S3\) are resolved correctly to the IP addresses maintained by AWS\. For more information, see [Using DNS with Your VPC](vpc-dns.md) and [AWS IP Address Ranges](http://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html) in the *Amazon Web Services General Reference*\.
 
 For more information about rules and limitations that are specific to Amazon S3, see [Endpoints for Amazon S3](vpc-endpoints-s3.md)\.
@@ -141,11 +130,8 @@ To create an endpoint, you must specify the VPC in which you want to create the 
 1. For **Service Name**, choose the service to which to connect\. To create a gateway endpoint to DynamoDB or Amazon S3, ensure that the **Type** column indicates **Gateway**\.
 
 1. Complete the following information, and choose **Create endpoint**\.
-
    + For **VPC**, select a VPC in which to create the endpoint\.
-
    + For **Configure route tables**, select the route tables to be used by the endpoint\. We automatically add a route that points traffic destined for the service to the endpoint to the selected route tables\.
-
    + For **Policy**, choose the type of policy\. You can leave the default option, **Full Access**, to allow full access to the service\. Alternatively, you can select **Custom**, and then use the AWS Policy Generator to create a custom policy, or type your own policy in the policy window\. 
 
 After you've created an endpoint, you can view information about it\. 
@@ -196,21 +182,15 @@ The **Policy** tab only displays the endpoint policy\. It does not display any i
    ```
 
 **To describe available services using the AWS Tools for Windows PowerShell or API**
-
 + [Get\-EC2VpcEndpointService](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2VpcEndpointService.html) \(AWS Tools for Windows PowerShell\)
-
 + [DescribeVpcEndpointServices](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-DescribeVpcEndpointServices.html) \(Amazon EC2 Query API\)
 
 **To create a VPC endpoint using the AWS Tools for Windows PowerShell or API**
-
 + [New\-EC2VpcEndpoint](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2VpcEndpoint.html) \(AWS Tools for Windows PowerShell\)
-
 + [CreateVpcEndpoint](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-CreateVpcEndpoint.html) \(Amazon EC2 Query API\)
 
 **To describe your VPC endpoints using the AWS Tools for Windows PowerShell or API**
-
 + [Get\-EC2VpcEndpoint](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2VpcEndpoint.html) \(AWS Tools for Windows PowerShell\)
-
 + [DescribeVpcEndpoints](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-DescribeVpcEndpoints.html) \(Amazon EC2 Query API\)
 
 ## Modifying Your Security Group<a name="vpc-endpoints-security"></a>
@@ -234,11 +214,8 @@ If the VPC security group associated with your instance restricts outbound traff
  For more information about security groups, see [Security Groups for Your VPC](VPC_SecurityGroups.md)\.
 
 **To get the prefix list name, ID, and IP address range for an AWS service using the command line or API**
-
 + [describe\-prefix\-lists](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-prefix-lists.html) \(AWS CLI\)
-
 + [Get\-EC2PrefixList](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2PrefixList.html) \(AWS Tools for Windows PowerShell\)
-
 + [DescribePrefixLists](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-DescribePrefixLists.html) \(Amazon EC2 Query API\)
 
 ## Modifying a Gateway Endpoint<a name="modify-gateway-endpoint"></a>
@@ -282,7 +259,5 @@ It can take a few minutes for policy changes to take effect\.
    ```
 
 **To modify a VPC endpoint using the AWS Tools for Windows PowerShell or an API**
-
 + [Edit\-EC2VpcEndpoint](http://docs.aws.amazon.com/powershell/latest/reference/items/Edit-EC2VpcEndpoint.html) \(AWS Tools for Windows PowerShell\)
-
 + [ModifyVpcEndpoint](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-ModifyVpcEndpoint.html) \(Amazon EC2 Query API\)

@@ -5,7 +5,7 @@ An egress\-only Internet gateway is a horizontally scaled, redundant, and highly
 **Note**  
 An egress\-only Internet gateway is for use with IPv6 traffic only\. To enable outbound\-only Internet communication over IPv4, use a NAT gateway instead\. For more information, see [NAT Gateways](vpc-nat-gateway.md)\.
 
-
+**Topics**
 + [Egress\-Only Internet Gateway Basics](#egress-only-internet-gateway-basics)
 + [Working with Egress\-Only Internet Gateways](#egress-only-internet-gateway-working-with)
 + [API and CLI Overview](#egress-only-internet-gateway-api-cli)
@@ -19,9 +19,7 @@ IPv6 addresses are globally unique, and are therefore public by default\. If you
 An egress\-only Internet gateway is stateful: it forwards traffic from the instances in the subnet to the Internet or other AWS services, and then sends the response back to the instances\.
 
 An egress\-only Internet gateway has the following characteristics:
-
 + You cannot associate a security group with an egress\-only Internet gateway\. You can use security groups for your instances in the private subnet to control the traffic to and from those instances\.
-
 + You can use a network ACL to control the traffic to and from the subnet for which the egress\-only Internet gateway routes traffic\. 
 
 In the following diagram, a VPC has an IPv6 CIDR block, and a subnet in the VPC has an IPv6 CIDR block\. A custom route table is associated with Subnet 1 and points all Internet\-bound IPv6 traffic \(`::/0`\) to an egress\-only Internet gateway in the VPC\.
@@ -99,19 +97,13 @@ If you no longer need an egress\-only Internet gateway, you can delete it\. Any 
 You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available API actions, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
 
 **Create an egress\-only Internet gateway**
-
 + [create\-egress\-only\-internet\-gateway](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-egress-only-internet-gateway.html) \(AWS CLI\)
-
 + [New\-EC2EgressOnlyInternetGateway](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2EgressOnlyInternetGateway.html) \(AWS Tools for Windows PowerShell\)
 
 **Describe an egress\-only Internet gateway**
-
 + [describe\-egress\-only\-internet\-gateways](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-egress-only-internet-gateways.html) \(AWS CLI\)
-
 + [Get\-EC2EgressOnlyInternetGatewayList](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2EgressOnlyInternetGatewayList.html) \(AWS Tools for Windows PowerShell\)
 
 **Delete an egress\-only Internet gateway**
-
 + [delete\-egress\-only\-internet\-gateway](http://docs.aws.amazon.com/cli/latest/reference/ec2/delete-egress-only-internet-gateway.html) \(AWS CLI\)
-
 + [Remove\-EC2EgressOnlyInternetGateway](http://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2EgressOnlyInternetGateway.html) \(AWS Tools for Windows PowerShell\)

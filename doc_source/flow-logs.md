@@ -2,15 +2,16 @@
 
 VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC\. Flow log data is stored using Amazon CloudWatch Logs\. After you've created a flow log, you can view and retrieve its data in Amazon CloudWatch Logs\.
 
-Flow logs can help you with a number of tasks; for example, to troubleshoot why specific traffic is not reaching an instance, which in turn can help you diagnose overly restrictive security group rules\. You can also use flow logs as a security tool to monitor the traffic that is reaching your instance\. 
+Flow logs can help you with a number of tasks; for example, to troubleshoot why specific traffic is not reaching an instance, which in turn helps you diagnose overly restrictive security group rules\. You can also use flow logs as a security tool to monitor the traffic that is reaching your instance\. 
 
 There is no additional charge for using flow logs; however, standard CloudWatch Logs charges apply\. For more information, see [Amazon CloudWatch Pricing](https://aws.amazon.com/cloudwatch/pricing)\.
 
-
+**Topics**
 + [Flow Logs Basics](#flow-logs-basics)
 + [Flow Log Limitations](#flow-logs-limitations)
 + [Flow Log Records](#flow-log-records)
 + [IAM Roles for Flow Logs](#flow-logs-iam)
++ [Controlling the Use of Flow Logs](#controlling-use-of-flow-logs)
 + [Working With Flow Logs](#working-with-flow-logs)
 + [Troubleshooting](#flow-logs-troubleshooting)
 + [API and CLI Overview](#flow-logs-api-cli)
@@ -21,7 +22,7 @@ There is no additional charge for using flow logs; however, standard CloudWatch 
 
 You can create a flow log for a VPC, a subnet, or a network interface\. If you create a flow log for a subnet or VPC, each network interface in the VPC or subnet is monitored\. Flow log data is published to a log group in CloudWatch Logs, and each network interface has a unique log stream\. Log streams contain *flow log records*, which are log events consisting of fields that describe the traffic for that network interface\. For more information, see [Flow Log Records](#flow-log-records)\. 
 
-To create a flow log, you specify the resource for which you want to create the flow log, the type of traffic to capture \(accepted traffic, rejected traffic, or all traffic\), the name of a log group in CloudWatch Logs to which the flow log will be published, and the ARN of an IAM role that has sufficient permission to publish the flow log to the CloudWatch Logs log group\. If you specify the name of a log group that does not exist, we'll attempt to create the log group for you\. After you've created a flow log, it can take several minutes to begin collecting data and publishing to CloudWatch Logs\. Flow logs do not capture real\-time log streams for your network interfaces\.
+To create a flow log, you specify the resource for which to create the flow log, the type of traffic to capture \(accepted traffic, rejected traffic, or all traffic\), the name of a log group in CloudWatch Logs to which the flow log is published, and the ARN of an IAM role that has sufficient permissions to publish the flow log to the CloudWatch Logs log group\. If you specify the name of a log group that does not exist, we attempt to create the log group for you\. After you've created a flow log, it can take several minutes to begin collecting data and publishing to CloudWatch Logs\. Flow logs do not capture real\-time log streams for your network interfaces\.
 
 You can create multiple flow logs that publish data to the same log group in CloudWatch Logs\. If the same network interface is present in one or more flow logs in the same log group, it has one combined log stream\. If you've specified that one flow log should capture rejected traffic, and the other flow log should capture accepted traffic, then the combined log stream captures all traffic\.
 
@@ -34,36 +35,25 @@ If you no longer require a flow log, you can delete it\. Deleting a flow log dis
 ## Flow Log Limitations<a name="flow-logs-limitations"></a>
 
 To use flow logs, you need to be aware of the following limitations:
-
 + You cannot enable flow logs for network interfaces that are in the EC2\-Classic platform\. This includes EC2\-Classic instances that have been linked to a VPC through ClassicLink\. 
-
 + You cannot enable flow logs for VPCs that are peered with your VPC unless the peer VPC is in your account\.
-
 + You cannot tag a flow log\.
-
 + After you've created a flow log, you cannot change its configuration; for example, you can't associate a different IAM role with the flow log\. Instead, you can delete the flow log and create a new one with the required configuration\. 
-
-+ None of the flow log API actions \(`ec2:*FlowLogs`\) support resource\-level permissions\. If you want to create an IAM policy to control the use of the flow log API actions, you must grant users permission to use all resources for the action by using the \* wildcard for the resource element in your statement\. For more information, see [Controlling Access to Amazon VPC Resources](VPC_IAM.md)\.
-
++ None of the flow log API actions \(`ec2:*FlowLogs`\) support resource\-level permissions\. To create an IAM policy to control the use of the flow log API actions, you must grant users permissions to use all resources for the action by using the \* wildcard for the resource element in your statement\. For more information, see [Controlling Access to Amazon VPC Resources](VPC_IAM.md)\.
 + If your network interface has multiple IPv4 addresses and traffic is sent to a secondary private IPv4 address, the flow log displays the primary private IPv4 address in the destination IP address field\.
 
-Flow logs do not capture all types of IP traffic\. The following types of traffic are not logged:
-
+Flow logs do not capture all IP traffic\. The following types of traffic are not logged:
 + Traffic generated by instances when they contact the Amazon DNS server\. If you use your own DNS server, then all traffic to that DNS server is logged\. 
-
 + Traffic generated by a Windows instance for Amazon Windows license activation\.
-
 + Traffic to and from `169.254.169.254` for instance metadata\.
-
 + Traffic to and from `169.254.169.123` for the Amazon Time Sync Service\.
-
 + DHCP traffic\.
-
 + Traffic to the reserved IP address for the default VPC router\. For more information, see [VPC and Subnet Sizing](VPC_Subnets.md#VPC_Sizing)\.
++ Traffic between an endpoint network interface and a Network Load Balancer network interface\. For more information, see [VPC Endpoint Services \(AWS PrivateLink\)](endpoint-service.md)\.
 
 ## Flow Log Records<a name="flow-log-records"></a>
 
-A flow log record represents a network flow in your flow log\. Each record captures the network flow for a specific 5\-tuple, for a specific capture window\. A 5\-tuple is a set of 5 different values that specify the source, destination, and protocol for an Internet protocol \(IP\) flow\. The capture window is a duration of time during which the flow logs service aggregates data before publishing flow log records\. The capture window is approximately 10 minutes, but can take up to 15 minutes\. A flow log record is a space\-separated string that has the following format:
+A flow log record represents a network flow in your flow log\. Each record captures the network flow for a specific 5\-tuple, for a specific capture window\. A 5\-tuple is a set of five different values that specify the source, destination, and protocol for an internet protocol \(IP\) flow\. The capture window is a duration of time during which the flow logs service aggregates data before publishing flow log records\. The capture window is approximately 10 minutes, but can take up to 15 minutes\. A flow log record is a space\-separated string that has the following format:
 
 *version account\-id interface\-id srcaddr dstaddr srcport dstport protocol packets bytes start end action log\-status*
 
@@ -72,7 +62,7 @@ A flow log record represents a network flow in your flow log\. Each record captu
 
 | Field | Description | 
 | --- | --- | 
-| version | The VPC flow logs version\. | 
+| version | The VPC Flow Logs version\. | 
 | account\-id | The AWS account ID for the flow log\. | 
 | interface\-id | The ID of the network interface for which the log stream applies\. | 
 | srcaddr | The source IPv4 or IPv6 address\. The IPv4 address of the network interface is always its private IPv4 address\. | 
@@ -89,7 +79,7 @@ A flow log record represents a network flow in your flow log\. Each record captu
 
 If a field is not applicable for a specific record, the record displays a '\-' symbol for that entry\.
 
-For examples of flow log records, see [Examples: Flow Log Records](#flow-logs-records-examples)
+For examples of flow log records, see [Examples: Flow Log Records](#flow-logs-records-examples)\.
 
 You can work with flow log records as you would with any other log events collected by CloudWatch Logs\. For more information about monitoring log data and metric filters, see [Searching and Filtering Log Data](http://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide/MonitoringLogData.html) in the *Amazon CloudWatch User Guide*\. For an example of setting up a metric filter and alarm for a flow log, see [Example: Creating a CloudWatch Metric Filter and Alarm for a Flow Log](#flow-logs-cw-alarm-example)\. 
 
@@ -162,13 +152,46 @@ Alternatively, you can follow the procedures below to create a new role for use 
 
 1. In the section [IAM Roles for Flow Logs](#flow-logs-iam) above, copy the second policy \(the trust relationship\), and then choose **Trust relationships**, **Edit trust relationship**\. Delete the existing policy document, and paste in the new one\. When you are done, choose **Update Trust Policy**\. 
 
-1. On the **Summary** page, take note of the ARN for your role\. You will need this ARN when you create your flow log\. 
+1. On the **Summary** page, take note of the ARN for your role\. You need this ARN when you create your flow log\. 
+
+## Controlling the Use of Flow Logs<a name="controlling-use-of-flow-logs"></a>
+
+By default, IAM users do not have permission to work with flow logs\. You can create an IAM user policy that grants users the permissions to create, describe, and delete flow logs\. To create a flow log, users must have permissions to use the `iam:PassRole` action for the IAM role that's associated with the flow log\.
+
+The following is an example policy that grants users full permissions to create, describe, and delete flow logs, and view flow log records in CloudWatch Logs\.
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DeleteFlowLogs",
+                "ec2:CreateFlowLogs",
+                "ec2:DescribeFlowLogs",
+                "logs:GetLogEvents"
+            ],
+            "Resource": "*"
+           },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:PassRole"
+            ],
+            "Resource": "arn:aws:iam::account:role/flow-log-role-name"
+        }
+    ]
+}
+```
+
+For more information about permissions, see [Granting IAM Users Required Permissions for Amazon EC2 Resources](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ec2-api-permissions.html) in the *Amazon EC2 API Reference*\.
 
 ## Working With Flow Logs<a name="working-with-flow-logs"></a>
 
 You can work with flow logs using the Amazon EC2, Amazon VPC, and CloudWatch consoles\.
 
-
+**Topics**
 + [Creating a Flow Log](#create-flow-log)
 + [Viewing Flow Logs](#view-flow-logs)
 + [Deleting a Flow Log](#delete-flow-log)
@@ -186,12 +209,9 @@ You can create a flow log from the VPC page and the Subnet page in the Amazon VP
 1. Select a network interface, choose the **Flow Logs** tab, and then **Create Flow Log**\.
 
 1. In the dialog box, complete following information\. When you are done, choose **Create Flow Log**:
-
    + **Filter**: Select whether the flow log should capture rejected traffic, accepted traffic, or all traffic\.
-
-   + **Role**: Specify the name of an IAM role that has permission to publish logs to CloudWatch Logs\.
-
-   + **Destination Log Group**: Enter the name of a log group in CloudWatch Logs to which the flow logs will be published\. You can use an existing log group, or you can enter a name for a new log group, which we'll create for you\.
+   + **Role**: Specify the name of an IAM role that has permissions to publish logs to CloudWatch Logs\.
+   + **Destination Log Group**: Enter the name of a log group in CloudWatch Logs to which the flow logs are to be published\. You can use an existing log group, or you can enter a name for a new log group, which we create for you\.
 
 **To create a flow log for a VPC or a subnet**
 
@@ -204,11 +224,8 @@ You can create a flow log from the VPC page and the Subnet page in the Amazon VP
 To create flow logs for multiple VPCs, choose the VPCs, and then select **Create Flow Log** from the **Actions** menu\. To create flow logs for multiple subnets, choose the subnets, and then select **Create Flow Log** from the **Subnet Actions** menu\.
 
 1. In the dialog box, complete following information\. When you are done, choose **Create Flow Log**:
-
    + **Filter**: Select whether the flow log should capture rejected traffic, accepted traffic, or all traffic\.
-
    + **Role**: Specify the name of an IAM role that has permission to publish logs to CloudWatch Logs\.
-
    + **Destination Log Group**: Enter the name of a log group in CloudWatch Logs to which the flow logs will be published\. You can use an existing log group, or you can enter a name for a new log group, which we'll create for you\.
 
 ### Viewing Flow Logs<a name="view-flow-logs"></a>
@@ -275,19 +292,14 @@ These procedures disable the flow log service for a resource\. To delete the log
 ### Incomplete Flow Log Records<a name="flow-logs-troubleshooting-incomplete-records"></a>
 
 If your flow log records are incomplete, or are no longer being published, there may be a problem delivering the flow logs to the CloudWatch Logs log group\. In either the Amazon EC2 console or the Amazon VPC console, go to the **Flow Logs** tab for the relevant resource\. For more information, see [Viewing Flow Logs](#view-flow-logs)\. The flow logs table displays any errors in the **Status** column\. Alternatively, use the [describe\-flow\-logs](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-flow-logs.html) command, and check the value that's returned in the `DeliverLogsErrorMessage` field\. One of the following errors may be displayed:
-
 + `Rate limited`: This error can occur if CloudWatch logs throttling has been applied — when the number of flow log records for a network interface is higher than the maximum number of records that can be published within a specific timeframe\. This error can also occur if you've reached the limit on the number of CloudWatch Logs log groups that you can create\. For more information, see [CloudWatch Limits](http://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide/cloudwatch_limits.html) in the *Amazon CloudWatch User Guide*\.
-
 + `Access error`: The IAM role for your flow log does not have sufficient permissions to publish flow log records to the CloudWatch log group\. For more information, see [IAM Roles for Flow Logs](#flow-logs-iam)\.
-
 + `Unknown error`: An internal error has occurred in the flow logs service\. 
 
 ### Flow Log is Active, But No Flow Log Records or Log Group<a name="flow-logs-troubleshooting-no-log-group"></a>
 
 You've created a flow log, and the Amazon VPC or Amazon EC2 console displays the flow log as `Active`\. However, you cannot see any log streams in CloudWatch Logs, or your CloudWatch Logs log group has not been created\. The cause may be one of the following:
-
 + The flow log is still in the process of being created\. In some cases, it can take tens of minutes after you've created the flow log for the log group to be created, and for data to be displayed\.
-
 + There has been no traffic recorded for your network interfaces yet\. The log group in CloudWatch Logs is only created when traffic is recorded\.
 
 ## API and CLI Overview<a name="flow-logs-api-cli"></a>
@@ -295,35 +307,23 @@ You've created a flow log, and the Amazon VPC or Amazon EC2 console displays the
 You can perform the tasks described on this page using the command line or API\. For more information about the command line interfaces and a list of available API actions, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
 
 **Create a flow log**
-
 + [create\-flow\-logs](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-flow-logs.html) \(AWS CLI\)
-
 + [New\-EC2FlowLogs](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2FlowLogs.html) \(AWS Tools for Windows PowerShell\)
-
 + [CreateFlowLogs](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateFlowLogs.html) \(Amazon EC2 Query API\)
 
 **Describe your flow logs**
-
 + [describe\-flow\-logs](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-flow-logs.html) \(AWS CLI\)
-
 + [Get\-EC2FlowLogs](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2FlowLogs.html) \(AWS Tools for Windows PowerShell\)
-
 + [DescribeFlowLogs](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeFlowLogs.html) \(Amazon EC2 Query API\)
 
 **View your flow log records \(log events\)**
-
 + [get\-log\-events](http://docs.aws.amazon.com/cli/latest/reference/logs/get-log-events.html) \(AWS CLI\)
-
 + [Get\-CWLLogEvents](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-CWLLogEvents.html) \(AWS Tools for Windows PowerShell\)
-
 + [GetLogEvents](http://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetLogEvents.html) \(CloudWatch API\)
 
 **Delete a flow log**
-
 + [delete\-flow\-logs](http://docs.aws.amazon.com/cli/latest/reference/ec2/delete-flow-logs.html) \(AWS CLI\)
-
 + [Remove\-EC2FlowLogs](http://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2FlowLogs.html) \(AWS Tools for Windows PowerShell\)
-
 + [DeleteFlowLogs](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DeleteFlowLogs.html) \(Amazon EC2 Query API\)
 
 ## Examples: Flow Log Records<a name="flow-logs-records-examples"></a>
@@ -361,9 +361,7 @@ The following is an example of a flow log record in which records were skipped d
 If you're using flow logs to diagnose overly restrictive or permissive security group rules or network ACL rules, then be aware of the statefulness of these resources\. Security groups are stateful — this means that responses to allowed traffic are also allowed, even if the rules in your security group do not permit it\. Conversely, network ACLs are stateless, therefore responses to allowed traffic are subject to network ACL rules\.
 
 For example, you use the `ping` command from your home computer \(IP address is `203.0.113.12`\) to your instance \(the network interface's private IP address is `172.31.16.139`\)\. Your security group's inbound rules allow ICMP traffic and the outbound rules do not allow ICMP traffic; however, because security groups are stateful, the response ping from your instance is allowed\. Your network ACL permits inbound ICMP traffic but does not permit outbound ICMP traffic\. Because network ACLs are stateless, the response ping is dropped and will not reach your home computer\. In a flow log, this is displayed as 2 flow log records: 
-
 + An `ACCEPT` record for the originating ping that was allowed by both the network ACL and the security group, and therefore was allowed to reach your instance\. 
-
 + A `REJECT` record for the response ping that the network ACL denied\.
 
 ```

@@ -9,7 +9,7 @@ NAT is not supported for IPv6 traffic—use an egress\-only Internet gateway ins
 **Note**  
 You can also use a NAT gateway, which is a managed NAT service that provides better availability, higher bandwidth, and requires less administrative effort\. For common use cases, we recommend that you use a NAT gateway rather than a NAT instance\. For more information, see [NAT Gateways](vpc-nat-gateway.md) and [Comparison of NAT Instances and NAT Gateways](vpc-nat-comparison.md)\.
 
-
+**Topics**
 + [NAT Instance Basics](#basics)
 + [Setting up the NAT Instance](#NATInstance)
 + [Creating the NATSG Security Group](#NATSG)
@@ -26,9 +26,7 @@ The following figure illustrates the NAT instance basics\. The main route table 
 Amazon provides Amazon Linux AMIs that are configured to run as NAT instances\. These AMIs include the string `amzn-ami-vpc-nat` in their names, so you can search for them in the Amazon EC2 console\. 
 
 When you launch an instance from a NAT AMI, the following configuration occurs on the instance:
-
 + IPv4 forwarding is enabled and ICMP redirects are disabled in `/etc/sysctl.d/10-nat-settings.conf`
-
 + A script located at `/usr/sbin/configure-pat.sh` runs at startup and configures iptables IP masquerading\. 
 
 **Note**  
@@ -96,9 +94,7 @@ The steps below are for manually creating and configuring a VPC; not for creatin
 ### Launching a NAT Instance Using the Command Line<a name="launch-nat-instance-cli"></a>
 
 To launch a NAT instance into your subnet, use one of the following commands\. For more information about these command line interfaces, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
-
 + [run\-instances](http://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html) \(AWS CLI\)
-
 + [New\-EC2Instance](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Instance.html) \(AWS Tools for Windows PowerShell\)
 
 To get the ID of an AMI that's configured to run as a NAT instance, use a command to describe images, and use filters to return results only for AMIs that are owned by Amazon, and that have the `amzn-ami-vpc-nat` string in their names\. The following example uses the AWS CLI:
@@ -179,9 +175,7 @@ You can disable the `SrcDestCheck` attribute for a NAT instance that's either ru
 **To disable source/destination checking using the command line**
 
 You can use one of the following commands\. For more information about these command line interfaces, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
-
 + [modify\-instance\-attribute](http://docs.aws.amazon.com/cli/latest/reference/ec2/modify-instance-attribute.html) \(AWS CLI\)
-
 + [Edit\-EC2InstanceAttribute](http://docs.aws.amazon.com/powershell/latest/reference/items/Edit-EC2InstanceAttribute.html) \(AWS Tools for Windows PowerShell\)
 
 ## Updating the Main Route Table<a name="nat-routing-table"></a>
@@ -229,13 +223,9 @@ After you have launched a NAT instance and completed the configuration steps abo
 1. In the navigation pane, choose **Instances**\.
 
 1. Launch an instance into your private subnet\. For more information, see [Launching an Instance into Your Subnet](working-with-vpcs.md#VPC_Launch_Instance)\. Ensure that you configure the following options in the launch wizard, and then choose **Launch**:
-
    + On the **Choose an Amazon Machine Image \(AMI\)** page, select an Amazon Linux AMI from the **Quick Start** category\.
-
    + On the **Configure Instance Details** page, select your private subnet from the **Subnet** list, and do not assign a public IP address to your instance\.
-
    + On the **Configure Security Group** page, ensure that your security group includes an inbound rule that allows SSH access from your NAT instance's private IP address, or from the IP address range of your public subnet, and ensure that you have an outbound rule that allows outbound ICMP traffic\.
-
    + In the **Select an existing key pair or create a new key pair** dialog box, select the same key pair you used to launch the NAT instance\.
 
 **To configure SSH agent forwarding for Linux or OS X**
@@ -309,13 +299,9 @@ After you have launched a NAT instance and completed the configuration steps abo
    Press **Ctrl\+C** on your keyboard to cancel the `ping` command\.
 
    If the `ping` command fails, check the following information:
-
    + Check that your NAT instance's security group rules allow inbound ICMP traffic from your private subnet\. If not, your NAT instance cannot receive the `ping` command from your private instance\.
-
    + Check that you've configured your route tables correctly\. For more information, see [Updating the Main Route Table](#nat-routing-table)\.
-
    + Ensure that you've disabled source/destination checking for your NAT instance\. For more information, see [Disabling Source/Destination Checks](#EIP_Disable_SrcDestCheck)\.
-
    + Ensure that you are pinging a website that has ICMP enabled\. If not, you will not receive reply packets\. To test this, perform the same `ping` command from the command line terminal on your own computer\. 
 
 1. \(Optional\) Terminate your private instance if you no longer require it\. For more information, see [Terminate Your Instance](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html) in the *Amazon EC2 User Guide for Linux Instances*\.

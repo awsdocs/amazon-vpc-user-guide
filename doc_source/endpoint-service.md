@@ -22,7 +22,7 @@ In the following diagram, the account owner of VPC B is a service provider, and 
 
 ![\[Using an interface endpoint to access an endpoint service\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/vpc-endpoint-service.png)
 
-
+**Topics**
 + [Endpoint Service Limitations](#endpoint-service-limits)
 + [Creating a VPC Endpoint Service Configuration](#create-endpoint-service)
 + [Adding and Removing Permissions for Your Endpoint Service](#add-endpoint-service-permissions)
@@ -34,15 +34,12 @@ In the following diagram, the account owner of VPC B is a service provider, and 
 
 ## Endpoint Service Limitations<a name="endpoint-service-limits"></a>
 
-To use endpoint services, you need to be aware of the current limitations:
-
+To use endpoint services, you need to be aware of the current rules and limitations:
 + You cannot tag an endpoint service\.
-
 + An endpoint service supports IPv4 traffic over TCP only\.
-
 + Service consumers must use the endpoint\-specific DNS hostnames to access the endpoint service\. Private DNS is not supported\. For more information, see [Accessing a Service Through an Interface Endpoint](vpce-interface.md#access-service-though-endpoint)\.
-
 + Endpoint services are only available in the AWS Region in which they are created\.
++ If an endpoint service is associated with multiple Network Load Balancers, then for a specific Availability Zone, an interface endpoint will establish a connection with one load balancer only\.
 
 ## Creating a VPC Endpoint Service Configuration<a name="create-endpoint-service"></a>
 
@@ -68,7 +65,6 @@ Regardless of the acceptance settings, service consumers must also have [permiss
 After you create an endpoint service configuration, you must add permissions to enable service consumers to create interface endpoints to your service\.
 
 **To create an endpoint service using the AWS CLI**
-
 + Use the [create\-vpc\-endpoint\-service\-configuration](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-vpc-endpoint-service-configuration.html) command and specify one or more ARNs for your Network Load Balancers\. You can optionally specify if acceptance is required for connecting to your service\.
 
   ```
@@ -101,19 +97,14 @@ After you create an endpoint service configuration, you must add permissions to 
   ```
 
 **To create an endpoint service using the AWS Tools for Windows PowerShell or API**
-
 + [New\-EC2VpcEndpointServiceConfiguration](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2VpcEndpointServiceConfiguration.html) \(AWS Tools for Windows PowerShell\)
-
 + [CreateVpcEndpointServiceConfiguration](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-CreateVpcEndpointServiceConfiguration.html) \(Amazon EC2 Query API\)
 
 ## Adding and Removing Permissions for Your Endpoint Service<a name="add-endpoint-service-permissions"></a>
 
 After you've created your endpoint service configuration, you can control which service consumers can create an interface endpoint to connect to your service\. Service consumers are [IAM principals](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html)—IAM users, IAM roles, and AWS accounts\. To add or remove permissions for a principal, you need its Amazon Resource Name \(ARN\)\.
-
 + For an AWS account \(and therefore all principals in the account\), the ARN is in the form `arn:aws:iam::aws-account-id:root`\.
-
 + For a specific IAM user, the ARN is in the form `arn:aws:iam::aws-account-id:user/user-name`\.
-
 + For a specific IAM role, the ARN is in the form `arn:aws:iam::aws-account-id:role/role-name`\.
 
 **To add or remove permissions using the console**
@@ -164,9 +155,7 @@ Specify `*` to add permissions for all principals\. This enables all principals 
    ```
 
 **To modify endpoint service permissions using the AWS Tools for Windows PowerShell or API**
-
 + [Edit\-EC2EndpointServicePermission](http://docs.aws.amazon.com/powershell/latest/reference/items/Edit-EC2EndpointServicePermission.html) \(AWS Tools for Windows PowerShell\)
-
 + [ModifyVpcEndpointServicePermissions](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-ModifyVpcEndpointServicePermissions.html) \(Amazon EC2 Query API\)
 
 ## Changing the Network Load Balancers and Acceptance Settings<a name="modify-endpoint-service"></a>
@@ -210,9 +199,7 @@ You cannot disassociate a load balancer if there are interface endpoints attache
    ```
 
 **To modify an endpoint service configuration using the AWS Tools for Windows PowerShell or API**
-
 + [Edit\-EC2VpcEndpointServiceConfiguration](http://docs.aws.amazon.com/powershell/latest/reference/items/Edit-EC2VpcEndpointServiceConfiguration.html) \(AWS Tools for Windows PowerShell\)
-
 + [ModifyVpcEndpointServiceConfiguration](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-ModifyVpcEndpointServiceConfiguration.html) \(Amazon EC2 Query API\)
 
 ## Accepting and Rejecting Interface Endpoint Connection Requests<a name="accept-reject-endpoint-requests"></a>
@@ -266,9 +253,7 @@ You can reject an interface endpoint connection after it's in the `available` st
    ```
 
 **To accept and reject endpoint connections using the AWS Tools for Windows PowerShell or API**
-
 + [Confirm\-EC2EndpointConnection](http://docs.aws.amazon.com/powershell/latest/reference/items/Confirm-EC2EndpointConnection.html) and [Deny\-EC2EndpointConnection](http://docs.aws.amazon.com/powershell/latest/reference/items/Deny-EC2EndpointConnection.html) \(AWS Tools for Windows PowerShell\)
-
 + [AcceptVpcEndpointConnections](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-AcceptVpcEndpointConnections.html) and [RejectVpcEndpointConnections](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-RejectVpcEndpointConnections.html) \(Amazon EC2 Query API\)
 
 ## Creating and Managing a Notification for an Endpoint Service<a name="create-notification-endpoint-service"></a>
@@ -378,9 +363,7 @@ If you no longer need a notification, you can delete it\.
    ```
 
 **To create and manage a notification using the AWS Tools for Windows PowerShell or API**
-
 + [New\-EC2VpcEndpointConnectionNotification](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2VpcEndpointConnectionNotification.html), [Get\-EC2EndpointConnectionNotification](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2EndpointConnectionNotification.html), [Edit\-EC2VpcEndpointConnectionNotification](http://docs.aws.amazon.com/powershell/latest/reference/items/Edit-EC2VpcEndpointConnectionNotification.html), and [Remove\-EC2EndpointConnectionNotification](http://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2EndpointConnectionNotification.html) \(AWS Tools for Windows PowerShell\)
-
 + [CreateVpcEndpointConnectionNotification](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-CreateVpcEndpointConnectionNotification.html), [DescribeVpcEndpointConnectionNotifications](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-DescribeVpcEndpointConnectionNotifications.html), [ModifyVpcEndpointConnectionNotification](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-ModifyVpcEndpointConnectionNotification.html), and [DeleteVpcEndpointConnectionNotifications](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-DeleteVpcEndpointConnectionNotifications.html) \(Amazon EC2 Query API\)
 
 ## Using Proxy Protocol for Connection Information<a name="endpoint-service-proxy-protocol"></a>
@@ -406,7 +389,6 @@ Before you delete the endpoint service configuration, you must reject any `avail
 1. Choose **Yes, Delete**\.
 
 **To delete an endpoint service configuration using the AWS CLI**
-
 + Use the [delete\-vpc\-endpoint\-service\-configurations](http://docs.aws.amazon.com/cli/latest/reference/ec2/delete-vpc-endpoint-service-configurations.html) command and specify the ID of the service\. 
 
   ```
@@ -414,7 +396,5 @@ Before you delete the endpoint service configuration, you must reject any `avail
   ```
 
 **To delete an endpoint service configuration using the AWS Tools for Windows PowerShell or API**
-
 + [Remove\-EC2EndpointServiceConfiguration](http://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2EndpointServiceConfiguration.html) \(AWS Tools for Windows PowerShell\)
-
 + [DeleteVpcEndpointServiceConfigurations](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-DeleteVpcEndpointServiceConfigurations.html) \(Amazon EC2 Query API\)

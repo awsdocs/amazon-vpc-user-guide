@@ -6,7 +6,7 @@ The following is a high\-level summary of the differences between NAT instances 
 | Attribute | NAT gateway | NAT instance | 
 | --- | --- | --- | 
 | Availability | Highly available\. NAT gateways in each Availability Zone are implemented with redundancy\. Create a NAT gateway in each Availability Zone to ensure zone\-independent architecture\.  | Use a script to manage failover between instances\.  | 
-| Bandwidth | Supports bursts of up to 10Gbps\. | Depends on the bandwidth of the instance type\. | 
+| Bandwidth | Can scale up to 45 Gbps\. | Depends on the bandwidth of the instance type\. | 
 | Maintenance | Managed by AWS\.You do not need to perform any maintenance\. | Managed by you, for example, by installing software updates or operating system patches on the instance\. | 
 | Performance | Software is optimized for handling NAT traffic\. | A generic Amazon Linux AMI that's configured to perform NAT\. | 
 | Cost | Charged depending on the number of NAT gateways you use, duration of usage, and amount of data that you send through the NAT gateways\.  | Charged depending on the number of NAT instances that you use, duration of usage, and instance type and size\.  | 

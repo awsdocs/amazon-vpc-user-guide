@@ -2,7 +2,7 @@
 
 This topic describes DHCP options sets and how to specify the DHCP options for your VPC\.
 
-
+**Topics**
 + [Overview of DHCP Options Sets](#DHCPOptionSets)
 + [Amazon DNS Server](#AmazonDNS)
 + [Changing DHCP Options](#DHCPOptions)
@@ -53,7 +53,7 @@ After you associate a new set of DHCP options with a VPC, any existing instances
 
 This section shows you how to work with DHCP options sets\.
 
-
+**Topics**
 + [Creating a DHCP Options Set](#CreatingaDHCPOptionSet)
 + [Changing the Set of DHCP Options a VPC Uses](#ChangingDHCPOptionsofaVPC)
 + [Changing a VPC to use No DHCP Options](#DHCP_Use_No_Options)
@@ -131,25 +131,17 @@ When you no longer need a DHCP options set, use the following procedure to delet
 You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
 
 **Create a set of DHCP options for your VPC**
-
 + [create\-dhcp\-options](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-dhcp-options.html) \(AWS CLI\)
-
 + [New\-EC2DhcpOption](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2DhcpOption.html) \(AWS Tools for Windows PowerShell\)
 
 **Associate a set of DHCP options with the specified VPC, or no DHCP options**
-
 + [associate\-dhcp\-options](http://docs.aws.amazon.com/cli/latest/reference/ec2/associate-dhcp-options.html) \(AWS CLI\)
-
 + [Register\-EC2DhcpOption](http://docs.aws.amazon.com/powershell/latest/reference/items/Register-EC2DhcpOption.html) \(AWS Tools for Windows PowerShell\)
 
 **Describes one or more sets of DHCP options**
-
 + [describe\-dhcp\-options](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-dhcp-options.html) \(AWS CLI\)
-
 + [Get\-EC2DhcpOption](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2DhcpOption.html) \(AWS Tools for Windows PowerShell\)
 
 **Deletes a set of DHCP options**
-
 + [delete\-dhcp\-options](http://docs.aws.amazon.com/cli/latest/reference/ec2/delete-dhcp-options.html) \(AWS CLI\)
-
 + [Remove\-EC2DhcpOption](http://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2DhcpOption.html) \(AWS Tools for Windows PowerShell\)

@@ -4,7 +4,7 @@ You can monitor your NAT gateway using CloudWatch, which collects information fr
 
 For more information about Amazon CloudWatch, see the [Amazon CloudWatch User Guide](http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/)\. For more information about pricing, see [Amazon CloudWatch Pricing](http://aws.amazon.com/cloudwatch/pricing)\.
 
-
+**Topics**
 + [NAT Gateway Metrics and Dimensions](#metrics-dimensions-nat-gateway)
 + [Creating CloudWatch Alarms to Monitor a NAT Gateway](#creating-alarms-nat-gateway)
 
@@ -27,7 +27,6 @@ Metrics are grouped first by the service namespace, and then by the various dime
 1. To view the metrics, select the metric dimension \.
 
 **To view metrics using the AWS CLI**
-
 + At a command prompt, use the following command to list the metrics that are available for the NAT gateway service:
 
   ```
@@ -78,11 +77,8 @@ For example, you can create an alarm that monitors the amount of traffic coming 
 1. Select the NAT gateway and the **BytesOutToDestination** metric and choose **Next**\.
 
 1. Configure the alarm as follows, and choose **Create Alarm** when you are done:
-
    + Under **Alarm Threshold**, enter a name and description for your alarm\. For **Whenever**, choose **>=** and enter `5000000`\. Enter **1** for the consecutive periods\.
-
    + Under **Actions**, select an existing notification list or choose **New list** to create a new one\. 
-
    + Under **Alarm Preview**, select a period of 15 minutes and specify a statistic of **Sum**\.
 
 You can create an alarm that monitors the `ErrorPortAllocation` metric and sends a notification when the value is greater than zero \(0\) for three consecutive 5\-minute periods\. 
@@ -98,11 +94,8 @@ You can create an alarm that monitors the `ErrorPortAllocation` metric and sends
 1. Select the NAT gateway and the **ErrorPortAllocation** metric and choose **Next**\.
 
 1. Configure the alarm as follows, and choose **Create Alarm** when you are done:
-
    + Under **Alarm Threshold**, enter a name and description for your alarm\. For **Whenever**, choose **>** and enter `0`\. Enter **3** for the consecutive periods\.
-
    + Under **Actions**, select an existing notification list or choose **New list** to create a new one\. 
-
    + Under **Alarm Preview**, select a period of 5 minutes and specify a statistic of **Maximum**\.
 
 For more examples of creating alarms, see [Creating Amazon CloudWatch Alarms](http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html) in the *Amazon CloudWatch User Guide*\.

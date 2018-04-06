@@ -2,7 +2,7 @@
 
 A *network access control list \(ACL\)* is an optional layer of security for your VPC that acts as a firewall for controlling traffic in and out of one or more subnets\. You might set up network ACLs with rules similar to your security groups in order to add an additional layer of security to your VPC\. For more information about the differences between security groups and network ACLs, see [Comparison of Security Groups and Network ACLs](VPC_Security.md#VPC_Security_Comparison)\.
 
-
+**Topics**
 + [Network ACL Basics](#ACLs)
 + [Network ACL Rules](#ACLRules)
 + [Default Network ACL](#default-network-acl)
@@ -15,19 +15,12 @@ A *network access control list \(ACL\)* is an optional layer of security for you
 ## Network ACL Basics<a name="ACLs"></a>
 
 The following are the basic things that you need to know about network ACLs:
-
 + Your VPC automatically comes with a modifiable default network ACL\. By default, it allows all inbound and outbound IPv4 traffic and, if applicable, IPv6 traffic\.
-
 + You can create a custom network ACL and associate it with a subnet\. By default, each custom network ACL denies all inbound and outbound traffic until you add rules\. 
-
 + Each subnet in your VPC must be associated with a network ACL\. If you don't explicitly associate a subnet with a network ACL, the subnet is automatically associated with the default network ACL\.
-
 + You can associate a network ACL with multiple subnets; however, a subnet can be associated with only one network ACL at a time\. When you associate a network ACL with a subnet, the previous association is removed\.
-
-+ A network ACL contains a numbered list of rules that we evaluate in order, starting with the lowest numbered rule, to determine whether traffic is allowed in or out of any subnet associated with the network ACL\. The highest number that you can use for a rule is 32766\. We recommend that you start by creating rules with rule numbers that are multiples of 100, so that you can insert new rules where you need to later on\.
-
++ A network ACL contains a numbered list of rules that we evaluate in order, starting with the lowest numbered rule, to determine whether traffic is allowed in or out of any subnet associated with the network ACL\. The highest number that you can use for a rule is 32766\. We recommend that you start by creating rules in increments \(for example, increments of 10 or 100\) so that you can insert new rules where you need to later on\.
 + A network ACL has separate inbound and outbound rules, and each rule can either allow or deny traffic\. 
-
 + Network ACLs are stateless; responses to allowed inbound traffic are subject to the rules for outbound traffic \(and vice versa\)\.
 
 For more information about the number of network ACLs you can create, see [Amazon VPC Limits](VPC_Appendix_Limits.md)\.
@@ -37,15 +30,10 @@ For more information about the number of network ACLs you can create, see [Amazo
 You can add or remove rules from the default network ACL, or create additional network ACLs for your VPC\. When you add or remove rules from a network ACL, the changes are automatically applied to the subnets it's associated with\.
 
 The following are the parts of a network ACL rule:
-
 + Rule number\. Rules are evaluated starting with the lowest numbered rule\. As soon as a rule matches traffic, it's applied regardless of any higher\-numbered rule that may contradict it\.
-
 + Protocol\. You can specify any protocol that has a standard protocol number\. For more information, see [Protocol Numbers](http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml)\. If you specify ICMP as the protocol, you can specify any or all of the ICMP types and codes\.
-
 + \[Inbound rules only\] The source of the traffic \(CIDR range\) and the destination \(listening\) port or port range\.
-
 + \[Outbound rules only\] The destination for the traffic \(CIDR range\) and the destination port or port range\.
-
 + Choice of ALLOW or DENY for the specified traffic\.
 
 ## Default Network ACL<a name="default-network-acl"></a>
@@ -165,7 +153,7 @@ In practice, to cover the different types of clients that might initiate traffic
 
 This section shows you how to work with network ACLs using the Amazon VPC console\.
 
-
+**Topics**
 + [Determining Network ACL Associations](#ACLSubnet)
 + [Creating a Network ACL](#CreateACL)
 + [Adding and Deleting Rules](#Rules)
@@ -359,43 +347,29 @@ However, only other instances within the subnet and your remote computer are abl
 You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
 
 **Create a network ACL for your VPC**
-
 + [create\-network\-acl](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-network-acl.html) \(AWS CLI\)
-
 + [New\-EC2NetworkAcl](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2NetworkAcl.html) \(AWS Tools for Windows PowerShell\)
 
 **Describe one or more of your network ACLs**
-
 + [describe\-network\-acls](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-network-acls.html) \(AWS CLI\)
-
 + [Get\-EC2NetworkAcl](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2NetworkAcl.html) \(AWS Tools for Windows PowerShell\)
 
 **Add a rule to a network ACL**
-
 + [create\-network\-acl\-entry](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-network-acl-entry.html) \(AWS CLI\)
-
 + [New\-EC2NetworkAclEntry](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2NetworkAclEntry.html) \(AWS Tools for Windows PowerShell\)
 
 **Delete a rule from a network ACL**
-
 + [delete\-network\-acl\-entry](http://docs.aws.amazon.com/cli/latest/reference/ec2/delete-network-acl-entry.html) \(AWS CLI\)
-
 + [Remove\-EC2NetworkAclEntry](http://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2NetworkAclEntry.html) \(AWS Tools for Windows PowerShell\)
 
 **Replace an existing rule in a network ACL**
-
 + [replace\-network\-acl\-entry](http://docs.aws.amazon.com/cli/latest/reference/ec2/replace-network-acl-entry.html) \(AWS CLI\)
-
 + [Set\-EC2NetworkAclEntry](http://docs.aws.amazon.com/powershell/latest/reference/items/Set-EC2NetworkAclEntry.html) \(AWS Tools for Windows PowerShell\)
 
 **Replace a network ACL association**
-
 + [replace\-network\-acl\-association](http://docs.aws.amazon.com/cli/latest/reference/ec2/replace-network-acl-association.html) \(AWS CLI\)
-
 + [Set\-EC2NetworkAclAssociation](http://docs.aws.amazon.com/powershell/latest/reference/items/Set-EC2NetworkAclAssociation.html) \(AWS Tools for Windows PowerShell\)
 
 **Delete a network ACL**
-
 + [delete\-network\-acl](http://docs.aws.amazon.com/cli/latest/reference/ec2/delete-network-acl.html) \(AWS CLI\)
-
 + [Remove\-EC2NetworkAcl](http://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2NetworkAcl.html) \(AWS Tools for Windows PowerShell\)

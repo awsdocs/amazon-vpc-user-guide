@@ -1,11 +1,8 @@
 # Security<a name="VPC_Security"></a>
 
 Amazon VPC provides features that you can use to increase and monitor the security for your VPC:
-
 + Security groups — Act as a firewall for associated Amazon EC2 instances, controlling both inbound and outbound traffic at the instance level
-
 + Network access control lists \(ACLs\) — Act as a firewall for associated subnets, controlling both inbound and outbound traffic at the subnet level
-
 + Flow logs — Capture information about the IP traffic going to and from network interfaces in your VPC
 
 When you launch an instance in a VPC, you can associate one or more security groups that you've created\. Each instance in your VPC could belong to a different set of security groups\. If you don't specify a security group when you launch an instance, the instance automatically belongs to the default security group for the VPC\. For more information about security groups, see [Security Groups for Your VPC](VPC_SecurityGroups.md)

@@ -6,7 +6,7 @@ For each security group, you add *rules* that control the inbound traffic to ins
 
 You might set up network ACLs with rules similar to your security groups in order to add an additional layer of security to your VPC\. For more information about the differences between security groups and network ACLs, see [Comparison of Security Groups and Network ACLs](VPC_Security.md#VPC_Security_Comparison)\.
 
-
+**Topics**
 + [Security Group Basics](#VPCSecurityGroups)
 + [Default Security Group for Your VPC](#DefaultSecurityGroup)
 + [Security Group Rules](#SecurityGroupRules)
@@ -16,33 +16,20 @@ You might set up network ACLs with rules similar to your security groups in orde
 ## Security Group Basics<a name="VPCSecurityGroups"></a>
 
 The following are the basic characteristics of security groups for your VPC:
-
 + You have limits on the number of security groups that you can create per VPC, the number of rules that you can add to each security group, and the number of security groups you can associate with a network interface\. For more information, see [Amazon VPC Limits](VPC_Appendix_Limits.md)\.
-
 + You can specify allow rules, but not deny rules\.
-
 + You can specify separate rules for inbound and outbound traffic\. 
-
 + When you create a security group, it has no inbound rules\. Therefore, no inbound traffic originating from another host to your instance is allowed until you add inbound rules to the security group\.
-
 + By default, a security group includes an outbound rule that allows all outbound traffic\. You can remove the rule and add outbound rules that allow specific outbound traffic only\. If your security group has no outbound rules, no outbound traffic originating from your instance is allowed\.
-
 + Security groups are stateful — if you send a request from your instance, the response traffic for that request is allowed to flow in regardless of inbound security group rules\. Responses to allowed inbound traffic are allowed to flow out, regardless of outbound rules\.
 **Note**  
 Some types of traffic are tracked differently to others\. For more information, see [Connection Tracking](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html#security-group-connection-tracking) in the *Amazon EC2 User Guide for Linux Instances*\.
-
 + Instances associated with a security group can't talk to each other unless you add rules allowing it \(exception: the default security group has these rules by default\)\.
-
 + Security groups are associated with network interfaces\. After you launch an instance, you can change the security groups associated with the instance, which changes the security groups associated with the primary network interface \(eth0\)\. You can also change the security groups associated with any other network interface\. For more information about network interfaces, see [Elastic Network Interfaces](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html)\.
-
 + When you create a security group, you must provide it with a name and a description\. The following rules apply:
-
   + Names and descriptions can be up to 255 characters in length\.
-
   + Names and descriptions are limited to the following characters: a\-z, A\-Z, 0\-9, spaces, and \.\_\-:/\(\)\#,@\[\]\+=&;\{\}\!$\*\.
-
   + A security group name cannot start with `sg-`\.
-
   + A security group name must be unique within the VPC\.
 
 ## Default Security Group for Your VPC<a name="DefaultSecurityGroup"></a>
@@ -74,13 +61,9 @@ If you've modified the outbound rules for your security group, we do not automat
 You can add or remove rules for a security group \(also referred to as *authorizing* or *revoking* inbound or outbound access\)\. A rule applies either to inbound traffic \(ingress\) or outbound traffic \(egress\)\. You can grant access to a specific CIDR range, or to another security group in your VPC or in a peer VPC \(requires a VPC peering connection\)\.
 
 The following are the basic parts of a security group rule in a VPC:
-
 + \(Inbound rules only\) The source of the traffic and the destination port or port range\. The source can be another security group, an IPv4 or IPv6 CIDR block, or a single IPv4 or IPv6 address\. 
-
 + \(Outbound rules only\) The destination for the traffic and the destination port or port range\. The destination can be another security group, an IPv4 or IPv6 CIDR block, or a single IPv4 or IPv6 address\.
-
 + Any protocol that has a standard protocol number \(for a list, see [Protocol Numbers](http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml)\)\. If you specify ICMP as the protocol, you can specify any or all of the ICMP types and codes\.
-
 + An optional description for the security group rule to help you identify it later\. A description can be up to 255 characters in length\. Allowed characters are a\-z, A\-Z, 0\-9, spaces, and \.\_\-:/\(\)\#,@\[\]\+=;\{\}\!$\*\.
 
 When you specify a security group as the source for a rule, this allows instances associated with the source security group to access instances in the security group\. This does not add rules from the source security group to this security group\. Incoming traffic is allowed based on the private IP addresses of the instances that are associated with the source security group \(and not the public IP or Elastic IP addresses\)\.
@@ -145,7 +128,7 @@ The following table summarizes the differences between security groups for use w
 
 This section shows you how to work with security groups using the Amazon VPC console\.
 
-
+**Topics**
 + [Modifying the Default Security Group](#ModifyingSecurityGroups)
 + [Creating a Security Group](#CreatingSecurityGroups)
 + [Adding, Removing, and Updating Rules](#AddRemoveRules)
@@ -172,15 +155,11 @@ Although you can use the default security group for your instances, you might wa
 1. Enter a name of the security group \(for example, `my-security-group`\) and provide a description\. Select the ID of your VPC from the **VPC** menu and choose **Yes, Create**\.
 
 **To create a security group using the command line**
-
 + [create\-security\-group](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-security-group.html) \(AWS CLI\)
-
 + [New\-EC2SecurityGroup](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2SecurityGroup.html) \(AWS Tools for Windows PowerShell\)
 
 **Describe one or more security groups using the command line**
-
 + [describe\-security\-groups](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-security-groups.html) \(AWS CLI\)
-
 + [Get\-EC2SecurityGroup](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2SecurityGroup.html) \(AWS Tools for Windows PowerShell\)
 
 By default, new security groups start with only an outbound rule that allows all traffic to leave the instances\. You must add rules to enable any inbound traffic or to restrict the outbound traffic\.
@@ -234,21 +213,15 @@ When you modify the protocol, port range, or source or destination of an existin
 To update the protocol, port range, or source or destination of an existing rule using the Amazon EC2 API or a command line tool, you cannot modify the rule; instead, you must delete the existing rule and add a new rule\. To update the rule description only, you can use the [update\-security\-group\-rule\-descriptions\-ingress](http://docs.aws.amazon.com/cli/latest/reference/ec2/update-security-group-rule-descriptions-ingress.html) and [update\-security\-group\-rule\-descriptions\-egress](http://docs.aws.amazon.com/cli/latest/reference/ec2/update-security-group-rule-descriptions-egress.html) commands\. 
 
 **To add a rule to a security group using the command line**
-
 + [authorize\-security\-group\-ingress](http://docs.aws.amazon.com/cli/latest/reference/ec2/authorize-security-group-ingress.html) and [authorize\-security\-group\-egress](http://docs.aws.amazon.com/cli/latest/reference/ec2/authorize-security-group-egress.html) \(AWS CLI\)
-
 + [Grant\-EC2SecurityGroupIngress](http://docs.aws.amazon.com/powershell/latest/reference/items/Grant-EC2SecurityGroupIngress.html) and [Grant\-EC2SecurityGroupEgress](http://docs.aws.amazon.com/powershell/latest/reference/items/Grant-EC2SecurityGroupEgress.html) \(AWS Tools for Windows PowerShell\)
 
 **To delete a rule from a security group using the command line**
-
 + [revoke\-security\-group\-ingress](http://docs.aws.amazon.com/cli/latest/reference/ec2/revoke-security-group-ingress.html) and [revoke\-security\-group\-egress](http://docs.aws.amazon.com/cli/latest/reference/ec2/revoke-security-group-egress.html)\(AWS CLI\)
-
 + [Revoke\-EC2SecurityGroupIngress](http://docs.aws.amazon.com/powershell/latest/reference/items/Revoke-EC2SecurityGroupIngress.html) and [Revoke\-EC2SecurityGroupEgress](http://docs.aws.amazon.com/powershell/latest/reference/items/Revoke-EC2SecurityGroupEgress.html) \(AWS Tools for Windows PowerShell\)
 
 **To update the description for a security group rule using the command line**
-
 + [update\-security\-group\-rule\-descriptions\-ingress](http://docs.aws.amazon.com/cli/latest/reference/ec2/update-security-group-rule-descriptions-ingress.html) and [update\-security\-group\-rule\-descriptions\-egress](http://docs.aws.amazon.com/cli/latest/reference/ec2/update-security-group-rule-descriptions-egress.html) \(AWS CLI\)
-
 + [Update\-EC2SecurityGroupRuleIngressDescription](http://docs.aws.amazon.com/powershell/latest/reference/items/Update-EC2SecurityGroupRuleIngressDescription.html) and [Update\-EC2SecurityGroupRuleEgressDescription](http://docs.aws.amazon.com/powershell/latest/reference/items/Update-EC2SecurityGroupRuleEgressDescription.html) \(AWS Tools for Windows PowerShell\)
 
 ### Changing an Instance's Security Groups<a name="SG_Changing_Group_Membership"></a>
@@ -269,9 +242,7 @@ This procedure changes the security groups that are associated with the primary 
 1. In the **Change Security Groups** dialog box, select one or more security groups from the list and choose **Assign Security Groups**\.
 
 **To change the security groups for an instance using the command line**
-
 + [modify\-instance\-attribute](http://docs.aws.amazon.com/cli/latest/reference/ec2/modify-instance-attribute.html) \(AWS CLI\)
-
 + [Edit\-EC2InstanceAttribute](http://docs.aws.amazon.com/powershell/latest/reference/items/Edit-EC2InstanceAttribute.html) \(AWS Tools for Windows PowerShell\)
 
 ### Deleting a Security Group<a name="DeleteSecurityGroup"></a>
@@ -291,9 +262,7 @@ If you're using the console, you can delete more than one security group at a ti
 1. In the **Delete Security Group** dialog box, choose **Yes, Delete**\.
 
 **To delete a security group using the command line**
-
 + [delete\-security\-group](http://docs.aws.amazon.com/cli/latest/reference/ec2/delete-security-group.html) \(AWS CLI\)
-
 + [Remove\-EC2SecurityGroup](http://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2SecurityGroup.html) \(AWS Tools for Windows PowerShell\)
 
 ### Deleting the 2009\-07\-15\-default Security Group<a name="DeleteSecurityGroup-2009"></a>

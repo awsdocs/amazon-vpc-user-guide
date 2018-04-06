@@ -11,7 +11,7 @@ This topic assumes that you'll use the VPC wizard in the Amazon VPC console to c
 
 This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnets with associated IPv6 CIDR blocks\. Instances launched into the subnets can receive IPv6 addresses, and communicate using IPv6\. Instances in the private subnet can use an egress\-only Internet gateway to connect to the Internet over IPv6, but the Internet cannot establish connections to the private instances over IPv6\. For more information about IPv4 and IPv6 addressing, see [IP Addressing in Your VPC](vpc-ip-addressing.md)\.
 
-
+**Topics**
 + [Overview](#Configuration-2)
 + [Routing](#VPC_Scenario2_Routing)
 + [Security](#VPC_Scenario2_Security)
@@ -25,23 +25,14 @@ The following diagram shows the key components of the configuration for this sce
 ![\[Diagram for scenario 2: VPC with public and private subnets\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/nat-gateway-diagram.png)
 
 The configuration for this scenario includes the following:
-
 + A VPC with a size /16 IPv4 CIDR block \(example: 10\.0\.0\.0/16\)\. This provides 65,536 private IPv4 addresses\.
-
 + A public subnet with a size /24 IPv4 CIDR block \(example: 10\.0\.0\.0/24\)\. This provides 256 private IPv4 addresses\. A public subnet is a subnet that's associated with a route table that has a route to an Internet gateway\.
-
 + A private subnet with a size /24 IPv4 CIDR block \(example: 10\.0\.1\.0/24\)\. This provides 256 private IPv4 addresses\.
-
 + An Internet gateway\. This connects the VPC to the Internet and to other AWS services\.
-
 + Instances with private IPv4 addresses in the subnet range \(examples: 10\.0\.0\.5, 10\.0\.1\.5\)\. This enables them to communicate with each other and other instances in the VPC\. 
-
 + Instances in the public subnet with Elastic IPv4 addresses \(example: 198\.51\.100\.1\), which are public IPv4 addresses that enable them to be reached from the Internet\. The instances can have public IP addresses assigned at launch instead of Elastic IP addresses\. Instances in the private subnet are back\-end servers that don't need to accept incoming traffic from the Internet and therefore do not have public IP addresses; however, they can send requests to the Internet using the NAT gateway \(see the next bullet\)\. 
-
 + A NAT gateway with its own Elastic IPv4 address\. Instances in the private subnet can send requests to the Internet through the NAT gateway over IPv4 \(for example, for software updates\)\.
-
 + A custom route table associated with the public subnet\. This route table contains an entry that enables instances in the subnet to communicate with other instances in the VPC over IPv4, and an entry that enables instances in the subnet to communicate directly with the Internet over IPv4\.
-
 + The main route table associated with the private subnet\. The route table contains an entry that enables instances in the subnet to communicate with other instances in the VPC over IPv4, and an entry that enables instances in the subnet to communicate with the Internet through the NAT gateway over IPv4\.
 
 For more information about subnets, see [VPCs and Subnets](VPC_Subnets.md)\. For more information about Internet gateways, see [Internet Gateways](VPC_Internet_Gateway.md)\. For more information about NAT gateways, see [NAT Gateways](vpc-nat-gateway.md)\.
@@ -49,19 +40,12 @@ For more information about subnets, see [VPCs and Subnets](VPC_Subnets.md)\. For
 ### Overview for IPv6<a name="vpc-scenario-2-overview-ipv6"></a>
 
 You can optionally enable IPv6 for this scenario\. In addition to the components listed above, the configuration includes the following:
-
 + A size /56 IPv6 CIDR block associated with the VPC \(example: 2001:db8:1234:1a00::/56\)\. Amazon automatically assigns the CIDR; you cannot choose the range yourself\.
-
 + A size /64 IPv6 CIDR block associated with the public subnet \(example: 2001:db8:1234:1a00::/64\)\. You can choose the range for your subnet from the range allocated to the VPC\. You cannot choose the size of the VPC IPv6 CIDR block\.
-
 + A size /64 IPv6 CIDR block associated with the private subnet \(example: 2001:db8:1234:1a01::/64\)\. You can choose the range for your subnet from the range allocated to the VPC\. You cannot choose the size of the subnet IPv6 CIDR block\.
-
 + IPv6 addresses assigned to the instances from the subnet range \(example: 2001:db8:1234:1a00::1a\)\.
-
 + An egress\-only Internet gateway\. This enables instances in the private subnet to send requests to the Internet over IPv6 \(for example, for software updates\)\. An egress\-only Internet gateway is necessary if you want instances in the private subnet to be able to initiate communication with the Internet over IPv6\. For more information, see [Egress\-Only Internet Gateways](egress-only-internet-gateway.md)\.
-
 + Route table entries in the custom route table that enable instances in the public subnet to use IPv6 to communicate with each other, and directly over the Internet\.
-
 + Route table entries in the main route table that enable instances in the private subnet to use IPv6 to communicate with each other, and to communicate with the Internet through an egress\-only Internet gateway\.
 
 ![\[IPv6-enabled VPC with a public and private subnet\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/scenario-2-ipv6-diagram.png)
@@ -131,9 +115,7 @@ AWS provides two features that you can use to increase security in your VPC: *se
 For scenario 2, you'll use security groups but not network ACLs\. If you'd like to use a network ACL, see [Recommended Rules for Scenario 2](VPC_Appendix_NACLs.md#VPC_Appendix_NACLs_Scenario_2)\.
 
 Your VPC comes with a [default security group](VPC_SecurityGroups.md#DefaultSecurityGroup)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. For this scenario, we recommend that you create the following security groups instead of using the default security group:
-
 + **WebServerSG**: Specify this security group when you launch the web servers in the public subnet\.
-
 + **DBServerSG**: Specify this security group when you launch the database servers in the private subnet\.
 
 The instances assigned to a security group can be in different subnets\. However, in this scenario, each security group corresponds to the type of role an instance plays, and each role requires the instance to be in a particular subnet\. Therefore, in this scenario, all instances assigned to a security group are in the same subnet\.
@@ -189,6 +171,8 @@ The following table describes the recommended rules for the DBServerSG security 
 | Destination  |  Protocol  |  Port Range  |  Comments  | 
 | The ID of the security group | All | All | Allow outbound traffic to other instances assigned to this security group\. | 
 
+\(Optional\) If you launch a bastion host in your public subnet to use as a proxy for SSH or RDP traffic from your home network to your private subnet, add a rule to the DBServerSG security group that allows inbound SSH or RDP traffic from the bastion instance or its associated security group\.
+
 ### Security for IPv6<a name="vpc-scenario-2-security-ipv6"></a>
 
 If you associate an IPv6 CIDR block with your VPC and subnets, you must add separate rules to your WebServerSG and DBServerSG security groups to control inbound and outbound IPv6 traffic for your instances\. In this scenario, the web servers will be able to receive all Internet traffic over IPv6, and SSH or RDP traffic from your local network over IPv6\. They can also initiate outbound IPv6 traffic to the Internet\. The database servers can initiate outbound IPv6 traffic to the Internet\.
@@ -231,11 +215,11 @@ These procedures include optional steps for enabling and configuring IPv6 commun
 
 1. In the navigation pane, choose **Elastic IPs**\.
 
-1. Choose **Allocate New Address**\.
+1. Choose **Allocate new address**\.
 
 1. Choose **Allocate**\.
 **Note**  
-If your account supports EC2\-Classic, first choose **VPC** from the **Network platform** list\.
+If your account supports EC2\-Classic, first choose **VPC**\.
 
 **To create a VPC**
 

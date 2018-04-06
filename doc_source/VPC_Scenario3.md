@@ -6,7 +6,7 @@ This topic assumes that you'll use the VPC wizard in the Amazon VPC console to c
 
 This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnets with associated IPv6 CIDR blocks\. Instances launched into the subnets can receive IPv6 addresses\. Currently, we do not support IPv6 communication over a VPN connection; however, instances in the VPC can communicate with each other via IPv6, and instances in the public subnet can communicate over the Internet via IPv6\. For more information about IPv4 and IPv6 addressing, see [IP Addressing in Your VPC](vpc-ip-addressing.md)\.
 
-
+**Topics**
 + [Overview](#Configuration-3)
 + [Routing](#VPC_Scenario3_Routing)
 + [Security](#VPC_Scenario3_Security)
@@ -22,23 +22,14 @@ The following diagram shows the key components of the configuration for this sce
 For this scenario, the* [Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/)* describes what your network administrator needs to do to configure the Amazon VPC customer gateway on your side of the VPN connection\.
 
 The configuration for this scenario includes the following:
-
 + A virtual private cloud \(VPC\) with a size /16 IPv4 CIDR \(example: 10\.0\.0\.0/16\)\. This provides 65,536 private IPv4 addresses\.
-
 + A public subnet with a size /24 IPv4 CIDR \(example: 10\.0\.0\.0/24\)\. This provides 256 private IPv4 addresses\. A public subnet is a subnet that's associated with a route table that has a route to an Internet gateway\.
-
 + A VPN\-only subnet with a size /24 IPv4 CIDR \(example: 10\.0\.1\.0/24\)\. This provides 256 private IPv4 addresses\.
-
 + An Internet gateway\. This connects the VPC to the Internet and to other AWS products\.
-
 + A VPN connection between your VPC and your network\. The VPN connection consists of a virtual private gateway located on the Amazon side of the VPN connection and a customer gateway located on your side of the VPN connection\.
-
 + Instances with private IPv4 addresses in the subnet range \(examples: 10\.0\.0\.5 and 10\.0\.1\.5\), which enables the instances to communicate with each other and other instances in the VPC\. 
-
 + Instances in the public subnet with Elastic IP addresses \(example: 198\.51\.100\.1\), which are public IPv4 addresses that enable them to be reached from the Internet\. The instances can have public IPv4 addresses assigned at launch instead of Elastic IP addresses\. Instances in the VPN\-only subnet are back\-end servers that don't need to accept incoming traffic from the Internet, but can send and receive traffic from your network\.
-
 + A custom route table associated with the public subnet\. This route table contains an entry that enables instances in the subnet to communicate with other instances in the VPC, and an entry that enables instances in the subnet to communicate directly with the Internet\.
-
 + The main route table associated with the VPN\-only subnet\. The route table contains an entry that enables instances in the subnet to communicate with other instances in the VPC, and an entry that enables instances in the subnet to communicate directly with your network\.
 
 For more information about subnets, see [VPCs and Subnets](VPC_Subnets.md) and [IP Addressing in Your VPC](vpc-ip-addressing.md)\. For more information about Internet gateways, see [Internet Gateways](VPC_Internet_Gateway.md)\. For more information about your VPN connection, see [AWS Managed VPN Connections](VPC_VPN.md)\. For more information about configuring a customer gateway, see the *[Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/)*\.
@@ -46,17 +37,11 @@ For more information about subnets, see [VPCs and Subnets](VPC_Subnets.md) and [
 ### Overview for IPv6<a name="vpc-scenario-3-overview-ipv6"></a>
 
 You can optionally enable IPv6 for this scenario\. In addition to the components listed above, the configuration includes the following:
-
 + A size /56 IPv6 CIDR block associated with the VPC \(example: 2001:db8:1234:1a00::/56\)\. AWS automatically assigns the CIDR; you cannot choose the range yourself\.
-
 + A size /64 IPv6 CIDR block associated with the public subnet \(example: 2001:db8:1234:1a00::/64\)\. You can choose the range for your subnet from the range allocated to the VPC\. You cannot choose the size of the IPv6 CIDR\.
-
 + A size /64 IPv6 CIDR block associated with the VPN\-only subnet \(example: 2001:db8:1234:1a01::/64\)\. You can choose the range for your subnet from the range allocated to the VPC\. You cannot choose the size of the IPv6 CIDR\.
-
 + IPv6 addresses assigned to the instances from the subnet range \(example: 2001:db8:1234:1a00::1a\)\.
-
 + Route table entries in the custom route table that enable instances in the public subnet to use IPv6 to communicate with each other, and directly over the Internet\.
-
 + A route table entry in the main route table that enable instances in the VPN\-only subnet to use IPv6 to communicate with each other\.
 
 ![\[IPv6-enabled VPC with a public and VPN-only subnet\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/scenario-3-ipv6-diagram.png)
@@ -145,9 +130,7 @@ AWS provides two features that you can use to increase security in your VPC: *se
 For scenario 3, you'll use security groups but not network ACLs\. If you'd like to use a network ACL, see [Recommended Rules for Scenario 3](VPC_Appendix_NACLs.md#VPC_Appendix_NACLs_Scenario_3)\.
 
 Your VPC comes with a [default security group](VPC_SecurityGroups.md#DefaultSecurityGroup)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. For this scenario, we recommend that you create the following security groups instead of using the default security group:
-
 + **WebServerSG**: Specify this security group when you launch web servers in the public subnet\.
-
 + **DBServerSG**: Specify this security group when you launch database servers in the VPN\-only subnet\.
 
 The instances assigned to a security group can be in different subnets\. However, in this scenario, each security group corresponds to the type of role an instance plays, and each role requires the instance to be in a particular subnet\. Therefore, in this scenario, all instances assigned to a security group are in the same subnet\.
@@ -253,15 +236,10 @@ These procedures include optional steps for enabling and configuring IPv6 commun
 1. Choose **Next**\.
 
 1. On the **Configure your VPN** page, do the following, and then choose **Create VPC**: 
-
    + In **Customer Gateway IP**, specify the public IP address of your VPN router\.
-
    + Optionally specify a name for your customer gateway and VPN connection\.
-
    + In **Routing Type**, select one of the routing options as follows:
-
      + If your VPN router supports Border Gateway Protocol \(BGP\), select **Dynamic \(requires BGP\)**\.
-
      + If your VPN router does not support BGP, choose **Static**\. In **IP Prefix**, add each IP range for your network in CIDR notation\.
 
      For more information, see [VPN Routing Options](VPC_VPN.md#VPNRoutingTypes)\.

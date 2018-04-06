@@ -33,7 +33,7 @@ The following table summarizes the differences between IPv4 and IPv6 in Amazon E
 
 We support IPv6 traffic over a virtual private gateway to an AWS Direct Connect connection\. For more information, see the [AWS Direct Connect User Guide](http://docs.aws.amazon.com/directconnect/latest/UserGuide/)\.
 
-
+**Topics**
 + [Private IPv4 Addresses](#vpc-private-ipv4-addresses)
 + [Public IPv4 Addresses](#vpc-public-ipv4-addresses)
 + [IPv6 Addresses](#vpc-ipv6-addresses)
@@ -55,9 +55,7 @@ We refer to private IP addresses as the IP addresses that are within the IPv4 CI
 All subnets have an attribute that determines whether a network interface created in the subnet automatically receives a public IPv4 address \(also referred to as a *public IP address* in this topic\)\. Therefore, when you launch an instance into a subnet that has this attribute enabled, a public IP address is assigned to the primary network interface \(eth0\) that's created for the instance\. A public IP address is mapped to the primary private IP address through network address translation \(NAT\)\. 
 
 You can control whether your instance receives a public IP address by doing the following: 
-
 + Modifying the public IP addressing attribute of your subnet\. For more information, see [Modifying the Public IPv4 Addressing Attribute for Your Subnet](#subnet-public-ip)\.
-
 + Enabling or disabling the public IP addressing feature during instance launch, which overrides the subnet's public IP addressing attribute\. For more information, see [Assigning a Public IPv4 Address During Instance Launch](#vpc-public-ip)\.
 
 A public IP address is assigned from Amazon's pool of public IP addresses; it's not associated with your account\. When a public IP address is disassociated from your instance, it's released back into the pool, and is no longer available for you to use\. You cannot manually associate or disassociate a public IP address\. Instead, in certain cases, we release the public IP address from your instance, or assign it a new one\. For more information, see [Public IP Addresses](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#concepts-public-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.
@@ -69,19 +67,13 @@ If your VPC is enabled to support DNS hostnames, each instance that receives a p
 ## IPv6 Addresses<a name="vpc-ipv6-addresses"></a>
 
 You can optionally associate an IPv6 CIDR block with your VPC and subnets\. For more information, see the following topics:
-
 + [Associating an IPv6 CIDR Block with Your VPC](working-with-vpcs.md#vpc-associate-ipv6-cidr)
-
 + [Associating an IPv6 CIDR Block with Your Subnet](working-with-vpcs.md#subnet-associate-ipv6-cidr)
 
 Your instance in a VPC receives an IPv6 address if an IPv6 CIDR block is associated with your VPC and your subnet, and if one of the following is true:
-
 + Your subnet is configured to automatically assign an IPv6 address to the primary network interface of an instance during launch\.
-
 + You manually assign an IPv6 address to your instance during launch\.
-
 + You assign an IPv6 address to your instance after launch\.
-
 + You assign an IPv6 address to a network interface in the same subnet, and attach the network interface to your instance after launch\. 
 
 When your instance receives an IPv6 address during launch, the address is associated with the primary network interface \(eth0\) of the instance\. You can disassociate the IPv6 address from the primary network interface\. We do not support IPv6 DNS hostnames for your instance\.
@@ -104,7 +96,7 @@ Regardless of the subnet attribute, you can still override this setting for a sp
 
 You can modify the IP addressing behavior of your subnet, assign a public IPv4 address to your instance during launch, and assign or unassign IPv6 addresses to and from your instance\.
 
-
+**Topics**
 + [Modifying the Public IPv4 Addressing Attribute for Your Subnet](#subnet-public-ip)
 + [Modifying the IPv6 Addressing Attribute for Your Subnet](#subnet-ipv6)
 + [Assigning a Public IPv4 Address During Instance Launch](#vpc-public-ip)
@@ -254,31 +246,21 @@ Alternatively, you can disassociate an IPv6 address from a network interface\. F
 You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
 
 **Assign a public IPv4 address during launch**
-
 + Use the `--associate-public-ip-address` or the `--no-associate-public-ip-address` option with the [run\-instances](http://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html) command\. \(AWS CLI\)
-
 + Use the `-AssociatePublicIp` parameter with the [New\-EC2Instance](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Instance.html) command\. \(AWS Tools for Windows PowerShell\)
 
 **Assign an IPv6 address during launch**
-
 + Use the `--ipv6-addresses` option with the [run\-instances](http://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html) command\. \(AWS CLI\)
-
 + Use the `-Ipv6Addresses` parameter with the [New\-EC2Instance](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Instance.html) command\. \(AWS Tools for Windows PowerShell\)
 
 **Modify a subnet's IP addressing behavior**
-
 + [modify\-subnet\-attribute](http://docs.aws.amazon.com/cli/latest/reference/ec2/modify-subnet-attribute.html) \(AWS CLI\)
-
 + [Edit\-EC2SubnetAttribute](http://docs.aws.amazon.com/powershell/latest/reference/items/Edit-EC2SubnetAttribute.html) \(AWS Tools for Windows PowerShell\)
 
 **Assign an IPv6 address to a network interface**
-
 + [assign\-ipv6\-addresses](http://docs.aws.amazon.com/cli/latest/reference/ec2/assign-ipv6-addresses.html) \(AWS CLI\)
-
 + [Register\-EC2Ipv6AddressList](http://docs.aws.amazon.com/powershell/latest/reference/items/Register-EC2Ipv6AddressList.html) \(AWS Tools for Windows PowerShell\)
 
 **Unassign an IPv6 address from a network interface**
-
 + [unassign\-ipv6\-addresses](http://docs.aws.amazon.com/cli/latest/reference/ec2/unassign-ipv6-addresses.html) \(AWS CLI\)
-
 + [Unregister\-EC2Ipv6AddressList](http://docs.aws.amazon.com/powershell/latest/reference/items/Unregister-EC2Ipv6AddressList.html) \(AWS Tools for Windows PowerShell\)

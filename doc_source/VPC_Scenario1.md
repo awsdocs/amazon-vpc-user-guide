@@ -6,7 +6,7 @@ This topic assumes that you'll use the VPC wizard in the Amazon VPC console to c
 
 This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnet with associated IPv6 CIDR blocks\. Instances launched into the public subnet can receive IPv6 addresses, and communicate using IPv6\. For more information about IPv4 and IPv6 addressing, see [IP Addressing in Your VPC](vpc-ip-addressing.md)\.
 
-
+**Topics**
 + [Overview](#Configuration)
 + [Routing](#VPC_Scenario1_Routing)
 + [Security](#VPC_Scenario1_Security)
@@ -22,15 +22,10 @@ The following diagram shows the key components of the configuration for this sce
 If you completed the exercise [Getting Started](GetStarted.md), then you've already implemented this scenario using the VPC wizard in the Amazon VPC console\.
 
 The configuration for this scenario includes the following:
-
 + A virtual private cloud \(VPC\) with a size /16 IPv4 CIDR block \(example: 10\.0\.0\.0/16\)\. This provides 65,536 private IPv4 addresses\.
-
 + A subnet with a size /24 IPv4 CIDR block \(example: 10\.0\.0\.0/24\)\. This provides 256 private IPv4 addresses\.
-
 + An Internet gateway\. This connects the VPC to the Internet and to other AWS services\.
-
 + An instance with a private IPv4 address in the subnet range \(example: 10\.0\.0\.6\), which enables the instance to communicate with other instances in the VPC, and an Elastic IPv4 address \(example: 198\.51\.100\.2\), which is a public IPv4 address that enables the instance to be reached from the Internet\.
-
 + A custom route table associated with the subnet\. The route table entries enable instances in the subnet to use IPv4 to communicate with other instances in the VPC, and to communicate directly over the Internet\. A subnet that's associated with a route table that has a route to an Internet gateway is known as a *public subnet*\.
 
 For more information about subnets, see [VPCs and Subnets](VPC_Subnets.md)\. For more information about Internet gateways, see [Internet Gateways](VPC_Internet_Gateway.md)\.
@@ -38,13 +33,9 @@ For more information about subnets, see [VPCs and Subnets](VPC_Subnets.md)\. For
 ### Overview for IPv6<a name="vpc-scenario-1-overview-ipv6"></a>
 
 You can optionally enable IPv6 for this scenario\. In addition to the components listed above, the configuration includes the following:
-
 + A size /56 IPv6 CIDR block associated with the VPC \(example: 2001:db8:1234:1a00::/56\)\. Amazon automatically assigns the CIDR; you cannot choose the range yourself\.
-
 + A size /64 IPv6 CIDR block associated with the public subnet \(example: 2001:db8:1234:1a00::/64\)\. You can choose the range for your subnet from the range allocated to the VPC\. You cannot choose the size of the subnet IPv6 CIDR block\.
-
 + An IPv6 address assigned to the instance from the subnet range \(example: 2001:db8:1234:1a00::123\)\.
-
 + Route table entries in the custom route table that enable instances in the VPC to use IPv6 to communicate with each other, and directly over the Internet\.
 
 ![\[IPv6-enabled VPC with a public subnet\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/scenario-1-ipv6-diagram.png)
@@ -151,19 +142,12 @@ These procedures include optional steps for enabling and configuring IPv6 commun
 1. Select the WebServerSG security group that you just created\. The details pane include a tab for information about the security group, plus tabs for working with its inbound rules and outbound rules\.
 
 1. On the **Inbound Rules** tab, choose **Edit**, and then do the following:
-
    + Select **HTTP** from the **Type** list, and enter `0.0.0.0/0` in the **Source** field\.
-
    + Choose **Add another rule**, then select **HTTPS** from the **Type** list, and enter `0.0.0.0/0` in the **Source** field\.
-
    + Choose **Add another rule**, then select **SSH** \(for Linux\) or **RDP** \(for Windows\) from the **Type** list\. Enter your network's public IP address range in the **Source** field\. \(If you don't know this address range, you can use `0.0.0.0/0` for testing purposes; in production, you authorize only a specific IP address or range of addresses to access your instance\.\)
-
    + \(Optional\) Choose **Add another rule**, then select **ALL traffic** from the **Type** list\. In the **Source** field, enter the ID of the WebServerSG security group\.
-
    + \(Optional, IPv6\-only\) Choose **Add another rule**, select **HTTP** from the **Type** list, and enter `::/0` in the **Source** field\.
-
    + \(Optional, IPv6\-only\) Choose **Add another rule**, select **HTTPS** from the **Type** list, and enter `::/0` in the **Source** field\.
-
    + \(Optional, IPv6\-only\) Choose **Add another rule**, select **SSH** \(for Linux\) or **RDP** \(for Windows\) from the **Type** list\. Enter your network's IPv6 address range in the **Source** field\. \(If you don't know this address range, you can use `::/0` for testing purposes; in production, you authorize only a specific IPv6 address or range of addresses to access your instance\.\)
 
 1. Choose **Save**\.

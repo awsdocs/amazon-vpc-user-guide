@@ -2,7 +2,7 @@
 
 To get started with Amazon Virtual Private Cloud \(Amazon VPC\), you create a VPC and subnets\. For a general overview of Amazon VPC, see [What Is Amazon VPC?](VPC_Introduction.md)\.
 
-
+**Topics**
 + [VPC and Subnet Basics](#vpc-subnet-basics)
 + [VPC and Subnet Sizing](#VPC_Sizing)
 + [Subnet Routing](#SubnetRouting)
@@ -47,7 +47,7 @@ Amazon VPC supports IPv4 and IPv6 addressing, and has different CIDR block size 
 
 For more information about IP addressing, see [IP Addressing in Your VPC](vpc-ip-addressing.md)\.
 
-
+**Topics**
 + [VPC and Subnet Sizing for IPv4](#vpc-sizing-ipv4)
 + [Adding IPv4 CIDR Blocks to a VPC](#vpc-resize)
 + [VPC and Subnet Sizing for IPv6](#vpc-sizing-ipv6)
@@ -57,11 +57,8 @@ For more information about IP addressing, see [IP Addressing in Your VPC](vpc-ip
 When you create a VPC, you must specify an IPv4 CIDR block for the VPC\. The allowed block size is between a `/16` netmask \(65,536 IP addresses\) and `/28` netmask \(16 IP addresses\)\. After you've created your VPC, you can associate secondary CIDR blocks with the VPC\. For more information, see [Adding IPv4 CIDR Blocks to a VPC](#vpc-resize)\. 
 
 When you create a VPC, we recommend that you specify a CIDR block \(of `/16` or smaller\) from the private IPv4 address ranges as specified in [RFC 1918](http://www.faqs.org/rfcs/rfc1918.html):
-
 + `10.0.0.0` \- `10.255.255.255` \(10/8 prefix\)
-
 + `172.16.0.0` \- `172.31.255.255` \(172\.16/12 prefix\)
-
 + `192.168.0.0` \- `192.168.255.255` \(192\.168/16 prefix\) 
 
 You can create a VPC with a publicly routable CIDR block that falls outside of the private IPv4 address ranges specified in RFC 1918; however, for the purposes of this documentation, we refer to *private IP addresses* as the IPv4 addresses that are within the CIDR range of your VPC\.
@@ -76,15 +73,10 @@ For example, if you create a VPC with CIDR block `10.0.0.0/24`, it supports 256 
 There are many tools available to help you calculate subnet CIDR blocks; for example, see [http://www\.subnet\-calculator\.com/cidr\.php](http://www.subnet-calculator.com/cidr.php)\. Also, your network engineering group can help you determine the CIDR blocks to specify for your subnets\.
 
 The first four IP addresses and the last IP address in each subnet CIDR block are not available for you to use, and cannot be assigned to an instance\. For example, in a subnet with CIDR block `10.0.0.0/24`, the following five IP addresses are reserved: 
-
 + `10.0.0.0`: Network address\.
-
 + `10.0.0.1`: Reserved by AWS for the VPC router\.
-
 + `10.0.0.2`: Reserved by AWS\. The IP address of the DNS server is always the base of the VPC network range plus two; however, we also reserve the base of each subnet range plus two\. For VPCs with multiple CIDR blocks, the IP address of the DNS server is located in the primary CIDR\. For more information, see [Amazon DNS Server](VPC_DHCP_Options.md#AmazonDNS)\.
-
 + `10.0.0.3`: Reserved by AWS for future use\.
-
 + `10.0.0.255`: Network broadcast address\. We do not support broadcast in a VPC, therefore we reserve this address\. 
 
 ### Adding IPv4 CIDR Blocks to a VPC<a name="vpc-resize"></a>
@@ -96,32 +88,19 @@ In the following example, the VPC on the left has a single CIDR block \(`10.0.0.
 ![\[VPCs with single and multiple CIDR blocks\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/vpc-multiple-cidrs.png)
 
 To add a CIDR block to your VPC, the following rules apply:
-
 + The allowed block size is between a `/28` netmask and `/16` netmask\.
-
 + The CIDR block must not overlap with any existing CIDR block that's associated with the VPC\.
-
 + There are restrictions on the ranges of IPv4 addresses you can use\. For more information, see [IPv4 CIDR Block Association Restrictions](#add-cidr-block-restrictions)\.
-
 + You cannot increase or decrease the size of an existing CIDR block\.
-
 + You have a limit on the number of CIDR blocks you can associate with a VPC and the number of routes you can add to a route table\. You cannot associate a CIDR block if this results in you exceeding your limits\. For more information, see [Amazon VPC Limits](VPC_Appendix_Limits.md)\.
-
 + The CIDR block must not be the same or larger than the CIDR range of a route in any of the VPC route tables\. For example, if you have a route with a destination of `10.0.0.0/24` to a virtual private gateway, you cannot associate a CIDR block of the same range or larger\. However, you can associate a CIDR block of `10.0.0.0/25` or smaller\.
-
 + If you've enabled your VPC for ClassicLink, you can associate CIDR blocks from the `10.0.0.0/16` and `10.1.0.0/16` ranges, but you cannot associate any other CIDR block from the `10.0.0.0/8` range\. 
-
 + The following rules apply when you add IPv4 CIDR blocks to a VPC that's part of a VPC peering connection:
-
   + If the VPC peering connection is `active`, you can add CIDR blocks to a VPC provided they do not overlap with a CIDR block of the peer VPC\.
-
   + If the VPC peering connection is `pending-acceptance`, the owner of the requester VPC cannot add any CIDR block to the VPC, regardless of whether it overlaps with the CIDR block of the accepter VPC\. Either the owner of the accepter VPC must accept the peering connection, or the owner of the requester VPC must delete the VPC peering connection request, add the CIDR block, and then request a new VPC peering connection\.
-
   + If the VPC peering connection is `pending-acceptance`, the owner of the accepter VPC can add CIDR blocks to the VPC\. If a secondary CIDR block overlaps with a CIDR block of the requester VPC, the VPC peering connection request fails and cannot be accepted\.
-
 + If you're using AWS Direct Connect to connect to multiple VPCs through a direct connect gateway, the VPCs that are associated with the direct connect gateway must not have overlapping CIDR blocks\. If you add a CIDR block to one of the VPCs that's associated with the direct connect gateway, ensure that the new CIDR block does not overlap with an existing CIDR block of any other associated VPC\. For more information, see [Direct Connect Gateways](http://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-gateways.html) in the *AWS Direct Connect User Guide*\.
-
-+ When you add or remove a CIDR block, it can go through various states: `associating` | `associated` | `disassociating` | `disassociated` | `failing` | `failed`\. The CIDR block is ready for you to use when it's in the `associated` state\.
++ When you add or remove a CIDR block, it can go through various states: `associating` \| `associated` \| `disassociating` \| `disassociated` \| `failing` \| `failed`\. The CIDR block is ready for you to use when it's in the `associated` state\.
 
 The following table provides an overview of permitted and restricted CIDR block associations, which depend on the IPv4 address range in which your VPC's primary CIDR block resides\.
 
@@ -193,6 +172,13 @@ For example, you create a VPC and specify that you want to associate an IPv6 CID
 
 You can disassociate an IPv6 CIDR block from a subnet, and you can disassociate an IPv6 CIDR block from a VPC\. After you've disassociated an IPv6 CIDR block from a VPC, you cannot expect to receive the same CIDR if you associate an IPv6 CIDR block with your VPC again later\.
 
+The first four IPv6 addresses and the last IPv6 address in each subnet CIDR block are not available for you to use, and cannot be assigned to an instance\. For example, in a subnet with CIDR block `2001:db8:1234:1a00/64`, the following five IP addresses are reserved: 
++ `2001:db8:1234:1a00::`
++ `2001:db8:1234:1a00::1`
++ `2001:db8:1234:1a00::2`
++ `2001:db8:1234:1a00::3`
++ `2001:db8:1234:1a00:ffff:ffff:ffff:ffff`
+
 ## Subnet Routing<a name="SubnetRouting"></a>
 
 Each subnet must be associated with a route table, which specifies the allowed routes for outbound traffic leaving the subnet\. Every subnet that you create is automatically associated with the main route table for the VPC\. You can change the association, and you can change the contents of the main route table\. For more information, see [Route Tables](VPC_Route_Tables.md)\.
@@ -217,13 +203,9 @@ You can create a flow log on your VPC or subnet to capture the traffic that flow
 ## Connections with Your Local Network and Other VPCs<a name="VGW"></a>
 
 You can optionally set up a connection between your VPC and your corporate or home network\. If you have an IPv4 address prefix in your VPC that overlaps with one of your networks' prefixes, any traffic to the network's prefix is dropped\. For example, let's say that you have the following:
-
 + A VPC with CIDR block `10.0.0.0/16`
-
 + A subnet in that VPC with CIDR block `10.0.1.0/24`
-
 + Instances running in that subnet with IP addresses `10.0.1.4` and `10.0.1.5`
-
 + On\-premises host networks using CIDR blocks `10.0.37.0/24` and `10.1.38.0/24`
 
 When those instances in the VPC try to talk to hosts in the `10.0.37.0/24` address space, the traffic is dropped because `10.0.37.0/24` is part of the larger prefix assigned to the VPC \(`10.0.0.0/16`\)\. The instances can talk to hosts in the `10.1.38.0/24` space because that block isn't part of `10.0.0.0/16`\.

@@ -3,18 +3,15 @@
 In this exercise, you create a VPC with an IPv6 CIDR block, a subnet with an IPv6 CIDR block, and launch a public\-facing instance into your subnet\. Your instance will be able to communicate with the Internet over IPv6, and you'll be able to access your instance over IPv6 from your local computer using SSH \(if it's a Linux instance\) or Remote Desktop \(if it's a Windows instance\)\. In your real world environment, you can use this scenario to create a public\-facing web server, for example, to host a blog\. 
 
 To complete this exercise, do the following:
-
 + Create a nondefault VPC with an IPv6 CIDR block and a single public subnet\. Subnets enable you to group instances based on your security and operational needs\. A public subnet is a subnet that has access to the Internet through an Internet gateway\.
-
 + Create a security group for your instance that allows traffic only through specific ports\.
-
 + Launch an Amazon EC2 instance into your subnet, and associate an IPv6 address with your instance during launch\. An IPv6 address is globally unique, and allows your instance to communicate with the Internet\.
 
 For more information about IPv4 and IPv6 addressing, see [IP Addressing in Your VPC](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-ip-addressing.html)\.
 
 Before you can use Amazon VPC for the first time, you must sign up for Amazon Web Services \(AWS\)\. When you sign up, your AWS account is automatically signed up for all services in AWS, including Amazon VPC\. If you haven't created an AWS account already, go to [http://aws\.amazon\.com](http://aws.amazon.com/) and choose **Create a Free Account**\. 
 
-
+**Topics**
 + [Step 1: Create the VPC](#get-started-ipv6-vpc)
 + [Step 2: Create a Security Group](#get-started-ipv6-sg)
 + [Step 3: Launch an Instance](#get-started-ipv6-instance)
@@ -22,13 +19,9 @@ Before you can use Amazon VPC for the first time, you must sign up for Amazon We
 ## Step 1: Create the VPC<a name="get-started-ipv6-vpc"></a>
 
 In this step, you use the Amazon VPC wizard in the Amazon VPC console to create a VPC\. The wizard performs the following steps for you:
-
 + Creates a VPC with a /16 IPv4 CIDR block and associates a /56 IPv6 CIDR block with the VPC\. For more information, see [Your VPC](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Subnets.html#YourVPC)\. The size of the IPv6 CIDR block is fixed \(/56\) and the range of IPv6 addresses is automatically allocated from Amazon's pool of IPv6 addresses \(you cannot select the range yourself\)\.
-
 + Attaches an Internet gateway to the VPC\. For more information about Internet gateways, see [Internet Gateways](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Internet_Gateway.html)\.
-
 + Creates a subnet with an /24 IPv4 CIDR block and a /64 IPv6 CIDR block in the VPC\. The size of the IPv6 CIDR block is fixed \(/64\)\. 
-
 + Creates a custom route table, and associates it with your subnet, so that traffic can flow between the subnet and the Internet gateway\. For more information about route tables, see [Route Tables](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html)\.
 
 The following diagram represents the architecture of your VPC after you've completed this step\.
@@ -80,11 +73,8 @@ After you've created the VPC, you can view information about the subnet, Interne
 1. In the navigation pane, choose **Internet Gateways**\. You can find the Internet gateway that's attached to your VPC by looking at the **VPC** column, which displays the ID and the name \(if applicable\) of the VPC\.
 
 1. In the navigation pane, choose **Route Tables**\. There are two route tables associated with the VPC\. Select the custom route table \(the **Main** column displays **No**\), and then choose the **Routes** tab to display the route information in the details pane:
-
    + The first two rows in the table are the local routes, which enable instances within the VPC to communicate over IPv4 and IPv6\. You can't remove these routes\.
-
    + The next row shows the route that the Amazon VPC wizard added to enable traffic destined for an IPv4 address outside the VPC \(`0.0.0.0/0`\) to flow from the subnet to the Internet gateway\. 
-
    + The next row shows the route that enables traffic destined for an IPv6 address outside the VPC \(`::/0`\) to flow from the subnet to the Internet gateway\. 
 
 1. Select the main route table\. The main route table has a local route, but no other routes\. 
@@ -95,7 +85,7 @@ A security group acts as a virtual firewall to control the traffic for its assoc
 
 Your VPC comes with a *default security group*\. Any instance not associated with another security group during launch is associated with the default security group\. In this exercise, you create a new security group, `WebServerSG`, and specify this security group when you launch an instance into your VPC\.
 
-
+**Topics**
 + [Rules for the WebServerSG Security Group](#get-started-inbound-outbound-rules-ipv6)
 + [Creating Your WebServerSG Security Group](#getting-started-ipv6-create-group)
 

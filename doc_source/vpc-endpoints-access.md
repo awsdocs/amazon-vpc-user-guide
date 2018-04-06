@@ -4,7 +4,7 @@ When you create a gateway endpoint, you can attach an endpoint policy to it that
 
 If you're using an endpoint to Amazon S3, you can also use Amazon S3 bucket policies to control access to buckets from specific endpoints, or specific VPCs\. For more information, see [Using Amazon S3 Bucket Policies](vpc-endpoints-s3.md#vpc-endpoints-s3-bucket-policies)\.
 
-
+**Topics**
 + [Using VPC Endpoint Policies](#vpc-endpoint-policies)
 + [Security Groups](#vpc-endpoints-security-groups)
 
@@ -18,17 +18,12 @@ Only gateway endpoints support the use of endpoint policies\. Use the [describe\
 You cannot attach more than one policy to an endpoint; however, you can modify the policy at any time\. Note that if you do modify a policy, it can take a few minutes for the changes to take effect\. For more information about writing policies, see [Overview of IAM Policies](http://docs.aws.amazon.com/IAM/latest/UserGuide/PoliciesOverview.html) in the *IAM User Guide*\.
 
 Your endpoint policy can be like any IAM policy; however, take note of the following:
-
 + Only the parts of the policy that relate to the specified service will work\. You cannot use an endpoint policy to allow resources in your VPC to perform other actions; for example, if you add EC2 actions to an endpoint policy for an endpoint to Amazon S3, they will have no effect\. 
-
-+ Your policy must contain a `Principal` element\. For more information, see [Principal](http://docs.aws.amazon.com/IAM/latest/UserGuide/AccessPolicyLanguage_ElementDescriptions.html#Principal) in the *IAM User Guide*\.
-
++ Your policy must contain a [Principal](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html) element\. For an endpoint policy, if you specify the principal in the format `"AWS": "AWS-account-ID"` or `"AWS": "arn:aws:iam::AWS-account-ID:root"`, access is granted to the AWS account root user only, and not all IAM users and roles for the account\.
 + The size of an endpoint policy cannot exceed 20,480 characters \(including whitespace\)\.
 
 For example endpoint policies, see the following topics:
-
 + [Using Endpoint Policies for Amazon S3](vpc-endpoints-s3.md#vpc-endpoints-policies-s3)
-
 + [Using Endpoint Policies for DynamoDB](vpc-endpoints-ddb.md#vpc-endpoints-policies-ddb)
 
 ## Security Groups<a name="vpc-endpoints-security-groups"></a>

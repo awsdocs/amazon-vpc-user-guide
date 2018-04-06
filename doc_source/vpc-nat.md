@@ -8,9 +8,6 @@ NAT devices are not supported for IPv6 traffic—use an egress\-only Internet ga
 We use the term *NAT* in this documentation to follow common IT practice, though the actual role of a NAT device is both address translation and port address translation \(PAT\)\. 
 
 AWS offers two kinds of NAT devices—a *NAT gateway* or a *NAT instance*\. We recommend NAT gateways, as they provide better availability and bandwidth over NAT instances\. The NAT Gateway service is also a managed service that does not require your administration efforts\. A NAT instance is launched from a NAT AMI\. You can choose to use a NAT instance for special purposes\.
-
 + [NAT Gateways](vpc-nat-gateway.md)
-
 + [NAT Instances](VPC_NAT_Instance.md)
-
 + [Comparison of NAT Instances and NAT Gateways](vpc-nat-comparison.md)

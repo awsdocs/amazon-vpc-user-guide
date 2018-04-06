@@ -13,9 +13,6 @@ If you no longer require an endpoint, you can delete it\. Deleting a gateway end
 1. In the confirmation screen, choose **Yes, Delete**\.
 
 **To delete a VPC endpoint**
-
 + [delete\-vpc\-endpoints](http://docs.aws.amazon.com/cli/latest/reference/ec2/delete-vpc-endpoints.html) \(AWS CLI\)
-
 + [Remove\-EC2VpcEndpoint](http://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2VpcEndpoint.html) \(AWS Tools for Windows PowerShell\)
-
 + [DeleteVpcEndpoints](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-DeleteVpcEndpoints.html) \(Amazon EC2 Query API\)

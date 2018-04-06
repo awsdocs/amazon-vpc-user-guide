@@ -138,11 +138,8 @@ For the example above, your web server security group \(`sg-11aa22bb`\) allows i
 1. In the **Inbound Rules** tab, choose **Edit**\.
 
 1. For each rule, choose **Add another rule**, and choose **Save** when you're done:
-
    + For **Type**, select **HTTP**\. For **Source**, enter `::/0`\. 
-
    + For **Type**, select **HTTPS**\. For **Source**, enter `::/0`\.
-
    + For **Type**, select **SSH**\. For **Source**, enter the IPv6 address of your local computer or the range of addresses for your local network\.
 
 In this scenario, an outbound rule that allows all IPv6 traffic is automatically added your security groups when you associate an IPv6 CIDR block with your VPC\. However, if you modified the original outbound rules for your security group, this rule is not automatically added, and you must add equivalent outbound rules for IPv6 traffic\. For more information, see [Security Groups for Your VPC](VPC_SecurityGroups.md)\.
@@ -218,7 +215,7 @@ If you launched your instance from a different AMI, it may not be configured for
 
 You can configure your instance using the following steps\. You'll need to connect to your instance using its public IPv4 address\. For more information, see [Connect to Your Linux Instance](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html) in the *Amazon EC2 User Guide for Linux Instances* and [Connecting to Your Windows Instance](http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/connecting_to_windows_instance.html) in the *Amazon EC2 User Guide for Windows Instances*\.
 
-
+**Topics**
 + [Amazon Linux](#ipv6-dhcpv6-amazon-linux)
 + [Ubuntu](#ipv6-dhcpv6-ubuntu)
 + [RHEL/CentOS](#ipv6-dhcpv6-rhel)
@@ -282,7 +279,7 @@ You can configure your Ubuntu instance to dynamically recognize any IPv6 address
 
 These steps must be performed as the root user\.
 
-
+**Topics**
 + [Ubuntu Server 16](#ipv6-dhcpv6-ubuntu-16)
 + [Ubuntu Server 14](#ipv6-dhcpv6-ubuntu-14)
 + [Starting the DHCPv6 Client](#ipv6-dhcpv6-ubuntu-start-client)
@@ -329,7 +326,6 @@ These steps must be performed as the root user\.
 1. Reconnect to your instance and use the `ifconfig` command to verify that the IPv6 address is configured on the network interface\.
 
 **To configure IPv6 using user data**
-
 + You can launch a new Ubuntu instance and ensure that any IPv6 address assigned to the instance is automatically configured on the network interface by specifying the following user data during launch:
 
   ```
@@ -540,9 +536,7 @@ To ensure that IPv6 is preferred over IPv4, download the fix named **Prefer IPv6
 1. Open the properties dialog box for Local Area Network again\. Choose **Internet Protocol Version 6 \(TCP/IPv6\)** and choose **Properties**\.
 
 1. Choose **Use the following IPv6 address** and do the following:
-
    + For **IPv6 Address**, enter the IPv6 address you obtained in step 1\.
-
    + For **Subnet prefix length**, enter `64`\. 
 
 1. Choose **OK** and close the properties dialog box\.

@@ -6,7 +6,7 @@ Public IPv4 addresses enable communication over the Internet, while private IPv4
 
 We provide an Amazon DNS server\. To use your own DNS server, create a new set of DHCP options for your VPC\. For more information, see [DHCP Options Sets](VPC_DHCP_Options.md)\.
 
-
+**Topics**
 + [DNS Hostnames](#vpc-dns-hostnames)
 + [DNS Support in Your VPC](#vpc-dns-support)
 + [DNS Limits](#vpc-dns-limits)
@@ -37,17 +37,12 @@ Your VPC has attributes that determine whether your instance receives public DNS
 | enableDnsSupport |  Indicates whether the DNS resolution is supported for the VPC\.  If this attribute is `false`, the Amazon\-provided DNS server in the VPC that resolves public DNS hostnames to IP addresses is not enabled\.  If this attribute is `true`, queries to the Amazon provided DNS server at the 169\.254\.169\.253 IP address, or the reserved IP address at the base of the VPC IPv4 network range plus two will succeed\. For more information, see [Amazon DNS Server](VPC_DHCP_Options.md#AmazonDNS)\.  | 
 
 If both attributes are set to `true`, the following occurs:
-
 + Your instance receives a public DNS hostname\.
-
 + The Amazon\-provided DNS server can resolve Amazon\-provided private DNS hostnames\.
 
 If either or both of the attributes is set to `false`, the following occurs:
-
 + Your instance does not receive a public DNS hostname that can be viewed in the Amazon EC2 console or described by a command line tool or AWS SDK\.
-
 + The Amazon\-provided DNS server cannot resolve Amazon\-provided private DNS hostnames\.
-
 + Your instance receives a custom private DNS hostname if you've specified a custom domain name in your [DHCP options set](VPC_DHCP_Options.md)\. If you are not using the Amazon\-provided DNS server, your custom domain name servers must resolve the hostname as appropriate\.
 
 By default, both attributes are set to `true` in a default VPC or a VPC created by the VPC wizard\. By default, only the `enableDnsSupport` attribute is set to `true` in a VPC created on the **Your VPCs** page of the VPC console or using the AWS CLI, API, or an AWS SDK\.
@@ -82,9 +77,7 @@ You can view the DNS hostnames for a running instance or a network interface usi
 **To view DNS hostnames for an instance using the command line**
 
 You can use one of the following commands\. For more information about these command line interfaces, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
-
 + [describe\-instances](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html) \(AWS CLI\)
-
 + [Get\-EC2Instance](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2Instance.html) \(AWS Tools for Windows PowerShell\)
 
 ### Network Interface<a name="eni-dns"></a>
@@ -102,9 +95,7 @@ You can use one of the following commands\. For more information about these com
 **To view DNS hostnames for a network interface using the command line**
 
 You can use one of the following commands\. For more information about these command line interfaces, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
-
 + [describe\-network\-interfaces](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-network-interfaces.html) \(AWS CLI\)
-
 + [Get\-EC2NetworkInterface](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2NetworkInterface.html) \(AWS Tools for Windows PowerShell\)
 
 ## Updating DNS Support for Your VPC<a name="vpc-dns-updating"></a>
@@ -127,17 +118,13 @@ You can view and update the DNS support attributes for your VPC using the Amazon
 **To describe DNS support for a VPC using the command line**
 
 You can use one of the following commands\. For more information about these command line interfaces, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
-
 + [describe\-vpc\-attribute](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-attribute.html) \(AWS CLI\)
-
 + [Get\-EC2VpcAttribute](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2VpcAttribute.html) \(AWS Tools for Windows PowerShell\)
 
 **To update DNS support for a VPC using the command line**
 
 You can use one of the following commands\. For more information about these command line interfaces, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
-
 + [modify\-vpc\-attribute](http://docs.aws.amazon.com/cli/latest/reference/ec2/modify-vpc-attribute.html) \(AWS CLI\)
-
 + [Edit\-EC2VpcAttribute](http://docs.aws.amazon.com/powershell/latest/reference/items/Edit-EC2VpcAttribute.html) \(AWS Tools for Windows PowerShell\)
 
 ## Using Private Hosted Zones<a name="vpc-private-hosted-zones"></a>

@@ -1,6 +1,6 @@
 # VPN Connections<a name="vpn-connections"></a>
 
-You can connect your VPC to remote networks by using a VPN connection\. The following are some of the connectivity options available to you\.
+You can connect your Amazon VPC to remote networks by using a VPN connection\. The following are some of the connectivity options available to you\.
 
 
 | VPN connectivity option | Description | 

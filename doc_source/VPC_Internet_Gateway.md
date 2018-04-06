@@ -9,13 +9,9 @@ An Internet gateway supports IPv4 and IPv6 traffic\.
 ## Enabling Internet Access<a name="vpc-igw-internet-access"></a>
 
 To enable access to or from the Internet for instances in a VPC subnet, you must do the following:
-
 + Attach an Internet gateway to your VPC\.
-
 + Ensure that your subnet's route table points to the Internet gateway\.
-
 + Ensure that instances in your subnet have a globally unique IP address \(public IPv4 address, Elastic IP address, or IPv6 address\)\.
-
 + Ensure that your network access control and security group rules allow the relevant traffic to flow to and from your instance\.
 
 To use an Internet gateway, your subnet's route table must contain a route that directs Internet\-bound traffic to the Internet gateway\. You can scope the route to all destinations not explicitly known to the route table \(`0.0.0.0/0` for IPv4 or `::/0` for IPv6\), or you can scope the route to a narrower range of IP addresses; for example, the public IPv4 addresses of your company’s public endpoints outside of AWS, or the Elastic IP addresses of other Amazon EC2 instances outside your VPC\. If your subnet is associated with a route table that has a route to an Internet gateway, it's known as a *public subnet*\. 
@@ -51,7 +47,7 @@ When you add a new subnet to your VPC, you must set up the routing and security 
 
 The following sections describe how to manually create a public subnet to support Internet access\.
 
-
+**Topics**
 + [Creating a Subnet](#Add_IGW_Create_Subnet)
 + [Creating and Attaching an Internet Gateway](#Add_IGW_Attach_Gateway)
 + [Creating a Custom Route Table](#Add_IGW_Routing)
@@ -106,9 +102,7 @@ When you create a subnet, we automatically associate it with the main route tabl
 1. Select the custom route table that you just created\. The details pane displays tabs for working with its routes, associations, and route propagation\.
 
 1. On the **Routes** tab, choose **Edit**, **Add another route**, and add the following routes as necessary\. Choose **Save** when you're done\.
-
    + For IPv4 traffic specify `0.0.0.0/0` in the **Destination** box, and select the Internet gateway ID in the **Target** list\.
-
    + For IPv6 traffic, specify `::/0` in the **Destination** box, and select the Internet gateway ID in the **Target** list\.
 
 1. On the **Subnet Associations** tab, choose **Edit**, select the **Associate** check box for the subnet, and then choose **Save**\.
@@ -203,31 +197,21 @@ If you no longer need an Internet gateway, you can delete it\. You can't delete 
 You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available API actions, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
 
 **Create an Internet gateway**
-
 + [create\-internet\-gateway](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-internet-gateway.html) \(AWS CLI\)
-
 + [New\-EC2InternetGateway](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2InternetGateway.html) \(AWS Tools for Windows PowerShell\)
 
 **Attach an Internet gateway to a VPC**
-
 + [attach\-internet\-gateway](http://docs.aws.amazon.com/cli/latest/reference/ec2/attach-internet-gateway.html) \(AWS CLI\)
-
 + [Add\-EC2InternetGateway](http://docs.aws.amazon.com/powershell/latest/reference/items/Add-EC2InternetGateway.html) \(AWS Tools for Windows PowerShell\)
 
 **Describe an Internet gateway**
-
 + [describe\-internet\-gateways](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-internet-gateways.html) \(AWS CLI\)
-
 + [Get\-EC2InternetGateway](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2InternetGateway.html) \(AWS Tools for Windows PowerShell\)
 
 **Detach an Internet gateway from a VPC**
-
 + [detach\-internet\-gateway](http://docs.aws.amazon.com/cli/latest/reference/ec2/detach-internet-gateway.html) \(AWS CLI\)
-
 + [Dismount\-EC2InternetGateway](http://docs.aws.amazon.com/powershell/latest/reference/items/Dismount-EC2InternetGateway.html) \(AWS Tools for Windows PowerShell\)
 
 **Delete an Internet gateway**
-
 + [delete\-internet\-gateway](http://docs.aws.amazon.com/cli/latest/reference/ec2/delete-internet-gateway.html) \(AWS CLI\)
-
 + [Remove\-EC2InternetGateway](http://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2InternetGateway.html) \(AWS Tools for Windows PowerShell\)

@@ -8,7 +8,7 @@ As you get started with Amazon VPC, you should understand the key concepts of th
 
 Amazon VPC is the networking layer for Amazon EC2\. If you're new to Amazon EC2, see [What is Amazon EC2?](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html) in the *Amazon EC2 User Guide for Linux Instances* to get a brief overview\.
 
-
+**Topics**
 + [VPCs and Subnets](#what-is-vpc-subnet)
 + [Supported Platforms](#what-is-supported-platform)
 + [Default and Nondefault VPCs](#what-is-default-nondefault)
@@ -29,21 +29,13 @@ To protect the AWS resources in each subnet, you can use multiple layers of secu
 The original release of Amazon EC2 supported a single, flat network that's shared with other customers called the *EC2\-Classic* platform\. Earlier AWS accounts still support this platform, and can launch instances into either EC2\-Classic or a VPC\. Accounts created after 2013\-12\-04 support EC2\-VPC only\. For more information, see [Detecting Your Supported Platforms and Whether You Have a Default VPC](default-vpc.md#detecting-platform)\.
 
 By launching your instances into a VPC instead of EC2\-Classic, you gain the ability to:
-
 + Assign static private IPv4 addresses to your instances that persist across starts and stops
-
 + Optionally associate an IPv6 CIDR block to your VPC and assign IPv6 addresses to your instances
-
 + Assign multiple IP addresses to your instances
-
 + Define network interfaces, and attach one or more network interfaces to your instances
-
 + Change security group membership for your instances while they're running
-
 + Control the outbound traffic from your instances \(egress filtering\) in addition to controlling the inbound traffic to them \(ingress filtering\)
-
 + Add an additional layer of access control to your instances in the form of network access control lists \(ACL\)
-
 + Run your instances on single\-tenant hardware
 
 ### Default and Nondefault VPCs<a name="what-is-default-nondefault"></a>
@@ -72,7 +64,7 @@ Alternatively, to allow an instance in your VPC to initiate outbound connections
 
 For more information, see [NAT](vpc-nat.md)\.
 
-You can optionally associate an Amazon\-provided IPv6 CIDR block with your VPC and assign IPv6 addresses to your instances\. Instances can connect to the internet over IPv6 through an internet gateway\. Alternatively, instances can initiate outbound connections to the internet over IPv6 using an egress\-only internet gateway\. For more information, see [Egress\-Only Internet Gateways](egress-only-internet-gateway.md)\. IPv6 traffic is separate to IPv4 traffic; your route tables must include separate routes for IPv6 traffic\.
+You can optionally associate an Amazon\-provided IPv6 CIDR block with your VPC and assign IPv6 addresses to your instances\. Instances can connect to the internet over IPv6 through an internet gateway\. Alternatively, instances can initiate outbound connections to the internet over IPv6 using an egress\-only internet gateway\. For more information, see [Egress\-Only Internet Gateways](egress-only-internet-gateway.md)\. IPv6 traffic is separate from IPv4 traffic; your route tables must include separate routes for IPv6 traffic\.
 
 ### Accessing a Corporate or Home Network<a name="what-is-vpn"></a>
 

@@ -1,21 +1,14 @@
 # Endpoints for Amazon S3<a name="vpc-endpoints-s3"></a>
 
 If you've already set up access to your Amazon S3 resources from your VPC, you can continue to use Amazon S3 DNS names to access those resources after you've set up an endpoint\. However, take note of the following:
-
 + Your endpoint has a policy that controls the use of the endpoint to access Amazon S3 resources\. The default policy allows access by any user or service within the VPC, using credentials from any AWS account, to any Amazon S3 resource; including Amazon S3 resources for an AWS account other than the account with which the VPC is associated\. For more information, see [Controlling Access to Services with VPC Endpoints](vpc-endpoints-access.md)\.
-
 + The source IPv4 addresses from instances in your affected subnets as received by Amazon S3 change from public IPv4 addresses to the private IPv4 addresses from your VPC\. An endpoint switches network routes, and disconnects open TCP connections\. Your tasks are interrupted during the changeover, and any previous connections using public IPv4 addresses are not resumed\. We recommend that you do not have any critical tasks running when you create or modify an endpoint; or that you test to ensure that your software can automatically reconnect to Amazon S3 after the connection break\.
-
 + You cannot use an IAM policy or bucket policy to allow access from a VPC IPv4 CIDR range \(the private IPv4 address range\)\. VPC CIDR blocks can be overlapping or identical, which may lead to unexpected results\. Therefore, you cannot use the `aws:SourceIp` condition in your IAM policies for requests to Amazon S3 through a VPC endpoint\. This applies to IAM policies for users and roles, and any bucket policies\. If a statement includes the `aws:SourceIp` condition, the value fails to match any provided IP address or range\. Instead, you can do the following:
-
   + Use your route tables to control which instances can access resources in Amazon S3 via the endpoint\.
-
   + For bucket policies, you can restrict access to a specific endpoint or to a specific VPC\. For more information, see [Using Amazon S3 Bucket Policies](#vpc-endpoints-s3-bucket-policies)\. 
-
 + Endpoints currently do not support cross\-region requests—ensure that you create your endpoint in the same region as your bucket\. You can find the location of your bucket by using the Amazon S3 console, or by using the [get\-bucket\-location](http://docs.aws.amazon.com/cli/latest/reference/s3api/get-bucket-location.html) command\. Use a region\-specific Amazon S3 endpoint to access your bucket; for example, `mybucket.s3-us-west-2.amazonaws.com`\. For more information about region\-specific endpoints for Amazon S3, see [Amazon Simple Storage Service \(S3\)](http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region) in *Amazon Web Services General Reference*\. If you use the AWS CLI to make requests to Amazon S3, set your default region to the same region as your bucket, or use the `--region` parameter in your requests\.
 **Note**  
 Treat Amazon S3's US Standard region as mapped to the `us-east-1` region\.
-
 + Endpoints are currently supported for IPv4 traffic only\.
 
 Before you use endpoints with Amazon S3, ensure that you have also read the following general limitations: [Gateway Endpoint Limitations](vpce-gateway.md#vpc-endpoints-limitations)\.
@@ -112,9 +105,7 @@ The following policy allows access to the Amazon Linux 2 repositories\.
 You can use bucket policies to control access to buckets from specific endpoints, or specific VPCs\.
 
 You cannot use the `aws:SourceIp` condition in your bucket policies for requests to Amazon S3 through a VPC endpoint\. The condition fails to match any specified IP address or IP address range, and may have an undesired effect when you make requests to an Amazon S3 bucket\. For example:
-
 + You have a bucket policy with a `Deny` effect and a `NotIpAddress` condition that's intended to grant access from a single or limited range of IP addresses only\. For requests to the bucket through an endpoint, the `NotIpAddress` condition is always matched, and the statement's effect applies, assuming other constraints in the policy match\. Access to the bucket is denied\.
-
 + You have a bucket policy with a `Deny` effect and an `IpAddress` condition that's intended to deny access to a single or limited range of IP addresses only\. For requests to the bucket through an endpoint, the condition is not matched, and the statement does not apply\. Access to the bucket is allowed, assuming there are other statements that allow access without an `IpAddress` condition\.
 
 Adjust your bucket policy to limit access to a specific VPC or a specific endpoint instead\. 

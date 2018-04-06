@@ -14,7 +14,7 @@ The following tables list the limits for Amazon VPC resources per region for you
 
 If you want to increase a limit that applies per resource, we increase the limit for all resources in the region; for example, the limit for security groups per VPC applies to all VPCs in the region\.
 
-
+**Topics**
 + [VPC and Subnets](#vpc-limits-vpcs-subnets)
 + [DNS](#vpc-limits-dns)
 + [Elastic IP Addresses \(IPv4\)](#vpc-limits-eips)
@@ -33,7 +33,7 @@ If you want to increase a limit that applies per resource, we increase the limit
 
 | Resource | Default limit | Comments | 
 | --- | --- | --- | 
-|  VPCs per region  |  5  |  The limit for internet gateways per region is directly correlated to this one\. Increasing this limit increases the limit on internet gateways per region by the same amount\. The multiple of the number of VPCs in the region and the number of security groups per VPC cannot exceed 5000\.  | 
+|  VPCs per region  |  5  |  The limit for internet gateways per region is directly correlated to this one\. Increasing this limit increases the limit on internet gateways per region by the same amount\. The number of VPCs in the region multiplied by the number of security groups per VPC cannot exceed 5000\.  | 
 |  Subnets per VPC  |  200  |  \-  | 
 | IPv4 CIDR blocks per VPC | 5 | This limit is made up of your primary CIDR block plus 4 secondary CIDR blocks\. | 
 |  IPv6 CIDR blocks per VPC  |  1  |  This limit cannot be increased\.  | 
@@ -97,9 +97,9 @@ For more information, see [DNS Limits](vpc-dns.md#vpc-dns-limits)\.
 
 | Resource | Default limit | Comments | 
 | --- | --- | --- | 
-|  Security groups per VPC \(per region\)  |  500  |  The multiple of the number of VPCs in the region and the number of security groups per VPC cannot exceed 5000\.  | 
-|  Inbound or outbound rules per security group   |  50  |  You can have 50 inbound and 50 outbound rules per security group \(giving a total of 100 combined inbound and outbound rules\)\. To increase or decrease this limit, contact AWS Support — a limit change applies to both inbound and outbound rules\. However, the multiple of the limit for inbound or outbound rules per security group and the limit for security groups per network interface cannot exceed 250\. For example, if you want to increase the limit to 100, we decrease your number of security groups per network interface to 2\. This limit is enforced separately for IPv4 rules and IPv6 rules; for example, your security group can have 50 inbound rules for IPv4 traffic and 50 inbound rules for IPv6 traffic\. A rule that references a security group counts as one rule for IPv4 and one rule for IPv6\.  | 
-|  Security groups per network interface  |  5  |  To increase or decrease this limit, you can contact AWS Support\. The maximum is 16\. The multiple of the limit for security groups per network interface and the limit for rules per security group cannot exceed 250\. For example, if you increase the limit to 10, we decrease your number of rules per security group to 25\.  | 
+|  Security groups per VPC \(per region\)  |  500  |  The number of VPCs in the region multiplied by the number of security groups per VPC cannot exceed 5000\.  | 
+|  Inbound or outbound rules per security group   |  50  |  You can have 50 inbound and 50 outbound rules per security group \(giving a total of 100 combined inbound and outbound rules\)\. To increase or decrease this limit, contact AWS Support — a limit change applies to both inbound and outbound rules\. However, the limit for inbound or outbound rules per security group multiplied by the limit for security groups per network interface cannot exceed 250\. For example, if you want to increase the limit to 100, we decrease your number of security groups per network interface to 2\. This limit is enforced separately for IPv4 rules and IPv6 rules; for example, your security group can have 50 inbound rules for IPv4 traffic and 50 inbound rules for IPv6 traffic\. A rule that references a security group counts as one rule for IPv4 and one rule for IPv6\.  | 
+|  Security groups per network interface  |  5  |  To increase or decrease this limit, you can contact AWS Support\. The maximum is 16\. The limit for security groups per network interface multiplied by the limit for rules per security group cannot exceed 250\. For example, if you increase the limit to 10, we decrease your number of rules per security group to 25\.  | 
 
 ## VPC Peering Connections<a name="vpc-limits-peering"></a>
 

@@ -6,7 +6,7 @@ This topic assumes that you'll use the VPC wizard in the Amazon VPC console to c
 
 This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnet with associated IPv6 CIDR blocks\. Instances launched into the subnet can receive IPv6 addresses\. Currently, we do not support IPv6 communication over a VPN connection; however, instances in the VPC can communicate with each other via IPv6\. For more information about IPv4 and IPv6 addressing, see [IP Addressing in Your VPC](vpc-ip-addressing.md)\.
 
-
+**Topics**
 + [Overview](#Configuration-4)
 + [Routing](#VPC_Scenario4_Routing)
 + [Security](#VPC_Scenario4_Security)
@@ -22,15 +22,10 @@ The following diagram shows the key components of the configuration for this sce
 For this scenario, the *[Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/)* describes what your network administrator needs to do to configure the Amazon VPC customer gateway on your side of the VPN connection\.
 
 The configuration for this scenario includes the following:
-
 + A virtual private cloud \(VPC\) with a size /16 CIDR \(example: 10\.0\.0\.0/16\)\. This provides 65,536 private IP addresses\.
-
 + A VPN\-only subnet with a size /24 CIDR \(example: 10\.0\.0\.0/24\)\. This provides 256 private IP addresses\.
-
 + A VPN connection between your VPC and your network\. The VPN connection consists of a virtual private gateway located on the Amazon side of the VPN connection and a customer gateway located on your side of the VPN connection\.
-
 + Instances with private IP addresses in the subnet range \(examples: 10\.0\.0\.5, 10\.0\.0\.6, and 10\.0\.0\.7\), which enables the instances to communicate with each other and other instances in the VPC\.
-
 + A custom route table associated with the subnet\. The route table contains a route that enables instances in the subnet to communicate with other instances in the VPC, and a route that enables instances in the subnet to communicate directly with your network\.
 
 For more information about subnets, see [VPCs and Subnets](VPC_Subnets.md) and [IP Addressing in Your VPC](vpc-ip-addressing.md)\. For more information about your VPN connection, see [AWS Managed VPN Connections](VPC_VPN.md)\. For more information about configuring a customer gateway, see the * [Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/)*\.
@@ -38,13 +33,9 @@ For more information about subnets, see [VPCs and Subnets](VPC_Subnets.md) and [
 ### Overview for IPv6<a name="vpc-scenario-4-overview-ipv6"></a>
 
 You can optionally enable IPv6 for this scenario\. In addition to the components listed above, the configuration includes the following:
-
 + A size /56 IPv6 CIDR block associated with the VPC \(example: 2001:db8:1234:1a00::/56\)\. AWS automatically assigns the CIDR; you cannot choose the range yourself\.
-
 + A size /64 IPv6 CIDR block associated with the VPN\-only subnet \(example: 2001:db8:1234:1a00::/64\)\. You can choose the range for your subnet from the range allocated to the VPC\. You cannot choose the size of the IPv6 CIDR\.
-
 + IPv6 addresses assigned to the instances from the subnet range \(example: 2001:db8:1234:1a00::1a\)\.
-
 + A route table entry in the custom route table that enable instances in the private subnet to use IPv6 to communicate with each other\.
 
 ![\[IPv6-enabled VPC with a VPN-only subnet\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/scenario-4-ipv6-diagram.png)
@@ -132,15 +123,10 @@ Use the VPC wizard to create your VPC and a VPN connection\.
 1. Choose **Next**\.
 
 1. On the **Configure your VPN** page, do the following, and then choose **Create VPC**: 
-
    + In **Customer Gateway IP**, specify the public IP address of your VPN router\.
-
    + Optionally specify a name for your customer gateway and VPN connection\.
-
    + In **Routing Type**, select one of the routing options as follows:
-
      + If your VPN router supports Border Gateway Protocol \(BGP\), select **Dynamic \(requires BGP\)**\.
-
      + If your VPN router does not support BGP, choose **Static**\. In **IP Prefix**, add each IP range for your network in CIDR notation\.
 
      For more information, see [VPN Routing Options](VPC_VPN.md#VPNRoutingTypes)\.

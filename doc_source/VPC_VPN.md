@@ -1,6 +1,6 @@
 # AWS Managed VPN Connections<a name="VPC_VPN"></a>
 
-By default, instances that you launch into a virtual private cloud \(VPC\) can't communicate with your own network\. You can enable access to your network from your VPC by attaching a virtual private gateway to the VPC, creating a custom route table, updating your security group rules, and creating an AWS managed VPN connection\.
+By default, instances that you launch into an Amazon VPC can't communicate with your own \(remote\) network\. You can enable access to your remote network from your VPC by attaching a virtual private gateway to the VPC, creating a custom route table, updating your security group rules, and creating an AWS managed VPN connection\.
 
 Although the term *VPN connection* is a general term, in the Amazon VPC documentation, a VPN connection refers to the connection between your VPC and your own network\. AWS supports Internet Protocol security \(IPsec\) VPN connections\.
 
@@ -9,7 +9,7 @@ Your AWS managed VPN connection is either an AWS Classic VPN or an AWS VPN\. For
 **Important**  
 We currently do not support IPv6 traffic through a VPN connection\.
 
-
+**Topics**
 + [Components of Your VPN](#VPN)
 + [AWS Managed VPN Categories](#vpn-categories)
 + [VPN Configuration Examples](#Examples)
@@ -45,7 +45,7 @@ To create a VPN connection, you must create a customer gateway resource in AWS, 
 |  The type of routing—static or dynamic\.   | For more information, see [VPN Routing Options](#VPNRoutingTypes)\. | 
 |  \(Dynamic routing only\) Border Gateway Protocol \(BGP\) Autonomous System Number \(ASN\) of the customer gateway\.  |  You can use an existing ASN assigned to your network\. If you don't have one, you can use a private ASN \(in the 64512–65534 range\)\.  If you use the VPC wizard in the console to set up your VPC, we automatically use 65000 as the ASN\.  | 
 
-To use Amazon VPC with a VPN connection, you or your network administrator must also configure the customer gateway device or application\. When you create the VPN connection, we provide you with the required configuration information and your network administrator typically performs this configuration\. For information about the customer gateway requirements and configuration, see the [Your Customer Gateway](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/Introduction.html) in the *Amazon VPC Network Administrator Guide*\.
+To use Amazon VPC with a VPN connection, you or your network administrator must also configure the customer gateway device or application in your remote network\. When you create the VPN connection, we provide you with the required configuration information and your network administrator typically performs this configuration\. For information about the customer gateway requirements and configuration, see the [Your Customer Gateway](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/Introduction.html) in the *Amazon VPC Network Administrator Guide*\.
 
 The VPN tunnel comes up when traffic is generated from your side of the VPN connection\. The virtual private gateway is not the initiator; your customer gateway must initiate the tunnels\. If your VPN connection experiences a period of idle time \(usually 10 seconds, depending on your configuration\), the tunnel may go down\. To prevent this, you can use a network monitoring tool to generate keepalive pings; for example, by using IP SLA\. 
 
@@ -54,19 +54,12 @@ For a list of customer gateways that we have tested with Amazon VPC, see [Amazon
 ## AWS Managed VPN Categories<a name="vpn-categories"></a>
 
 Your AWS managed VPN connection is either an AWS Classic VPN connection or an AWS VPN connection\. Any new VPN connection that you create is an AWS VPN connection\. The following features are supported on AWS VPN connections only:
-
 + NAT traversal
-
 + 4\-byte ASN \(in addition to 2\-byte ASN\)
-
 + CloudWatch metrics
-
 + Reusable IP addresses for your customer gateways
-
 + Additional encryption options; including AES 256\-bit encryption, SHA\-2 hashing, and additional Diffie\-Hellman groups
-
 + Configurable tunnel options
-
 + Custom private ASN for the Amazon side of a BGP session
 
 You can find out the category of your AWS managed VPN connection by using the Amazon VPC console or a command line tool\. 
@@ -80,7 +73,6 @@ You can find out the category of your AWS managed VPN connection by using the Am
 1. Select the VPN connection, and check the value for **Category** in the details pane\. A value of `VPN` indicates an AWS VPN connection\. A value of `VPN-Classic` indicates an AWS Classic VPN connection\.
 
 **To identify the VPN category using a command line tool**
-
 + You can use the [describe\-vpn\-connections](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpn-connections.html) AWS CLI command\. In the output that's returned, take note of the `Category` value\. A value of `VPN` indicates an AWS VPN connection\. A value of `VPN-Classic` indicates an AWS Classic VPN connection\.
 
   In the following example, the VPN connection is an AWS VPN connection\.
@@ -108,9 +100,7 @@ You can find out the category of your AWS managed VPN connection by using the Am
   ```
 
 Alternatively, use one of the following commands:
-
 + [DescribeVpnConnections](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeVpnConnections.html) \(Amazon EC2 Query API\)
-
 + [Get\-EC2VpnConnection](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2VpnConnection.html) \(Tools for Windows PowerShell\)
 
 ### Migrating to AWS VPN<a name="aws-vpn-migrate"></a>
@@ -131,11 +121,8 @@ During this procedure, connectivity over the current VPC connection is interrupt
 1. In the navigation pane, choose **Virtual Private Gateways**, **Create Virtual Private Gateway** and create a virtual private gateway\.
 
 1. In the navigation pane, choose **VPN Connections**, **Create VPN Connection**\. Specify the following information, and choose **Yes, Create**\.
-
    + **Virtual Private Gateway**: Select the virtual private gateway that you created in the previous step\.
-
    + **Customer Gateway**: Choose **Existing**, and select the existing customer gateway for your current AWS Classic VPN connection\.
-
    + Specify the routing options as required\.
 
 1. Select the new VPN connection and choose **Download Configuration**\. Download the appropriate configuration file for your customer gateway device\.
@@ -151,9 +138,7 @@ From this step onwards, connectivity is interrupted until the new virtual privat
 1. In the navigation pane, choose **Virtual Private Gateways**\. Select the old virtual private gateway and choose **Detach from VPC**, **Yes, Detach**\. Select the new virtual private gateway, and choose **Attach to VPC**\. Specify the VPC for your VPN connection, and choose **Yes, Attach**\. 
 
 1. In the navigation pane, choose **Route Tables**\. Select the route table for your VPC and do one of the following: 
-
    + If you are using route propagation, choose **Route Propagation**, **Edit**\. Select the new virtual private gateway that's attached to the VPC and choose **Save**\.
-
    + If you are using static routes, choose **Routes**, **Edit**\. Modify the route to point to the new virtual private gateway, and choose **Save**\.
 
 1. Enable the new tunnels on your customer gateway device and disable the old tunnels\. To bring the tunnel up, you must initiate the connection from your local network\.
@@ -168,7 +153,7 @@ After you've deleted the AWS Classic VPN connection, you cannot revert or migrat
 
 ## VPN Configuration Examples<a name="Examples"></a>
 
-The following diagrams illustrate single and multiple VPN connections\. The VPC has an attached virtual private gateway, and your network includes a customer gateway, which you must configure to enable the VPN connection\. You set up the routing so that any traffic from the VPC bound for your network is routed to the virtual private gateway\.
+The following diagrams illustrate single and multiple VPN connections\. The VPC has an attached virtual private gateway, and your remote network includes a customer gateway, which you must configure to enable the VPN connection\. You set up the routing so that any traffic from the VPC bound for your network is routed to the virtual private gateway\.
 
 When you create multiple VPN connections to a single VPC, you can configure a second customer gateway to create a redundant connection to the same external location\. You can also use it to create VPN connections to multiple geographic locations\.
 
@@ -183,10 +168,10 @@ When you create multiple VPN connections to a single VPC, you can configure a se
 ## VPN Routing Options<a name="VPNRoutingTypes"></a>
 
 When you create a VPN connection, you must do the following:
-
 + Specify the type of routing that you plan to use \(static or dynamic\)
-
 + Update the route table for your subnet
+
+There are limits on the number of routes that you can add to a route table\. For more information, see the Route Tables section in [Amazon VPC Limits](VPC_Appendix_Limits.md)\.
 
 ### Static and Dynamic Routing<a name="vpn-static-dynamic"></a>
 
@@ -198,22 +183,17 @@ We recommend that you use BGP\-capable devices, when available, because the BGP 
 
 ### Route Tables and VPN Route Priority<a name="vpn-route-priority"></a>
 
-[Route tables](VPC_Route_Tables.md) determine where network traffic is directed\. In your route table, you must add a route for your network and specify the virtual private gateway as the target\. This enables traffic destined for your network to route via the virtual private gateway and over one of the VPN tunnels\. You can enable route propagation for your route table to automatically propagate your network routes to the table for you\.
+[Route tables](VPC_Route_Tables.md) determine where network traffic is directed\. In your route table, you must add a route for your remote network and specify the virtual private gateway as the target\. This enables traffic from your VPC that's destined for your remote network to route via the virtual private gateway and over one of the VPN tunnels\. You can enable route propagation for your route table to automatically propagate your network routes to the table for you\.
 
 Only IP prefixes that are known to the virtual private gateway, whether through BGP advertisements or static route entry, can receive traffic from your VPC\. The virtual private gateway does not route any other traffic destined outside of received BGP advertisements, static route entries, or its attached VPC CIDR\.
 
-When a virtual private gateway receives routing information, it uses path selection to determine how to route traffic to your network\. Longest prefix match applies; otherwise, the following rules apply:
-
+When a virtual private gateway receives routing information, it uses path selection to determine how to route traffic to your remote network\. Longest prefix match applies; otherwise, the following rules apply:
 + If any propagated routes from a VPN connection or AWS Direct Connect connection overlap with the local route for your VPC, the local route is most preferred even if the propagated routes are more specific\. 
-
 + If any propagated routes from a VPN connection or AWS Direct Connect connection have the same destination CIDR block as other existing static routes \(longest prefix match cannot be applied\), we prioritize the static routes whose targets are an Internet gateway, a virtual private gateway, a network interface, an instance ID, a VPC peering connection, a NAT gateway, or a VPC endpoint\.
 
 If you have overlapping routes within a VPN connection and longest prefix match cannot be applied, then we prioritize the routes as follows in the VPN connection, from most preferred to least preferred: 
-
 + BGP propagated routes from an AWS Direct Connect connection 
-
 + Manually added static routes for a VPN connection
-
 + BGP propagated routes from a VPN connection
 
 In this example, your route table has a static route to an internet gateway \(that you added manually\), and a propagated route to a virtual private gateway\. Both routes have a destination of `172.31.0.0/24`\. In this case, all traffic destined for `172.31.0.0/24` is routed to the internet gateway — it is a static route and therefore takes priority over the propagated route\.
@@ -227,7 +207,7 @@ In this example, your route table has a static route to an internet gateway \(th
 
 ## Configuring the VPN Tunnels for Your VPN Connection<a name="VPNTunnels"></a>
 
-You use a VPN connection to connect your network to a VPC\. Each VPN connection has two tunnels, with each tunnel using a unique virtual private gateway public IP address\. It is important to configure both tunnels for redundancy\. When one tunnel becomes unavailable \(for example, down for maintenance\), network traffic is automatically routed to the available tunnel for that specific VPN connection\.
+You use a VPN connection to connect your remote network to a VPC\. Each VPN connection has two tunnels, with each tunnel using a unique virtual private gateway public IP address\. It is important to configure both tunnels for redundancy\. When one tunnel becomes unavailable \(for example, down for maintenance\), network traffic is automatically routed to the available tunnel for that specific VPN connection\.
 
 The following diagram shows the two tunnels of the VPN connection\.
 
@@ -247,10 +227,10 @@ You cannot modify tunnel options after you create the VPN connection\. To change
 
 ## Using Redundant VPN Connections to Provide Failover<a name="VPNConnections"></a>
 
-As described earlier, a VPN connection has two tunnels to help ensure connectivity in case one of the VPN connections becomes unavailable\. To protect against a loss of connectivity in case your customer gateway becomes unavailable, you can set up a second VPN connection to your VPC and virtual private gateway by using a second customer gateway\. By using redundant VPN connections and customer gateways, you can perform maintenance on one of your customer gateways while traffic continues to flow over the second customer gateway's VPN connection\. To establish redundant VPN connections and customer gateways on your network, you need to set up a second VPN connection\. The customer gateway IP address for the second VPN connection must be publicly accessible\.
+As described earlier, a VPN connection has two tunnels to help ensure connectivity in case one of the VPN connections becomes unavailable\. To protect against a loss of connectivity in case your customer gateway becomes unavailable, you can set up a second VPN connection to your VPC and virtual private gateway by using a second customer gateway\. By using redundant VPN connections and customer gateways, you can perform maintenance on one of your customer gateways while traffic continues to flow over the second customer gateway's VPN connection\. To establish redundant VPN connections and customer gateways on your remote network, you need to set up a second VPN connection\. The customer gateway IP address for the second VPN connection must be publicly accessible\.
 
 The following diagram shows the two tunnels of each VPN connection and two customer gateways\.
 
 ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/Multiple_Gateways_diagram.png)
 
-Dynamically routed VPN connections use the Border Gateway Protocol \(BGP\) to exchange routing information between your customer gateways and the virtual private gateways\. Statically routed VPN connections require you to enter static routes for the network on your side of the customer gateway\. BGP\-advertised and statically entered route information allow gateways on both sides to determine which tunnels are available and reroute traffic if a failure occurs\. We recommend that you configure your network to use the routing information provided by BGP \(if available\) to select an available path\. The exact configuration depends on the architecture of your network\.
+Dynamically routed VPN connections use the Border Gateway Protocol \(BGP\) to exchange routing information between your customer gateways and the virtual private gateways\. Statically routed VPN connections require you to enter static routes for the remote network on your side of the customer gateway\. BGP\-advertised and statically entered route information allow gateways on both sides to determine which tunnels are available and reroute traffic if a failure occurs\. We recommend that you configure your network to use the routing information provided by BGP \(if available\) to select an available path\. The exact configuration depends on the architecture of your network\.

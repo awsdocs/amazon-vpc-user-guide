@@ -2,7 +2,7 @@
 
 The VPC wizard helps you implement common scenarios for Amazon VPC\. If you implement these scenarios as described in the documentation, you'll use the default network access control list \(ACL\), which allows all inbound and outbound traffic\. If you need an additional layer of security, you can create a network ACL and add rules\. We recommend the following rules for each scenario\.
 
-
+**Topics**
 + [Recommended Rules for Scenario 1](#VPC_Appendix_NACLs_Scenario_1)
 + [Recommended Rules for Scenario 2](#VPC_Appendix_NACLs_Scenario_2)
 + [Recommended Rules for Scenario 3](#VPC_Appendix_NACLs_Scenario_3)

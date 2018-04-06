@@ -7,7 +7,7 @@ Currently, not all Amazon EC2 API actions support resource\-level permissions\. 
 
 For more information about creating IAM policies for Amazon EC2, supported resources for EC2 API actions, as well as example policies for Amazon EC2, see [IAM Policies for Amazon EC2](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-policies-for-amazon-ec2.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
 
-
+**Topics**
 + [Example Policies for the AWS CLI or SDK](#ExamplePolicies_VPC)
 + [Example Policies for the Console](#example-policies-vpc-console)
 
@@ -15,7 +15,7 @@ For more information about creating IAM policies for Amazon EC2, supported resou
 
 The following examples show policy statements that you can use to control the permissions that IAM users have to Amazon VPC\. These examples are designed for users that use the AWS CLI or an AWS SDK\.
 
-
+**Topics**
 + [1\. Managing a VPC](#managingvpciam)
 + [2\. Read\-Only Policy for Amazon VPC](#readonlyvpciam)
 + [3\. Custom Policy for Amazon VPC](#customepolicyvpciam)
@@ -395,7 +395,7 @@ You can use IAM policies to grant users permissions to view and work with specif
 
 This section demonstrates policies that enable users to work with specific parts of the VPC console\.
 
-
+**Topics**
 + [1\. Using the VPC wizard](#vpc-wizard-iam)
 + [2\. Managing a VPC](#manage-vpc-console-iam)
 + [3\. Managing security groups](#vpc-security-groups-console-iam)
@@ -413,19 +413,12 @@ To enable users to use the VPC wizard, you must grant them permission to create 
 **Option 1: VPC with a single public subnet**
 
 The first VPC wizard configuration option creates a VPC with a single subnet\. In your IAM policy, you must grant users permission to use the following actions so they can successfully use this wizard option:
-
 + `ec2:CreateVpc`, `ec2:CreateSubnet`, `ec2:CreateRouteTable`, and `ec2:CreateInternetGateway`: To create a VPC, a subnet, a custom route table, and an Internet gateway\.
-
 + `ec2:DescribeAvailabilityZones`: To display the section of the wizard with the **Availability Zone** list and the CIDR block field for the subnet\. Even if users intend to leave the default settings, they will not be able to create a VPC unless those options are displayed\.
-
 + `ec2:DescribeVpcEndpointServices`: To display the VPC endpoint section of the wizard\.
-
 + `ec2:AttachInternetGateway`: To attach the Internet gateway to the VPC\.
-
 + `ec2:CreateRoute`: To create a route in the custom route table\. The route points traffic to the Internet gateway\.
-
 + `ec2:AssociateRouteTable`: To associate the custom route table to the subnet\.
-
 + `ec2:ModifyVpcAttribute`: To modify the VPC's attribute to enable DNS hostnames, so that each instance launched into this VPC receives a DNS hostname\.
 
 None of the API actions in this policy support resource\-level permissions, so you cannot control which specific resources users can use\.
@@ -451,29 +444,19 @@ None of the API actions in this policy support resource\-level permissions, so y
 The second VPC wizard configuration option creates a VPC with a public and private subnet, and provides the option to launch a NAT gateway or a NAT instance\. The following policy has the same actions as the previous example \(option 1\), plus actions that allow users to run and configure either a NAT gateway or a NAT instance\.
 
 The following actions are required regardless if you're launching a NAT instance or a NAT gateway:
-
 + `ec2:DescribeKeyPairs`: To display a list of existing key pairs and load the NAT section of the wizard\.
 
 The following actions are required to create a NAT gateway \(these actions are not required for launching a NAT instance\):
-
 + `ec2:CreateNatGateway`: To create the NAT gateway\. 
-
 + `ec2:DescribeNatGateways`: To check NAT gateway status until it's in the available state\.
-
 + `ec2:DescribeAddresses`: To list the available Elastic IP addresses in your account to associate with the NAT gateway\.
 
 The following actions are required to launch a NAT instance \(these actions are not required for creating a NAT gateway\):
-
 + `ec2:DescribeImages`: To locate an AMI that's been configured to run as a NAT instance\.
-
 + `ec2:RunInstances`: To launch the NAT instance\.
-
 + `ec2:AllocateAddress` and `ec2:AssociateAddress`: To allocate an Elastic IP address to your account, and then associate it with the NAT instance\. 
-
 + `ec2:ModifyInstanceAttribute`: To disable source/destination checking for the NAT instance\.
-
 + `ec2:DescribeInstances`: To check the status of the instance until it's in the running state\.
-
 + `ec2:DescribeRouteTables`, `ec2:DescribeVpnGateways`, and `ec2:DescribeVpcs`: To gather information about the routes that must be added to the main route table\.
 
 The following policy allows users to create either a NAT instance or a NAT gateway\.
@@ -537,17 +520,11 @@ The following policy allows users to launch instances using only `ami-1a2b3c4d`\
 **Option 3: VPC with public and private subnets and AWS managed VPN access**
 
 The third VPC wizard configuration option creates a VPC with a public and private subnet, and creates a VPN connection between your VPC and your own network\. In your IAM policy, you must grant users permission to use the same actions as option 1\. This allows them to create a VPC and two subnets, and to configure the routing for the public subnet\. To create a VPN connection, users must also have permission to use the following actions:
-
 + `ec2:CreateCustomerGateway`: To create a customer gateway\.
-
 + `ec2:CreateVpnGateway` and `ec2:AttachVpnGateway`: To create a virtual private gateway, and attach it to the VPC\.
-
 + `ec2:EnableVgwRoutePropagation`: To enable route propagation so that routes are automatically propagated to your route table\.
-
 + `ec2:CreateVpnConnection`: To create a VPN connection\.
-
 + `ec2:DescribeVpnConnections`, `ec2:DescribeVpnGateways`, and `ec2:DescribeCustomerGateways`: To display the options on the second configuration page of the wizard\.
-
 + `ec2:DescribeVpcs` and `ec2:DescribeRouteTables`: To gather information about the routes that must be added to the main route table\.
 
 None of the API actions in this policy support resource\-level permissions, so you cannot control which specific resources users can use\.

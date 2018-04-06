@@ -2,7 +2,7 @@
 
 The following example uses AWS CLI commands to create a nondefault VPC with an IPv4 CIDR block, and a public and private subnet in the VPC\. After you've created the VPC and subnets, you can launch an instance in the public subnet and connect to it\. To begin, you must first install and configure the AWS CLI\. For more information, see [Getting Set Up with the AWS Command Line Interface](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html)\.
 
-
+**Topics**
 + [Step 1: Create a VPC and Subnets](#vpc-subnets-commands-example-create-vpc)
 + [Step 2: Make Your Subnet Public](#vpc-subnets-commands-example-public-subnet)
 + [Step 3: Launch an Instance into Your Subnet](#vpc-subnets-commands-example-launch-instance)
