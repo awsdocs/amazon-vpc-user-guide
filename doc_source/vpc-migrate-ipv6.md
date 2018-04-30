@@ -18,9 +18,19 @@ The following table provides an overview of the steps to enable your VPC and sub
 | [Step 4: Update Your Security Group Rules](#vpc-migrate-ipv6-sg-rules) | Update your security group rules to include rules for IPv6 addresses\. This enables IPv6 traffic to flow to and from your instances\. If you've created custom network ACL rules to control the flow of traffic to and from your subnet, you must include rules for IPv6 traffic\.  | 
 | [Step 5: Change Your Instance Type](#vpc-migrate-ipv6-instance-types) | If your instance type does not support IPv6, change the instance type\. | 
 | [Step 6: Assign IPv6 Addresses to Your Instances](#vpc-migrate-assign-ipv6-address) | Assign IPv6 addresses to your instances from the IPv6 address range of your subnet\. | 
-| [\(Optional\) Configure IPv6 on Your Instances](#vpc-migrate-ipv6-dhcpv6) | If your instance was launched from an AMI that is not configured to use DHCPv6, you must manually configure your instance to recognize an IPv6 address assigned to the instance\. | 
+| [Step 7: \(Optional\) Configure IPv6 on Your Instances](#vpc-migrate-ipv6-dhcpv6) | If your instance was launched from an AMI that is not configured to use DHCPv6, you must manually configure your instance to recognize an IPv6 address assigned to the instance\. | 
 
 Before you migrate to using IPv6, ensure that you have read the features of IPv6 addressing for Amazon VPC: [IPv4 and IPv6 Characteristics and Restrictions](vpc-ip-addressing.md#vpc-ipv4-ipv6-comparison)\.
+
+**Topics**
++ [Example: Enabling IPv6 in a VPC With a Public and Private Subnet](#vpc-migrate-ipv6-example)
++ [Step 1: Associate an IPv6 CIDR Block with Your VPC and Subnets](#vpc-migrate-ipv6-cidr)
++ [Step 2: Create and Configure an Egress\-Only Internet Gateway for a Private Subnet](#vpc-migrate-ipv6-eigw)
++ [Step 3: Update Your Route Tables](#vpc-migrate-ipv6-routes)
++ [Step 4: Update Your Security Group Rules](#vpc-migrate-ipv6-sg-rules)
++ [Step 5: Change Your Instance Type](#vpc-migrate-ipv6-instance-types)
++ [Step 6: Assign IPv6 Addresses to Your Instances](#vpc-migrate-assign-ipv6-address)
++ [Step 7: \(Optional\) Configure IPv6 on Your Instances](#vpc-migrate-ipv6-dhcpv6)
 
 ## Example: Enabling IPv6 in a VPC With a Public and Private Subnet<a name="vpc-migrate-ipv6-example"></a>
 
@@ -55,7 +65,7 @@ After you've completed the steps, your VPC will have the following configuration
 
 ![\[VPC with public and private subnets\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/vpc-migrate-ipv6-example-2-diagram.png)
 
-### Step 1: Associate an IPv6 CIDR Block with Your VPC and Subnets<a name="vpc-migrate-ipv6-cidr"></a>
+## Step 1: Associate an IPv6 CIDR Block with Your VPC and Subnets<a name="vpc-migrate-ipv6-cidr"></a>
 
 You can associate an IPv6 CIDR block with your VPC, and then associate a `/64` CIDR block from that range with each subnet\. 
 
@@ -83,7 +93,7 @@ You can associate an IPv6 CIDR block with your VPC, and then associate a `/64` C
 
 For more information, see [VPC and Subnet Sizing for IPv6](VPC_Subnets.md#vpc-sizing-ipv6)\.
 
-### Step 2: Create and Configure an Egress\-Only Internet Gateway for a Private Subnet<a name="vpc-migrate-ipv6-eigw"></a>
+## Step 2: Create and Configure an Egress\-Only Internet Gateway for a Private Subnet<a name="vpc-migrate-ipv6-eigw"></a>
 
 An egress\-only internet gateway enables outbound communication to the internet over IPv6 and prevents inbound communication\.
 
@@ -97,7 +107,7 @@ An egress\-only internet gateway enables outbound communication to the internet 
 
 For more information, see [Egress\-Only Internet Gateways](egress-only-internet-gateway.md)\.
 
-### Step 3: Update Your Route Tables<a name="vpc-migrate-ipv6-routes"></a>
+## Step 3: Update Your Route Tables<a name="vpc-migrate-ipv6-routes"></a>
 
 For a public subnet, you must update the route table to enable instances \(such as web servers\) to use the internet gateway for IPv6 traffic\. If you do not have internet gateway, see [Creating and Attaching an Internet Gateway](VPC_Internet_Gateway.md#Add_IGW_Attach_Gateway)\.
 
@@ -121,13 +131,15 @@ For a private subnet, you must update the route table to enable instances \(such
 
 1. On the **Routes** tab, choose **Edit**\. 
 
-1. Choose **Add another route**\. Specify `::/0` for **Destination**, select the egress\-only internet gateway ID for **Target**, and then choose **Save**\. 
+1. Choose **Add another route**\. For **Destination**, specify `::/0`\. For **Target**, select the egress\-only internet gateway ID you created in the previous step, and then choose **Save**\. 
 
 For more information, see [Routing Options](VPC_Route_Tables.md#route-table-options)\.
 
-### Step 4: Update Your Security Group Rules<a name="vpc-migrate-ipv6-sg-rules"></a>
+## Step 4: Update Your Security Group Rules<a name="vpc-migrate-ipv6-sg-rules"></a>
 
-For the example above, your web server security group \(`sg-11aa22bb`\) allows inbound access from IPv4 addresses over specific ports\. You must add rules that allow the same inbound access from IPv6 addresses, namely HTTP and HTTPS access from all IPv6 addresses, and SSH access from a specific IPv6 address \(if applicable\)\. You do not need to make any changes to the inbound rules for your database security group; the rule that allows all communication from `sg-11aa22bb` includes IPv6 communication by default\.
+To enable your instances to send and receive traffic over IPv6, you must update your security group rules to include rules for IPv6 addresses\.
+
+For example, in the example above, you can update the web server security group \(`sg-11aa22bb`\) to add rules that allow inbound HTTP, HTTPS, and SSH access from IPv6 addresses\. You do not need to make any changes to the inbound rules for your database security group; the rule that allows all communication from `sg-11aa22bb` includes IPv6 communication by default\.
 
 **To update your security group rules**
 
@@ -137,20 +149,19 @@ For the example above, your web server security group \(`sg-11aa22bb`\) allows i
 
 1. In the **Inbound Rules** tab, choose **Edit**\.
 
-1. For each rule, choose **Add another rule**, and choose **Save** when you're done:
-   + For **Type**, select **HTTP**\. For **Source**, enter `::/0`\. 
-   + For **Type**, select **HTTPS**\. For **Source**, enter `::/0`\.
-   + For **Type**, select **SSH**\. For **Source**, enter the IPv6 address of your local computer or the range of addresses for your local network\.
+1. For each rule, choose **Add another rule**, and choose **Save** when you're done\. For example, to add a rule that allows all HTTP traffic over IPv6, for **Type**, select **HTTP** and for **Source**, enter `::/0`\.
 
-In this scenario, an outbound rule that allows all IPv6 traffic is automatically added your security groups when you associate an IPv6 CIDR block with your VPC\. However, if you modified the original outbound rules for your security group, this rule is not automatically added, and you must add equivalent outbound rules for IPv6 traffic\. For more information, see [Security Groups for Your VPC](VPC_SecurityGroups.md)\.
+By default, an outbound rule that allows all IPv6 traffic is automatically added your security groups when you associate an IPv6 CIDR block with your VPC\. However, if you modified the original outbound rules for your security group, this rule is not automatically added, and you must add equivalent outbound rules for IPv6 traffic\. For more information, see [Security Groups for Your VPC](VPC_SecurityGroups.md)\.
 
-#### Update Your Network ACL Rules<a name="vpc-migrate-ipv6-nacl-rules"></a>
+### Update Your Network ACL Rules<a name="vpc-migrate-ipv6-nacl-rules"></a>
 
-If you associate an IPv6 CIDR block with your VPC, we automatically add rules to the default network ACL to allow IPv6 traffic, provided you haven't modified its default rules\. If you've modified your default network ACL or if you've created a custom network ACL with rules to control the flow of traffic to and from your subnet, you must manually add rules for IPv6 traffic\. For more information about recommended network ACL rules for a VPC with a private and public subnet, see [Recommended Rules for Scenario 2](VPC_Appendix_NACLs.md#VPC_Appendix_NACLs_Scenario_2)\.
+If you associate an IPv6 CIDR block with your VPC, we automatically add rules to the default network ACL to allow IPv6 traffic, provided you haven't modified its default rules\. If you've modified your default network ACL or if you've created a custom network ACL with rules to control the flow of traffic to and from your subnet, you must manually add rules for IPv6 traffic\. For more information about recommended network ACL rules, see [Recommended Network ACL Rules for Your VPC](VPC_Appendix_NACLs.md)\.
 
-### Step 5: Change Your Instance Type<a name="vpc-migrate-ipv6-instance-types"></a>
+## Step 5: Change Your Instance Type<a name="vpc-migrate-ipv6-instance-types"></a>
 
-In this example, your web server instance `t2.medium` instance type, which supports IPv6\. Your database instance is an `m3.large` instance type, which does not support IPv6\. You must resize the instance to a supported instance type, for example, `m4.large`\. For more information, see [Instance Types](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)\.
+All current generation instance types support IPv6\. For more information, see [Instance Types](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)\.
+
+If your instance type does not support IPv6, you must resize the instance to a supported instance type\. In the example above, the database instance is an `m3.large` instance type, which does not support IPv6\. You must resize the instance to a supported instance type, for example, `m4.large`\. 
 
 To resize your instance, be aware of the compatibility limitations\. For more information, see [Compatibility for Resizing Instances](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-resize.html#resize-limitations) in the *Amazon EC2 User Guide for Linux Instances*\. In this scenario, if your database instance was launched from an AMI that uses HVM virtualization, you can resize it to an `m4.large` instance type by using the following procedure\.
 
@@ -169,7 +180,7 @@ To resize your instance, you must stop it\. Stopping and starting an instance ch
 
 1. With the instance still selected, choose **Actions**, **Instance Settings**, **Change Instance Type**\.
 
-1. For **Instance Type**, choose **m4\.large**, **Apply**\.
+1. For **Instance Type**, choose the new instance type, and then choose **Apply**\.
 
 1. To restart the stopped instance, select the instance and choose **Actions**, **Instance State**, **Start**\. In the confirmation dialog box, choose **Yes, Start**\.
 
@@ -179,7 +190,7 @@ You may not be able to migrate to a new instance type if there are compatibility
 
 If you launch an instance from a new AMI, you can assign an IPv6 address to your instance during launch\. 
 
-### Step 6: Assign IPv6 Addresses to Your Instances<a name="vpc-migrate-assign-ipv6-address"></a>
+## Step 6: Assign IPv6 Addresses to Your Instances<a name="vpc-migrate-assign-ipv6-address"></a>
 
 After you've verified that your instance type supports IPv6, you can assign an IPv6 address to your instance using the Amazon EC2 console\. The IPv6 address is assigned to the primary network interface \(eth0\) for the instance\.
 
@@ -195,7 +206,7 @@ After you've verified that your instance type supports IPv6, you can assign an I
 
 1. Choose **Yes, Update**\.
 
-Alternatively, if you launch a replacement instance \(for example, if you were unable to resize your instance and you created a new AMI instead\), you can assign an IPv6 address during launch\.
+Alternatively, if you launch a new instance \(for example, if you were unable to resize your instance and you created a new AMI instead\), you can assign an IPv6 address during launch\.
 
 **To assign an IPv6 address to an instance during launch**
 
@@ -207,7 +218,7 @@ Alternatively, if you launch a replacement instance \(for example, if you were u
 
 1. Follow the remaining steps in the wizard to launch your instance\.
 
-### \(Optional\) Configure IPv6 on Your Instances<a name="vpc-migrate-ipv6-dhcpv6"></a>
+## Step 7: \(Optional\) Configure IPv6 on Your Instances<a name="vpc-migrate-ipv6-dhcpv6"></a>
 
 If you launched your instance using Amazon Linux 2016\.09\.0 or later, or Windows Server 2008 R2 or later, your instance is configured for IPv6 and no additional steps are required\. 
 
@@ -221,7 +232,7 @@ You can configure your instance using the following steps\. You'll need to conne
 + [RHEL/CentOS](#ipv6-dhcpv6-rhel)
 + [Windows](#ipv6-dhcpv6-windows)
 
-#### Amazon Linux<a name="ipv6-dhcpv6-amazon-linux"></a>
+### Amazon Linux<a name="ipv6-dhcpv6-amazon-linux"></a>
 
 **To configure DHCPv6 on Amazon Linux**
 
@@ -273,7 +284,7 @@ You can configure your instance using the following steps\. You'll need to conne
 
 1. Reboot your instance\. Reconnect to your instance and use the `ifconfig` command to verify that the IPv6 address is recognized on the primary network interface\.
 
-#### Ubuntu<a name="ipv6-dhcpv6-ubuntu"></a>
+### Ubuntu<a name="ipv6-dhcpv6-ubuntu"></a>
 
 You can configure your Ubuntu instance to dynamically recognize any IPv6 address assigned to the network interface\. If your instance does not have an IPv6 address, this configuration may cause the boot time of your instance to be extended by up to 5 minutes\.
 
@@ -284,7 +295,7 @@ These steps must be performed as the root user\.
 + [Ubuntu Server 14](#ipv6-dhcpv6-ubuntu-14)
 + [Starting the DHCPv6 Client](#ipv6-dhcpv6-ubuntu-start-client)
 
-##### Ubuntu Server 16<a name="ipv6-dhcpv6-ubuntu-16"></a>
+#### Ubuntu Server 16<a name="ipv6-dhcpv6-ubuntu-16"></a>
 
 **To configure IPv6 on a running Ubuntu Server 16 instance**
 
@@ -338,7 +349,7 @@ These steps must be performed as the root user\.
 
   For more information, see [Running Commands on Your Linux Instance at Launch](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-##### Ubuntu Server 14<a name="ipv6-dhcpv6-ubuntu-14"></a>
+#### Ubuntu Server 14<a name="ipv6-dhcpv6-ubuntu-14"></a>
 
 If you're using Ubuntu Server 14, you must include a workaround for a [known issue](https://bugs.launchpad.net/ubuntu/+source/ifupdown/+bug/1013597) that occurs when restarting a dual\-stack network interface \(the restart results in an extended timeout during which your instance is unreachable\)\.
 
@@ -366,7 +377,7 @@ These steps must be performed as the root user\.
 
 1. Reconnect to your instance and use the `ifconfig` command to verify that the IPv6 address is configured on the network interface\.
 
-##### Starting the DHCPv6 Client<a name="ipv6-dhcpv6-ubuntu-start-client"></a>
+#### Starting the DHCPv6 Client<a name="ipv6-dhcpv6-ubuntu-start-client"></a>
 
 Alternatively, to bring up the IPv6 address for the network interface immediately without performing any additional configuration, you can start the DHCPv6 client for the instance\. However, the IPv6 address does not persist on the network interface after reboot\.
 
@@ -382,9 +393,12 @@ Alternatively, to bring up the IPv6 address for the network interface immediatel
 
 1. Use the `ifconfig` command to verify that the IPv6 address is recognized on the primary network interface\.
 
-#### RHEL/CentOS<a name="ipv6-dhcpv6-rhel"></a>
+### RHEL/CentOS<a name="ipv6-dhcpv6-rhel"></a>
 
-RHEL 7\.4 and CentOS 7 use [cloud\-init](http://cloudinit.readthedocs.io/en/latest/index.html) to configure your network interface and generate the `/etc/sysconfig/network-scripts/ifcfg-eth0` file\. You can create a custom `cloud-init` configuration file to enable DHCPv6, which generates an `ifcfg-eth0` file with settings that enable DHCPv6 after each reboot\.
+RHEL 7\.4 and CentOS 7 and later use [cloud\-init](http://cloudinit.readthedocs.io/en/latest/index.html) to configure your network interface and generate the `/etc/sysconfig/network-scripts/ifcfg-eth0` file\. You can create a custom `cloud-init` configuration file to enable DHCPv6, which generates an `ifcfg-eth0` file with settings that enable DHCPv6 after each reboot\.
+
+**Note**  
+Due to a known issue, if you're using RHEL/CentOS 7\.4 with the latest version of cloud\-init\-0\.7\.9, these steps might result in you losing connectivity to your instance after reboot\. As a workaround, you can manually edit the `/etc/sysconfig/network-scripts/ifcfg-eth0` file\.
 
 **To configure DHCPv6 on RHEL 7\.4 or CentOS 7**
 
@@ -469,7 +483,7 @@ For RHEL versions 7\.3 and earlier, you can use the following procedure to modif
    sudo service network restart
    ```
 
-#### Windows<a name="ipv6-dhcpv6-windows"></a>
+### Windows<a name="ipv6-dhcpv6-windows"></a>
 
 Use the following procedures to configure IPv6 on Windows Server 2003 and Windows Server 2008 SP2\.
 
