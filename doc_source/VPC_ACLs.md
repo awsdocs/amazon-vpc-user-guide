@@ -321,7 +321,7 @@ The subnet is associated with a network ACL that has the following rules\.
 | Inbound Rules | 
 | Rule \# | Type | Protocol | Port Range | Source | Allow/Deny | Comments | 
 | 100 | SSH | TCP | 22 | 172\.31\.1\.2/32 | ALLOW | Allows inbound traffic from the remote computer\. If the instance is a Windows computer, then this rule must use the RDP protocol for port 3389 instead\. | 
-| \* | All traffic | All | All | 0\.0\.0\.0/0 | DENY | Denies all other inbound traffic that does match the previous rule\. | 
+| \* | All traffic | All | All | 0\.0\.0\.0/0 | DENY | Denies all other inbound traffic that does not match the previous rule\. | 
 | Outbound Rules | 
 | Rule \# | Type | Protocol | Port Range | Destination | Allow/Deny | Comments | 
 | 100 | Custom TCP | TCP | 1024\-65535 | 172\.31\.1\.2/32 | ALLOW | Allows outbound responses to the remote computer\. Network ACLs are stateless, therefore this rule is required to allow response traffic for inbound requests\. | 
