@@ -90,7 +90,7 @@ You can use one of the following commands\. For more information about these com
 
 1. Select the network interface from the list\.
 
-1. In the details pane, the **Private DNS** \(IPv4\) field displays the private DNS hostname\.
+1. In the details pane, the **Private DNS \(IPv4\)** field displays the private DNS hostname\.
 
 **To view DNS hostnames for a network interface using the command line**
 

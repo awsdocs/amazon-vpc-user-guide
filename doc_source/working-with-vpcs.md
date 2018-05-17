@@ -193,7 +193,7 @@ If you no longer need your subnet, you can delete it\. You must terminate any in
 
 1. In the navigation pane, choose **Subnets**\.
 
-1. Select the subnet to delete and choose **Subnet Actions**, **Delete**\.
+1. Select the subnet to delete and choose **Subnet Actions**, **Delete Subnet**\.
 
 1. In the **Delete Subnet** dialog box, choose **Yes, Delete**\.
 

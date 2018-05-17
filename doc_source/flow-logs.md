@@ -138,7 +138,7 @@ Alternatively, you can follow the procedures below to create a new role for use 
 
 1. Choose **EC2** and then the **EC2** use case\. Choose **Next: Permissions**\.
 
-1. On the **Attach Policy** page, choose **Next: Review**\.
+1. On the **Attach permissions policy** page, choose **Next: Review**\.
 
 1. Enter a name for your role; for example, `Flow-Logs-Role`, and optionally provide a description\. Choose **Create role**\.
 

@@ -242,7 +242,7 @@ It can take a few minutes for policy changes to take effect\.
 
 1. Choose **Actions**, **Manage route tables**\.
 
-1. Select or deselect the required route tables, and choose **Save**\.
+1. Select or deselect the required route tables, and choose **Modify Route Tables**\.
 
 **To modify a gateway endpoint using the AWS CLI**
 

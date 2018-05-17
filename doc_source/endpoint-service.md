@@ -22,6 +22,12 @@ In the following diagram, the account owner of VPC B is a service provider, and 
 
 ![\[Using an interface endpoint to access an endpoint service\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/vpc-endpoint-service.png)
 
+For low latency and fault tolerance, we recommend using a Network Load Balancer with targets in every Availability Zone of the AWS Region\. To help achieve high availability for service consumers that use [zonal DNS hostnames](vpce-interface.md#access-service-though-endpoint) to access the service, you can enable cross\-zone load balancing\. Cross\-zone load balancing enables the load balancer to distribute traffic across the registered targets in all enabled Availability Zones\. For more information, see [Cross\-Zone Load Balancing](http://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancers.html#cross-zone-load-balancing) in the *User Guide for Network Load Balancers*\. Regional data transfer charges may apply to your account when you enable cross\-zone load balancing\.
+
+In the following diagram, the owner of VPC B is ther service provider, and has configured a Network Load Balancer with targets in two different Availability Zones\. The service consumer \(VPC A\) has created interface endpoints in the same two Availability Zones in their VPC\. Requests to the service from instances in VPC A can use either interface endpoint\.
+
+![\[Using interface endpoints to access an endpoint service\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/vpc-endpoint-service-multi-az.png)
+
 **Topics**
 + [Endpoint Service Limitations](#endpoint-service-limits)
 + [Creating a VPC Endpoint Service Configuration](#create-endpoint-service)
@@ -40,6 +46,7 @@ To use endpoint services, you need to be aware of the current rules and limitati
 + Service consumers must use the endpoint\-specific DNS hostnames to access the endpoint service\. Private DNS is not supported\. For more information, see [Accessing a Service Through an Interface Endpoint](vpce-interface.md#access-service-though-endpoint)\.
 + Endpoint services are only available in the AWS Region in which they are created\.
 + If an endpoint service is associated with multiple Network Load Balancers, then for a specific Availability Zone, an interface endpoint will establish a connection with one load balancer only\.
++ Availability Zones in your account might not map to the same locations as Availability Zones in another account; for example, your Availability Zone `us-east-1a` might not be the same location as `us-east-1a` for another account\. For more information, see [Region and Availability Zone Concepts](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-regions-availability-zones)\. When you configure an endpoint service, it's configured in the Availability Zones as mapped to your account\.
 
 ## Creating a VPC Endpoint Service Configuration<a name="create-endpoint-service"></a>
 

@@ -77,7 +77,7 @@ For example, the following route table has a route for IPv4 Internet traffic \(`
 | Destination | Target | 
 | --- | --- | 
 | 10\.0\.0\.0/16 | Local | 
-| 172\.31\.0\.0/16 | pcx\-1a2b1a2b | 
+| 172\.31\.0\.0/16 | pcx\-1a2b3c4d | 
 | 0\.0\.0\.0/0 | igw\-11aa22bb | 
 
 If you've attached a virtual private gateway to your VPC and enabled route propagation on your route table, routes representing your VPN connection automatically appear as propagated routes in your route table\. For more information, see [Route Tables and VPN Route Priority](VPC_VPN.md#vpn-route-priority)\.
@@ -89,7 +89,7 @@ In this example, an IPv6 CIDR block is associated with your VPC\. In your route 
 | --- | --- | 
 | 10\.0\.0\.0/16 | Local | 
 | 2001:db8:1234:1a00::/56 | Local | 
-| 172\.31\.0\.0/16 | pcx\-1a2b1a2b | 
+| 172\.31\.0\.0/16 | pcx\-1a2b3c4d | 
 | 0\.0\.0\.0/0 | igw\-11aa22bb | 
 | ::/0 | eigw\-aabb1122 | 
 

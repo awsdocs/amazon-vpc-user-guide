@@ -215,7 +215,7 @@ If your instance is in a VPC and subnet with an [associated IPv6 CIDR block](wor
 
 1. In the navigation pane, choose **Instances** and select your instance\.
 
-1. Choose **Actions**, **Manage IP Addresses**\.
+1. Choose **Actions**, **Networking**, **Manage IP Addresses**\.
 
 1. Under **IPv6 Addresses**, choose **Assign new IP**\. You can specify an IPv6 address from the range of the subnet, or leave the **Auto\-assign** value to let Amazon choose an IPv6 address for you\.
 
@@ -233,7 +233,7 @@ If you no longer need an IPv6 address for your instance, you can disassociate it
 
 1. In the navigation pane, choose **Instances** and select your instance\.
 
-1. Choose **Actions**, **Manage IP Addresses**\.
+1. Choose **Actions**, **Networking**, **Manage IP Addresses**\.
 
 1. Under **IPv6 Addresses**, choose **Unassign** for the IPv6 address\.
 

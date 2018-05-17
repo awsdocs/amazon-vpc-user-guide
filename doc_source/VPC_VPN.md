@@ -135,7 +135,7 @@ During this procedure, connectivity over the current VPC connection is interrupt
 **Note**  
 From this step onwards, connectivity is interrupted until the new virtual private gateway is attached and the new VPN connection is active\.
 
-1. In the navigation pane, choose **Virtual Private Gateways**\. Select the old virtual private gateway and choose **Detach from VPC**, **Yes, Detach**\. Select the new virtual private gateway, and choose **Attach to VPC**\. Specify the VPC for your VPN connection, and choose **Yes, Attach**\. 
+1. In the navigation pane, choose **Virtual Private Gateways**\. Select the old virtual private gateway and choose **Actions**, **Detach from VPC**, **Yes, Detach**\. Select the new virtual private gateway, and choose **Actions**, **Attach to VPC**\. Specify the VPC for your VPN connection, and choose **Yes, Attach**\. 
 
 1. In the navigation pane, choose **Route Tables**\. Select the route table for your VPC and do one of the following: 
    + If you are using route propagation, choose **Route Propagation**, **Edit**\. Select the new virtual private gateway that's attached to the VPC and choose **Save**\.

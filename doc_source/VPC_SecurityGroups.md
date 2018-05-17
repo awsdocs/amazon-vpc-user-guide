@@ -292,6 +292,6 @@ When changing an instance's security group, you can select multiple groups from 
 
 1. In the navigation pane, choose **Security Groups**\.
 
-1. Choose the `2009-07-15-default` security group, then choose **Security Group Actions**, **Delete**\.
+1. Choose the `2009-07-15-default` security group, then choose **Security Group Actions**, **Delete Security Group**\.
 
 1. In the **Delete Security Group** dialog box, choose **Yes, Delete**\.

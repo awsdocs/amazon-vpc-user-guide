@@ -53,6 +53,7 @@ To use interface endpoints, you need to be aware of their properties and current
 + For each interface endpoint, you can choose only one subnet per Availability Zone\.
 + Interface endpoints do not support the use of endpoint policies\. Full access to the service through the interface endpoint is allowed\.
 + Services may not be available in all Availability Zones through an interface endpoint\. To find out which Availability Zones are supported, use the [describe\-vpc\-endpoint\-services](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-services.html) command or use the Amazon VPC console\. For more information, see [Creating an Interface Endpoint](#create-interface-endpoint)\.
++ Availability Zones in your account might not map to the same locations as Availability Zones in another account; for example, your Availability Zone `us-east-1a` might not be the same location as `us-east-1a` for another account\. For more information, see [Region and Availability Zone Concepts](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-regions-availability-zones)\. When you create an interface endpoint, it's created in the Availability Zone for your account\.
 + Each interface endpoint can support a bandwidth of up to 10 Gbps per Availability Zone by default\. Additional capacity may be added automatically based on your usage\.
 + If the network ACL for your subnet restricts traffic, you may not be able to send traffic through the endpoint network interface\. Ensure that you add appropriate rules that allow traffic to and from the CIDR block of the subnet\.
 + An interface endpoint supports TCP traffic only\.
@@ -367,7 +368,9 @@ If you no longer need a notification, you can delete it\.
 
 After you've created an interface endpoint, you can submit requests to the supported service via an endpoint URL\. You can use the following:
 + The endpoint\-specific regional DNS hostname that we generate for the interface endpoint\. The hostname includes a unique endpoint identifier, service identifier, the region, and `vpce.amazonaws.com` in its name; for example, `vpce-0fe5b17a0707d6abc-29p5708s.ec2.us-east-1.vpce.amazonaws.com`\.
-+ The endpoint\-specific zonal DNS hostname that we generate for each Availability Zone in which the endpoint is available\. The hostname includes the Availability Zone in its name; for example, `vpce-0fe5b17a0707d6abc-29p5708s-us-east-1a.ec2.us-east-1.vpce.amazonaws.com`\.
++ The endpoint\-specific zonal DNS hostname that we generate for each Availability Zone in which the endpoint is available\. The hostname includes the Availability Zone in its name; for example, `vpce-0fe5b17a0707d6abc-29p5708s-us-east-1a.ec2.us-east-1.vpce.amazonaws.com`\. You might use this option if your architecture isolates Availability Zones \(for example, for fault containment or to reduce regional data transfer costs\)\.
+**Note**  
+A request to the zonal DNS hostname is destined to the corresponding Availability Zone location in the service provider's account, which might not have the same Availability Zone name as your account\. For more information, see [Region and Availability Zone Concepts](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-regions-availability-zones)\.
 + If you have enabled private DNS for the endpoint \(a private hosted zone\), the default DNS hostname for the AWS service for the region; for example, `ec2.us-east-1.amazonaws.com`\.
 + The private IP address of the endpoint network interface in the VPC\.
 

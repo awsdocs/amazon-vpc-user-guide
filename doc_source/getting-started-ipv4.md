@@ -191,13 +191,13 @@ The following diagram represents the architecture of your VPC after you've compl
 
 1. In the navigation pane, choose **Elastic IPs**\.
 
-1. Choose **Allocate New Address**, and then **Yes, Allocate**\.
+1. Choose **Allocate new address**, and then **Allocate**\.
 **Note**  
-If your account supports EC2\-Classic, first select **EC2\-VPC** from the **Network platform** list\.
+If your account supports EC2\-Classic, first choose **VPC**\.
 
 1. Select the Elastic IP address from the list, choose **Actions**, and then choose **Associate Address**\.
 
-1. In the dialog box, choose **Instance** from the **Associate with** list, and then select your instance from the **Instance** list\. Choose **Yes, Associate** when you're done\.
+1. For **Resource type**, ensure that **Instance** is selected\. Choose your instance from the **Instance** list\. Choose **Associate** when you're done\.
 
 Your instance is now accessible from the Internet\. You can connect to your instance through its Elastic IP address using SSH or Remote Desktop from your home network\. For more information about how to connect to a Linux instance, see [Connecting to Your Linux Instance](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html) in the *Amazon EC2 User Guide for Linux Instances*\. For more information about how to connect to a Windows instance, see [Connect to Your Windows Instance Using RDP](http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/connecting_to_windows_instance.html) in the *Amazon EC2 User Guide for Windows Instances*\. 
 

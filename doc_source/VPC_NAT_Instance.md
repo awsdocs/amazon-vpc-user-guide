@@ -208,13 +208,13 @@ After you have launched a NAT instance and completed the configuration steps abo
 
 1. Find the security group associated with your NAT instance, and choose **Edit** in the **Inbound** tab\.
 
-1. Choose **Add Rule**, select **All ICMP** from the **Type** list, and select **Custom IP** from the **Source** list\. Enter the IP address range of your private subnet, for example, `10.0.1.0/24`\. Choose **Save**\.
+1. Choose **Add Rule**, select **All ICMP \- IPv4** from the **Type** list, and select **Custom** from the **Source** list\. Enter the IP address range of your private subnet, for example, `10.0.1.0/24`\. Choose **Save**\.
 
 1. In the **Outbound** tab, choose **Edit**\.
 
-1. Choose **Add Rule**, select **SSH** from the **Type** list, and select **Custom IP** from the **Source** list\. Enter the IP address range of your private subnet, for example, `10.0.1.0/24`\. Choose **Save**\.
+1. Choose **Add Rule**, select **SSH** from the **Type** list, and select **Custom** from the **Destination** list\. Enter the IP address range of your private subnet, for example, `10.0.1.0/24`\. Choose **Save**\.
 
-1. Choose **Add Rule**, select **All ICMP** from the **Type** list, and select **Custom IP** from the **Source** list\. Enter `0.0.0.0/0`, and then choose **Save**\.
+1. Choose **Add Rule**, select **All ICMP \- IPv4** from the **Type** list, and select **Custom** from the **Destination** list\. Enter `0.0.0.0/0`, and then choose **Save**\.
 
 **To launch an instance into your private subnet**
 
