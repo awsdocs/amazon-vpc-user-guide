@@ -419,6 +419,7 @@ Due to a known issue, if you're using RHEL/CentOS 7\.4 with the latest version o
      - type: physical
        name: eth0
        subnets:
+         - type: dhcp
          - type: dhcp6
    ```
 
