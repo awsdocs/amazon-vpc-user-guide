@@ -18,7 +18,7 @@ Amazon VPC is the networking layer for Amazon EC2\. If you're new to Amazon EC2,
 
 ### VPCs and Subnets<a name="what-is-vpc-subnet"></a>
 
-A *virtual private cloud* \(VPC\) is a virtual network dedicated to your AWS account\. It is logically isolated from other virtual networks in the AWS Cloud\. You can launch your AWS resources, such as Amazon EC2 instances, into your VPC\. You can configure your VPC by modifying its IP address range, create subnets, and configure route tables, network gateways, and security settings\.
+A *virtual private cloud* \(VPC\) is a virtual network dedicated to your AWS account\. It is logically isolated from other virtual networks in the AWS Cloud\. You can launch your AWS resources, such as Amazon EC2 instances, into your VPC\. You can configure your VPC by modifying its IP address range; create subnets; and configure route tables, network gateways, and security settings\.
 
 A *subnet* is a range of IP addresses in your VPC\. You can launch AWS resources into a specified subnet\. Use a public subnet for resources that must be connected to the internet, and a private subnet for resources that won't be connected to the internet\. For more information about public and private subnets, see [VPC and Subnet Basics](VPC_Subnets.md#vpc-subnet-basics)\.
 
