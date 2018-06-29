@@ -196,7 +196,7 @@ You can create an egress\-only Internet gateway for your VPC to enable instances
 
 ## Working with Route Tables<a name="WorkWithRouteTables"></a>
 
-This section shows you how to work with route tables\.
+The following tasks show you how to work with route tables\.
 
 **Note**  
 When you use the wizard in the console to create a VPC with a gateway, the wizard automatically updates the route tables to use the gateway\. If you're using the command line tools or API to set up your VPC, you must update the route tables yourself\.
@@ -247,7 +247,7 @@ Subnets that aren't explicitly associated with any route table have an implicit 
 
 ### Creating a Custom Route Table<a name="CustomRouteTable"></a>
 
-You can create a custom route table for your VPC using the Amazon VPC console\. 
+You can create a custom route table for your VPC using the Amazon VPC console\.
 
 **To create a custom route table**
 

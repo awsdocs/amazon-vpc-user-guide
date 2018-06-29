@@ -18,7 +18,7 @@ Amazon VPC is the networking layer for Amazon EC2\. If you're new to Amazon EC2,
 
 ### VPCs and Subnets<a name="what-is-vpc-subnet"></a>
 
-A *virtual private cloud* \(VPC\) is a virtual network dedicated to your AWS account\. It is logically isolated from other virtual networks in the AWS Cloud\. You can launch your AWS resources, such as Amazon EC2 instances, into your VPC\. You can configure your VPC by modifying its IP address range; create subnets; and configure route tables, network gateways, and security settings\.
+A *virtual private cloud* \(VPC\) is a virtual network dedicated to your AWS account\. It is logically isolated from other virtual networks in the AWS Cloud\. You can launch your AWS resources, such as Amazon EC2 instances, into your VPC\. You can specify an IP address range for the VPC, add subnets, associate security groups, and configure route tables\.
 
 A *subnet* is a range of IP addresses in your VPC\. You can launch AWS resources into a specified subnet\. Use a public subnet for resources that must be connected to the internet, and a private subnet for resources that won't be connected to the internet\. For more information about public and private subnets, see [VPC and Subnet Basics](VPC_Subnets.md#vpc-subnet-basics)\.
 
@@ -88,7 +88,7 @@ To use AWS PrivateLink, create an interface VPC endpoint for a service in your V
 
 ## How to Get Started with Amazon VPC<a name="howto"></a>
 
-To get a hands\-on introduction to Amazon VPC, complete the exercise [Getting Started](GetStarted.md)\. The exercise guides you through the steps to create a nondefault VPC with a public subnet, and to launch an instance into your subnet\.
+To get a hands\-on introduction to Amazon VPC, complete the exercise [Getting Started with Amazon VPC](GetStarted.md)\. The exercise guides you through the steps to create a nondefault VPC with a public subnet, and to launch an instance into your subnet\.
 
 If you have a default VPC, and you want to get started launching instances into your VPC without performing any additional configuration on your VPC, see [Launching an EC2 Instance into Your Default VPC](default-vpc.md#launching-into)\.
 

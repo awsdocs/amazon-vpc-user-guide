@@ -2,6 +2,23 @@
 
 An interface VPC endpoint \(interface endpoint\) enables you to connect to services powered by AWS PrivateLink\. These services include some AWS services, services hosted by other AWS customers and partners in their own VPCs \(referred to as *endpoint services*\), and supported AWS Marketplace partner services\. The owner of the service is the *service provider*, and you, as the principal creating the interface endpoint, are the *service consumer*\.
 
+The following services are supported:
++ [Amazon API Gateway](http://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-private-apis.html)
++ [Amazon CloudWatch](http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch-and-interface-VPC.html)
++ [Amazon CloudWatch Events](http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/cloudwatch-events-and-interface-VPC.html)
++ [Amazon CloudWatch Logs](http://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/cloudwatch-logs-and-interface-VPC.html)
++ [AWS CodeBuild](http://docs.aws.amazon.com/codebuild/latest/userguide/use-vpc-endpoints-with-codebuild.html)
++ Amazon EC2 API
++ Elastic Load Balancing API
++ [AWS Key Management Service](http://docs.aws.amazon.com/kms/latest/developerguide/kms-vpc-endpoint.html)
++ [Amazon Kinesis Data Streams](http://docs.aws.amazon.com/streams/latest/dev/vpc.html)
++ [Amazon SageMaker Runtime](http://docs.aws.amazon.com/sagemaker/latest/dg/interface-vpc-endpoint.html)
++ AWS Service Catalog
++ [Amazon SNS](http://docs.aws.amazon.com/sns/latest/dg/sns-vpc.html)
++ [AWS Systems Manager](http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-setting-up-vpc.html)
++ [Endpoint services](endpoint-service.md) hosted by other AWS accounts
++ Supported AWS Marketplace partner services
+
 The following are the general steps for setting up an interface endpoint:
 
 1. Choose the VPC in which to create the interface endpoint, and provide the name of the AWS service, endpoint service, or AWS Marketplace service to which you're connecting\.
@@ -18,8 +35,6 @@ An endpoint network interface is a requester\-managed network interface\. You ca
 
 Services cannot initiate requests to resources in your VPC through the endpoint\. An endpoint only returns responses to traffic initiated from resources in your VPC\.
 
-For more information about supported services, see [VPC Endpoints](vpc-endpoints.md)\.
-
 **Topics**
 + [Private DNS](#vpce-private-dns)
 + [Interface Endpoint Properties and Limitations](#vpce-interface-limitations)
@@ -35,7 +50,7 @@ For more information about supported services, see [VPC Endpoints](vpc-endpoints
 
 When you create an interface endpoint, we generate endpoint\-specific DNS hostnames that you can use to communicate with the service\. For AWS services and AWS Marketplace partner services, you can optionally enable private DNS for the endpoint\. This option associates a private hosted zone with your VPC\. The hosted zone contains a record set for the default DNS name for the service \(for example, `ec2.us-east-1.amazonaws.com`\) that resolves to the private IP addresses of the endpoint network interfaces in your VPC\. This enables you to make requests to the service using its default DNS hostname instead of the endpoint\-specific DNS hostnames\. For example, if your existing applications make requests to an AWS service, they can continue to make requests through the interface endpoint without requiring any configuration changes\.
 
-In the following diagram, you have created an interface endpoint for Amazon Kinesis Data Streams and an endpoint network interface in subnet 2\. You have not enabled private DNS for the interface endpoint\. Instances in either subnet can communicate with Amazon Kinesis Data Streams through the interface endpoint using an endpoint\-specific DNS hostname \(DNS name B\)\. Instance in subnet 1 can communicate with Amazon Kinesis Data Streams over public IP address space in the AWS Region using the default DNS name for the service \(DNS name A\)\.
+In the following diagram, you have created an interface endpoint for Amazon Kinesis Data Streams and an endpoint network interface in subnet 2\. You have not enabled private DNS for the interface endpoint\. Instances in either subnet can communicate with Amazon Kinesis Data Streams through the interface endpoint using an endpoint\-specific DNS hostname \(DNS name B\)\. Instance in subnet 1 can communicate with Amazon Kinesis Data Streams over public IP address space in the AWS region using the default DNS name for the service \(DNS name A\)\.
 
 ![\[Using an interface endpoint to access Kinesis\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/vpc-endpoint-kinesis-diagram.png)
 
@@ -49,7 +64,7 @@ To use private DNS, you must set the following VPC attributes to `true`: `enable
 ## Interface Endpoint Properties and Limitations<a name="vpce-interface-limitations"></a>
 
 To use interface endpoints, you need to be aware of their properties and current limitations:
-+ An interface endpoint can be accessed through an AWS Direct Connect connection\. It can also be accessed through an intra\-region VPC peering connection from C5 and M5 instance types only\. You cannot access an interface endpoint through an AWS VPN connection, an inter\-region VPC peering connection, or an intra\-region VPC peering connection from an instance type other than C5 or M5\.
++ An interface endpoint can be accessed through an AWS Direct Connect connection\. It can also be accessed through an intra\-region VPC peering connection from C5, `i3.metal`, and M5 instance types only\. You cannot access an interface endpoint through an AWS VPN connection, an inter\-region VPC peering connection, or an intra\-region VPC peering connection from an instance type other than C5, `i3.metal`, or M5\.
 + For each interface endpoint, you can choose only one subnet per Availability Zone\.
 + Interface endpoints do not support the use of endpoint policies\. Full access to the service through the interface endpoint is allowed\.
 + Services may not be available in all Availability Zones through an interface endpoint\. To find out which Availability Zones are supported, use the [describe\-vpc\-endpoint\-services](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-services.html) command or use the Amazon VPC console\. For more information, see [Creating an Interface Endpoint](#create-interface-endpoint)\.

@@ -1,6 +1,6 @@
 # Gateway VPC Endpoints<a name="vpce-gateway"></a>
 
-To create and set up a gateway endpoint, follow these general steps: 
+To create and set up a gateway endpoint, follow these general steps:
 
 1. Specify the VPC in which to create the endpoint, and the service to which you're connecting\. A service is identified by a *prefix list*—the name and ID of a service for a region\. A prefix list ID uses the form `pl-xxxxxxx` and a prefix list name uses the form `com.amazonaws.<region>.<service>`\. Use the prefix list name \(service name\) to create an endpoint\.
 

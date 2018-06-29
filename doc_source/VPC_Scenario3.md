@@ -2,8 +2,6 @@
 
 The configuration for this scenario includes a virtual private cloud \(VPC\) with a public subnet and a private subnet, and a virtual private gateway to enable communication with your own network over an IPsec VPN tunnel\. We recommend this scenario if you want to extend your network into the cloud and also directly access the Internet from your VPC\. This scenario enables you to run a multi\-tiered application with a scalable web front end in a public subnet, and to house your data in a private subnet that is connected to your network by an IPsec VPN connection\.
 
-This topic assumes that you'll use the VPC wizard in the Amazon VPC console to create the VPC and the VPN connection\.
-
 This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnets with associated IPv6 CIDR blocks\. Instances launched into the subnets can receive IPv6 addresses\. Currently, we do not support IPv6 communication over a VPN connection; however, instances in the VPC can communicate with each other via IPv6, and instances in the public subnet can communicate over the Internet via IPv6\. For more information about IPv4 and IPv6 addressing, see [IP Addressing in Your VPC](vpc-ip-addressing.md)\.
 
 **Topics**
@@ -102,7 +100,7 @@ If you associate an IPv6 CIDR block with your VPC and subnets, your route tables
 
 **Main Route Table**
 
-The second entry is the default route that's automatically added for local routing in the VPC over IPv6\. 
+The second entry is the default route that's automatically added for local routing in the VPC over IPv6\.
 
 
 | Destination | Target | 
@@ -225,26 +223,34 @@ These procedures include optional steps for enabling and configuring IPv6 commun
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. On the dashboard, choose **Start VPC Wizard**\. 
+1. On the dashboard, choose **Create VPC**\.  
+![\[The Amazon VPC dashboard\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/VPC-dashboard.png)
 
-1. Select the third option, **VPC with Public and Private Subnets and Hardware VPN Access**, and then choose **Select**\.
+1. Choose the third option, **VPC with Public and Private Subnets and Hardware VPN Access**, and then choose **Select**\.
 
-1. For **VPC name**, **Public subnet name** and **Private subnet name**, you can name your VPC and subnets to help you identify them later in the console\. You can specify your own IPv4 CIDR block range for the VPC and subnets, or you can leave the default values\. 
+1. On the **VPC with Public and Private Subnets and Hardware VPN Access** page, do the following:
 
-1. \(Optional, IPv6\-only\) For **IPv6 CIDR block**, choose **Amazon\-provided IPv6 CIDR block**\. For **Public subnet's IPv6 CIDR**, choose **Specify a custom IPv6 CIDR** and specify the hexadecimal pair value for your subnet, or leave the default value\. For **Private subnet's IPv6 CIDR**, choose **Specify a custom IPv6 CIDR**\. Specify the hexadecimal pair value for the IPv6 subnet or leave the default value\.
+   1. \(Optional\) Modify the IPv4 CIDR block ranges for the VPC and subnets as needed, or keep the default values\.
 
-1. Choose **Next**\.
+   1. \(Optional\) Name your VPC and subnets\. This helps you identify them later in the console\.
 
-1. On the **Configure your VPN** page, do the following, and then choose **Create VPC**: 
-   + In **Customer Gateway IP**, specify the public IP address of your VPN router\.
-   + Optionally specify a name for your customer gateway and VPN connection\.
-   + In **Routing Type**, select one of the routing options as follows:
-     + If your VPN router supports Border Gateway Protocol \(BGP\), select **Dynamic \(requires BGP\)**\.
-     + If your VPN router does not support BGP, choose **Static**\. In **IP Prefix**, add each IP range for your network in CIDR notation\.
+   1. \(Optional, IPv6\-only\) For **IPv6 CIDR block**, choose **Amazon\-provided IPv6 CIDR block**\. For **Public subnet's IPv6 CIDR**, choose **Specify a custom IPv6 CIDR** and specify the hexadecimal pair value for your subnet, or keep the default value\. For **Private subnet's IPv6 CIDR**, choose **Specify a custom IPv6 CIDR**\. Specify the hexadecimal pair value for the IPv6 subnet or keep the default value\.
 
-     For more information, see [VPN Routing Options](VPC_VPN.md#VPNRoutingTypes)\.
+   1. Choose **Next**\.
 
-1. When the wizard is done, choose **VPN Connections** in the navigation pane\. Select the VPN connection that the wizard created, and choose **Download Configuration**\. In the dialog box, select the vendor for your customer gateway, the platform, and the software version, and then choose **Yes, Download**\. 
+1. On the **Configure your VPN** page, do the following:
+
+   1. For **Customer Gateway IP**, specify the public IP address of your VPN router\.
+
+   1. \(Optional\) Name your customer gateway and VPN connection\.
+
+   1. For **Routing Type**, select one of the [routing options](VPC_VPN.md#VPNRoutingTypes):
+      + If your VPN router supports Border Gateway Protocol \(BGP\), select **Dynamic \(requires BGP\)**\.
+      + If your VPN router does not support BGP, choose **Static**\. For **IP Prefix**, add each IP range for your network in CIDR notation\.
+
+   1. Choose **Create VPC**
+
+1. When the wizard is done, choose **VPN Connections** in the navigation pane\. Select the VPN connection that the wizard created, and choose **Download Configuration**\. In the dialog box, select the vendor for your customer gateway, the platform, and the software version, and then choose **Yes, Download**\.
 
 1. Save the text file containing the VPN configuration and give it to the network administrator along with this guide: [Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/)\. The VPN won't work until the network administrator configures the customer gateway\.
 
@@ -258,11 +264,11 @@ Create the WebServerSG and DBServerSG security groups\. These security groups wi
 
 1. Choose **Create Security Group**\.
 
-1. Provide a name and description for the security group\. In this topic, the name `WebServerSG` is used as an example\. Select the ID of your VPC from the **VPC** list, and then choose **Yes, Create**\.
+1. Provide a name and description for the security group\. In this topic, the name `WebServerSG` is used as an example\. Select the ID of your VPC from **VPC**, and then choose **Yes, Create**\.
 
 1. Choose **Create Security Group** again\.
 
-1. Provide a name and description for the security group\. In this topic, the name `DBServerSG` is used as an example\. Select the ID of your VPC from the **VPC** list, and then choose **Yes, Create**\.
+1. Provide a name and description for the security group\. In this topic, the name `DBServerSG` is used as an example\. Select the ID of your VPC from **VPC**, and then choose **Yes, Create**\.
 
 **To add rules to the WebServerSG security group**
 
@@ -270,19 +276,19 @@ Create the WebServerSG and DBServerSG security groups\. These security groups wi
 
 1. On the **Inbound Rules** tab, choose **Edit** and add rules for inbound traffic as follows:
 
-   1. Select **HTTP** from the **Type** list, and enter `0.0.0.0/0` in the **Source** field\.
+   1. Select **HTTP** from **Type**, and type `0.0.0.0/0` in **Source**\.
 
-   1. Choose **Add another rule**, then select **HTTPS** from the **Type** list, and enter `0.0.0.0/0` in the **Source** field\.
+   1. Choose **Add another rule**, then select **HTTPS** from **Type**, and type `0.0.0.0/0` for **Source**\.
 
-   1. Choose **Add another rule**, then select **SSH** from the **Type** list\. Enter your network's public IP address range in the **Source** field\. 
+   1. Choose **Add another rule**, then select **SSH** from **Type**\. Type your network's public IP address range in **Source**\.
 
-   1. Choose **Add another rule**, then select **RDP** from the **Type** list\. Enter your network's public IP address range in the **Source** field\. 
+   1. Choose **Add another rule**, then select **RDP** from **Type**\. Type your network's public IP address range in **Source**\.
 
-   1. \(Optional, IPv6\-only\) Choose **Add another rule**, **Type**, **HTTP**\. For **Source**, enter `::/0`\. 
+   1. \(Optional, IPv6\-only\) Choose **Add another rule**, **Type**, **HTTP**\. For **Source**, type `::/0`\. 
 
-   1. \(Optional, IPv6\-only\) Choose **Add another rule**, **Type**, **HTTPS**\. For **Source**, enter `::/0`\. 
+   1. \(Optional, IPv6\-only\) Choose **Add another rule**, **Type**, **HTTPS**\. For **Source**, type `::/0`\. 
 
-   1. \(Optional, IPv6\-only\) Choose **Add another rule**, **Type**, **SSH** \(for Linux\) or **RDP** \(for Windows\)\. For **Source**, enter your network's IPv6 address range\. 
+   1. \(Optional, IPv6\-only\) Choose **Add another rule**, **Type**, **SSH** \(for Linux\) or **RDP** \(for Windows\)\. For **Source**, type your network's IPv6 address range\.
 
    1. Choose **Save**\.
 
@@ -290,13 +296,13 @@ Create the WebServerSG and DBServerSG security groups\. These security groups wi
 
    1. Locate the default rule that enables all outbound traffic, and then choose **Remove**\. 
 
-   1. Select **MS SQL** from the **Type** list\. In the **Destination** field, specify the ID of the DBServerSG security group\.
+   1. Select **MS SQL** from **Type**\. For **Destination**, type the ID of the DBServerSG security group\.
 
-   1. Choose **Add another rule**, then select **MySQL** from the **Type** list\. In the **Destination** field, specify the ID of the DBServerSG security group\.
+   1. Choose **Add another rule**, then select **MySQL** from **Type**\. For **Destination**, specify the ID of the DBServerSG security group\.
 
-   1. Choose **Add another rule**, then select **HTTPS** from the **Type** list\. In the **Destination** field, enter `0.0.0.0/0`\.
+   1. Choose **Add another rule**, then select **HTTPS** from **Type**\. For **Destination**, type `0.0.0.0/0`\.
 
-   1. Choose **Add another rule**, then select **HTTP** from the **Type** list\. In the **Destination** field, enter `0.0.0.0/0`\.
+   1. Choose **Add another rule**, then select **HTTP** from **Type**\. For **Destination**, type `0.0.0.0/0`\.
 
    1. Choose **Save**\.
 
@@ -306,27 +312,27 @@ Create the WebServerSG and DBServerSG security groups\. These security groups wi
 
 1. On the **Inbound Rules** tab, choose **Edit** and add rules for inbound traffic as follows:
 
-   1. Select **SSH** from the **Type** list, and enter the IP address range of your network in the **Source** field\.
+   1. Select **SSH** from **Type**, and type the IP address range of your network in **Source**\.
 
-   1. Choose **Add another rule**, then select **RDP** from the **Type** list, and enter the IP address range of your network in the **Source** field\.
+   1. Choose **Add another rule**, then select **RDP** from **Type**, and type the IP address range of your network in **Source**\.
 
-   1. Choose **Add another rule**, then select **MS SQL** from the **Type** list\. Specify the ID of your WebServerSG security group in the **Source** field\. 
+   1. Choose **Add another rule**, then select **MS SQL** from **Type**\. Type the ID of your WebServerSG security group in **Source**\.
 
-   1. Choose **Add another rule**, then select **MYSQL** from the **Type** list\. Specify the ID of your WebServerSG security group in the **Source** field\. 
+   1. Choose **Add another rule**, then select **MYSQL** from **Type**\. Type the ID of your WebServerSG security group in **Source**\.
 
    1. Choose **Save**\.
 
 1. On the **Outbound Rules** tab, choose **Edit** and add rules for outbound traffic as follows:
 
-   1. Locate the default rule that enables all outbound traffic, and then choose **Remove**\. 
+   1. Locate the default rule that enables all outbound traffic, and then choose **Remove**\.
 
-   1. Select **HTTP** from the **Type** list\. In the **Destination** field, enter `0.0.0.0/0`\.
+   1. Select **HTTP** from **Type**\. For **Destination**, type `0.0.0.0/0`\.
 
-   1. Choose **Add another rule**, then select **HTTPS** from the **Type** list\. In the **Destination** field, enter `0.0.0.0/0`\.
+   1. Choose **Add another rule**, then select **HTTPS** from **Type**\. For **Destination**, type `0.0.0.0/0`\.
 
    1. Choose **Save**\.
 
-After your network administrator configures your customer gateway, you can launch instances into your VPC\. 
+After your network administrator configures your customer gateway, you can launch instances into your VPC\.
 
 **To launch an instance \(web server or database server\)**
 
@@ -338,9 +344,9 @@ After your network administrator configures your customer gateway, you can launc
 **Note**  
 If you intend to use your instance for IPv6 communication, you must choose a supported instance type; for example, T2\. For more information, see [Amazon EC2 Instance Types](https://aws.amazon.com/ec2/instance-types/)\.
 
-1. On the **Configure Instance Details** page, select the VPC that you created earlier from the **Network** list, and then select a subnet\. For example, launch a web server into the public subnet and the database server into the private subnet\. 
+1. On the **Configure Instance Details** page, select the VPC that you created earlier from **Network**, and then select a subnet\. For example, launch a web server into the public subnet and the database server into the private subnet\.
 
-1. \(Optional\) By default, instances launched into a nondefault VPC are not assigned a public IPv4 address\. To be able to connect to your instance in the public subnet, you can assign a public IPv4 address now, or allocate an Elastic IP address and assign it to your instance after it's launched\. To assign a public IP address now, ensure that you select **Enable** from the **Auto\-assign Public IP** list\. You do not need to assign a public IP address to an instance in the private subnet\.
+1. \(Optional\) By default, instances launched into a nondefault VPC are not assigned a public IPv4 address\. To be able to connect to your instance in the public subnet, you can assign a public IPv4 address now, or allocate an Elastic IP address and assign it to your instance after it's launched\. To assign a public IP address now, ensure that you select **Enable** from **Auto\-assign Public IP**\. You do not need to assign a public IP address to an instance in the private subnet\.
 **Note**  
 You can only use the auto\-assign public IP address feature with a single, new network interface with the device index of eth0\. For more information, see [Assigning a Public IPv4 Address During Instance Launch](vpc-ip-addressing.md#vpc-public-ip)\. 
 
@@ -368,7 +374,7 @@ If your account supports EC2\-Classic, first choose **VPC**\.
 
 1. Select the Elastic IP address from the list, and choose **Actions**, **Associate address**\.
 
-1. Select the network interface or instance\. Select the address to associate the Elastic IP address with from the corresponding **Private IP** list, and then choose **Associate**\.
+1. Select the network interface or instance\. Select the address to associate the Elastic IP address with from the corresponding **Private IP**, and then choose **Associate**\.
 
 In scenario 3, you need a DNS server that enables your public subnet to communicate with servers on the Internet, and you need another DNS server that enables your VPN\-only subnet to communicate with servers in your network\.
 
@@ -382,13 +388,13 @@ Your VPC automatically has a set of DHCP options with domain\-name\-servers=Amaz
 
 1. Choose **Create DHCP options set**\.
 
-1. In the **Create DHCP options set** dialog box, in the **Domain name servers** box, specify the address of the Amazon DNS server \(AmazonProvidedDNS\) and the address of your DNS server \(for example,` 192.0.2.1`\), separated by a comma, and then choose **Yes, Create**\. 
+1. In the **Create DHCP options set** dialog box, for **Domain name servers**, specify the address of the Amazon DNS server \(AmazonProvidedDNS\) and the address of your DNS server \(for example,` 192.0.2.1`\), separated by a comma, and then choose **Yes, Create**\.
 
 1. In the navigation pane, choose **Your VPCs**\.
 
 1. Select the VPC, and then choose **Actions**, **Edit DHCP Options Set**\.
 
-1. Select the ID of the new set of options from the **DHCP options set** list and then choose **Save**\.
+1. Select the ID of the new set of options from **DHCP options set** and then choose **Save**\.
 
 1. \(Optional\) The VPC now uses this new set of DHCP options and therefore has access to both DNS servers\. If you want, you can delete the original set of options that the VPC used\.
 

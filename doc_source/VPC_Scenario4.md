@@ -1,8 +1,6 @@
 # Scenario 4: VPC with a Private Subnet Only and AWS Managed VPN Access<a name="VPC_Scenario4"></a>
 
-The configuration for this scenario includes a virtual private cloud \(VPC\) with a single private subnet, and a virtual private gateway to enable communication with your own network over an IPsec VPN tunnel\. There is no Internet gateway to enable communication over the Internet\. We recommend this scenario if you want to extend your network into [the cloud](http://aws.amazon.com/what-is-cloud-computing/) using Amazon's infrastructure without exposing your network to the Internet\. 
-
-This topic assumes that you'll use the VPC wizard in the Amazon VPC console to create the VPC and the VPN connection\.
+The configuration for this scenario includes a virtual private cloud \(VPC\) with a single private subnet, and a virtual private gateway to enable communication with your own network over an IPsec VPN tunnel\. There is no Internet gateway to enable communication over the Internet\. We recommend this scenario if you want to extend your network into [the cloud](https://aws.amazon.com/what-is-cloud-computing/) using Amazon's infrastructure without exposing your network to the Internet\.
 
 This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnet with associated IPv6 CIDR blocks\. Instances launched into the subnet can receive IPv6 addresses\. Currently, we do not support IPv6 communication over a VPN connection; however, instances in the VPC can communicate with each other via IPv6\. For more information about IPv4 and IPv6 addressing, see [IP Addressing in Your VPC](vpc-ip-addressing.md)\.
 
@@ -19,14 +17,14 @@ The following diagram shows the key components of the configuration for this sce
 ![\[Diagram for scenario 4: VPC with only a virtual private gateway\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/Case4_Diagram.png)
 
 **Important**  
-For this scenario, the *[Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/)* describes what your network administrator needs to do to configure the Amazon VPC customer gateway on your side of the VPN connection\.
+For this scenario, the [Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/) describes what your network administrator needs to do to configure the Amazon VPC customer gateway on your side of the VPN connection\.
 
 The configuration for this scenario includes the following:
 + A virtual private cloud \(VPC\) with a size /16 CIDR \(example: 10\.0\.0\.0/16\)\. This provides 65,536 private IP addresses\.
 + A VPN\-only subnet with a size /24 CIDR \(example: 10\.0\.0\.0/24\)\. This provides 256 private IP addresses\.
 + A VPN connection between your VPC and your network\. The VPN connection consists of a virtual private gateway located on the Amazon side of the VPN connection and a customer gateway located on your side of the VPN connection\.
 + Instances with private IP addresses in the subnet range \(examples: 10\.0\.0\.5, 10\.0\.0\.6, and 10\.0\.0\.7\), which enables the instances to communicate with each other and other instances in the VPC\.
-+ A custom route table associated with the subnet\. The route table contains a route that enables instances in the subnet to communicate with other instances in the VPC, and a route that enables instances in the subnet to communicate directly with your network\.
++ The main route table contains a route that enables instances in the subnet to communicate with other instances in the VPC\. Route propagation is enabled, so a route that enables instances in the subnet to communicate directly with your network appears as a propagated route in the main route table\.
 
 For more information about subnets, see [VPCs and Subnets](VPC_Subnets.md) and [IP Addressing in Your VPC](vpc-ip-addressing.md)\. For more information about your VPN connection, see [AWS Managed VPN Connections](VPC_VPN.md)\. For more information about configuring a customer gateway, see the * [Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/)*\.
 
@@ -36,7 +34,7 @@ You can optionally enable IPv6 for this scenario\. In addition to the components
 + A size /56 IPv6 CIDR block associated with the VPC \(example: 2001:db8:1234:1a00::/56\)\. AWS automatically assigns the CIDR; you cannot choose the range yourself\.
 + A size /64 IPv6 CIDR block associated with the VPN\-only subnet \(example: 2001:db8:1234:1a00::/64\)\. You can choose the range for your subnet from the range allocated to the VPC\. You cannot choose the size of the IPv6 CIDR\.
 + IPv6 addresses assigned to the instances from the subnet range \(example: 2001:db8:1234:1a00::1a\)\.
-+ A route table entry in the custom route table that enable instances in the private subnet to use IPv6 to communicate with each other\.
++ A route table entry in the main route table that enables instances in the private subnet to use IPv6 to communicate with each other\.
 
 ![\[IPv6-enabled VPC with a VPN-only subnet\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/scenario-4-ipv6-diagram.png)
 
@@ -112,26 +110,34 @@ Use the VPC wizard to create your VPC and a VPN connection\.
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. On the dashboard, choose **Start VPC Wizard**\. 
+1. On the dashboard, choose **Create VPC**\.  
+![\[The Amazon VPC dashboard\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/VPC-dashboard.png)
 
-1. Select the fourth option, **VPC with a Private Subnet Only and Hardware VPN Access**, and then choose **Select**\.
+1. Choose the fourth option, **VPC with a Private Subnet Only and Hardware VPN Access**, and then choose **Select**\.
 
-1. On the first page of the wizard, confirm the details for your VPC and private subnet\. Naming your VPC and subnet helps you identify them later in the console\. 
+1. On the **VPC with a Private Subnet Only and Hardware VPN Access** page, do the following:
 
-1. \(Optional, IPv6\-only\) For **IPv6 CIDR block**, choose **Amazon\-provided IPv6 CIDR block**\. For **Private subnet's IPv6 CIDR**, choose **Specify a custom IPv6 CIDR**\. Specify the hexadecimal pair value for the IPv6 subnet or leave the default value \(`00`\)\.
+   1. \(Optional\) Modify the IPv4 CIDR block ranges for the VPC and subnet as needed, or keep the default values\.
 
-1. Choose **Next**\.
+   1. \(Optional\) Name your VPC and subnet\. This helps you identify them later in the console\.
 
-1. On the **Configure your VPN** page, do the following, and then choose **Create VPC**: 
-   + In **Customer Gateway IP**, specify the public IP address of your VPN router\.
-   + Optionally specify a name for your customer gateway and VPN connection\.
-   + In **Routing Type**, select one of the routing options as follows:
-     + If your VPN router supports Border Gateway Protocol \(BGP\), select **Dynamic \(requires BGP\)**\.
-     + If your VPN router does not support BGP, choose **Static**\. In **IP Prefix**, add each IP range for your network in CIDR notation\.
+   1. \(Optional, IPv6\-only\) For **IPv6 CIDR block**, choose **Amazon\-provided IPv6 CIDR block**\. For **Private subnet's IPv6 CIDR**, choose **Specify a custom IPv6 CIDR**\. Specify the hexadecimal pair value for the IPv6 subnet or keep the default value \(`00`\)\.
 
-     For more information, see [VPN Routing Options](VPC_VPN.md#VPNRoutingTypes)\.
+   1. Choose **Next**\.
 
-1. When the wizard is done, choose **VPN Connections** in the navigation pane\. Select the VPN connection that the wizard created, and choose **Download Configuration**\. In the dialog box, select the vendor for the customer gateway, the platform, and the software version, and then choose **Yes, Download**\. 
+1. On the **Configure your VPN** page, do the following:
+
+   1. For **Customer Gateway IP**, specify the public IP address of your VPN router\.
+
+   1. \(Optional\) Name your customer gateway and VPN connection\.
+
+   1. For **Routing Type**, select one of the [routing options](VPC_VPN.md#VPNRoutingTypes):
+      + If your VPN router supports Border Gateway Protocol \(BGP\), select **Dynamic \(requires BGP\)**\.
+      + If your VPN router does not support BGP, choose **Static**\. For **IP Prefix**, add each IP range for your network, in CIDR notation\.
+
+   1. Choose **Create VPC**\.
+
+1. When the wizard is done, choose **VPN Connections** in the navigation pane\. Select the VPN connection that the wizard created, and choose **Download Configuration**\. In the dialog box, select the vendor for the customer gateway, the platform, and the software version, and then choose **Yes, Download**\.
 
 1. Save the text file containing the VPN configuration and give it to the network administrator along with this guide: [Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/)\. The VPN won't work until the network administrator configures the customer gateway\.
 
@@ -145,9 +151,9 @@ For this scenario, you need to update the default security group with new inboun
 
 1. On the **Inbound Rules** tab, choose **Edit** and add rules for inbound traffic as follows:
 
-   1. Select **SSH** from the **Type** list, and enter your network's private IP address range in the **Source** field; for example, `172.0.0.0/8`\.
+   1. Select **SSH** from **Type**, and type your network's private IP address range in **Source** \(for example, `172.0.0.0/8`\)\.
 
-   1. Choose **Add another rule**, then select **RDP** from the **Type** list, and enter your network's private IP address range in the **Source** field\.
+   1. Choose **Add another rule**, then select **RDP** from **Type**, and type your network's private IP address range in **Source**\.
 
    1. Choose **Save**\.
 

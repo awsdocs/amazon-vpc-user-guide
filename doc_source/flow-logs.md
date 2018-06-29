@@ -108,7 +108,7 @@ The IAM role that's associated with your flow log must have sufficient permissio
 }
 ```
 
-You must also ensure that your role has a trust relationship that allows the flow logs service to assume the role \(in the IAM console, choose your role, and then choose **Edit trust relationship** to view the trust relationship\):
+You must also ensure that your role has a trust relationship that allows the flow logs service to assume the role:
 
 ```
 {
@@ -126,7 +126,7 @@ You must also ensure that your role has a trust relationship that allows the flo
 }
 ```
 
-Alternatively, you can follow the procedures below to create a new role for use with flow logs\.
+You can update an existing role or use the following procedure to create a new role for use with flow logs\.
 
 ### Creating a Flow Logs Role<a name="create-flow-logs-role"></a>
 
@@ -134,25 +134,25 @@ Alternatively, you can follow the procedures below to create a new role for use 
 
 1. Open the IAM console at [https://console\.aws\.amazon\.com/iam/](https://console.aws.amazon.com/iam/)\.
 
-1. In the navigation pane, choose **Roles**, **Create role**\.
+1. In the navigation pane, choose **Roles**\.
 
-1. Choose **EC2** and then the **EC2** use case\. Choose **Next: Permissions**\.
+1. Choose **Create role**\.
 
-1. On the **Attach permissions policy** page, choose **Next: Review**\.
+1. Choose **EC2** as the service that will use this role and then **EC2** as the use case\. Choose **Next: Permissions**\.
 
-1. Enter a name for your role; for example, `Flow-Logs-Role`, and optionally provide a description\. Choose **Create role**\.
+1. On the **Attach permissions policies** page, choose **Next: Review**\.
 
-1. Select the name of your role\. Under **Permissions**, choose **Add inline policy**\.
+1. Type a name for your role \(for example, `Flow-Logs-Role`\) and optionally provide a description\. Choose **Create role**\.
 
-1. Choose the **JSON** tab\.
+1. Select the name of your role\. For **Permissions**, choose **Add inline policy** and choose the **JSON** tab\.
 
-1. In the section [IAM Roles for Flow Logs](#flow-logs-iam) above, copy the first policy and paste it in the window\. Choose **Review policy**\.
+1. Copy the first policy from [IAM Roles for Flow Logs](#flow-logs-iam) and paste it in the window\. Choose **Review policy**\.
 
-1. Enter a name for your policy, and then choose **Create policy**\.
+1. Type a name for your policy, and then choose **Create policy**\.
 
-1. In the section [IAM Roles for Flow Logs](#flow-logs-iam) above, copy the second policy \(the trust relationship\), and then choose **Trust relationships**, **Edit trust relationship**\. Delete the existing policy document, and paste in the new one\. When you are done, choose **Update Trust Policy**\. 
+1. Select the name of your role\. For **Trust relationships**, choose **Edit trust relationship**\. In the existing policy document, change the service from `ec2.amazonaws.com` to `vpc-flow-logs.amazonaws.com`\. Choose **Update Trust Policy**\.
 
-1. On the **Summary** page, take note of the ARN for your role\. You need this ARN when you create your flow log\. 
+1. On the **Summary** page, note the ARN for your role\. You need this ARN when you create your flow log\.
 
 ## Controlling the Use of Flow Logs<a name="controlling-use-of-flow-logs"></a>
 

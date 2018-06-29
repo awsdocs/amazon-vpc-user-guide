@@ -102,7 +102,7 @@ When you create a subnet, we automatically associate it with the main route tabl
 1. Select the custom route table that you just created\. The details pane displays tabs for working with its routes, associations, and route propagation\.
 
 1. On the **Routes** tab, choose **Edit**, **Add another route**, and add the following routes as necessary\. Choose **Save** when you're done\.
-   + For IPv4 traffic specify `0.0.0.0/0` in the **Destination** box, and select the internet gateway ID in the **Target** list\.
+   + For IPv4 traffic, specify `0.0.0.0/0` in the **Destination** box, and select the internet gateway ID in the **Target** list\.
    + For IPv6 traffic, specify `::/0` in the **Destination** box, and select the internet gateway ID in the **Target** list\.
 
 1. On the **Subnet Associations** tab, choose **Edit**, select the **Associate** check box for the subnet, and then choose **Save**\.

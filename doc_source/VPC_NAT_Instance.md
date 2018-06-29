@@ -168,9 +168,11 @@ You can disable the `SrcDestCheck` attribute for a NAT instance that's either ru
 
 1. In the navigation pane, choose **Instances**\.
 
-1. Select the NAT instance, choose **Actions**, select **Networking**, and then select **Change Source/Dest\. Check**\.
+1. Select the NAT instance, choose **Actions**, **Networking**, **Change Source/Dest\. Check**\.
 
 1. For the NAT instance, verify that this attribute is disabled\. Otherwise, choose **Yes, Disable**\.
+
+1. If the NAT instance has a secondary network interface, choose it from **Network interfaces** on the **Description** tab and choose the interface ID to go to the network interfaces page\. Choose **Actions**, **Change Source/Dest\. Check**, disable the setting, and choose **Save**\.
 
 **To disable source/destination checking using the command line**
 

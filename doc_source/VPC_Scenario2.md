@@ -7,8 +7,6 @@ The instances in the public subnet can send outbound traffic directly to the Int
 **Note**  
 You can also use the VPC wizard to configure a VPC with a NAT instance; however, we recommend that you use a NAT gateway\. For more information, see [NAT Gateways](vpc-nat-gateway.md)\.
 
-This topic assumes that you'll use the VPC wizard in the Amazon VPC console to create the VPC and NAT gateway\.
-
 This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnets with associated IPv6 CIDR blocks\. Instances launched into the subnets can receive IPv6 addresses, and communicate using IPv6\. Instances in the private subnet can use an egress\-only Internet gateway to connect to the Internet over IPv6, but the Internet cannot establish connections to the private instances over IPv6\. For more information about IPv4 and IPv6 addressing, see [IP Addressing in Your VPC](vpc-ip-addressing.md)\.
 
 **Topics**
@@ -225,17 +223,18 @@ If your account supports EC2\-Classic, first choose **VPC**\.
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. On the VPC dashboard, choose **Start VPC Wizard**\.
+1. On the VPC dashboard, choose **Create VPC**\.  
+![\[The Amazon VPC dashboard\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/VPC-dashboard.png)
 
-1. Choose the second option, **VPC with Public and Private Subnets**, and **Select**\.
+1. Choose the second option, **VPC with Public and Private Subnets**, and then choose **Select**\.
 
-1. For **VPC name**, **Public subnet name** and **Private subnet name**, you can name your VPC and subnets to help you identify them later in the console\. You can specify your own IPv4 CIDR block range for the VPC and subnets, or you can leave the default values\. 
+1. \(Optional\) You can name your VPC and subnets to help you identify them later in the console\. You can specify your own IPv4 CIDR block range for the VPC and subnets, or you can keep the default values\.
 
-1. \(Optional, IPv6\-only\) For **IPv6 CIDR block**, choose **Amazon\-provided IPv6 CIDR block**\. For **Public subnet's IPv6 CIDR**, choose **Specify a custom IPv6 CIDR** and specify the hexadecimal pair value for your subnet, or leave the default value\. For **Private subnet's IPv6 CIDR**, choose **Specify a custom IPv6 CIDR**\. Specify the hexadecimal pair value for the IPv6 subnet or leave the default value\.
+1. \(Optional, IPv6\-only\) For **IPv6 CIDR block**, choose **Amazon\-provided IPv6 CIDR block**\. For **Public subnet's IPv6 CIDR**, choose **Specify a custom IPv6 CIDR** and specify the hexadecimal pair value for your subnet, or keep the default value\. For **Private subnet's IPv6 CIDR**, choose **Specify a custom IPv6 CIDR**\. Specify the hexadecimal pair value for the IPv6 subnet or keep the default value\.
 
 1. In the **Specify the details of your NAT gateway** section, specify the allocation ID for an Elastic IP address in your account\.
 
-1. You can leave the rest of the default values on the page, and choose **Create VPC**\.
+1. You can keep the rest of the default values on the page, and choose **Create VPC**\.
 
 Because the WebServerSG and DBServerSG security groups reference each other, create all the security groups required for this scenario before you add rules to them\.
 

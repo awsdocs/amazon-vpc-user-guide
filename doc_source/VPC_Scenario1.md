@@ -2,8 +2,6 @@
 
 The configuration for this scenario includes a virtual private cloud \(VPC\) with a single public subnet, and an Internet gateway to enable communication over the Internet\. We recommend this configuration if you need to run a single\-tier, public\-facing web application, such as a blog or a simple website\.
 
-This topic assumes that you'll use the VPC wizard in the Amazon VPC console to create the VPC\.
-
 This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnet with associated IPv6 CIDR blocks\. Instances launched into the public subnet can receive IPv6 addresses, and communicate using IPv6\. For more information about IPv4 and IPv6 addressing, see [IP Addressing in Your VPC](vpc-ip-addressing.md)\.
 
 **Topics**
@@ -19,7 +17,7 @@ The following diagram shows the key components of the configuration for this sce
 ![\[Diagram for scenario 1: VPC with a public subnet\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/Case1_Diagram.png)
 
 **Note**  
-If you completed the exercise [Getting Started](GetStarted.md), then you've already implemented this scenario using the VPC wizard in the Amazon VPC console\.
+If you completed the exercise [Getting Started with Amazon VPC](GetStarted.md), then you've already implemented this scenario using the VPC wizard in the Amazon VPC console\.
 
 The configuration for this scenario includes the following:
 + A virtual private cloud \(VPC\) with a size /16 IPv4 CIDR block \(example: 10\.0\.0\.0/16\)\. This provides 65,536 private IPv4 addresses\.
@@ -88,7 +86,7 @@ The following are the inbound and outbound rules for IPv4 traffic for the WebSer
 | The security group ID \(sg\-xxxxxxxx\) | All | All | \(Optional\) Allow inbound traffic from other instances associated with this security group\. This rule is automatically added to the default security group for the VPC; for any custom security group you create, you must manually add the rule to allow this type of communication\. | 
 | Outbound \(Optional\) | 
 | Destination | Protocol | Port Range | Comments | 
-| 0\.0\.0\.0/0 | All | All | Default rule to allow all outbound access to any IPv4 address\. If you want your web server to initiate outbound traffic, for example, to get software updates, you can leave the default outbound rule\. Otherwise, you can remove this rule\. | 
+| 0\.0\.0\.0/0 | All | All | Default rule to allow all outbound access to any IPv4 address\. If you want your web server to initiate outbound traffic, for example, to get software updates, you can keep the default outbound rule\. Otherwise, you can remove this rule\. | 
 
 ### Security for IPv6<a name="vpc-scenario-1-security-ipv6"></a>
 
@@ -107,7 +105,7 @@ The following are the IPv6\-specific rules for the WebServerSG security group \(
 |  IPv6 address range of your network   |  TCP  |  3389  |  \(Windows instances\) Allow inbound RDP access over IPv6 from your network  | 
 | Outbound \(Optional\) | 
 | Destination | Protocol | Port Range | Comments | 
-| ::/0 | All | All | Default rule to allow all outbound access to any IPv6 address\. If you want your web server to initiate outbound traffic, for example, to get software updates, you can leave the default outbound rule\. Otherwise, you can remove this rule\. | 
+| ::/0 | All | All | Default rule to allow all outbound access to any IPv6 address\. If you want your web server to initiate outbound traffic, for example, to get software updates, you can keep the default outbound rule\. Otherwise, you can remove this rule\. | 
 
 ## Implementing Scenario 1<a name="VPC_Scenario1_Implementation"></a>
 
@@ -119,15 +117,16 @@ These procedures include optional steps for enabling and configuring IPv6 commun
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the dashboard, choose **Start VPC Wizard**\. 
+1. On the dashboard, choose **Create VPC**\.  
+![\[The Amazon VPC dashboard\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/VPC-dashboard.png)
 
-1. Select the first option, **VPC with a Single Public Subnet**, and then choose **Select**\.
+1. Choose the first option, **VPC with a Single Public Subnet**, and then choose **Select**\.
 
-1. For **VPC name** and **Subnet name**, you can name your VPC and subnet to help you to identify them later in the console\. You can specify your own IPv4 CIDR block range for the VPC and subnet, or you can leave the default values \(10\.0\.0\.0/16 and 10\.0\.0\.0/24 respectively\)\.
+1. \(Optional\) You can name your VPC and subnet to help you to identify them later in the console\. You can specify your own IPv4 CIDR block ranges for the VPC and subnet, or you can keep the default values \(10\.0\.0\.0/16 and 10\.0\.0\.0/24 respectively\)\.
 
-1. \(Optional, IPv6\-only\) For **IPv6 CIDR block**, choose **Amazon\-provided IPv6 CIDR block**\. For **Public subnet's IPv6 CIDR**, choose **Specify a custom IPv6 CIDR** and specify the hexadecimal pair value for your subnet, or leave the default value \(`00`\)\.
+1. \(Optional, IPv6\-only\) For **IPv6 CIDR block**, choose **Amazon\-provided IPv6 CIDR block**\. For **Public subnet's IPv6 CIDR**, choose **Specify a custom IPv6 CIDR** and specify the hexadecimal pair value for your subnet, or keep the default value \(`00`\)\.
 
-1. You can leave the rest of the default settings, and choose **Create VPC**\.<a name="vpc-scenario-1-create-web-server-group"></a>
+1. Keep the rest of the default settings, and choose **Create VPC**\.<a name="vpc-scenario-1-create-web-server-group"></a>
 
 **To create the WebServerSG security group**
 

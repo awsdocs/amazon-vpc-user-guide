@@ -16,11 +16,11 @@ We provide an Amazon DNS server\. To use your own DNS server, create a new set o
 
 ## DNS Hostnames<a name="vpc-dns-hostnames"></a>
 
-When you launch an instance into a default VPC, we provide the instance with public and private DNS hostnames that correspond to the public IPv4 and private IPv4 addresses for the instance\. When you launch an instance into a nondefault VPC, we provide the instance with a private DNS hostname and we might provide a public DNS hostname, depending on the [DNS attributes](#vpc-dns-support) you specify for the VPC and if your instance has a public IPv4 address\. 
+When you launch an instance into a default VPC, we provide the instance with public and private DNS hostnames that correspond to the public IPv4 and private IPv4 addresses for the instance\. When you launch an instance into a nondefault VPC, we provide the instance with a private DNS hostname and we might provide a public DNS hostname, depending on the [DNS attributes](#vpc-dns-support) you specify for the VPC and if your instance has a public IPv4 address\.
 
-An Amazon\-provided private \(internal\) DNS hostname resolves to the private IPv4 address of the instance, and takes the form `ip-private-ipv4-address.ec2.internal` for the us\-east\-1 region, and `ip-private-ipv4-address.region.compute.internal` for other regions \(where `private.ipv4.address` is the reverse lookup IP address\)\. You can use the private DNS hostname for communication between instances in the same network, but we can't resolve the DNS hostname outside the network that the instance is in\. 
+An Amazon\-provided private \(internal\) DNS hostname resolves to the private IPv4 address of the instance, and takes the form `ip-private-ipv4-address.ec2.internal` for the us\-east\-1 region, and `ip-private-ipv4-address.region.compute.internal` for other regions \(where `private-ipv4-address` is the reverse lookup IP address\)\. You can use the private DNS hostname for communication between instances in the same network, but we can't resolve the DNS hostname outside the network that the instance is in\.
 
-A public \(external\) DNS hostname takes the form `ec2-public-ipv4-address.compute-1.amazonaws.com` for the us\-east\-1 region, and `ec2-public-ipv4-address.region.amazonaws.com` for other regions\. We resolve a public DNS hostname to the public IPv4 address of the instance outside the network of the instance, and to the private IPv4 address of the instance from within the network of the instance\. 
+A public \(external\) DNS hostname takes the form `ec2-public-ipv4-address.compute-1.amazonaws.com` for the us\-east\-1 region, and `ec2-public-ipv4-address.region.amazonaws.com` for other regions\. We resolve a public DNS hostname to the public IPv4 address of the instance outside the network of the instance, and to the private IPv4 address of the instance from within the network of the instance\.
 
 We do not provide DNS hostnames for IPv6 addresses\.
 

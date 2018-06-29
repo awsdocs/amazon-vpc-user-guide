@@ -15,8 +15,8 @@ Amazon's trademarks and trade dress may not be used in
 -----
 ## Contents
 + [What Is Amazon VPC?](VPC_Introduction.md)
-+ [Getting Started](GetStarted.md)
-   + [Getting Started With Amazon VPC](getting-started-ipv4.md)
++ [Getting Started with Amazon VPC](GetStarted.md)
+   + [Getting Started with IPv4 for Amazon VPC](getting-started-ipv4.md)
    + [Getting Started with IPv6 for Amazon VPC](get-started-ipv6.md)
 + [Scenarios and Examples](VPC_Scenarios.md)
    + [Scenario 1: VPC with a Single Public Subnet](VPC_Scenario1.md)
