@@ -22,6 +22,7 @@ An [interface endpoint](vpce-interface.md) is an elastic network interface with 
 + AWS Service Catalog
 + [Amazon SNS](http://docs.aws.amazon.com/sns/latest/dg/sns-vpc.html)
 + [AWS Systems Manager](http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-setting-up-vpc.html)
++ AWS Elasticsearch
 + [Endpoint services](endpoint-service.md) hosted by other AWS accounts
 + Supported AWS Marketplace partner services
 
