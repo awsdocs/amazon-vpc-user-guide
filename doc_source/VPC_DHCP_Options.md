@@ -1,6 +1,8 @@
 # DHCP Options Sets<a name="VPC_DHCP_Options"></a>
 
-This topic describes DHCP options sets and how to specify the DHCP options for your VPC\.
+The Dynamic Host Configuration Protocol \(DHCP\) provides a standard for passing configuration information to hosts on a TCP/IP network\. The `options` field of a DHCP message contains the configuration parameters\. Some of those parameters are the domain name, domain name server, and the netbios\-node\-type\.
+
+You can configure DHCP options sets for your virtual private clouds \(VPC\)\.
 
 **Topics**
 + [Overview of DHCP Options Sets](#DHCPOptionSets)
@@ -10,10 +12,6 @@ This topic describes DHCP options sets and how to specify the DHCP options for y
 + [API and Command Overview](#APIOverview)
 
 ## Overview of DHCP Options Sets<a name="DHCPOptionSets"></a>
-
-The Dynamic Host Configuration Protocol \(DHCP\) provides a standard for passing configuration information to hosts on a TCP/IP network\. The `options` field of a DHCP message contains the configuration parameters\. Some of those parameters are the domain name, domain name server, and the netbios\-node\-type\.
-
-DHCP options sets are associated with your AWS account so that you can use them across all of your virtual private clouds \(VPC\)\.
 
 The Amazon EC2 instances you launch into a nondefault VPC are private by default; they're not assigned a public IPv4 address unless you specifically assign one during launch, or you modify the subnet's public IPv4 address attribute\. By default, all instances in a nondefault VPC receive an unresolvable host name that AWS assigns \(for example, ip\-10\-0\-0\-202\)\. You can assign your own domain name to your instances, and use up to four of your own DNS servers\. To do that, you must specify a special set of DHCP options to use with the VPC\. 
 
@@ -36,7 +34,7 @@ When you launch an instance into a VPC, we provide the instance with a private D
 
 The Amazon DNS server in your VPC is used to resolve the DNS domain names that you specify in a private hosted zone in Route 53\. For more information about private hosted zones, see [Working with Private Hosted Zones](http://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-private.html) in the *Amazon Route 53 Developer Guide*\.
 
-Services that use the Hadoop framework, such as Amazon EMR, require instances to resolve their own fully qualified domain names \(FQDN\)\. In such cases, DNS resolution can fail if the `domain-name-servers` option is set to a custom value\. To ensure proper DNS resolution, consider adding a conditional forwarder on your DNS server to forward queries for the domain `region-name.compute.internal` to the Amazon DNS server\. For more information about launching an Amazon EMR cluster into a VPC, see [Setting Up a VPC to Host Clusters](http://docs.aws.amazon.com/emr/latest/DeveloperGuide/emr-plan-vpc-subnet.html#emr-vpc-host-job-flows) in the *Amazon EMR Developer Guide*\.
+Services that use the Hadoop framework, such as Amazon EMR, require instances to resolve their own fully qualified domain names \(FQDN\)\. In such cases, DNS resolution can fail if the `domain-name-servers` option is set to a custom value\. To ensure proper DNS resolution, consider adding a conditional forwarder on your DNS server to forward queries for the domain `region-name.compute.internal` to the Amazon DNS server\. For more information, see [Setting Up a VPC to Host Clusters](http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-vpc-host-job-flows.html) in the *Amazon EMR Management Guide*\.
 
 **Note**  
  You can use the Amazon DNS server IP address 169\.254\.169\.253, though some servers don't allow its use\. Windows Server 2008, for example, disallows the use of a DNS server located in the 169\.254\.x\.x network range\. 

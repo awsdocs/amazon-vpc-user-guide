@@ -13,6 +13,7 @@ The following services are supported:
 + [AWS Key Management Service](http://docs.aws.amazon.com/kms/latest/developerguide/kms-vpc-endpoint.html)
 + [Amazon Kinesis Data Streams](http://docs.aws.amazon.com/streams/latest/dev/vpc.html)
 + [Amazon SageMaker Runtime](http://docs.aws.amazon.com/sagemaker/latest/dg/interface-vpc-endpoint.html)
++ [AWS Secrets Manager](http://docs.aws.amazon.com/secretsmanager/latest/userguide/rotation-network-rqmts.html)
 + AWS Service Catalog
 + [Amazon SNS](http://docs.aws.amazon.com/sns/latest/dg/sns-vpc.html)
 + [AWS Systems Manager](http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-setting-up-vpc.html)
