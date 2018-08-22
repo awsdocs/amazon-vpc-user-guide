@@ -50,6 +50,7 @@ Flow logs do not capture all IP traffic\. The following types of traffic are not
 + DHCP traffic\.
 + Traffic to the reserved IP address for the default VPC router\. For more information, see [VPC and Subnet Sizing](VPC_Subnets.md#VPC_Sizing)\.
 + Traffic between an endpoint network interface and a Network Load Balancer network interface\. For more information, see [VPC Endpoint Services \(AWS PrivateLink\)](endpoint-service.md)\.
++ Traffic to and from an endpoint network interface which has been denied (REJECT) by a Network ACL or Security Group.
 
 ## Flow Log Records<a name="flow-log-records"></a>
 
