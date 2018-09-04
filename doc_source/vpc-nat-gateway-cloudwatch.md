@@ -81,7 +81,7 @@ For example, you can create an alarm that monitors the amount of traffic coming 
    + Under **Actions**, select an existing notification list or choose **New list** to create a new one\. 
    + Under **Alarm Preview**, select a period of 15 minutes and specify a statistic of **Sum**\.
 
-You can create an alarm that monitors the `ErrorPortAllocation` metric and sends a notification when the value is greater than zero \(0\) for three consecutive 5\-minute periods\. 
+You can create an alarm that monitors the `ErrorPortAllocation` metric and sends a notification when the value is greater than zero \(0\) for three consecutive 5\-minute periods\.
 
 **To create an alarm to monitor port allocation errors**
 

@@ -4,7 +4,7 @@ If you have multiple VPN connections, you can provide secure communication betwe
 
 The following diagram shows the VPN CloudHub architecture, with blue dashed lines indicating network traffic between remote sites being routed over their VPN connections\.
 
-![\[Image NOT FOUND\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/AWS_VPN_CloudHub-diagram.png)
+![\[Image NOT FOUND\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/AWS_VPN_CloudHub-diagram.png)
 
 To use the AWS VPN CloudHub, you must create a virtual private gateway with multiple customer gateways\. You must use a unique Border Gateway Protocol \(BGP\) Autonomous System Number \(ASN\) for each customer gateway\. Customer gateways advertise the appropriate routes \(BGP prefixes\) over their VPN connections\. These routing advertisements are received and re\-advertised to each BGP peer, enabling each site to send data to and receive data from the other sites\. The sites must not have overlapping IP ranges\. Each site can also send and receive data from the VPC as if they were using a standard VPN connection\.
 

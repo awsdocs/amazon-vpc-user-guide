@@ -133,7 +133,7 @@ After you create the VPN connection, download the configuration information and 
 
 1. In the **Download Configuration** dialog box, select the vendor, platform, and software that corresponds to your customer gateway device or software, and then choose **Yes, Download**\. 
 
-1. Give the configuration file to your network administrator, along with this guide: [Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/)\. After the network administrator configures the customer gateway, the VPN connection is operational\.
+1. Give the configuration file to your network administrator, along with this guide: [Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/vpc/latest/adminguide/)\. After the network administrator configures the customer gateway, the VPN connection is operational\.
 
 **To create a VPN connection using the command line or API**
 + [CreateVpnConnection](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-CreateVpnConnection.html) \(Amazon EC2 Query API\)

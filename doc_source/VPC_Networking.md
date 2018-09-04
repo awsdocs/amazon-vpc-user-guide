@@ -1,6 +1,8 @@
 # VPC Networking Components<a name="VPC_Networking"></a>
 
 You can use the following components to configure networking in your VPC:
+
+**Networking Components**
 + [Network Interfaces](VPC_ElasticNetworkInterfaces.md)
 + [Route Tables](VPC_Route_Tables.md)
 + [Internet Gateways](VPC_Internet_Gateway.md)

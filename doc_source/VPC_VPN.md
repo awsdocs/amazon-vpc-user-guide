@@ -21,7 +21,7 @@ For information about how you're charged for using a VPN connection with your VP
 
 ## Components of Your VPN<a name="VPN"></a>
 
-A VPN connection consists of the following components\. For more information about VPN limits, see [Amazon VPC Limits](VPC_Appendix_Limits.md)\.
+A VPN connection consists of the following components\. For more information about VPN limits, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
 
 ### Virtual Private Gateway<a name="VPNGateway"></a>
 
@@ -45,7 +45,7 @@ To create a VPN connection, you must create a customer gateway resource in AWS, 
 |  The type of routing—static or dynamic\.   | For more information, see [VPN Routing Options](#VPNRoutingTypes)\. | 
 |  \(Dynamic routing only\) Border Gateway Protocol \(BGP\) Autonomous System Number \(ASN\) of the customer gateway\.  |  You can use an existing ASN assigned to your network\. If you don't have one, you can use a private ASN \(in the 64512–65534 range\)\.  If you use the VPC wizard in the console to set up your VPC, we automatically use 65000 as the ASN\.  | 
 
-To use Amazon VPC with a VPN connection, you or your network administrator must also configure the customer gateway device or application in your remote network\. When you create the VPN connection, we provide you with the required configuration information and your network administrator typically performs this configuration\. For information about the customer gateway requirements and configuration, see the [Your Customer Gateway](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/Introduction.html) in the *Amazon VPC Network Administrator Guide*\.
+To use Amazon VPC with a VPN connection, you or your network administrator must also configure the customer gateway device or application in your remote network\. When you create the VPN connection, we provide you with the required configuration information and your network administrator typically performs this configuration\. For information about the customer gateway requirements and configuration, see the [Your Customer Gateway](http://docs.aws.amazon.com/vpc/latest/adminguide/Introduction.html) in the *Amazon VPC Network Administrator Guide*\.
 
 The VPN tunnel comes up when traffic is generated from your side of the VPN connection\. The virtual private gateway is not the initiator; your customer gateway must initiate the tunnels\. If your VPN connection experiences a period of idle time \(usually 10 seconds, depending on your configuration\), the tunnel may go down\. To prevent this, you can use a network monitoring tool to generate keepalive pings; for example, by using IP SLA\. 
 
@@ -127,7 +127,7 @@ During this procedure, connectivity over the current VPC connection is interrupt
 
 1. Select the new VPN connection and choose **Download Configuration**\. Download the appropriate configuration file for your customer gateway device\.
 
-1. Use the configuration file to configure VPN tunnels on your customer gateway device\. For examples, see the *[Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/)*\. Do not enable the tunnels yet\. Contact your vendor if you need guidance on keeping the newly configured tunnels disabled\. 
+1. Use the configuration file to configure VPN tunnels on your customer gateway device\. For examples, see the *[Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/vpc/latest/adminguide/)*\. Do not enable the tunnels yet\. Contact your vendor if you need guidance on keeping the newly configured tunnels disabled\. 
 
 1. \(Optional\) Create test VPC and attach the virtual private gateway to the test VPC\. Change the encryption domain/source destination addresses as required, and test connectivity from a host in your local network to a test instance in the test VPC\.
 
@@ -159,11 +159,11 @@ When you create multiple VPN connections to a single VPC, you can configure a se
 
 ### Single VPN Connection<a name="SingleVPN"></a>
 
-![\[VPN layout\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/VPN_Basic_Diagram.png)
+![\[VPN layout\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/VPN_Basic_Diagram.png)
 
 ### Multiple VPN connections<a name="MultipleVPN"></a>
 
-![\[Multiple VPN layout\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/Branch_Offices_diagram.png)
+![\[Multiple VPN layout\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/Branch_Offices_diagram.png)
 
 ## VPN Routing Options<a name="VPNRoutingTypes"></a>
 
@@ -171,7 +171,7 @@ When you create a VPN connection, you must do the following:
 + Specify the type of routing that you plan to use \(static or dynamic\)
 + Update the route table for your subnet
 
-There are limits on the number of routes that you can add to a route table\. For more information, see the Route Tables section in [Amazon VPC Limits](VPC_Appendix_Limits.md)\.
+There are limits on the number of routes that you can add to a route table\. For more information, see the Route Tables section in [Amazon VPC Limits](amazon-vpc-limits.md)\.
 
 ### Static and Dynamic Routing<a name="vpn-static-dynamic"></a>
 
@@ -211,7 +211,7 @@ You use a VPN connection to connect your remote network to a VPC\. Each VPN conn
 
 The following diagram shows the two tunnels of the VPN connection\.
 
-![\[Image NOT FOUND\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/Multiple_VPN_Tunnels_diagram.png)
+![\[Image NOT FOUND\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/Multiple_VPN_Tunnels_diagram.png)
 
 When you create a VPN connection, you download a configuration file specific to your customer gateway device that contains information for configuring the device, including information for configuring each tunnel\. You can optionally specify some of the tunnel options yourself when you create the VPN connection\. Otherwise, AWS provides default values\.
 
@@ -220,7 +220,7 @@ The following table describes the tunnel options that you can configure\.
 
 | Item | Description | AWS\-provided default value | 
 | --- | --- | --- | 
-|  Inside tunnel CIDR  |  The range of inside IP addresses for the VPN tunnel\. You can specify a size /30 CIDR block from the `169.254.0.0/16` range\. The CIDR block must be unique across all VPN connections that use the same virtual private gateway\. The following CIDR blocks are reserved and cannot be used:  [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_VPN.html)  |  A size /30 CIDR block from the `169.254.0.0/16` range\.  | 
+|  Inside tunnel CIDR  |  The range of inside IP addresses for the VPN tunnel\. You can specify a size /30 CIDR block from the `169.254.0.0/16` range\. The CIDR block must be unique across all VPN connections that use the same virtual private gateway\. The following CIDR blocks are reserved and cannot be used:  [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/VPC_VPN.html)  |  A size /30 CIDR block from the `169.254.0.0/16` range\.  | 
 |  Pre\-shared key \(PSK\)  |  The pre\-shared key \(PSK\) to establish the initial IKE Security Association between the virtual private gateway and customer gateway\.  The PSK must be between 8 and 64 characters in length and cannot start with zero \(0\)\. Allowed characters are alphanumeric characters, periods \(\.\), and underscores \(\_\)\.  |  A 32\-character alphanumeric string\.  | 
 
 You cannot modify tunnel options after you create the VPN connection\. To change the inside tunnel IP addresses or the PSKs for an existing connection, you must delete the VPN connection and create a new one\. You cannot configure tunnel options for an AWS Classic VPN connection\.
@@ -231,6 +231,6 @@ As described earlier, a VPN connection has two tunnels to help ensure connectivi
 
 The following diagram shows the two tunnels of each VPN connection and two customer gateways\.
 
-![\[Image NOT FOUND\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/Multiple_Gateways_diagram.png)
+![\[Image NOT FOUND\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/Multiple_Gateways_diagram.png)
 
 Dynamically routed VPN connections use the Border Gateway Protocol \(BGP\) to exchange routing information between your customer gateways and the virtual private gateways\. Statically routed VPN connections require you to enter static routes for the remote network on your side of the customer gateway\. BGP\-advertised and statically entered route information allow gateways on both sides to determine which tunnels are available and reroute traffic if a failure occurs\. We recommend that you configure your network to use the routing information provided by BGP \(if available\) to select an available path\. The exact configuration depends on the architecture of your network\.

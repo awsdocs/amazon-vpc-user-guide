@@ -21,7 +21,7 @@ You can also use a NAT gateway, which is a managed NAT service that provides bet
 
 The following figure illustrates the NAT instance basics\. The main route table is associated with the private subnet and sends the traffic from the instances in the private subnet to the NAT instance in the public subnet\. The NAT instance sends the traffic to the Internet gateway for the VPC\. The traffic is attributed to the Elastic IP address of the NAT instance\. The NAT instance specifies a high port number for the response; if a response comes back, the NAT instance sends it to an instance in the private subnet based on the port number for the response\. 
 
-![\[NAT instance setup\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/nat-instance-diagram.png)
+![\[NAT instance setup\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/nat-instance-diagram.png)
 
 Amazon provides Amazon Linux AMIs that are configured to run as NAT instances\. These AMIs include the string `amzn-ami-vpc-nat` in their names, so you can search for them in the Amazon EC2 console\. 
 
@@ -73,7 +73,7 @@ The steps below are for manually creating and configuring a VPC; not for creatin
 
       1. Review the settings that you've chosen\. Make any changes that you need, and then choose **Launch** to choose a key pair and launch your instance\.
 
-1. \(Optional\) Connect to the NAT instance, make any modifications that you need, and then create your own AMI that's configured to run as a NAT instance\. You can use this AMI the next time that you need to launch a NAT instance\. For more information about creating an AMI, see [Creating Amazon EBS\-Backed AMIs](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+1. \(Optional\) Connect to the NAT instance, make any modifications that you need, and then create your own AMI that's configured to run as a NAT instance\. You can use this AMI the next time that you need to launch a NAT instance\. For more information see [Creating Amazon EBS\-Backed AMIs](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 1. Disable the `SrcDestCheck` attribute for the NAT instance \(see [Disabling Source/Destination Checks](#EIP_Disable_SrcDestCheck)\)
 
@@ -93,7 +93,7 @@ The steps below are for manually creating and configuring a VPC; not for creatin
 
 ### Launching a NAT Instance Using the Command Line<a name="launch-nat-instance-cli"></a>
 
-To launch a NAT instance into your subnet, use one of the following commands\. For more information about these command line interfaces, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
+To launch a NAT instance into your subnet, use one of the following commands\. For more information, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 + [run\-instances](http://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html) \(AWS CLI\)
 + [New\-EC2Instance](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Instance.html) \(AWS Tools for Windows PowerShell\)
 
@@ -154,7 +154,7 @@ Define the NATSG security group as described in the following table to enable yo
 
    1. Choose **Save**\.
 
-For more information about security groups, see [Security Groups for Your VPC](VPC_SecurityGroups.md)\.
+For more information, see [Security Groups for Your VPC](VPC_SecurityGroups.md)\.
 
 ## Disabling Source/Destination Checks<a name="EIP_Disable_SrcDestCheck"></a>
 
@@ -176,7 +176,7 @@ You can disable the `SrcDestCheck` attribute for a NAT instance that's either ru
 
 **To disable source/destination checking using the command line**
 
-You can use one of the following commands\. For more information about these command line interfaces, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
+You can use one of the following commands\. For more information, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 + [modify\-instance\-attribute](http://docs.aws.amazon.com/cli/latest/reference/ec2/modify-instance-attribute.html) \(AWS CLI\)
 + [Edit\-EC2InstanceAttribute](http://docs.aws.amazon.com/powershell/latest/reference/items/Edit-EC2InstanceAttribute.html) \(AWS Tools for Windows PowerShell\)
 
@@ -196,7 +196,7 @@ The private subnet in your VPC is not associated with a custom route table, ther
 
 1. On the **Subnet Associations** tab, choose **Edit**, and then select the **Associate** check box for the subnet\. Choose **Save**\.
 
-For more information about route tables, see [Route Tables](VPC_Route_Tables.md)\.
+For more information, see [Route Tables](VPC_Route_Tables.md)\.
 
 ## Testing Your NAT Instance Configuration<a name="nat-test-configuration"></a>
 

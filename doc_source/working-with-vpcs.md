@@ -81,7 +81,7 @@ After you've created a subnet, you can do the following:
 + Configure your routing\. To make your subnet a public subnet, you must attach an internet gateway to your VPC\. For more information, see [Creating and Attaching an Internet Gateway](VPC_Internet_Gateway.md#Add_IGW_Attach_Gateway)\. You can then create a custom route table, and add route to the internet gateway\. For more information, see [Creating a Custom Route Table](VPC_Internet_Gateway.md#Add_IGW_Routing)\. For other routing options, see [Route Tables](VPC_Route_Tables.md)\.
 + Modify the subnet settings to specify that all instances launched in that subnet receive a public IPv4 address, or an IPv6 address, or both\. For more information, see [IP Addressing Behavior for Your Subnet](vpc-ip-addressing.md#vpc-ip-addressing-subnet)\.
 + Create or modify your security groups as needed\. For more information, see [Security Groups for Your VPC](VPC_SecurityGroups.md)\.
-+ Create or modify your network ACLs as needed\. For more information about network ACLs, see [Network ACLs](VPC_ACLs.md)\.
++ Create or modify your network ACLs as needed\. For more information, see [Network ACLs](vpc-network-acls.md)\.
 
 ## Associating a Secondary IPv4 CIDR Block with Your VPC<a name="add-ipv4-cidr"></a>
 

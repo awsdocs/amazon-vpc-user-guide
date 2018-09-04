@@ -20,7 +20,7 @@ This scenario can also be optionally configured for IPv6—you can use the VPC w
 
 The following diagram shows the key components of the configuration for this scenario\.
 
-![\[Diagram for scenario 2: VPC with public and private subnets\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/nat-gateway-diagram.png)
+![\[Diagram for scenario 2: VPC with public and private subnets\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/nat-gateway-diagram.png)
 
 The configuration for this scenario includes the following:
 + A VPC with a size /16 IPv4 CIDR block \(example: 10\.0\.0\.0/16\)\. This provides 65,536 private IPv4 addresses\.
@@ -46,7 +46,7 @@ You can optionally enable IPv6 for this scenario\. In addition to the components
 + Route table entries in the custom route table that enable instances in the public subnet to use IPv6 to communicate with each other, and directly over the Internet\.
 + Route table entries in the main route table that enable instances in the private subnet to use IPv6 to communicate with each other, and to communicate with the Internet through an egress\-only Internet gateway\.
 
-![\[IPv6-enabled VPC with a public and private subnet\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/scenario-2-ipv6-diagram.png)
+![\[IPv6-enabled VPC with a public and private subnet\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/scenario-2-ipv6-diagram.png)
 
 ## Routing<a name="VPC_Scenario2_Routing"></a>
 
@@ -110,7 +110,7 @@ The second entry is the default route that's automatically added for local routi
 
 AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Security](VPC_Security.md)\. 
 
-For scenario 2, you'll use security groups but not network ACLs\. If you'd like to use a network ACL, see [Recommended Rules for Scenario 2](VPC_Appendix_NACLs.md#VPC_Appendix_NACLs_Scenario_2)\.
+For scenario 2, you'll use security groups but not network ACLs\. If you'd like to use a network ACL, see [Recommended Rules for Scenario 2](vpc-recommended-nacl-rules.md#nacl-rules-scenario-2)\.
 
 Your VPC comes with a [default security group](VPC_SecurityGroups.md#DefaultSecurityGroup)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. For this scenario, we recommend that you create the following security groups instead of using the default security group:
 + **WebServerSG**: Specify this security group when you launch the web servers in the public subnet\.
@@ -223,8 +223,8 @@ If your account supports EC2\-Classic, first choose **VPC**\.
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. On the VPC dashboard, choose **Create VPC**\.  
-![\[The Amazon VPC dashboard\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/VPC-dashboard.png)
+1. On the VPC dashboard, choose **Launch VPC Wizard**\.  
+![\[The Amazon VPC dashboard\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/VPC-dashboard.png)
 
 1. Choose the second option, **VPC with Public and Private Subnets**, and then choose **Select**\.
 

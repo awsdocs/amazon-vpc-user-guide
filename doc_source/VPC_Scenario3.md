@@ -14,10 +14,10 @@ This scenario can also be optionally configured for IPv6—you can use the VPC w
 
 The following diagram shows the key components of the configuration for this scenario\.
 
-![\[Diagram for scenario 3: VPC with public and private subnets and VPN access\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/Case3_Diagram.png)
+![\[Diagram for scenario 3: VPC with public and private subnets and VPN access\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/Case3_Diagram.png)
 
 **Important**  
-For this scenario, the* [Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/)* describes what your network administrator needs to do to configure the Amazon VPC customer gateway on your side of the VPN connection\.
+For this scenario, the* [Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/vpc/latest/adminguide/)* describes what your network administrator needs to do to configure the Amazon VPC customer gateway on your side of the VPN connection\.
 
 The configuration for this scenario includes the following:
 + A virtual private cloud \(VPC\) with a size /16 IPv4 CIDR \(example: 10\.0\.0\.0/16\)\. This provides 65,536 private IPv4 addresses\.
@@ -30,7 +30,7 @@ The configuration for this scenario includes the following:
 + A custom route table associated with the public subnet\. This route table contains an entry that enables instances in the subnet to communicate with other instances in the VPC, and an entry that enables instances in the subnet to communicate directly with the Internet\.
 + The main route table associated with the VPN\-only subnet\. The route table contains an entry that enables instances in the subnet to communicate with other instances in the VPC, and an entry that enables instances in the subnet to communicate directly with your network\.
 
-For more information about subnets, see [VPCs and Subnets](VPC_Subnets.md) and [IP Addressing in Your VPC](vpc-ip-addressing.md)\. For more information about Internet gateways, see [Internet Gateways](VPC_Internet_Gateway.md)\. For more information about your VPN connection, see [AWS Managed VPN Connections](VPC_VPN.md)\. For more information about configuring a customer gateway, see the *[Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/)*\.
+For more information about subnets, see [VPCs and Subnets](VPC_Subnets.md) and [IP Addressing in Your VPC](vpc-ip-addressing.md)\. For more information about Internet gateways, see [Internet Gateways](VPC_Internet_Gateway.md)\. For more information about your VPN connection, see [AWS Managed VPN Connections](VPC_VPN.md)\. For more information about configuring a customer gateway, see the *[Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/vpc/latest/adminguide/)*\.
 
 ### Overview for IPv6<a name="vpc-scenario-3-overview-ipv6"></a>
 
@@ -42,7 +42,7 @@ You can optionally enable IPv6 for this scenario\. In addition to the components
 + Route table entries in the custom route table that enable instances in the public subnet to use IPv6 to communicate with each other, and directly over the Internet\.
 + A route table entry in the main route table that enable instances in the VPN\-only subnet to use IPv6 to communicate with each other\.
 
-![\[IPv6-enabled VPC with a public and VPN-only subnet\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/scenario-3-ipv6-diagram.png)
+![\[IPv6-enabled VPC with a public and VPN-only subnet\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/scenario-3-ipv6-diagram.png)
 
 ## Routing<a name="VPC_Scenario3_Routing"></a>
 
@@ -125,7 +125,7 @@ The second entry is the default route that's automatically added for local routi
 
 AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Security](VPC_Security.md)\. 
 
-For scenario 3, you'll use security groups but not network ACLs\. If you'd like to use a network ACL, see [Recommended Rules for Scenario 3](VPC_Appendix_NACLs.md#VPC_Appendix_NACLs_Scenario_3)\.
+For scenario 3, you'll use security groups but not network ACLs\. If you'd like to use a network ACL, see [Recommended Rules for Scenario 3](vpc-recommended-nacl-rules.md#nacl-rules-scenario-3)\.
 
 Your VPC comes with a [default security group](VPC_SecurityGroups.md#DefaultSecurityGroup)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. For this scenario, we recommend that you create the following security groups instead of using the default security group:
 + **WebServerSG**: Specify this security group when you launch web servers in the public subnet\.
@@ -213,7 +213,7 @@ These procedures include optional steps for enabling and configuring IPv6 commun
 
 **To prepare your customer gateway**
 
-1. Determine the device you'll use as your customer gateway\. For more information about the devices that we've tested, see [Amazon Virtual Private Cloud FAQs](http://aws.amazon.com/vpc/faqs/#C9)\. For more information about the requirements for your customer gateway, see the [Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/)\.
+1. Determine the device you'll use as your customer gateway\. For more information about the devices that we've tested, see [Amazon Virtual Private Cloud FAQs](http://aws.amazon.com/vpc/faqs/#C9)\. For more information about the requirements for your customer gateway, see the [Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/vpc/latest/adminguide/)\.
 
 1. Obtain the Internet\-routable IP address for the customer gateway's external interface\. The address must be static and may be behind a device performing network address translation \(NAT\)\.
 
@@ -223,8 +223,8 @@ These procedures include optional steps for enabling and configuring IPv6 commun
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. On the dashboard, choose **Create VPC**\.  
-![\[The Amazon VPC dashboard\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/VPC-dashboard.png)
+1. On the dashboard, choose **Launch VPC Wizard**\.  
+![\[The Amazon VPC dashboard\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/VPC-dashboard.png)
 
 1. Choose the third option, **VPC with Public and Private Subnets and Hardware VPN Access**, and then choose **Select**\.
 
@@ -252,7 +252,7 @@ These procedures include optional steps for enabling and configuring IPv6 commun
 
 1. When the wizard is done, choose **VPN Connections** in the navigation pane\. Select the VPN connection that the wizard created, and choose **Download Configuration**\. In the dialog box, select the vendor for your customer gateway, the platform, and the software version, and then choose **Yes, Download**\.
 
-1. Save the text file containing the VPN configuration and give it to the network administrator along with this guide: [Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/)\. The VPN won't work until the network administrator configures the customer gateway\.
+1. Save the text file containing the VPN configuration and give it to the network administrator along with this guide: [Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/vpc/latest/adminguide/)\. The VPN won't work until the network administrator configures the customer gateway\.
 
 Create the WebServerSG and DBServerSG security groups\. These security groups will reference each other, therefore you must create them before you add rules to them\.
 

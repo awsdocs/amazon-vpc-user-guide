@@ -1,6 +1,6 @@
 # VPCs and Subnets<a name="VPC_Subnets"></a>
 
-To get started with Amazon Virtual Private Cloud \(Amazon VPC\), you create a VPC and subnets\. For a general overview of Amazon VPC, see [What Is Amazon VPC?](VPC_Introduction.md)\.
+To get started with Amazon Virtual Private Cloud \(Amazon VPC\), you create a VPC and subnets\. For a general overview of Amazon VPC, see [What Is Amazon VPC?](what-is-amazon-vpc.md)\.
 
 **Topics**
 + [VPC and Subnet Basics](#vpc-subnet-basics)
@@ -18,7 +18,7 @@ When you create a VPC, you must specify a range of IPv4 addresses for the VPC in
 
 The following diagram shows a new VPC with an IPv4 CIDR block, and the main route table\.
 
-![\[VPC with the main route table\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/vpc-diagram.png)
+![\[VPC with the main route table\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-diagram.png)
 
 A VPC spans all the Availability Zones in the region\. After creating a VPC, you can add one or more subnets in each Availability Zone\. When you create a subnet, you specify the CIDR block for the subnet, which is a subset of the VPC CIDR block\. Each subnet must reside entirely within one Availability Zone and cannot span zones\. Availability Zones are distinct locations that are engineered to be isolated from failures in other Availability Zones\. By launching instances in separate Availability Zones, you can protect your applications from the failure of a single location\. We assign a unique ID to each subnet\.
 
@@ -26,7 +26,7 @@ You can also optionally assign an IPv6 CIDR block to your VPC, and assign IPv6 C
 
 The following diagram shows a VPC that has been configured with subnets in multiple Availability Zones\. 1A, 1B, 2A, and 3A are instances in your VPC\. An IPv6 CIDR block is associated with the VPC, and an IPv6 CIDR block is associated with subnet 1\. An internet gateway enables communication over the internet, and a virtual private network \(VPN\) connection enables communication with your corporate network\.
 
-![\[VPC with multiple Availability Zones\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/subnets-diagram.png)
+![\[VPC with multiple Availability Zones\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/subnets-diagram.png)
 
 If a subnet's traffic is routed to an internet gateway, the subnet is known as a *public subnet*\. In this diagram, subnet 1 is a public subnet\. If you want your instance in a public subnet to communicate with the internet over IPv4, it must have a public IPv4 address or an Elastic IP address \(IPv4\)\. For more information about public IPv4 addresses, see [Public IPv4 Addresses](vpc-ip-addressing.md#vpc-public-ipv4-addresses)\. If you want your instance in the public subnet to communicate with the internet over IPv6, it must have an IPv6 address\.
 
@@ -39,7 +39,7 @@ For more information, see [Scenarios and Examples](VPC_Scenarios.md), [Internet 
 **Note**  
 Regardless of the type of subnet, the internal IPv4 address range of the subnet is always private—we do not announce the address block to the internet\.
 
-You have a limit on the number of VPCs and subnets you can create in your account\. For more information, see [Amazon VPC Limits](VPC_Appendix_Limits.md)\.
+You have a limit on the number of VPCs and subnets you can create in your account\. For more information, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
 
 ## VPC and Subnet Sizing<a name="VPC_Sizing"></a>
 
@@ -85,14 +85,14 @@ You can associate secondary IPv4 CIDR blocks with your VPC\. When you associate 
 
 In the following example, the VPC on the left has a single CIDR block \(`10.0.0.0/16`\) and two subnets\. The VPC on the right represents the architecture of the same VPC after you've added a second CIDR block \(`10.2.0.0/16`\) and created a new subnet from the range of the second CIDR\.
 
-![\[VPCs with single and multiple CIDR blocks\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/vpc-multiple-cidrs.png)
+![\[VPCs with single and multiple CIDR blocks\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-multiple-cidrs.png)
 
 To add a CIDR block to your VPC, the following rules apply:
 + The allowed block size is between a `/28` netmask and `/16` netmask\.
 + The CIDR block must not overlap with any existing CIDR block that's associated with the VPC\.
 + There are restrictions on the ranges of IPv4 addresses you can use\. For more information, see [IPv4 CIDR Block Association Restrictions](#add-cidr-block-restrictions)\.
 + You cannot increase or decrease the size of an existing CIDR block\.
-+ You have a limit on the number of CIDR blocks you can associate with a VPC and the number of routes you can add to a route table\. You cannot associate a CIDR block if this results in you exceeding your limits\. For more information, see [Amazon VPC Limits](VPC_Appendix_Limits.md)\.
++ You have a limit on the number of CIDR blocks you can associate with a VPC and the number of routes you can add to a route table\. You cannot associate a CIDR block if this results in you exceeding your limits\. For more information, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
 + The CIDR block must not be the same or larger than the CIDR range of a route in any of the VPC route tables\. For example, if you have a route with a destination of `10.0.0.0/24` to a virtual private gateway, you cannot associate a CIDR block of the same range or larger\. However, you can associate a CIDR block of `10.0.0.0/25` or smaller\.
 + If you've enabled your VPC for ClassicLink, you can associate CIDR blocks from the `10.0.0.0/16` and `10.1.0.0/16` ranges, but you cannot associate any other CIDR block from the `10.0.0.0/8` range\. 
 + The following rules apply when you add IPv4 CIDR blocks to a VPC that's part of a VPC peering connection:
@@ -196,7 +196,7 @@ The route table associated with subnet 3 routes all IPv4 traffic \(`0.0.0.0/0`\)
 
 AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Security](VPC_Security.md)\. 
 
-By design, each subnet must be associated with a network ACL\. Every subnet that you create is automatically associated with the VPC's default network ACL\. You can change the association, and you can change the contents of the default network ACL\. For more information, see [Network ACLs](VPC_ACLs.md)\.
+By design, each subnet must be associated with a network ACL\. Every subnet that you create is automatically associated with the VPC's default network ACL\. You can change the association, and you can change the contents of the default network ACL\. For more information, see [Network ACLs](vpc-network-acls.md)\.
 
 You can create a flow log on your VPC or subnet to capture the traffic that flows to and from the network interfaces in your VPC or subnet\. You can also create a flow log on an individual network interface\. Flow logs are published to CloudWatch Logs\. For more information, see [VPC Flow Logs](flow-logs.md)\.
 
@@ -210,7 +210,7 @@ You can optionally set up a connection between your VPC and your corporate or ho
 
 When those instances in the VPC try to talk to hosts in the `10.0.37.0/24` address space, the traffic is dropped because `10.0.37.0/24` is part of the larger prefix assigned to the VPC \(`10.0.0.0/16`\)\. The instances can talk to hosts in the `10.1.38.0/24` space because that block isn't part of `10.0.0.0/16`\.
 
-You can also create a VPC peering connection between your VPCs, or with a VPC in another AWS account\. A VPC peering connection enables you to route traffic between the VPCs using private IP addresses; however, you cannot create a VPC peering connection between VPCs that have overlapping CIDR blocks\. For more information, see [Amazon VPC Peering Guide](http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/)\.
+You can also create a VPC peering connection between your VPCs, or with a VPC in another AWS account\. A VPC peering connection enables you to route traffic between the VPCs using private IP addresses; however, you cannot create a VPC peering connection between VPCs that have overlapping CIDR blocks\. For more information, see [Amazon VPC Peering Guide](http://docs.aws.amazon.com/vpc/latest/peering/)\.
 
 We therefore recommend that you create a VPC with a CIDR range large enough for expected future growth, but not one that overlaps with current or expected future subnets anywhere in your corporate or home network, or that overlaps with current or future VPCs\. 
 

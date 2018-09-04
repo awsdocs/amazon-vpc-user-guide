@@ -7,10 +7,6 @@ CloudWatch metrics are not supported for AWS Classic VPN connections\. For more 
 
 For more information, see the [Amazon CloudWatch User Guide](http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/)\.
 
-**Topics**
-+ [VPN Metrics and Dimensions](#metrics-dimensions-vpn)
-+ [Creating CloudWatch Alarms to Monitor VPN Tunnels](#creating-alarms-vpn)
-
 ## VPN Metrics and Dimensions<a name="metrics-dimensions-vpn"></a>
 
 When you create a new VPN connection, the VPN service sends the following metrics about your VPN tunnels to CloudWatch as it becomes available\. You can use the following procedures to view the metrics for VPN tunnels\.

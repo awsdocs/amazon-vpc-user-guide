@@ -20,7 +20,7 @@ When you launch an instance into a default VPC, we provide the instance with pub
 
 An Amazon\-provided private \(internal\) DNS hostname resolves to the private IPv4 address of the instance, and takes the form `ip-private-ipv4-address.ec2.internal` for the us\-east\-1 region, and `ip-private-ipv4-address.region.compute.internal` for other regions \(where `private-ipv4-address` is the reverse lookup IP address\)\. You can use the private DNS hostname for communication between instances in the same network, but we can't resolve the DNS hostname outside the network that the instance is in\.
 
-A public \(external\) DNS hostname takes the form `ec2-public-ipv4-address.compute-1.amazonaws.com` for the us\-east\-1 region, and `ec2-public-ipv4-address.region.amazonaws.com` for other regions\. We resolve a public DNS hostname to the public IPv4 address of the instance outside the network of the instance, and to the private IPv4 address of the instance from within the network of the instance\.
+A public \(external\) DNS hostname takes the form `ec2-public-ipv4-address.compute-1.amazonaws.com` for the us\-east\-1 region, and `ec2-public-ipv4-address.region.compute.amazonaws.com` for other regions\. We resolve a public DNS hostname to the public IPv4 address of the instance outside the network of the instance, and to the private IPv4 address of the instance from within the network of the instance\.
 
 We do not provide DNS hostnames for IPv6 addresses\.
 
@@ -46,6 +46,9 @@ If either or both of the attributes is set to `false`, the following occurs:
 + Your instance receives a custom private DNS hostname if you've specified a custom domain name in your [DHCP options set](VPC_DHCP_Options.md)\. If you are not using the Amazon\-provided DNS server, your custom domain name servers must resolve the hostname as appropriate\.
 
 By default, both attributes are set to `true` in a default VPC or a VPC created by the VPC wizard\. By default, only the `enableDnsSupport` attribute is set to `true` in a VPC created on the **Your VPCs** page of the VPC console or using the AWS CLI, API, or an AWS SDK\.
+
+**Important**  
+If you use custom DNS domain names defined in a private hosted zone in Amazon Route 53, the `enableDnsHostnames` and `enableDnsSupport` attributes must be set to `true`\.
 
 The Amazon DNS server can resolve private DNS hostnames to private IPv4 addresses for all address spaces, including where the IPv4 address range of your VPC falls outside of the private IPv4 addresses ranges specified by [RFC 1918](http://www.faqs.org/rfcs/rfc1918.html)\.
 
@@ -76,7 +79,7 @@ You can view the DNS hostnames for a running instance or a network interface usi
 
 **To view DNS hostnames for an instance using the command line**
 
-You can use one of the following commands\. For more information about these command line interfaces, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
+You can use one of the following commands\. For more information about these command line interfaces, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 + [describe\-instances](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html) \(AWS CLI\)
 + [Get\-EC2Instance](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2Instance.html) \(AWS Tools for Windows PowerShell\)
 
@@ -94,7 +97,7 @@ You can use one of the following commands\. For more information about these com
 
 **To view DNS hostnames for a network interface using the command line**
 
-You can use one of the following commands\. For more information about these command line interfaces, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
+You can use one of the following commands\. For more information about these command line interfaces, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 + [describe\-network\-interfaces](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-network-interfaces.html) \(AWS CLI\)
 + [Get\-EC2NetworkInterface](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2NetworkInterface.html) \(AWS Tools for Windows PowerShell\)
 
@@ -111,19 +114,19 @@ You can view and update the DNS support attributes for your VPC using the Amazon
 1. Select the VPC from the list\.
 
 1. Review the information in the **Summary** tab\. In this example, both settings are enabled\.  
-![\[The DNS Settings tab\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/dns-settings-gwt.png)
+![\[The DNS Settings tab\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/dns-settings-gwt.png)
 
-1. To update these settings, choose **Actions** and either **Edit DNS Resolution** or **Edit DNS Hostnames**\. In the dialog box that opens, choose **Yes** or **No**, and **Save**\. 
+1. To update these settings, choose **Actions** and either **Edit DNS Resolution** or **Edit DNS Hostnames**\. In the dialog box that opens, choose **Yes** or **No**, and then choose **Save**\.
 
 **To describe DNS support for a VPC using the command line**
 
-You can use one of the following commands\. For more information about these command line interfaces, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
+You can use one of the following commands\. For more information about these command line interfaces, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 + [describe\-vpc\-attribute](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-attribute.html) \(AWS CLI\)
 + [Get\-EC2VpcAttribute](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2VpcAttribute.html) \(AWS Tools for Windows PowerShell\)
 
 **To update DNS support for a VPC using the command line**
 
-You can use one of the following commands\. For more information about these command line interfaces, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
+You can use one of the following commands\. For more information about these command line interfaces, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 + [modify\-vpc\-attribute](http://docs.aws.amazon.com/cli/latest/reference/ec2/modify-vpc-attribute.html) \(AWS CLI\)
 + [Edit\-EC2VpcAttribute](http://docs.aws.amazon.com/powershell/latest/reference/items/Edit-EC2VpcAttribute.html) \(AWS Tools for Windows PowerShell\)
 
@@ -133,7 +136,7 @@ If you want to access the resources in your VPC using custom DNS domain names, s
 
 To access resources using custom DNS domain names, you must be connected to an instance within your VPC\. From your instance, you can test that your resource in your private hosted zone is accessible from its custom DNS name by using the `ping` command; for example, `ping mywebserver.example.com`\. \(You must ensure that your instance's security group rules allow inbound ICMP traffic for the `ping` command to work\.\)
 
-You can access a private hosted zone from an EC2\-Classic instance that is linked to your VPC via ClassicLink, provided your VPC is enabled for ClassicLink DNS support\. For more information, see [Enabling ClassicLink DNS Support](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html#classiclink-enable-dns-support) in the *Amazon EC2 User Guide for Linux Instances*\. Otherwise, private hosted zones do not support transitive relationships outside of the VPC; for example, you cannot access your resources using their custom private DNS names from the other side of a VPN connection\.
+You can access a private hosted zone from an EC2\-Classic instance that is linked to your VPC using ClassicLink, provided your VPC is enabled for ClassicLink DNS support\. For more information, see [Enabling ClassicLink DNS Support](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html#classiclink-enable-dns-support) in the *Amazon EC2 User Guide for Linux Instances*\. Otherwise, private hosted zones do not support transitive relationships outside of the VPC; for example, you cannot access your resources using their custom private DNS names from the other side of a VPN connection\.
 
 **Important**  
-If you are using custom DNS domain names defined in a private hosted zone in Amazon Route 53, you must set the following VPC attributes to `true`: `enableDnsHostnames` and `enableDnsSupport`\. For more information, see [Updating DNS Support for Your VPC](#vpc-dns-updating)\.
+If you use custom DNS domain names defined in a private hosted zone in Amazon Route 53, the `enableDnsHostnames` and `enableDnsSupport` attributes must be set to `true`\.

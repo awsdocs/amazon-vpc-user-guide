@@ -33,14 +33,6 @@ The following table summarizes the differences between IPv4 and IPv6 in Amazon E
 
 We support IPv6 traffic over a virtual private gateway to an AWS Direct Connect connection\. For more information, see the [AWS Direct Connect User Guide](http://docs.aws.amazon.com/directconnect/latest/UserGuide/)\.
 
-**Topics**
-+ [Private IPv4 Addresses](#vpc-private-ipv4-addresses)
-+ [Public IPv4 Addresses](#vpc-public-ipv4-addresses)
-+ [IPv6 Addresses](#vpc-ipv6-addresses)
-+ [IP Addressing Behavior for Your Subnet](#vpc-ip-addressing-subnet)
-+ [Working with IP Addresses](#vpc-working-with-ip-addresses)
-+ [Migrating to IPv6](vpc-migrate-ipv6.md)
-
 ## Private IPv4 Addresses<a name="vpc-private-ipv4-addresses"></a>
 
 Private IPv4 addresses \(also referred to as *private IP addresses* in this topic\) are not reachable over the Internet, and can be used for communication between the instances in your VPC\. When you launch an instance into a VPC, a primary private IP address from the IPv4 address range of the subnet is assigned to the default network interface \(eth0\) of the instance\. Each instance is also given a private \(internal\) DNS hostname that resolves to the private IP address of the instance\. If you don't specify a primary private IP address, we select an available IP address in the subnet range for you\. For more information about network interfaces, see [Elastic Network Interfaces](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html) in the *Amazon EC2 User Guide for Linux Instances*\.
@@ -243,7 +235,7 @@ Alternatively, you can disassociate an IPv6 address from a network interface\. F
 
 ### API and Command Overview<a name="ip-addressing-api-cli"></a>
 
-You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
+You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 
 **Assign a public IPv4 address during launch**
 + Use the `--associate-public-ip-address` or the `--no-associate-public-ip-address` option with the [run\-instances](http://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html) command\. \(AWS CLI\)

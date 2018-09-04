@@ -16,7 +16,7 @@ You might set up network ACLs with rules similar to your security groups in orde
 ## Security Group Basics<a name="VPCSecurityGroups"></a>
 
 The following are the basic characteristics of security groups for your VPC:
-+ You have limits on the number of security groups that you can create per VPC, the number of rules that you can add to each security group, and the number of security groups you can associate with a network interface\. For more information, see [Amazon VPC Limits](VPC_Appendix_Limits.md)\.
++ You have limits on the number of security groups that you can create per VPC, the number of rules that you can add to each security group, and the number of security groups you can associate with a network interface\. For more information, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
 + You can specify allow rules, but not deny rules\.
 + You can specify separate rules for inbound and outbound traffic\. 
 + When you create a security group, it has no inbound rules\. Therefore, no inbound traffic originating from another host to your instance is allowed until you add inbound rules to the security group\.
@@ -102,7 +102,7 @@ If your VPC has a VPC peering connection with another VPC, a security group rule
 
 If the owner of the peer VPC deletes the referenced security group, or if you or the owner of the peer VPC deletes the VPC peering connection, the security group rule is marked as `stale`\. You can delete stale security group rules as you would any other security group rule\.
 
-For more information, see [Working With Stale Security Groups](http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/vpc-peering-security-groups.html#vpc-peering-stale-groups) in the *Amazon VPC Peering Guide*\.
+For more information, see [Working With Stale Security Groups](http://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-security-groups.html#vpc-peering-stale-groups) in the *Amazon VPC Peering Guide*\.
 
 ## Differences Between Security Groups for EC2\-Classic and EC2\-VPC<a name="VPC_Security_Group_Differences"></a>
 
@@ -168,7 +168,7 @@ By default, new security groups start with only an outbound rule that allows all
 
 When you add or remove a rule, any instances already assigned to the security group are subject to the change\. 
 
-If you have a VPC peering connection, you can reference security groups from the peer VPC as the source or destination in your security group rules\. For more information, see [Updating Your Security Groups to Reference Peered VPC Security Groups](http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/working-with-vpc-peering.html#vpc-peering-security-groups) in the *Amazon VPC Peering Guide*\.
+If you have a VPC peering connection, you can reference security groups from the peer VPC as the source or destination in your security group rules\. For more information, see [Updating Your Security Groups to Reference Peered VPC Security Groups](http://docs.aws.amazon.com/vpc/latest/peering/working-with-vpc-peering.html#vpc-peering-security-groups) in the *Amazon VPC Peering Guide*\.
 
 **To add a rule using the console**
 

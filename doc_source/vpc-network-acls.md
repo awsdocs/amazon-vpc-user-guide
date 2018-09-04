@@ -1,18 +1,18 @@
-# Network ACLs<a name="VPC_ACLs"></a>
+# Network ACLs<a name="vpc-network-acls"></a>
 
 A *network access control list \(ACL\)* is an optional layer of security for your VPC that acts as a firewall for controlling traffic in and out of one or more subnets\. You might set up network ACLs with rules similar to your security groups in order to add an additional layer of security to your VPC\. For more information about the differences between security groups and network ACLs, see [Comparison of Security Groups and Network ACLs](VPC_Security.md#VPC_Security_Comparison)\.
 
 **Topics**
-+ [Network ACL Basics](#ACLs)
-+ [Network ACL Rules](#ACLRules)
++ [Network ACL Basics](#nacl-basics)
++ [Network ACL Rules](#nacl-rules)
 + [Default Network ACL](#default-network-acl)
 + [Custom Network ACL](#custom-network-acl)
-+ [Ephemeral Ports](#VPC_ACLs_Ephemeral_Ports)
-+ [Working with Network ACLs](#WorkWithACLs)
++ [Ephemeral Ports](#nacl-ephemeral-ports)
++ [Working with Network ACLs](#nacl-tasks)
 + [Example: Controlling Access to Instances in a Subnet](#nacl-examples)
 + [API and Command Overview](#nacl-api-cli)
 
-## Network ACL Basics<a name="ACLs"></a>
+## Network ACL Basics<a name="nacl-basics"></a>
 
 The following are the basic things that you need to know about network ACLs:
 + Your VPC automatically comes with a modifiable default network ACL\. By default, it allows all inbound and outbound IPv4 traffic and, if applicable, IPv6 traffic\.
@@ -23,9 +23,9 @@ The following are the basic things that you need to know about network ACLs:
 + A network ACL has separate inbound and outbound rules, and each rule can either allow or deny traffic\. 
 + Network ACLs are stateless; responses to allowed inbound traffic are subject to the rules for outbound traffic \(and vice versa\)\.
 
-For more information about the number of network ACLs you can create, see [Amazon VPC Limits](VPC_Appendix_Limits.md)\.
+For more information, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
 
-## Network ACL Rules<a name="ACLRules"></a>
+## Network ACL Rules<a name="nacl-rules"></a>
 
 You can add or remove rules from the default network ACL, or create additional network ACLs for your VPC\. When you add or remove rules from a network ACL, the changes are automatically applied to the subnets it's associated with\.
 
@@ -77,7 +77,7 @@ If you've modified your default network ACL's inbound rules, we do not automatic
 
 ## Custom Network ACL<a name="custom-network-acl"></a>
 
-The following table shows an example of a custom network ACL for a VPC that supports IPv4 only\. It includes rules that allow HTTP and HTTPS traffic in \(inbound rules 100 and 110\)\. There's a corresponding outbound rule that enables responses to that inbound traffic \(outbound rule 120, which covers ephemeral ports 32768\-65535\)\. For more information about how to select the appropriate ephemeral port range, see [Ephemeral Ports](#VPC_ACLs_Ephemeral_Ports)\.
+The following table shows an example of a custom network ACL for a VPC that supports IPv4 only\. It includes rules that allow HTTP and HTTPS traffic in \(inbound rules 100 and 110\)\. There's a corresponding outbound rule that enables responses to that inbound traffic \(outbound rule 120, which covers ephemeral ports 32768\-65535\)\. For more information about how to select the appropriate ephemeral port range, see [Ephemeral Ports](#nacl-ephemeral-ports)\.
 
 The network ACL also includes inbound rules that allow SSH and RDP traffic into the subnet\. The outbound rule 120 enables responses to egress the subnet\.
 
@@ -95,13 +95,13 @@ Each network ACL includes a default rule whose rule number is an asterisk\. This
 |  110  | HTTPS |  TCP  |  443  | 0\.0\.0\.0/0 |  ALLOW  |  Allows inbound HTTPS traffic from any IPv4 address\.  | 
 |  120  | SSH |  TCP  |  22  | 192\.0\.2\.0/24 |  ALLOW  |  Allows inbound SSH traffic from your home network's public IPv4 address range \(over the Internet gateway\)\.  | 
 |  130  | RDP |  TCP  |  3389  | 192\.0\.2\.0/24 |  ALLOW  |  Allows inbound RDP traffic to the web servers from your home network's public IPv4 address range \(over the Internet gateway\)\.   | 
-|  140  | Custom TCP |  TCP  |  32768\-65535  | 0\.0\.0\.0/0 |  ALLOW  |  Allows inbound return IPv4 traffic from the Internet \(that is, for requests that originate in the subnet\)\. This range is an example only\. For more information about how to select the appropriate ephemeral port range, see [Ephemeral Ports](#VPC_ACLs_Ephemeral_Ports)\.  | 
+|  140  | Custom TCP |  TCP  |  32768\-65535  | 0\.0\.0\.0/0 |  ALLOW  |  Allows inbound return IPv4 traffic from the Internet \(that is, for requests that originate in the subnet\)\. This range is an example only\. For more information about how to select the appropriate ephemeral port range, see [Ephemeral Ports](#nacl-ephemeral-ports)\.  | 
 |  \*  | All traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  |  Denies all inbound IPv4 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
 |  Outbound  | 
 |  Rule \#  | Type |  Protocol  |  Port Range  | Destination |  Allow/Deny  |  Comments  | 
 |  100  | HTTP |  TCP  |  80  | 0\.0\.0\.0/0 |  ALLOW  |  Allows outbound IPv4 HTTP traffic from the subnet to the Internet\.  | 
 |  110  | HTTPS |  TCP  |  443  | 0\.0\.0\.0/0 |  ALLOW  |  Allows outbound IPv4 HTTPS traffic from the subnet to the Internet\.  | 
-|  120  | Custom TCP |  TCP  |  32768\-65535  | 0\.0\.0\.0/0 |  ALLOW  |  Allows outbound IPv4 responses to clients on the Internet \(for example, serving web pages to people visiting the web servers in the subnet\)\. This range is an example only\. For more information about how to select the appropriate ephemeral port range, see [Ephemeral Ports](#VPC_ACLs_Ephemeral_Ports)\.  | 
+|  120  | Custom TCP |  TCP  |  32768\-65535  | 0\.0\.0\.0/0 |  ALLOW  |  Allows outbound IPv4 responses to clients on the Internet \(for example, serving web pages to people visiting the web servers in the subnet\)\. This range is an example only\. For more information about how to select the appropriate ephemeral port range, see [Ephemeral Ports](#nacl-ephemeral-ports)\.  | 
 |  \*  | All traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  |  Denies all outbound IPv4 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
 
 As a packet comes to the subnet, we evaluate it against the ingress rules of the ACL the subnet is associated with \(starting at the top of the list of rules, and moving to the bottom\)\. Here's how the evaluation goes if the packet is destined for the SSL port \(443\)\. The packet doesn't match the first rule evaluated \(rule 100\)\. It does match the second rule \(110\), which allows the packet into the subnet\. If the packet had been destined for port 139 \(NetBIOS\), it doesn't match any of the rules, and the \* rule ultimately denies the packet\. 
@@ -124,8 +124,8 @@ The following table shows the same example of a custom network ACL for a VPC tha
 |  115  |  HTTPS  |  TCP  |  443  |  ::/0  |  ALLOW  |  Allows inbound HTTPS traffic from any IPv6 address\.  | 
 |  120  | SSH |  TCP  |  22  | 192\.0\.2\.0/24 |  ALLOW  |  Allows inbound SSH traffic from your home network's public IPv4 address range \(over the Internet gateway\)\.  | 
 |  130  | RDP |  TCP  |  3389  | 192\.0\.2\.0/24 |  ALLOW  |  Allows inbound RDP traffic to the web servers from your home network's public IPv4 address range \(over the Internet gateway\)\.   | 
-|  140  | Custom TCP |  TCP  |  32768\-65535  | 0\.0\.0\.0/0 |  ALLOW  |  Allows inbound return IPv4 traffic from the Internet \(that is, for requests that originate in the subnet\)\. This range is an example only\. For more information about how to select the appropriate ephemeral port range, see [Ephemeral Ports](#VPC_ACLs_Ephemeral_Ports)\.  | 
-|  145  | Custom TCP | TCP | 32768\-65535 | ::/0 | ALLOW |  Allows inbound return IPv6 traffic from the Internet \(that is, for requests that originate in the subnet\)\. This range is an example only\. For more information about how to select the appropriate ephemeral port range, see [Ephemeral Ports](#VPC_ACLs_Ephemeral_Ports)\.  | 
+|  140  | Custom TCP |  TCP  |  32768\-65535  | 0\.0\.0\.0/0 |  ALLOW  |  Allows inbound return IPv4 traffic from the Internet \(that is, for requests that originate in the subnet\)\. This range is an example only\. For more information about how to select the appropriate ephemeral port range, see [Ephemeral Ports](#nacl-ephemeral-ports)\.  | 
+|  145  | Custom TCP | TCP | 32768\-65535 | ::/0 | ALLOW |  Allows inbound return IPv6 traffic from the Internet \(that is, for requests that originate in the subnet\)\. This range is an example only\. For more information about how to select the appropriate ephemeral port range, see [Ephemeral Ports](#nacl-ephemeral-ports)\.  | 
 |  \*  | All traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  |  Denies all inbound IPv4 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
 |  \*  |  All traffic  |  All  |  All  |  ::/0  |  DENY  |  Denies all inbound IPv6 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
 |  Outbound  | 
@@ -134,12 +134,12 @@ The following table shows the same example of a custom network ACL for a VPC tha
 |  105  |  HTTP  |  TCP  |  80  |  ::/0  |  ALLOW  |  Allows outbound IPv6 HTTP traffic from the subnet to the Internet\.  | 
 |  110  | HTTPS |  TCP  |  443  | 0\.0\.0\.0/0 |  ALLOW  |  Allows outbound IPv4 HTTPS traffic from the subnet to the Internet\.  | 
 |  115  |  HTTPS  |  TCP  |  443  |  ::/0  |  ALLOW  |  Allows outbound IPv6 HTTPS traffic from the subnet to the Internet\.  | 
-|  120  | Custom TCP |  TCP  |  32768\-65535  | 0\.0\.0\.0/0 |  ALLOW  |  Allows outbound IPv4 responses to clients on the Internet \(for example, serving web pages to people visiting the web servers in the subnet\)\. This range is an example only\. For more information about how to select the appropriate ephemeral port range, see [Ephemeral Ports](#VPC_ACLs_Ephemeral_Ports)\.  | 
-|  125  |  Custom TCP  |  TCP  |  32768\-65535  |  ::/0  |  ALLOW  |  Allows outbound IPv6 responses to clients on the Internet \(for example, serving web pages to people visiting the web servers in the subnet\)\. This range is an example only\. For more information about how to select the appropriate ephemeral port range, see [Ephemeral Ports](#VPC_ACLs_Ephemeral_Ports)\.  | 
+|  120  | Custom TCP |  TCP  |  32768\-65535  | 0\.0\.0\.0/0 |  ALLOW  |  Allows outbound IPv4 responses to clients on the Internet \(for example, serving web pages to people visiting the web servers in the subnet\)\. This range is an example only\. For more information about how to select the appropriate ephemeral port range, see [Ephemeral Ports](#nacl-ephemeral-ports)\.  | 
+|  125  |  Custom TCP  |  TCP  |  32768\-65535  |  ::/0  |  ALLOW  |  Allows outbound IPv6 responses to clients on the Internet \(for example, serving web pages to people visiting the web servers in the subnet\)\. This range is an example only\. For more information about how to select the appropriate ephemeral port range, see [Ephemeral Ports](#nacl-ephemeral-ports)\.  | 
 |  \*  | All traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  |  Denies all outbound IPv4 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
 |  \*  |  All traffic  |  All  |  All  |  ::/0  |  DENY  |  Denies all outbound IPv6 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
 
-## Ephemeral Ports<a name="VPC_ACLs_Ephemeral_Ports"></a>
+## Ephemeral Ports<a name="nacl-ephemeral-ports"></a>
 
 The example network ACL in the preceding section uses an ephemeral port range of 32768\-65535\. However, you might want to use a different range for your network ACLs depending on the type of client that you're using or with which you're communicating\.
 
@@ -149,9 +149,9 @@ If an instance in your VPC is the client initiating a request, your network ACL 
 
 In practice, to cover the different types of clients that might initiate traffic to public\-facing instances in your VPC, you can open ephemeral ports 1024\-65535\. However, you can also add rules to the ACL to deny traffic on any malicious ports within that range\. Ensure that you place the DENY rules earlier in the table than the ALLOW rules that open the wide range of ephemeral ports\.
 
-## Working with Network ACLs<a name="WorkWithACLs"></a>
+## Working with Network ACLs<a name="nacl-tasks"></a>
 
-This section shows you how to work with network ACLs using the Amazon VPC console\.
+The following tasks show you how to work with network ACLs using the Amazon VPC console\.
 
 **Topics**
 + [Determining Network ACL Associations](#ACLSubnet)
@@ -298,7 +298,7 @@ You can delete a network ACL only if there are no subnets associated with it\. Y
 
 In this example, instances in your subnet can communicate with each other, and are accessible from a trusted remote computer\. The remote computer may be a computer in your local network or an instance in a different subnet or VPC that you use to connect to your instances to perform administrative tasks\. Your security group rules and network ACL rules allow access from the IP address of your remote computer \(172\.31\.1\.2/32\)\. All other traffic from the Internet or other networks is denied\.
 
-![\[Using a security group and an NACL\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/nacl-example-diagram.png)
+![\[Using a security group and an NACL\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/nacl-example-diagram.png)
 
 All instances use the same security group \(sg\-1a2b3c4d\), with the following rules\.
 
@@ -344,7 +344,7 @@ However, only other instances within the subnet and your remote computer are abl
 
 ## API and Command Overview<a name="nacl-api-cli"></a>
 
-You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
+You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 
 **Create a network ACL for your VPC**
 + [create\-network\-acl](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-network-acl.html) \(AWS CLI\)

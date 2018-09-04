@@ -1,4 +1,4 @@
-# What Is Amazon VPC?<a name="VPC_Introduction"></a>
+# What Is Amazon VPC?<a name="what-is-amazon-vpc"></a>
 
 Amazon Virtual Private Cloud \(Amazon VPC\) enables you to launch AWS resources into a virtual network that you've defined\. This virtual network closely resembles a traditional network that you'd operate in your own data center, with the benefits of using the scalable infrastructure of AWS\.
 
@@ -50,15 +50,15 @@ You control how the instances that you launch into a VPC access resources outsid
 
 Your default VPC includes an internet gateway, and each default subnet is a public subnet\. Each instance that you launch into a default subnet has a private IPv4 address and a public IPv4 address\. These instances can communicate with the internet through the internet gateway\. An internet gateway enables your instances to connect to the internet through the Amazon EC2 network edge\. 
 
-![\[Using a default VPC\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/default-vpc-diagram.png)
+![\[Using a default VPC\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/default-vpc-diagram.png)
 
 By default, each instance that you launch into a nondefault subnet has a private IPv4 address, but no public IPv4 address, unless you specifically assign one at launch, or you modify the subnet's public IP address attribute\. These instances can communicate with each other, but can't access the internet\.
 
-![\[Using a nondefault VPC\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/nondefault-vpc-diagram.png)
+![\[Using a nondefault VPC\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/nondefault-vpc-diagram.png)
 
 You can enable internet access for an instance launched into a nondefault subnet by attaching an internet gateway to its VPC \(if its VPC is not a default VPC\) and associating an Elastic IP address with the instance\.
 
-![\[Using an internet gateway\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/internet-gateway-diagram.png)
+![\[Using an internet gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/internet-gateway-diagram.png)
 
 Alternatively, to allow an instance in your VPC to initiate outbound connections to the internet but prevent unsolicited inbound connections from the internet, you can use a network address translation \(NAT\) device for IPv4 traffic\. NAT maps multiple private IPv4 addresses to a single public IPv4 address\. A NAT device has an Elastic IP address and is connected to the internet through an internet gateway\. You can connect an instance in a private subnet to the internet through the NAT device, which routes traffic from the instance to the internet gateway, and routes any responses to the instance\.
 
@@ -72,7 +72,7 @@ You can optionally connect your VPC to your own corporate data center using an I
 
 A VPN connection consists of a virtual private gateway attached to your VPC and a customer gateway located in your data center\. A virtual private gateway is the VPN concentrator on the Amazon side of the VPN connection\. A customer gateway is a physical device or software appliance on your side of the VPN connection\.
 
-![\[Using a virtual private gateway\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/virtual-private-gateway-diagram.png)
+![\[Using a virtual private gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/virtual-private-gateway-diagram.png)
 
 For more information, see [AWS Managed VPN Connections](VPC_VPN.md)\.
 
@@ -82,17 +82,17 @@ AWS PrivateLink is a highly available, scalable technology that enables you to p
 
 To use AWS PrivateLink, create an interface VPC endpoint for a service in your VPC\. This creates an elastic network interface in your subnet with a private IP address that serves as an entry point for traffic destined to the service\. For more information, see [VPC Endpoints](vpc-endpoints.md)\.
 
-![\[Using an interface endpoint to access an AWS service\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/vpc-endpoint-privatelink-diagram.png)
+![\[Using an interface endpoint to access an AWS service\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-privatelink-diagram.png)
 
  You can create your own AWS PrivateLink\-powered service \(endpoint service\) and enable other AWS customers to access your service\. For more information, see [VPC Endpoint Services \(AWS PrivateLink\)](endpoint-service.md)\.
 
 ## How to Get Started with Amazon VPC<a name="howto"></a>
 
-To get a hands\-on introduction to Amazon VPC, complete the exercise [Getting Started with Amazon VPC](GetStarted.md)\. The exercise guides you through the steps to create a nondefault VPC with a public subnet, and to launch an instance into your subnet\.
+To get a hands\-on introduction to Amazon VPC, complete [Getting Started with Amazon VPC](vpc-getting-started.md)\. This exercise guides you through the steps to create a nondefault VPC with a public subnet, and to launch an instance into your subnet\.
 
 If you have a default VPC, and you want to get started launching instances into your VPC without performing any additional configuration on your VPC, see [Launching an EC2 Instance into Your Default VPC](default-vpc.md#launching-into)\.
 
-To learn about the basic scenarios for Amazon VPC, see [Scenarios and Examples](VPC_Scenarios.md)\. You can configure your VPC and subnets in other ways to suit your needs\. 
+To learn about the basic scenarios for Amazon VPC, see [Scenarios and Examples](VPC_Scenarios.md)\. You can configure your VPC and subnets in other ways to suit your needs\.
 
 The following table lists related resources that you might find useful as you work with this service\.
 
@@ -149,7 +149,7 @@ There's no additional charge for using Amazon VPC\. You pay the standard rates f
 
 ## Amazon VPC Limits<a name="CurrentCapabilities"></a>
 
-There are limits to the number of Amazon VPC components that you can provision\. You can request an increase for some of these limits\. For more information, see [Amazon VPC Limits](VPC_Appendix_Limits.md)\.
+There are limits to the number of Amazon VPC components that you can provision\. You can request an increase for some of these limits\. For more information, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
 
 ## PCI DSS Compliance<a name="pci-compliance"></a>
 

@@ -10,7 +10,7 @@ To create and set up a gateway endpoint, follow these general steps:
 
 In the following diagram, instances in subnet 2 can access Amazon S3 through the gateway endpoint\.
 
-![\[Using a gateway endpoint to access Amazon S3\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/vpc-endpoint-s3-diagram.png)
+![\[Using a gateway endpoint to access Amazon S3\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-s3-diagram.png)
 
 You can create multiple endpoints in a single VPC, for example, to multiple services\. You can also create multiple endpoints for a single service, and use different route tables to enforce different access policies from different subnets to the same service\.
 
@@ -109,7 +109,7 @@ To use gateway endpoints, you need to be aware of the current limitations:
 + You cannot tag an endpoint\.
 + Endpoints support IPv4 traffic only\.
 + You cannot transfer an endpoint from one VPC to another, or from one service to another\.
-+ You have a limit on the number of endpoints you can create per VPC\. For more information, see [VPC Endpoints](VPC_Appendix_Limits.md#vpc-limits-endpoints)\.
++ You have a limit on the number of endpoints you can create per VPC\. For more information, see [VPC Endpoints](amazon-vpc-limits.md#vpc-limits-endpoints)\.
 + Endpoint connections cannot be extended out of a VPC\. Resources on the other side of a VPN connection, VPC peering connection, AWS Direct Connect connection, or ClassicLink connection in your VPC cannot use the endpoint to communicate with resources in the endpoint service\. 
 + You must enable DNS resolution in your VPC, or if you're using your own DNS server, ensure that DNS requests to the required service \(such as Amazon S3\) are resolved correctly to the IP addresses maintained by AWS\. For more information, see [Using DNS with Your VPC](vpc-dns.md) and [AWS IP Address Ranges](http://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html) in the *Amazon Web Services General Reference*\.
 

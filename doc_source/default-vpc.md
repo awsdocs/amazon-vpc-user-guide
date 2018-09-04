@@ -26,7 +26,7 @@ When we create a default VPC, we do the following to set it up for you:
 
 The following figure illustrates the key components that we set up for a default VPC\.
 
-![\[A default VPC\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/default-vpc-diagram.png)
+![\[A default VPC\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/default-vpc-diagram.png)
 
 You can use a default VPC as you would use any other VPC: 
 + Add additional nondefault subnets\.
@@ -76,7 +76,7 @@ For more information about the EC2\-Classic and EC2\-VPC platforms, see [Support
 1. On the Amazon EC2 console dashboard, look for **Supported Platforms** under **Account Attributes**\. If there are two values, `EC2` and `VPC`, you can launch instances into either platform\. If there is one value, `VPC`, you can launch instances only into EC2\-VPC\.
 
    For example, the following indicates that the account supports the EC2\-VPC platform only, and has a default VPC with the identifier `vpc-1a2b3c4d`\.  
-![\[The Supported Platforms indicator.\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/vpc_indicator.png)
+![\[The Supported Platforms indicator.\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc_indicator.png)
 
    If you delete your default VPC, the **Default VPC** value displayed is `None`\. For more information, see [Deleting Your Default Subnets and Default VPC](#deleting-default-vpc)\.
 

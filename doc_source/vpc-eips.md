@@ -2,7 +2,7 @@
 
 An *Elastic IP address* is a static, public IPv4 address designed for dynamic cloud computing\. You can associate an Elastic IP address with any instance or network interface for any VPC in your account\. With an Elastic IP address, you can mask the failure of an instance by rapidly remapping the address to another instance in your VPC\. Note that the advantage of associating the Elastic IP address with the network interface instead of directly with the instance is that you can move all the attributes of the network interface from one instance to another in a single step\.
 
-We currently do not support Elastic IP addresses for IPv6\. 
+We currently do not support Elastic IP addresses for IPv6\.
 
 **Topics**
 + [Elastic IP Address Basics](#vpc-eip-overview)
@@ -18,7 +18,7 @@ The following are the basic things that you need to know about Elastic IP addres
 + There are differences between an Elastic IP address that you use in a VPC and one that you use in EC2\-Classic\. For more information, see [Elastic IP Address Differences Between EC2\-Classic and Amazon EC2\-VPC](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html#VPC_EIP_EC2_Differences) in the *Amazon EC2 User Guide for Linux Instances*\)\.
 + You can move an Elastic IP address from one instance to another\. The instance can be in the same VPC or another VPC, but not in EC2\-Classic\.
 + Your Elastic IP addresses remain associated with your AWS account until you explicitly release them\.
-+ To ensure efficient use of Elastic IP addresses, we impose a small hourly charge when they aren't associated with a running instance, or when they are associated with a stopped instance or an unattached network interface\. While your instance is running, you aren't charged for one Elastic IP address associated with the instance, but you are charged for any additional Elastic IP addresses associated with the instance\. For more information, see [Amazon EC2 Pricing](http://aws.amazon.com/ec2/pricing/on-demand/#Elastic_IP_Addresses)\.
++ To ensure efficient use of Elastic IP addresses, we impose a small hourly charge when they aren't associated with a running instance, or when they are associated with a stopped instance or an unattached network interface\. While your instance is running, you aren't charged for one Elastic IP address associated with the instance, but you are charged for any additional Elastic IP addresses associated with the instance\. For more information, see [Amazon EC2 Pricing](https://aws.amazon.com/ec2/pricing/on-demand/#Elastic_IP_Addresses)\.
 + You're limited to five Elastic IP addresses; to help conserve them, you can use a NAT device \(see [NAT](vpc-nat.md)\)\.
 + An Elastic IP address is accessed through the Internet gateway of a VPC\. If you have set up a VPN connection between your VPC and your network, the VPN traffic traverses a virtual private gateway, not an Internet gateway, and therefore cannot access the Elastic IP address\.
 + You can move an Elastic IP address that you've allocated for use in the EC2\-Classic platform to the VPC platform\. For more information, see [Migrating an Elastic IP Address from EC2\-Classic to EC2\-VPC](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html#migrating-eip) in the *Amazon EC2 User Guide*\.
@@ -111,7 +111,7 @@ Currently, you can recover an Elastic IP address using the Amazon EC2 API or a c
 
 ## API and CLI Overview<a name="eip-api-cli"></a>
 
-You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
+You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 
 **Acquire an Elastic IP address**
 + [allocate\-address](http://docs.aws.amazon.com/cli/latest/reference/ec2/allocate-address.html) \(AWS CLI\)

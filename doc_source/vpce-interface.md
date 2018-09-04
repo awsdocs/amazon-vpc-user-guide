@@ -4,16 +4,19 @@ An interface VPC endpoint \(interface endpoint\) enables you to connect to servi
 
 The following services are supported:
 + [Amazon API Gateway](http://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-private-apis.html)
++ [AWS CloudFormation](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-vpce-bucketnames.html)
 + [Amazon CloudWatch](http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch-and-interface-VPC.html)
 + [Amazon CloudWatch Events](http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/cloudwatch-events-and-interface-VPC.html)
 + [Amazon CloudWatch Logs](http://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/cloudwatch-logs-and-interface-VPC.html)
 + [AWS CodeBuild](http://docs.aws.amazon.com/codebuild/latest/userguide/use-vpc-endpoints-with-codebuild.html)
++ [AWS Config](http://docs.aws.amazon.com/config/latest/developerguide/config-VPC-endpoints.html)
 + Amazon EC2 API
 + Elastic Load Balancing API
 + [AWS Key Management Service](http://docs.aws.amazon.com/kms/latest/developerguide/kms-vpc-endpoint.html)
 + [Amazon Kinesis Data Streams](http://docs.aws.amazon.com/streams/latest/dev/vpc.html)
 + [Amazon SageMaker Runtime](http://docs.aws.amazon.com/sagemaker/latest/dg/interface-vpc-endpoint.html)
 + [AWS Secrets Manager](http://docs.aws.amazon.com/secretsmanager/latest/userguide/rotation-network-rqmts.html)
++ [AWS Security Token Service](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_sts_vpce.html)
 + AWS Service Catalog
 + [Amazon SNS](http://docs.aws.amazon.com/sns/latest/dg/sns-vpc.html)
 + [AWS Systems Manager](http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-setting-up-vpc.html)
@@ -53,11 +56,11 @@ When you create an interface endpoint, we generate endpoint\-specific DNS hostna
 
 In the following diagram, you have created an interface endpoint for Amazon Kinesis Data Streams and an endpoint network interface in subnet 2\. You have not enabled private DNS for the interface endpoint\. Instances in either subnet can communicate with Amazon Kinesis Data Streams through the interface endpoint using an endpoint\-specific DNS hostname \(DNS name B\)\. Instance in subnet 1 can communicate with Amazon Kinesis Data Streams over public IP address space in the AWS region using the default DNS name for the service \(DNS name A\)\.
 
-![\[Using an interface endpoint to access Kinesis\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/vpc-endpoint-kinesis-diagram.png)
+![\[Using an interface endpoint to access Kinesis\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-kinesis-diagram.png)
 
 In the next diagram, you have enabled private DNS for the endpoint\. Instances in either subnet can communicate with Amazon Kinesis Data Streams through the interface endpoint using an endpoint\-specific DNS hostname \(DNS name B\) or the default DNS name for the service \(DNS name A\)\.
 
-![\[Using an interface endpoint to access Kinesis\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/vpc-endpoint-kinesis-private-dns-diagram.png)
+![\[Using an interface endpoint to access Kinesis\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-kinesis-private-dns-diagram.png)
 
 **Important**  
 To use private DNS, you must set the following VPC attributes to `true`: `enableDnsHostnames` and `enableDnsSupport`\. For more information, see [Updating DNS Support for Your VPC](vpc-dns.md#vpc-dns-updating)\. IAM users must have permission to work with hosted zones\. For more information, see [Authentication and Access Control for Route 53](http://docs.aws.amazon.com/Route53/latest/DeveloperGuide/auth-and-access-control.html)\.
@@ -65,7 +68,7 @@ To use private DNS, you must set the following VPC attributes to `true`: `enable
 ## Interface Endpoint Properties and Limitations<a name="vpce-interface-limitations"></a>
 
 To use interface endpoints, you need to be aware of their properties and current limitations:
-+ An interface endpoint can be accessed through an AWS Direct Connect connection\. It can also be accessed through an intra\-region VPC peering connection from C5, `i3.metal`, and M5 instance types only\. You cannot access an interface endpoint through an AWS VPN connection, an inter\-region VPC peering connection, or an intra\-region VPC peering connection from an instance type other than C5, `i3.metal`, or M5\.
++ An interface endpoint can be accessed through an AWS Direct Connect connection\. Interface endpoints can be accessed through an intra\-region VPC peering connection from C5, i3\.metal, R5, R5D, M5, and Z1D instance types only\. Interface endpoints cannot be accessed through an inter\-region VPC peering connection, or an AWS VPN connection\.
 + For each interface endpoint, you can choose only one subnet per Availability Zone\.
 + Interface endpoints do not support the use of endpoint policies\. Full access to the service through the interface endpoint is allowed\.
 + Services may not be available in all Availability Zones through an interface endpoint\. To find out which Availability Zones are supported, use the [describe\-vpc\-endpoint\-services](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-services.html) command or use the Amazon VPC console\. For more information, see [Creating an Interface Endpoint](#create-interface-endpoint)\.
@@ -77,13 +80,13 @@ To use interface endpoints, you need to be aware of their properties and current
 + You cannot tag an endpoint\.
 + Endpoints support IPv4 traffic only\.
 + You cannot transfer an endpoint from one VPC to another, or from one service to another\.
-+ You have a limit on the number of endpoints you can create per VPC\. For more information, see [VPC Endpoints](VPC_Appendix_Limits.md#vpc-limits-endpoints)\.
++ You have a limit on the number of endpoints you can create per VPC\. For more information, see [VPC Endpoints](amazon-vpc-limits.md#vpc-limits-endpoints)\.
 
 ## Interface Endpoint Lifecycle<a name="vpce-interface-lifecycle"></a>
 
 An interface endpoint goes through various stages starting from when you create it \(the endpoint connection request\)\. At each stage, there may be actions that the service consumer and service provider can take\.
 
-![\[Interface endpoint lifecycle\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/interface-endpoint-lifecycle-diagram.png)
+![\[Interface endpoint lifecycle\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/interface-endpoint-lifecycle-diagram.png)
 
 The following rules apply:
 + A service provider can configure their service to accept interface endpoint requests automatically or manually\. AWS services and AWS Marketplace services generally accept all endpoint requests automatically\.

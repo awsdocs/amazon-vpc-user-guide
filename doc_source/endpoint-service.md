@@ -2,6 +2,19 @@
 
 You can create your own application in your VPC and configure it as an AWS PrivateLink\-powered service \(referred to as an *endpoint service*\)\. Other AWS principals can create a connection from their VPC to your endpoint service using an [interface VPC endpoint](vpce-interface.md)\. You are the *service provider*, and the AWS principals that create connections to your service are *service consumers*\.
 
+**Topics**
++ [Overview](#endpoint-service-overview)
++ [Endpoint Service Limitations](#endpoint-service-limits)
++ [Creating a VPC Endpoint Service Configuration](#create-endpoint-service)
++ [Adding and Removing Permissions for Your Endpoint Service](#add-endpoint-service-permissions)
++ [Changing the Network Load Balancers and Acceptance Settings](#modify-endpoint-service)
++ [Accepting and Rejecting Interface Endpoint Connection Requests](#accept-reject-endpoint-requests)
++ [Creating and Managing a Notification for an Endpoint Service](#create-notification-endpoint-service)
++ [Using Proxy Protocol for Connection Information](#endpoint-service-proxy-protocol)
++ [Deleting an Endpoint Service Configuration](#delete-endpoint-service)
+
+## Overview<a name="endpoint-service-overview"></a>
+
 The following are the general steps to create an endpoint service\.
 
 1. Create a Network Load Balancer for your application in your VPC and configure it for each subnet \(Availability Zone\) in which the service should be available\. The load balancer receives requests from service consumers and routes it to your service\. For more information, see [Getting Started with Network Load Balancers](http://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancer-getting-started.html) in the *User Guide for Network Load Balancers*\. We recommend that you configure your service in all Availability Zones within the region\.
@@ -20,23 +33,13 @@ The combination of permissions and acceptance settings can help you control whic
 
 In the following diagram, the account owner of VPC B is a service provider, and has a service running on instances in subnet B\. The owner of VPC B has a service endpoint \(vpce\-svc\-1234\) with an associated Network Load Balancer that points to the instances in subnet B as targets\. Instances in subnet A of VPC A use an interface endpoint to access the services in subnet B\.
 
-![\[Using an interface endpoint to access an endpoint service\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/vpc-endpoint-service.png)
+![\[Using an interface endpoint to access an endpoint service\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-service.png)
 
 For low latency and fault tolerance, we recommend using a Network Load Balancer with targets in every Availability Zone of the AWS Region\. To help achieve high availability for service consumers that use [zonal DNS hostnames](vpce-interface.md#access-service-though-endpoint) to access the service, you can enable cross\-zone load balancing\. Cross\-zone load balancing enables the load balancer to distribute traffic across the registered targets in all enabled Availability Zones\. For more information, see [Cross\-Zone Load Balancing](http://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancers.html#cross-zone-load-balancing) in the *User Guide for Network Load Balancers*\. Regional data transfer charges may apply to your account when you enable cross\-zone load balancing\.
 
 In the following diagram, the owner of VPC B is the service provider, and has configured a Network Load Balancer with targets in two different Availability Zones\. The service consumer \(VPC A\) has created interface endpoints in the same two Availability Zones in their VPC\. Requests to the service from instances in VPC A can use either interface endpoint\.
 
-![\[Using interface endpoints to access an endpoint service\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/vpc-endpoint-service-multi-az.png)
-
-**Topics**
-+ [Endpoint Service Limitations](#endpoint-service-limits)
-+ [Creating a VPC Endpoint Service Configuration](#create-endpoint-service)
-+ [Adding and Removing Permissions for Your Endpoint Service](#add-endpoint-service-permissions)
-+ [Changing the Network Load Balancers and Acceptance Settings](#modify-endpoint-service)
-+ [Accepting and Rejecting Interface Endpoint Connection Requests](#accept-reject-endpoint-requests)
-+ [Creating and Managing a Notification for an Endpoint Service](#create-notification-endpoint-service)
-+ [Using Proxy Protocol for Connection Information](#endpoint-service-proxy-protocol)
-+ [Deleting an Endpoint Service Configuration](#delete-endpoint-service)
+![\[Using interface endpoints to access an endpoint service\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-service-multi-az.png)
 
 ## Endpoint Service Limitations<a name="endpoint-service-limits"></a>
 

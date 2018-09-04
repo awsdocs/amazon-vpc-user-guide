@@ -2,41 +2,39 @@
 
 If you have an existing VPC that supports IPv4 only, and resources in your subnet that are configured to use IPv4 only, you can enable IPv6 support for your VPC and resources\. Your VPC can operate in dual\-stack mode — your resources can communicate over IPv4, or IPv6, or both\. IPv4 and IPv6 communication are independent of each other\.
 
-You cannot disable IPv4 support for your VPC and subnets; this is the default IP addressing system for Amazon VPC and Amazon EC2\. 
+You cannot disable IPv4 support for your VPC and subnets; this is the default IP addressing system for Amazon VPC and Amazon EC2\.
 
 **Note**  
-This topic assumes that you have an existing VPC with public and private subnets\. If you're looking for information about setting up a new VPC for use with IPv6, see [Getting Started with IPv6 for Amazon VPC](get-started-ipv6.md)\.
+This information assumes that you have an existing VPC with public and private subnets\. For information about setting up a new VPC for use with IPv6, see [Getting Started with IPv6 for Amazon VPC](get-started-ipv6.md)\.
 
 The following table provides an overview of the steps to enable your VPC and subnets to use IPv6\.
 
 
 | Step | Notes | 
 | --- | --- | 
-| [Step 1: Associate an IPv6 CIDR Block with Your VPC and Subnets](#vpc-migrate-ipv6-cidr) | Associate an Amazon\-provided IPv6 CIDR block with your VPC and with your subnets\.  | 
-| [Step 2: Create and Configure an Egress\-Only Internet Gateway for a Private Subnet](#vpc-migrate-ipv6-eigw) | If you're using a NAT device in your private subnet, it does not support IPv6 traffic\. Instead, create an egress\-only internet gateway for your private subnet to enable outbound communication to the internet over IPv6 and prevent inbound communication\. An egress\-only internet gateway supports IPv6 traffic only\. | 
-| [Step 3: Update Your Route Tables](#vpc-migrate-ipv6-routes) | Update your route tables to route your IPv6 traffic\. For a public subnet, create a route that routes all IPv6 traffic from the subnet to the internet gateway\. For a private subnet, create a route that routes all internet\-bound IPv6 traffic from the subnet to the egress\-only internet gateway\. | 
-| [Step 4: Update Your Security Group Rules](#vpc-migrate-ipv6-sg-rules) | Update your security group rules to include rules for IPv6 addresses\. This enables IPv6 traffic to flow to and from your instances\. If you've created custom network ACL rules to control the flow of traffic to and from your subnet, you must include rules for IPv6 traffic\.  | 
-| [Step 5: Change Your Instance Type](#vpc-migrate-ipv6-instance-types) | If your instance type does not support IPv6, change the instance type\. | 
-| [Step 6: Assign IPv6 Addresses to Your Instances](#vpc-migrate-assign-ipv6-address) | Assign IPv6 addresses to your instances from the IPv6 address range of your subnet\. | 
-| [Step 7: \(Optional\) Configure IPv6 on Your Instances](#vpc-migrate-ipv6-dhcpv6) | If your instance was launched from an AMI that is not configured to use DHCPv6, you must manually configure your instance to recognize an IPv6 address assigned to the instance\. | 
+| [Step 1: Associate an IPv6 CIDR Block with Your VPC and Subnets](#vpc-migrate-ipv6-cidr) | Associate an Amazon\-provided IPv6 CIDR block with your VPC and with your subnets\. | 
+| [Step 2: Update Your Route Tables](#vpc-migrate-ipv6-routes) | Update your route tables to route your IPv6 traffic\. For a public subnet, create a route that routes all IPv6 traffic from the subnet to the internet gateway\. For a private subnet, create a route that routes all internet\-bound IPv6 traffic from the subnet to an egress\-only internet gateway\. | 
+| [Step 3: Update Your Security Group Rules](#vpc-migrate-ipv6-sg-rules) | Update your security group rules to include rules for IPv6 addresses\. This enables IPv6 traffic to flow to and from your instances\. If you've created custom network ACL rules to control the flow of traffic to and from your subnet, you must include rules for IPv6 traffic\. | 
+| [Step 4: Change Your Instance Type](#vpc-migrate-ipv6-instance-types) | If your instance type does not support IPv6, change the instance type\. | 
+| [Step 5: Assign IPv6 Addresses to Your Instances](#vpc-migrate-assign-ipv6-address) | Assign IPv6 addresses to your instances from the IPv6 address range of your subnet\. | 
+| [Step 6: \(Optional\) Configure IPv6 on Your Instances](#vpc-migrate-ipv6-dhcpv6) | If your instance was launched from an AMI that is not configured to use DHCPv6, you must manually configure your instance to recognize an IPv6 address assigned to the instance\. | 
 
 Before you migrate to using IPv6, ensure that you have read the features of IPv6 addressing for Amazon VPC: [IPv4 and IPv6 Characteristics and Restrictions](vpc-ip-addressing.md#vpc-ipv4-ipv6-comparison)\.
 
 **Topics**
 + [Example: Enabling IPv6 in a VPC With a Public and Private Subnet](#vpc-migrate-ipv6-example)
 + [Step 1: Associate an IPv6 CIDR Block with Your VPC and Subnets](#vpc-migrate-ipv6-cidr)
-+ [Step 2: Create and Configure an Egress\-Only Internet Gateway for a Private Subnet](#vpc-migrate-ipv6-eigw)
-+ [Step 3: Update Your Route Tables](#vpc-migrate-ipv6-routes)
-+ [Step 4: Update Your Security Group Rules](#vpc-migrate-ipv6-sg-rules)
-+ [Step 5: Change Your Instance Type](#vpc-migrate-ipv6-instance-types)
-+ [Step 6: Assign IPv6 Addresses to Your Instances](#vpc-migrate-assign-ipv6-address)
-+ [Step 7: \(Optional\) Configure IPv6 on Your Instances](#vpc-migrate-ipv6-dhcpv6)
++ [Step 2: Update Your Route Tables](#vpc-migrate-ipv6-routes)
++ [Step 3: Update Your Security Group Rules](#vpc-migrate-ipv6-sg-rules)
++ [Step 4: Change Your Instance Type](#vpc-migrate-ipv6-instance-types)
++ [Step 5: Assign IPv6 Addresses to Your Instances](#vpc-migrate-assign-ipv6-address)
++ [Step 6: \(Optional\) Configure IPv6 on Your Instances](#vpc-migrate-ipv6-dhcpv6)
 
 ## Example: Enabling IPv6 in a VPC With a Public and Private Subnet<a name="vpc-migrate-ipv6-example"></a>
 
-In this example, your VPC has a public and a private subnet\. You have a database instance in your private subnet that has outbound communication with the internet through a NAT gateway in your VPC\. You have a public\-facing web server in your public subnet that has internet access through an internet gateway\. The following diagram represents the architecture of your VPC\.
+In this example, your VPC has a public and a private subnet\. You have a database instance in your private subnet that has outbound communication with the internet through a NAT gateway in your VPC\. You have a public\-facing web server in your public subnet that has internet access through the internet gateway\. The following diagram represents the architecture of your VPC\.
 
-![\[VPC with public and private subnets\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/vpc-migrate-ipv6-example-diagram.png)
+![\[VPC with public and private subnets\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-migrate-ipv6-example-diagram.png)
 
 The security group for your web server \(`sg-11aa22bb`\) has the following inbound rules:
 
@@ -63,11 +61,11 @@ You want your VPC and resources to be enabled for IPv6, and you want them to ope
 
 After you've completed the steps, your VPC will have the following configuration\.
 
-![\[VPC with public and private subnets\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/vpc-migrate-ipv6-example-2-diagram.png)
+![\[VPC with public and private subnets\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-migrate-ipv6-example-2-diagram.png)
 
 ## Step 1: Associate an IPv6 CIDR Block with Your VPC and Subnets<a name="vpc-migrate-ipv6-cidr"></a>
 
-You can associate an IPv6 CIDR block with your VPC, and then associate a `/64` CIDR block from that range with each subnet\. 
+You can associate an IPv6 CIDR block with your VPC, and then associate a `/64` CIDR block from that range with each subnet\.
 
 **To associate an IPv6 CIDR block with a VPC**
 
@@ -93,25 +91,11 @@ You can associate an IPv6 CIDR block with your VPC, and then associate a `/64` C
 
 For more information, see [VPC and Subnet Sizing for IPv6](VPC_Subnets.md#vpc-sizing-ipv6)\.
 
-## Step 2: Create and Configure an Egress\-Only Internet Gateway for a Private Subnet<a name="vpc-migrate-ipv6-eigw"></a>
+## Step 2: Update Your Route Tables<a name="vpc-migrate-ipv6-routes"></a>
 
-An egress\-only internet gateway enables outbound communication to the internet over IPv6 and prevents inbound communication\.
+For a public subnet, you must update the route table to enable instances \(such as web servers\) to use the internet gateway for IPv6 traffic\.
 
-**To create an egress\-only Internet Gateway**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Egress Only Internet Gateways**, **Create Egress Only Internet Gateway**\.
-
-1. Select the VPC in which to create the egress\-only internet gateway\. Choose **Create**\.
-
-For more information, see [Egress\-Only Internet Gateways](egress-only-internet-gateway.md)\.
-
-## Step 3: Update Your Route Tables<a name="vpc-migrate-ipv6-routes"></a>
-
-For a public subnet, you must update the route table to enable instances \(such as web servers\) to use the internet gateway for IPv6 traffic\. If you do not have internet gateway, see [Creating and Attaching an Internet Gateway](VPC_Internet_Gateway.md#Add_IGW_Attach_Gateway)\.
-
-For a private subnet, you must update the route table to enable instances \(such as database instances\) to use the egress\-only internet gateway for IPv6 traffic\. 
+For a private subnet, you must update the route table to enable instances \(such as database instances\) to use an egress\-only internet gateway for IPv6 traffic\.
 
 **To update your route table for a public subnet**
 
@@ -121,21 +105,23 @@ For a private subnet, you must update the route table to enable instances \(such
 
 1. On the **Routes** tab, choose **Edit**\.
 
-1. Choose **Add another route**\. Specify `::/0` for **Destination**, select the internet gateway ID for **Target**, and then choose **Save**\. 
+1. Choose **Add another route**\. Specify `::/0` for **Destination**, select the ID of the internet gateway for **Target**, and then choose **Save**\. 
 
 **To update your route table for a private subnet**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
+1. If you're using a NAT device in your private subnet, it does not support IPv6 traffic\. Instead, create an egress\-only internet gateway for your private subnet to enable outbound communication to the internet over IPv6 and prevent inbound communication\. An egress\-only internet gateway supports IPv6 traffic only\. For more information, see [Egress\-Only Internet Gateways](egress-only-internet-gateway.md)\.
+
 1. In the navigation pane, choose **Route Tables** and select the route table that's associated with the private subnet\.
 
-1. On the **Routes** tab, choose **Edit**\. 
+1. On the **Routes** tab, choose **Edit**\.
 
-1. Choose **Add another route**\. For **Destination**, specify `::/0`\. For **Target**, select the egress\-only internet gateway ID you created in the previous step, and then choose **Save**\. 
+1. Choose **Add another route**\. For **Destination**, specify `::/0`\. For **Target**, select the ID of the egress\-only internet gateway, and then choose **Save**\.
 
 For more information, see [Routing Options](VPC_Route_Tables.md#route-table-options)\.
 
-## Step 4: Update Your Security Group Rules<a name="vpc-migrate-ipv6-sg-rules"></a>
+## Step 3: Update Your Security Group Rules<a name="vpc-migrate-ipv6-sg-rules"></a>
 
 To enable your instances to send and receive traffic over IPv6, you must update your security group rules to include rules for IPv6 addresses\.
 
@@ -155,9 +141,9 @@ By default, an outbound rule that allows all IPv6 traffic is automatically added
 
 ### Update Your Network ACL Rules<a name="vpc-migrate-ipv6-nacl-rules"></a>
 
-If you associate an IPv6 CIDR block with your VPC, we automatically add rules to the default network ACL to allow IPv6 traffic, provided you haven't modified its default rules\. If you've modified your default network ACL or if you've created a custom network ACL with rules to control the flow of traffic to and from your subnet, you must manually add rules for IPv6 traffic\. For more information about recommended network ACL rules, see [Recommended Network ACL Rules for Your VPC](VPC_Appendix_NACLs.md)\.
+If you associate an IPv6 CIDR block with your VPC, we automatically add rules to the default network ACL to allow IPv6 traffic, provided you haven't modified its default rules\. If you've modified your default network ACL or if you've created a custom network ACL with rules to control the flow of traffic to and from your subnet, you must manually add rules for IPv6 traffic\. For more information, see [Recommended Network ACL Rules for Your VPC](vpc-recommended-nacl-rules.md)\.
 
-## Step 5: Change Your Instance Type<a name="vpc-migrate-ipv6-instance-types"></a>
+## Step 4: Change Your Instance Type<a name="vpc-migrate-ipv6-instance-types"></a>
 
 All current generation instance types support IPv6\. For more information, see [Instance Types](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)\.
 
@@ -190,7 +176,7 @@ You may not be able to migrate to a new instance type if there are compatibility
 
 If you launch an instance from a new AMI, you can assign an IPv6 address to your instance during launch\. 
 
-## Step 6: Assign IPv6 Addresses to Your Instances<a name="vpc-migrate-assign-ipv6-address"></a>
+## Step 5: Assign IPv6 Addresses to Your Instances<a name="vpc-migrate-assign-ipv6-address"></a>
 
 After you've verified that your instance type supports IPv6, you can assign an IPv6 address to your instance using the Amazon EC2 console\. The IPv6 address is assigned to the primary network interface \(eth0\) for the instance\.
 
@@ -218,7 +204,7 @@ Alternatively, if you launch a new instance \(for example, if you were unable to
 
 1. Follow the remaining steps in the wizard to launch your instance\.
 
-## Step 7: \(Optional\) Configure IPv6 on Your Instances<a name="vpc-migrate-ipv6-dhcpv6"></a>
+## Step 6: \(Optional\) Configure IPv6 on Your Instances<a name="vpc-migrate-ipv6-dhcpv6"></a>
 
 If you launched your instance using Amazon Linux 2016\.09\.0 or later, or Windows Server 2008 R2 or later, your instance is configured for IPv6 and no additional steps are required\. 
 
@@ -290,11 +276,6 @@ You can configure your Ubuntu instance to dynamically recognize any IPv6 address
 
 These steps must be performed as the root user\.
 
-**Topics**
-+ [Ubuntu Server 16](#ipv6-dhcpv6-ubuntu-16)
-+ [Ubuntu Server 14](#ipv6-dhcpv6-ubuntu-14)
-+ [Starting the DHCPv6 Client](#ipv6-dhcpv6-ubuntu-start-client)
-
 #### Ubuntu Server 16<a name="ipv6-dhcpv6-ubuntu-16"></a>
 
 **To configure IPv6 on a running Ubuntu Server 16 instance**
@@ -325,7 +306,7 @@ These steps must be performed as the root user\.
 1. Create the file `/etc/network/interfaces.d/60-default-with-ipv6.cfg` and add the following line\. If required, replace `eth0` with the name of the network interface that you retrieved in the step above\.
 
    ```
-   iface eth0 inet6 dhcp                   
+   iface eth0 inet6 dhcp
    ```
 
 1. Reboot your instance, or restart the network interface by running the following command\. If required, replace `eth0` with the name of your network interface\.

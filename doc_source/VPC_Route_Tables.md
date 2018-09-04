@@ -23,7 +23,7 @@ The following are the basic things that you need to know about route tables:
   + CIDR blocks for IPv4 and IPv6 are treated separately\. For example, a route with a destination CIDR of 0\.0\.0\.0/0 \(all IPv4 addresses\) does not automatically include all IPv6 addresses\. You must create a route with a destination CIDR of ::/0 for all IPv6 addresses\.
 + Every route table contains a local route for communication within the VPC over IPv4\. If your VPC has more than one IPv4 CIDR block, your route tables contain a local route for each IPv4 CIDR block\. If you've associated an IPv6 CIDR block with your VPC, your route tables contain a local route for the IPv6 CIDR block\. You cannot modify or delete these routes\.
 + When you add an Internet gateway, an egress\-only Internet gateway, a virtual private gateway, a NAT device, a peering connection, or a VPC endpoint in your VPC, you must update the route table for any subnet that uses these gateways or connections\.
-+ There is a limit on the number of route tables you can create per VPC, and the number of routes you can add per route table\. For more information, see [Amazon VPC Limits](VPC_Appendix_Limits.md)\.
++ There is a limit on the number of route tables you can create per VPC, and the number of routes you can add per route table\. For more information, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
 
 ### Main Route Tables<a name="RouteTableDetails"></a>
 
@@ -37,7 +37,7 @@ Your VPC can have route tables other than the default table\. One way to protect
 
 The following diagram shows the routing for a VPC with both an Internet gateway and a virtual private gateway, plus a public subnet and a VPN\-only subnet\. The main route table came with the VPC, and it also has a route for the VPN\-only subnet\. A custom route table is associated with the public subnet\. The custom route table has a route over the Internet gateway \(the destination is 0\.0\.0\.0/0, and the target is the Internet gateway\)\.
 
-![\[Main route table and custom table\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/custom-route-table-diagram.png)
+![\[Main route table and custom table\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/custom-route-table-diagram.png)
 
 If you create a new subnet in this VPC, it's automatically associated with the main route table, which routes its traffic to the virtual private gateway\. If you were to set up the reverse configuration \(the main route table with the route to the Internet gateway, and the custom route table with the route to the virtual private gateway\), then a new subnet automatically has a route to the Internet gateway\. 
 
@@ -51,19 +51,19 @@ You might want to make changes to the main route table, but to avoid any disrupt
 
 The following diagram shows a VPC with two subnets that are implicitly associated with the main route table \(Route Table A\), and a custom route table \(Route Table B\) that isn't associated with any subnets\.
 
-![\[Replace main table: Start\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/routing-Route_Replace_Main_Start-diagram.png)
+![\[Replace main table: Start\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/routing-Route_Replace_Main_Start-diagram.png)
 
 You can create an explicit association between Subnet 2 and Route Table B\.
 
-![\[Replace main table: New table\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/routing-Route_Replace_Main_New_Table-diagram.png)
+![\[Replace main table: New table\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/routing-Route_Replace_Main_New_Table-diagram.png)
 
 After you've tested Route Table B, you can make it the main route table\. Note that Subnet 2 still has an explicit association with Route Table B, and Subnet 1 has an implicit association with Route Table B because it is the new main route table\. Route Table A is no longer in use\.
 
-![\[Replace main table: Replace\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/routing-Route_Replace_Main_Replace-diagram.png)
+![\[Replace main table: Replace\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/routing-Route_Replace_Main_Replace-diagram.png)
 
 If you disassociate Subnet 2 from Route Table B, there's still an implicit association between Subnet 2 and Route Table B\. If you no longer need Route Table A, you can delete it\.
 
-![\[Replace main table: Disassociate\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/routing-Route_Replace_Main_Disassociate-diagram.png)
+![\[Replace main table: Disassociate\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/routing-Route_Replace_Main_Disassociate-diagram.png)
 
 ## Route Priority<a name="route-tables-priority"></a>
 
@@ -170,7 +170,7 @@ Add the following route to the route table for VPC B:
 | 10\.0\.0\.0/16 | pcx\-1a2b1a2b | 
 | 2001:db8:1234:1a00::/56 | pcx\-1a2b1a2b | 
 
-For more information about VPC peering connections, see the [Amazon VPC Peering Guide](http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/)\.
+For more information about VPC peering connections, see the [Amazon VPC Peering Guide](http://docs.aws.amazon.com/vpc/latest/peering/)\.
 
 ### Route Tables for ClassicLink<a name="route-tables-classiclink"></a>
 
@@ -182,7 +182,7 @@ If any of your VPC route tables have existing routes for address ranges within t
 
 If you've already enabled a VPC for ClassicLink, you may not be able to add any more specific routes to your route tables for the `10.0.0.0/8` IP address range\.
 
-If you modify a VPC peering connection to enable communication between instances in your VPC and an EC2\-Classic instance that's linked to the peer VPC, a static route is automatically added to your route tables with a destination of `10.0.0.0/8` and a target of `local`\. If you modify a VPC peering connection to enable communication between a local EC2\-Classic instance linked to your VPC and instances in a peer VPC, you must manually add a route to your main route table with a destination of the peer VPC CIDR block, and a target of the VPC peering connection\. The EC2\-Classic instance relies on the main route table for routing to the peer VPC\. For more information, see [Configurations With ClassicLink](http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/peering-configurations-classiclink.html) in the *Amazon VPC Peering Guide*\.
+If you modify a VPC peering connection to enable communication between instances in your VPC and an EC2\-Classic instance that's linked to the peer VPC, a static route is automatically added to your route tables with a destination of `10.0.0.0/8` and a target of `local`\. If you modify a VPC peering connection to enable communication between a local EC2\-Classic instance linked to your VPC and instances in a peer VPC, you must manually add a route to your main route table with a destination of the peer VPC CIDR block, and a target of the VPC peering connection\. The EC2\-Classic instance relies on the main route table for routing to the peer VPC\. For more information, see [Configurations With ClassicLink](http://docs.aws.amazon.com/vpc/latest/peering/peering-configurations-classiclink.html) in the *Amazon VPC Peering Guide*\.
 
 ### Route Tables for a VPC Endpoint<a name="route-tables-vpce"></a>
 
@@ -393,7 +393,7 @@ You can delete a route table only if there are no subnets associated with it\. Y
 
 ## API and Command Overview<a name="route-tables-api-cli"></a>
 
-You can perform the tasks described on this page using the command line or API\. For more information about the command line interface and a list of available API operations, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
+You can perform the tasks described on this page using the command line or API\. For more information about the command line interface and a list of available API operations, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 
 **Create a custom route table**
 + [create\-route\-table](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-route-table.html) \(AWS CLI\)
