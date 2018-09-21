@@ -46,21 +46,21 @@ If you no longer require a detached virtual private gateway, you can delete it\.
 1. Choose **Yes, Delete**\.
 
 **To delete a VPN connection using the command line or API**
-+ [DeleteVpnConnection](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-DeleteVpnConnection.html) \(Amazon EC2 Query API\)
-+ [delete\-vpn\-connection](http://docs.aws.amazon.com/cli/latest/reference/ec2/delete-vpn-connection.html) \(AWS CLI\)
-+ [Remove\-EC2VpnConnection](http://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2VpnConnection.html) \(AWS Tools for Windows PowerShell\)
++ [DeleteVpnConnection](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-DeleteVpnConnection.html) \(Amazon EC2 Query API\)
++ [delete\-vpn\-connection](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-vpn-connection.html) \(AWS CLI\)
++ [Remove\-EC2VpnConnection](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2VpnConnection.html) \(AWS Tools for Windows PowerShell\)
 
 **To delete a customer gateway using the command line or API**
-+ [DeleteCustomerGateway](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-DeleteCustomerGateway.html) \(Amazon EC2 Query API\)
-+ [delete\-customer\-gateway](http://docs.aws.amazon.com/cli/latest/reference/ec2/delete-customer-gateway.html) \(AWS CLI\)
-+ [Remove\-EC2CustomerGateway](http://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2CustomerGateway.html) \(AWS Tools for Windows PowerShell\)
++ [DeleteCustomerGateway](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-DeleteCustomerGateway.html) \(Amazon EC2 Query API\)
++ [delete\-customer\-gateway](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-customer-gateway.html) \(AWS CLI\)
++ [Remove\-EC2CustomerGateway](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2CustomerGateway.html) \(AWS Tools for Windows PowerShell\)
 
 **To detach a virtual private gateway using the command line or API**
-+ [DetachVpnGateway](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-DetachVpnGateway.html) \(Amazon EC2 Query API\)
-+ [detach\-vpn\-gateway](http://docs.aws.amazon.com/cli/latest/reference/ec2/detach-vpn-gateway.html) \(AWS CLI\)
-+ [Dismount\-EC2VpnGateway](http://docs.aws.amazon.com/powershell/latest/reference/items/Dismount-EC2VpnGateway.html) \(AWS Tools for Windows PowerShell\)
++ [DetachVpnGateway](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-DetachVpnGateway.html) \(Amazon EC2 Query API\)
++ [detach\-vpn\-gateway](https://docs.aws.amazon.com/cli/latest/reference/ec2/detach-vpn-gateway.html) \(AWS CLI\)
++ [Dismount\-EC2VpnGateway](https://docs.aws.amazon.com/powershell/latest/reference/items/Dismount-EC2VpnGateway.html) \(AWS Tools for Windows PowerShell\)
 
 **To delete a virtual private gateway using the command line or API**
-+ [DeleteVpnGateway](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-DeleteVpnGateway.html) \(Amazon EC2 Query API\)
-+ [delete\-vpn\-gateway](http://docs.aws.amazon.com/cli/latest/reference/ec2/delete-vpn-gateway.html) \(AWS CLI\)
-+ [Remove\-EC2VpnGateway](http://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2VpnGateway.html) \(AWS Tools for Windows PowerShell\)
++ [DeleteVpnGateway](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-DeleteVpnGateway.html) \(Amazon EC2 Query API\)
++ [delete\-vpn\-gateway](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-vpn-gateway.html) \(AWS CLI\)
++ [Remove\-EC2VpnGateway](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2VpnGateway.html) \(AWS Tools for Windows PowerShell\)

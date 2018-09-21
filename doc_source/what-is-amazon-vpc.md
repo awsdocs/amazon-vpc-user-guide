@@ -6,7 +6,7 @@ Amazon Virtual Private Cloud \(Amazon VPC\) enables you to launch AWS resources 
 
 As you get started with Amazon VPC, you should understand the key concepts of this virtual network, and how it is similar to or different from your own networks\. This section provides a brief description of the key concepts for Amazon VPC\.
 
-Amazon VPC is the networking layer for Amazon EC2\. If you're new to Amazon EC2, see [What is Amazon EC2?](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html) in the *Amazon EC2 User Guide for Linux Instances* to get a brief overview\.
+Amazon VPC is the networking layer for Amazon EC2\. If you're new to Amazon EC2, see [What is Amazon EC2?](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html) in the *Amazon EC2 User Guide for Linux Instances* to get a brief overview\.
 
 **Topics**
 + [VPCs and Subnets](#what-is-vpc-subnet)
@@ -99,33 +99,11 @@ The following table lists related resources that you might find useful as you wo
 
 |  Resource  |  Description  | 
 | --- | --- | 
-| [Amazon Virtual Private Cloud Connectivity Options](http://media.amazonwebservices.com/AWS_Amazon_VPC_Connectivity_Options.pdf) | A whitepaper that provides an overview of the options for network connectivity\. | 
+| [Amazon Virtual Private Cloud Connectivity Options](https://docs.aws.amazon.com/aws-technical-content/latest/aws-vpc-connectivity-options/) | Provides an overview of the options for network connectivity\. | 
 |  [Amazon VPC forum](https://forums.aws.amazon.com/forum.jspa?forumID=58)  |  A community\-based forum for discussing technical questions related to Amazon VPC\.  | 
-|  [AWS Developer Resources](http://aws.amazon.com/resources/)  |  A central starting point to find documentation, code samples, release notes, and other information to help you create innovative applications with AWS\.  | 
+|  [Getting Started Resource Center](https://aws.amazon.com/getting-started/)  |  Information to help you get started building on AWS\.  | 
 |  [AWS Support Center](https://console.aws.amazon.com/support/home#/)  |  The home page for AWS Support\.  | 
-|  [Contact Us](http://aws.amazon.com/contact-us/)  |  A central contact point for inquiries concerning AWS billing, accounts, and events\.  | 
-
-## Using Amazon VPC with Other AWS Services<a name="related-services"></a>
-
-Amazon VPC integrates with many other AWS services; furthermore, some services require a VPC in your account to carry out certain functions\. Below are examples of services that use Amazon VPC\.
-
-
-| Service | Relevant Topic | 
-| --- | --- | 
-|  AWS Data Pipeline  |  [Launching Resources for Your Pipeline into a VPC](http://docs.aws.amazon.com/datapipeline/latest/DeveloperGuide/dp-resources-vpc.html)  | 
-|  Amazon EC2  |  [Amazon EC2 and Amazon VPC](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-vpc.html)  | 
-|  Auto Scaling  |  [Auto Scaling and Amazon VPC](http://docs.aws.amazon.com/autoscaling/latest/userguide/autoscalingsubnets.html)  | 
-|  Elastic Beanstalk  |  [Using AWS Elastic Beanstalk with Amazon VPC](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/AWSHowTo-vpc.html)  | 
-|  Elastic Load Balancing  |  [Setting Up Elastic Load Balancing](http://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/setting-up-elb.html)  | 
-|  Amazon ElastiCache  |  [Using ElastiCache with Amazon VPC](http://docs.aws.amazon.com/AmazonElastiCache/latest/UserGuide/ManagingVPC.html)  | 
-|  Amazon EMR  |  [Select a Subnet for the Cluster](http://docs.aws.amazon.com/emr/latest/DeveloperGuide/emr-plan-vpc-subnet.html)  | 
-|  AWS OpsWorks  |  [Running a Stack in a VPC](http://docs.aws.amazon.com/opsworks/latest/userguide/workingstacks-vpc.html)  | 
-|  Amazon RDS  |  [Amazon RDS and Amazon VPC](http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSVPC.html)  | 
-|  Amazon Redshift  |  [Managing Clusters in a VPC](http://docs.aws.amazon.com/redshift/latest/mgmt/managing-clusters-vpc.html)  | 
-|  Route 53  |  [Working with Private Hosted Zones](http://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-private.html)  | 
-| Amazon WorkSpaces | [Create and Configure Your VPC](http://docs.aws.amazon.com/workspaces/latest/adminguide/gsg_create_vpc.html) | 
-
-To get a detailed view of the VPCs, subnets, and other VPC resources in your account and their relation to each other, you can use the AWS Config service\. For more information, see the *[AWS Config Developer Guide](http://docs.aws.amazon.com/config/latest/developerguide/)*\.
+|  [Contact Us](https://aws.amazon.com/contact-us/)  |  A central contact point for inquiries concerning AWS billing, accounts, and events\.  | 
 
 ## Accessing Amazon VPC<a name="VPCInterfaces"></a>
 
@@ -134,18 +112,18 @@ Amazon VPC provides a web\-based user interface, the Amazon VPC console\. If you
 If you prefer to use a command line interface, you have the following options:
 
 AWS Command Line Interface \(AWS CLI\)  
-Provides commands for a broad set of AWS services, and is supported on Windows, macOS, and Linux/Unix\. To get started, see [AWS Command Line Interface User Guide](http://docs.aws.amazon.com/cli/latest/userguide/)\. For more information about the commands for Amazon VPC, see [ec2](http://docs.aws.amazon.com/cli/latest/reference/ec2/)\.
+Provides commands for a broad set of AWS services, and is supported on Windows, macOS, and Linux/Unix\. To get started, see [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\. For more information about the commands for Amazon VPC, see [ec2](https://docs.aws.amazon.com/cli/latest/reference/ec2/)\.
 
 AWS Tools for Windows PowerShell  
-Provides commands for a broad set of AWS services for those who script in the PowerShell environment\. To get started, see [AWS Tools for Windows PowerShell User Guide](http://docs.aws.amazon.com/powershell/latest/userguide/)\.
+Provides commands for a broad set of AWS services for those who script in the PowerShell environment\. To get started, see [AWS Tools for Windows PowerShell User Guide](https://docs.aws.amazon.com/powershell/latest/userguide/)\.
 
-Amazon VPC provides a Query API\. These requests are HTTP or HTTPS requests that use the HTTP verbs GET or POST and a Query parameter named `Action`\. For more information, see [Actions](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/query-apis.html) in the *Amazon EC2 API Reference*\.
+Amazon VPC provides a Query API\. These requests are HTTP or HTTPS requests that use the HTTP verbs GET or POST and a Query parameter named `Action`\. For more information, see [Actions](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/query-apis.html) in the *Amazon EC2 API Reference*\.
 
 To build applications using language\-specific APIs instead of submitting a request over HTTP or HTTPS, AWS provides libraries, sample code, tutorials, and other resources for software developers\. These libraries provide basic functions that automatically take care of tasks such as cryptographically signing your requests, retrying requests, and handling error responses\. For more information, see [AWS SDKs and Tools](https://aws.amazon.com/tools/)\.
 
 ## Pricing for Amazon VPC<a name="Paying"></a>
 
-There's no additional charge for using Amazon VPC\. You pay the standard rates for the instances and other Amazon EC2 features that you use\. There are charges for using an AWS managed VPN connection and using a NAT gateway\. For more information, see [Amazon VPC Pricing](http://aws.amazon.com/vpc/pricing/) and [Amazon EC2 Pricing](http://aws.amazon.com/ec2/pricing/)\.
+There's no additional charge for using Amazon VPC\. You pay the standard rates for the instances and other Amazon EC2 features that you use\. There are charges for using an AWS managed VPN connection and using a NAT gateway\. For more information, see [Amazon VPC Pricing](https://aws.amazon.com/vpc/pricing/) and [Amazon EC2 Pricing](https://aws.amazon.com/ec2/pricing/)\.
 
 ## Amazon VPC Limits<a name="CurrentCapabilities"></a>
 

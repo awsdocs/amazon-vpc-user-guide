@@ -61,7 +61,7 @@ If an AWS account supports only EC2\-VPC, any IAM accounts associated with this 
 
 If your AWS account supports both EC2\-Classic and EC2\-VPC, you can either create a new AWS account or launch your instances into a region that you haven't used before\. You might do this to get the benefits of using EC2\-VPC with the simplicity of launching instances into EC2\-Classic\. If you'd still prefer to add a default VPC to a region that doesn't have one and supports EC2\-Classic, see "I really want a default VPC for my existing EC2 account\. Is that possible?" in the [Default VPCs FAQ](http://aws.amazon.com/vpc/faqs/#Default_VPCs)\.
 
-For more information about the EC2\-Classic and EC2\-VPC platforms, see [Supported Platforms](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-supported-platforms.html)\.
+For more information about the EC2\-Classic and EC2\-VPC platforms, see [Supported Platforms](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-supported-platforms.html)\.
 
 ### Detecting Your Supported Platforms and Whether You Have a Default VPC<a name="detecting-platform"></a>
 
@@ -81,8 +81,8 @@ For more information about the EC2\-Classic and EC2\-VPC platforms, see [Support
    If you delete your default VPC, the **Default VPC** value displayed is `None`\. For more information, see [Deleting Your Default Subnets and Default VPC](#deleting-default-vpc)\.
 
 **To detect platform support using the command line**
-+ [describe\-account\-attributes](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-account-attributes.html) \(AWS CLI\)
-+ [Get\-EC2AccountAttributes](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2AccountAttributes.html) \(AWS Tools for Windows PowerShell\)
++ [describe\-account\-attributes](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-account-attributes.html) \(AWS CLI\)
++ [Get\-EC2AccountAttributes](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2AccountAttributes.html) \(AWS Tools for Windows PowerShell\)
 
 The `supported-platforms` attribute in the output indicates which platforms you can launch EC2 instances into\.
 
@@ -105,14 +105,14 @@ You can view your default VPC and subnets using the Amazon VPC console or the co
 1. To verify which subnets are default subnets, look for a value of **Yes** in the **Default Subnet **column\.
 
 **To describe your default VPC using the command line**
-+ Use the [describe\-vpcs](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpcs.html) \(AWS CLI\)
-+ Use the [Get\-EC2Vpc](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2Vpc.html) \(AWS Tools for Windows PowerShell\)
++ Use the [describe\-vpcs](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpcs.html) \(AWS CLI\)
++ Use the [Get\-EC2Vpc](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2Vpc.html) \(AWS Tools for Windows PowerShell\)
 
 Use the commands with the `isDefault` filter and set the filter value to `true`\. 
 
 **To describe your default subnets using the command line**
-+ Use the [describe\-subnets](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-subnets.html) \(AWS CLI\)
-+ Use the [Get\-EC2Subnet](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2Subnet.html) \(AWS Tools for Windows PowerShell\)
++ Use the [describe\-subnets](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-subnets.html) \(AWS CLI\)
++ Use the [Get\-EC2Subnet](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2Subnet.html) \(AWS Tools for Windows PowerShell\)
 
 Use the commands with the `vpc-id` filter and set the filter value to the ID of the default VPC\. In the output, the `DefaultForAz` field is set to `true` for default subnets\.
 
@@ -137,8 +137,8 @@ When you launch an EC2 instance without specifying a subnet, it's automatically 
 ### Launching an EC2 Instance Using the Command Line<a name="launching-into-cli"></a>
 
 You can use one of the following commands to launch an EC2 instance:
-+ [run\-instances](http://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html) \(AWS CLI\)
-+ [New\-EC2Instance](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Instance.html) \(AWS Tools for Windows PowerShell\)
++ [run\-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html) \(AWS CLI\)
++ [New\-EC2Instance](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Instance.html) \(AWS Tools for Windows PowerShell\)
 
 To launch an EC2 instance into your default VPC, use these commands without specifying a subnet or an Availability Zone\.
 
@@ -171,7 +171,7 @@ If you already have a default VPC in the region, you cannot create another one\.
 1. Choose **Create**\. Close the confirmation screen\.
 
 **To create a default VPC using the command line**
-+ You can use the [create\-default\-vpc](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-default-vpc.html) AWS CLI command\. This command does not have any input parameters\.
++ You can use the [create\-default\-vpc](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-default-vpc.html) AWS CLI command\. This command does not have any input parameters\.
 
   ```
   aws ec2 create-default-vpc
@@ -192,7 +192,7 @@ If you already have a default VPC in the region, you cannot create another one\.
   }
   ```
 
-Alternatively, you can use the [New\-EC2DefaultVpc](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2DefaultVpc.html) Tools for Windows PowerShell command or the [CreateDefaultVpc](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateDefaultVpc.html) Amazon EC2 API action\.
+Alternatively, you can use the [New\-EC2DefaultVpc](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2DefaultVpc.html) Tools for Windows PowerShell command or the [CreateDefaultVpc](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateDefaultVpc.html) Amazon EC2 API action\.
 
 ## Creating a Default Subnet<a name="create-default-subnet"></a>
 
@@ -211,7 +211,7 @@ If you've associated an IPv6 CIDR block with your default VPC, the new default s
 Currently, you can create a default subnet using the AWS CLI, an AWS SDK, or the Amazon EC2 API only\.
 
 **To create a default subnet using the command line**
-+ Use the [create\-default\-subnet](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-default-subnet.html) AWS CLI command and specify the Availability Zone in which to create the subnet\.
++ Use the [create\-default\-subnet](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-default-subnet.html) AWS CLI command and specify the Availability Zone in which to create the subnet\.
 
   ```
   aws ec2 create-default-subnet --availability-zone us-east-2a
@@ -235,4 +235,4 @@ Currently, you can create a default subnet using the AWS CLI, an AWS SDK, or the
   }
   ```
 
-  Alternatively, you can use the [CreateDefaultSubnet](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateDefaultSubnet.html) Amazon EC2 API action\.
+  Alternatively, you can use the [CreateDefaultSubnet](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateDefaultSubnet.html) Amazon EC2 API action\.

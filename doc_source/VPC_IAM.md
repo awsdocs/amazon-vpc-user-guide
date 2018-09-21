@@ -3,9 +3,9 @@
 Your security credentials identify you to services in AWS and grant you unlimited use of your AWS resources, such as your Amazon VPC resources\. You can use AWS Identity and Access Management \(IAM\) to allow other users, services, and applications to use your Amazon VPC resources without sharing your security credentials\. You can choose to allow full use or limited use of your resources by granting users permission to use specific Amazon EC2 API actions\. Some API actions support resource\-level permissions, which allow you to control the specific resources that users can create or modify\.
 
 **Important**  
-Currently, not all Amazon EC2 API actions support resource\-level permissions\. If an Amazon EC2 API action does not support resource\-level permissions, you can grant users permission to use the action, but you have to specify a \* for the resource element of your policy statement\. For an example of how to do this, see the following example policy: [1\. Managing a VPC](#managingvpciam) We'll add support for additional API actions and ARNs for additional Amazon EC2 resources later\. For information about which ARNs you can use with which Amazon EC2 API actions, as well as supported condition keys for each ARN, see [Supported Resources and Conditions for Amazon EC2 API Actions](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-supported-iam-actions-resources.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
+Currently, not all Amazon EC2 API actions support resource\-level permissions\. If an Amazon EC2 API action does not support resource\-level permissions, you can grant users permission to use the action, but you have to specify a \* for the resource element of your policy statement\. For an example of how to do this, see the following example policy: [1\. Managing a VPC](#managingvpciam) We'll add support for additional API actions and ARNs for additional Amazon EC2 resources later\. For information about which ARNs you can use with which Amazon EC2 API actions, as well as supported condition keys for each ARN, see [Supported Resources and Conditions for Amazon EC2 API Actions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-supported-iam-actions-resources.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
 
-For more information about creating IAM policies for Amazon EC2, supported resources for EC2 API actions, as well as example policies for Amazon EC2, see [IAM Policies for Amazon EC2](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-policies-for-amazon-ec2.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
+For more information about creating IAM policies for Amazon EC2, supported resources for EC2 API actions, as well as example policies for Amazon EC2, see [IAM Policies for Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-policies-for-amazon-ec2.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
 
 **Topics**
 + [Example Policies for the AWS CLI or SDK](#ExamplePolicies_VPC)
@@ -25,7 +25,7 @@ The following examples show policy statements that you can use to control the pe
 + [7\. Creating and managing VPC peering connections](#vpcpeeringiam)
 + [8\. Creating and managing VPC endpoints](#vpc-endpoints-iam)
 
-For example policies for working with ClassicLink, see [Example Policies for CLI or SDK](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+For example policies for working with ClassicLink, see [Example Policies for CLI or SDK](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 ### 1\. Managing a VPC<a name="managingvpciam"></a>
 

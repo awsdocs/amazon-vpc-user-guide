@@ -12,7 +12,7 @@ You can work with flow logs using the Amazon EC2, Amazon VPC, CloudWatch, and Am
 
 ## Controlling the Use of Flow Logs<a name="controlling-use-of-flow-logs"></a>
 
-By default, IAM users do not have permission to work with flow logs\. You can create an IAM user policy that grants users the permissions to create, describe, and delete flow logs\. For more information, see [Granting IAM Users Required Permissions for Amazon EC2 Resources](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ec2-api-permissions.html) in the *Amazon EC2 API Reference*\.
+By default, IAM users do not have permission to work with flow logs\. You can create an IAM user policy that grants users the permissions to create, describe, and delete flow logs\. For more information, see [Granting IAM Users Required Permissions for Amazon EC2 Resources](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/ec2-api-permissions.html) in the *Amazon EC2 API Reference*\.
 
 The following is an example policy that grants users full permissions to create, describe, and delete flow logs\.
 
@@ -67,7 +67,7 @@ You can create a flow log from the **VPC** and **Subnet** pages in the Amazon VP
 
       1. For **S3 bucket ARN**, specify the Amazon Resource Name \(ARN\) of the existing Amazon S3 bucket to which to publish the flow log data\.
 
-         You can also specify a subfolder in the bucket\. To specify a subfolder in the bucket, use the following ARN format: `bucket_ARN/subfolder_name/`\. For example, to specify a subfolder named `my-logs` in a bucket named `my-bucket`, use the following ARN: `arn:aws:s3:::my-bucket/my-logs/`\.
+         You can also specify a subfolder in the bucket\. To specify a subfolder in the bucket, use the following ARN format: `bucket_ARN/subfolder_name/`\. For example, to specify a subfolder named `my-logs` in a bucket named `my-bucket`, use the following ARN: `arn:aws:s3:::my-bucket/my-logs/`\. You cannot use `AWSLogs` as a subfolder name\. This is a reserved term\.
 **Note**  
 We automatically create a resource policy and attach it to the specified Amazon S3 bucket\. For more information, see [Amazon S3 Bucket Permissions for Flow Logs](flow-logs-s3.md#flow-logs-s3-permissions)\.
 
@@ -183,21 +183,21 @@ These procedures disable the flow log service for a resource\. Deleting a flow l
 You can perform the tasks described on this page using the command line or API\. For more information about the command line interfaces and a list of available API actions, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 
 **Create a flow log**
-+ [create\-flow\-logs](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-flow-logs.html) \(AWS CLI\)
-+ [New\-EC2FlowLogs](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2FlowLogs.html) \(AWS Tools for Windows PowerShell\)
-+ [CreateFlowLogs](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateFlowLogs.html) \(Amazon EC2 Query API\)
++ [create\-flow\-logs](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-flow-logs.html) \(AWS CLI\)
++ [New\-EC2FlowLogs](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2FlowLogs.html) \(AWS Tools for Windows PowerShell\)
++ [CreateFlowLogs](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateFlowLogs.html) \(Amazon EC2 Query API\)
 
 **Describe your flow logs**
-+ [describe\-flow\-logs](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-flow-logs.html) \(AWS CLI\)
-+ [Get\-EC2FlowLogs](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2FlowLogs.html) \(AWS Tools for Windows PowerShell\)
-+ [DescribeFlowLogs](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeFlowLogs.html) \(Amazon EC2 Query API\)
++ [describe\-flow\-logs](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-flow-logs.html) \(AWS CLI\)
++ [Get\-EC2FlowLogs](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2FlowLogs.html) \(AWS Tools for Windows PowerShell\)
++ [DescribeFlowLogs](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeFlowLogs.html) \(Amazon EC2 Query API\)
 
 **View your flow log records \(log events\)**
-+ [get\-log\-events](http://docs.aws.amazon.com/cli/latest/reference/logs/get-log-events.html) \(AWS CLI\)
-+ [Get\-CWLLogEvents](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-CWLLogEvents.html) \(AWS Tools for Windows PowerShell\)
-+ [GetLogEvents](http://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetLogEvents.html) \(CloudWatch API\)
++ [get\-log\-events](https://docs.aws.amazon.com/cli/latest/reference/logs/get-log-events.html) \(AWS CLI\)
++ [Get\-CWLLogEvents](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-CWLLogEvents.html) \(AWS Tools for Windows PowerShell\)
++ [GetLogEvents](https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetLogEvents.html) \(CloudWatch API\)
 
 **Delete a flow log**
-+ [delete\-flow\-logs](http://docs.aws.amazon.com/cli/latest/reference/ec2/delete-flow-logs.html) \(AWS CLI\)
-+ [Remove\-EC2FlowLogs](http://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2FlowLogs.html) \(AWS Tools for Windows PowerShell\)
-+ [DeleteFlowLogs](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DeleteFlowLogs.html) \(Amazon EC2 Query API\)
++ [delete\-flow\-logs](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-flow-logs.html) \(AWS CLI\)
++ [Remove\-EC2FlowLogs](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2FlowLogs.html) \(AWS Tools for Windows PowerShell\)
++ [DeleteFlowLogs](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DeleteFlowLogs.html) \(Amazon EC2 Query API\)

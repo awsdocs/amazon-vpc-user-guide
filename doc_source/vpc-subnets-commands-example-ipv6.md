@@ -1,6 +1,6 @@
 # Example: Create an IPv6 VPC and Subnets Using the AWS CLI<a name="vpc-subnets-commands-example-ipv6"></a>
 
-The following example uses AWS CLI commands to create a nondefault VPC with an IPv6 CIDR block, a public subnet, and a private subnet with outbound Internet access only\. After you've created the VPC and subnets, you can launch an instance in the public subnet and connect to it\. You can launch an instance in your private subnet and verify that it can connect to the Internet\. To begin, you must first install and configure the AWS CLI\. For more information, see [Getting Set Up with the AWS Command Line Interface](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html)\.
+The following example uses AWS CLI commands to create a nondefault VPC with an IPv6 CIDR block, a public subnet, and a private subnet with outbound Internet access only\. After you've created the VPC and subnets, you can launch an instance in the public subnet and connect to it\. You can launch an instance in your private subnet and verify that it can connect to the Internet\. To begin, you must first install and configure the AWS CLI\. For more information, see [Getting Set Up with the AWS Command Line Interface](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html)\.
 
 **Topics**
 + [Step 1: Create a VPC and Subnets](#vpc-subnets-commands-example-create-ipv6-vpc)
@@ -254,7 +254,7 @@ aws ec2 modify-subnet-attribute --subnet-id subnet-a46032fc --assign-ipv6-addres
 
 ## Step 5: Launch an Instance into Your Public Subnet<a name="vpc-subnets-commands-example-launch-instance-ipv6"></a>
 
-To test that your public subnet is public and that instances in the subnet are accessible from the Internet, launch an instance into your public subnet and connect to it\. First, you must create a security group to associate with your instance, and a key pair with which you'll connect to your instance\. For more information about security groups, see [Security Groups for Your VPC](VPC_SecurityGroups.md)\. For more information about key pairs, see [Amazon EC2 Key Pairs](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+To test that your public subnet is public and that instances in the subnet are accessible from the Internet, launch an instance into your public subnet and connect to it\. First, you must create a security group to associate with your instance, and a key pair with which you'll connect to your instance\. For more information about security groups, see [Security Groups for Your VPC](VPC_SecurityGroups.md)\. For more information about key pairs, see [Amazon EC2 Key Pairs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **To launch and connect to an instance in your public subnet**
 
@@ -294,7 +294,7 @@ If you use `::/0`, you enable all IPv6 addresses to access your instance using S
    aws ec2 run-instances --image-id ami-a4827dc9 --count 1 --instance-type t2.micro --key-name MyKeyPair --security-group-ids sg-e1fb8c9a --subnet-id subnet-b46032ec
    ```
 **Note**  
-In this example, the AMI is an Amazon Linux AMI in the US East \(N\. Virginia\) region\. If you're in a different region, you need the AMI ID for a suitable AMI in your region\. For more information, see [Finding a Linux AMI](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+In this example, the AMI is an Amazon Linux AMI in the US East \(N\. Virginia\) region\. If you're in a different region, you need the AMI ID for a suitable AMI in your region\. For more information, see [Finding a Linux AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 1. Your instance must be in the `running` state in order to connect to it\. Describe your instance and confirm its state, and take note of its IPv6 address\.
 
@@ -333,7 +333,7 @@ In this example, the AMI is an Amazon Linux AMI in the US East \(N\. Virginia\) 
    ssh -i "MyKeyPair.pem" ec2-user@2001:db8:1234:1a00::123
    ```
 
-   If you're connecting from a Windows computer, use the following instructions: [Connecting to Your Linux Instance from Windows Using PuTTY](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html)\.
+   If you're connecting from a Windows computer, use the following instructions: [Connecting to Your Linux Instance from Windows Using PuTTY](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html)\.
 
 ## Step 6: Launch an Instance into Your Private Subnet<a name="vpc-subnets-commands-example-launch-instance-ipv6-private"></a>
 
@@ -417,7 +417,7 @@ To test that instances in your egress\-only private subnet can access the Intern
 
 ## Step 7: Clean Up<a name="vpc-subnets-commands-example-clean-up-ipv6"></a>
 
-After you've verified that you can connect to your instance in the public subnet and that your instance in the private subnet can access the Internet, you can terminate the instances if you no longer need them\. To do this, use the [terminate\-instances](http://docs.aws.amazon.com/cli/latest/reference/ec2/terminate-instances.html) command\. To delete the other resources you've created in this example, use the following commands in their listed order:
+After you've verified that you can connect to your instance in the public subnet and that your instance in the private subnet can access the Internet, you can terminate the instances if you no longer need them\. To do this, use the [terminate\-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/terminate-instances.html) command\. To delete the other resources you've created in this example, use the following commands in their listed order:
 
 1. Delete your security groups:
 

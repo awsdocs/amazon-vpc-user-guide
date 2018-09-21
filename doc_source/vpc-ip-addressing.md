@@ -24,20 +24,20 @@ The following table summarizes the differences between IPv4 and IPv6 in Amazon E
 | The subnet CIDR block size can be from /16 to /28\. | The subnet CIDR block size is fixed at /64\. | 
 | You can choose the private IPv4 CIDR block for your VPC\. | We choose the IPv6 CIDR block for your VPC from Amazon's pool of IPv6 addresses\. You cannot select your own range\. | 
 | There is a distinction between private and public IP addresses\. To enable communication with the Internet, a public IPv4 address is mapped to the primary private IPv4 address through network address translation \(NAT\)\.  | No distinction between public and private IP addresses\. IPv6 addresses are public\. | 
-| Supported on all instance types\. | Supported on all current generation instance types and the C3, R3, and I2 previous generation instance types\. For more information, see [Instance Types](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)\. | 
+| Supported on all instance types\. | Supported on all current generation instance types and the C3, R3, and I2 previous generation instance types\. For more information, see [Instance Types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)\. | 
 | Supported in EC2\-Classic, and EC2\-Classic connections with a VPC via ClassicLink\. | Not supported in EC2\-Classic, and not supported for EC2\-Classic connections with a VPC via ClassicLink\. | 
 | Supported on all AMIs\. | Automatically supported on AMIs that are configured for DHCPv6\. Amazon Linux versions 2016\.09\.0 and later and Windows Server 2008 R2 and later are configured for DHCPv6\. For other AMIs, you must [manually configure your instance](vpc-migrate-ipv6.md#vpc-migrate-ipv6-dhcpv6) to recognize any assigned IPv6 addresses\. | 
 | An instance receives an Amazon\-provided private DNS hostname that corresponds to its private IPv4 address, and if applicable, a public DNS hostname that corresponds to its public IPv4 or Elastic IP address\. | Amazon\-provided DNS hostnames are not supported\. | 
 | Elastic IPv4 addresses are supported\. | Elastic IPv6 addresses are not supported\.  | 
 | Supported for VPC VPN connections and customer gateways, NAT devices, and VPC endpoints\. | Not supported for VPC VPN connections and customer gateways, NAT devices, and VPC endpoints\. | 
 
-We support IPv6 traffic over a virtual private gateway to an AWS Direct Connect connection\. For more information, see the [AWS Direct Connect User Guide](http://docs.aws.amazon.com/directconnect/latest/UserGuide/)\.
+We support IPv6 traffic over a virtual private gateway to an AWS Direct Connect connection\. For more information, see the [AWS Direct Connect User Guide](https://docs.aws.amazon.com/directconnect/latest/UserGuide/)\.
 
 ## Private IPv4 Addresses<a name="vpc-private-ipv4-addresses"></a>
 
-Private IPv4 addresses \(also referred to as *private IP addresses* in this topic\) are not reachable over the Internet, and can be used for communication between the instances in your VPC\. When you launch an instance into a VPC, a primary private IP address from the IPv4 address range of the subnet is assigned to the default network interface \(eth0\) of the instance\. Each instance is also given a private \(internal\) DNS hostname that resolves to the private IP address of the instance\. If you don't specify a primary private IP address, we select an available IP address in the subnet range for you\. For more information about network interfaces, see [Elastic Network Interfaces](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+Private IPv4 addresses \(also referred to as *private IP addresses* in this topic\) are not reachable over the Internet, and can be used for communication between the instances in your VPC\. When you launch an instance into a VPC, a primary private IP address from the IPv4 address range of the subnet is assigned to the default network interface \(eth0\) of the instance\. Each instance is also given a private \(internal\) DNS hostname that resolves to the private IP address of the instance\. If you don't specify a primary private IP address, we select an available IP address in the subnet range for you\. For more information about network interfaces, see [Elastic Network Interfaces](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-You can assign additional private IP addresses, known as secondary private IP addresses, to instances that are running in a VPC\. Unlike a primary private IP address, you can reassign a secondary private IP address from one network interface to another\. A private IP address remains associated with the network interface when the instance is stopped and restarted, and is released when the instance is terminated\. For more information about primary and secondary IP addresses, see [Multiple IP Addresses](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+You can assign additional private IP addresses, known as secondary private IP addresses, to instances that are running in a VPC\. Unlike a primary private IP address, you can reassign a secondary private IP address from one network interface to another\. A private IP address remains associated with the network interface when the instance is stopped and restarted, and is released when the instance is terminated\. For more information about primary and secondary IP addresses, see [Multiple IP Addresses](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **Note**  
 We refer to private IP addresses as the IP addresses that are within the IPv4 CIDR range of the VPC\. Most VPC IP address ranges fall within the private \(non\-publicly routable\) IP address ranges specified in RFC 1918; however, you can use publicly routable CIDR blocks for your VPC\. Regardless of the IP address range of your VPC, we do not support direct access to the Internet from your VPC's CIDR block, including a publicly\-routable CIDR block\. You must set up Internet access through a gateway; for example, an Internet gateway, virtual private gateway, a VPN connection, or AWS Direct Connect\.
@@ -50,7 +50,7 @@ You can control whether your instance receives a public IP address by doing the 
 + Modifying the public IP addressing attribute of your subnet\. For more information, see [Modifying the Public IPv4 Addressing Attribute for Your Subnet](#subnet-public-ip)\.
 + Enabling or disabling the public IP addressing feature during instance launch, which overrides the subnet's public IP addressing attribute\. For more information, see [Assigning a Public IPv4 Address During Instance Launch](#vpc-public-ip)\.
 
-A public IP address is assigned from Amazon's pool of public IP addresses; it's not associated with your account\. When a public IP address is disassociated from your instance, it's released back into the pool, and is no longer available for you to use\. You cannot manually associate or disassociate a public IP address\. Instead, in certain cases, we release the public IP address from your instance, or assign it a new one\. For more information, see [Public IP Addresses](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#concepts-public-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.
+A public IP address is assigned from Amazon's pool of public IP addresses; it's not associated with your account\. When a public IP address is disassociated from your instance, it's released back into the pool, and is no longer available for you to use\. You cannot manually associate or disassociate a public IP address\. Instead, in certain cases, we release the public IP address from your instance, or assign it a new one\. For more information, see [Public IP Addresses](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#concepts-public-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 If you require a persistent public IP address allocated to your account that can be assigned to and removed from instances as you require, use an Elastic IP address instead\. For more information, see [Elastic IP Addresses](vpc-eips.md)\.
 
@@ -72,7 +72,7 @@ When your instance receives an IPv6 address during launch, the address is associ
 
 An IPv6 address persists when you stop and start your instance, and is released when you terminate your instance\. You cannot reassign an IPv6 address while it's assigned to another network interface—you must first unassign it\.
 
-You can assign additional IPv6 addresses to your instance by assigning them to a network interface attached to your instance\. The number of IPv6 addresses you can assign to a network interface, and the number of network interfaces you can attach to an instance varies per instance type\. For more information, see [IP Addresses Per Network Interface Per Instance Type](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#AvailableIpPerENI) in the *Amazon EC2 User Guide*\.
+You can assign additional IPv6 addresses to your instance by assigning them to a network interface attached to your instance\. The number of IPv6 addresses you can assign to a network interface, and the number of network interfaces you can attach to an instance varies per instance type\. For more information, see [IP Addresses Per Network Interface Per Instance Type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#AvailableIpPerENI) in the *Amazon EC2 User Guide*\.
 
 IPv6 addresses are globally unique, and therefore reachable over the Internet\. You can control whether instances are reachable via their IPv6 addresses by controlling the routing for your subnet, or by using security group and network ACL rules\. For more information, see [Security](VPC_Security.md)\.
 
@@ -153,7 +153,7 @@ A public IPv4 address cannot be assigned if you specify more than one network in
 
 1. On the **Instances** screen, select your instance\. On the **Description** tab, in the **IPv4 Public IP** field, you can view your instance's public IP address\. Alternatively, in the navigation pane, choose **Network Interfaces** and select the eth0 network interface for your instance\. You can view the public IP address in the **IPv4 Public IP** field\.
 **Note**  
-The public IPv4 address is displayed as a property of the network interface in the console, but it's mapped to the primary private IPv4 address through NAT\. Therefore, if you inspect the properties of your network interface on your instance, for example, through `ipconfig` on a Windows instance, or `ifconfig` on a Linux instance, the public IP address is not displayed\. To determine your instance's public IP address from within the instance, you can use instance metadata\. For more information, see [Instance Metadata and User Data](http://docs.aws.amazon.com/AWSEC2/latest/DeveloperGuide/ec2-instance-metadata.html)\.
+The public IPv4 address is displayed as a property of the network interface in the console, but it's mapped to the primary private IPv4 address through NAT\. Therefore, if you inspect the properties of your network interface on your instance, for example, through `ipconfig` on a Windows instance, or `ifconfig` on a Linux instance, the public IP address is not displayed\. To determine your instance's public IP address from within the instance, you can use instance metadata\. For more information, see [Instance Metadata and User Data](https://docs.aws.amazon.com/AWSEC2/latest/DeveloperGuide/ec2-instance-metadata.html)\.
 
 This feature is only available during launch\. However, whether or not you assign a public IPv4 address to your instance during launch, you can associate an Elastic IP address with your instance after it's launched\. For more information, see [Elastic IP Addresses](vpc-eips.md)\.
 
@@ -195,7 +195,7 @@ Select an instance type that supports IPv6 addresses\.
 
 1. Follow the remaining steps in the wizard to launch your instance\.
 
-For more information about assigning multiple IPv6 addresses to your instance during launch, see [Working with Multiple IPv6 Addresses](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html#working-with-multiple-ipv6) in the *Amazon EC2 User Guide for Linux Instances*
+For more information about assigning multiple IPv6 addresses to your instance during launch, see [Working with Multiple IPv6 Addresses](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html#working-with-multiple-ipv6) in the *Amazon EC2 User Guide for Linux Instances*
 
 ### Assigning an IPv6 Address to an Instance<a name="vpc-assign-ipv6-instance"></a>
 
@@ -213,7 +213,7 @@ If your instance is in a VPC and subnet with an [associated IPv6 CIDR block](wor
 
 1. Choose **Save**\.
 
-Alternatively, you can assign an IPv6 address to a network interface\. For more information, see [Assigning an IPv6 Address](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#eni-assign-ipv6) in the *Elastic Network Interfaces* topic in the *Amazon EC2 User Guide for Linux Instances*\. 
+Alternatively, you can assign an IPv6 address to a network interface\. For more information, see [Assigning an IPv6 Address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#eni-assign-ipv6) in the *Elastic Network Interfaces* topic in the *Amazon EC2 User Guide for Linux Instances*\. 
 
 ### Unassigning an IPv6 Address From an Instance<a name="vpc-unassign-ipv6-instance"></a>
 
@@ -231,28 +231,28 @@ If you no longer need an IPv6 address for your instance, you can disassociate it
 
 1. Choose **Save**\.
 
-Alternatively, you can disassociate an IPv6 address from a network interface\. For more information, see [Unassigning an IPv6 Address](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#eni-unassign-ipv6) in the *Elastic Network Interfaces* topic in the *Amazon EC2 User Guide for Linux Instances*\. 
+Alternatively, you can disassociate an IPv6 address from a network interface\. For more information, see [Unassigning an IPv6 Address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#eni-unassign-ipv6) in the *Elastic Network Interfaces* topic in the *Amazon EC2 User Guide for Linux Instances*\. 
 
 ### API and Command Overview<a name="ip-addressing-api-cli"></a>
 
 You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 
 **Assign a public IPv4 address during launch**
-+ Use the `--associate-public-ip-address` or the `--no-associate-public-ip-address` option with the [run\-instances](http://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html) command\. \(AWS CLI\)
-+ Use the `-AssociatePublicIp` parameter with the [New\-EC2Instance](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Instance.html) command\. \(AWS Tools for Windows PowerShell\)
++ Use the `--associate-public-ip-address` or the `--no-associate-public-ip-address` option with the [run\-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html) command\. \(AWS CLI\)
++ Use the `-AssociatePublicIp` parameter with the [New\-EC2Instance](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Instance.html) command\. \(AWS Tools for Windows PowerShell\)
 
 **Assign an IPv6 address during launch**
-+ Use the `--ipv6-addresses` option with the [run\-instances](http://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html) command\. \(AWS CLI\)
-+ Use the `-Ipv6Addresses` parameter with the [New\-EC2Instance](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Instance.html) command\. \(AWS Tools for Windows PowerShell\)
++ Use the `--ipv6-addresses` option with the [run\-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html) command\. \(AWS CLI\)
++ Use the `-Ipv6Addresses` parameter with the [New\-EC2Instance](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Instance.html) command\. \(AWS Tools for Windows PowerShell\)
 
 **Modify a subnet's IP addressing behavior**
-+ [modify\-subnet\-attribute](http://docs.aws.amazon.com/cli/latest/reference/ec2/modify-subnet-attribute.html) \(AWS CLI\)
-+ [Edit\-EC2SubnetAttribute](http://docs.aws.amazon.com/powershell/latest/reference/items/Edit-EC2SubnetAttribute.html) \(AWS Tools for Windows PowerShell\)
++ [modify\-subnet\-attribute](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-subnet-attribute.html) \(AWS CLI\)
++ [Edit\-EC2SubnetAttribute](https://docs.aws.amazon.com/powershell/latest/reference/items/Edit-EC2SubnetAttribute.html) \(AWS Tools for Windows PowerShell\)
 
 **Assign an IPv6 address to a network interface**
-+ [assign\-ipv6\-addresses](http://docs.aws.amazon.com/cli/latest/reference/ec2/assign-ipv6-addresses.html) \(AWS CLI\)
-+ [Register\-EC2Ipv6AddressList](http://docs.aws.amazon.com/powershell/latest/reference/items/Register-EC2Ipv6AddressList.html) \(AWS Tools for Windows PowerShell\)
++ [assign\-ipv6\-addresses](https://docs.aws.amazon.com/cli/latest/reference/ec2/assign-ipv6-addresses.html) \(AWS CLI\)
++ [Register\-EC2Ipv6AddressList](https://docs.aws.amazon.com/powershell/latest/reference/items/Register-EC2Ipv6AddressList.html) \(AWS Tools for Windows PowerShell\)
 
 **Unassign an IPv6 address from a network interface**
-+ [unassign\-ipv6\-addresses](http://docs.aws.amazon.com/cli/latest/reference/ec2/unassign-ipv6-addresses.html) \(AWS CLI\)
-+ [Unregister\-EC2Ipv6AddressList](http://docs.aws.amazon.com/powershell/latest/reference/items/Unregister-EC2Ipv6AddressList.html) \(AWS Tools for Windows PowerShell\)
++ [unassign\-ipv6\-addresses](https://docs.aws.amazon.com/cli/latest/reference/ec2/unassign-ipv6-addresses.html) \(AWS CLI\)
++ [Unregister\-EC2Ipv6AddressList](https://docs.aws.amazon.com/powershell/latest/reference/items/Unregister-EC2Ipv6AddressList.html) \(AWS Tools for Windows PowerShell\)

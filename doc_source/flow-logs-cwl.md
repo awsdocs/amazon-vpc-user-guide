@@ -92,7 +92,7 @@ You can update an existing role or use the following procedure to create a new r
 
 ## Processing Flow Log Records<a name="process-records-cwl"></a>
 
-You can work with flow log records as you would with any other log events collected by CloudWatch Logs\. For more information about monitoring log data and metric filters, see [Searching and Filtering Log Data](http://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide/MonitoringLogData.html) in the *Amazon CloudWatch User Guide*\.
+You can work with flow log records as you would with any other log events collected by CloudWatch Logs\. For more information about monitoring log data and metric filters, see [Searching and Filtering Log Data](https://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide/MonitoringLogData.html) in the *Amazon CloudWatch User Guide*\.
 
 ### Example: Creating a CloudWatch Metric Filter and Alarm for a Flow Log<a name="flow-logs-cw-alarm-example"></a>
 

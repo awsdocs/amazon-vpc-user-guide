@@ -23,7 +23,7 @@ For more information, see [DNS Limits](vpc-dns.md#vpc-dns-limits)\.
 
 | Resource | Default limit | Comments | 
 | --- | --- | --- | 
-|  Elastic IP addresses per region  |  5  |  This is the limit for the number of Elastic IP addresses for use in EC2\-VPC\. For Elastic IP addresses for use in EC2\-Classic, see [Amazon EC2 Limits](http://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html#limits_ec2) in the *Amazon Web Services General Reference*\.  | 
+|  Elastic IP addresses per region  |  5  |  This is the limit for the number of Elastic IP addresses for use in EC2\-VPC\. For Elastic IP addresses for use in EC2\-Classic, see [Amazon EC2 Limits](https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html#limits_ec2) in the *Amazon Web Services General Reference*\.  | 
 
 ## Flow Logs<a name="vpc-limits-flow-logs"></a>
 
@@ -38,10 +38,10 @@ For more information, see [DNS Limits](vpc-dns.md#vpc-dns-limits)\.
 | Resource | Default limit | Comments | 
 | --- | --- | --- | 
 |  Customer gateways per region  |  50  |  To increase this limit, contact AWS Support\.  | 
-| Egress\-only internet gateways per region | 5 | This limit is directly correlated with the limit on VPCs per region\. To increase this limit, increase the limit on VPCs per region\. Only one egress\-only internet gateway can be attached to a VPC at a time\. | 
+| Egress\-only internet gateways per region | 5 | This limit is directly correlated with the limit on VPCs per region\. To increase this limit, increase the limit on VPCs per region\. You can attach only one egress\-only internet gateway to a VPC at a time\. | 
 |  Internet gateways per region  |  5  |  This limit is directly correlated with the limit on VPCs per region\. To increase this limit, increase the limit on VPCs per region\. Only one internet gateway can be attached to a VPC at a time\.  | 
 | NAT gateways per Availability Zone | 5 | A NAT gateway in the pending, active, or deleting state counts against your limit\. | 
-|  Virtual private gateways per region  |  5  |  Only one virtual private gateway can be attached to a VPC at a time\.   | 
+|  Virtual private gateways per region  |  5  |  You can attach only one virtual private gateway to a VPC at a time\.   | 
 
 ## Network ACLs<a name="vpc-limits-nacls"></a>
 
@@ -56,7 +56,7 @@ For more information, see [DNS Limits](vpc-dns.md#vpc-dns-limits)\.
 
 | Resource | Default limit | Comments | 
 | --- | --- | --- | 
-| Network interfaces per instance | \- | This limit varies by instance type\. For more information, see [IP Addresses Per ENI Per Instance Type](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#AvailableIpPerENI)\. | 
+| Network interfaces per instance | \- | This limit varies by instance type\. For more information, see [IP Addresses Per ENI Per Instance Type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#AvailableIpPerENI)\. | 
 | Network interfaces per region | 350 | This limit is the greater of either the default limit \(350\) or your On\-Demand Instance limit multiplied by 5\. The default limit for On\-Demand Instances is 20\. If your On\-Demand Instance limit is below 70, the default limit of 350 applies\. To increase this limit, submit a request or increase your On\-Demand Instance limit\. | 
 
 ## Route Tables<a name="vpc-limits-route-tables"></a>
@@ -91,8 +91,8 @@ For more information, see [DNS Limits](vpc-dns.md#vpc-dns-limits)\.
 
 | Resource | Default limit | Comments | 
 | --- | --- | --- | 
-| Gateway VPC endpoints per region | 20 | To increase this limit, contact AWS Support\. The maximum limit is 255 endpoints per VPC, regardless of your endpoint limit per region\. | 
-| Interface VPC endpoints per VPC | 20 | \- | 
+| Gateway VPC endpoints per region | 20 | To increase this limit, contact AWS Support\. You cannot have more than 255 gateway endpoints per VPC\. | 
+| Interface VPC endpoints per VPC | 20 | To increase this limit, contact AWS Support\. The maximum limit for interface endpoints per region is this limit multiplied by the number of VPCs in the region\. | 
 
 ## VPN Connections<a name="vpc-limits-vpn"></a>
 

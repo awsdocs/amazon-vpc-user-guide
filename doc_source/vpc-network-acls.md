@@ -109,7 +109,7 @@ As a packet comes to the subnet, we evaluate it against the ingress rules of the
 You might want to add a DENY rule in a situation where you legitimately need to open a wide range of ports, but there are certain ports within that range you want to deny\. Just make sure to place the DENY rule earlier in the table than the rule that allows the wide range of port traffic\.
 
 **Important**  
-With Elastic Load Balancing, if the subnet for your back\-end instances has a network ACL in which you've added a DENY rule for all traffic with a source of `0.0.0.0/0` or the subnet's CIDR, then your load balancer can't carry out health checks on the instances\. For more information about the recommended network ACL rules for your load balancers and back\-end instances, see [Network ACLs for Load Balancers in a VPC](http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-groups.html#elb-vpc-nacl) in the *User Guide for Classic Load Balancers*\.
+With Elastic Load Balancing, if the subnet for your back\-end instances has a network ACL in which you've added a DENY rule for all traffic with a source of `0.0.0.0/0` or the subnet's CIDR, then your load balancer can't carry out health checks on the instances\. For more information about the recommended network ACL rules for your load balancers and back\-end instances, see [Network ACLs for Load Balancers in a VPC](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-groups.html#elb-vpc-nacl) in the *User Guide for Classic Load Balancers*\.
 
 The following table shows the same example of a custom network ACL for a VPC that has an associated IPv6 CIDR block\. This network ACL includes rules for all IPv6 HTTP and HTTPS traffic\. In this case, new rules were inserted between the existing rules for IPv4 traffic; however, you can also add the rules as higher number rules after the IPv4 rules\. IPv4 and IPv6 traffic are separate; therefore, none of the rules for the IPv4 traffic apply to the IPv6 traffic\.
 
@@ -347,29 +347,29 @@ However, only other instances within the subnet and your remote computer are abl
 You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 
 **Create a network ACL for your VPC**
-+ [create\-network\-acl](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-network-acl.html) \(AWS CLI\)
-+ [New\-EC2NetworkAcl](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2NetworkAcl.html) \(AWS Tools for Windows PowerShell\)
++ [create\-network\-acl](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-network-acl.html) \(AWS CLI\)
++ [New\-EC2NetworkAcl](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2NetworkAcl.html) \(AWS Tools for Windows PowerShell\)
 
 **Describe one or more of your network ACLs**
-+ [describe\-network\-acls](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-network-acls.html) \(AWS CLI\)
-+ [Get\-EC2NetworkAcl](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2NetworkAcl.html) \(AWS Tools for Windows PowerShell\)
++ [describe\-network\-acls](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-network-acls.html) \(AWS CLI\)
++ [Get\-EC2NetworkAcl](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2NetworkAcl.html) \(AWS Tools for Windows PowerShell\)
 
 **Add a rule to a network ACL**
-+ [create\-network\-acl\-entry](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-network-acl-entry.html) \(AWS CLI\)
-+ [New\-EC2NetworkAclEntry](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2NetworkAclEntry.html) \(AWS Tools for Windows PowerShell\)
++ [create\-network\-acl\-entry](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-network-acl-entry.html) \(AWS CLI\)
++ [New\-EC2NetworkAclEntry](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2NetworkAclEntry.html) \(AWS Tools for Windows PowerShell\)
 
 **Delete a rule from a network ACL**
-+ [delete\-network\-acl\-entry](http://docs.aws.amazon.com/cli/latest/reference/ec2/delete-network-acl-entry.html) \(AWS CLI\)
-+ [Remove\-EC2NetworkAclEntry](http://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2NetworkAclEntry.html) \(AWS Tools for Windows PowerShell\)
++ [delete\-network\-acl\-entry](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-network-acl-entry.html) \(AWS CLI\)
++ [Remove\-EC2NetworkAclEntry](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2NetworkAclEntry.html) \(AWS Tools for Windows PowerShell\)
 
 **Replace an existing rule in a network ACL**
-+ [replace\-network\-acl\-entry](http://docs.aws.amazon.com/cli/latest/reference/ec2/replace-network-acl-entry.html) \(AWS CLI\)
-+ [Set\-EC2NetworkAclEntry](http://docs.aws.amazon.com/powershell/latest/reference/items/Set-EC2NetworkAclEntry.html) \(AWS Tools for Windows PowerShell\)
++ [replace\-network\-acl\-entry](https://docs.aws.amazon.com/cli/latest/reference/ec2/replace-network-acl-entry.html) \(AWS CLI\)
++ [Set\-EC2NetworkAclEntry](https://docs.aws.amazon.com/powershell/latest/reference/items/Set-EC2NetworkAclEntry.html) \(AWS Tools for Windows PowerShell\)
 
 **Replace a network ACL association**
-+ [replace\-network\-acl\-association](http://docs.aws.amazon.com/cli/latest/reference/ec2/replace-network-acl-association.html) \(AWS CLI\)
-+ [Set\-EC2NetworkAclAssociation](http://docs.aws.amazon.com/powershell/latest/reference/items/Set-EC2NetworkAclAssociation.html) \(AWS Tools for Windows PowerShell\)
++ [replace\-network\-acl\-association](https://docs.aws.amazon.com/cli/latest/reference/ec2/replace-network-acl-association.html) \(AWS CLI\)
++ [Set\-EC2NetworkAclAssociation](https://docs.aws.amazon.com/powershell/latest/reference/items/Set-EC2NetworkAclAssociation.html) \(AWS Tools for Windows PowerShell\)
 
 **Delete a network ACL**
-+ [delete\-network\-acl](http://docs.aws.amazon.com/cli/latest/reference/ec2/delete-network-acl.html) \(AWS CLI\)
-+ [Remove\-EC2NetworkAcl](http://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2NetworkAcl.html) \(AWS Tools for Windows PowerShell\)
++ [delete\-network\-acl](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-network-acl.html) \(AWS CLI\)
++ [Remove\-EC2NetworkAcl](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2NetworkAcl.html) \(AWS Tools for Windows PowerShell\)

@@ -145,11 +145,11 @@ If you associate an IPv6 CIDR block with your VPC, we automatically add rules to
 
 ## Step 4: Change Your Instance Type<a name="vpc-migrate-ipv6-instance-types"></a>
 
-All current generation instance types support IPv6\. For more information, see [Instance Types](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)\.
+All current generation instance types support IPv6\. For more information, see [Instance Types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)\.
 
 If your instance type does not support IPv6, you must resize the instance to a supported instance type\. In the example above, the database instance is an `m3.large` instance type, which does not support IPv6\. You must resize the instance to a supported instance type, for example, `m4.large`\. 
 
-To resize your instance, be aware of the compatibility limitations\. For more information, see [Compatibility for Resizing Instances](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-resize.html#resize-limitations) in the *Amazon EC2 User Guide for Linux Instances*\. In this scenario, if your database instance was launched from an AMI that uses HVM virtualization, you can resize it to an `m4.large` instance type by using the following procedure\.
+To resize your instance, be aware of the compatibility limitations\. For more information, see [Compatibility for Resizing Instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-resize.html#resize-limitations) in the *Amazon EC2 User Guide for Linux Instances*\. In this scenario, if your database instance was launched from an AMI that uses HVM virtualization, you can resize it to an `m4.large` instance type by using the following procedure\.
 
 **Important**  
 To resize your instance, you must stop it\. Stopping and starting an instance changes the public IPv4 address for the instance, if it has one\. If you have any data stored on instance store volumes, the data is erased\. 
@@ -170,7 +170,7 @@ To resize your instance, you must stop it\. Stopping and starting an instance ch
 
 1. To restart the stopped instance, select the instance and choose **Actions**, **Instance State**, **Start**\. In the confirmation dialog box, choose **Yes, Start**\.
 
-If your instance is an instance store\-backed AMI, you can't resize your instance using the earlier procedure\. Instead, you can create an instance store\-backed AMI from your instance, and launch a new instance from your AMI using a new instance type\. For more information, see [Creating an Instance Store\-Backed Linux AMI](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide//creating-an-ami-instance-store.html) in the *Amazon EC2 User Guide for Linux Instances*, and [Creating an Instance Store\-Backed Windows AMI](http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/Creating_InstanceStoreBacked_WinAMI.html) in the *Amazon EC2 User Guide for Windows Instances*\.
+If your instance is an instance store\-backed AMI, you can't resize your instance using the earlier procedure\. Instead, you can create an instance store\-backed AMI from your instance, and launch a new instance from your AMI using a new instance type\. For more information, see [Creating an Instance Store\-Backed Linux AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide//creating-an-ami-instance-store.html) in the *Amazon EC2 User Guide for Linux Instances*, and [Creating an Instance Store\-Backed Windows AMI](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/Creating_InstanceStoreBacked_WinAMI.html) in the *Amazon EC2 User Guide for Windows Instances*\.
 
 You may not be able to migrate to a new instance type if there are compatibility limitations\. For example, if your instance was launched from an AMI that uses PV virtualization, the only instance type that supports both PV virtualization and IPv6 is C3\. This instance type may not be suitable for your needs\. In this case, you may have to reinstall your software on a base HVM AMI, and launch a new instance\. 
 
@@ -210,7 +210,7 @@ If you launched your instance using Amazon Linux 2016\.09\.0 or later, or Window
 
 If you launched your instance from a different AMI, it may not be configured for DHCPv6, which means that any IPv6 address that you assign to the instance is not automatically recognized on the primary network interface\. To verify if the IPv6 address is configured on your network interface, use the `ifconfig` command on Linux, or the `ipconfig` command on Windows\.
 
-You can configure your instance using the following steps\. You'll need to connect to your instance using its public IPv4 address\. For more information, see [Connect to Your Linux Instance](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html) in the *Amazon EC2 User Guide for Linux Instances* and [Connecting to Your Windows Instance](http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/connecting_to_windows_instance.html) in the *Amazon EC2 User Guide for Windows Instances*\.
+You can configure your instance using the following steps\. You'll need to connect to your instance using its public IPv4 address\. For more information, see [Connect to Your Linux Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html) in the *Amazon EC2 User Guide for Linux Instances* and [Connecting to Your Windows Instance](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/connecting_to_windows_instance.html) in the *Amazon EC2 User Guide for Windows Instances*\.
 
 **Topics**
 + [Amazon Linux](#ipv6-dhcpv6-amazon-linux)
@@ -328,7 +328,7 @@ These steps must be performed as the root user\.
 
   In this case, you do not have to connect to the instance to configure the IPv6 address\. 
 
-  For more information, see [Running Commands on Your Linux Instance at Launch](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+  For more information, see [Running Commands on Your Linux Instance at Launch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 #### Ubuntu Server 14<a name="ipv6-dhcpv6-ubuntu-14"></a>
 
@@ -473,7 +473,7 @@ To ensure that IPv6 is preferred over IPv4, download the fix named **Prefer IPv6
 
 **To enable and configure IPv6 on Windows Server 2003**
 
-1. Get the IPv6 address of your instance by using the [describe\-instances](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html) AWS CLI command, or by checking the **IPv6 IPs** field for the instance in the Amazon EC2 console\.
+1. Get the IPv6 address of your instance by using the [describe\-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html) AWS CLI command, or by checking the **IPv6 IPs** field for the instance in the Amazon EC2 console\.
 
 1. Connect to your instance using the instance's public IPv4 address\. 
 
@@ -517,7 +517,7 @@ To ensure that IPv6 is preferred over IPv4, download the fix named **Prefer IPv6
 
 **To enable and configure IPv6 on Windows Server 2008 SP2**
 
-1. Get the IPv6 address of your instance by using the [describe\-instances](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html) AWS CLI command, or by checking the **IPv6 IPs** field for the instance in the Amazon EC2 console\.
+1. Get the IPv6 address of your instance by using the [describe\-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html) AWS CLI command, or by checking the **IPv6 IPs** field for the instance in the Amazon EC2 console\.
 
 1. Connect to your Windows instance using the instance's public IPv4 address\.
 

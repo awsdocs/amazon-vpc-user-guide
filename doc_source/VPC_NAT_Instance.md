@@ -73,7 +73,7 @@ The steps below are for manually creating and configuring a VPC; not for creatin
 
       1. Review the settings that you've chosen\. Make any changes that you need, and then choose **Launch** to choose a key pair and launch your instance\.
 
-1. \(Optional\) Connect to the NAT instance, make any modifications that you need, and then create your own AMI that's configured to run as a NAT instance\. You can use this AMI the next time that you need to launch a NAT instance\. For more information see [Creating Amazon EBS\-Backed AMIs](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+1. \(Optional\) Connect to the NAT instance, make any modifications that you need, and then create your own AMI that's configured to run as a NAT instance\. You can use this AMI the next time that you need to launch a NAT instance\. For more information see [Creating Amazon EBS\-Backed AMIs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 1. Disable the `SrcDestCheck` attribute for the NAT instance \(see [Disabling Source/Destination Checks](#EIP_Disable_SrcDestCheck)\)
 
@@ -94,8 +94,8 @@ The steps below are for manually creating and configuring a VPC; not for creatin
 ### Launching a NAT Instance Using the Command Line<a name="launch-nat-instance-cli"></a>
 
 To launch a NAT instance into your subnet, use one of the following commands\. For more information, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
-+ [run\-instances](http://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html) \(AWS CLI\)
-+ [New\-EC2Instance](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Instance.html) \(AWS Tools for Windows PowerShell\)
++ [run\-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html) \(AWS CLI\)
++ [New\-EC2Instance](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Instance.html) \(AWS Tools for Windows PowerShell\)
 
 To get the ID of an AMI that's configured to run as a NAT instance, use a command to describe images, and use filters to return results only for AMIs that are owned by Amazon, and that have the `amzn-ami-vpc-nat` string in their names\. The following example uses the AWS CLI:
 
@@ -177,8 +177,8 @@ You can disable the `SrcDestCheck` attribute for a NAT instance that's either ru
 **To disable source/destination checking using the command line**
 
 You can use one of the following commands\. For more information, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
-+ [modify\-instance\-attribute](http://docs.aws.amazon.com/cli/latest/reference/ec2/modify-instance-attribute.html) \(AWS CLI\)
-+ [Edit\-EC2InstanceAttribute](http://docs.aws.amazon.com/powershell/latest/reference/items/Edit-EC2InstanceAttribute.html) \(AWS Tools for Windows PowerShell\)
++ [modify\-instance\-attribute](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-instance-attribute.html) \(AWS CLI\)
++ [Edit\-EC2InstanceAttribute](https://docs.aws.amazon.com/powershell/latest/reference/items/Edit-EC2InstanceAttribute.html) \(AWS Tools for Windows PowerShell\)
 
 ## Updating the Main Route Table<a name="nat-routing-table"></a>
 
@@ -256,7 +256,7 @@ After you have launched a NAT instance and completed the configuration steps abo
 
 1. Download and install Pageant from the [PuTTY download page](http://www.chiark.greenend.org.uk/~sgtatham/putty/), if not already installed\.
 
-1. Convert your private key to \.ppk format\. For more information, see [Converting Your Private Key Using PuTTYgen](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html#putty-private-key)\.
+1. Convert your private key to \.ppk format\. For more information, see [Converting Your Private Key Using PuTTYgen](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html#putty-private-key)\.
 
 1. Start Pageant, right\-click the Pageant icon on the taskbar \(it may be hidden\), and choose **Add Key**\. Select the \.ppk file you created, enter the passphrase if required, and choose **Open**\.
 
@@ -306,4 +306,4 @@ After you have launched a NAT instance and completed the configuration steps abo
    + Ensure that you've disabled source/destination checking for your NAT instance\. For more information, see [Disabling Source/Destination Checks](#EIP_Disable_SrcDestCheck)\.
    + Ensure that you are pinging a website that has ICMP enabled\. If not, you will not receive reply packets\. To test this, perform the same `ping` command from the command line terminal on your own computer\. 
 
-1. \(Optional\) Terminate your private instance if you no longer require it\. For more information, see [Terminate Your Instance](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+1. \(Optional\) Terminate your private instance if you no longer require it\. For more information, see [Terminate Your Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html) in the *Amazon EC2 User Guide for Linux Instances*\.

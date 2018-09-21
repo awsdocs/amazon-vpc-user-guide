@@ -5,7 +5,7 @@ You can monitor VPN tunnels using CloudWatch, which collects and processes raw d
 **Important**  
 CloudWatch metrics are not supported for AWS Classic VPN connections\. For more information, see [AWS Managed VPN Categories](VPC_VPN.md#vpn-categories)\.
 
-For more information, see the [Amazon CloudWatch User Guide](http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/)\.
+For more information, see the [Amazon CloudWatch User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/)\.
 
 ## VPN Metrics and Dimensions<a name="metrics-dimensions-vpn"></a>
 
@@ -121,4 +121,4 @@ The following alarm monitors the amount of traffic leaving the VPN tunnel to you
    + Under **Actions**, select an existing notification list or choose **New list** to create a new one\. 
    + Under **Alarm Preview**, select a period of 15 minutes and specify a statistic of **Sum**\.
 
-For more examples of creating alarms, see [Creating Amazon CloudWatch Alarms](http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html) in the *Amazon CloudWatch User Guide*\.
+For more examples of creating alarms, see [Creating Amazon CloudWatch Alarms](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html) in the *Amazon CloudWatch User Guide*\.

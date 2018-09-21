@@ -27,7 +27,7 @@ A VPN connection consists of the following components\. For more information abo
 
 A *virtual private gateway* is the VPN concentrator on the Amazon side of the VPN connection\. You create a virtual private gateway and attach it to the VPC from which you want to create the VPN connection\.
 
-When you create a virtual private gateway, you can specify the private Autonomous System Number \(ASN\) for the Amazon side of the gateway\. If you don't specify an ASN, the virtual private gateway is created with the default ASN \(64512\)\. You cannot change the ASN after you've created the virtual private gateway\. To check the ASN for your virtual private gateway, view its details in the **Virtual Private Gateways** screen in the Amazon VPC console, or use the [describe\-vpn\-gateways](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpn-gateways.html) AWS CLI command\.
+When you create a virtual private gateway, you can specify the private Autonomous System Number \(ASN\) for the Amazon side of the gateway\. If you don't specify an ASN, the virtual private gateway is created with the default ASN \(64512\)\. You cannot change the ASN after you've created the virtual private gateway\. To check the ASN for your virtual private gateway, view its details in the **Virtual Private Gateways** screen in the Amazon VPC console, or use the [describe\-vpn\-gateways](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpn-gateways.html) AWS CLI command\.
 
 **Note**  
 If you create your virtual private gateway before 2018\-06\-30, the default ASN is 17493 in the Asia Pacific \(Singapore\) region, 10124 in the Asia Pacific \(Tokyo\) region, 9059 in the EU \(Ireland\) region, and 7224 in all other regions\. 
@@ -45,7 +45,7 @@ To create a VPN connection, you must create a customer gateway resource in AWS, 
 |  The type of routing—static or dynamic\.   | For more information, see [VPN Routing Options](#VPNRoutingTypes)\. | 
 |  \(Dynamic routing only\) Border Gateway Protocol \(BGP\) Autonomous System Number \(ASN\) of the customer gateway\.  |  You can use an existing ASN assigned to your network\. If you don't have one, you can use a private ASN \(in the 64512–65534 range\)\.  If you use the VPC wizard in the console to set up your VPC, we automatically use 65000 as the ASN\.  | 
 
-To use Amazon VPC with a VPN connection, you or your network administrator must also configure the customer gateway device or application in your remote network\. When you create the VPN connection, we provide you with the required configuration information and your network administrator typically performs this configuration\. For information about the customer gateway requirements and configuration, see the [Your Customer Gateway](http://docs.aws.amazon.com/vpc/latest/adminguide/Introduction.html) in the *Amazon VPC Network Administrator Guide*\.
+To use Amazon VPC with a VPN connection, you or your network administrator must also configure the customer gateway device or application in your remote network\. When you create the VPN connection, we provide you with the required configuration information and your network administrator typically performs this configuration\. For information about the customer gateway requirements and configuration, see the [Your Customer Gateway](https://docs.aws.amazon.com/vpc/latest/adminguide/Introduction.html) in the *Amazon VPC Network Administrator Guide*\.
 
 The VPN tunnel comes up when traffic is generated from your side of the VPN connection\. The virtual private gateway is not the initiator; your customer gateway must initiate the tunnels\. If your VPN connection experiences a period of idle time \(usually 10 seconds, depending on your configuration\), the tunnel may go down\. To prevent this, you can use a network monitoring tool to generate keepalive pings; for example, by using IP SLA\. 
 
@@ -73,7 +73,7 @@ You can find out the category of your AWS managed VPN connection by using the Am
 1. Select the VPN connection, and check the value for **Category** in the details pane\. A value of `VPN` indicates an AWS VPN connection\. A value of `VPN-Classic` indicates an AWS Classic VPN connection\.
 
 **To identify the VPN category using a command line tool**
-+ You can use the [describe\-vpn\-connections](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpn-connections.html) AWS CLI command\. In the output that's returned, take note of the `Category` value\. A value of `VPN` indicates an AWS VPN connection\. A value of `VPN-Classic` indicates an AWS Classic VPN connection\.
++ You can use the [describe\-vpn\-connections](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpn-connections.html) AWS CLI command\. In the output that's returned, take note of the `Category` value\. A value of `VPN` indicates an AWS VPN connection\. A value of `VPN-Classic` indicates an AWS Classic VPN connection\.
 
   In the following example, the VPN connection is an AWS VPN connection\.
 
@@ -100,14 +100,14 @@ You can find out the category of your AWS managed VPN connection by using the Am
   ```
 
 Alternatively, use one of the following commands:
-+ [DescribeVpnConnections](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeVpnConnections.html) \(Amazon EC2 Query API\)
-+ [Get\-EC2VpnConnection](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2VpnConnection.html) \(Tools for Windows PowerShell\)
++ [DescribeVpnConnections](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeVpnConnections.html) \(Amazon EC2 Query API\)
++ [Get\-EC2VpnConnection](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2VpnConnection.html) \(Tools for Windows PowerShell\)
 
 ### Migrating to AWS VPN<a name="aws-vpn-migrate"></a>
 
 If your existing VPN connection is an AWS Classic VPN connection, you can migrate to an AWS VPN connection by creating a new virtual private gateway and VPN connection, detaching the old virtual private gateway from your VPC, and attaching the new virtual private gateway to your VPC\.
 
-If your existing virtual private gateway is associated with multiple VPN connections, you must recreate each VPN connection for the new virtual private gateway\. If there are multiple AWS Direct Connect private virtual interfaces attached to your virtual private gateway, you must recreate each private virtual interface for the new virtual private gateway\. For more information, see [Creating a Virtual Interface](http://docs.aws.amazon.com/directconnect/latest/UserGuide/create-vif.html) in the *AWS Direct Connect User Guide*\.
+If your existing virtual private gateway is associated with multiple VPN connections, you must recreate each VPN connection for the new virtual private gateway\. If there are multiple AWS Direct Connect private virtual interfaces attached to your virtual private gateway, you must recreate each private virtual interface for the new virtual private gateway\. For more information, see [Creating a Virtual Interface](https://docs.aws.amazon.com/directconnect/latest/UserGuide/create-vif.html) in the *AWS Direct Connect User Guide*\.
 
 If your existing AWS managed VPN connection is an AWS VPN connection, you cannot migrate to an AWS Classic VPN connection\.
 
@@ -127,7 +127,7 @@ During this procedure, connectivity over the current VPC connection is interrupt
 
 1. Select the new VPN connection and choose **Download Configuration**\. Download the appropriate configuration file for your customer gateway device\.
 
-1. Use the configuration file to configure VPN tunnels on your customer gateway device\. For examples, see the *[Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/vpc/latest/adminguide/)*\. Do not enable the tunnels yet\. Contact your vendor if you need guidance on keeping the newly configured tunnels disabled\. 
+1. Use the configuration file to configure VPN tunnels on your customer gateway device\. For examples, see the *[Amazon VPC Network Administrator Guide](https://docs.aws.amazon.com/vpc/latest/adminguide/)*\. Do not enable the tunnels yet\. Contact your vendor if you need guidance on keeping the newly configured tunnels disabled\. 
 
 1. \(Optional\) Create test VPC and attach the virtual private gateway to the test VPC\. Change the encryption domain/source destination addresses as required, and test connectivity from a host in your local network to a test instance in the test VPC\.
 

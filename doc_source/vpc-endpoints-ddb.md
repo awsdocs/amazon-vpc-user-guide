@@ -65,7 +65,7 @@ You can create a policy that restricts access to a specific DynamoDB table\. In 
 
 You can create an IAM policy for your IAM users, groups, or roles to restrict access to DynamoDB tables from a specific VPC endpoint only\. To do this, you can use the `aws:sourceVpce` condition key for the table resource in your IAM policy\.
 
-For more information about managing access to DynamoDB, see [Authentication and Access Control for Amazon DynamoDB](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/authentication-and-access-control.html) in the *Amazon DynamoDB Developer Guide*\.
+For more information about managing access to DynamoDB, see [Authentication and Access Control for Amazon DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/authentication-and-access-control.html) in the *Amazon DynamoDB Developer Guide*\.
 
 **Example Example: Restrict Access from a Specific Endpoint**  
 In this example, users are denied permission to work with DynamoDB tables, except if accessed through endpoint `vpce-11aa22bb`\.  
