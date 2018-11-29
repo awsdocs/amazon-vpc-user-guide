@@ -17,7 +17,7 @@ To establish a baseline, you should monitor the following items:
 
 **Topics**
 + [Monitoring Tools](#monitoring-automated-manual)
-+ [Monitoring with Amazon CloudWatch](monitoring-cloudwatch-vpn.md)
++ [Monitoring VPN Tunnels Using Amazon CloudWatch](monitoring-cloudwatch-vpn.md)
 
 ## Monitoring Tools<a name="monitoring-automated-manual"></a>
 
@@ -26,7 +26,7 @@ AWS provides various tools that you can use to monitor a VPN connection\. You ca
 ### Automated Monitoring Tools<a name="monitoring-automated_tools"></a>
 
 You can use the following automated monitoring tools to watch a VPN connection and report when something is wrong:
-+ **Amazon CloudWatch Alarms** – Watch a single metric over a time period that you specify, and perform one or more actions based on the value of the metric relative to a given threshold over a number of time periods\. The action is a notification sent to an Amazon SNS topic\. CloudWatch alarms do not invoke actions simply because they are in a particular state; the state must have changed and been maintained for a specified number of periods\. For more information, see [Monitoring with Amazon CloudWatch](monitoring-cloudwatch-vpn.md)\.
++ **Amazon CloudWatch Alarms** – Watch a single metric over a time period that you specify, and perform one or more actions based on the value of the metric relative to a given threshold over a number of time periods\. The action is a notification sent to an Amazon SNS topic\. CloudWatch alarms do not invoke actions simply because they are in a particular state; the state must have changed and been maintained for a specified number of periods\. For more information, see [Monitoring VPN Tunnels Using Amazon CloudWatch](monitoring-cloudwatch-vpn.md)\.
 + **AWS CloudTrail Log Monitoring** – Share log files between accounts, monitor CloudTrail log files in real time by sending them to CloudWatch Logs, write log processing applications in Java, and validate that your log files have not changed after delivery by CloudTrail\. For more information, see [Logging API Calls Using AWS CloudTrail](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/using-cloudtrail.html) in the *Amazon EC2 API Reference* and [Working with CloudTrail Log Files](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-working-with-log-files.html) in the *AWS CloudTrail User Guide*
 
 ### Manual Monitoring Tools<a name="monitoring-manual-tools"></a>

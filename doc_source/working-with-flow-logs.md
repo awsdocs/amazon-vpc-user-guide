@@ -37,85 +37,15 @@ Some additional IAM role and permission configuration is required, depending on 
 
 ## Creating a Flow Log<a name="create-flow-log"></a>
 
-You can create a flow log from the **VPC** and **Subnet** pages in the Amazon VPC console, or from the **Network Interfaces** page in the Amazon EC2 console\.
+You can create flow logs for your VPCs, subnets, or network interfaces\. Flow logs can publish data to CloudWatch Logs or Amazon S3\.
 
-**To create a flow log for a network interface**
-
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-1. In the navigation pane, choose **Network Interfaces**\.
-
-1. Select a network interface and choose **Flow Logs**, **Create Flow Log**\.
-
-1. For **Filter**, specify the type of IP traffic data to log\. Choose **All** to log accepted and rejected traffic, **Rejected** to record only rejected traffic, or **Accepted** to record only accepted traffic\.
-
-1. Specify the destinations to which to publish the flow log data\. Flow log data can be published to CloudWatch Logs and Amazon S3\.
-
-   1. To publish the flow log data to CloudWatch Logs, do the following:
-
-      1. Choose **Send to CloudWatch Logs**\.
-
-      1. For **Destination log group**, enter the name of a log group in CloudWatch Logs to which the flow logs are to be published\. You can use an existing log group or enter a name for a new log group\. If you specify the name of a log group that does not exist, we attempt to create the log group for you\.
-
-      1. For **IAM role**, specify the name of the role that has permissions to publish logs to CloudWatch Logs\.
-
-   1. To publish the flow log data to Amazon S3, do the following:
-
-      1. Make sure that the Amazon S3 bucket to which to publish the flow log already exists\. If it does not, create a new Amazon S3 bucket\. For more information, see [Create a Bucket](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html)\.
-
-      1. Choose **Send to an Amazon S3 bucket**\.
-
-      1. For **S3 bucket ARN**, specify the Amazon Resource Name \(ARN\) of the existing Amazon S3 bucket to which to publish the flow log data\.
-
-         You can also specify a subfolder in the bucket\. To specify a subfolder in the bucket, use the following ARN format: `bucket_ARN/subfolder_name/`\. For example, to specify a subfolder named `my-logs` in a bucket named `my-bucket`, use the following ARN: `arn:aws:s3:::my-bucket/my-logs/`\. You cannot use `AWSLogs` as a subfolder name\. This is a reserved term\.
-**Note**  
-We automatically create a resource policy and attach it to the specified Amazon S3 bucket\. For more information, see [Amazon S3 Bucket Permissions for Flow Logs](flow-logs-s3.md#flow-logs-s3-permissions)\.
-
-1. Choose **Create Flow Log**\.
-
-**To create a flow log for a VPC or a subnet**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Your VPCs** or **Subnets**\.
-
-1. Select your VPC or subnet and choose **Flow Logs**, **Create Flow Log**\.
-**Note**  
-To create flow logs for multiple VPCs, choose the VPCs, and choose **Actions**, **Create Flow Log**\. To create flow logs for multiple subnets, choose the subnets, and choose **Subnet Actions**, **Create Flow Log**\.
-
-1. For **Filter**, specify the type of IP traffic data to log\. Choose **All** to log accepted and rejected traffic, **Rejected** to record only rejected traffic, or **Accepted** to record only accepted traffic\.
-
-1. Specify the destinations to which to publish the flow log data\. Flow log data can be published to CloudWatch Logs and Amazon S3\.
-
-   1. To publish the flow log data to CloudWatch Logs, do the following:
-
-      1. Choose **Send to CloudWatch Logs**\.
-
-      1. For **Destination log group**, enter the name of a log group in CloudWatch Logs to which the flow logs are to be published\. You can use an existing log group, or you can enter a name for a new log group\. If you specify the name of a log group that does not exist, we attempt to create the log group for you\.
-
-      1. For **IAM role**, specify the name of the IAM role that has permissions to publish logs to CloudWatch Logs\.
-**Note**  
-The Amazon Resource Name \(ARN\) of the selected IAM role is indicated next to the **IAM Role ARN** label\.
-
-   1. To publish the flow log data to Amazon S3, do the following:
-
-      1. Make sure that the Amazon S3 bucket to which to publish the flow log already exists\. If it does not, create a new Amazon S3 bucket\. For more information, see [Create a Bucket](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html)\.
-
-      1. Choose **Send to an Amazon S3 bucket**\.
-
-      1. For **S3 bucket ARN**, specify the ARN of the existing Amazon S3 bucket to which you want to publish the flow log data\.
-
-         You can also specify a subfolder in the bucket\. To specify a subfolder in the bucket, use the following ARN format: `bucket_ARN/subfolder_name/`\. For example, to specify a subfolder named `my-logs` in a bucket named `my-bucket`, use the following ARN: `arn:aws:s3:::my-bucket/my-logs/`\.
-**Note**  
-We automatically create a resource policy and attach it to the specified Amazon S3 bucket\. For more information, see [Amazon S3 Bucket Permissions for Flow Logs](flow-logs-s3.md#flow-logs-s3-permissions)\.
-
-1. Choose **Create Flow Log**\.
+For more information, see [Creating a Flow Log that Publishes to CloudWatch Logs](flow-logs-cwl.md#flow-logs-cwl-create-flow-log) and [Creating a Flow Log that Publishes to Amazon S3](flow-logs-s3.md#flow-logs-s3-create-flow-log)\.
 
 ## Viewing Flow Logs<a name="view-flow-logs"></a>
 
 You can view information about your flow logs in the Amazon EC2 and Amazon VPC consoles by viewing the **Flow Logs** tab for a specific resource\. When you select the resource, all the flow logs for that resource are listed\. The information displayed includes the ID of the flow log, the flow log configuration, and information about the status of the flow log\.
 
-**To view information about your flow logs for your network interfaces**
+**To view information about flow logs for your network interfaces**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -123,7 +53,7 @@ You can view information about your flow logs in the Amazon EC2 and Amazon VPC c
 
 1. Select a network interface, and choose **Flow Logs**\. Information about the flow logs is displayed on the tab\. The **Destination type** column indicates the destination to which the flow logs are published\.
 
-**To view information about your flow logs for your VPCs or subnets**
+**To view information about flow logs for your VPCs or subnets**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 

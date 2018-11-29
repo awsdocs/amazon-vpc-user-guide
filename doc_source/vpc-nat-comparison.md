@@ -1,15 +1,15 @@
 # Comparison of NAT Instances and NAT Gateways<a name="vpc-nat-comparison"></a>
 
-The following is a high\-level summary of the differences between NAT instances and NAT gateways\. 
+The following is a high\-level summary of the differences between NAT instances and NAT gateways\.
 
 
 | Attribute | NAT gateway | NAT instance | 
 | --- | --- | --- | 
-| Availability | Highly available\. NAT gateways in each Availability Zone are implemented with redundancy\. Create a NAT gateway in each Availability Zone to ensure zone\-independent architecture\.  | Use a script to manage failover between instances\.  | 
+| Availability | Highly available\. NAT gateways in each Availability Zone are implemented with redundancy\. Create a NAT gateway in each Availability Zone to ensure zone\-independent architecture\. | Use a script to manage failover between instances\. | 
 | Bandwidth | Can scale up to 45 Gbps\. | Depends on the bandwidth of the instance type\. | 
 | Maintenance | Managed by AWS\. You do not need to perform any maintenance\. | Managed by you, for example, by installing software updates or operating system patches on the instance\. | 
 | Performance | Software is optimized for handling NAT traffic\. | A generic Amazon Linux AMI that's configured to perform NAT\. | 
-| Cost | Charged depending on the number of NAT gateways you use, duration of usage, and amount of data that you send through the NAT gateways\.  | Charged depending on the number of NAT instances that you use, duration of usage, and instance type and size\.  | 
+| Cost | Charged depending on the number of NAT gateways you use, duration of usage, and amount of data that you send through the NAT gateways\. | Charged depending on the number of NAT instances that you use, duration of usage, and instance type and size\. | 
 | Type and size | Uniform offering; you don’t need to decide on the type or size\.  | Choose a suitable instance type and size, according to your predicted workload\. | 
 | Public IP addresses | Choose the Elastic IP address to associate with a NAT gateway at creation\. | Use an Elastic IP address or a public IP address with a NAT instance\. You can change the public IP address at any time by associating a new Elastic IP address with the instance\. | 
 | Private IP addresses | Automatically selected from the subnet's IP address range when you create the gateway\. | Assign a specific private IP address from the subnet's IP address range when you launch the instance\. | 

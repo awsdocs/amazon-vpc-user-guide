@@ -1,4 +1,4 @@
-# Monitoring with Amazon CloudWatch<a name="monitoring-cloudwatch-vpn"></a>
+# Monitoring VPN Tunnels Using Amazon CloudWatch<a name="monitoring-cloudwatch-vpn"></a>
 
 You can monitor VPN tunnels using CloudWatch, which collects and processes raw data from the VPN service into readable, near real\-time metrics\. These statistics are recorded for a period of 15 months, so that you can access historical information and gain a better perspective on how your web application or service is performing\. VPN metric data is automatically sent to CloudWatch as it becomes available\.
 
@@ -7,9 +7,28 @@ CloudWatch metrics are not supported for AWS Classic VPN connections\. For more 
 
 For more information, see the [Amazon CloudWatch User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/)\.
 
-## VPN Metrics and Dimensions<a name="metrics-dimensions-vpn"></a>
+## VPN Tunnel Metrics and Dimensions<a name="metrics-dimensions-vpn"></a>
 
-When you create a new VPN connection, the VPN service sends the following metrics about your VPN tunnels to CloudWatch as it becomes available\. You can use the following procedures to view the metrics for VPN tunnels\.
+The following metrics are available for your VPN tunnels\.
+
+
+| Metric | Description | 
+| --- | --- | 
+|  `TunnelState`  |  The state of the tunnel\. For static VPNs, 0 indicates DOWN and 1 indicates UP\. For BGP VPNs, 1 indicates ESTABLISHED and 0 is used for all other states\. Units: Boolean  | 
+|  `TunnelDataIn`  |  The bytes received through the VPN tunnel\. Each metric data point represents the number of bytes received after the previous data point\. Use the Sum statistic to show the total number of bytes received during the period\. This metric counts the data after decryption\. Units: Bytes  | 
+|  `TunnelDataOut`  |  The bytes sent through the VPN tunnel\. Each metric data point represents the number of bytes sent after the previous data point\. Use the Sum statistic to show the total number of bytes sent during the period\. This metric counts the data before encryption\. Units: Bytes  | 
+
+To filter the metric data, use the following dimensions\.
+
+
+| Dimension | Description | 
+| --- | --- | 
+| `VpnId` |  Filters the metric data by the VPN connection ID\.  | 
+| `TunnelIpAddress` |  Filters the metric data by the IP address of the tunnel for the virtual private gateway\.  | 
+
+## Viewing VPN Tunnel CloudWatch Metrics<a name="viewing-metrics"></a>
+
+When you create a new VPN connection, the VPN service sends the following metrics about your VPN tunnels to CloudWatch as it becomes available\. You can view the metrics for VPN tunnels as follows\.
 
 **To view metrics using the CloudWatch console**
 
@@ -23,29 +42,12 @@ Metrics are grouped first by the service namespace, and then by the various dime
 
 1. Select the metric dimension to view the metrics \(for example, for the VPN connection\)\.
 
-**To view metrics using the AWS CLI**
-+ At a command prompt, use the following command:
+**To view metrics using the AWS CLI**  
+At a command prompt, use the following command:
 
-  ```
-  1. aws cloudwatch list-metrics --namespace "AWS/VPN"
-  ```
-
-The following metrics are available from Amazon VPC VPN\.
-
-
-| Metric | Description | 
-| --- | --- | 
-|  TunnelState  |  The state of the tunnel\. 0 indicates DOWN and 1 indicates UP\. Units: Boolean  | 
-|  TunnelDataIn  |  The bytes received through the VPN tunnel\. Each metric data point represents the number of bytes received after the previous data point\. Use the Sum statistic to show the total number of bytes received during the period\. This metric counts the data after decryption\. Units: Bytes  | 
-|  TunnelDataOut  |  The bytes sent through the VPN tunnel\. Each metric data point represents the number of bytes sent after the previous data point\. Use the Sum statistic to show the total number of bytes sent during the period\. This metric counts the data before encryption\. Units: Bytes  | 
-
-You can filter the Amazon VPC VPN data using the following dimensions\.
-
-
-| Dimension | Description | 
-| --- | --- | 
-| `VpnId` |  This dimension filters the data by the VPN connection\.  | 
-| `TunnelIpAddress` |  This dimension filters the data by the IP address of the tunnel for the virtual private gateway\.  | 
+```
+aws cloudwatch list-metrics --namespace "AWS/VPN"
+```
 
 ## Creating CloudWatch Alarms to Monitor VPN Tunnels<a name="creating-alarms-vpn"></a>
 

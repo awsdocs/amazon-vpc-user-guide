@@ -6,6 +6,7 @@ The following are possible issues you might have when working with flow logs\.
 + [Incomplete Flow Log Records](#flow-logs-troubleshooting-incomplete-records)
 + [Flow Log is Active, But No Flow Log Records or Log Group](#flow-logs-troubleshooting-no-log-group)
 + [Error: LogDestinationNotFoundException](#flow-logs-troubleshooting-not-found)
++ [Exceeding the Amazon S3 Bucket Policy Limit](#flow-logs-troubleshooting-policy-limit)
 
 ## Incomplete Flow Log Records<a name="flow-logs-troubleshooting-incomplete-records"></a>
 
@@ -22,6 +23,24 @@ You've created a flow log, and the Amazon VPC or Amazon EC2 console displays the
 
 ## Error: LogDestinationNotFoundException<a name="flow-logs-troubleshooting-not-found"></a>
 
-You might get this error when creating a flow log that publishes data to an Amazon S3 bucket\. This error indicates that the specified Amazon S3 bucket could not be found\.
+You might get this error when creating a flow log that publishes data to an Amazon S3 bucket\. This error indicates that the specified S3 bucket could not be found\.
 
-To resolve this error, ensure that you have specified the ARN for an existing Amazon S3 bucket, and that the ARN is in the correct format\.
+To resolve this error, ensure that you have specified the ARN for an existing S3 bucket, and that the ARN is in the correct format\.
+
+## Exceeding the Amazon S3 Bucket Policy Limit<a name="flow-logs-troubleshooting-policy-limit"></a>
+
+Amazon S3 bucket policies are limited to 20 KB in size\.
+
+Each time you create a flow log that publishes to an Amazon S3 bucket, we automatically add the specified bucket ARN, which includes the folder path, to the `Resource` element in the bucket's policy\.
+
+Creating multiple flow logs that publish to the same bucket could cause you to exceed the bucket policy limit\. Exceeding the bucket policy limit results in the `LogDestinationPermissionIssueException` error\.
+
+If you receive this error by exceeding the bucket policy limit, do one of the following:
++ Clean up the bucket's policy by removing the flow log entries that are no longer needed\.
++ Grant permissions to the entire bucket by replacing the individual flow log entries with the following:
+
+  ```
+  arn:aws:s3:::bucket_name/*
+  ```
+
+  If you grant permissions to the entire bucket, new flow log subscriptions do not add new permissions to the bucket policy\.

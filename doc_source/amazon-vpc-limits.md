@@ -101,3 +101,13 @@ For more information, see [DNS Limits](vpc-dns.md#vpc-dns-limits)\.
 | --- | --- | --- | 
 |  VPN connections per region  |  50  |  \-  | 
 |  VPN connections per VPC \(per virtual private gateway\)  | 10 |  \-  | 
+
+## VPC Sharing<a name="vpc-sharing-limits-vpn"></a>
+
+All standard VPC limits apply to a shared VPC\.
+
+
+| Resource | Default limit | Comments | 
+| --- | --- | --- | 
+|  Number of distinct accounts that a VPC can be shared with  |   30  |  \-  | 
+| Number of subnets that can be shared with an account |  100 |  \-  | 

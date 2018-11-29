@@ -9,6 +9,7 @@ To get started with Amazon Virtual Private Cloud \(Amazon VPC\), you create a VP
 + [Subnet Security](#SubnetSecurity)
 + [Connections with Your Local Network and Other VPCs](#VGW)
 + [Working with VPCs and Subnets](working-with-vpcs.md)
++ [Working with Shared VPCs](vpc-sharing.md)
 
 ## VPC and Subnet Basics<a name="vpc-subnet-basics"></a>
 

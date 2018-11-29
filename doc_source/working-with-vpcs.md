@@ -82,6 +82,7 @@ After you've created a subnet, you can do the following:
 + Modify the subnet settings to specify that all instances launched in that subnet receive a public IPv4 address, or an IPv6 address, or both\. For more information, see [IP Addressing Behavior for Your Subnet](vpc-ip-addressing.md#vpc-ip-addressing-subnet)\.
 + Create or modify your security groups as needed\. For more information, see [Security Groups for Your VPC](VPC_SecurityGroups.md)\.
 + Create or modify your network ACLs as needed\. For more information, see [Network ACLs](vpc-network-acls.md)\.
++ Share the subnet with other accounts\. For more information, see [Sharing a Subnet](vpc-sharing.md#vpc-sharing-share-subnet)\.
 
 ## Associating a Secondary IPv4 CIDR Block with Your VPC<a name="add-ipv4-cidr"></a>
 

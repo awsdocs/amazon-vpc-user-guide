@@ -13,7 +13,7 @@ NAT gateways are not supported for IPv6 traffic—use an egress\-only internet g
 + [Controlling the Use of NAT Gateways](#nat-gateway-iam)
 + [Tagging a NAT Gateway](#nat-gateway-tagging)
 + [API and CLI Overview](#nat-gateway-api-cli)
-+ [Monitoring Your NAT Gateway with Amazon CloudWatch](vpc-nat-gateway-cloudwatch.md)
++ [Monitoring NAT Gateways Using Amazon CloudWatch](vpc-nat-gateway-cloudwatch.md)
 
 ## NAT Gateway Basics<a name="nat-gateway-basics"></a>
 
@@ -40,7 +40,7 @@ A NAT gateway has the following characteristics and limitations:
 + You can use a network ACL to control the traffic to and from the subnet in which the NAT gateway is located\. The network ACL applies to the NAT gateway's traffic\. A NAT gateway uses ports 1024–65535\. For more information, see [Network ACLs](vpc-network-acls.md)\.
 + When a NAT gateway is created, it receives a network interface that's automatically assigned a private IP address from the IP address range of your subnet\. You can view the NAT gateway's network interface in the Amazon EC2 console\. For more information, see [Viewing Details about a Network Interface](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#view_eni_details)\. You cannot modify the attributes of this network interface\.
 + A NAT gateway cannot be accessed by a ClassicLink connection associated with your VPC\.
-+ A NAT gateway can support up to 55,000 simultaneous connections to each unique destination\. This limit also applies if you create approximately 900 connections per second to a single destination \(about 55,000 connections per minute\)\. If the destination IP address, the destination port, or the protocol \(TCP/UDP/ICMP\) changes, you can create an additional 55,000 connections\. For more than 55,000 connections, there is an increased chance of connection errors due to port allocation errors\. These errors can be monitored by viewing the `ErrorPortAllocation` CloudWatch metric for your NAT gateway\. For more information, see [Monitoring Your NAT Gateway with Amazon CloudWatch](vpc-nat-gateway-cloudwatch.md)\. 
++ A NAT gateway can support up to 55,000 simultaneous connections to each unique destination\. This limit also applies if you create approximately 900 connections per second to a single destination \(about 55,000 connections per minute\)\. If the destination IP address, the destination port, or the protocol \(TCP/UDP/ICMP\) changes, you can create an additional 55,000 connections\. For more than 55,000 connections, there is an increased chance of connection errors due to port allocation errors\. These errors can be monitored by viewing the `ErrorPortAllocation` CloudWatch metric for your NAT gateway\. For more information, see [Monitoring NAT Gateways Using Amazon CloudWatch](vpc-nat-gateway-cloudwatch.md)\. 
 
 ### Migrating from a NAT Instance<a name="nat-instance-migrate"></a>
 
@@ -56,6 +56,10 @@ A NAT gateway cannot send traffic over VPC endpoints, VPN connections, AWS Direc
 For example, your private subnet’s route table has the following routes: internet\-bound traffic \(0\.0\.0\.0/0\) is routed to a NAT gateway, Amazon S3 traffic \(pl\-xxxxxxxx; a specific IP address range for Amazon S3\) is routed to a VPC endpoint, and 10\.25\.0\.0/16 traffic is routed to a VPC peering connection\. The pl\-xxxxxxxx and 10\.25\.0\.0/16 IP address ranges are more specific than 0\.0\.0\.0/0; when your instances send traffic to Amazon S3 or the peered VPC, the traffic is sent to the VPC endpoint or the VPC peering connection\. When your instances send traffic to the internet \(other than the Amazon S3 IP addresses\), the traffic is sent to the NAT gateway\. 
 
 You cannot route traffic to a NAT gateway through a VPC peering connection, a VPN connection, or AWS Direct Connect\. A NAT gateway cannot be used by resources on the other side of these connections\.
+
+### Best Practice When Sending Traffic to Amazon S3 or DynamoDB<a name="nat-gateway-s3-ddb"></a>
+
+To avoid data processing charges for NAT gateways when accessing Amazon S3 and DynamoDB, set up a gateway endpoint and route the traffic through the gateway endpoint instead of the NAT gateway\. There are no charges for using a gateway endpoint\. For more information, see [Gateway VPC Endpoints](vpce-gateway.md)\.
 
 ## Working with NAT Gateways<a name="nat-gateway-working-with"></a>
 
@@ -119,7 +123,7 @@ You can delete a NAT gateway using the Amazon VPC console\. After you've deleted
 
 ### Testing a NAT Gateway<a name="nat-gateway-testing"></a>
 
-After you've created your NAT gateway and updated your route tables, you can ping the internet from an instance in your private subnet to test that it can connect to the internet\. For an example of how to do this, see [Testing the internet Connection](#nat-gateway-testing-example)\.
+After you've created your NAT gateway and updated your route tables, you can ping the internet from an instance in your private subnet to test that it can connect to the internet\. For an example of how to do this, see [Testing the Internet Connection](#nat-gateway-testing-example)\.
 
 If you're able to connect to the internet, you can also perform the following tests to determine if the internet traffic is being routed through the NAT gateway:
 + You can trace the route of traffic from an instance in your private subnet\. To do this, run the `traceroute` command from a Linux instance in your private subnet\. In the output, you should see the private IP address of the NAT gateway in one of the hops \(it's usually the first hop\)\.
@@ -127,7 +131,7 @@ If you're able to connect to the internet, you can also perform the following te
 
 If the preceding tests fail, see [Troubleshooting NAT Gateways](#nat-gateway-troubleshooting)\. 
 
-#### Testing the internet Connection<a name="nat-gateway-testing-example"></a>
+#### Testing the Internet Connection<a name="nat-gateway-testing-example"></a>
 
 The following example demonstrates how to test if your instance in a private subnet can connect to the internet\.
 
@@ -192,7 +196,7 @@ The following example demonstrates how to test if your instance in a private sub
    ...
    ```
 
-   Press **Ctrl\+C** on your keyboard to cancel the `ping` command\. If the `ping` command fails, see [Instances in Private Subnet Cannot Access internet](#nat-gateway-troubleshooting-no-internet-connection)\.
+   Press **Ctrl\+C** on your keyboard to cancel the `ping` command\. If the `ping` command fails, see [Instances in Private Subnet Cannot Access Internet](#nat-gateway-troubleshooting-no-internet-connection)\.
 
 1. \(Optional\) If you no longer require your instances, terminate them\. For more information, see [Terminate Your Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
@@ -206,7 +210,7 @@ The following topics help you to troubleshoot common issues you might encounter 
 + [The Availability Zone Is Unsupported \(`NotAvailableInZone`\)](#nat-gateway-troubleshooting-unsupported-az)
 + [You Created a NAT Gateway and It's No Longer Visible](#nat-gateway-troubleshooting-gateway-removed)
 + [NAT Gateway Doesn't Respond to a Ping Command](#nat-gateway-troubleshooting-ping)
-+ [Instances in Private Subnet Cannot Access internet](#nat-gateway-troubleshooting-no-internet-connection)
++ [Instances in Private Subnet Cannot Access Internet](#nat-gateway-troubleshooting-no-internet-connection)
 + [TCP Connection to a Specific Endpoint Fails](#nat-gateway-troubleshooting-fragmentation)
 + [Traceroute Output Does Not Display NAT Gateway Private IP Address](#nat-gateway-troubleshooting-traceroute)
 + [Internet Connection Drops After 5 Minutes](#nat-gateway-troubleshooting-timeout)
@@ -256,7 +260,7 @@ If you try to ping a NAT gateway's Elastic IP address or private IP address from
 
 To test that your NAT gateway is working, see [Testing a NAT Gateway](#nat-gateway-testing)\.
 
-### Instances in Private Subnet Cannot Access internet<a name="nat-gateway-troubleshooting-no-internet-connection"></a>
+### Instances in Private Subnet Cannot Access Internet<a name="nat-gateway-troubleshooting-no-internet-connection"></a>
 
 If you followed the preceding steps to test your NAT gateway and the `ping` command fails, or your instances cannot access the internet, check the following information:
 + Check that the NAT gateway is in the `Available` state\. In the Amazon VPC console, go to the **NAT Gateways** page and view the status information in the details pane\. If the NAT gateway is in a failed state, there may have been an error when it was created\. For more information, see [NAT Gateway Goes to a Status of Failed](#nat-gateway-troubleshooting-failed)\.

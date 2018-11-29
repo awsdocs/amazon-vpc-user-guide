@@ -6,7 +6,8 @@ When publishing to CloudWatch Logs, flow log data is published to a log group, a
 
 **Topics**
 + [IAM Roles for Publishing Flow Logs to CloudWatch Logs](#flow-logs-iam)
-+ [Processing Flow Log Records](#process-records-cwl)
++ [Creating a Flow Log that Publishes to CloudWatch Logs](#flow-logs-cwl-create-flow-log)
++ [Processing Flow Log Records in CloudWatch Logs](#process-records-cwl)
 
 ## IAM Roles for Publishing Flow Logs to CloudWatch Logs<a name="flow-logs-iam"></a>
 
@@ -90,7 +91,47 @@ You can update an existing role or use the following procedure to create a new r
 
 1. On the **Summary** page, note the ARN for your role\. You need this ARN when you create your flow log\.
 
-## Processing Flow Log Records<a name="process-records-cwl"></a>
+## Creating a Flow Log that Publishes to CloudWatch Logs<a name="flow-logs-cwl-create-flow-log"></a>
+
+You can create flow logs for your VPCs, subnets, or network interfaces\.
+
+**To create a flow log for a network interface**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. In the navigation pane, choose **Network Interfaces**\.
+
+1. Select one or more network interfaces and choose **Actions**, **Create flow log**\.
+
+1. For **Filter**, specify the type of IP traffic data to log\. Choose **All** to log accepted and rejected traffic, **Rejected** to record only rejected traffic, or **Accepted** to record only accepted traffic\.
+
+1. For **Destination**, choose **Send to CloudWatch Logs**\.
+
+1. For **Destination log group**, type the name of a log group in CloudWatch Logs to which the flow logs are to be published\. If you specify the name of a log group that does not exist, we attempt to create the log group for you\.
+
+1. For **IAM role**, specify the name of the role that has permissions to publish logs to CloudWatch Logs\.
+
+1. Choose **Create**\.
+
+**To create a flow log for a VPC or a subnet**
+
+1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
+
+1. In the navigation pane, choose **Your VPCs** or **Subnets**\.
+
+1. Select one or more VPCs or subnets and then choose **Actions**, **Create flow log**\.
+
+1. For **Filter**, specify the type of IP traffic data to log\. Choose **All** to log accepted and rejected traffic, **Rejected** to record only rejected traffic, or **Accepted** to record only accepted traffic\.
+
+1. For **Destination**, choose **Send to CloudWatch Logs**\.
+
+1. For **Destination log group**, type the name of a log group in CloudWatch Logs to which the flow logs are to be published\. If you specify the name of a log group that does not exist, we attempt to create the log group for you\.
+
+1. For **IAM role**, specify the name of the IAM role that has permissions to publish logs to CloudWatch Logs\.
+
+1. Choose **Create**\.
+
+## Processing Flow Log Records in CloudWatch Logs<a name="process-records-cwl"></a>
 
 You can work with flow log records as you would with any other log events collected by CloudWatch Logs\. For more information about monitoring log data and metric filters, see [Searching and Filtering Log Data](https://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide/MonitoringLogData.html) in the *Amazon CloudWatch User Guide*\.
 

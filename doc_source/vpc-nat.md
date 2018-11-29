@@ -1,6 +1,6 @@
 # NAT<a name="vpc-nat"></a>
 
-You can use a NAT device to enable instances in a private subnet to connect to the Internet \(for example, for software updates\) or other AWS services, but prevent the Internet from initiating connections with the instances\. A NAT device forwards traffic from the instances in the private subnet to the Internet or other AWS services, and then sends the response back to the instances\. When traffic goes to the Internet, the source IPv4 address is replaced with the NAT device’s address and similarly, when the response traffic goes to those instances, the NAT device translates the address back to those instances’ private IPv4 addresses\. 
+You can use a NAT device to enable instances in a private subnet to connect to the internet \(for example, for software updates\) or other AWS services, but prevent the internet from initiating connections with the instances\. A NAT device forwards traffic from the instances in the private subnet to the internet or other AWS services, and then sends the response back to the instances\. When traffic goes to the internet, the source IPv4 address is replaced with the NAT device’s address and similarly, when the response traffic goes to those instances, the NAT device translates the address back to those instances’ private IPv4 addresses\. 
 
 NAT devices are not supported for IPv6 traffic—use an egress\-only Internet gateway instead\. For more information, see [Egress\-Only Internet Gateways](egress-only-internet-gateway.md)\.
 
