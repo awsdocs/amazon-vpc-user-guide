@@ -49,13 +49,13 @@ If you're already using a NAT instance, you can replace it with a NAT gateway\. 
 **Note**  
 If you change your routing from a NAT instance to a NAT gateway, or if you disassociate the Elastic IP address from your NAT instance, any current connections are dropped and have to be re\-established\. Ensure that you do not have any critical tasks \(or any other tasks that operate through the NAT instance\) running\.
 
-### Using a NAT Gateway with VPC Endpoints, VPN, AWS Direct Connect, or VPC Peering<a name="nat-gateway-other-services"></a>
+### Using a NAT Gateway with VPC Endpoints, AWS Site\-to\-Site VPN, AWS Direct Connect, or VPC Peering<a name="nat-gateway-other-services"></a>
 
-A NAT gateway cannot send traffic over VPC endpoints, VPN connections, AWS Direct Connect, or VPC peering connections\. If your instances in the private subnet must access resources over a VPC endpoint, a VPN connection, or AWS Direct Connect, use the private subnet’s route table to route the traffic directly to these devices\. 
+A NAT gateway cannot send traffic over VPC endpoints, AWS Site\-to\-Site VPN connections, AWS Direct Connect, or VPC peering connections\. If your instances in the private subnet must access resources over a VPC endpoint, a Site\-to\-Site VPN connection, or AWS Direct Connect, use the private subnet’s route table to route the traffic directly to these devices\. 
 
 For example, your private subnet’s route table has the following routes: internet\-bound traffic \(0\.0\.0\.0/0\) is routed to a NAT gateway, Amazon S3 traffic \(pl\-xxxxxxxx; a specific IP address range for Amazon S3\) is routed to a VPC endpoint, and 10\.25\.0\.0/16 traffic is routed to a VPC peering connection\. The pl\-xxxxxxxx and 10\.25\.0\.0/16 IP address ranges are more specific than 0\.0\.0\.0/0; when your instances send traffic to Amazon S3 or the peered VPC, the traffic is sent to the VPC endpoint or the VPC peering connection\. When your instances send traffic to the internet \(other than the Amazon S3 IP addresses\), the traffic is sent to the NAT gateway\. 
 
-You cannot route traffic to a NAT gateway through a VPC peering connection, a VPN connection, or AWS Direct Connect\. A NAT gateway cannot be used by resources on the other side of these connections\.
+You cannot route traffic to a NAT gateway through a VPC peering connection, a Site\-to\-Site VPN connection, or AWS Direct Connect\. A NAT gateway cannot be used by resources on the other side of these connections\.
 
 ### Best Practice When Sending Traffic to Amazon S3 or DynamoDB<a name="nat-gateway-s3-ddb"></a>
 
@@ -237,10 +237,10 @@ The following table lists the possible causes of the failure as indicated in the
 
 ### You've Reached Your Elastic IP Address or NAT Gateway Limit<a name="nat-gateway-troubleshooting-limits"></a>
 
-If you've reached your Elastic IP address limit, you can disassociate an Elastic IP address from another resource, or you can request a limit increase using the [Amazon VPC Limits form](https://console.aws.amazon.com/support/home#/case/create?issueType=service-limit-increase&limitType=service-code-vpc)\. 
+If you've reached your Elastic IP address limit, you can disassociate an Elastic IP address from another resource, or you can request a limit increase using the [Amazon VPC Limits form](https://console.aws.amazon.com/support/home#/case/create?issueType=service-limit-increase&limitType=vpc)\. 
 
 If you've reached your NAT gateway limit, you can do one of the following:
-+ Request a limit increase using the [Amazon VPC Limits form](https://console.aws.amazon.com/support/home#/case/create?issueType=service-limit-increase&limitType=service-code-vpc)\. The NAT gateway limit is enforced per Availability Zone\.
++ Request a limit increase using the [Amazon VPC Limits form](https://console.aws.amazon.com/support/home#/case/create?issueType=service-limit-increase&limitType=vpc)\. The NAT gateway limit is enforced per Availability Zone\.
 + Check the status of your NAT gateway\. A status of `Pending`, `Available`, or `Deleting` counts against your limit\. If you've recently deleted a NAT gateway, wait a few minutes for the status to go from `Deleting` to `Deleted`, then try creating a new NAT gateway\.
 + If you do not need your NAT gateway in a specific Availability Zone, try creating a NAT gateway in an Availability Zone where you haven't reached your limit\. 
 

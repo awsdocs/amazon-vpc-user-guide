@@ -29,7 +29,7 @@ For example policies for working with ClassicLink, see [Example Policies for CLI
 
 ### 1\. Managing a VPC<a name="managingvpciam"></a>
 
-The following policy grants users permission to create and manage your VPC\. You might attach this policy to a group of network administrators\. The `Action` element specifies the API actions related to VPCs, subnets, Internet gateways, customer gateways, virtual private gateways, VPN connections, route tables, Elastic IP addresses, security groups, network ACLs, and DHCP options sets\. The policy also allows the group to run, stop, start, and terminate instances\. It also allows the group to list Amazon EC2 resources\.
+The following policy grants users permission to create and manage your VPC\. You might attach this policy to a group of network administrators\. The `Action` element specifies the API actions related to VPCs, subnets, Internet gateways, customer gateways, virtual private gateways, Site\-to\-Site VPN connections, route tables, Elastic IP addresses, security groups, network ACLs, and DHCP options sets\. The policy also allows the group to run, stop, start, and terminate instances\. It also allows the group to list Amazon EC2 resources\.
 
 The policy uses wildcards to specify all actions for each type of object \(for example, `*SecurityGroup*`\)\. Alternatively, you could list each action explicitly\. If you use the wildcards, be aware that if we add new actions whose names include any of the wildcarded strings in the policy, the policy would automatically grant the group access to those new actions\.
 
@@ -517,13 +517,13 @@ The following policy allows users to launch instances using only `ami-1a2b3c4d`\
 }
 ```
 
-**Option 3: VPC with public and private subnets and AWS managed VPN access**
+**Option 3: VPC with public and private subnets and AWS Site\-to\-Site VPN access**
 
-The third VPC wizard configuration option creates a VPC with a public and private subnet, and creates a VPN connection between your VPC and your own network\. In your IAM policy, you must grant users permission to use the same actions as option 1\. This allows them to create a VPC and two subnets, and to configure the routing for the public subnet\. To create a VPN connection, users must also have permission to use the following actions:
+The third VPC wizard configuration option creates a VPC with a public and private subnet, and creates a AWS Site\-to\-Site VPN connection between your VPC and your own network\. In your IAM policy, you must grant users permission to use the same actions as option 1\. This allows them to create a VPC and two subnets, and to configure the routing for the public subnet\. To create a Site\-to\-Site VPN connection, users must also have permission to use the following actions:
 + `ec2:CreateCustomerGateway`: To create a customer gateway\.
 + `ec2:CreateVpnGateway` and `ec2:AttachVpnGateway`: To create a virtual private gateway, and attach it to the VPC\.
 + `ec2:EnableVgwRoutePropagation`: To enable route propagation so that routes are automatically propagated to your route table\.
-+ `ec2:CreateVpnConnection`: To create a VPN connection\.
++ `ec2:CreateVpnConnection`: To create a Site\-to\-Site VPN connection\.
 + `ec2:DescribeVpnConnections`, `ec2:DescribeVpnGateways`, and `ec2:DescribeCustomerGateways`: To display the options on the second configuration page of the wizard\.
 + `ec2:DescribeVpcs` and `ec2:DescribeRouteTables`: To gather information about the routes that must be added to the main route table\.
 
@@ -549,9 +549,9 @@ None of the API actions in this policy support resource\-level permissions, so y
 }
 ```
 
-**Option 4: VPC with a private subnet only and AWS managed VPN access**
+**Option 4: VPC with a private subnet only and AWS Site\-to\-Site VPN access**
 
-The fourth VPC configuration option creates a VPC with a private subnet, and creates a VPN connection between the VPC and your own network\. Unlike the other three options, users do not need permission to create or attach an Internet gateway to the VPC, and they do not need permission to create a route table and associate it with the subnet\. They will require the same permissions as listed in the previous example \(option 3\) to establish the VPN connection\.
+The fourth VPC configuration option creates a VPC with a private subnet, and creates a Site\-to\-Site VPN connection between the VPC and your own network\. Unlike the other three options, users do not need permission to create or attach an Internet gateway to the VPC, and they do not need permission to create a route table and associate it with the subnet\. They will require the same permissions as listed in the previous example \(option 3\) to establish the Site\-to\-Site VPN connection\.
 
 None of the API actions in this policy support resource\-level permissions, so you cannot control which specific resources users can use\.
 

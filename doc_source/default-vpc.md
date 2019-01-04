@@ -34,7 +34,7 @@ You can use a default VPC as you would use any other VPC:
 + Add additional route tables\.
 + Associate additional security groups\.
 + Update the rules of the default security group\.
-+ Add VPN connections\.
++ Add AWS Site\-to\-Site VPN connections\.
 + Add more IPv4 CIDR blocks\.
 
 You can use a default subnet as you would use any other subnet; add custom route tables and set network ACLs\. You can also specify a specific default subnet when you launch an EC2 instance\.

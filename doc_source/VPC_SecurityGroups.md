@@ -62,7 +62,7 @@ You can add or remove rules for a security group \(also referred to as *authoriz
 
 The following are the basic parts of a security group rule in a VPC:
 + \(Inbound rules only\) The source of the traffic and the destination port or port range\. The source can be another security group, an IPv4 or IPv6 CIDR block, or a single IPv4 or IPv6 address\.
-+ \(Outbound rules only\) The destination for the traffic and the destination port or port range\. The destination can be another security group, an IPv4 or IPv6 CIDR block, or a single IPv4 or IPv6 address\.
++ \(Outbound rules only\) The destination for the traffic and the destination port or port range\. The destination can be another security group, an IPv4 or IPv6 CIDR block, a single IPv4 or IPv6 address, or a prefix list ID\.
 + Any protocol that has a standard protocol number \(for a list, see [Protocol Numbers](http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml)\)\. If you specify ICMP as the protocol, you can specify any or all of the ICMP types and codes\.
 + An optional description for the security group rule to help you identify it later\. A description can be up to 255 characters in length\. Allowed characters are a\-z, A\-Z, 0\-9, spaces, and \.\_\-:/\(\)\#,@\[\]\+=;\{\}\!$\*\.
 
@@ -106,23 +106,7 @@ For more information, see [Working With Stale Security Groups](https://docs.aws.
 
 ## Differences Between Security Groups for EC2\-Classic and EC2\-VPC<a name="VPC_Security_Group_Differences"></a>
 
-If you're already an Amazon EC2 user, you're probably familiar with security groups\. However, you can't use the security groups that you've created for use with EC2\-Classic with instances in your VPC\. You must create security groups specifically for use with instances in your VPC\. The rules you create for use with a security group for a VPC can't reference a security group for EC2\-Classic, and vice versa\.
-
-The following table summarizes the differences between security groups for use with EC2\-Classic and those for use with EC2\-VPC\.
-
-
-| EC2\-Classic | EC2\-VPC | 
-| --- | --- | 
-|  You can create up to 500 security groups per region\.  |  You can create up to 500 security groups per VPC\.  | 
-|  You can add up to 100 rules to a security group\.  |  You can add up to 50 rules to a security group\.  | 
-|  You can add rules for inbound traffic only\.  |  You can add rules for inbound and outbound traffic\.  | 
-|  You can assign up to 500 security groups to an instance\.  |  You can assign up to 5 security groups to a network interface\.   | 
-|  You can reference security groups from other AWS accounts\.  |  You can reference security groups from your VPC or from a peer VPC in a VPC peering connection only\. The peer VPC can be in a different account\.  | 
-|  After you launch an instance, you can't change the security groups assigned to it\.  |  You can change the security groups assigned to an instance after it's launched\.  | 
-|  When you add a rule to a security group, you don't have to specify a protocol, and only TCP, UDP, or ICMP are available\.  |  When you add a rule to a security group, you must specify a protocol, and it can be any protocol with a standard protocol number, or all protocols \(see [Protocol Numbers](http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml)\)\.  | 
-|  When you add a rule to a security group, you must specify port numbers \(for TCP or UDP\)\.  |  When you add a rule to a security group, you can specify port numbers only if the rule is for TCP or UDP, and you can specify all port numbers\.  | 
-| Security groups that are referenced in another security group's rules cannot be deleted\. | Security groups that are referenced in another security group's rules can be deleted if the security groups are in different VPCs\. If the referenced security group is deleted, the rule is marked as stale\. You can use the [describe\-stale\-security\-groups](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-stale-security-groups.html) AWS CLI command to identify stale rules\. | 
-| You cannot specify an IPv6 CIDR block or an IPv6 address as the source or destination in a security group rule\. | You can specify an IPv6 CIDR block or an IPv6 address as the source or destination in a security group rule\. | 
+You can't use the security groups that you've created for use with EC2\-Classic with instances in your VPC\. You must create security groups specifically for use with instances in your VPC\. The rules you create for use with a security group for a VPC can't reference a security group for EC2\-Classic, and vice versa\. For more information about the differences between security groups for use with EC2\-Classic and those for use with a VPC, see [Differences Between EC2\-Classic and a VPC](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-classic-platform.html#differences-ec2-classic-vpc) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 ## Working with Security Groups<a name="WorkingWithSecurityGroups"></a>
 
@@ -138,7 +122,7 @@ The following tasks show you how to work with security groups using the Amazon V
 
 ### Modifying the Default Security Group<a name="ModifyingSecurityGroups"></a>
 
-Your VPC includes a default security group whose initial rules are to deny all inbound traffic, allow all outbound traffic, and allow all traffic between instances in the group\. You can't delete this group; however, you can change the group's rules\. The procedure is the same as modifying any other security group\. For more information, see [Adding, Removing, and Updating Rules](#AddRemoveRules)\.
+Your VPC includes a [default security group](#DefaultSecurityGroup)\. You can't delete this group; however, you can change the group's rules\. The procedure is the same as modifying any other security group\. For more information, see [Adding, Removing, and Updating Rules](#AddRemoveRules)\.
 
 ### Creating a Security Group<a name="CreatingSecurityGroups"></a>
 

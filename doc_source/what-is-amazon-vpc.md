@@ -68,17 +68,17 @@ You can optionally associate an Amazon\-provided IPv6 CIDR block with your VPC a
 
 ### Accessing a Corporate or Home Network<a name="what-is-vpn"></a>
 
-You can optionally connect your VPC to your own corporate data center using an IPsec AWS managed VPN connection, making the AWS Cloud an extension of your data center\.
+You can optionally connect your VPC to your own corporate data center using an IPsec AWS Site\-to\-Site VPN connection, making the AWS Cloud an extension of your data center\.
 
-A VPN connection consists of a virtual private gateway attached to your VPC and a customer gateway located in your data center\. A virtual private gateway is the VPN concentrator on the Amazon side of the VPN connection\. A customer gateway is a physical device or software appliance on your side of the VPN connection\.
+A Site\-to\-Site VPN connection consists of a virtual private gateway attached to your VPC and a customer gateway located in your data center\. A virtual private gateway is the VPN concentrator on the Amazon side of the Site\-to\-Site VPN connection\. A customer gateway is a physical device or software appliance on your side of the Site\-to\-Site VPN connection\.
 
 ![\[Using a virtual private gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/virtual-private-gateway-diagram.png)
 
-For more information, see [AWS Managed VPN Connections](VPC_VPN.md)\.
+For more information, see [What is AWS Site\-to\-Site VPN?](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html) in the *AWS Site\-to\-Site VPN User Guide*\.
 
 ### Accessing Services Through AWS PrivateLink<a name="what-is-privatelink"></a>
 
-AWS PrivateLink is a highly available, scalable technology that enables you to privately connect your VPC to supported AWS services, services hosted by other AWS accounts \(VPC endpoint services\), and supported AWS Marketplace partner services\. You do not require an internet gateway, NAT device, public IP address, AWS Direct Connect connection, or VPN connection to communicate with the service\. Traffic between your VPC and the service does not leave the Amazon network\.
+AWS PrivateLink is a highly available, scalable technology that enables you to privately connect your VPC to supported AWS services, services hosted by other AWS accounts \(VPC endpoint services\), and supported AWS Marketplace partner services\. You do not require an internet gateway, NAT device, public IP address, AWS Direct Connect connection, or AWS Site\-to\-Site VPN connection to communicate with the service\. Traffic between your VPC and the service does not leave the Amazon network\.
 
 To use AWS PrivateLink, create an interface VPC endpoint for a service in your VPC\. This creates an elastic network interface in your subnet with a private IP address that serves as an entry point for traffic destined to the service\. For more information, see [VPC Endpoints](vpc-endpoints.md)\.
 
@@ -123,7 +123,7 @@ To build applications using language\-specific APIs instead of submitting a requ
 
 ## Pricing for Amazon VPC<a name="Paying"></a>
 
-There's no additional charge for using Amazon VPC\. You pay the standard rates for the instances and other Amazon EC2 features that you use\. There are charges for using an AWS managed VPN connection and using a NAT gateway\. For more information, see [Amazon VPC Pricing](https://aws.amazon.com/vpc/pricing/) and [Amazon EC2 Pricing](https://aws.amazon.com/ec2/pricing/)\.
+There's no additional charge for using Amazon VPC\. You pay the standard rates for the instances and other Amazon EC2 features that you use\. There are charges for using an Site\-to\-Site VPN connection and using a NAT gateway\. For more information, see [Amazon VPC Pricing](https://aws.amazon.com/vpc/pricing/) and [Amazon EC2 Pricing](https://aws.amazon.com/ec2/pricing/)\.
 
 ## Amazon VPC Limits<a name="CurrentCapabilities"></a>
 

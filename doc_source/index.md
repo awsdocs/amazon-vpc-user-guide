@@ -1,7 +1,7 @@
 # Amazon Virtual Private Cloud User Guide
 
 -----
-*****Copyright &copy; 2018 Amazon Web Services, Inc. and/or its affiliates. All rights reserved.*****
+*****Copyright &copy; 2019 Amazon Web Services, Inc. and/or its affiliates. All rights reserved.*****
 
 -----
 Amazon's trademarks and trade dress may not be used in 
@@ -21,10 +21,13 @@ Amazon's trademarks and trade dress may not be used in
 + [Scenarios and Examples](VPC_Scenarios.md)
    + [Scenario 1: VPC with a Single Public Subnet](VPC_Scenario1.md)
    + [Scenario 2: VPC with Public and Private Subnets (NAT)](VPC_Scenario2.md)
-   + [Scenario 3: VPC with Public and Private Subnets and AWS Managed VPN Access](VPC_Scenario3.md)
-   + [Scenario 4: VPC with a Private Subnet Only and AWS Managed VPN Access](VPC_Scenario4.md)
+   + [Scenario 3: VPC with Public and Private Subnets and AWS Site-to-Site VPN Access](VPC_Scenario3.md)
+   + [Scenario 4: VPC with a Private Subnet Only and AWS Site-to-Site VPN Access](VPC_Scenario4.md)
    + [Example: Create an IPv4 VPC and Subnets Using the AWS CLI](vpc-subnets-commands-example.md)
    + [Example: Create an IPv6 VPC and Subnets Using the AWS CLI](vpc-subnets-commands-example-ipv6.md)
+   + [Example: Services that Span Regions Using AWS PrivateLink and Inter-Region VPC Peering](vpc-inter-region-example.md)
+      + [Example: Service Provider Configures a Service to Span Regions](vpc-inter-region-peering-provider-side.md)
+      + [Example: Service Consumer Configures Access Across Regions](vpc-inter-region-peering-consumer-side.md)
 + [VPCs and Subnets](VPC_Subnets.md)
    + [Working with VPCs and Subnets](working-with-vpcs.md)
    + [Working with Shared VPCs](vpc-sharing.md)
@@ -65,12 +68,5 @@ Amazon's trademarks and trade dress may not be used in
    + [VPC Endpoint Services (AWS PrivateLink)](endpoint-service.md)
    + [ClassicLink](vpc-classiclink.md)
 + [VPN Connections](vpn-connections.md)
-   + [AWS Managed VPN Connections](VPC_VPN.md)
-   + [Setting Up an AWS VPN Connection](SetUpVPNConnections.md)
-   + [Testing the VPN Connection](HowToTestEndToEnd_Linux.md)
-   + [Deleting a VPN Connection](delete-vpn.md)
-   + [Providing Secure Communication Between Sites Using VPN CloudHub](VPN_CloudHub.md)
-   + [Monitoring Your VPN Connection](monitoring-overview-vpn.md)
-      + [Monitoring VPN Tunnels Using Amazon CloudWatch](monitoring-cloudwatch-vpn.md)
 + [Amazon VPC Limits](amazon-vpc-limits.md)
 + [Document History](WhatsNew.md)

@@ -33,9 +33,9 @@ If a subnet's traffic is routed to an internet gateway, the subnet is known as a
 
 If a subnet doesn't have a route to the internet gateway, the subnet is known as a *private subnet*\. In this diagram, subnet 2 is a private subnet\.
 
-If a subnet doesn't have a route to the internet gateway, but has its traffic routed to a virtual private gateway for a VPN connection, the subnet is known as a *VPN\-only subnet*\. In this diagram, subnet 3 is a VPN\-only subnet\. Currently, we do not support IPv6 traffic over a VPN connection\.
+If a subnet doesn't have a route to the internet gateway, but has its traffic routed to a virtual private gateway for a Site\-to\-Site VPN connection, the subnet is known as a *VPN\-only subnet*\. In this diagram, subnet 3 is a VPN\-only subnet\. Currently, we do not support IPv6 traffic over a Site\-to\-Site VPN connection\.
 
-For more information, see [Scenarios and Examples](VPC_Scenarios.md), [Internet Gateways](VPC_Internet_Gateway.md), or [AWS Managed VPN Connections](VPC_VPN.md)\.
+For more information, see [Scenarios and Examples](VPC_Scenarios.md), [Internet Gateways](VPC_Internet_Gateway.md), and [What is AWS Site\-to\-Site VPN?](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html) in the *AWS Site\-to\-Site VPN User Guide*\.
 
 **Note**  
 Regardless of the type of subnet, the internal IPv4 address range of the subnet is always private—we do not announce the address block to the internet\.
@@ -187,11 +187,11 @@ Each subnet must be associated with a route table, which specifies the allowed r
 In the previous diagram, the route table associated with subnet 1 routes all IPv4 traffic \(`0.0.0.0/0`\) and IPv6 traffic \(`::/0`\) to an internet gateway \(for example, `igw-1a2b3c4d`\)\. Because instance 1A has an IPv4 Elastic IP address and instance 1B has an IPv6 address, they can be reached from the internet over IPv4 and IPv6 respectively\. 
 
 **Note**  
-\(IPv4 only\) The Elastic IPv4 address or public IPv4 address that's associated with your instance is accessed through the internet gateway of your VPC\. Traffic that goes through a VPN connection between your instance and another network traverses a virtual private gateway, not the internet gateway, and therefore does not access the Elastic IPv4 address or public IPv4 address\. 
+\(IPv4 only\) The Elastic IPv4 address or public IPv4 address that's associated with your instance is accessed through the internet gateway of your VPC\. Traffic that goes through a AWS Site\-to\-Site VPN connection between your instance and another network traverses a virtual private gateway, not the internet gateway, and therefore does not access the Elastic IPv4 address or public IPv4 address\. 
 
 The instance 2A can't reach the internet, but can reach other instances in the VPC\. You can allow an instance in your VPC to initiate outbound connections to the internet over IPv4 but prevent unsolicited inbound connections from the internet using a network address translation \(NAT\) gateway or instance\. Because you can allocate a limited number of Elastic IP addresses, we recommend that you use a NAT device if you have more instances that require a static public IP address\. For more information, see [NAT](vpc-nat.md)\. To initiate outbound\-only communication to the internet over IPv6, you can use an egress\-only internet gateway\. For more information, see [Egress\-Only Internet Gateways](egress-only-internet-gateway.md)\.
 
-The route table associated with subnet 3 routes all IPv4 traffic \(`0.0.0.0/0`\) to a virtual private gateway \(for example, `vgw-1a2b3c4d`\)\. Instance 3A can reach computers in the corporate network over the VPN connection\.
+The route table associated with subnet 3 routes all IPv4 traffic \(`0.0.0.0/0`\) to a virtual private gateway \(for example, `vgw-1a2b3c4d`\)\. Instance 3A can reach computers in the corporate network over the Site\-to\-Site VPN connection\.
 
 ## Subnet Security<a name="SubnetSecurity"></a>
 
@@ -215,4 +215,4 @@ You can also create a VPC peering connection between your VPCs, or with a VPC in
 
 We therefore recommend that you create a VPC with a CIDR range large enough for expected future growth, but not one that overlaps with current or expected future subnets anywhere in your corporate or home network, or that overlaps with current or future VPCs\. 
 
-We currently do not support VPN connections over IPv6\. 
+We currently do not support AWS Site\-to\-Site VPN connections over IPv6\. 

@@ -308,7 +308,7 @@ All instances use the same security group \(sg\-1a2b3c4d\), with the following r
 | Inbound Rules | 
 | Protocol Type | Protocol | Port Range | Source | Comments | 
 | All traffic | All | All | sg\-1a2b3c4d | Enables instances associated with the same security group to communicate with each other\. | 
-| TCP | SSH | 22 | 172\.31\.1\.2/32 | Allows inbound SSH access from the remote computer\. If the instance is a Windows computer, then this rule must use the RDP protocol for port 3389 instead\. | 
+| SSH | TCP | 22 | 172\.31\.1\.2/32 | Allows inbound SSH access from the remote computer\. If the instance is a Windows computer, then this rule must use the RDP protocol for port 3389 instead\. | 
 | Outbound Rules | 
 | Protocol Type | Protocol | Port Range | Destination | Comments | 
 | All traffic | All | All | sg\-1a2b3c4d | Enables instances associated with the same security group to communicate with each other\. | 

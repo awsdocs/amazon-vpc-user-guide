@@ -158,7 +158,7 @@ The following are the IPv6\-specific rules for your network ACLs \(which are in 
 
 ## Recommended Rules for Scenario 3<a name="nacl-rules-scenario-3"></a>
 
-Scenario 3 is a public subnet with instances that can receive and send Internet traffic, and a VPN\-only subnet with instances that can communicate only with your home network over the VPN connection\. For more information, see [Scenario 3: VPC with Public and Private Subnets and AWS Managed VPN Access](VPC_Scenario3.md)\.
+Scenario 3 is a public subnet with instances that can receive and send Internet traffic, and a VPN\-only subnet with instances that can communicate only with your home network over the AWS Site\-to\-Site VPN connection\. For more information, see [Scenario 3: VPC with Public and Private Subnets and AWS Site\-to\-Site VPN Access](VPC_Scenario3.md)\.
 
 For this scenario you have a network ACL for the public subnet, and a separate one for the VPN\-only subnet\. The following table shows the rules we recommend for each ACL\. They block all traffic except that which is explicitly required\.
 
@@ -245,7 +245,7 @@ The following are the IPv6\-specific rules for your network ACLs \(which are in 
 
 ## Recommended Rules for Scenario 4<a name="nacl-rules-scenario-4"></a>
 
-Scenario 4 is a single subnet with instances that can communicate only with your home network over a VPN connection\. For a more information, see [Scenario 4: VPC with a Private Subnet Only and AWS Managed VPN Access](VPC_Scenario4.md)\.
+Scenario 4 is a single subnet with instances that can communicate only with your home network over a AWS Site\-to\-Site VPN connection\. For a more information, see [Scenario 4: VPC with a Private Subnet Only and AWS Site\-to\-Site VPN Access](VPC_Scenario4.md)\.
 
 The following table shows the rules we recommended\. They block all traffic except that which is explicitly required\.
 

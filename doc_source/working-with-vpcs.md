@@ -273,7 +273,7 @@ Alternatively, you can use a command line tool\.
 
 You can delete your VPC at any time\. However, you must terminate all instances in the VPC first\. When you delete a VPC using the VPC console, we delete all its components, such as subnets, security groups, network ACLs, route tables, internet gateways, VPC peering connections, and DHCP options\.
 
-If you have a VPN connection, you don't have to delete it or the other components related to the VPN \(such as the customer gateway and virtual private gateway\)\. If you plan to use the customer gateway with another VPC, we recommend that you keep the VPN connection and the gateways\. Otherwise, your network administrator must configure the customer gateway again after you create a new VPN connection\. 
+If you have a AWS Site\-to\-Site VPN connection, you don't have to delete it or the other components related to the VPN \(such as the customer gateway and virtual private gateway\)\. If you plan to use the customer gateway with another VPC, we recommend that you keep the Site\-to\-Site VPN connection and the gateways\. Otherwise, your network administrator must configure the customer gateway again after you create a new Site\-to\-Site VPN connection\. 
 
 **To delete your VPC using the console**
 
@@ -287,7 +287,7 @@ If you have a VPN connection, you don't have to delete it or the other component
 
 1. Select the VPC to delete and choose **Actions**, **Delete VPC**\.
 
-1. To delete the VPN connection, select the option to do so; otherwise, leave it unselected\. Choose **Yes, Delete**\.
+1. To delete the Site\-to\-Site VPN connection, select the option to do so; otherwise, leave it unselected\. Choose **Yes, Delete**\.
 
 Alternatively, you can use a command line tool\. When you delete a VPC using the command line, you must first terminate all instances, delete all subnets, custom security groups, and custom route tables, and detach any internet gateway in the VPC\.
 

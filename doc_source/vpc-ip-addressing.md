@@ -29,7 +29,7 @@ The following table summarizes the differences between IPv4 and IPv6 in Amazon E
 | Supported on all AMIs\. | Automatically supported on AMIs that are configured for DHCPv6\. Amazon Linux versions 2016\.09\.0 and later and Windows Server 2008 R2 and later are configured for DHCPv6\. For other AMIs, you must [manually configure your instance](vpc-migrate-ipv6.md#vpc-migrate-ipv6-dhcpv6) to recognize any assigned IPv6 addresses\. | 
 | An instance receives an Amazon\-provided private DNS hostname that corresponds to its private IPv4 address, and if applicable, a public DNS hostname that corresponds to its public IPv4 or Elastic IP address\. | Amazon\-provided DNS hostnames are not supported\. | 
 | Elastic IPv4 addresses are supported\. | Elastic IPv6 addresses are not supported\.  | 
-| Supported for VPC VPN connections and customer gateways, NAT devices, and VPC endpoints\. | Not supported for VPC VPN connections and customer gateways, NAT devices, and VPC endpoints\. | 
+| Supported for AWS Site\-to\-Site VPN connections and customer gateways, NAT devices, and VPC endpoints\. | Not supported for AWS Site\-to\-Site VPN connections and customer gateways, NAT devices, and VPC endpoints\. | 
 
 We support IPv6 traffic over a virtual private gateway to an AWS Direct Connect connection\. For more information, see the [AWS Direct Connect User Guide](https://docs.aws.amazon.com/directconnect/latest/UserGuide/)\.
 
@@ -40,7 +40,7 @@ Private IPv4 addresses \(also referred to as *private IP addresses* in this topi
 You can assign additional private IP addresses, known as secondary private IP addresses, to instances that are running in a VPC\. Unlike a primary private IP address, you can reassign a secondary private IP address from one network interface to another\. A private IP address remains associated with the network interface when the instance is stopped and restarted, and is released when the instance is terminated\. For more information about primary and secondary IP addresses, see [Multiple IP Addresses](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **Note**  
-We refer to private IP addresses as the IP addresses that are within the IPv4 CIDR range of the VPC\. Most VPC IP address ranges fall within the private \(non\-publicly routable\) IP address ranges specified in RFC 1918; however, you can use publicly routable CIDR blocks for your VPC\. Regardless of the IP address range of your VPC, we do not support direct access to the Internet from your VPC's CIDR block, including a publicly\-routable CIDR block\. You must set up Internet access through a gateway; for example, an Internet gateway, virtual private gateway, a VPN connection, or AWS Direct Connect\.
+We refer to private IP addresses as the IP addresses that are within the IPv4 CIDR range of the VPC\. Most VPC IP address ranges fall within the private \(non\-publicly routable\) IP address ranges specified in RFC 1918; however, you can use publicly routable CIDR blocks for your VPC\. Regardless of the IP address range of your VPC, we do not support direct access to the Internet from your VPC's CIDR block, including a publicly\-routable CIDR block\. You must set up Internet access through a gateway; for example, an Internet gateway, virtual private gateway, a AWS Site\-to\-Site VPN connection, or AWS Direct Connect\.
 
 ## Public IPv4 Addresses<a name="vpc-public-ipv4-addresses"></a>
 

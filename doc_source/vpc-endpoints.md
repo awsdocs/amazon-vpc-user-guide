@@ -26,6 +26,7 @@ An [interface endpoint](vpce-interface.md) is an elastic network interface with 
 + [AWS Security Token Service](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_sts_vpce.html)
 + AWS Service Catalog
 + [Amazon SNS](https://docs.aws.amazon.com/sns/latest/dg/sns-vpc.html)
++ [Amazon SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-vpc-endpoints.html)
 + [AWS Systems Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-setting-up-vpc.html)
 + [Endpoint services](endpoint-service.md) hosted by other AWS accounts
 + Supported AWS Marketplace partner services

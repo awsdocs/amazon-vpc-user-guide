@@ -80,7 +80,7 @@ For example, the following route table has a route for IPv4 Internet traffic \(`
 | 172\.31\.0\.0/16 | pcx\-1a2b3c4d | 
 | 0\.0\.0\.0/0 | igw\-11aa22bb | 
 
-If you've attached a virtual private gateway to your VPC and enabled route propagation on your route table, routes representing your VPN connection automatically appear as propagated routes in your route table\. For more information, see [Route Tables and VPN Route Priority](VPC_VPN.md#vpn-route-priority)\.
+If you've attached a virtual private gateway to your VPC and enabled route propagation on your route table, routes representing your Site\-to\-Site VPN connection automatically appear as propagated routes in your route table\. For more information, see [Route Tables and VPN Route Priority](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html#vpn-route-priority)\.
 
 In this example, an IPv6 CIDR block is associated with your VPC\. In your route table, IPv6 traffic destined for within the VPC \(`2001:db8:1234:1a00::/56`\) is covered by the `Local` route, and is routed within the VPC\. The route table also has a route for `172.31.0.0/16` IPv4 traffic that points to a peering connection \(`pcx-1a2b3c4d`\), a route for all IPv4 traffic \(`0.0.0.0/0`\) that points to an Internet gateway, and a route for all IPv6 traffic \(`::/0`\) that points to an egress\-only Internet gateway\. IPv4 and IPv6 traffic are treated separately; therefore, all IPv6 traffic \(except for traffic within the VPC\) is routed to the egress\-only Internet gateway\. 
 
@@ -116,9 +116,9 @@ To enable instances in a private subnet to connect to the Internet, you can crea
 
 ### Route Tables for a Virtual Private Gateway<a name="route-tables-vgw"></a>
 
-You can use an AWS managed VPN connection to enable instances in your VPC to communicate with your own network\. To do this, create and attach a virtual private gateway to your VPC, and then add a route with the destination of your network and a target of the virtual private gateway \(`vgw-xxxxxxxx`\)\. You can then create and configure your VPN connection\. For more information, see [AWS Managed VPN Connections](VPC_VPN.md)\.
+You can use an AWS Site\-to\-Site VPN connection to enable instances in your VPC to communicate with your own network\. To do this, create and attach a virtual private gateway to your VPC, and then add a route with the destination of your network and a target of the virtual private gateway \(`vgw-xxxxxxxx`\)\. You can then create and configure your Site\-to\-Site VPN connection\. For more information, see [What is AWS Site\-to\-Site VPN?](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html) in the *AWS Site\-to\-Site VPN User Guide*\.
 
-We currently do not support IPv6 traffic over a VPN connection\. However, we support IPv6 traffic routed through a virtual private gateway to an AWS Direct Connect connection\. For more information, see the [AWS Direct Connect User Guide](https://docs.aws.amazon.com/directconnect/latest/UserGuide/)\.
+We currently do not support IPv6 traffic over a AWS Site\-to\-Site VPN connection\. However, we support IPv6 traffic routed through a virtual private gateway to an AWS Direct Connect connection\. For more information, see the [AWS Direct Connect User Guide](https://docs.aws.amazon.com/directconnect/latest/UserGuide/)\.
 
 ### Route Tables for a VPC Peering Connection<a name="route-tables-vpc-peering"></a>
 
@@ -287,7 +287,7 @@ You can add, delete, and modify routes in your route tables\. You can only modif
 
 Route propagation allows a virtual private gateway to automatically propagate routes to the route tables so that you don't need to manually enter VPN routes to your route tables\. You can enable or disable route propagation\.
 
-For more information about VPN routing options, see [VPN Routing Options](VPC_VPN.md#VPNRoutingTypes)\.
+For more information about VPN routing options, see [Site\-to\-Site VPN Routing Options](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html) in the *Site\-to\-Site VPN User Guide*\.
 
 **To enable route propagation**
 
@@ -427,11 +427,11 @@ You can perform the tasks described on this page using the command line or API\.
 + [replace\-route\-table\-association](https://docs.aws.amazon.com/cli/latest/reference/ec2/replace-route-table-association.html) \(AWS CLI\)
 + [Set\-EC2RouteTableAssociation](https://docs.aws.amazon.com/powershell/latest/reference/items/Set-EC2RouteTableAssociation.html) \(AWS Tools for Windows PowerShell\)
 
-**Create a static route associated with a VPN connection**
+**Create a static route associated with a Site\-to\-Site VPN connection**
 + [create\-vpn\-connection\-route](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-vpn-connection-route.html) \(AWS CLI\)
 + [New\-EC2VpnConnectionRoute](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2VpnConnectionRoute.html) \(AWS Tools for Windows PowerShell\)
 
-**Delete a static route associated with a VPN connection**
+**Delete a static route associated with a Site\-to\-Site VPN connection**
 + [delete\-vpn\-connection\-route](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-vpn-connection-route.html) \(AWS CLI\)
 + [Remove\-EC2VpnConnectionRoute](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2VpnConnectionRoute.html) \(AWS Tools for Windows PowerShell\)
 

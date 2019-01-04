@@ -22,6 +22,7 @@ Your endpoint policy can be like any IAM policy; however, take note of the follo
 For example endpoint policies, see the following topics:
 + [Using Endpoint Policies for Amazon S3](vpc-endpoints-s3.md#vpc-endpoints-policies-s3)
 + [Using Endpoint Policies for DynamoDB](vpc-endpoints-ddb.md#vpc-endpoints-policies-ddb)
++ Use VPC Endpoints for AWS CodeBuild\. For more information, see [Use VPC Endpoints](https://docs.aws.amazon.com/codebuild/latest/userguide/use-vpc-endpoints-with-codebuild.html) in the *AWS CodeBuild User Guide*\.
 
 ## Security Groups<a name="vpc-endpoints-security-groups"></a>
 
