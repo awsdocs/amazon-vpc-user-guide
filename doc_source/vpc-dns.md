@@ -33,9 +33,7 @@ Your VPC has attributes that determine whether your instance receives public DNS
 
 | Attribute | Description | 
 | --- | --- | 
-| enableDnsHostnames |  Indicates whether the instances launched in the VPC get public DNS hostnames\.  If this attribute is `true`, instances with associated EIP in the VPC get public DNS hostnames, but only if the `enableDnsSupport` attribute is also set to `true`\.   
-This option is also required when you enable Private DNS Name for VPC interface endpoints, or when you enable private zones.
- | 
+| enableDnsHostnames |  Indicates whether the instances launched in the VPC get public DNS hostnames\.  If this attribute is `true`, instances with associated EIP in the VPC get public DNS hostnames, but only if the `enableDnsSupport` attribute is also set to `true`\. This option is also required when you enable Private DNS Name for VPC interface endpoints, or when you enable private zones. | 
 | enableDnsSupport |  Indicates whether the DNS resolution is supported for the VPC\.  If this attribute is `false`, the Amazon\-provided DNS server in the VPC that resolves public DNS hostnames to IP addresses is not enabled\.  If this attribute is `true`, queries to the Amazon provided DNS server at the 169\.254\.169\.253 IP address, or the reserved IP address at the base of the VPC IPv4 network range plus two will succeed\. For more information, see [Amazon DNS Server](VPC_DHCP_Options.md#AmazonDNS)\.  | 
 
 If both attributes are set to `true`, the following occurs:
