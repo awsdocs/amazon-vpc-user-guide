@@ -98,6 +98,7 @@ Participants cannot use a shared subnet with the following services:
 + AWS Glue 
 +  Amazon EMR
 + Network Load Balancer 
++ Amazon EKS
 
 ## Limitations<a name="vpc-share-limitations"></a>
 
