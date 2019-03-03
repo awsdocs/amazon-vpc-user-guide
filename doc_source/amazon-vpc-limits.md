@@ -65,7 +65,7 @@ For more information, see [DNS Limits](vpc-dns.md#vpc-dns-limits)\.
 | Resource | Default limit | Comments | 
 | --- | --- | --- | 
 |  Route tables per VPC  |  200  |  This limit includes the main route table\.  | 
-|  Routes per route table \(non\-propagated routes\)  |  50  |  You can increase this limit up to a maximum of 100; however, network performance might be impacted\. This limit is enforced separately for IPv4 routes and IPv6 routes \(you can have 50 each, and a maximum of 100 each\)\.  | 
+|  Routes per route table \(non\-propagated routes\)  |  50  |  You can increase this limit up to a maximum of 1000; however, network performance might be impacted\. This limit is enforced separately for IPv4 routes and IPv6 routes\.  If you have more than 125 routes, we recommend that you paginate calls to describe your route tables for better performance\.   | 
 |  BGP advertised routes per route table \(propagated routes\)  |  100  |  This limit cannot be increased\. If you require more than 100 prefixes, advertise a default route\.  | 
 
 ## Security Groups<a name="vpc-limits-security-groups"></a>
@@ -74,8 +74,8 @@ For more information, see [DNS Limits](vpc-dns.md#vpc-dns-limits)\.
 | Resource | Default limit | Comments | 
 | --- | --- | --- | 
 |  VPC security groups per Region  |  2500  |  The maximum is 10000\. If you have more than 5000 security groups in a Region, we recommend that you paginate calls to describe your security groups for better performance\.  | 
-|  Inbound or outbound rules per security group   |  60  |  You can have 60 inbound and 60 outbound rules per security group \(making a total of 120 rules\)\. This limit is enforced separately for IPv4 rules and IPv6 rules; for example, a security group can have 60 inbound rules for IPv4 traffic and 60 inbound rules for IPv6 traffic\. A rule that references a security group or preflix list ID counts as one rule for IPv4 and one rule for IPv6\. A limit change applies to both inbound and outbound rules\. This limit multiplied by the limit for security groups per network interface cannot exceed 300\. For example, if you increase this limit to 100, we decrease the limit for your number of security groups per network interface to 3\.  | 
-|  Security groups per network interface  |  5  |  The maximum is 16\. The limit for security groups per network interface multiplied by the limit for rules per security group cannot exceed 300\. For example, if you increase this limit to 10, we decrease the limit for your number of rules per security group to 30\.  | 
+|  Inbound or outbound rules per security group   |  60  |  You can have 60 inbound and 60 outbound rules per security group \(making a total of 120 rules\)\. This limit is enforced separately for IPv4 rules and IPv6 rules; for example, a security group can have 60 inbound rules for IPv4 traffic and 60 inbound rules for IPv6 traffic\. A rule that references a security group or prefix list ID counts as one rule for IPv4 and one rule for IPv6\. A limit change applies to both inbound and outbound rules\. This limit multiplied by the limit for security groups per network interface cannot exceed 1000\. For example, if you increase this limit to 100, we decrease the limit for your number of security groups per network interface to 10\.  | 
+|  Security groups per network interface  |  5  |  To increase or decrease this limit, contact AWS Support\. The maximum is 16\. The limit for security groups per network interface multiplied by the limit for rules per security group cannot exceed 1000\. For example, if you increase this limit to 10, we decrease the limit for your number of rules per security group to 100\.  | 
 
 ## VPC Peering Connections<a name="vpc-limits-peering"></a>
 

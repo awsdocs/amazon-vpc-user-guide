@@ -89,7 +89,7 @@ The kind of rules you add can depend on the purpose of the instance\. The follow
 |  Your network's public IPv4 address range  |  TCP  |  3389  |  Allow inbound RDP access to Windows instances from IPv4 IP addresses in your network \(over the Internet gateway\)  | 
 |   Outbound   | 
 |  Destination  |  Protocol  |  Port Range  |  Comments  | 
-|  The ID of the security group for your database servers  |  TCP  |  1433  |  Allow outbound Microsoft SQL Server access to instances in the specified security group  | 
+|  The ID of the security group for your Microsoft SQL Server database servers  |  TCP  |  1433  |  Allow outbound Microsoft SQL Server access to instances in the specified security group  | 
 |  The ID of the security group for your MySQL database servers  |  TCP  |  3306  |  Allow outbound MySQL access to instances in the specified security group  | 
 
 A database server would need a different set of rules; for example, instead of inbound HTTP and HTTPS traffic, you can add a rule that allows inbound MySQL or Microsoft SQL Server access\. For an example of security group rules for web servers and database servers, see [Security](VPC_Scenario3.md#VPC_Scenario3_Security)\. 

@@ -25,6 +25,7 @@ Amazon's trademarks and trade dress may not be used in
    + [Scenario 4: VPC with a Private Subnet Only and AWS Site-to-Site VPN Access](VPC_Scenario4.md)
    + [Example: Create an IPv4 VPC and Subnets Using the AWS CLI](vpc-subnets-commands-example.md)
    + [Example: Create an IPv6 VPC and Subnets Using the AWS CLI](vpc-subnets-commands-example-ipv6.md)
+   + [Example: Sharing Public Subnets and Private Subnets](example-vpc-share.md)
    + [Example: Services that Span Regions Using AWS PrivateLink and Inter-Region VPC Peering](vpc-inter-region-example.md)
       + [Example: Service Provider Configures a Service to Span Regions](vpc-inter-region-peering-provider-side.md)
       + [Example: Service Consumer Configures Access Across Regions](vpc-inter-region-peering-consumer-side.md)

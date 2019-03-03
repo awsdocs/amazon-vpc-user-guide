@@ -19,7 +19,6 @@ When we create a default VPC, we do the following to set it up for you:
 + Create a VPC with a size `/16` IPv4 CIDR block \(`172.31.0.0/16`\)\. This provides up to 65,536 private IPv4 addresses\. 
 + Create a size `/20` default subnet in each Availability Zone\. This provides up to 4,096 addresses per subnet, a few of which are reserved for our use\.
 + Create an [internet gateway](VPC_Internet_Gateway.md) and connect it to your default VPC\.
-+ Create a main route table for your default VPC with a rule that sends all IPv4 traffic destined for the internet to the internet gateway\.
 + Create a default security group and associate it with your default VPC\.
 + Create a default network access control list \(ACL\) and associate it with your default VPC\.
 + Associate the default DHCP options set for your AWS account with your default VPC\.
@@ -43,7 +42,7 @@ You can optionally associate an IPv6 CIDR block with your default VPC\. For more
 
 ### Default Subnets<a name="default-subnet"></a>
 
-By default, a default subnet is a public subnet, because the main route table sends the subnet's traffic that is destined for the internet to the internet gateway\. You can make a default subnet into a private subnet by removing the route from the destination 0\.0\.0\.0/0 to the internet gateway\. However, if you do this, any EC2 instance running in that subnet can't access the internet\. 
+By default, a default subnet is a public subnet, because the main route table sends the subnet's traffic that is destined for the internet to the internet gateway\. You can make a default subnet into a private subnet by removing the route from the destination 0\.0\.0\.0/0 to the internet gateway\. However, if you do this, no EC2 instance running in that subnet can access the internet\. 
 
 Instances that you launch into a default subnet receive both a public IPv4 address and a private IPv4 address, and both public and private DNS hostnames\. Instances that you launch into a nondefault subnet in a default VPC don't receive a public IPv4 address or a DNS hostname\. You can change your subnet's default public IP addressing behavior\. For more information, see [Modifying the Public IPv4 Addressing Attribute for Your Subnet](vpc-ip-addressing.md#subnet-public-ip)\.
 

@@ -38,7 +38,7 @@ The following are the parts of a network ACL rule:
 
 ## Default Network ACL<a name="default-network-acl"></a>
 
-The default network ACL is configured to allow all traffic to flow in and out of the subnets to which it is associated\. Each network ACL also includes a rule whose rule number is an asterisk\. This rule ensures that if a packet doesn't match any of the other numbered rules, it's denied\. You can't modify or remove this rule\. 
+The default network ACL is configured to allow all traffic to flow in and out of the subnets with which it is associated\. Each network ACL also includes a rule whose rule number is an asterisk\. This rule ensures that if a packet doesn't match any of the other numbered rules, it's denied\. You can't modify or remove this rule\. 
 
 The following is an example default network ACL for a VPC that supports IPv4 only\.
 

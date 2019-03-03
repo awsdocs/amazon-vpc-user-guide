@@ -59,7 +59,7 @@ Users must also have permissions to use the iam:PassRole action for the IAM role
     {
       "Effect": "Allow",
       "Action": ["iam:PassRole"],
-	  "Resource": "arn:aws:iam::account-id:role/flow-log-role-name"
+      "Resource": "arn:aws:iam::account-id:role/flow-log-role-name"
     }
   ]
 }

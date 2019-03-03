@@ -14,7 +14,7 @@ VPC sharing allows multiple AWS accounts to create their application resources, 
 
 ## Shared VPCs Prerequisites<a name="vpc-share-prerequisites"></a>
 
-You must enable resource sharing from the Master account for your organization\. For information about enabling resource sharing, see [Enable Sharing with AWS Organizations](https://docs.aws.amazon.com/ram/latest/userguide/getting-started-sharing.html#getting-started-sharing-orgs) in the *AWS RAM User Guide*\.
+You must enable resource sharing from the master account for your organization\. For information about enabling resource sharing, see [Enable Sharing with AWS Organizations](https://docs.aws.amazon.com/ram/latest/userguide/getting-started-sharing.html#getting-started-sharing-orgs) in the *AWS RAM User Guide*\.
 
 ## Sharing a Subnet<a name="vpc-sharing-share-subnet"></a>
 
@@ -45,7 +45,6 @@ The owner can unshare a shared subnet with participants at any time\. After the 
 + Existing participant resources continue to run in the unshared subnet\.
 + Participants can no longer create new resources in the unshared subnet\.
 + Participants can modify, describe, and delete their resources that are in the subnet\.
-+ The VPC flow log subscription excludes all data that belongs to participant ENIs\. The participant can decide whether to create, or delete the ENI flow logs\.
 + If participants still have resources in the unshared subnet, the owner cannot delete the shared subnet or the shared\-subnet VPC\. The owner can only delete the subnet or shared\-subnet VPC after the participants delete all the resources in the unshared subnet\.
 
 **To unshare a subnet using the console**
@@ -107,3 +106,4 @@ The following limitations apply to working with VPC sharing:
 + Participants cannot launch resources using security groups that are owned by other participants or the owner\.
 + Participants cannot launch resources using the default security group for the VPC because it belongs to the owner\.
 + Service limits apply per individual account\. For more information about service limits, see [AWS Service Limits](https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html) in the *Amazon Web Services General Reference*\.
++ VPC tags are not shared with the participants\.

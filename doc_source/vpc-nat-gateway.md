@@ -17,7 +17,7 @@ NAT gateways are not supported for IPv6 traffic—use an egress\-only internet g
 
 ## NAT Gateway Basics<a name="nat-gateway-basics"></a>
 
-To create a NAT gateway, you must specify the public subnet in which the NAT gateway should reside\. For more information about public and private subnets, see [Subnet Routing](VPC_Subnets.md#SubnetRouting)\. You must also specify an [Elastic IP address](vpc-eips.md) to associate with the NAT gateway when you create it\. After you've created a NAT gateway, you must update the route table associated with one or more of your private subnets to point Internet\-bound traffic to the NAT gateway\. This enables instances in your private subnets to communicate with the internet\. 
+To create a NAT gateway, you must specify the public subnet in which the NAT gateway should reside\. For more information about public and private subnets, see [Subnet Routing](VPC_Subnets.md#SubnetRouting)\. You must also specify an [Elastic IP address](vpc-eips.md) to associate with the NAT gateway when you create it\. The Elastic IP address cannot be changed once you associate it with the NAT Gateway\. After you've created a NAT gateway, you must update the route table associated with one or more of your private subnets to point Internet\-bound traffic to the NAT gateway\. This enables instances in your private subnets to communicate with the internet\.
 
 Each NAT gateway is created in a specific Availability Zone and implemented with redundancy in that zone\. You have a limit on the number of NAT gateways you can create in an Availability Zone\. For more information, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
 
@@ -213,7 +213,7 @@ The following topics help you to troubleshoot common issues you might encounter 
 + [Instances in Private Subnet Cannot Access Internet](#nat-gateway-troubleshooting-no-internet-connection)
 + [TCP Connection to a Specific Endpoint Fails](#nat-gateway-troubleshooting-fragmentation)
 + [Traceroute Output Does Not Display NAT Gateway Private IP Address](#nat-gateway-troubleshooting-traceroute)
-+ [Internet Connection Drops After 5 Minutes](#nat-gateway-troubleshooting-timeout)
++ [Internet Connection Drops After 350 Seconds](#nat-gateway-troubleshooting-timeout)
 + [IPsec Connection Cannot Be Established](#nat-gateway-troubleshooting-ipsec)
 + [Cannot Initiate More Connections to a Destination](#nat-gateway-troubleshooting-simultaneous-connections)
 
@@ -300,9 +300,9 @@ Your instance can access the internet, but when you perform the `traceroute` com
 + Ensure that there is a route that sends internet traffic to the NAT gateway\. 
 + Ensure that there isn't a more specific route that's sending internet traffic to other devices, such as a virtual private gateway or an internet gateway\. 
 
-### Internet Connection Drops After 5 Minutes<a name="nat-gateway-troubleshooting-timeout"></a>
+### Internet Connection Drops After 350 Seconds<a name="nat-gateway-troubleshooting-timeout"></a>
 
-If a connection that's using a NAT gateway is idle for 5 minutes or more, the connection times out\. To prevent the connection from being dropped, you can initiate more traffic over the connection or enable TCP keepalive on the instance with a value smaller than 300 seconds\.
+If a connection that's using a NAT gateway is idle for 350 seconds or more, the connection times out\. To prevent the connection from being dropped, you can initiate more traffic over the connection or enable TCP keepalive on the instance with a value less than 350 seconds\.
 
 ### IPsec Connection Cannot Be Established<a name="nat-gateway-troubleshooting-ipsec"></a>
 
