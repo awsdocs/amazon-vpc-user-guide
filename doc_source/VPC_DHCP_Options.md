@@ -15,7 +15,7 @@ You can configure DHCP options sets for your virtual private clouds \(VPC\)\.
 
 The Amazon EC2 instances you launch into a nondefault VPC are private by default; they're not assigned a public IPv4 address unless you specifically assign one during launch, or you modify the subnet's public IPv4 address attribute\. By default, all instances in a nondefault VPC receive an unresolvable host name that AWS assigns \(for example, ip\-10\-0\-0\-202\)\. You can assign your own domain name to your instances, and use up to four of your own DNS servers\. To do that, you must specify a special set of DHCP options to use with the VPC\. 
 
-The following table lists all the supported options for a DHCP options set\. You can specify only the options you need in your DHCP options set\. For more information about the options, see [RFC 2132](http://www.ietf.org/rfc/rfc2132.txt)\.
+The following table lists all the supported options for a DHCP options set\. You can specify only the options you need in your DHCP options set\. For more information about the options, see [RFC 2132](https://tools.ietf.org/html/rfc2132)\.
 
 
 | DHCP Option Name | Description | 
