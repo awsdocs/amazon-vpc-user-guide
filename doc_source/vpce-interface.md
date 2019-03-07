@@ -72,7 +72,7 @@ To use private DNS, you must set the following VPC attributes to `true`: `enable
 ## Interface Endpoint Properties and Limitations<a name="vpce-interface-limitations"></a>
 
 To use interface endpoints, you need to be aware of their properties and current limitations:
-+ An interface endpoint can be accessed through AWS VPN connections or AWS Direct Connect connections\. Interface endpoints can be accessed through intra\-region VPC peering connections from [Nitro instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances)\. Interface endpoints can be accessed through inter\-region VPC peering connections from any type of instance\.
++ An interface endpoint can be accessed through AWS VPN connections, AWS Direct Connect connections, in\-region VPC peering connections, and inter\-region VPC peering connections\.
 + For each interface endpoint, you can choose only one subnet per Availability Zone\.
 + Interface endpoints support the use of policies for services that support endpoint policies\. For information about the services that support policies, see [Controlling Access to Services with VPC Endpoints](vpc-endpoints-access.md)\.
 + Services may not be available in all Availability Zones through an interface endpoint\. To find out which Availability Zones are supported, use the [describe\-vpc\-endpoint\-services](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-services.html) command or use the Amazon VPC console\. For more information, see [Creating an Interface Endpoint](#create-interface-endpoint)\.
