@@ -2,13 +2,13 @@
 
 Consider the following example, where a service runs on instances in Provider VPC 1 in Region A, for example the us\-east\-1 Region\. Resources that are in Consumer VPC 1 in the same Region can directly access the service through the AWS PrivateLink VPC endpoint in Consumer VPC 1\.
 
-![\[Image NOT FOUND\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-inter-region-peering-provider-side.png)
+![\[Image NOT FOUND\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/inter-region-peering-provider-side.png)
 
 To allow resources that are in Consumer VPC 2 in Region B, for example the eu\-west\-1 Region to privately access the service, the service provider must complete the following steps:
 
 1. Create Provider VPC 2 in Region B\.
 
-1. Configure inter\-region peering between Provider VPC 1 and Provider VPC 2 so that traffic can route between the two VPCs\.
+1. Configure VPC inter\-region peering between Provider VPC 1 and Provider VPC 2 so that traffic can route between the two VPCs\.
 
 1. Create Network Load Balancer 2 in Provider VPC 2\.
 
@@ -18,6 +18,4 @@ To allow resources that are in Consumer VPC 2 in Region B, for example the eu\-w
 
 1. Create a VPC endpoint service configuration in Provider VPC 2 and associate it with Network Load Balancer 2\.
 
-After the configuration is complete, the consumer can create a VPC endpoint service in Consumer VPC 2 so that they can privately access the service\.
-
-The consumer account incurs the VPC endpoint data processing charges and the VPC endpoint hourly charges\. The provider account incurs the inter\-region peering data transfer charges, the Network Load Balancer charges, and the service instances charges\.
+ The Provider 2 account incurs the inter\-region peering data transfer charges, Network Load Balancer charges\. The Provider 1 account incurs the service instances charges\.
