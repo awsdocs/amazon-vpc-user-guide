@@ -43,7 +43,7 @@ Services that use the Hadoop framework, such as Amazon EMR, require instances to
 
 After you create a set of DHCP options, you can't modify them\. If you want your VPC to use a different set of DHCP options, you must create a new set and associate them with your VPC\. You can also set up your VPC to use no DHCP options at all\.
 
-You can have multiple sets of DHCP options, but you can associate only one set of DHCP options with a VPC at a time\. If you delete a VPC, the DHCP options set associated with the VPC are also deleted\.
+You can have multiple sets of DHCP options, but you can associate only one set of DHCP options with a VPC at a time\. You can have multiple sets of DHCP options, but you can associate only one set of DHCP options with a VPC at a time\. If you delete a VPC, the DHCP options set associated with the VPC are disassociated from the VPC\.
 
 After you associate a new set of DHCP options with a VPC, any existing instances and all new instances that you launch in the VPC use these options\. You don't need to restart or relaunch the instances\. They automatically pick up the changes within a few hours, depending on how frequently the instance renews its DHCP lease\. If you want, you can explicitly renew the lease using the operating system on the instance\. 
 
