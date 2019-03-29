@@ -77,7 +77,7 @@ You can update an existing role or use the following procedure to create a new r
 
 1. Choose **EC2** as the service to use this role\. For **Use case**, choose **EC2**\. Choose **Next: Permissions**\.
 
-1. On the **Attach permissions policies** page, choose **Next: Review**\.
+1. On the **Attach permissions policies** page, choose **Next: Tags**\ and optionally add tags. Choose **Next: Review**\.
 
 1. Enter a name for your role \(for example, `Flow-Logs-Role`\) and optionally provide a description\. Choose **Create role**\.
 
