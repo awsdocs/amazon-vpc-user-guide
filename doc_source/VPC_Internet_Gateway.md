@@ -29,7 +29,7 @@ In the following diagram, Subnet 1 in the VPC is associated with a custom route 
 The following table provides an overview of whether your VPC automatically comes with the components required for internet access over IPv4 or IPv6\. 
 
 
-|  | Default VPC | Nondefault VPC | 
+| Component | Default VPC | Nondefault VPC | 
 | --- | --- | --- | 
 | Internet gateway | Yes | Yes, if you created the VPC using the first or second option in the VPC wizard\. Otherwise, you must manually create and attach the internet gateway\. | 
 | Route table with route to internet gateway for IPv4 traffic \(0\.0\.0\.0/0\) | Yes | Yes, if you created the VPC using the first or second option in the VPC wizard\. Otherwise, you must manually create the route table and add the route\. | 

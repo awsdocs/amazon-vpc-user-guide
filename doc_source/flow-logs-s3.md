@@ -36,7 +36,7 @@ aws_account_id_vpcflowlogs_region_flow_log_id_timestamp_hash.log.gz
 **Note**  
 The time stamp uses the `YYYYMMDDTHHmmZ` format\.
 
-For example, the following shows the folder structure and file name of a log file for a flow log created by AWS account `123456789012`, for a resource in the `us-east-1` region, on `June 20, 2018` at `16:20 UTC`, which includes flow log records for 16:15:01 to 16:20:00: 
+For example, the following shows the folder structure and file name of a log file for a flow log created by AWS account `123456789012`, for a resource in the `us-east-1` region, on `June 20, 2018` at `16:20 UTC`, which includes flow log records for `16:15:00` to `16:19:59`: 
 
 ```
 arn:aws:s3:::my-flow-log-bucket/AWSLogs/123456789012/vpcflowlogs/us-east-1/2018/06/20/123456789012_vpcflowlogs_us-east-1_fl-1234abcd_20180620T1620Z_fe123456.log.gz
@@ -146,7 +146,7 @@ In addition to the required bucket policies, Amazon S3 uses access control lists
 
 ## Creating a Flow Log that Publishes to Amazon S3<a name="flow-logs-s3-create-flow-log"></a>
 
-After you have created an configured your Amazon S3 bucket, you can create flow logs for your VPCs, subnets, or network interfaces\.
+After you have created and configured your Amazon S3 bucket, you can create flow logs for your VPCs, subnets, or network interfaces\.
 
 **To create a flow log for a network interface**
 

@@ -145,6 +145,8 @@ The following diagram represents the architecture of your VPC after you've compl
 
 **To launch an EC2 instance into a VPC**
 
+Before you launch the EC2 instance into the VPC, configure the subnet of the VPC to automatically assign IPv6 IP addresses\. For more information, see [Modifying the IPv6 Addressing Attribute for Your Subnet](vpc-ip-addressing.md#subnet-ipv6)\.
+
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
 1. In the navigation bar, on the top\-right, ensure that you select the same region in which you created your VPC and security group\. 

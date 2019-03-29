@@ -12,7 +12,9 @@ The following services are supported:
 + [AWS Config](https://docs.aws.amazon.com/config/latest/developerguide/config-VPC-endpoints.html)
 + Amazon EC2 API
 + Elastic Load Balancing API
-+ [AWS Key Management Service](https://docs.aws.amazon.com/kms/latest/developerguide/kms-vpc-endpoint.html)
++ [Amazon Elastic Container Registry](https://docs.aws.amazon.com/AmazonECR/latest/userguide/vpc-endpoints.html)
++ [Amazon Elastic Container Service](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/vpc-endpoints.html)
++ [AWS Key Management Service](https://docs.aws.amazon.com/kms/latest/developerguide/vpc-endpoint.html)
 + [Amazon Kinesis Data Streams](https://docs.aws.amazon.com/streams/latest/dev/vpc.html)
 + [Amazon SageMaker and Amazon SageMaker Runtime](https://docs.aws.amazon.com/sagemaker/latest/dg/interface-vpc-endpoint.html)
 + [Amazon SageMaker Notebook Instance](https://docs.aws.amazon.com/sagemaker/latest/dg/notebook-interface-endpoint.html)
@@ -70,9 +72,9 @@ To use private DNS, you must set the following VPC attributes to `true`: `enable
 ## Interface Endpoint Properties and Limitations<a name="vpce-interface-limitations"></a>
 
 To use interface endpoints, you need to be aware of their properties and current limitations:
-+ An interface endpoint can be accessed through AWS VPN connections or AWS Direct Connect connections\. Interface endpoints can be accessed through intra\-region VPC peering connections from [Nitro instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances)\. Interface endpoints can be accessed through inter\-region VPC peering connections from any type of instance\.
++ An interface endpoint can be accessed through AWS VPN connections, AWS Direct Connect connections, in\-region VPC peering connections, and inter\-region VPC peering connections\.
 + For each interface endpoint, you can choose only one subnet per Availability Zone\.
-+ Interface endpoints do not support the use of endpoint policies\. Full access to the service through the interface endpoint is allowed\.
++ Interface endpoints support the use of policies for services that support endpoint policies\. For information about the services that support policies, see [Controlling Access to Services with VPC Endpoints](vpc-endpoints-access.md)\.
 + Services may not be available in all Availability Zones through an interface endpoint\. To find out which Availability Zones are supported, use the [describe\-vpc\-endpoint\-services](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-services.html) command or use the Amazon VPC console\. For more information, see [Creating an Interface Endpoint](#create-interface-endpoint)\.
 + Availability Zones in your account might not map to the same locations as Availability Zones in another account; for example, your Availability Zone `us-east-1a` might not be the same location as `us-east-1a` for another account\. For more information, see [Region and Availability Zone Concepts](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-regions-availability-zones)\. When you create an interface endpoint, it's created in the Availability Zone for your account\.
 + Each interface endpoint can support a bandwidth of up to 10 Gbps per Availability Zone by default\. Additional capacity may be added automatically based on your usage\.
