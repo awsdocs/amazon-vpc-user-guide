@@ -51,8 +51,8 @@ The following is an example default network ACL for a VPC that supports IPv4 onl
 |  \*  | All IPv4 traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  | 
 |  Outbound  | 
 | Rule \# | Type |  Protocol  |  Port Range | Destination |  Allow/Deny | 
-|  100  | All IPv4 traffic |  all  |  all  | 0\.0\.0\.0/0 |  ALLOW  | 
-|  \*  | All IPv4 traffic |  all  |  all  | 0\.0\.0\.0/0 |  DENY  | 
+|  100  | All IPv4 traffic |  All  |  All  | 0\.0\.0\.0/0 |  ALLOW  | 
+|  \*  | All IPv4 traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  | 
 
 If you create a VPC with an IPv6 CIDR block or if you associate an IPv6 CIDR block with your existing VPC, we automatically add rules that allow all IPv6 traffic to flow in and out of your subnet\. We also add rules whose rule numbers are an asterisk that ensures that a packet is denied if it doesn't match any of the other numbered rules\. You can't modify or remove these rules\. The following is an example default network ACL for a VPC that supports IPv4 and IPv6\.
 
@@ -70,10 +70,10 @@ If you've modified your default network ACL's inbound rules, we do not automatic
 |  \*  |  All IPv6 traffic  |  All  |  All  |  ::/0  |  DENY  | 
 |  Outbound  | 
 | Rule \# | Type |  Protocol  |  Port Range | Destination |  Allow/Deny | 
-|  100  | All traffic |  all  |  all  | 0\.0\.0\.0/0 |  ALLOW  | 
-|  101  |  All IPv6 traffic  |  all  |  all  |  ::/0  |  ALLOW  | 
-|  \*  | All traffic |  all  |  all  | 0\.0\.0\.0/0 |  DENY  | 
-|  \*  |  All IPv6 traffic  |  all  |  all  |  ::/0  |  DENY  | 
+|  100  | All traffic |  All  |  All  | 0\.0\.0\.0/0 |  ALLOW  | 
+|  101  |  All IPv6 traffic  |  All  |  All  |  ::/0  |  ALLOW  | 
+|  \*  | All traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  | 
+|  \*  |  All IPv6 traffic  |  All  |  All  |  ::/0  |  DENY  | 
 
 ## Custom Network ACL<a name="custom-network-acl"></a>
 

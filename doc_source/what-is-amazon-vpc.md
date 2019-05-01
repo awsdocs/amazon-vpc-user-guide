@@ -15,6 +15,7 @@ Amazon VPC is the networking layer for Amazon EC2\. If you're new to Amazon EC2,
 + [Accessing the Internet](#what-is-connectivity)
 + [Accessing a Corporate or Home Network](#what-is-vpn)
 + [Accessing Services Through AWS PrivateLink](#what-is-privatelink)
++ [AWS Private Global Network Considerations](#what-is-aws-global-network)
 
 ### VPCs and Subnets<a name="what-is-vpc-subnet"></a>
 
@@ -85,6 +86,14 @@ To use AWS PrivateLink, create an interface VPC endpoint for a service in your V
 ![\[Using an interface endpoint to access an AWS service\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-privatelink-diagram.png)
 
  You can create your own AWS PrivateLink\-powered service \(endpoint service\) and enable other AWS customers to access your service\. For more information, see [VPC Endpoint Services \(AWS PrivateLink\)](endpoint-service.md)\.
+
+### AWS Private Global Network Considerations<a name="what-is-aws-global-network"></a>
+
+AWS provides a high\-performance, and low\-latency private global network that delivers a secure cloud computing environment to support your networking needs\. AWS Regions are connected to multiple Internet Service Providers \(ISPs\) as well as to a private global network backbone, which provides improved network performance for cross\-Region traffic sent by customers\.
+
+The following considerations apply:
++ Traffic that is in an Availability Zone, or between Availability Zones in all Regions, routes over the AWS private global network\.
++ Traffic that is between Regions always routes over the AWS private global network, except for China Regions\.
 
 ## How to Get Started with Amazon VPC<a name="howto"></a>
 

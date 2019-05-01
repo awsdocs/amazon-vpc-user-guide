@@ -2,7 +2,7 @@
 
 To create and set up a gateway endpoint, follow these general steps:
 
-1. Specify the VPC in which to create the endpoint, and the service to which you're connecting\. A service is identified by a *prefix list*—the name and ID of a service for a region\. A prefix list ID uses the form `pl-xxxxxxx` and a prefix list name uses the form `com.amazonaws.<region>.<service>`\. Use the prefix list name \(service name\) to create an endpoint\.
+1. Specify the VPC in which to create the endpoint, and the service to which you're connecting\. A service is identified by a *prefix list*—the name and ID of a service for a Region\. A prefix list ID uses the form `pl-xxxxxxx` and a prefix list name uses the form "com\.amazonaws\.*region*\.*service*"\. Use the prefix list name \(service name\) to create an endpoint\.
 
 1. Attach an *endpoint policy* to your endpoint that allows access to some or all of the service to which you're connecting\. For more information, see [Using VPC Endpoint Policies](vpc-endpoints-access.md#vpc-endpoint-policies)\. 
 
@@ -51,7 +51,7 @@ The following rules apply:
 + You cannot explicitly add, modify, or delete an endpoint route in your route table by using the route table APIs, or by using the Route Tables page in the Amazon VPC console\. You can only add an endpoint route by associating a route table with an endpoint\. To change the route tables that are associated with your endpoint, you can [modify the endpoint](#modify-gateway-endpoint)\. 
 + An endpoint route is automatically deleted when you remove the route table association from the endpoint \(by modifying the endpoint\), or when you delete your endpoint\. 
 
-We use the most specific route that matches the traffic to determine how to route the traffic \(longest prefix match\)\. If you have an existing route in your route table for all internet traffic \(`0.0.0.0/0`\) that points to an internet gateway, the endpoint route takes precedence for all traffic destined for the service, because the IP address range for the service is more specific than `0.0.0.0/0`\. All other internet traffic goes to your internet gateway, including traffic that's destined for the service in other regions\. 
+We use the most specific route that matches the traffic to determine how to route the traffic \(longest prefix match\)\. If you have an existing route in your route table for all internet traffic \(`0.0.0.0/0`\) that points to an internet gateway, the endpoint route takes precedence for all traffic destined for the service, because the IP address range for the service is more specific than `0.0.0.0/0`\. All other internet traffic goes to your internet gateway, including traffic that's destined for the service in other Regions\.
 
 However, if you have existing, more specific routes to IP address ranges that point to an internet gateway or a NAT device, those routes take precedence\. If you have existing routes destined for an IP address range that is identical to the IP address range used by the service, then your routes take precedence\. 
 
@@ -67,7 +67,7 @@ In this scenario, you have an existing route in your route table for all interne
 | 10\.0\.0\.0/16 | Local | 
 | 0\.0\.0\.0/0 | igw\-1a2b3c4d | 
 
-You create an endpoint to a supported AWS service, and associate your route table with the endpoint\. An endpoint route is automatically added to the route table, with a destination of `pl-1a2b3c4d` \(assume this represents the service to which you've created the endpoint\)\. Now, any traffic from the subnet that's destined for that AWS service in the same region goes to the endpoint, and does not go to the internet gateway\. All other internet traffic goes to your internet gateway, including traffic that's destined for other services, and destined for the AWS service in other regions\.
+You create an endpoint to a supported AWS service, and associate your route table with the endpoint\. An endpoint route is automatically added to the route table, with a destination of `pl-1a2b3c4d` \(assume this represents the service to which you've created the endpoint\)\. Now, any traffic from the subnet that's destined for that AWS service in the same Region goes to the endpoint, and does not go to the internet gateway\. All other internet traffic goes to your internet gateway, including traffic that's destined for other services, and destined for the AWS service in other Regions\.
 
 
 ****  
@@ -91,7 +91,7 @@ In this scenario, you have configured your route table to enable instances in yo
 | 54\.123\.165\.0/24  | igw\-1a2b3c4d | 
 | pl\-1a2b3c4d | vpce\-11bb22cc | 
 
-To ensure that all traffic destined for Amazon S3 in the same region is routed via the endpoint, you must adjust the routes in your route table\. To do this, you can delete the route to the internet gateway\. Now, all traffic to Amazon S3 in the same region uses the endpoint, and the subnet that's associated with your route table is a private subnet\. 
+To ensure that all traffic destined for Amazon S3 in the same Region is routed via the endpoint, you must adjust the routes in your route table\. To do this, you can delete the route to the internet gateway\. Now, all traffic to Amazon S3 in the same Region uses the endpoint, and the subnet that's associated with your route table is a private subnet\.
 
 
 ****  

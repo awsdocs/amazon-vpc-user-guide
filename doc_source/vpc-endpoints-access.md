@@ -22,7 +22,10 @@ Your endpoint policy can be like any IAM policy; however, take note of the follo
 For example endpoint policies, see the following topics:
 + [Using Endpoint Policies for Amazon S3](vpc-endpoints-s3.md#vpc-endpoints-policies-s3)
 + [Using Endpoint Policies for DynamoDB](vpc-endpoints-ddb.md#vpc-endpoints-policies-ddb)
-+ Use VPC Endpoints for AWS CodeBuild\. For more information, see [Use VPC Endpoints](https://docs.aws.amazon.com/codebuild/latest/userguide/use-vpc-endpoints-with-codebuild.html) in the *AWS CodeBuild User Guide*\.
++ Use VPC endpoints for AWS CodeBuild\. For more information, see [Use VPC Endpoints](https://docs.aws.amazon.com/codebuild/latest/userguide/use-vpc-endpoints-with-codebuild.html) in the *AWS CodeBuild User Guide*\.
++ Use VPC endpoints for AWS CodeCommit\. For more information, see [Create VPC Endpoints for CodeCommit](https://docs.aws.amazon.com/codecommit/latest/userguide/codecommit-and-interface-VPC.html#create-vpc-endpoint-policy-for-codecommit.html) in the *AWS CodeCommit User Guide*\.
++ Use VPC endpoints for Amazon SNS\. For more information, see [Creating an Amazon VPC Endpoint Policy for Amazon SNS](https://docs.aws.amazon.com/sns/latest/dg/sns-vpc-endpoint-policy.html) in the *Amazon Simple Notification Service Developer Guide*\.
++ Use VPC endpoints for Amazon SQS\. For more information, see [Creating an Amazon VPC Endpoint Policy for Amazon SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-vpc-endpoint-policy.html) in the *Amazon Simple Queue Service Developer Guide*\.
 
 ## Security Groups<a name="vpc-endpoints-security-groups"></a>
 

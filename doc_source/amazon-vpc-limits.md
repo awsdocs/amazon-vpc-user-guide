@@ -9,7 +9,7 @@ If you request a limit increase that applies per resource, we increase the limit
 
 | Resource | Default limit | Comments | 
 | --- | --- | --- | 
-|  VPCs per Region  |  5  |  The limit for internet gateways per Region is directly correlated to this one\. Increasing this limit increases the limit on internet gateways per Region by the same amount\.  | 
+|  VPCs per Region  |  5  |  The limit for internet gateways per Region is directly correlated to this one\. Increasing this limit increases the limit on internet gateways per Region by the same amount\. Customers can have 100s of VPCs per Region for their needs even though the default limit is 5 VPCs per Region\. You can request an increase for these limits using the [Amazon VPC limits form](https://console.aws.amazon.com/support/home#/case/create?issueType=service-limit-increase&limitType=vpc)\.  | 
 |  Subnets per VPC  |  200  |  \-  | 
 | IPv4 CIDR blocks per VPC | 5 | This limit is made up of your primary CIDR block plus 4 secondary CIDR blocks\. | 
 |  IPv6 CIDR blocks per VPC  |  1  |  This limit cannot be increased\.  | 

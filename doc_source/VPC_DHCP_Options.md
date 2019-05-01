@@ -15,7 +15,7 @@ You can configure DHCP options sets for your virtual private clouds \(VPC\)\.
 
 The Amazon EC2 instances you launch into a nondefault VPC are private by default; they're not assigned a public IPv4 address unless you specifically assign one during launch, or you modify the subnet's public IPv4 address attribute\. By default, all instances in a nondefault VPC receive an unresolvable host name that AWS assigns \(for example, ip\-10\-0\-0\-202\)\. You can assign your own domain name to your instances, and use up to four of your own DNS servers\. To do that, you must specify a special set of DHCP options to use with the VPC\. 
 
-The following table lists all the supported options for a DHCP options set\. You can specify only the options you need in your DHCP options set\. For more information about the options, see [RFC 2132](http://www.ietf.org/rfc/rfc2132.txt)\.
+The following table lists all the supported options for a DHCP options set\. You can specify only the options you need in your DHCP options set\. For more information about the options, see [RFC 2132](https://tools.ietf.org/html/rfc2132)\.
 
 
 | DHCP Option Name | Description | 
@@ -43,7 +43,7 @@ Services that use the Hadoop framework, such as Amazon EMR, require instances to
 
 After you create a set of DHCP options, you can't modify them\. If you want your VPC to use a different set of DHCP options, you must create a new set and associate them with your VPC\. You can also set up your VPC to use no DHCP options at all\.
 
-You can have multiple sets of DHCP options, but you can associate only one set of DHCP options with a VPC at a time\. You can have multiple sets of DHCP options, but you can associate only one set of DHCP options with a VPC at a time\. If you delete a VPC, the DHCP options set associated with the VPC are disassociated from the VPC\.
+You can have multiple sets of DHCP options, but you can associate only one set of DHCP options with a VPC at a time\. If you delete a VPC, the DHCP options set associated with the VPC is disassociated from the VPC\.
 
 After you associate a new set of DHCP options with a VPC, any existing instances and all new instances that you launch in the VPC use these options\. You don't need to restart or relaunch the instances\. They automatically pick up the changes within a few hours, depending on how frequently the instance renews its DHCP lease\. If you want, you can explicitly renew the lease using the operating system on the instance\. 
 
