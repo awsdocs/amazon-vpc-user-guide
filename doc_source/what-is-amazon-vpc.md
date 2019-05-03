@@ -95,6 +95,8 @@ The following considerations apply:
 + Traffic that is in an Availability Zone, or between Availability Zones in all Regions, routes over the AWS private global network\.
 + Traffic that is between Regions always routes over the AWS private global network, except for China Regions\.
 
+Network packet loss can be caused by a number of factors, including network flow collisions, lower level \(Layer 2\) errors, and other network failures\. We engineer and operate our networks to minimize packet loss\. We measure packet\-loss rate \(PLR\) across the global backbone that connects the AWS Regions\. We operate our backbone network to target a p99 of the hourly PLR of less than 0\.0001%\.
+
 ## How to Get Started with Amazon VPC<a name="howto"></a>
 
 To get a hands\-on introduction to Amazon VPC, complete [Getting Started with Amazon VPC](vpc-getting-started.md)\. This exercise guides you through the steps to create a nondefault VPC with a public subnet, and to launch an instance into your subnet\.
