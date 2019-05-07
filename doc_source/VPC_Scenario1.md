@@ -140,14 +140,14 @@ These procedures include optional steps for enabling and configuring IPv6 commun
 
 1. Select the WebServerSG security group that you just created\. The details pane include a tab for information about the security group, plus tabs for working with its inbound rules and outbound rules\.
 
-1. On the **Inbound Rules** tab, choose **Edit**, and then do the following:
+1. On the **Inbound Rules** tab, choose **Edit Rules**, and then do the following:
    + Select **HTTP** from the **Type** list, and enter `0.0.0.0/0` in the **Source** field\.
-   + Choose **Add another rule**, then select **HTTPS** from the **Type** list, and enter `0.0.0.0/0` in the **Source** field\.
-   + Choose **Add another rule**, then select **SSH** \(for Linux\) or **RDP** \(for Windows\) from the **Type** list\. Enter your network's public IP address range in the **Source** field\. \(If you don't know this address range, you can use `0.0.0.0/0` for testing purposes; in production, you authorize only a specific IP address or range of addresses to access your instance\.\)
-   + \(Optional\) Choose **Add another rule**, then select **ALL traffic** from the **Type** list\. In the **Source** field, enter the ID of the WebServerSG security group\.
-   + \(Optional, IPv6\-only\) Choose **Add another rule**, select **HTTP** from the **Type** list, and enter `::/0` in the **Source** field\.
-   + \(Optional, IPv6\-only\) Choose **Add another rule**, select **HTTPS** from the **Type** list, and enter `::/0` in the **Source** field\.
-   + \(Optional, IPv6\-only\) Choose **Add another rule**, select **SSH** \(for Linux\) or **RDP** \(for Windows\) from the **Type** list\. Enter your network's IPv6 address range in the **Source** field\. \(If you don't know this address range, you can use `::/0` for testing purposes; in production, you authorize only a specific IPv6 address or range of addresses to access your instance\.\)
+   + Choose **Add rule**, then select **HTTPS** from the **Type** list, and enter `0.0.0.0/0` in the **Source** field\.
+   + Choose **Add rule**, then select **SSH** \(for Linux\) or **RDP** \(for Windows\) from the **Type** list\. Enter your network's public IP address range in the **Source** field\. \(If you don't know this address range, you can use `0.0.0.0/0` for testing purposes; in production, you authorize only a specific IP address or range of addresses to access your instance\.\)
+   + \(Optional\) Choose **Add rule**, then select **ALL traffic** from the **Type** list\. In the **Source** field, enter the ID of the WebServerSG security group\.
+   + \(Optional, IPv6\-only\) Choose **Add rule**, select **HTTP** from the **Type** list, and enter `::/0` in the **Source** field\.
+   + \(Optional, IPv6\-only\) Choose **Add rule**, select **HTTPS** from the **Type** list, and enter `::/0` in the **Source** field\.
+   + \(Optional, IPv6\-only\) Choose **Add rule**, select **SSH** \(for Linux\) or **RDP** \(for Windows\) from the **Type** list\. Enter your network's IPv6 address range in the **Source** field\. \(If you don't know this address range, you can use `::/0` for testing purposes; in production, you authorize only a specific IPv6 address or range of addresses to access your instance\.\)
 
 1. Choose **Save**\.
 
@@ -157,7 +157,7 @@ These procedures include optional steps for enabling and configuring IPv6 commun
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. From the dashboard, choose **Launch Instance**\.
+1. From the dashboard, choose **Launch EC2 Instances**\.
 
 1. Follow the directions in the wizard\. Choose an AMI, choose an instance type, and then choose **Next: Configure Instance Details**\.
 **Note**  

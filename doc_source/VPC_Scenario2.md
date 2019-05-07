@@ -223,7 +223,7 @@ If your account supports EC2\-Classic, first choose **VPC**\.
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. On the VPC dashboard, choose **Launch VPC Wizard**\.  
+1. Choose **Your VPCs**, and then choose **Launch VPC Wizard**\.  
 ![\[The Amazon VPC dashboard\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/VPC-dashboard.png)
 
 1. Choose the second option, **VPC with Public and Private Subnets**, and then choose **Select**\.

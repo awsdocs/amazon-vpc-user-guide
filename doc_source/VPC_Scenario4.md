@@ -151,7 +151,7 @@ For this scenario, you need to update the default security group with new inboun
 
 1. On the **Inbound Rules** tab, choose **Edit** and add rules for inbound traffic as follows:
 
-   1. Select **SSH** from **Type**, and type your network's private IP address range in **Source** \(for example, `172.0.0.0/8`\)\.
+   1. Select **SSH** from **Type**, and type your network's private IP address range in **Source** \(for example, `172.0.0.0/12`\)\.
 
    1. Choose **Add another rule**, then select **RDP** from **Type**, and type your network's private IP address range in **Source**\.
 

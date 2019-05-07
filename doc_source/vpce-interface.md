@@ -5,16 +5,20 @@ An interface VPC endpoint \(interface endpoint\) enables you to connect to servi
 The following services are supported:
 + [Amazon API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-private-apis.html)
 + [AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-vpce-bucketnames.html)
++ [AWS CloudTrail](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-and-interface-VPC.html)
 + [Amazon CloudWatch](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch-and-interface-VPC.html)
 + [Amazon CloudWatch Events](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/cloudwatch-events-and-interface-VPC.html)
 + [Amazon CloudWatch Logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/cloudwatch-logs-and-interface-VPC.html)
 + [AWS CodeBuild](https://docs.aws.amazon.com/codebuild/latest/userguide/use-vpc-endpoints-with-codebuild.html)
++ [AWS CodeCommit](https://docs.aws.amazon.com/codecommit/latest/userguide/codecommit-and-interface-VPC.html)
++ [AWS CodePipeline](https://docs.aws.amazon.com/codepipeline/latest/userguide/vpc-support.html#use-vpc-endpoints-with-codepipeline)
 + [AWS Config](https://docs.aws.amazon.com/config/latest/developerguide/config-VPC-endpoints.html)
 + Amazon EC2 API
-+ Elastic Load Balancing API
++ [Elastic Load Balancing](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/load-balancer-vpc-endpoints.html)
 + [Amazon Elastic Container Registry](https://docs.aws.amazon.com/AmazonECR/latest/userguide/vpc-endpoints.html)
 + [Amazon Elastic Container Service](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/vpc-endpoints.html)
 + [AWS Key Management Service](https://docs.aws.amazon.com/kms/latest/developerguide/vpc-endpoint.html)
++ [Amazon Kinesis Data Firehose](https://docs.aws.amazon.com/firehose/latest/dev/vpc-endpoint.html)
 + [Amazon Kinesis Data Streams](https://docs.aws.amazon.com/streams/latest/dev/vpc.html)
 + [Amazon SageMaker and Amazon SageMaker Runtime](https://docs.aws.amazon.com/sagemaker/latest/dg/interface-vpc-endpoint.html)
 + [Amazon SageMaker Notebook Instance](https://docs.aws.amazon.com/sagemaker/latest/dg/notebook-interface-endpoint.html)
@@ -24,6 +28,7 @@ The following services are supported:
 + [Amazon SNS](https://docs.aws.amazon.com/sns/latest/dg/sns-vpc.html)
 + [Amazon SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-vpc-endpoints.html)
 + [AWS Systems Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-setting-up-vpc.html)
++ [AWS Transfer for SFTP](https://docs.aws.amazon.com/transfer/latest/userguide/create-server-vpc.html)
 + [Endpoint services](endpoint-service.md) hosted by other AWS accounts
 + Supported AWS Marketplace partner services
 
@@ -58,7 +63,7 @@ Services cannot initiate requests to resources in your VPC through the endpoint\
 
 When you create an interface endpoint, we generate endpoint\-specific DNS hostnames that you can use to communicate with the service\. For AWS services and AWS Marketplace partner services, you can optionally enable private DNS for the endpoint\. This option associates a private hosted zone with your VPC\. The hosted zone contains a record set for the default DNS name for the service \(for example, `ec2.us-east-1.amazonaws.com`\) that resolves to the private IP addresses of the endpoint network interfaces in your VPC\. This enables you to make requests to the service using its default DNS hostname instead of the endpoint\-specific DNS hostnames\. For example, if your existing applications make requests to an AWS service, they can continue to make requests through the interface endpoint without requiring any configuration changes\.
 
-In the following diagram, you have created an interface endpoint for Amazon Kinesis Data Streams and an endpoint network interface in subnet 2\. You have not enabled private DNS for the interface endpoint\. Instances in either subnet can communicate with Amazon Kinesis Data Streams through the interface endpoint using an endpoint\-specific DNS hostname \(DNS name B\)\. Instance in subnet 1 can communicate with Amazon Kinesis Data Streams over public IP address space in the AWS region using the default DNS name for the service \(DNS name A\)\.
+In the following diagram, you have created an interface endpoint for Amazon Kinesis Data Streams and an endpoint network interface in subnet 2\. You have not enabled private DNS for the interface endpoint\. Instances in either subnet can communicate with Amazon Kinesis Data Streams through the interface endpoint using an endpoint\-specific DNS hostname \(DNS name B\)\. Instance in subnet 1 can communicate with Amazon Kinesis Data Streams over public IP address space in the AWS Region using the default DNS name for the service \(DNS name A\)\.
 
 ![\[Using an interface endpoint to access Kinesis\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-kinesis-diagram.png)
 
@@ -72,7 +77,6 @@ To use private DNS, you must set the following VPC attributes to `true`: `enable
 ## Interface Endpoint Properties and Limitations<a name="vpce-interface-limitations"></a>
 
 To use interface endpoints, you need to be aware of their properties and current limitations:
-+ An interface endpoint can be accessed through AWS VPN connections, AWS Direct Connect connections, in\-region VPC peering connections, and inter\-region VPC peering connections\.
 + For each interface endpoint, you can choose only one subnet per Availability Zone\.
 + Interface endpoints support the use of policies for services that support endpoint policies\. For information about the services that support policies, see [Controlling Access to Services with VPC Endpoints](vpc-endpoints-access.md)\.
 + Services may not be available in all Availability Zones through an interface endpoint\. To find out which Availability Zones are supported, use the [describe\-vpc\-endpoint\-services](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-services.html) command or use the Amazon VPC console\. For more information, see [Creating an Interface Endpoint](#create-interface-endpoint)\.
@@ -390,20 +394,20 @@ If you no longer need a notification, you can delete it\.
 ## Accessing a Service Through an Interface Endpoint<a name="access-service-though-endpoint"></a>
 
 After you've created an interface endpoint, you can submit requests to the supported service via an endpoint URL\. You can use the following:
-+ The endpoint\-specific regional DNS hostname that we generate for the interface endpoint\. The hostname includes a unique endpoint identifier, service identifier, the region, and `vpce.amazonaws.com` in its name; for example, `vpce-0fe5b17a0707d6abc-29p5708s.ec2.us-east-1.vpce.amazonaws.com`\.
++ The endpoint\-specific regional DNS hostname that we generate for the interface endpoint\. The hostname includes a unique endpoint identifier, service identifier, the Region, and `vpce.amazonaws.com` in its name; for example, `vpce-0fe5b17a0707d6abc-29p5708s.ec2.us-east-1.vpce.amazonaws.com`\.
 + The endpoint\-specific zonal DNS hostname that we generate for each Availability Zone in which the endpoint is available\. The hostname includes the Availability Zone in its name; for example, `vpce-0fe5b17a0707d6abc-29p5708s-us-east-1a.ec2.us-east-1.vpce.amazonaws.com`\. You might use this option if your architecture isolates Availability Zones \(for example, for fault containment or to reduce regional data transfer costs\)\.
 **Note**  
 A request to the zonal DNS hostname is destined to the corresponding Availability Zone location in the service provider's account, which might not have the same Availability Zone name as your account\. For more information, see [Region and Availability Zone Concepts](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-regions-availability-zones)\.
-+ If you have enabled private DNS for the endpoint \(a private hosted zone\), the default DNS hostname for the AWS service for the region; for example, `ec2.us-east-1.amazonaws.com`\.
++ If you have enabled private DNS for the endpoint \(a private hosted zone\), the default DNS hostname for the AWS service for the Region; for example, `ec2.us-east-1.amazonaws.com`\.
 + The private IP address of the endpoint network interface in the VPC\.
 
-For example, in a subnet in which you have an interface endpoint to Elastic Load Balancing and for which you have not enabled the private DNS option, use the following AWS CLI command from an instance to describe your load balancers\. The command uses the endpoint\-specific regional DNS hostname to make the request via the interface endpoint:
+For example, in a subnet in which you have an interface endpoint to Elastic Load Balancing and for which you have not enabled the private DNS option, use the following AWS CLI command from an instance to describe your load balancers\. The command uses the endpoint\-specific regional DNS hostname to make the request using the interface endpoint:
 
 ```
 aws elbv2 describe-load-balancers --endpoint-url https://vpce-0f89a33420c193abc-bluzidnv.elasticloadbalancing.us-east-1.vpce.amazonaws.com/
 ```
 
-If you enable the private DNS option, you do not have to specify the endpoint URL in the request\. The AWS CLI uses the default endpoint for the service for the region \(`elasticloadbalancing.us-east-1.amazonaws.com`\)\.
+If you enable the private DNS option, you do not have to specify the endpoint URL in the request\. The AWS CLI uses the default endpoint for the service for the Region \(`elasticloadbalancing.us-east-1.amazonaws.com`\)\.
 
 ## Modifying an Interface Endpoint<a name="modify-interface-endpoint"></a>
 

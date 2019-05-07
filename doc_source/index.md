@@ -29,6 +29,8 @@ Amazon's trademarks and trade dress may not be used in
    + [Example: Services Using AWS PrivateLink and VPC Peering](vpc-peer-region-example.md)
       + [Example: Service Provider Configures the Service](vpc--region-peering-provider-side.md)
       + [Example: Service Consumer Configures Access](vpc-region-peering-consumer-side.md)
+      + [Example: Service Provider Configures a Service to Span Regions](vpc-inter-region-peering-provider-side.md)
+      + [Example: Service Consumer Configures Access Across Regions](vpc-inter-region-peering-consumer-side.md)
 + [VPCs and Subnets](VPC_Subnets.md)
    + [Working with VPCs and Subnets](working-with-vpcs.md)
    + [Working with Shared VPCs](vpc-sharing.md)
