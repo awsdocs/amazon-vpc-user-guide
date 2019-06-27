@@ -11,7 +11,7 @@ If you've already set up access to your Amazon S3 resources from your VPC, you c
 Treat Amazon S3's US Standard region as mapped to the `us-east-1` region\.
 + Endpoints are currently supported for IPv4 traffic only\.
 
-Before you use endpoints with Amazon S3, ensure that you have also read the following general limitations: [Gateway Endpoint Limitations](vpce-gateway.md#vpc-endpoints-limitations)\.
+Before you use endpoints with Amazon S3, ensure that you have also read the following general limitations: [Gateway Endpoint Limitations](vpce-gateway.md#vpc-endpoints-limitations)\. For information about creating and viewing S3 buckets, see [How Do I Create an S3 Bucket](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/create-bucket.html) and [How Do I View the Properties for an S3 Bucket](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/view-bucket-properties.html) in the *Amazon Simple Storage Service Console User Guide*\.
 
 If you use other AWS services in your VPC, they may use S3 buckets for certain tasks\. Ensure that your endpoint policy allows full access to Amazon S3 \(the default policy\), or that it allows access to the specific buckets that are used by these services\. Alternatively, only create an endpoint in a subnet that is not used by any of these services, to allow the services to continue accessing S3 buckets using public IP addresses\.
 
@@ -34,7 +34,7 @@ Traffic between your VPC and S3 buckets does not leave the Amazon network\.
 
 ## Using Endpoint Policies for Amazon S3<a name="vpc-endpoints-policies-s3"></a>
 
-The following are example endpoint policies for accessing Amazon S3\. For more information, see [Using VPC Endpoint Policies](vpc-endpoints-access.md#vpc-endpoint-policies)\.
+The following are example endpoint policies for accessing Amazon S3\. For more information, see [Using VPC Endpoint Policies](vpc-endpoints-access.md#vpc-endpoint-policies)\. It is up to the user to determine the policy restrictions that meet the business needs\. For example, you can specify the Region \("packages\.us\-west\-1\.amazonaws\.com" \) to avoid an ambiguous S3 bucket name\.
 
 **Important**  
 All types of policies — IAM user policies, endpoint policies, S3 bucket policies, and Amazon S3 ACL policies \(if any\) — must grant the necessary permissions for access to Amazon S3 to succeed\. 

@@ -34,7 +34,7 @@ Some types of traffic are tracked differently to others\. For more information, 
 
 ## Default Security Group for Your VPC<a name="DefaultSecurityGroup"></a>
 
-Your VPC automatically comes with a default security group\. Each EC2 instance that you launch in your VPC is automatically associated with the default security group if you don't specify a different security group when you launch the instance\.
+Your VPC automatically comes with a default security group\. If you don't specify a different security group when you launch the instance, each EC2 instance that you launch in your VPC is automatically associated with a security group named "launch\-wizard\-*xx*"\. For example, the security group for the first EC2 instance that you launch is named "launch\-wizard\-1"\.
 
 The following table describes the default rules for a default security group\.
 
@@ -62,7 +62,7 @@ You can add or remove rules for a security group \(also referred to as *authoriz
 
 The following are the basic parts of a security group rule in a VPC:
 + \(Inbound rules only\) The source of the traffic and the destination port or port range\. The source can be another security group, an IPv4 or IPv6 CIDR block, or a single IPv4 or IPv6 address\.
-+ \(Outbound rules only\) The destination for the traffic and the destination port or port range\. The destination can be another security group, an IPv4 or IPv6 CIDR block, a single IPv4 or IPv6 address, or a prefix list ID\.
++ \(Outbound rules only\) The destination for the traffic and the destination port or port range\. The destination can be another security group, an IPv4 or IPv6 CIDR block, a single IPv4 or IPv6 address, or a prefix list ID \( A service is identified by a prefix list—the name and ID of a service for a Region\)\.
 + Any protocol that has a standard protocol number \(for a list, see [Protocol Numbers](http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml)\)\. If you specify ICMP as the protocol, you can specify any or all of the ICMP types and codes\.
 + An optional description for the security group rule to help you identify it later\. A description can be up to 255 characters in length\. Allowed characters are a\-z, A\-Z, 0\-9, spaces, and \.\_\-:/\(\)\#,@\[\]\+=;\{\}\!$\*\.
 
@@ -160,17 +160,19 @@ If you have a VPC peering connection, you can reference security groups from the
 
 1. In the navigation pane, choose **Security Groups**\.
 
-1. Select the security group to update\. The details pane displays the details for the security group, plus tabs for working with its inbound rules and outbound rules\.
+1. Select the security group to update\. 
 
-1. On the **Inbound Rules** tab, choose **Edit**\. Select an option for a rule for inbound traffic for **Type**, and then fill in the required information\. For example, for a public web server, choose **HTTP** or **HTTPS** and specify a value for **Source** as `0.0.0.0/0`\. 
+1. Choose **Actions**, **Edit inbound rules** or **Actions**, **Edit outbound rules**\.
+
+1. For **Type**, select the traffic type, and then fill in the required information\. For example, for a public web server, choose **HTTP** or **HTTPS** and specify a value for **Source** as `0.0.0.0/0`\. 
 **Note**  
 If you use `0.0.0.0/0`, you enable all IPv4 addresses to access your instance using HTTP or HTTPS\. To restrict access, enter a specific IP address or range of addresses\.
 
-1. Optionally provide a description for the rule, and choose **Save**\.
+1. You can also allow communication between all instances associated with this security group\. Create an inbound rule with the following options:
+   + **Type**: **All Traffic**
+   + **Source**: enter the ID of the security group\.
 
-1. You can also allow communication between all instances associated with this security group\. On the **Inbound Rules** tab, choose **All Traffic** from the **Type** list\. Start typing the ID of the security group for **Source**; this provides you with a list of security groups\. Select the security group from the list and choose **Save**\. 
-
-1. If you need to, you can use the **Outbound Rules** tab to add rules for outbound traffic\.
+1. Choose **Save rules**\.
 
 **To delete a rule using the console**
 
@@ -178,9 +180,13 @@ If you use `0.0.0.0/0`, you enable all IPv4 addresses to access your instance us
 
 1. In the navigation pane, choose **Security Groups**\.
 
-1. Select the security group to update\. The details pane displays the details for the security group, plus tabs for working with its inbound rules and outbound rules\.
+1. Select the security group to update\.
 
-1. Choose **Edit**, select the role to delete, and then choose **Remove**, **Save**\. 
+1. Choose **Actions**, **Edit inbound rules** or **Actions**, **Edit outbound rules**\.
+
+1. Choose the delete button \(“x”\) to the right of the rule that you want to delete\.
+
+1. Choose **Save rules**\.
 
 When you modify the protocol, port range, or source or destination of an existing security group rule using the console, the console deletes the existing rule and adds a new one for you\. 
 
@@ -190,9 +196,13 @@ When you modify the protocol, port range, or source or destination of an existin
 
 1. In the navigation pane, choose **Security Groups**\.
 
-1. Select the security group to update, and choose **Inbound Rules** to update a rule for inbound traffic or **Outbound Rules** to update a rule for outbound traffic\.
+1. Select the security group to update\.
 
-1. Choose **Edit**\. Modify the rule entry as required and choose **Save**\.
+1. Choose **Actions**, **Edit inbound rules** or **Actions**, **Edit outbound rules**\.
+
+1. Modify the rule entry as required\.
+
+1. Choose **Save rules**\.
 
 To update the protocol, port range, or source or destination of an existing rule using the Amazon EC2 API or a command line tool, you cannot modify the rule; instead, you must delete the existing rule and add a new rule\. To update the rule description only, you can use the [update\-security\-group\-rule\-descriptions\-ingress](https://docs.aws.amazon.com/cli/latest/reference/ec2/update-security-group-rule-descriptions-ingress.html) and [update\-security\-group\-rule\-descriptions\-egress](https://docs.aws.amazon.com/cli/latest/reference/ec2/update-security-group-rule-descriptions-egress.html) commands\. 
 

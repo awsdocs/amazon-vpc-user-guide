@@ -291,7 +291,7 @@ If you use `::/0`, you enable all IPv6 addresses to access your instance using S
 1. Launch an instance into your public subnet, using the security group and key pair that you've created\. In the output, take note of the instance ID for your instance\.
 
    ```
-   aws ec2 run-instances --image-id ami-a4827dc9 --count 1 --instance-type t2.micro --key-name MyKeyPair --security-group-ids sg-e1fb8c9a --subnet-id subnet-b46032ec
+   aws ec2 run-instances --image-id ami-0de53d8956e8dcf80 --count 1 --instance-type t2.micro --key-name MyKeyPair --security-group-ids sg-e1fb8c9a --subnet-id subnet-b46032ec
    ```
 **Note**  
 In this example, the AMI is an Amazon Linux AMI in the US East \(N\. Virginia\) region\. If you're in a different region, you need the AMI ID for a suitable AMI in your region\. For more information, see [Finding a Linux AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html) in the *Amazon EC2 User Guide for Linux Instances*\.

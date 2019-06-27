@@ -135,7 +135,13 @@ If you enabled server\-side encryption for your Amazon S3 bucket using AWS KMS\-
             "delivery.logs.amazonaws.com"
         ]
     },
-    "Action": "kms:GenerateDataKey*",
+   "Action": [
+       "kms:Encrypt",
+       "kms:Decrypt",
+       "kms:ReEncrypt*",
+       "kms:GenerateDataKey*",
+       "kms:DescribeKey"
+    ],
     "Resource": "*"
 }
 ```

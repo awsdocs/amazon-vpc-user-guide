@@ -57,9 +57,9 @@ For example, your private subnet’s route table has the following routes: inter
 
 You cannot route traffic to a NAT gateway through a VPC peering connection, a Site\-to\-Site VPN connection, or AWS Direct Connect\. A NAT gateway cannot be used by resources on the other side of these connections\.
 
-### Best Practice When Sending Traffic to Amazon S3 or DynamoDB<a name="nat-gateway-s3-ddb"></a>
+### Best Practice When Sending Traffic to Amazon S3 or DynamoDB in the Same Region<a name="nat-gateway-s3-ddb"></a>
 
-To avoid data processing charges for NAT gateways when accessing Amazon S3 and DynamoDB, set up a gateway endpoint and route the traffic through the gateway endpoint instead of the NAT gateway\. There are no charges for using a gateway endpoint\. For more information, see [Gateway VPC Endpoints](vpce-gateway.md)\.
+To avoid data processing charges for NAT gateways when accessing Amazon S3 and DynamoDB that are in the same Region, set up a gateway endpoint and route the traffic through the gateway endpoint instead of the NAT gateway\. There are no charges for using a gateway endpoint\. For more information, see [Gateway VPC Endpoints](vpce-gateway.md)\.
 
 ## Working with NAT Gateways<a name="nat-gateway-working-with"></a>
 

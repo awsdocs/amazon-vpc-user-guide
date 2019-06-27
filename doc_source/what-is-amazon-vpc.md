@@ -110,7 +110,7 @@ The following table lists related resources that you might find useful as you wo
 
 |  Resource  |  Description  | 
 | --- | --- | 
-| [Amazon Virtual Private Cloud Connectivity Options](https://docs.aws.amazon.com/aws-technical-content/latest/aws-vpc-connectivity-options/) | Provides an overview of the options for network connectivity\. | 
+| [Amazon Virtual Private Cloud Connectivity Options](https://docs.aws.amazon.com/aws-technical-content/latest/aws-vpc-connectivity-options/introduction.html) | Provides an overview of the options for network connectivity\. | 
 |  [Amazon VPC forum](https://forums.aws.amazon.com/forum.jspa?forumID=58)  |  A community\-based forum for discussing technical questions related to Amazon VPC\.  | 
 |  [Getting Started Resource Center](https://aws.amazon.com/getting-started/)  |  Information to help you get started building on AWS\.  | 
 |  [AWS Support Center](https://console.aws.amazon.com/support/home#/)  |  The home page for AWS Support\.  | 

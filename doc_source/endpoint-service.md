@@ -4,6 +4,7 @@ You can create your own application in your VPC and configure it as an AWS Priva
 
 **Topics**
 + [Overview](#endpoint-service-overview)
++ [Endpoint Service Availability Zone Considerations](#vpce-endpoint-service-availability-zones)
 + [Endpoint Service Limitations](#endpoint-service-limits)
 + [Creating a VPC Endpoint Service Configuration](#create-endpoint-service)
 + [Adding and Removing Permissions for Your Endpoint Service](#add-endpoint-service-permissions)
@@ -11,13 +12,14 @@ You can create your own application in your VPC and configure it as an AWS Priva
 + [Accepting and Rejecting Interface Endpoint Connection Requests](#accept-reject-endpoint-requests)
 + [Creating and Managing a Notification for an Endpoint Service](#create-notification-endpoint-service)
 + [Using Proxy Protocol for Connection Information](#endpoint-service-proxy-protocol)
++ [Adding or Removing VPC Endpoint Service Tags](#modify-tags-vpc-endpoint-service-tags)
 + [Deleting an Endpoint Service Configuration](#delete-endpoint-service)
 
 ## Overview<a name="endpoint-service-overview"></a>
 
 The following are the general steps to create an endpoint service\.
 
-1. Create a Network Load Balancer for your application in your VPC and configure it for each subnet \(Availability Zone\) in which the service should be available\. The load balancer receives requests from service consumers and routes it to your service\. For more information, see [Getting Started with Network Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancer-getting-started.html) in the *User Guide for Network Load Balancers*\. We recommend that you configure your service in all Availability Zones within the region\.
+1. Create a Network Load Balancer for your application in your VPC and configure it for each subnet \(Availability Zone\) in which the service should be available\. The load balancer receives requests from service consumers and routes it to your service\. For more information, see [Getting Started with Network Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancer-getting-started.html) in the *User Guide for Network Load Balancers*\. We recommend that you configure your service in all Availability Zones within the Region\.
 
 1. Create a VPC endpoint service configuration and specify your Network Load Balancer\.
 
@@ -25,11 +27,11 @@ The following are the general steps to enable service consumers to connect to yo
 
 1. Grant permissions to specific service consumers \(AWS accounts, IAM users, and IAM roles\) to create a connection to your endpoint service\.
 
-1. A service consumer that has been granted permissions creates an interface endpoint to your service, optionally in each Availability Zone in which you've configured your service\.
+1. A service consumer that has been granted permissions creates an interface endpoint to your service, optionally in each Availability Zone in which you configured your service\.
 
 1. To activate the connection, accept the interface endpoint connection request\. By default, connection requests must be manually accepted\. However, you can configure the acceptance settings for your endpoint service so that any connection requests are automatically accepted\.
 
-The combination of permissions and acceptance settings can help you control which service consumers \(AWS principals\) can access to your service\. For example, you can grant permissions to selected principals that you trust and automatically accept all connection requests, or you can grant permissions to a wider group of principals and manually accept specific connection requests that you trust\.
+The combination of permissions and acceptance settings can help you control which service consumers \(AWS principals\) can access your service\. For example, you can grant permissions to selected principals that you trust and automatically accept all connection requests, or you can grant permissions to a wider group of principals and manually accept specific connection requests that you trust\.
 
 In the following diagram, the account owner of VPC B is a service provider, and has a service running on instances in subnet B\. The owner of VPC B has a service endpoint \(vpce\-svc\-1234\) with an associated Network Load Balancer that points to the instances in subnet B as targets\. Instances in subnet A of VPC A use an interface endpoint to access the services in subnet B\.
 
@@ -37,9 +39,13 @@ In the following diagram, the account owner of VPC B is a service provider, and 
 
 For low latency and fault tolerance, we recommend using a Network Load Balancer with targets in every Availability Zone of the AWS Region\. To help achieve high availability for service consumers that use [zonal DNS hostnames](vpce-interface.md#access-service-though-endpoint) to access the service, you can enable cross\-zone load balancing\. Cross\-zone load balancing enables the load balancer to distribute traffic across the registered targets in all enabled Availability Zones\. For more information, see [Cross\-Zone Load Balancing](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancers.html#cross-zone-load-balancing) in the *User Guide for Network Load Balancers*\. Regional data transfer charges may apply to your account when you enable cross\-zone load balancing\.
 
-In the following diagram, the owner of VPC B is the service provider, and has configured a Network Load Balancer with targets in two different Availability Zones\. The service consumer \(VPC A\) has created interface endpoints in the same two Availability Zones in their VPC\. Requests to the service from instances in VPC A can use either interface endpoint\.
+In the following diagram, the owner of VPC B is the service provider, and it has configured a Network Load Balancer with targets in two different Availability Zones\. The service consumer \(VPC A\) has created interface endpoints in the same two Availability Zones in their VPC\. Requests to the service from instances in VPC A can use either interface endpoint\.
 
 ![\[Using interface endpoints to access an endpoint service\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-service-multi-az.png)
+
+## Endpoint Service Availability Zone Considerations<a name="vpce-endpoint-service-availability-zones"></a>
+
+When you create an endpoint service, the service is created in the Availability Zone that is mapped to your account and is independent from other accounts\. When the service provider and the consumer are in different accounts, use the Availability Zone ID to uniquely and consistently identify the endpoint service Availability Zone\. For example, `use1-az1` is an AZ ID for the `us-east-1` Region and maps to the same location in every AWS account\. For information about Availability Zone IDs, see [AZ IDs for Your Resources](https://docs.aws.amazon.com/ram/latest/userguide/working-with-az-ids.html) in the *AWS RAM User Guide* or use [describe\-availability\-zones](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-availability-zones.html)\. 
 
 ## Endpoint Service Limitations<a name="endpoint-service-limits"></a>
 
@@ -47,10 +53,9 @@ To use endpoint services, you need to be aware of the current rules and limitati
 + You cannot tag an endpoint service\.
 + An endpoint service supports IPv4 traffic over TCP only\.
 + Service consumers must use the endpoint\-specific DNS hostnames to access the endpoint service\. Private DNS is not supported\. For more information, see [Accessing a Service Through an Interface Endpoint](vpce-interface.md#access-service-though-endpoint)\.
-+ Endpoint services are only available in the AWS Region in which they are created\.
-+ If an endpoint service is associated with multiple Network Load Balancers, then for a specific Availability Zone, an interface endpoint will establish a connection with one load balancer only\.
++ If an endpoint service is associated with multiple Network Load Balancers, then for a specific Availability Zone, an interface endpoint establishes a connection with one load balancer only\.
 + For the endpoint service, the associated Network Load Balancer can support 55,000 simultaneous connections or about 55,000 connections per minute to each unique target \(IP address and port\)\. If you exceed these connections, there is an increased chance of port allocation errors\. To fix the port allocation errors, add more targets to the target group\. For information about Network Load Balancer target groups, see [Target Groups for Your Network Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-target-groups.html) and [Register Targets with Your Target Group](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/target-group-register-targets.html) in the *User Guide for Network Load Balancers*\.
-+ Availability Zones in your account might not map to the same locations as Availability Zones in another account; for example, your Availability Zone `us-east-1a` might not be the same location as `us-east-1a` for another account\. For more information, see [Region and Availability Zone Concepts](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-regions-availability-zones)\. When you configure an endpoint service, it's configured in the Availability Zones as mapped to your account\.
++ Availability Zones in your account might not map to the same locations as Availability Zones in another account\. For example, your Availability Zone `us-east-1a` might not be the same location as `us-east-1a` for another account\. For more information, see [Region and Availability Zone Concepts](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-regions-availability-zones)\. When you configure an endpoint service, it's configured in the Availability Zones as mapped to your account\.
 
 ## Creating a VPC Endpoint Service Configuration<a name="create-endpoint-service"></a>
 
@@ -113,7 +118,7 @@ After you create an endpoint service configuration, you must add permissions to 
 
 ## Adding and Removing Permissions for Your Endpoint Service<a name="add-endpoint-service-permissions"></a>
 
-After you've created your endpoint service configuration, you can control which service consumers can create an interface endpoint to connect to your service\. Service consumers are [IAM principals](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html)—IAM users, IAM roles, and AWS accounts\. To add or remove permissions for a principal, you need its Amazon Resource Name \(ARN\)\.
+After you create your endpoint service configuration, you can control which service consumers can create an interface endpoint to connect to your service\. Service consumers are [IAM principals](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html)—IAM users, IAM roles, and AWS accounts\. To add or remove permissions for a principal, you need its Amazon Resource Name \(ARN\)\.
 + For an AWS account \(and therefore all principals in the account\), the ARN is in the form `arn:aws:iam::aws-account-id:root`\.
 + For a specific IAM user, the ARN is in the form `arn:aws:iam::aws-account-id:user/user-name`\.
 + For a specific IAM role, the ARN is in the form `arn:aws:iam::aws-account-id:role/role-name`\.
@@ -142,7 +147,7 @@ Specify `*` to add permissions for all principals\. This enables all principals 
    aws ec2 modify-vpc-endpoint-service-permissions --service-id vpce-svc-03d5ebb7d9579a2b3 --add-allowed-principals '["arn:aws:iam::123456789012:root"]'
    ```
 
-1. To view the permissions you've added for your endpoint service, use the [describe\-vpc\-endpoint\-service\-permissions](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-service-permissions.html) command\.
+1. To view the permissions you added for your endpoint service, use the [describe\-vpc\-endpoint\-service\-permissions](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-service-permissions.html) command\.
 
    ```
    aws ec2 describe-vpc-endpoint-service-permissions --service-id vpce-svc-03d5ebb7d9579a2b3
@@ -215,7 +220,7 @@ You cannot disassociate a load balancer if there are interface endpoints attache
 
 ## Accepting and Rejecting Interface Endpoint Connection Requests<a name="accept-reject-endpoint-requests"></a>
 
-After you've created an endpoint service, service consumers for which you've added permission can create an interface endpoint to connect to your service\. For more information about creating an interface endpoint, see [Interface VPC Endpoints \(AWS PrivateLink\)](vpce-interface.md)\.
+After you create an endpoint service, service consumers for which you've added permission can create an interface endpoint to connect to your service\. For more information about creating an interface endpoint, see [Interface VPC Endpoints \(AWS PrivateLink\)](vpce-interface.md)\.
 
 If you specified that acceptance is required for connection requests, you must manually accept or reject interface endpoint connection requests to your endpoint service\. After an interface endpoint is accepted, it becomes `available`\.
 
@@ -382,6 +387,32 @@ If you no longer need a notification, you can delete it\.
 A Network Load Balancer provides source IP addresses to your application \(your service\)\. When service consumers send traffic to your service through an interface endpoint, the source IP addresses provided to your application are the private IP addresses of the Network Load Balancer nodes, and not the IP addresses of the service consumers\.
 
 If you need the IP addresses of the service consumers and their corresponding interface endpoint IDs, enable Proxy Protocol on your load balancer and get the client IP addresses from the Proxy Protocol header\. For more information, see [Proxy Protocol](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-target-groups.html#proxy-protocol) in the *User Guide for Network Load Balancers*\.
+
+## Adding or Removing VPC Endpoint Service Tags<a name="modify-tags-vpc-endpoint-service-tags"></a>
+
+Tags provide a way to identify the VPC endpoint service\. You can add or remove a tag\.
+
+**To add or remove a VPC endpoint service tag**
+
+1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
+
+1. In the navigation pane, choose **Endpoint Services**\.
+
+1. Select the VPC endpoint service and choose **Actions**, **Add/Edit Tags**\.
+
+1. Add or remove a tag\.
+
+   \[Add a tag\] Choose **Create tag** and do the following:
+   + For **Key**, enter the key name\.
+   + For **Value**, enter the key value\.
+
+   \[Remove a tag\] Choose the delete button \(“x”\) to the right of the tag’s Key and Value\.
+
+**To add or remove a tag using the AWS Tools for Windows PowerShell or an API**
++ [tag\-resource](https://docs.aws.amazon.com/cli/latest/reference/directconnect/tag-resource.html) \(AWS CLI\) 
++ [TagResource](https://docs.aws.amazon.com/directconnect/latest/APIReference/API_TagResource.html) \(AWS Tools for Windows PowerShell\)
++ [untag\-resource](https://docs.aws.amazon.com/cli/latest/reference/directconnect/untag-resource.html) \(AWS CLI\) 
++ [TagResource](https://docs.aws.amazon.com/directconnect/latest/APIReference/API_UntagResource.html) \(AWS Tools for Windows PowerShell\)
 
 ## Deleting an Endpoint Service Configuration<a name="delete-endpoint-service"></a>
 

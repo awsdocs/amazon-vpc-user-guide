@@ -105,6 +105,7 @@ The following topics explain routing for specific gateways or connections in you
 + [Route Tables for ClassicLink](#route-tables-classiclink)
 + [Route Tables for a VPC Endpoint](#route-tables-vpce)
 + [Route Tables for an Egress\-Only Internet Gateway](#route-tables-eigw)
++ [Route Tables for Transit Gateways](#route-tables-tgw)
 
 ### Route Tables for an Internet Gateway<a name="route-tables-internet-gateway"></a>
 
@@ -194,6 +195,32 @@ For more information about routing for endpoints, and the implications for route
 
 You can create an egress\-only Internet gateway for your VPC to enable instances in a private subnet to initiate outbound communication to the Internet, but prevent the Internet from initiating connections with the instances\. An egress\-only Internet gateway is used for IPv6 traffic only\. To configure routing for an egress\-only Internet gateway, add a route for the private subnet that routes IPv6 Internet traffic \(`::/0`\) to the egress\-only Internet gateway\. For more information, see [Egress\-Only Internet Gateways](egress-only-internet-gateway.md)\.
 
+### Route Tables for Transit Gateways<a name="route-tables-tgw"></a>
+
+When you attach a VPC to a transit gateway, you need to add a route for traffic to route through the transit gateway\. 
+
+Consider the following scenario where you have three VPCs that are attached to a transit gateway\. In this scenario, all attachments are associated with the transit gateway route table and propagate to the transit gateway route table\. Therefore, all attachments can route packets to each other, with the transit gateway serving as a simple layer 3 IP hub\. 
+
+For example, you have two VPCs, with the following information:
++ VPC A: 10\.1\.0\.0/16, attachment ID tgw\-attach\-11111111111111111
++ VPC B: 10\.2\.0\.0/16, attachment ID tgw\-attach\-22222222222222222
+
+To enable traffic between the VPCs and allow access to the transit gateway the VPC A route table is configured as follows\.
+
+
+| Destination | Target | 
+| --- | --- | 
+|  10\.1\.0\.0/16  |  local  | 
+|  10\.0\.0\.0/8  |  *tgw\-id*  | 
+
+The following is an example of the transit gateway route table entries for the VPC attachments\.\.
+
+
+| Destination | Target | 
+| --- | --- | 
+|  10\.1\.0\.0/16  | tgw\-attach\-11111111111111111 | 
+|  10\.2\.0\.0/16  |  tgw\-attach\-22222222222222222  | 
+
 ## Working with Route Tables<a name="WorkWithRouteTables"></a>
 
 The following tasks show you how to work with route tables\.
@@ -269,9 +296,13 @@ You can add, delete, and modify routes in your route tables\. You can only modif
 
 1. In the navigation pane, choose **Route Tables**, and then select the route table\.
 
-1. In the **Routes** tab, choose **Edit**\.
+1. Choose **Actions**, **Edit routes**\.
 
-1. To modify an existing route, replace the destination CIDR block or a single IP address for **Destination**, and then select a target for **Target**\. Choose **Add another route**, **Save**\.
+1. To add a route, choose **Add route**, for **Destination** enter the destination CIDR block or a single IP address, and then select a target for **Target**\.
+
+1. To modify an existing route, replace the destination CIDR block or a single IP address for **Destination**, and then select a target for **Target**\. 
+
+1. Choose **Save routes** when you are done\.
 
 **To delete a route from a route table**
 
@@ -279,9 +310,11 @@ You can add, delete, and modify routes in your route tables\. You can only modif
 
 1. In the navigation pane, choose **Route Tables**, and then select the route table\.
 
-1. In the **Routes** tab, choose **Edit**, and then choose **Remove** for the route to delete\.
+1. Choose **Actions**, **Edit routes**\.
 
-1. Choose **Save** when you're done\.
+1.  Choose the delete button \(“x”\) to the right of the route that you want to delete\.
+
+1. Choose **Save routes** when you are done\.
 
 ### Enabling and Disabling Route Propagation<a name="EnableDisableRouteProp"></a>
 
@@ -295,7 +328,7 @@ For more information about VPN routing options, see [Site\-to\-Site VPN Routing 
 
 1. In the navigation pane, choose **Route Tables**, and then select the route table\.
 
-1. On the **Route Propagation** tab, choose **Edit**\.
+1. Choose **Actions**, **Edit route propagation**\.
 
 1. Select the **Propagate** check box next to the virtual private gateway, and then choose **Save**\.
 
@@ -305,7 +338,7 @@ For more information about VPN routing options, see [Site\-to\-Site VPN Routing 
 
 1. In the navigation pane, choose **Route Tables**, and then select the route table\.
 
-1. On the **Route Propagation** tab, choose **Edit**\. 
+1. Choose **Actions**, **Edit route propagation**\. 
 
 1. Clear the **Propagate** check box, and then choose **Save**\.
 

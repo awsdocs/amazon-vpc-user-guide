@@ -26,6 +26,7 @@ There is no additional charge for using gateway endpoints\. Standard charges for
 + [Creating a Gateway Endpoint](#create-gateway-endpoint)
 + [Modifying Your Security Group](#vpc-endpoints-security)
 + [Modifying a Gateway Endpoint](#modify-gateway-endpoint)
++ [Adding or Removing Gateway Endpoint Tags](#modify-tags-vpc-gateway-endpoint-tags)
 
 ## Routing for Gateway Endpoints<a name="vpc-endpoints-routing"></a>
 
@@ -106,7 +107,6 @@ To ensure that all traffic destined for Amazon S3 in the same Region is routed v
 To use gateway endpoints, you need to be aware of the current limitations:
 + You cannot use a prefix list ID in an outbound rule in a network ACL to allow or deny outbound traffic to the service specified in an endpoint\. If your network ACL rules restrict traffic, you must specify the CIDR block \(IP address range\) for the service instead\. You can, however, use a prefix list ID in an outbound security group rule\. For more information, see [Security Groups](vpc-endpoints-access.md#vpc-endpoints-security-groups)\. 
 + Endpoints are supported within the same region only\. You cannot create an endpoint between a VPC and a service in a different region\.
-+ You cannot tag an endpoint\.
 + Endpoints support IPv4 traffic only\.
 + You cannot transfer an endpoint from one VPC to another, or from one service to another\.
 + You have a limit on the number of endpoints you can create per VPC\. For more information, see [VPC Endpoints](amazon-vpc-limits.md#vpc-limits-endpoints)\.
@@ -261,3 +261,29 @@ It can take a few minutes for policy changes to take effect\.
 **To modify a VPC endpoint using the AWS Tools for Windows PowerShell or an API**
 + [Edit\-EC2VpcEndpoint](https://docs.aws.amazon.com/powershell/latest/reference/items/Edit-EC2VpcEndpoint.html) \(AWS Tools for Windows PowerShell\)
 + [ModifyVpcEndpoint](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-ModifyVpcEndpoint.html) \(Amazon EC2 Query API\)
+
+## Adding or Removing Gateway Endpoint Tags<a name="modify-tags-vpc-gateway-endpoint-tags"></a>
+
+Tags provide a way to identify the gateway endpoint\. You can add or remove a tag\.
+
+**To add or remove a gateway endpoint tag**
+
+1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
+
+1. In the navigation pane, choose **Endpoints**\.
+
+1. Select the gateway endpoint and choose **Actions**, **Add/Edit Tags**\.
+
+1. Add or remove a tag\.
+
+   \[Add a tag\] Choose **Create tag** and do the following:
+   + For **Key**, enter the key name\.
+   + For **Value**, enter the key value\.
+
+   \[Remove a tag\] Choose the delete button \(“x”\) to the right of the tag’s Key and Value\.
+
+**To add or remove a tag using the AWS Tools for Windows PowerShell or an API**
++ [tag\-resource](https://docs.aws.amazon.com/cli/latest/reference/directconnect/tag-resource.html) \(AWS CLI\) 
++ [TagResource](https://docs.aws.amazon.com/directconnect/latest/APIReference/API_TagResource.html) \(AWS Tools for Windows PowerShell\)
++ [untag\-resource](https://docs.aws.amazon.com/cli/latest/reference/directconnect/untag-resource.html) \(AWS CLI\) 
++ [TagResource](https://docs.aws.amazon.com/directconnect/latest/APIReference/API_UntagResource.html) \(AWS Tools for Windows PowerShell\)

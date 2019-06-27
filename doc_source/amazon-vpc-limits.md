@@ -25,13 +25,6 @@ For more information, see [DNS Limits](vpc-dns.md#vpc-dns-limits)\.
 | --- | --- | --- | 
 |  Elastic IP addresses per Region  |  5  |  This is the limit for the number of Elastic IP addresses for use in EC2\-VPC\. For Elastic IP addresses for use in EC2\-Classic, see [Amazon EC2 Limits](https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html#limits_ec2) in the *Amazon Web Services General Reference*\.  | 
 
-## Flow Logs<a name="vpc-limits-flow-logs"></a>
-
-
-| Resource | Default limit | Comments | 
-| --- | --- | --- | 
-|  Flow logs per single network interface, single subnet, or single VPC in a Region  | 2 | This limit cannot be increased\. You can effectively have 6 flow logs per network interface if you create 2 flow logs for the subnet, and 2 flow logs for the VPC in which your network interface resides\. | 
-
 ## Gateways<a name="vpc-limits-gateways"></a>
 
 
@@ -109,5 +102,5 @@ All standard VPC limits apply to a shared VPC\.
 
 | Resource | Default limit | Comments | 
 | --- | --- | --- | 
-|  Number of distinct accounts that a VPC can be shared with  |   30  |  \-  | 
-| Number of subnets that can be shared with an account |  100 |  \-  | 
+|  Number of distinct accounts that a VPC can be shared with  |   100  | This is the limit for the number of distinct participant accounts that subnets in a VPC can be shared with\. This is a per VPC limit and applies across all the subnets shared in a VPC\. AWS recommends that you paginate your DescribeSecurityGroups and DescribeNetworkInterfaces API calls before requesting an increase for this limit\. To increase this limit, contact AWS Support\.  | 
+| Number of subnets that can be shared with an account |  100 |  This is the limit for maximum number of subnets that can be shared with an AWS account\. AWS recommends that you paginate your `DescribeSecurityGroups` and `DescribeSubnets` API calls before requesting an increase for this limit\. To increase this limit contact AWS Support\.  | 
