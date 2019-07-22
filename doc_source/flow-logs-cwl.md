@@ -145,7 +145,7 @@ In this example, you have a flow log for `eni-1a2b3c4d`\. You want to create an 
 
 1. In the navigation pane, choose **Logs**.
 
-1. Select the associated **Metric Filters** value for the your Flow Log log group\.
+1. Select the associated **Metric Filters** value for the log group for your flow log\.
 
 1. Select **Add Metric Filter**\.
 
