@@ -50,7 +50,6 @@ When you create an endpoint service, the service is created in the Availability 
 ## Endpoint Service Limitations<a name="endpoint-service-limits"></a>
 
 To use endpoint services, you need to be aware of the current rules and limitations:
-+ You cannot tag an endpoint service\.
 + An endpoint service supports IPv4 traffic over TCP only\.
 + Service consumers must use the endpoint\-specific DNS hostnames to access the endpoint service\. Private DNS is not supported\. For more information, see [Accessing a Service Through an Interface Endpoint](vpce-interface.md#access-service-though-endpoint)\.
 + If an endpoint service is associated with multiple Network Load Balancers, then for a specific Availability Zone, an interface endpoint establishes a connection with one load balancer only\.
@@ -409,10 +408,10 @@ Tags provide a way to identify the VPC endpoint service\. You can add or remove 
    \[Remove a tag\] Choose the delete button \(“x”\) to the right of the tag’s Key and Value\.
 
 **To add or remove a tag using the AWS Tools for Windows PowerShell or an API**
-+ [tag\-resource](https://docs.aws.amazon.com/cli/latest/reference/directconnect/tag-resource.html) \(AWS CLI\) 
-+ [TagResource](https://docs.aws.amazon.com/directconnect/latest/APIReference/API_TagResource.html) \(AWS Tools for Windows PowerShell\)
-+ [untag\-resource](https://docs.aws.amazon.com/cli/latest/reference/directconnect/untag-resource.html) \(AWS CLI\) 
-+ [TagResource](https://docs.aws.amazon.com/directconnect/latest/APIReference/API_UntagResource.html) \(AWS Tools for Windows PowerShell\)
++ [create\-tags](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-tags.html) \(AWS CLI\) 
++ [CreateTags](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateTags.html) \(AWS Tools for Windows PowerShell\)
++ [delete\-tags](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-tags.html) \(AWS CLI\) 
++ [DeleteTags](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DeleteTags.html) \(AWS Tools for Windows PowerShell\)
 
 ## Deleting an Endpoint Service Configuration<a name="delete-endpoint-service"></a>
 

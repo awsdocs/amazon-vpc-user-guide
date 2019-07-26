@@ -6,9 +6,9 @@ Endpoints are virtual devices\. They are horizontally scaled, redundant, and hig
 
 There are two types of VPC endpoints: *interface endpoints* and *gateway endpoints*\. Create the type of VPC endpoint required by the supported service\.
 
-**Interface Endpoints \(Powered by AWS PrivateLink\)**
+**Interface Endpoints \(Powered by [AWS PrivateLink\)](https://aws.amazon.com/privatelink/)**
 
-An [interface endpoint](vpce-interface.md) is an elastic network interface with a private IP address that serves as an entry point for traffic destined to a supported service\. The following services are supported:
+An [interface endpoint](vpce-interface.md) is an elastic network interface with a private IP address from the IP address range of your subnet that serves as an entry point for traffic destined to a supported service\. The following services are supported:
 + [Amazon API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-private-apis.html)
 + [App Mesh](https://docs.aws.amazon.com//app-mesh/latest/userguide/vpc-endpoints.html)
 + [AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-vpce-bucketnames.html)
@@ -43,7 +43,7 @@ An [interface endpoint](vpce-interface.md) is an elastic network interface with 
 
 **Gateway Endpoints**
 
-A [gateway endpoint](vpce-gateway.md) is a gateway that is a target for a specified route in your route table, used for traffic destined to a supported AWS service\. The following AWS services are supported:
+A [gateway endpoint](vpce-gateway.md) is a gateway that you specify as a target for a route in your route table for traffic destined to a supported AWS service\. The following AWS services are supported:
 + Amazon S3
 + DynamoDB
 

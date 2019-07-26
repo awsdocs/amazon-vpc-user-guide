@@ -6,7 +6,7 @@ To create and set up a gateway endpoint, follow these general steps:
 
 1. Attach an *endpoint policy* to your endpoint that allows access to some or all of the service to which you're connecting\. For more information, see [Using VPC Endpoint Policies](vpc-endpoints-access.md#vpc-endpoint-policies)\. 
 
-1. Specify one or more route tables to control the routing of traffic between your VPC and the other service\. Subnets that use these route tables have access to the endpoint, and traffic from instances in these subnets to the service is then routed through the endpoint\.
+1. Specify one or more route tables in which to create routes to the service\. Route tables control the routing of traffic between your VPC and the other service\. Each subnet that's associated with one of these route tables has access to the endpoint, and traffic from instances in these subnets to the service is then routed through the endpoint\.
 
 In the following diagram, instances in subnet 2 can access Amazon S3 through the gateway endpoint\.
 
@@ -48,7 +48,7 @@ To view the current public IP address range for a service, you can use the [desc
 The range of public IP addresses for a service may change from time to time\. Consider the implications before you make routing or other decisions based on the current IP address range for a service\.
 
 The following rules apply:
-+ You can have multiple endpoint routes to different services in a route table, and you can have multiple endpoint routes to the same service in different route tables, but you cannot have multiple endpoints to the same service in a single route table\. For example, if you have two endpoints to Amazon S3 in your VPC, you cannot use the same route table for both endpoints\. 
++ You can have multiple endpoint routes to different services in a route table, and you can have multiple endpoint routes to the same service in different route tables, but you cannot have multiple endpoint routes to the same service in a single route table\. For example, if you create two endpoints to Amazon S3 in your VPC, you cannot create endpoint routes for both endpoints in the same route table\. 
 + You cannot explicitly add, modify, or delete an endpoint route in your route table by using the route table APIs, or by using the Route Tables page in the Amazon VPC console\. You can only add an endpoint route by associating a route table with an endpoint\. To change the route tables that are associated with your endpoint, you can [modify the endpoint](#modify-gateway-endpoint)\. 
 + An endpoint route is automatically deleted when you remove the route table association from the endpoint \(by modifying the endpoint\), or when you delete your endpoint\. 
 
@@ -283,7 +283,7 @@ Tags provide a way to identify the gateway endpoint\. You can add or remove a ta
    \[Remove a tag\] Choose the delete button \(“x”\) to the right of the tag’s Key and Value\.
 
 **To add or remove a tag using the AWS Tools for Windows PowerShell or an API**
-+ [tag\-resource](https://docs.aws.amazon.com/cli/latest/reference/directconnect/tag-resource.html) \(AWS CLI\) 
-+ [TagResource](https://docs.aws.amazon.com/directconnect/latest/APIReference/API_TagResource.html) \(AWS Tools for Windows PowerShell\)
-+ [untag\-resource](https://docs.aws.amazon.com/cli/latest/reference/directconnect/untag-resource.html) \(AWS CLI\) 
-+ [TagResource](https://docs.aws.amazon.com/directconnect/latest/APIReference/API_UntagResource.html) \(AWS Tools for Windows PowerShell\)
++ [create\-tags](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-tags.html) \(AWS CLI\) 
++ [CreateTags](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateTags.html) \(AWS Tools for Windows PowerShell\)
++ [delete\-tags](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-tags.html) \(AWS CLI\) 
++ [DeleteTags](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DeleteTags.html) \(AWS Tools for Windows PowerShell\)

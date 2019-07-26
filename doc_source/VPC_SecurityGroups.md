@@ -34,7 +34,10 @@ Some types of traffic are tracked differently to others\. For more information, 
 
 ## Default Security Group for Your VPC<a name="DefaultSecurityGroup"></a>
 
-Your VPC automatically comes with a default security group\. If you don't specify a different security group when you launch the instance, each EC2 instance that you launch in your VPC is automatically associated with a security group named "launch\-wizard\-*xx*"\. For example, the security group for the first EC2 instance that you launch is named "launch\-wizard\-1"\.
+Your VPC automatically comes with a default security group\. If you don't specify a different security group when you launch the instance, we associate the default security group with your instance\. 
+
+**Note**  
+If you launch an instance in the Amazon EC2 console, the launch instance wizard automatically defines a "launch\-wizard\-*xx*" security group, which you can associate with the instance instead of the default security group\.
 
 The following table describes the default rules for a default security group\.
 

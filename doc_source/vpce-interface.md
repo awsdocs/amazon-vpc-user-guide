@@ -45,7 +45,7 @@ An endpoint network interface is a requester\-managed network interface\. You ca
 
 1. Specify the security groups to associate with the endpoint network interface\. The security group rules control the traffic to the endpoint network interface from resources in your VPC\. If you do not specify a security group, we associate the default security group for the VPC\.
 
-1. \(Optional\) AWS services and AWS Marketplace partner services only\) Enable [private DNS](#vpce-private-dns) for the endpoint to enable you to make requests to the service using its default DNS hostname\.
+1. \(Optional, AWS services and AWS Marketplace partner services only\) Enable [private DNS](#vpce-private-dns) for the endpoint to enable you to make requests to the service using its default DNS hostname\.
 **Important**  
 Private DNS is enabled by default for endpoints created for AWS services and AWS Marketplace partner services\. 
 
@@ -119,7 +119,7 @@ Services may not be available in all Availability Zones through an interface end
 
 ## Pricing for Interface Endpoints<a name="vpce-interface-pricing"></a>
 
-You are charged for creating and using an interface endpoint to a service\. Hourly usage rates and data processing rates apply\. For more information, see [Amazon VPC Pricing](http://aws.amazon.com/vpc/pricing/)\.
+You are charged for creating and using an interface endpoint to a service\. Hourly usage rates and data processing rates apply\. For more information, see [AWS PrivateLink Pricing](https://aws.amazon.com/privatelink/pricing/)\.
 
 ## Creating an Interface Endpoint<a name="create-interface-endpoint"></a>
 
@@ -428,7 +428,7 @@ After you've created an interface endpoint, you can submit requests to the suppo
 + The endpoint\-specific zonal DNS hostname that we generate for each Availability Zone in which the endpoint is available\. The hostname includes the Availability Zone in its name; for example, `vpce-0fe5b17a0707d6abc-29p5708s-us-east-1a.ec2.us-east-1.vpce.amazonaws.com`\. You might use this option if your architecture isolates Availability Zones \(for example, for fault containment or to reduce regional data transfer costs\)\.
 **Note**  
 A request to the zonal DNS hostname is destined to the corresponding Availability Zone location in the service provider's account, which might not have the same Availability Zone name as your account\. For more information, see [Region and Availability Zone Concepts](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-regions-availability-zones)\.
-+ If you have enabled private DNS for the endpoint \(a private hosted zone\), the default DNS hostname for the AWS service for the Region; for example, `ec2.us-east-1.amazonaws.com`\.
++ If you have enabled private DNS for the endpoint \(a private hosted zone; applicable to AWS services and AWS Marketplace partner services only\), the default DNS hostname for the AWS service for the Region; for example, `ec2.us-east-1.amazonaws.com`\.
 + The private IP address of the endpoint network interface in the VPC\.
 
 For example, in a subnet in which you have an interface endpoint to Elastic Load Balancing and for which you have not enabled the private DNS option, use the following AWS CLI command from an instance to describe your load balancers\. The command uses the endpoint\-specific regional DNS hostname to make the request using the interface endpoint:
@@ -437,7 +437,7 @@ For example, in a subnet in which you have an interface endpoint to Elastic Load
 aws elbv2 describe-load-balancers --endpoint-url https://vpce-0f89a33420c193abc-bluzidnv.elasticloadbalancing.us-east-1.vpce.amazonaws.com/
 ```
 
-If you enable the private DNS option, you do not have to specify the endpoint URL in the request\. The AWS CLI uses the default endpoint for the service for the Region \(`elasticloadbalancing.us-east-1.amazonaws.com`\)\.
+If you enable the private DNS option, you do not have to specify the endpoint URL in the request\. The AWS CLI uses the default endpoint for the AWS service for the Region \(`elasticloadbalancing.us-east-1.amazonaws.com`\)\.
 
 ## Modifying an Interface Endpoint<a name="modify-interface-endpoint"></a>
 

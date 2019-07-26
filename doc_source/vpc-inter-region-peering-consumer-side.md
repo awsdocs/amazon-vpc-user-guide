@@ -6,7 +6,7 @@ Consider the following example, where a service runs on instances in Provider VP
 
 To allow resources that are in Consumer VPC 1 to privately access the service, the service consumer must complete the following steps:
 
-1. Create Consumer VPC 2 in Region A\.
+1. Create Consumer VPC 2 in Region B\.
 
 1. Create a VPC endpoint that spans one or more subnets in Consumer VPC 2\.
 

@@ -4,7 +4,7 @@ Consider the following example, where a service runs on instances in Provider VP
 
 ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-inter-region-peering-provider-side.png)
 
-To allow resources that are in Consumer VPC 2 the service provider must complete the following steps:
+To allow resources that are in Consumer VPC 2 to privately access the service, the service provider must complete the following steps:
 
 1. Create Provider VPC 2\.
 

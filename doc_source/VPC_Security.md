@@ -26,7 +26,7 @@ The following table summarizes the basic differences between security groups and
 |  Supports allow rules only  |  Supports allow rules and deny rules  | 
 |  Is stateful: Return traffic is automatically allowed, regardless of any rules  |  Is stateless: Return traffic must be explicitly allowed by rules  | 
 |  We evaluate all rules before deciding whether to allow traffic  |  We process rules in number order when deciding whether to allow traffic  | 
-|  Applies to an instance only if someone specifies the security group when launching the instance, or associates the security group with the instance later on  |  Automatically applies to all instances in the subnets it's associated with \(therefore, you don't have to rely on users to specify the security group\)  | 
+|  Applies to an instance only if someone specifies the security group when launching the instance, or associates the security group with the instance later on  |  Automatically applies to all instances in the subnets it's associated with \(therefore, an additional layer of defense if the security group rules are too permissive\)  | 
 
 The following diagram illustrates the layers of security provided by security groups and network ACLs\. For example, traffic from an Internet gateway is routed to the appropriate subnet using the routes in the routing table\. The rules of the network ACL associated with the subnet control which traffic is allowed to the subnet\. The rules of the security group associated with an instance control which traffic is allowed to the instance\.
 

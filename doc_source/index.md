@@ -55,6 +55,7 @@ Amazon's trademarks and trade dress may not be used in
    + [NAT](vpc-nat.md)
       + [NAT Gateways](vpc-nat-gateway.md)
          + [Monitoring NAT Gateways Using Amazon CloudWatch](vpc-nat-gateway-cloudwatch.md)
+         + [Troubleshooting NAT Gateways](nat-gateway-troubleshooting.md)
       + [NAT Instances](VPC_NAT_Instance.md)
       + [Comparison of NAT Instances and NAT Gateways](vpc-nat-comparison.md)
    + [DHCP Options Sets](VPC_DHCP_Options.md)

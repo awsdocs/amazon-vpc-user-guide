@@ -419,8 +419,8 @@ When the VPC wizard launched the NAT instance, it used the default security grou
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the navigation pane, choose **Network Interfaces**\.
+1. In the navigation pane, choose **Instances**\.
 
-1. Select the network interface for the NAT instance from the list and choose **Actions**, **Change Security Groups**\.
+1. Select the NAT instance from the list and choose **Actions**, **Networking**, **Change Security Groups**\.
 
-1. In the **Change Security Groups** dialog box, for **Security groups**, select the NATSG security group that you created \(see [Security](#VPC_Scenario2_Security)\) and choose **Save**\.
+1. Select the NATSG security group that you created \(see [Security](#VPC_Scenario2_Security)\) and choose **Assign Security Groups**\.

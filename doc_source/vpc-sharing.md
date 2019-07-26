@@ -92,8 +92,7 @@ In a shared VPC, each participant pays for their application resources including
 ## Unsupported Services for Shared Subnets<a name="vpc-share-unsupported-services"></a>
 
 Participants cannot use a shared subnet with the following services:
-+ Amazon Aurora Serverless 
-+ AWS CloudHSM
++ AWS CloudHSM \(Classic\)
 + AWS Glue 
 +  Amazon EMR
 + Network Load Balancer 
@@ -107,3 +106,4 @@ The following limitations apply to working with VPC sharing:
 + Participants cannot launch resources using the default security group for the VPC because it belongs to the owner\.
 + Service limits apply per individual account\. For more information about service limits, see [AWS Service Limits](https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html) in the *Amazon Web Services General Reference*\.
 + VPC tags are not shared with the participants\.
++ When participants launch resources in a shared subnet, they should make sure they attach their security group to the resource, and not rely on the default security group\. Participants cannot use the default security group because it belongs to the VPC owner\.

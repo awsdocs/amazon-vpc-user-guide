@@ -20,7 +20,7 @@ The following table lists AWS services that may be affected by an endpoint, and 
 
 | AWS service | Note | 
 | --- | --- | 
-| Amazon AppStream 2\.0 | Your endpoint policy must allow access to the specific buckets that are used by AppStream 2\.0 for storing user content\. For more information, see [Home Folders and VPC Endpoints](https://docs.aws.amazon.com/appstream2/latest/developerguide/managing-network.html#managing-network-vpce-iam-policy) in the Amazon AppStream 2\.0 Developer Guide\. | 
+| Amazon AppStream 2\.0 | Your endpoint policy must allow access to the specific buckets that are used by AppStream 2\.0 for storing user content\. For more information, see [Home Folders and VPC Endpoints](https://docs.aws.amazon.com/appstream2/latest/developerguide/managing-network.html#managing-network-vpce-iam-policy) in the Amazon AppStream 2\.0 Administration Guide\. | 
 | AWS CloudFormation | If you have resources in your VPC that must respond to a wait condition or custom resource request, your endpoint policy must allow at least access to the specific buckets that are used by these resources\. For more information, see [AWS CloudFormation and VPC Endpoints](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-vpce-bucketnames.html)\. | 
 | CodeDeploy | Your endpoint policy must allow full access to Amazon S3, or allow access to any S3 buckets that you've created for your CodeDeploy deployments\. | 
 | Elastic Beanstalk | Your endpoint policy must allow at least access to any S3 buckets used for Elastic Beanstalk applications\. For more information, see [Using Elastic Beanstalk with Amazon S3](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/AWSHowTo.S3.html) in the AWS Elastic Beanstalk Developer Guide\. | 

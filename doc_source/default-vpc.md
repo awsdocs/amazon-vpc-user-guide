@@ -81,7 +81,7 @@ For more information about the EC2\-Classic and EC2\-VPC platforms, see [Support
 
 **To detect platform support using the command line**
 + [describe\-account\-attributes](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-account-attributes.html) \(AWS CLI\)
-+ [Get\-EC2AccountAttributes](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2AccountAttributes.html) \(AWS Tools for Windows PowerShell\)
++ [Get\-EC2AccountAttribute](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2AccountAttribute.html) \(AWS Tools for Windows PowerShell\)
 
 The `supported-platforms` attribute in the output indicates which platforms you can launch EC2 instances into\.
 

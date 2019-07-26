@@ -143,11 +143,9 @@ In this example, you have a flow log for `eni-1a2b3c4d`\. You want to create an 
 
 1. Open the CloudWatch console at [https://console\.aws\.amazon\.com/cloudwatch/](https://console.aws.amazon.com/cloudwatch/)\.
 
-1. In the navigation pane, choose **Logs**.
+1. In the navigation pane, choose **Logs**\.
 
-1. Select the associated **Metric Filters** value for the log group for your flow log\.
-
-1. Select **Add Metric Filter**\.
+1. Choose the associated **Metric Filters** value for the log group for your flow log, and then choose **Add Metric Filter**\.
 
 1. For **Filter Pattern**, enter the following:
 

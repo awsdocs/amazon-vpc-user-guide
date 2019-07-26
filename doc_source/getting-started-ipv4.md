@@ -202,7 +202,7 @@ This completes the exercise; you can choose to continue using your instance in y
 
 ## Step 5: Clean Up<a name="getting-started-delete-vpc"></a>
 
-Before you can delete a VPC, you must terminate any instances that are running in the VPC\. If you delete a VPC using the VPC console, it also deletes resources that are associated with the VPC, such as subnets, security groups, network ACLs, DHCP options sets, route tables, and Internet gateways\. 
+Before you can delete a VPC, you must terminate any instances that are running in the VPC\. You can then delete the VPC using the VPC console\. The VPC console also automatically disassociates and deletes any resources that are associated with the VPC, such as subnets, security groups, network ACLs, DHCP options sets, route tables, and internet gateways\.
 
 **To terminate your instance, release your Elastic IP address, and delete your VPC**
 
@@ -220,4 +220,4 @@ Before you can delete a VPC, you must terminate any instances that are running i
 
 1. Select the VPC, choose **Actions**, and then choose **Delete VPC**\.
 
-1. When prompted for confirmation, choose **Yes, Delete**\.
+1. When prompted for confirmation, choose **Delete VPC**\.
