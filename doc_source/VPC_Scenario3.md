@@ -1,8 +1,8 @@
-# Scenario 3: VPC with Public and Private Subnets and AWS Managed VPN Access<a name="VPC_Scenario3"></a>
+# Scenario 3: VPC with Public and Private Subnets and AWS Site\-to\-Site VPN Access<a name="VPC_Scenario3"></a>
 
-The configuration for this scenario includes a virtual private cloud \(VPC\) with a public subnet and a private subnet, and a virtual private gateway to enable communication with your own network over an IPsec VPN tunnel\. We recommend this scenario if you want to extend your network into the cloud and also directly access the Internet from your VPC\. This scenario enables you to run a multi\-tiered application with a scalable web front end in a public subnet, and to house your data in a private subnet that is connected to your network by an IPsec VPN connection\.
+The configuration for this scenario includes a virtual private cloud \(VPC\) with a public subnet and a private subnet, and a virtual private gateway to enable communication with your own network over an IPsec VPN tunnel\. We recommend this scenario if you want to extend your network into the cloud and also directly access the Internet from your VPC\. This scenario enables you to run a multi\-tiered application with a scalable web front end in a public subnet, and to house your data in a private subnet that is connected to your network by an IPsec AWS Site\-to\-Site VPN connection\.
 
-This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnets with associated IPv6 CIDR blocks\. Instances launched into the subnets can receive IPv6 addresses\. Currently, we do not support IPv6 communication over a VPN connection; however, instances in the VPC can communicate with each other via IPv6, and instances in the public subnet can communicate over the Internet via IPv6\. For more information about IPv4 and IPv6 addressing, see [IP Addressing in Your VPC](vpc-ip-addressing.md)\.
+This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnets with associated IPv6 CIDR blocks\. Instances launched into the subnets can receive IPv6 addresses\. Currently, we do not support IPv6 communication over a Site\-to\-Site VPN connection; however, instances in the VPC can communicate with each other via IPv6, and instances in the public subnet can communicate over the Internet via IPv6\. For more information about IPv4 and IPv6 addressing, see [IP Addressing in Your VPC](vpc-ip-addressing.md)\.
 
 **Topics**
 + [Overview](#Configuration-3)
@@ -14,23 +14,23 @@ This scenario can also be optionally configured for IPv6—you can use the VPC w
 
 The following diagram shows the key components of the configuration for this scenario\.
 
-![\[Diagram for scenario 3: VPC with public and private subnets and VPN access\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/Case3_Diagram.png)
+![\[Diagram for scenario 3: VPC with public and private subnets and VPN access\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/Case3_Diagram.png)
 
 **Important**  
-For this scenario, the* [Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/)* describes what your network administrator needs to do to configure the Amazon VPC customer gateway on your side of the VPN connection\.
+For this scenario, the* [Amazon VPC Network Administrator Guide](https://docs.aws.amazon.com/vpc/latest/adminguide/)* describes what your network administrator needs to do to configure the Amazon VPC customer gateway on your side of the Site\-to\-Site VPN connection\.
 
 The configuration for this scenario includes the following:
 + A virtual private cloud \(VPC\) with a size /16 IPv4 CIDR \(example: 10\.0\.0\.0/16\)\. This provides 65,536 private IPv4 addresses\.
 + A public subnet with a size /24 IPv4 CIDR \(example: 10\.0\.0\.0/24\)\. This provides 256 private IPv4 addresses\. A public subnet is a subnet that's associated with a route table that has a route to an Internet gateway\.
 + A VPN\-only subnet with a size /24 IPv4 CIDR \(example: 10\.0\.1\.0/24\)\. This provides 256 private IPv4 addresses\.
 + An Internet gateway\. This connects the VPC to the Internet and to other AWS products\.
-+ A VPN connection between your VPC and your network\. The VPN connection consists of a virtual private gateway located on the Amazon side of the VPN connection and a customer gateway located on your side of the VPN connection\.
++ A Site\-to\-Site VPN connection between your VPC and your network\. The Site\-to\-Site VPN connection consists of a virtual private gateway located on the Amazon side of the Site\-to\-Site VPN connection and a customer gateway located on your side of the Site\-to\-Site VPN connection\.
 + Instances with private IPv4 addresses in the subnet range \(examples: 10\.0\.0\.5 and 10\.0\.1\.5\), which enables the instances to communicate with each other and other instances in the VPC\. 
 + Instances in the public subnet with Elastic IP addresses \(example: 198\.51\.100\.1\), which are public IPv4 addresses that enable them to be reached from the Internet\. The instances can have public IPv4 addresses assigned at launch instead of Elastic IP addresses\. Instances in the VPN\-only subnet are back\-end servers that don't need to accept incoming traffic from the Internet, but can send and receive traffic from your network\.
 + A custom route table associated with the public subnet\. This route table contains an entry that enables instances in the subnet to communicate with other instances in the VPC, and an entry that enables instances in the subnet to communicate directly with the Internet\.
 + The main route table associated with the VPN\-only subnet\. The route table contains an entry that enables instances in the subnet to communicate with other instances in the VPC, and an entry that enables instances in the subnet to communicate directly with your network\.
 
-For more information about subnets, see [VPCs and Subnets](VPC_Subnets.md) and [IP Addressing in Your VPC](vpc-ip-addressing.md)\. For more information about Internet gateways, see [Internet Gateways](VPC_Internet_Gateway.md)\. For more information about your VPN connection, see [AWS Managed VPN Connections](VPC_VPN.md)\. For more information about configuring a customer gateway, see the *[Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/)*\.
+For more information about subnets, see [VPCs and Subnets](VPC_Subnets.md) and [IP Addressing in Your VPC](vpc-ip-addressing.md)\. For more information about Internet gateways, see [Internet Gateways](VPC_Internet_Gateway.md)\. For more information about your AWS Site\-to\-Site VPN connection, see [What is AWS Site\-to\-Site VPN?](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html) in the *AWS Site\-to\-Site VPN User Guide*\. For more information about configuring a customer gateway, see the *[Amazon VPC Network Administrator Guide](https://docs.aws.amazon.com/vpc/latest/adminguide/)*\.
 
 ### Overview for IPv6<a name="vpc-scenario-3-overview-ipv6"></a>
 
@@ -42,18 +42,18 @@ You can optionally enable IPv6 for this scenario\. In addition to the components
 + Route table entries in the custom route table that enable instances in the public subnet to use IPv6 to communicate with each other, and directly over the Internet\.
 + A route table entry in the main route table that enable instances in the VPN\-only subnet to use IPv6 to communicate with each other\.
 
-![\[IPv6-enabled VPC with a public and VPN-only subnet\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/scenario-3-ipv6-diagram.png)
+![\[IPv6-enabled VPC with a public and VPN-only subnet\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/scenario-3-ipv6-diagram.png)
 
 ## Routing<a name="VPC_Scenario3_Routing"></a>
 
 Your VPC has an implied router \(shown in the configuration diagram for this scenario\)\. In this scenario, the VPC wizard updates the main route table used with the VPN\-only subnet, and creates a custom route table and associates it with the public subnet\. 
 
-The instances in the VPN\-only subnet can't reach the Internet directly; any Internet\-bound traffic must first traverse the virtual private gateway to your network, where the traffic is then subject to your firewall and corporate security policies\. If the instances send any AWS\-bound traffic \(for example, requests to the Amazon S3 or Amazon EC2 APIs\), the requests must go over the virtual private gateway to your network and then egress to the Internet before reaching AWS\. Currently, we do not support IPv6 for VPN connections\.
+The instances in the VPN\-only subnet can't reach the Internet directly; any Internet\-bound traffic must first traverse the virtual private gateway to your network, where the traffic is then subject to your firewall and corporate security policies\. If the instances send any AWS\-bound traffic \(for example, requests to the Amazon S3 or Amazon EC2 APIs\), the requests must go over the virtual private gateway to your network and then egress to the Internet before reaching AWS\. Currently, we do not support IPv6 for Site\-to\-Site VPN connections\.
 
 **Tip**  
 Any traffic from your network going to an Elastic IP address for an instance in the public subnet goes over the Internet, and not over the virtual private gateway\. You could instead set up a route and security group rules that enable the traffic to come from your network over the virtual private gateway to the public subnet\. 
 
-The VPN connection is configured either as a statically\-routed VPN connection or as a dynamically\-routed VPN connection \(using BGP\)\. If you select static routing, you'll be prompted to manually enter the IP prefix for your network when you create the VPN connection\. If you select dynamic routing, the IP prefix is advertised automatically to the virtual private gateway for your VPC using BGP\.
+The Site\-to\-Site VPN connection is configured either as a statically\-routed Site\-to\-Site VPN connection or as a dynamically\-routed Site\-to\-Site VPN connection \(using BGP\)\. If you select static routing, you'll be prompted to manually enter the IP prefix for your network when you create the Site\-to\-Site VPN connection\. If you select dynamic routing, the IP prefix is advertised automatically to the virtual private gateway for your VPC using BGP\.
 
 The following tables describe the route tables for this scenario\.
 
@@ -125,7 +125,7 @@ The second entry is the default route that's automatically added for local routi
 
 AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Security](VPC_Security.md)\. 
 
-For scenario 3, you'll use security groups but not network ACLs\. If you'd like to use a network ACL, see [Recommended Rules for Scenario 3](VPC_Appendix_NACLs.md#VPC_Appendix_NACLs_Scenario_3)\.
+For scenario 3, you'll use security groups but not network ACLs\. If you'd like to use a network ACL, see [Recommended Rules for Scenario 3](vpc-recommended-nacl-rules.md#nacl-rules-scenario-3)\.
 
 Your VPC comes with a [default security group](VPC_SecurityGroups.md#DefaultSecurityGroup)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. For this scenario, we recommend that you create the following security groups instead of using the default security group:
 + **WebServerSG**: Specify this security group when you launch web servers in the public subnet\.
@@ -207,24 +207,24 @@ The following are the IPv6\-specific rules for the WebServerSG security group \(
 
 ## Implementing Scenario 3<a name="VPC_Scenario3_Implementation"></a>
 
-To implement scenario 3, get information about your customer gateway, and create the VPC using the VPC wizard\. The VPC wizard creates a VPN connection for you with a customer gateway and virtual private gateway\.
+To implement scenario 3, get information about your customer gateway, and create the VPC using the VPC wizard\. The VPC wizard creates a Site\-to\-Site VPN connection for you with a customer gateway and virtual private gateway\.
 
 These procedures include optional steps for enabling and configuring IPv6 communication for your VPC\. You do not have to perform these steps if you do not want to use IPv6 in your VPC\.
 
 **To prepare your customer gateway**
 
-1. Determine the device you'll use as your customer gateway\. For more information about the devices that we've tested, see [Amazon Virtual Private Cloud FAQs](http://aws.amazon.com/vpc/faqs/#C9)\. For more information about the requirements for your customer gateway, see the [Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/)\.
+1. Determine the device you'll use as your customer gateway\. For more information about the devices that we've tested, see [Amazon Virtual Private Cloud FAQs](http://aws.amazon.com/vpc/faqs/#C9)\. For more information about the requirements for your customer gateway, see the [Amazon VPC Network Administrator Guide](https://docs.aws.amazon.com/vpc/latest/adminguide/)\.
 
 1. Obtain the Internet\-routable IP address for the customer gateway's external interface\. The address must be static and may be behind a device performing network address translation \(NAT\)\.
 
-1. If you want to create a statically\-routed VPN connection, get the list of internal IP ranges \(in CIDR notation\) that should be advertised across the VPN connection to the virtual private gateway\. For more information, see [VPN Routing Options](VPC_VPN.md#VPNRoutingTypes)\.
+1. If you want to create a statically\-routed Site\-to\-Site VPN connection, get the list of internal IP ranges \(in CIDR notation\) that should be advertised across the Site\-to\-Site VPN connection to the virtual private gateway\. For more information, see [Route Tables and VPN Route Priority](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html#vpn-route-priority) in the *AWS Site\-to\-Site VPN User Guide*\.
 
 **To create a VPC using the VPC wizard**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. On the dashboard, choose **Create VPC**\.  
-![\[The Amazon VPC dashboard\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/VPC-dashboard.png)
+1. On the dashboard, choose **Launch VPC Wizard**\.  
+![\[The Amazon VPC dashboard\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/VPC-dashboard.png)
 
 1. Choose the third option, **VPC with Public and Private Subnets and Hardware VPN Access**, and then choose **Select**\.
 
@@ -242,17 +242,17 @@ These procedures include optional steps for enabling and configuring IPv6 commun
 
    1. For **Customer Gateway IP**, specify the public IP address of your VPN router\.
 
-   1. \(Optional\) Name your customer gateway and VPN connection\.
+   1. \(Optional\) Name your customer gateway and Site\-to\-Site VPN connection\.
 
-   1. For **Routing Type**, select one of the [routing options](VPC_VPN.md#VPNRoutingTypes):
+   1. For **Routing Type**, select one of the routing options\. For more information, see [Site\-to\-Site VPN Routing Options](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html#VPNRoutingTypes) in the *AWS Site\-to\-Site VPN User Guide*\.
       + If your VPN router supports Border Gateway Protocol \(BGP\), select **Dynamic \(requires BGP\)**\.
       + If your VPN router does not support BGP, choose **Static**\. For **IP Prefix**, add each IP range for your network in CIDR notation\.
 
    1. Choose **Create VPC**
 
-1. When the wizard is done, choose **VPN Connections** in the navigation pane\. Select the VPN connection that the wizard created, and choose **Download Configuration**\. In the dialog box, select the vendor for your customer gateway, the platform, and the software version, and then choose **Yes, Download**\.
+1. When the wizard is done, choose **Site\-to\-Site VPN Connections** in the navigation pane\. Select the Site\-to\-Site VPN connection that the wizard created, and choose **Download Configuration**\. In the dialog box, select the vendor for your customer gateway, the platform, and the software version, and then choose **Yes, Download**\.
 
-1. Save the text file containing the VPN configuration and give it to the network administrator along with this guide: [Amazon VPC Network Administrator Guide](http://docs.aws.amazon.com/AmazonVPC/latest/NetworkAdminGuide/)\. The VPN won't work until the network administrator configures the customer gateway\.
+1. Save the text file containing the VPN configuration and give it to the network administrator along with this guide: [Amazon VPC Network Administrator Guide](https://docs.aws.amazon.com/vpc/latest/adminguide/)\. The VPN won't work until the network administrator configures the customer gateway\.
 
 Create the WebServerSG and DBServerSG security groups\. These security groups will reference each other, therefore you must create them before you add rules to them\.
 
@@ -356,7 +356,7 @@ You can only use the auto\-assign public IP address feature with a single, new n
 
 1. Review the settings that you've chosen\. Make any changes that you need, and then choose **Launch** to choose a key pair and launch your instance\.
 
-For the instances running in the VPN\-only subnet, you can test their connectivity by pinging them from your network\. For more information, see [Testing the VPN Connection](HowToTestEndToEnd_Linux.md)\.
+For the instances running in the VPN\-only subnet, you can test their connectivity by pinging them from your network\. For more information, see [Testing the Site\-to\-Site VPN Connection](https://docs.aws.amazon.com/vpn/latest/s2svpn/HowToTestEndToEnd_Linux.html)\.
 
 If you did not assign a public IPv4 address to your instance in the public subnet in step 5, you will not be able to connect to it\. Before you can access an instance in your public subnet, you must assign it an Elastic IP address\.
 
@@ -398,4 +398,4 @@ Your VPC automatically has a set of DHCP options with domain\-name\-servers=Amaz
 
 1. \(Optional\) The VPC now uses this new set of DHCP options and therefore has access to both DNS servers\. If you want, you can delete the original set of options that the VPC used\.
 
-You can now connect to your instances in the VPC\. For information about how to connect to a Linux instance, see [Connect to Your Linux Instance](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html#EC2_ConnectToInstance_Linux) in the *Amazon EC2 User Guide for Linux Instances*\. For information about how to connect to a Windows instance, see [Connect to Your Windows Instance](http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/EC2Win_GetStarted.html#EC2Win_ConnectToInstanceWindows) in the *Amazon EC2 User Guide for Windows Instances*\.
+You can now connect to your instances in the VPC\. For information about how to connect to a Linux instance, see [Connect to Your Linux Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html#EC2_ConnectToInstance_Linux) in the *Amazon EC2 User Guide for Linux Instances*\. For information about how to connect to a Windows instance, see [Connect to Your Windows Instance](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/EC2Win_GetStarted.html#EC2Win_ConnectToInstanceWindows) in the *Amazon EC2 User Guide for Windows Instances*\.

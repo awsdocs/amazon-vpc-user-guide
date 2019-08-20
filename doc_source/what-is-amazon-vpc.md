@@ -1,4 +1,4 @@
-# What Is Amazon VPC?<a name="VPC_Introduction"></a>
+# What Is Amazon VPC?<a name="what-is-amazon-vpc"></a>
 
 Amazon Virtual Private Cloud \(Amazon VPC\) enables you to launch AWS resources into a virtual network that you've defined\. This virtual network closely resembles a traditional network that you'd operate in your own data center, with the benefits of using the scalable infrastructure of AWS\.
 
@@ -6,7 +6,7 @@ Amazon Virtual Private Cloud \(Amazon VPC\) enables you to launch AWS resources 
 
 As you get started with Amazon VPC, you should understand the key concepts of this virtual network, and how it is similar to or different from your own networks\. This section provides a brief description of the key concepts for Amazon VPC\.
 
-Amazon VPC is the networking layer for Amazon EC2\. If you're new to Amazon EC2, see [What is Amazon EC2?](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html) in the *Amazon EC2 User Guide for Linux Instances* to get a brief overview\.
+Amazon VPC is the networking layer for Amazon EC2\. If you're new to Amazon EC2, see [What is Amazon EC2?](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html) in the *Amazon EC2 User Guide for Linux Instances* to get a brief overview\.
 
 **Topics**
 + [VPCs and Subnets](#what-is-vpc-subnet)
@@ -15,6 +15,7 @@ Amazon VPC is the networking layer for Amazon EC2\. If you're new to Amazon EC2,
 + [Accessing the Internet](#what-is-connectivity)
 + [Accessing a Corporate or Home Network](#what-is-vpn)
 + [Accessing Services Through AWS PrivateLink](#what-is-privatelink)
++ [AWS Private Global Network Considerations](#what-is-aws-global-network)
 
 ### VPCs and Subnets<a name="what-is-vpc-subnet"></a>
 
@@ -50,15 +51,15 @@ You control how the instances that you launch into a VPC access resources outsid
 
 Your default VPC includes an internet gateway, and each default subnet is a public subnet\. Each instance that you launch into a default subnet has a private IPv4 address and a public IPv4 address\. These instances can communicate with the internet through the internet gateway\. An internet gateway enables your instances to connect to the internet through the Amazon EC2 network edge\. 
 
-![\[Using a default VPC\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/default-vpc-diagram.png)
+![\[Using a default VPC\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/default-vpc-diagram.png)
 
 By default, each instance that you launch into a nondefault subnet has a private IPv4 address, but no public IPv4 address, unless you specifically assign one at launch, or you modify the subnet's public IP address attribute\. These instances can communicate with each other, but can't access the internet\.
 
-![\[Using a nondefault VPC\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/nondefault-vpc-diagram.png)
+![\[Using a nondefault VPC\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/nondefault-vpc-diagram.png)
 
 You can enable internet access for an instance launched into a nondefault subnet by attaching an internet gateway to its VPC \(if its VPC is not a default VPC\) and associating an Elastic IP address with the instance\.
 
-![\[Using an internet gateway\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/internet-gateway-diagram.png)
+![\[Using an internet gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/internet-gateway-diagram.png)
 
 Alternatively, to allow an instance in your VPC to initiate outbound connections to the internet but prevent unsolicited inbound connections from the internet, you can use a network address translation \(NAT\) device for IPv4 traffic\. NAT maps multiple private IPv4 addresses to a single public IPv4 address\. A NAT device has an Elastic IP address and is connected to the internet through an internet gateway\. You can connect an instance in a private subnet to the internet through the NAT device, which routes traffic from the instance to the internet gateway, and routes any responses to the instance\.
 
@@ -68,64 +69,52 @@ You can optionally associate an Amazon\-provided IPv6 CIDR block with your VPC a
 
 ### Accessing a Corporate or Home Network<a name="what-is-vpn"></a>
 
-You can optionally connect your VPC to your own corporate data center using an IPsec AWS managed VPN connection, making the AWS Cloud an extension of your data center\.
+You can optionally connect your VPC to your own corporate data center using an IPsec AWS Site\-to\-Site VPN connection, making the AWS Cloud an extension of your data center\.
 
-A VPN connection consists of a virtual private gateway attached to your VPC and a customer gateway located in your data center\. A virtual private gateway is the VPN concentrator on the Amazon side of the VPN connection\. A customer gateway is a physical device or software appliance on your side of the VPN connection\.
+A Site\-to\-Site VPN connection consists of a virtual private gateway attached to your VPC and a customer gateway located in your data center\. A virtual private gateway is the VPN concentrator on the Amazon side of the Site\-to\-Site VPN connection\. A customer gateway is a physical device or software appliance on your side of the Site\-to\-Site VPN connection\.
 
-![\[Using a virtual private gateway\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/virtual-private-gateway-diagram.png)
+![\[Using a virtual private gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/virtual-private-gateway-diagram.png)
 
-For more information, see [AWS Managed VPN Connections](VPC_VPN.md)\.
+For more information, see [What is AWS Site\-to\-Site VPN?](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html) in the *AWS Site\-to\-Site VPN User Guide*\.
 
 ### Accessing Services Through AWS PrivateLink<a name="what-is-privatelink"></a>
 
-AWS PrivateLink is a highly available, scalable technology that enables you to privately connect your VPC to supported AWS services, services hosted by other AWS accounts \(VPC endpoint services\), and supported AWS Marketplace partner services\. You do not require an internet gateway, NAT device, public IP address, AWS Direct Connect connection, or VPN connection to communicate with the service\. Traffic between your VPC and the service does not leave the Amazon network\.
+AWS PrivateLink is a highly available, scalable technology that enables you to privately connect your VPC to supported AWS services, services hosted by other AWS accounts \(VPC endpoint services\), and supported AWS Marketplace partner services\. You do not require an internet gateway, NAT device, public IP address, AWS Direct Connect connection, or AWS Site\-to\-Site VPN connection to communicate with the service\. Traffic between your VPC and the service does not leave the Amazon network\.
 
 To use AWS PrivateLink, create an interface VPC endpoint for a service in your VPC\. This creates an elastic network interface in your subnet with a private IP address that serves as an entry point for traffic destined to the service\. For more information, see [VPC Endpoints](vpc-endpoints.md)\.
 
-![\[Using an interface endpoint to access an AWS service\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/vpc-endpoint-privatelink-diagram.png)
+![\[Using an interface endpoint to access an AWS service\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-privatelink-diagram.png)
 
  You can create your own AWS PrivateLink\-powered service \(endpoint service\) and enable other AWS customers to access your service\. For more information, see [VPC Endpoint Services \(AWS PrivateLink\)](endpoint-service.md)\.
 
+### AWS Private Global Network Considerations<a name="what-is-aws-global-network"></a>
+
+AWS provides a high\-performance, and low\-latency private global network that delivers a secure cloud computing environment to support your networking needs\. AWS Regions are connected to multiple Internet Service Providers \(ISPs\) as well as to a private global network backbone, which provides improved network performance for cross\-Region traffic sent by customers\.
+
+The following considerations apply:
++ Traffic that is in an Availability Zone, or between Availability Zones in all Regions, routes over the AWS private global network\.
++ Traffic that is between Regions always routes over the AWS private global network, except for China Regions\.
+
+Network packet loss can be caused by a number of factors, including network flow collisions, lower level \(Layer 2\) errors, and other network failures\. We engineer and operate our networks to minimize packet loss\. We measure packet\-loss rate \(PLR\) across the global backbone that connects the AWS Regions\. We operate our backbone network to target a p99 of the hourly PLR of less than 0\.0001%\.
+
 ## How to Get Started with Amazon VPC<a name="howto"></a>
 
-To get a hands\-on introduction to Amazon VPC, complete the exercise [Getting Started with Amazon VPC](GetStarted.md)\. The exercise guides you through the steps to create a nondefault VPC with a public subnet, and to launch an instance into your subnet\.
+To get a hands\-on introduction to Amazon VPC, complete [Getting Started with Amazon VPC](vpc-getting-started.md)\. This exercise guides you through the steps to create a nondefault VPC with a public subnet, and to launch an instance into your subnet\.
 
 If you have a default VPC, and you want to get started launching instances into your VPC without performing any additional configuration on your VPC, see [Launching an EC2 Instance into Your Default VPC](default-vpc.md#launching-into)\.
 
-To learn about the basic scenarios for Amazon VPC, see [Scenarios and Examples](VPC_Scenarios.md)\. You can configure your VPC and subnets in other ways to suit your needs\. 
+To learn about the basic scenarios for Amazon VPC, see [Scenarios and Examples](VPC_Scenarios.md)\. You can configure your VPC and subnets in other ways to suit your needs\.
 
 The following table lists related resources that you might find useful as you work with this service\.
 
 
 |  Resource  |  Description  | 
 | --- | --- | 
-| [Amazon Virtual Private Cloud Connectivity Options](http://media.amazonwebservices.com/AWS_Amazon_VPC_Connectivity_Options.pdf) | A whitepaper that provides an overview of the options for network connectivity\. | 
+| [Amazon Virtual Private Cloud Connectivity Options](https://docs.aws.amazon.com/aws-technical-content/latest/aws-vpc-connectivity-options/introduction.html) | Provides an overview of the options for network connectivity\. | 
 |  [Amazon VPC forum](https://forums.aws.amazon.com/forum.jspa?forumID=58)  |  A community\-based forum for discussing technical questions related to Amazon VPC\.  | 
-|  [AWS Developer Resources](http://aws.amazon.com/resources/)  |  A central starting point to find documentation, code samples, release notes, and other information to help you create innovative applications with AWS\.  | 
+|  [Getting Started Resource Center](https://aws.amazon.com/getting-started/)  |  Information to help you get started building on AWS\.  | 
 |  [AWS Support Center](https://console.aws.amazon.com/support/home#/)  |  The home page for AWS Support\.  | 
-|  [Contact Us](http://aws.amazon.com/contact-us/)  |  A central contact point for inquiries concerning AWS billing, accounts, and events\.  | 
-
-## Using Amazon VPC with Other AWS Services<a name="related-services"></a>
-
-Amazon VPC integrates with many other AWS services; furthermore, some services require a VPC in your account to carry out certain functions\. Below are examples of services that use Amazon VPC\.
-
-
-| Service | Relevant Topic | 
-| --- | --- | 
-|  AWS Data Pipeline  |  [Launching Resources for Your Pipeline into a VPC](http://docs.aws.amazon.com/datapipeline/latest/DeveloperGuide/dp-resources-vpc.html)  | 
-|  Amazon EC2  |  [Amazon EC2 and Amazon VPC](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-vpc.html)  | 
-|  Auto Scaling  |  [Auto Scaling and Amazon VPC](http://docs.aws.amazon.com/autoscaling/latest/userguide/autoscalingsubnets.html)  | 
-|  Elastic Beanstalk  |  [Using AWS Elastic Beanstalk with Amazon VPC](http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/AWSHowTo-vpc.html)  | 
-|  Elastic Load Balancing  |  [Setting Up Elastic Load Balancing](http://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/setting-up-elb.html)  | 
-|  Amazon ElastiCache  |  [Using ElastiCache with Amazon VPC](http://docs.aws.amazon.com/AmazonElastiCache/latest/UserGuide/ManagingVPC.html)  | 
-|  Amazon EMR  |  [Select a Subnet for the Cluster](http://docs.aws.amazon.com/emr/latest/DeveloperGuide/emr-plan-vpc-subnet.html)  | 
-|  AWS OpsWorks  |  [Running a Stack in a VPC](http://docs.aws.amazon.com/opsworks/latest/userguide/workingstacks-vpc.html)  | 
-|  Amazon RDS  |  [Amazon RDS and Amazon VPC](http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSVPC.html)  | 
-|  Amazon Redshift  |  [Managing Clusters in a VPC](http://docs.aws.amazon.com/redshift/latest/mgmt/managing-clusters-vpc.html)  | 
-|  Route 53  |  [Working with Private Hosted Zones](http://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-private.html)  | 
-| Amazon WorkSpaces | [Create and Configure Your VPC](http://docs.aws.amazon.com/workspaces/latest/adminguide/gsg_create_vpc.html) | 
-
-To get a detailed view of the VPCs, subnets, and other VPC resources in your account and their relation to each other, you can use the AWS Config service\. For more information, see the *[AWS Config Developer Guide](http://docs.aws.amazon.com/config/latest/developerguide/)*\.
+|  [Contact Us](https://aws.amazon.com/contact-us/)  |  A central contact point for inquiries concerning AWS billing, accounts, and events\.  | 
 
 ## Accessing Amazon VPC<a name="VPCInterfaces"></a>
 
@@ -134,22 +123,22 @@ Amazon VPC provides a web\-based user interface, the Amazon VPC console\. If you
 If you prefer to use a command line interface, you have the following options:
 
 AWS Command Line Interface \(AWS CLI\)  
-Provides commands for a broad set of AWS services, and is supported on Windows, macOS, and Linux/Unix\. To get started, see [AWS Command Line Interface User Guide](http://docs.aws.amazon.com/cli/latest/userguide/)\. For more information about the commands for Amazon VPC, see [ec2](http://docs.aws.amazon.com/cli/latest/reference/ec2/)\.
+Provides commands for a broad set of AWS services, and is supported on Windows, macOS, and Linux/Unix\. To get started, see [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\. For more information about the commands for Amazon VPC, see [ec2](https://docs.aws.amazon.com/cli/latest/reference/ec2/)\.
 
 AWS Tools for Windows PowerShell  
-Provides commands for a broad set of AWS services for those who script in the PowerShell environment\. To get started, see [AWS Tools for Windows PowerShell User Guide](http://docs.aws.amazon.com/powershell/latest/userguide/)\.
+Provides commands for a broad set of AWS services for those who script in the PowerShell environment\. To get started, see [AWS Tools for Windows PowerShell User Guide](https://docs.aws.amazon.com/powershell/latest/userguide/)\.
 
-Amazon VPC provides a Query API\. These requests are HTTP or HTTPS requests that use the HTTP verbs GET or POST and a Query parameter named `Action`\. For more information, see [Actions](http://docs.aws.amazon.com/AWSEC2/latest/APIReference/query-apis.html) in the *Amazon EC2 API Reference*\.
+Amazon VPC provides a Query API\. These requests are HTTP or HTTPS requests that use the HTTP verbs GET or POST and a Query parameter named `Action`\. For more information, see [Actions](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/query-apis.html) in the *Amazon EC2 API Reference*\.
 
 To build applications using language\-specific APIs instead of submitting a request over HTTP or HTTPS, AWS provides libraries, sample code, tutorials, and other resources for software developers\. These libraries provide basic functions that automatically take care of tasks such as cryptographically signing your requests, retrying requests, and handling error responses\. For more information, see [AWS SDKs and Tools](https://aws.amazon.com/tools/)\.
 
 ## Pricing for Amazon VPC<a name="Paying"></a>
 
-There's no additional charge for using Amazon VPC\. You pay the standard rates for the instances and other Amazon EC2 features that you use\. There are charges for using an AWS managed VPN connection and using a NAT gateway\. For more information, see [Amazon VPC Pricing](http://aws.amazon.com/vpc/pricing/) and [Amazon EC2 Pricing](http://aws.amazon.com/ec2/pricing/)\.
+There's no additional charge for using Amazon VPC\. You pay the standard rates for the instances and other Amazon EC2 features that you use\. There are charges for using an Site\-to\-Site VPN connection and using a NAT gateway\. For more information, see [Amazon VPC Pricing](https://aws.amazon.com/vpc/pricing/) and [Amazon EC2 Pricing](https://aws.amazon.com/ec2/pricing/)\.
 
 ## Amazon VPC Limits<a name="CurrentCapabilities"></a>
 
-There are limits to the number of Amazon VPC components that you can provision\. You can request an increase for some of these limits\. For more information, see [Amazon VPC Limits](VPC_Appendix_Limits.md)\.
+There are limits to the number of Amazon VPC components that you can provision\. You can request an increase for some of these limits\. For more information, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
 
 ## PCI DSS Compliance<a name="pci-compliance"></a>
 

@@ -1,11 +1,11 @@
 # Controlling Access to Amazon VPC Resources<a name="VPC_IAM"></a>
 
-Your security credentials identify you to services in AWS and grant you unlimited use of your AWS resources, such as your Amazon VPC resources\. You can use AWS Identity and Access Management \(IAM\) to allow other users, services, and applications to use your Amazon VPC resources without sharing your security credentials\. You can choose to allow full use or limited use of your resources by granting users permission to use specific Amazon EC2 API actions\. Some API actions support resource\-level permissions, which allow you to control the specific resources that users can create or modify\.
+To allow access to Amazon VPC resources without sharing your security credentials, you must create and attach an IAM policy to the IAM user or the group to which the IAM user belongs\. The IAM user must be given permission to use the specific Amazon VPC resources and Amazon EC2 API actions they need\. When you attach a policy to a user or group of users, it allows or denies permission to perform the specified tasks on the specified resources\. Some API actions support resource\-level permissions, which allow you to control the specific resources that users can create or modify\.
 
 **Important**  
-Currently, not all Amazon EC2 API actions support resource\-level permissions\. If an Amazon EC2 API action does not support resource\-level permissions, you can grant users permission to use the action, but you have to specify a \* for the resource element of your policy statement\. For an example of how to do this, see the following example policy: [1\. Managing a VPC](#managingvpciam) We'll add support for additional API actions and ARNs for additional Amazon EC2 resources later\. For information about which ARNs you can use with which Amazon EC2 API actions, as well as supported condition keys for each ARN, see [Supported Resources and Conditions for Amazon EC2 API Actions](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-supported-iam-actions-resources.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
+Currently, not all Amazon EC2 API actions support resource\-level permissions\. If an Amazon EC2 API action does not support resource\-level permissions, you can grant users permission to use the action, but you have to specify a \* for the resource element of your policy statement\. For an example of how to do this, see the following example policy: [1\. Managing a VPC](#managingvpciam) We'll add support for additional API actions and ARNs for additional Amazon EC2 resources later\. For information about which ARNs you can use with which Amazon EC2 API actions, as well as supported condition keys for each ARN, see [Supported Resources and Conditions for Amazon EC2 API Actions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-supported-iam-actions-resources.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
 
-For more information about creating IAM policies for Amazon EC2, supported resources for EC2 API actions, as well as example policies for Amazon EC2, see [IAM Policies for Amazon EC2](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-policies-for-amazon-ec2.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
+For more information about creating IAM policies for Amazon EC2, supported resources for EC2 API actions, as well as example policies for Amazon EC2, see [IAM Policies for Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-policies-for-amazon-ec2.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
 
 **Topics**
 + [Example Policies for the AWS CLI or SDK](#ExamplePolicies_VPC)
@@ -25,11 +25,11 @@ The following examples show policy statements that you can use to control the pe
 + [7\. Creating and managing VPC peering connections](#vpcpeeringiam)
 + [8\. Creating and managing VPC endpoints](#vpc-endpoints-iam)
 
-For example policies for working with ClassicLink, see [Example Policies for CLI or SDK](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+For example policies for working with ClassicLink, see [Example Policies for CLI or SDK](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 ### 1\. Managing a VPC<a name="managingvpciam"></a>
 
-The following policy grants users permission to create and manage your VPC\. You might attach this policy to a group of network administrators\. The `Action` element specifies the API actions related to VPCs, subnets, Internet gateways, customer gateways, virtual private gateways, VPN connections, route tables, Elastic IP addresses, security groups, network ACLs, and DHCP options sets\. The policy also allows the group to run, stop, start, and terminate instances\. It also allows the group to list Amazon EC2 resources\.
+The following policy grants users permission to create and manage your VPC\. You might attach this policy to a group of network administrators\. The `Action` element specifies the API actions related to VPCs, subnets, Internet gateways, customer gateways, virtual private gateways, Site\-to\-Site VPN connections, route tables, Elastic IP addresses, security groups, network ACLs, and DHCP options sets\. The policy also allows the group to run, stop, start, and terminate instances\. It also allows the group to list Amazon EC2 resources\.
 
 The policy uses wildcards to specify all actions for each type of object \(for example, `*SecurityGroup*`\)\. Alternatively, you could list each action explicitly\. If you use the wildcards, be aware that if we add new actions whose names include any of the wildcarded strings in the policy, the policy would automatically grant the group access to those new actions\.
 
@@ -517,13 +517,13 @@ The following policy allows users to launch instances using only `ami-1a2b3c4d`\
 }
 ```
 
-**Option 3: VPC with public and private subnets and AWS managed VPN access**
+**Option 3: VPC with public and private subnets and AWS Site\-to\-Site VPN access**
 
-The third VPC wizard configuration option creates a VPC with a public and private subnet, and creates a VPN connection between your VPC and your own network\. In your IAM policy, you must grant users permission to use the same actions as option 1\. This allows them to create a VPC and two subnets, and to configure the routing for the public subnet\. To create a VPN connection, users must also have permission to use the following actions:
+The third VPC wizard configuration option creates a VPC with a public and private subnet, and creates a AWS Site\-to\-Site VPN connection between your VPC and your own network\. In your IAM policy, you must grant users permission to use the same actions as option 1\. This allows them to create a VPC and two subnets, and to configure the routing for the public subnet\. To create a Site\-to\-Site VPN connection, users must also have permission to use the following actions:
 + `ec2:CreateCustomerGateway`: To create a customer gateway\.
 + `ec2:CreateVpnGateway` and `ec2:AttachVpnGateway`: To create a virtual private gateway, and attach it to the VPC\.
 + `ec2:EnableVgwRoutePropagation`: To enable route propagation so that routes are automatically propagated to your route table\.
-+ `ec2:CreateVpnConnection`: To create a VPN connection\.
++ `ec2:CreateVpnConnection`: To create a Site\-to\-Site VPN connection\.
 + `ec2:DescribeVpnConnections`, `ec2:DescribeVpnGateways`, and `ec2:DescribeCustomerGateways`: To display the options on the second configuration page of the wizard\.
 + `ec2:DescribeVpcs` and `ec2:DescribeRouteTables`: To gather information about the routes that must be added to the main route table\.
 
@@ -549,9 +549,9 @@ None of the API actions in this policy support resource\-level permissions, so y
 }
 ```
 
-**Option 4: VPC with a private subnet only and AWS managed VPN access**
+**Option 4: VPC with a private subnet only and AWS Site\-to\-Site VPN access**
 
-The fourth VPC configuration option creates a VPC with a private subnet, and creates a VPN connection between the VPC and your own network\. Unlike the other three options, users do not need permission to create or attach an Internet gateway to the VPC, and they do not need permission to create a route table and associate it with the subnet\. They will require the same permissions as listed in the previous example \(option 3\) to establish the VPN connection\.
+The fourth VPC configuration option creates a VPC with a private subnet, and creates a Site\-to\-Site VPN connection between the VPC and your own network\. Unlike the other three options, users do not need permission to create or attach an Internet gateway to the VPC, and they do not need permission to create a route table and associate it with the subnet\. They will require the same permissions as listed in the previous example \(option 3\) to establish the Site\-to\-Site VPN connection\.
 
 None of the API actions in this policy support resource\-level permissions, so you cannot control which specific resources users can use\.
 

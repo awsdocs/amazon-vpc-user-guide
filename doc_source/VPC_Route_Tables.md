@@ -23,7 +23,7 @@ The following are the basic things that you need to know about route tables:
   + CIDR blocks for IPv4 and IPv6 are treated separately\. For example, a route with a destination CIDR of 0\.0\.0\.0/0 \(all IPv4 addresses\) does not automatically include all IPv6 addresses\. You must create a route with a destination CIDR of ::/0 for all IPv6 addresses\.
 + Every route table contains a local route for communication within the VPC over IPv4\. If your VPC has more than one IPv4 CIDR block, your route tables contain a local route for each IPv4 CIDR block\. If you've associated an IPv6 CIDR block with your VPC, your route tables contain a local route for the IPv6 CIDR block\. You cannot modify or delete these routes\.
 + When you add an Internet gateway, an egress\-only Internet gateway, a virtual private gateway, a NAT device, a peering connection, or a VPC endpoint in your VPC, you must update the route table for any subnet that uses these gateways or connections\.
-+ There is a limit on the number of route tables you can create per VPC, and the number of routes you can add per route table\. For more information, see [Amazon VPC Limits](VPC_Appendix_Limits.md)\.
++ There is a limit on the number of route tables you can create per VPC, and the number of routes you can add per route table\. For more information, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
 
 ### Main Route Tables<a name="RouteTableDetails"></a>
 
@@ -37,7 +37,7 @@ Your VPC can have route tables other than the default table\. One way to protect
 
 The following diagram shows the routing for a VPC with both an Internet gateway and a virtual private gateway, plus a public subnet and a VPN\-only subnet\. The main route table came with the VPC, and it also has a route for the VPN\-only subnet\. A custom route table is associated with the public subnet\. The custom route table has a route over the Internet gateway \(the destination is 0\.0\.0\.0/0, and the target is the Internet gateway\)\.
 
-![\[Main route table and custom table\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/custom-route-table-diagram.png)
+![\[Main route table and custom table\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/custom-route-table-diagram.png)
 
 If you create a new subnet in this VPC, it's automatically associated with the main route table, which routes its traffic to the virtual private gateway\. If you were to set up the reverse configuration \(the main route table with the route to the Internet gateway, and the custom route table with the route to the virtual private gateway\), then a new subnet automatically has a route to the Internet gateway\. 
 
@@ -51,19 +51,19 @@ You might want to make changes to the main route table, but to avoid any disrupt
 
 The following diagram shows a VPC with two subnets that are implicitly associated with the main route table \(Route Table A\), and a custom route table \(Route Table B\) that isn't associated with any subnets\.
 
-![\[Replace main table: Start\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/routing-Route_Replace_Main_Start-diagram.png)
+![\[Replace main table: Start\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/routing-Route_Replace_Main_Start-diagram.png)
 
 You can create an explicit association between Subnet 2 and Route Table B\.
 
-![\[Replace main table: New table\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/routing-Route_Replace_Main_New_Table-diagram.png)
+![\[Replace main table: New table\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/routing-Route_Replace_Main_New_Table-diagram.png)
 
 After you've tested Route Table B, you can make it the main route table\. Note that Subnet 2 still has an explicit association with Route Table B, and Subnet 1 has an implicit association with Route Table B because it is the new main route table\. Route Table A is no longer in use\.
 
-![\[Replace main table: Replace\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/routing-Route_Replace_Main_Replace-diagram.png)
+![\[Replace main table: Replace\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/routing-Route_Replace_Main_Replace-diagram.png)
 
 If you disassociate Subnet 2 from Route Table B, there's still an implicit association between Subnet 2 and Route Table B\. If you no longer need Route Table A, you can delete it\.
 
-![\[Replace main table: Disassociate\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/routing-Route_Replace_Main_Disassociate-diagram.png)
+![\[Replace main table: Disassociate\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/routing-Route_Replace_Main_Disassociate-diagram.png)
 
 ## Route Priority<a name="route-tables-priority"></a>
 
@@ -80,7 +80,7 @@ For example, the following route table has a route for IPv4 Internet traffic \(`
 | 172\.31\.0\.0/16 | pcx\-1a2b3c4d | 
 | 0\.0\.0\.0/0 | igw\-11aa22bb | 
 
-If you've attached a virtual private gateway to your VPC and enabled route propagation on your route table, routes representing your VPN connection automatically appear as propagated routes in your route table\. For more information, see [Route Tables and VPN Route Priority](VPC_VPN.md#vpn-route-priority)\.
+If you've attached a virtual private gateway to your VPC and enabled route propagation on your route table, routes representing your Site\-to\-Site VPN connection automatically appear as propagated routes in your route table\. For more information, see [Route Tables and VPN Route Priority](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html#vpn-route-priority)\.
 
 In this example, an IPv6 CIDR block is associated with your VPC\. In your route table, IPv6 traffic destined for within the VPC \(`2001:db8:1234:1a00::/56`\) is covered by the `Local` route, and is routed within the VPC\. The route table also has a route for `172.31.0.0/16` IPv4 traffic that points to a peering connection \(`pcx-1a2b3c4d`\), a route for all IPv4 traffic \(`0.0.0.0/0`\) that points to an Internet gateway, and a route for all IPv6 traffic \(`::/0`\) that points to an egress\-only Internet gateway\. IPv4 and IPv6 traffic are treated separately; therefore, all IPv6 traffic \(except for traffic within the VPC\) is routed to the egress\-only Internet gateway\. 
 
@@ -105,6 +105,7 @@ The following topics explain routing for specific gateways or connections in you
 + [Route Tables for ClassicLink](#route-tables-classiclink)
 + [Route Tables for a VPC Endpoint](#route-tables-vpce)
 + [Route Tables for an Egress\-Only Internet Gateway](#route-tables-eigw)
++ [Route Tables for Transit Gateways](#route-tables-tgw)
 
 ### Route Tables for an Internet Gateway<a name="route-tables-internet-gateway"></a>
 
@@ -116,9 +117,9 @@ To enable instances in a private subnet to connect to the Internet, you can crea
 
 ### Route Tables for a Virtual Private Gateway<a name="route-tables-vgw"></a>
 
-You can use an AWS managed VPN connection to enable instances in your VPC to communicate with your own network\. To do this, create and attach a virtual private gateway to your VPC, and then add a route with the destination of your network and a target of the virtual private gateway \(`vgw-xxxxxxxx`\)\. You can then create and configure your VPN connection\. For more information, see [AWS Managed VPN Connections](VPC_VPN.md)\.
+You can use an AWS Site\-to\-Site VPN connection to enable instances in your VPC to communicate with your own network\. To do this, create and attach a virtual private gateway to your VPC, and then add a route with the destination of your network and a target of the virtual private gateway \(`vgw-xxxxxxxx`\)\. You can then create and configure your Site\-to\-Site VPN connection\. For more information, see [What is AWS Site\-to\-Site VPN?](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html) in the *AWS Site\-to\-Site VPN User Guide*\.
 
-We currently do not support IPv6 traffic over a VPN connection\. However, we support IPv6 traffic routed through a virtual private gateway to an AWS Direct Connect connection\. For more information, see the [AWS Direct Connect User Guide](http://docs.aws.amazon.com/directconnect/latest/UserGuide/)\.
+We currently do not support IPv6 traffic over a AWS Site\-to\-Site VPN connection\. However, we support IPv6 traffic routed through a virtual private gateway to an AWS Direct Connect connection\. For more information, see the [AWS Direct Connect User Guide](https://docs.aws.amazon.com/directconnect/latest/UserGuide/)\.
 
 ### Route Tables for a VPC Peering Connection<a name="route-tables-vpc-peering"></a>
 
@@ -170,7 +171,7 @@ Add the following route to the route table for VPC B:
 | 10\.0\.0\.0/16 | pcx\-1a2b1a2b | 
 | 2001:db8:1234:1a00::/56 | pcx\-1a2b1a2b | 
 
-For more information about VPC peering connections, see the [Amazon VPC Peering Guide](http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/)\.
+For more information about VPC peering connections, see the [Amazon VPC Peering Guide](https://docs.aws.amazon.com/vpc/latest/peering/)\.
 
 ### Route Tables for ClassicLink<a name="route-tables-classiclink"></a>
 
@@ -182,7 +183,7 @@ If any of your VPC route tables have existing routes for address ranges within t
 
 If you've already enabled a VPC for ClassicLink, you may not be able to add any more specific routes to your route tables for the `10.0.0.0/8` IP address range\.
 
-If you modify a VPC peering connection to enable communication between instances in your VPC and an EC2\-Classic instance that's linked to the peer VPC, a static route is automatically added to your route tables with a destination of `10.0.0.0/8` and a target of `local`\. If you modify a VPC peering connection to enable communication between a local EC2\-Classic instance linked to your VPC and instances in a peer VPC, you must manually add a route to your main route table with a destination of the peer VPC CIDR block, and a target of the VPC peering connection\. The EC2\-Classic instance relies on the main route table for routing to the peer VPC\. For more information, see [Configurations With ClassicLink](http://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/peering-configurations-classiclink.html) in the *Amazon VPC Peering Guide*\.
+If you modify a VPC peering connection to enable communication between instances in your VPC and an EC2\-Classic instance that's linked to the peer VPC, a static route is automatically added to your route tables with a destination of `10.0.0.0/8` and a target of `local`\. If you modify a VPC peering connection to enable communication between a local EC2\-Classic instance linked to your VPC and instances in a peer VPC, you must manually add a route to your main route table with a destination of the peer VPC CIDR block, and a target of the VPC peering connection\. The EC2\-Classic instance relies on the main route table for routing to the peer VPC\. For more information, see [Configurations With ClassicLink](https://docs.aws.amazon.com/vpc/latest/peering/peering-configurations-classiclink.html) in the *Amazon VPC Peering Guide*\.
 
 ### Route Tables for a VPC Endpoint<a name="route-tables-vpce"></a>
 
@@ -193,6 +194,32 @@ For more information about routing for endpoints, and the implications for route
 ### Route Tables for an Egress\-Only Internet Gateway<a name="route-tables-eigw"></a>
 
 You can create an egress\-only Internet gateway for your VPC to enable instances in a private subnet to initiate outbound communication to the Internet, but prevent the Internet from initiating connections with the instances\. An egress\-only Internet gateway is used for IPv6 traffic only\. To configure routing for an egress\-only Internet gateway, add a route for the private subnet that routes IPv6 Internet traffic \(`::/0`\) to the egress\-only Internet gateway\. For more information, see [Egress\-Only Internet Gateways](egress-only-internet-gateway.md)\.
+
+### Route Tables for Transit Gateways<a name="route-tables-tgw"></a>
+
+When you attach a VPC to a transit gateway, you need to add a route for traffic to route through the transit gateway\. 
+
+Consider the following scenario where you have three VPCs that are attached to a transit gateway\. In this scenario, all attachments are associated with the transit gateway route table and propagate to the transit gateway route table\. Therefore, all attachments can route packets to each other, with the transit gateway serving as a simple layer 3 IP hub\. 
+
+For example, you have two VPCs, with the following information:
++ VPC A: 10\.1\.0\.0/16, attachment ID tgw\-attach\-11111111111111111
++ VPC B: 10\.2\.0\.0/16, attachment ID tgw\-attach\-22222222222222222
+
+To enable traffic between the VPCs and allow access to the transit gateway the VPC A route table is configured as follows\.
+
+
+| Destination | Target | 
+| --- | --- | 
+|  10\.1\.0\.0/16  |  local  | 
+|  10\.0\.0\.0/8  |  *tgw\-id*  | 
+
+The following is an example of the transit gateway route table entries for the VPC attachments\.\.
+
+
+| Destination | Target | 
+| --- | --- | 
+|  10\.1\.0\.0/16  | tgw\-attach\-11111111111111111 | 
+|  10\.2\.0\.0/16  |  tgw\-attach\-22222222222222222  | 
 
 ## Working with Route Tables<a name="WorkWithRouteTables"></a>
 
@@ -269,9 +296,13 @@ You can add, delete, and modify routes in your route tables\. You can only modif
 
 1. In the navigation pane, choose **Route Tables**, and then select the route table\.
 
-1. In the **Routes** tab, choose **Edit**\.
+1. Choose **Actions**, **Edit routes**\.
 
-1. To modify an existing route, replace the destination CIDR block or a single IP address for **Destination**, and then select a target for **Target**\. Choose **Add another route**, **Save**\.
+1. To add a route, choose **Add route**, for **Destination** enter the destination CIDR block or a single IP address, and then select a target for **Target**\.
+
+1. To modify an existing route, replace the destination CIDR block or a single IP address for **Destination**, and then select a target for **Target**\. 
+
+1. Choose **Save routes** when you are done\.
 
 **To delete a route from a route table**
 
@@ -279,15 +310,17 @@ You can add, delete, and modify routes in your route tables\. You can only modif
 
 1. In the navigation pane, choose **Route Tables**, and then select the route table\.
 
-1. In the **Routes** tab, choose **Edit**, and then choose **Remove** for the route to delete\.
+1. Choose **Actions**, **Edit routes**\.
 
-1. Choose **Save** when you're done\.
+1.  Choose the delete button \(“x”\) to the right of the route that you want to delete\.
+
+1. Choose **Save routes** when you are done\.
 
 ### Enabling and Disabling Route Propagation<a name="EnableDisableRouteProp"></a>
 
 Route propagation allows a virtual private gateway to automatically propagate routes to the route tables so that you don't need to manually enter VPN routes to your route tables\. You can enable or disable route propagation\.
 
-For more information about VPN routing options, see [VPN Routing Options](VPC_VPN.md#VPNRoutingTypes)\.
+For more information about VPN routing options, see [Site\-to\-Site VPN Routing Options](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html) in the *Site\-to\-Site VPN User Guide*\.
 
 **To enable route propagation**
 
@@ -295,7 +328,7 @@ For more information about VPN routing options, see [VPN Routing Options](VPC_VP
 
 1. In the navigation pane, choose **Route Tables**, and then select the route table\.
 
-1. On the **Route Propagation** tab, choose **Edit**\.
+1. Choose **Actions**, **Edit route propagation**\.
 
 1. Select the **Propagate** check box next to the virtual private gateway, and then choose **Save**\.
 
@@ -305,7 +338,7 @@ For more information about VPN routing options, see [VPN Routing Options](VPC_VP
 
 1. In the navigation pane, choose **Route Tables**, and then select the route table\.
 
-1. On the **Route Propagation** tab, choose **Edit**\. 
+1. Choose **Actions**, **Edit route propagation**\. 
 
 1. Clear the **Propagate** check box, and then choose **Save**\.
 
@@ -393,56 +426,56 @@ You can delete a route table only if there are no subnets associated with it\. Y
 
 ## API and Command Overview<a name="route-tables-api-cli"></a>
 
-You can perform the tasks described on this page using the command line or API\. For more information about the command line interface and a list of available API operations, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
+You can perform the tasks described on this page using the command line or API\. For more information about the command line interface and a list of available API operations, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 
 **Create a custom route table**
-+ [create\-route\-table](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-route-table.html) \(AWS CLI\)
-+ [New\-EC2RouteTable](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2RouteTable.html) \(AWS Tools for Windows PowerShell\)
++ [create\-route\-table](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-route-table.html) \(AWS CLI\)
++ [New\-EC2RouteTable](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2RouteTable.html) \(AWS Tools for Windows PowerShell\)
 
 **Add a route to a route table**
-+ [create\-route](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-route.html) \(AWS CLI\)
-+ [New\-EC2Route](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Route.html) \(AWS Tools for Windows PowerShell\)
++ [create\-route](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-route.html) \(AWS CLI\)
++ [New\-EC2Route](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Route.html) \(AWS Tools for Windows PowerShell\)
 
 **Associate a subnet with a route table**
-+ [associate\-route\-table](http://docs.aws.amazon.com/cli/latest/reference/ec2/associate-route-table.html) \(AWS CLI\)
-+ [Register\-EC2RouteTable](http://docs.aws.amazon.com/powershell/latest/reference/items/Register-EC2RouteTable.html) \(AWS Tools for Windows PowerShell\)
++ [associate\-route\-table](https://docs.aws.amazon.com/cli/latest/reference/ec2/associate-route-table.html) \(AWS CLI\)
++ [Register\-EC2RouteTable](https://docs.aws.amazon.com/powershell/latest/reference/items/Register-EC2RouteTable.html) \(AWS Tools for Windows PowerShell\)
 
 **Describe one or more route tables**
-+ [describe\-route\-tables](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-route-tables.html) \(AWS CLI\)
-+ [Get\-EC2RouteTable](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2RouteTable.html) \(AWS Tools for Windows PowerShell\)
++ [describe\-route\-tables](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-route-tables.html) \(AWS CLI\)
++ [Get\-EC2RouteTable](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2RouteTable.html) \(AWS Tools for Windows PowerShell\)
 
 **Delete a route from a route table**
-+ [delete\-route](http://docs.aws.amazon.com/cli/latest/reference/ec2/delete-route.html) \(AWS CLI\)
-+ [Remove\-EC2Route](http://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2Route.html) \(AWS Tools for Windows PowerShell\)
++ [delete\-route](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-route.html) \(AWS CLI\)
++ [Remove\-EC2Route](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2Route.html) \(AWS Tools for Windows PowerShell\)
 
 **Replace an existing route in a route table**
-+ [replace\-route](http://docs.aws.amazon.com/cli/latest/reference/ec2/replace-route.html) \(AWS CLI\)
-+ [Set\-EC2Route](http://docs.aws.amazon.com/powershell/latest/reference/items/Set-EC2Route.html) \(AWS Tools for Windows PowerShell\)
++ [replace\-route](https://docs.aws.amazon.com/cli/latest/reference/ec2/replace-route.html) \(AWS CLI\)
++ [Set\-EC2Route](https://docs.aws.amazon.com/powershell/latest/reference/items/Set-EC2Route.html) \(AWS Tools for Windows PowerShell\)
 
 **Disassociate a subnet from a route table**
-+ [disassociate\-route\-table](http://docs.aws.amazon.com/cli/latest/reference/ec2/disassociate-route-table.html) \(AWS CLI\)
-+ [Unregister\-EC2RouteTable](http://docs.aws.amazon.com/powershell/latest/reference/items/Unregister-EC2RouteTable.html) \(AWS Tools for Windows PowerShell\)
++ [disassociate\-route\-table](https://docs.aws.amazon.com/cli/latest/reference/ec2/disassociate-route-table.html) \(AWS CLI\)
++ [Unregister\-EC2RouteTable](https://docs.aws.amazon.com/powershell/latest/reference/items/Unregister-EC2RouteTable.html) \(AWS Tools for Windows PowerShell\)
 
 **Change the route table associated with a subnet**
-+ [replace\-route\-table\-association](http://docs.aws.amazon.com/cli/latest/reference/ec2/replace-route-table-association.html) \(AWS CLI\)
-+ [Set\-EC2RouteTableAssociation](http://docs.aws.amazon.com/powershell/latest/reference/items/Set-EC2RouteTableAssociation.html) \(AWS Tools for Windows PowerShell\)
++ [replace\-route\-table\-association](https://docs.aws.amazon.com/cli/latest/reference/ec2/replace-route-table-association.html) \(AWS CLI\)
++ [Set\-EC2RouteTableAssociation](https://docs.aws.amazon.com/powershell/latest/reference/items/Set-EC2RouteTableAssociation.html) \(AWS Tools for Windows PowerShell\)
 
-**Create a static route associated with a VPN connection**
-+ [create\-vpn\-connection\-route](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-vpn-connection-route.html) \(AWS CLI\)
-+ [New\-EC2VpnConnectionRoute](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2VpnConnectionRoute.html) \(AWS Tools for Windows PowerShell\)
+**Create a static route associated with a Site\-to\-Site VPN connection**
++ [create\-vpn\-connection\-route](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-vpn-connection-route.html) \(AWS CLI\)
++ [New\-EC2VpnConnectionRoute](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2VpnConnectionRoute.html) \(AWS Tools for Windows PowerShell\)
 
-**Delete a static route associated with a VPN connection**
-+ [delete\-vpn\-connection\-route](http://docs.aws.amazon.com/cli/latest/reference/ec2/delete-vpn-connection-route.html) \(AWS CLI\)
-+ [Remove\-EC2VpnConnectionRoute](http://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2VpnConnectionRoute.html) \(AWS Tools for Windows PowerShell\)
+**Delete a static route associated with a Site\-to\-Site VPN connection**
++ [delete\-vpn\-connection\-route](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-vpn-connection-route.html) \(AWS CLI\)
++ [Remove\-EC2VpnConnectionRoute](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2VpnConnectionRoute.html) \(AWS Tools for Windows PowerShell\)
 
 **Enable a virtual private gateway \(VGW\) to propagate routes to the routing tables of a VPC**
-+ [enable\-vgw\-route\-propagation](http://docs.aws.amazon.com/cli/latest/reference/ec2/enable-vgw-route-propagation.html) \(AWS CLI\)
-+ [Enable\-EC2VgwRoutePropagation](http://docs.aws.amazon.com/powershell/latest/reference/items/Enable-EC2VgwRoutePropagation.html) \(AWS Tools for Windows PowerShell\)
++ [enable\-vgw\-route\-propagation](https://docs.aws.amazon.com/cli/latest/reference/ec2/enable-vgw-route-propagation.html) \(AWS CLI\)
++ [Enable\-EC2VgwRoutePropagation](https://docs.aws.amazon.com/powershell/latest/reference/items/Enable-EC2VgwRoutePropagation.html) \(AWS Tools for Windows PowerShell\)
 
 **Disable a VGW from propagating routes to the routing tables of a VPC**
-+ [disable\-vgw\-route\-propagation](http://docs.aws.amazon.com/cli/latest/reference/ec2/disable-vgw-route-propagation.html) \(AWS CLI\)
-+ [Disable\-EC2VgwRoutePropagation](http://docs.aws.amazon.com/powershell/latest/reference/items/Disable-EC2VgwRoutePropagation.html) \(AWS Tools for Windows PowerShell\)
++ [disable\-vgw\-route\-propagation](https://docs.aws.amazon.com/cli/latest/reference/ec2/disable-vgw-route-propagation.html) \(AWS CLI\)
++ [Disable\-EC2VgwRoutePropagation](https://docs.aws.amazon.com/powershell/latest/reference/items/Disable-EC2VgwRoutePropagation.html) \(AWS Tools for Windows PowerShell\)
 
 **Delete a route table**
-+ [delete\-route\-table](http://docs.aws.amazon.com/cli/latest/reference/ec2/delete-route-table.html) \(AWS CLI\)
-+ [Remove\-EC2RouteTable](http://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2RouteTable.html) \(AWS Tools for Windows PowerShell\)
++ [delete\-route\-table](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-route-table.html) \(AWS CLI\)
++ [Remove\-EC2RouteTable](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2RouteTable.html) \(AWS Tools for Windows PowerShell\)

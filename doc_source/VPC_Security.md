@@ -1,13 +1,13 @@
 # Security<a name="VPC_Security"></a>
 
-Amazon VPC provides features that you can use to increase and monitor the security for your VPC:
+Amazon Virtual Private Cloud provides features that you can use to increase and monitor the security for your virtual private cloud \(VPC\):
 + Security groups — Act as a firewall for associated Amazon EC2 instances, controlling both inbound and outbound traffic at the instance level
 + Network access control lists \(ACLs\) — Act as a firewall for associated subnets, controlling both inbound and outbound traffic at the subnet level
 + Flow logs — Capture information about the IP traffic going to and from network interfaces in your VPC
 
 When you launch an instance in a VPC, you can associate one or more security groups that you've created\. Each instance in your VPC could belong to a different set of security groups\. If you don't specify a security group when you launch an instance, the instance automatically belongs to the default security group for the VPC\. For more information about security groups, see [Security Groups for Your VPC](VPC_SecurityGroups.md)
 
-You can secure your VPC instances using only security groups; however, you can add network ACLs as an additional layer of defense\. For more information about network ACLs, see [Network ACLs](VPC_ACLs.md)\.
+You can secure your VPC instances using only security groups; however, you can add network ACLs as an additional layer of defense\. For more information, see [Network ACLs](vpc-network-acls.md)\.
 
 You can monitor the accepted and rejected IP traffic going to and from your instances by creating a flow log for a VPC, subnet, or individual network interface\. Flow log data is published to CloudWatch Logs, and can help you diagnose overly restrictive or overly permissive security group and network ACL rules\. For more information, see [VPC Flow Logs](flow-logs.md)\.
 
@@ -26,8 +26,8 @@ The following table summarizes the basic differences between security groups and
 |  Supports allow rules only  |  Supports allow rules and deny rules  | 
 |  Is stateful: Return traffic is automatically allowed, regardless of any rules  |  Is stateless: Return traffic must be explicitly allowed by rules  | 
 |  We evaluate all rules before deciding whether to allow traffic  |  We process rules in number order when deciding whether to allow traffic  | 
-|  Applies to an instance only if someone specifies the security group when launching the instance, or associates the security group with the instance later on  |  Automatically applies to all instances in the subnets it's associated with \(therefore, you don't have to rely on users to specify the security group\)  | 
+|  Applies to an instance only if someone specifies the security group when launching the instance, or associates the security group with the instance later on  |  Automatically applies to all instances in the subnets it's associated with \(therefore, an additional layer of defense if the security group rules are too permissive\)  | 
 
 The following diagram illustrates the layers of security provided by security groups and network ACLs\. For example, traffic from an Internet gateway is routed to the appropriate subnet using the routes in the routing table\. The rules of the network ACL associated with the subnet control which traffic is allowed to the subnet\. The rules of the security group associated with an instance control which traffic is allowed to the instance\.
 
-![\[Traffic is controlled using security groups and network ACLs\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/security-diagram.png)
+![\[Traffic is controlled using security groups and network ACLs\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/security-diagram.png)

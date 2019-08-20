@@ -15,7 +15,7 @@ You can configure DHCP options sets for your virtual private clouds \(VPC\)\.
 
 The Amazon EC2 instances you launch into a nondefault VPC are private by default; they're not assigned a public IPv4 address unless you specifically assign one during launch, or you modify the subnet's public IPv4 address attribute\. By default, all instances in a nondefault VPC receive an unresolvable host name that AWS assigns \(for example, ip\-10\-0\-0\-202\)\. You can assign your own domain name to your instances, and use up to four of your own DNS servers\. To do that, you must specify a special set of DHCP options to use with the VPC\. 
 
-The following table lists all the supported options for a DHCP options set\. You can specify only the options you need in your DHCP options set\. For more information about the options, see [RFC 2132](http://www.ietf.org/rfc/rfc2132.txt)\.
+The following table lists all the supported options for a DHCP options set\. You can specify only the options you need in your DHCP options set\. For more information about the options, see [RFC 2132](https://tools.ietf.org/html/rfc2132)\.
 
 
 | DHCP Option Name | Description | 
@@ -35,9 +35,9 @@ The DNS server does not reside within a specific subnet or Availability Zone in 
 
 When you launch an instance into a VPC, we provide the instance with a private DNS hostname, and a public DNS hostname if the instance receives a public IPv4 address\. If `domain-name-servers` in your DHCP options is set to AmazonProvidedDNS, the public DNS hostname takes the form `ec2-public-ipv4-address.compute-1.amazonaws.com` for the us\-east\-1 region, and `ec2-public-ipv4-address.region.compute.amazonaws.com` for other regions\. The private hostname takes the form `ip-private-ipv4-address.ec2.internal` for the us\-east\-1 region, and `ip-private-ipv4-address.region.compute.internal` for other regions\. To change these to custom DNS hostnames, you must set `domain-name-servers` to a custom DNS server\.
 
-The Amazon DNS server in your VPC is used to resolve the DNS domain names that you specify in a private hosted zone in Route 53\. For more information about private hosted zones, see [Working with Private Hosted Zones](http://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-private.html) in the *Amazon Route 53 Developer Guide*\.
+The Amazon DNS server in your VPC is used to resolve the DNS domain names that you specify in a private hosted zone in Route 53\. For more information about private hosted zones, see [Working with Private Hosted Zones](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-private.html) in the *Amazon Route 53 Developer Guide*\.
 
-Services that use the Hadoop framework, such as Amazon EMR, require instances to resolve their own fully qualified domain names \(FQDN\)\. In such cases, DNS resolution can fail if the `domain-name-servers` option is set to a custom value\. To ensure proper DNS resolution, consider adding a conditional forwarder on your DNS server to forward queries for the domain `region-name.compute.internal` to the Amazon DNS server\. For more information, see [Setting Up a VPC to Host Clusters](http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-vpc-host-job-flows.html) in the *Amazon EMR Management Guide*\.
+Services that use the Hadoop framework, such as Amazon EMR, require instances to resolve their own fully qualified domain names \(FQDN\)\. In such cases, DNS resolution can fail if the `domain-name-servers` option is set to a custom value\. To ensure proper DNS resolution, consider adding a conditional forwarder on your DNS server to forward queries for the domain `region-name.compute.internal` to the Amazon DNS server\. For more information, see [Setting Up a VPC to Host Clusters](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-vpc-host-job-flows.html) in the *Amazon EMR Management Guide*\.
 
 **Note**  
  You can use the Amazon DNS server IP address 169\.254\.169\.253, though some servers don't allow its use\. Windows Server 2008, for example, disallows the use of a DNS server located in the 169\.254\.x\.x network range\. 
@@ -46,7 +46,7 @@ Services that use the Hadoop framework, such as Amazon EMR, require instances to
 
 After you create a set of DHCP options, you can't modify them\. If you want your VPC to use a different set of DHCP options, you must create a new set and associate them with your VPC\. You can also set up your VPC to use no DHCP options at all\.
 
-You can have multiple sets of DHCP options, but you can associate only one set of DHCP options with a VPC at a time\. If you delete a VPC, the DHCP options set associated with the VPC are also deleted\.
+You can have multiple sets of DHCP options, but you can associate only one set of DHCP options with a VPC at a time\. If you delete a VPC, the DHCP options set associated with the VPC is disassociated from the VPC\.
 
 After you associate a new set of DHCP options with a VPC, any existing instances and all new instances that you launch in the VPC use these options\. You don't need to restart or relaunch the instances\. They automatically pick up the changes within a few hours, depending on how frequently the instance renews its DHCP lease\. If you want, you can explicitly renew the lease using the operating system on the instance\. 
 
@@ -129,20 +129,20 @@ When you no longer need a DHCP options set, use the following procedure to delet
 
 ## API and Command Overview<a name="APIOverview"></a>
 
-You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Accessing Amazon VPC](VPC_Introduction.md#VPCInterfaces)\.
+You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 
 **Create a set of DHCP options for your VPC**
-+ [create\-dhcp\-options](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-dhcp-options.html) \(AWS CLI\)
-+ [New\-EC2DhcpOption](http://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2DhcpOption.html) \(AWS Tools for Windows PowerShell\)
++ [create\-dhcp\-options](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-dhcp-options.html) \(AWS CLI\)
++ [New\-EC2DhcpOption](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2DhcpOption.html) \(AWS Tools for Windows PowerShell\)
 
 **Associate a set of DHCP options with the specified VPC, or no DHCP options**
-+ [associate\-dhcp\-options](http://docs.aws.amazon.com/cli/latest/reference/ec2/associate-dhcp-options.html) \(AWS CLI\)
-+ [Register\-EC2DhcpOption](http://docs.aws.amazon.com/powershell/latest/reference/items/Register-EC2DhcpOption.html) \(AWS Tools for Windows PowerShell\)
++ [associate\-dhcp\-options](https://docs.aws.amazon.com/cli/latest/reference/ec2/associate-dhcp-options.html) \(AWS CLI\)
++ [Register\-EC2DhcpOption](https://docs.aws.amazon.com/powershell/latest/reference/items/Register-EC2DhcpOption.html) \(AWS Tools for Windows PowerShell\)
 
 **Describes one or more sets of DHCP options**
-+ [describe\-dhcp\-options](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-dhcp-options.html) \(AWS CLI\)
-+ [Get\-EC2DhcpOption](http://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2DhcpOption.html) \(AWS Tools for Windows PowerShell\)
++ [describe\-dhcp\-options](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-dhcp-options.html) \(AWS CLI\)
++ [Get\-EC2DhcpOption](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2DhcpOption.html) \(AWS Tools for Windows PowerShell\)
 
 **Deletes a set of DHCP options**
-+ [delete\-dhcp\-options](http://docs.aws.amazon.com/cli/latest/reference/ec2/delete-dhcp-options.html) \(AWS CLI\)
-+ [Remove\-EC2DhcpOption](http://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2DhcpOption.html) \(AWS Tools for Windows PowerShell\)
++ [delete\-dhcp\-options](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-dhcp-options.html) \(AWS CLI\)
++ [Remove\-EC2DhcpOption](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2DhcpOption.html) \(AWS Tools for Windows PowerShell\)

@@ -7,7 +7,7 @@ ClassicLink is available to all users with accounts that support the EC2\-Classi
 There is no additional charge for using ClassicLink\. Standard charges for data transfer and instance hour usage apply\.
 
 For more information about ClassicLink and how to use it, see the following topics in the *Amazon EC2 User Guide*:
-+ [ClassicLink Basics](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html#classiclink-basics)
-+ [ClassicLink Limitations](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html#classiclink-limitations)
-+ [Working with ClassicLink](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html#working-with-classiclink)
-+ [ClassicLink API and CLI Overview](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html#classiclink-api-cli)
++ [ClassicLink Basics](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html#classiclink-basics)
++ [ClassicLink Limitations](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html#classiclink-limitations)
++ [Working with ClassicLink](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html#working-with-classiclink)
++ [ClassicLink API and CLI Overview](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html#classiclink-api-cli)

@@ -14,10 +14,10 @@ This scenario can also be optionally configured for IPv6—you can use the VPC w
 
 The following diagram shows the key components of the configuration for this scenario\.
 
-![\[Diagram for scenario 1: VPC with a public subnet\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/Case1_Diagram.png)
+![\[Diagram for scenario 1: VPC with a public subnet\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/Case1_Diagram.png)
 
 **Note**  
-If you completed the exercise [Getting Started with Amazon VPC](GetStarted.md), then you've already implemented this scenario using the VPC wizard in the Amazon VPC console\.
+If you completed [Getting Started with Amazon VPC](vpc-getting-started.md), then you've already implemented this scenario using the VPC wizard in the Amazon VPC console\.
 
 The configuration for this scenario includes the following:
 + A virtual private cloud \(VPC\) with a size /16 IPv4 CIDR block \(example: 10\.0\.0\.0/16\)\. This provides 65,536 private IPv4 addresses\.
@@ -36,7 +36,7 @@ You can optionally enable IPv6 for this scenario\. In addition to the components
 + An IPv6 address assigned to the instance from the subnet range \(example: 2001:db8:1234:1a00::123\)\.
 + Route table entries in the custom route table that enable instances in the VPC to use IPv6 to communicate with each other, and directly over the Internet\.
 
-![\[IPv6-enabled VPC with a public subnet\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/scenario-1-ipv6-diagram.png)
+![\[IPv6-enabled VPC with a public subnet\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/scenario-1-ipv6-diagram.png)
 
 ## Routing<a name="VPC_Scenario1_Routing"></a>
 
@@ -66,7 +66,7 @@ If you associate an IPv6 CIDR block with your VPC and subnet, your route table m
 
 AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Security](VPC_Security.md)\. 
 
-For this scenario, you use a security group but not a network ACL\. If you'd like to use a network ACL, see [Recommended Rules for Scenario 1](VPC_Appendix_NACLs.md#VPC_Appendix_NACLs_Scenario_1)\.
+For this scenario, you use a security group but not a network ACL\. If you'd like to use a network ACL, see [Recommended Rules for Scenario 1](vpc-recommended-nacl-rules.md#nacl-rules-scenario-1)\.
 
 Your VPC comes with a [default security group](VPC_SecurityGroups.md#DefaultSecurityGroup)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. You can add rules to the default security group, but the rules may not be suitable for other instances that you launch into the VPC\. Instead, we recommend that you create a custom security group for your web server\.
 
@@ -117,8 +117,8 @@ These procedures include optional steps for enabling and configuring IPv6 commun
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. On the dashboard, choose **Create VPC**\.  
-![\[The Amazon VPC dashboard\]](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/images/VPC-dashboard.png)
+1. On the dashboard, choose **Launch VPC Wizard**\.  
+![\[The Amazon VPC dashboard\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/VPC-dashboard.png)
 
 1. Choose the first option, **VPC with a Single Public Subnet**, and then choose **Select**\.
 
@@ -140,14 +140,14 @@ These procedures include optional steps for enabling and configuring IPv6 commun
 
 1. Select the WebServerSG security group that you just created\. The details pane include a tab for information about the security group, plus tabs for working with its inbound rules and outbound rules\.
 
-1. On the **Inbound Rules** tab, choose **Edit**, and then do the following:
+1. On the **Inbound Rules** tab, choose **Edit Rules**, and then do the following:
    + Select **HTTP** from the **Type** list, and enter `0.0.0.0/0` in the **Source** field\.
-   + Choose **Add another rule**, then select **HTTPS** from the **Type** list, and enter `0.0.0.0/0` in the **Source** field\.
-   + Choose **Add another rule**, then select **SSH** \(for Linux\) or **RDP** \(for Windows\) from the **Type** list\. Enter your network's public IP address range in the **Source** field\. \(If you don't know this address range, you can use `0.0.0.0/0` for testing purposes; in production, you authorize only a specific IP address or range of addresses to access your instance\.\)
-   + \(Optional\) Choose **Add another rule**, then select **ALL traffic** from the **Type** list\. In the **Source** field, enter the ID of the WebServerSG security group\.
-   + \(Optional, IPv6\-only\) Choose **Add another rule**, select **HTTP** from the **Type** list, and enter `::/0` in the **Source** field\.
-   + \(Optional, IPv6\-only\) Choose **Add another rule**, select **HTTPS** from the **Type** list, and enter `::/0` in the **Source** field\.
-   + \(Optional, IPv6\-only\) Choose **Add another rule**, select **SSH** \(for Linux\) or **RDP** \(for Windows\) from the **Type** list\. Enter your network's IPv6 address range in the **Source** field\. \(If you don't know this address range, you can use `::/0` for testing purposes; in production, you authorize only a specific IPv6 address or range of addresses to access your instance\.\)
+   + Choose **Add rule**, then select **HTTPS** from the **Type** list, and enter `0.0.0.0/0` in the **Source** field\.
+   + Choose **Add rule**, then select **SSH** \(for Linux\) or **RDP** \(for Windows\) from the **Type** list\. Enter your network's public IP address range in the **Source** field\. \(If you don't know this address range, you can use `0.0.0.0/0` for testing purposes; in production, you authorize only a specific IP address or range of addresses to access your instance\.\)
+   + \(Optional\) Choose **Add rule**, then select **ALL traffic** from the **Type** list\. In the **Source** field, enter the ID of the WebServerSG security group\.
+   + \(Optional, IPv6\-only\) Choose **Add rule**, select **HTTP** from the **Type** list, and enter `::/0` in the **Source** field\.
+   + \(Optional, IPv6\-only\) Choose **Add rule**, select **HTTPS** from the **Type** list, and enter `::/0` in the **Source** field\.
+   + \(Optional, IPv6\-only\) Choose **Add rule**, select **SSH** \(for Linux\) or **RDP** \(for Windows\) from the **Type** list\. Enter your network's IPv6 address range in the **Source** field\. \(If you don't know this address range, you can use `::/0` for testing purposes; in production, you authorize only a specific IPv6 address or range of addresses to access your instance\.\)
 
 1. Choose **Save**\.
 
@@ -157,7 +157,7 @@ These procedures include optional steps for enabling and configuring IPv6 commun
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. From the dashboard, choose **Launch Instance**\.
+1. From the dashboard, choose **Launch EC2 Instances**\.
 
 1. Follow the directions in the wizard\. Choose an AMI, choose an instance type, and then choose **Next: Configure Instance Details**\.
 **Note**  
@@ -191,4 +191,4 @@ If your account supports EC2\-Classic, first choose **VPC**\.
 
    1. Select the instance to associate the address with, and then choose **Associate**\.
 
-You can now connect to your instances in the VPC\. For information about how to connect to a Linux instance, see [Connect to Your Linux Instance](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html#EC2_ConnectToInstance_Linux) in the *Amazon EC2 User Guide for Linux Instances*\. For information about how to connect to a Windows instance, see [Connect to Your Windows Instance](http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/EC2Win_GetStarted.html#EC2Win_ConnectToInstanceWindows) in the *Amazon EC2 User Guide for Windows Instances*\.
+You can now connect to your instances in the VPC\. For information about how to connect to a Linux instance, see [Connect to Your Linux Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html#EC2_ConnectToInstance_Linux) in the *Amazon EC2 User Guide for Linux Instances*\. For information about how to connect to a Windows instance, see [Connect to Your Windows Instance](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/EC2Win_GetStarted.html#EC2Win_ConnectToInstanceWindows) in the *Amazon EC2 User Guide for Windows Instances*\.

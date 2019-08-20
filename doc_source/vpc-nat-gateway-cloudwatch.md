@@ -1,18 +1,41 @@
-# Monitoring Your NAT Gateway with Amazon CloudWatch<a name="vpc-nat-gateway-cloudwatch"></a>
+# Monitoring NAT Gateways Using Amazon CloudWatch<a name="vpc-nat-gateway-cloudwatch"></a>
 
 You can monitor your NAT gateway using CloudWatch, which collects information from your NAT gateway and creates readable, near real\-time metrics\. You can use this information to monitor and troubleshoot your NAT gateway\. NAT gateway metric data is provided at 1\-minute frequency, and statistics are recorded for a period of 15 months\.
 
-For more information about Amazon CloudWatch, see the [Amazon CloudWatch User Guide](http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/)\. For more information about pricing, see [Amazon CloudWatch Pricing](http://aws.amazon.com/cloudwatch/pricing)\.
-
-**Topics**
-+ [NAT Gateway Metrics and Dimensions](#metrics-dimensions-nat-gateway)
-+ [Creating CloudWatch Alarms to Monitor a NAT Gateway](#creating-alarms-nat-gateway)
+For more information about Amazon CloudWatch, see the [Amazon CloudWatch User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/)\. For more information about pricing, see [Amazon CloudWatch Pricing](http://aws.amazon.com/cloudwatch/pricing)\.
 
 ## NAT Gateway Metrics and Dimensions<a name="metrics-dimensions-nat-gateway"></a>
 
-NAT gateway metrics are sent to CloudWatch at 1\-minute intervals\. You can use the following procedures to view the metrics for your NAT gateway\.
+The following metrics are available for your NAT gateways\.
 
-Currently, you can view NAT gateway metrics using the CloudWatch console or a command line tool only\.
+
+| Metric | Description | 
+| --- | --- | 
+|  `ActiveConnectionCount`  |  The total number of concurrent active TCP connections through the NAT gateway\. A value of zero indicates that there are no active connections through the NAT gateway\. Units: Count Statistics: The most useful statistic is `Max`\.  | 
+|  `BytesInFromDestination`  |  The number of bytes received by the NAT gateway from the destination\. If the value for `BytesOutToSource` is less than the value for `BytesInFromDestination`, there may be data loss during NAT gateway processing, or traffic being actively blocked by the NAT gateway\. Units: Bytes Statistics: The most useful statistic is `Sum`\.  | 
+|  `BytesInFromSource`  |  The number of bytes received by the NAT gateway from clients in your VPC\. If the value for `BytesOutToDestination` is less than the value for `BytesInFromSource`, there may be data loss during NAT gateway processing\. Units: Bytes Statistics: The most useful statistic is `Sum`\.  | 
+|  `BytesOutToDestination`  |  The number of bytes sent out through the NAT gateway to the destination\. A value greater than zero indicates that there is traffic going to the internet from clients that are behind the NAT gateway\. If the value for `BytesOutToDestination` is less than the value for `BytesInFromSource`, there may be data loss during NAT gateway processing\. Unit: Bytes Statistics: The most useful statistic is `Sum`\.  | 
+|  `BytesOutToSource`  |  The number of bytes sent through the NAT gateway to the clients in your VPC\. A value greater than zero indicates that there is traffic coming from the internet to clients that are behind the NAT gateway\. If the value for `BytesOutToSource` is less than the value for `BytesInFromDestination`, there may be data loss during NAT gateway processing, or traffic being actively blocked by the NAT gateway\. Units: Bytes Statistics: The most useful statistic is `Sum`\.  | 
+|  `ConnectionAttemptCount`  |  The number of connection attempts made through the NAT gateway\. If the value for `ConnectionEstablishedCount` is less than the value for `ConnectionAttemptCount`, this indicates that clients behind the NAT gateway attempted to establish new connections for which there was no response\. Unit: Count Statistics: The most useful statistic is `Sum`\.  | 
+|  `ConnectionEstablishedCount`  |  The number of connections established through the NAT gateway\. If the value for `ConnectionEstablishedCount` is less than the value for `ConnectionAttemptCount`, this indicates that clients behind the NAT gateway attempted to establish new connections for which there was no response\. Unit: Count Statistics: The most useful statistic is `Sum`\.  | 
+|  `ErrorPortAllocation`  |  The number of times the NAT gateway could not allocate a source port\.  A value greater than zero indicates that too many concurrent connections are open through the NAT gateway\. Units: Count Statistics: The most useful statistic is `Sum`\.  | 
+|  `IdleTimeoutCount`  |  The number of connections that transitioned from the active state to the idle state\. An active connection transitions to idle if it was not closed gracefully and there was no activity for the last 350 seconds\. A value greater than zero indicates that there are connections that have been moved to an idle state\. If the value for `IdleTimeoutCount` increases, it may indicate that clients behind the NAT gateway are re\-using stale connections\.  Unit: Count Statistics: The most useful statistic is `Sum`\.  | 
+|  `PacketsDropCount`  |  The number of packets dropped by the NAT gateway\. A value greater than zero may indicate an ongoing transient issue with the NAT gateway\. If this value is high, see the [AWS service health dashboard](http://status.aws.amazon.com/)\. Units: Count Statistics: The most useful statistic is `Sum`\.  | 
+|  `PacketsInFromDestination`  |  The number of packets received by the NAT gateway from the destination\. If the value for `PacketsOutToSource` is less than the value for `PacketsInFromDestination`, there may be data loss during NAT gateway processing, or traffic being actively blocked by the NAT gateway\. Unit: Count Statistics: The most useful statistic is `Sum`\.  | 
+|  `PacketsInFromSource`  |  The number of packets received by the NAT gateway from clients in your VPC\. If the value for `PacketsOutToDestination` is less than the value for `PacketsInFromSource`, there may be data loss during NAT gateway processing\. Unit: Count Statistics: The most useful statistic is `Sum`\.  | 
+|  `PacketsOutToDestination`  |  The number of packets sent out through the NAT gateway to the destination\. A value greater than zero indicates that there is traffic going to the internet from clients that are behind the NAT gateway\. If the value for `PacketsOutToDestination` is less than the value for `PacketsInFromSource`, there may be data loss during NAT gateway processing\. Unit: Count Statistics: The most useful statistic is `Sum`\.  | 
+|  `PacketsOutToSource`  |  The number of packets sent through the NAT gateway to the clients in your VPC\. A value greater than zero indicates that there is traffic coming from the internet to clients that are behind the NAT gateway\. If the value for `PacketsOutToSource` is less than the value for `PacketsInFromDestination`, there may be data loss during NAT gateway processing, or traffic being actively blocked by the NAT gateway\. Unit: Count Statistics: The most useful statistic is `Sum`\.  | 
+
+To filter the metric data, use the following dimension\.
+
+
+| Dimension | Description | 
+| --- | --- | 
+| NatGatewayId | Filter the metric data by the NAT gateway ID\. | 
+
+## Viewing NAT Gateway CloudWatch Metrics<a name="viewing-metrics"></a>
+
+NAT gateway metrics are sent to CloudWatch at 1\-minute intervals\. You can view the metrics for your NAT gateways as follows\.
 
 **To view metrics using the CloudWatch console**
 
@@ -26,39 +49,12 @@ Metrics are grouped first by the service namespace, and then by the various dime
 
 1. To view the metrics, select the metric dimension \.
 
-**To view metrics using the AWS CLI**
-+ At a command prompt, use the following command to list the metrics that are available for the NAT gateway service:
+**To view metrics using the AWS CLI**  
+At a command prompt, use the following command to list the metrics that are available for the NAT gateway service:
 
-  ```
-  aws cloudwatch list-metrics --namespace "AWS/NATGateway"
-  ```
-
-The following metrics are available from the NAT gateway service\.
-
-
-| Metric | Description | 
-| --- | --- | 
-|  ActiveConnectionCount  |  The total number of concurrent active TCP connections through the NAT gateway\. A value of zero indicates that there are no active connections through the NAT gateway\. Units: Count Statistics: The most useful statistic is `Max`\.  | 
-|  BytesInFromDestination  |  The number of bytes received by the NAT gateway from the destination\. If the value for `BytesOutToSource` is less than the value for `BytesInFromDestination`, there may be data loss during NAT gateway processing, or traffic being actively blocked by the NAT gateway\. Units: Bytes Statistics: The most useful statistic is `Sum`\.  | 
-|  BytesInFromSource  |  The number of bytes received by the NAT gateway from clients in your VPC\. If the value for `BytesOutToDestination` is less than the value for `BytesInFromSource`, there may be data loss during NAT gateway processing\. Units: Bytes Statistics: The most useful statistic is `Sum`\.  | 
-|  BytesOutToDestination  |  The number of bytes sent out through the NAT gateway to the destination\. A value greater than zero indicates that there is traffic going to the internet from clients that are behind the NAT gateway\. If the value for `BytesOutToDestination` is less than the value for `BytesInFromSource`, there may be data loss during NAT gateway processing\. Unit: Bytes Statistics: The most useful statistic is `Sum`\.  | 
-|  BytesOutToSource  |  The number of bytes sent through the NAT gateway to the clients in your VPC\. A value greater than zero indicates that there is traffic coming from the internet to clients that are behind the NAT gateway\. If the value for `BytesOutToSource` is less than the value for `BytesInFromDestination`, there may be data loss during NAT gateway processing, or traffic being actively blocked by the NAT gateway\. Units: Bytes Statistics: The most useful statistic is `Sum`\.  | 
-|  ConnectionAttemptCount  |  The number of connection attempts made through the NAT gateway\. If the value for `ConnectionEstablishedCount` is less than the value for `ConnectionAttemptCount`, this indicates that clients behind the NAT gateway attempted to establish new connections for which there was no response\. Unit: Count Statistics: The most useful statistic is `Sum`\.  | 
-|  ConnectionEstablishedCount  |  The number of connections established through the NAT gateway\. If the value for `ConnectionEstablishedCount` is less than the value for `ConnectionAttemptCount`, this indicates that clients behind the NAT gateway attempted to establish new connections for which there was no response\. Unit: Count Statistics: The most useful statistic is `Sum`\.  | 
-|  ErrorPortAllocation  |  The number of times the NAT gateway could not allocate a source port\.  A value greater than zero indicates that too many concurrent connections are open through the NAT gateway\. Units: Count Statistics: The most useful statistic is `Sum`\.  | 
-|  IdleTimeoutCount  |  The number of connections that transitioned from the active state to the idle state\. An active connection transitions to idle if it was not closed gracefully and there was no activity for the last 350 seconds\. A value greater than zero indicates that there are connections that have been moved to an idle state\. If the value for `IdleTimeoutCount` increases, it may indicate that clients behind the NAT gateway are re\-using stale connections\.  Unit: Count Statistics: The most useful statistic is `Sum`\.  | 
-|  PacketsDropCount  |  The number of packets dropped by the NAT gateway\. A value greater than zero may indicate an ongoing transient issue with the NAT gateway\. If this value is high, see the [AWS service health dashboard](http://status.aws.amazon.com/)\. Units: Count Statistics: The most useful statistic is `Sum`\.  | 
-|  PacketsInFromDestination  |  The number of packets received by the NAT gateway from the destination\. If the value for `PacketsOutToSource` is less than the value for `PacketsInFromDestination`, there may be data loss during NAT gateway processing, or traffic being actively blocked by the NAT gateway\. Unit: Count Statistics: The most useful statistic is `Sum`\.  | 
-|  PacketsInFromSource  |  The number of packets received by the NAT gateway from clients in your VPC\. If the value for `PacketsOutToDestination` is less than the value for `PacketsInFromSource`, there may be data loss during NAT gateway processing\. Unit: Count Statistics: The most useful statistic is `Sum`\.  | 
-|  PacketsOutToDestination  |  The number of packets sent out through the NAT gateway to the destination\. A value greater than zero indicates that there is traffic going to the internet from clients that are behind the NAT gateway\. If the value for `PacketsOutToDestination` is less than the value for `PacketsInFromSource`, there may be data loss during NAT gateway processing\. Unit: Count Statistics: The most useful statistic is `Sum`\.  | 
-|  PacketsOutToSource  |  The number of packets sent through the NAT gateway to the clients in your VPC\. A value greater than zero indicates that there is traffic coming from the internet to clients that are behind the NAT gateway\. If the value for `PacketsOutToSource` is less than the value for `PacketsInFromDestination`, there may be data loss during NAT gateway processing, or traffic being actively blocked by the NAT gateway\. Unit: Count Statistics: The most useful statistic is `Sum`\.  | 
-
-You can filter the NAT gateway data using the following dimensions\.
-
-
-| Dimension | Description | 
-| --- | --- | 
-| NatGatewayId | This dimension filters data by the NAT gateway ID\. | 
+```
+aws cloudwatch list-metrics --namespace "AWS/NATGateway"
+```
 
 ## Creating CloudWatch Alarms to Monitor a NAT Gateway<a name="creating-alarms-nat-gateway"></a>
 
@@ -81,7 +77,7 @@ For example, you can create an alarm that monitors the amount of traffic coming 
    + Under **Actions**, select an existing notification list or choose **New list** to create a new one\. 
    + Under **Alarm Preview**, select a period of 15 minutes and specify a statistic of **Sum**\.
 
-You can create an alarm that monitors the `ErrorPortAllocation` metric and sends a notification when the value is greater than zero \(0\) for three consecutive 5\-minute periods\. 
+You can create an alarm that monitors the `ErrorPortAllocation` metric and sends a notification when the value is greater than zero \(0\) for three consecutive 5\-minute periods\.
 
 **To create an alarm to monitor port allocation errors**
 
@@ -98,4 +94,4 @@ You can create an alarm that monitors the `ErrorPortAllocation` metric and sends
    + Under **Actions**, select an existing notification list or choose **New list** to create a new one\. 
    + Under **Alarm Preview**, select a period of 5 minutes and specify a statistic of **Maximum**\.
 
-For more examples of creating alarms, see [Creating Amazon CloudWatch Alarms](http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html) in the *Amazon CloudWatch User Guide*\.
+For more examples of creating alarms, see [Creating Amazon CloudWatch Alarms](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html) in the *Amazon CloudWatch User Guide*\.

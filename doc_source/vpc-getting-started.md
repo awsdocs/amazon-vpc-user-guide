@@ -1,4 +1,4 @@
-# Getting Started with Amazon VPC<a name="GetStarted"></a>
+# Getting Started with Amazon VPC<a name="vpc-getting-started"></a>
 
 The following tutorials help you set up a nondefault VPC quickly\. If you need resources in your VPC to communicate over IPv6, you can set up a VPC with an associated IPv6 CIDR block\. Otherwise, set up a VPC with an associated IPv4 CIDR block\.
 
