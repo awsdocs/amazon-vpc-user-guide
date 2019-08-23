@@ -94,7 +94,7 @@ To add a CIDR block to your VPC, the following rules apply:
 + There are restrictions on the ranges of IPv4 addresses you can use\. For more information, see [IPv4 CIDR Block Association Restrictions](#add-cidr-block-restrictions)\.
 + You cannot increase or decrease the size of an existing CIDR block\.
 + You have a limit on the number of CIDR blocks you can associate with a VPC and the number of routes you can add to a route table\. You cannot associate a CIDR block if this results in you exceeding your limits\. For more information, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
-+ The CIDR block must not be the same or larger than the CIDR range of a route in any of the VPC route tables\. For example, if you have a route with a destination of `10.0.0.0/24` to a virtual private gateway, you cannot associate a CIDR block of the same range or larger\. However, you can associate a CIDR block of `10.0.0.0/25` or smaller\.
++ The CIDR block must not be of the same range or larger size (more IP Addresses) than the CIDR range of a route in any of the VPC route tables\. For example, if you have a route with a destination of `10.0.0.0/24` to a virtual private gateway, you cannot associate a CIDR block of the same range or larger size\. However, you can associate a CIDR block of `10.0.1.0/25` or smaller\.
 + If you've enabled your VPC for ClassicLink, you can associate CIDR blocks from the `10.0.0.0/16` and `10.1.0.0/16` ranges, but you cannot associate any other CIDR block from the `10.0.0.0/8` range\. 
 + The following rules apply when you add IPv4 CIDR blocks to a VPC that's part of a VPC peering connection:
   + If the VPC peering connection is `active`, you can add CIDR blocks to a VPC provided they do not overlap with a CIDR block of the peer VPC\.
