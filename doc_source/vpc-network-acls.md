@@ -7,6 +7,7 @@ A *network access control list \(ACL\)* is an optional layer of security for you
 + [Network ACL Rules](#nacl-rules)
 + [Default Network ACL](#default-network-acl)
 + [Custom Network ACL](#custom-network-acl)
++ [Custom Network ACLs and Other AWS Services](#nacl-other-services)
 + [Ephemeral Ports](#nacl-ephemeral-ports)
 + [Working with Network ACLs](#nacl-tasks)
 + [Example: Controlling Access to Instances in a Subnet](#nacl-examples)
@@ -108,8 +109,7 @@ As a packet comes to the subnet, we evaluate it against the ingress rules of the
 
 You might want to add a DENY rule in a situation where you legitimately need to open a wide range of ports, but there are certain ports within that range you want to deny\. Just make sure to place the DENY rule earlier in the table than the rule that allows the wide range of port traffic\.
 
-**Important**  
-With Elastic Load Balancing, if the subnet for your back\-end instances has a network ACL in which you've added a DENY rule for all traffic with a source of `0.0.0.0/0` or the subnet's CIDR, then your load balancer can't carry out health checks on the instances\. For more information about the recommended network ACL rules for your load balancers and back\-end instances, see [Network ACLs for Load Balancers in a VPC](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-groups.html#elb-vpc-nacl) in the *User Guide for Classic Load Balancers*\.
+You add ALLOW rules depending on your use case; for example, a rule that allows outbound TCP and UDP access on port 53 for DNS resolution\. For every rule that you add, ensure that there is a corresponding inbound or outbound rule that allows response traffic\.
 
 The following table shows the same example of a custom network ACL for a VPC that has an associated IPv6 CIDR block\. This network ACL includes rules for all IPv6 HTTP and HTTPS traffic\. In this case, new rules were inserted between the existing rules for IPv4 traffic; however, you can also add the rules as higher number rules after the IPv4 rules\. IPv4 and IPv6 traffic are separate; therefore, none of the rules for the IPv4 traffic apply to the IPv6 traffic\.
 
@@ -138,6 +138,12 @@ The following table shows the same example of a custom network ACL for a VPC tha
 |  125  |  Custom TCP  |  TCP  |  32768\-65535  |  ::/0  |  ALLOW  |  Allows outbound IPv6 responses to clients on the Internet \(for example, serving web pages to people visiting the web servers in the subnet\)\. This range is an example only\. For more information about how to select the appropriate ephemeral port range, see [Ephemeral Ports](#nacl-ephemeral-ports)\.  | 
 |  \*  | All traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  |  Denies all outbound IPv4 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
 |  \*  |  All traffic  |  All  |  All  |  ::/0  |  DENY  |  Denies all outbound IPv6 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
+
+## Custom Network ACLs and Other AWS Services<a name="nacl-other-services"></a>
+
+If you create a custom network ACL, be aware of how it might affect resources that you create using other AWS services\.
+
+With Elastic Load Balancing, if the subnet for your back\-end instances has a network ACL in which you've added a DENY rule for all traffic with a source of `0.0.0.0/0` or the subnet's CIDR, then your load balancer can't carry out health checks on the instances\. For more information about the recommended network ACL rules for your load balancers and back\-end instances, see [Network ACLs for Load Balancers in a VPC](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-groups.html#elb-vpc-nacl) in the *User Guide for Classic Load Balancers*\.
 
 ## Ephemeral Ports<a name="nacl-ephemeral-ports"></a>
 
@@ -311,7 +317,7 @@ All instances use the same security group \(sg\-1a2b3c4d\), with the following r
 | SSH | TCP | 22 | 172\.31\.1\.2/32 | Allows inbound SSH access from the remote computer\. If the instance is a Windows computer, then this rule must use the RDP protocol for port 3389 instead\. | 
 | Outbound Rules | 
 | Protocol Type | Protocol | Port Range | Destination | Comments | 
-| All traffic | All | All | sg\-1a2b3c4d | Enables instances associated with the same security group to communicate with each other\. | 
+| All traffic | All | All | sg\-1a2b3c4d | Enables instances associated with the same security group to communicate with each other\. Security groups are stateful, therefore you don't need a rule that allows response traffic for inbound requests\. | 
 
 The subnet is associated with a network ACL that has the following rules\.
 

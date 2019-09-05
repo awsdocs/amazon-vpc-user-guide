@@ -221,6 +221,8 @@ The following is an example of the transit gateway route table entries for the V
 |  10\.1\.0\.0/16  | tgw\-attach\-11111111111111111 | 
 |  10\.2\.0\.0/16  |  tgw\-attach\-22222222222222222  | 
 
+For more information about transit gateway route tables, see [Routing](https://docs.aws.amazon.com/vpc/latest/tgw/how-transit-gateways-work.html#tgw-routing-overview) in *Amazon VPC Transit Gateways*\.
+
 ## Working with Route Tables<a name="WorkWithRouteTables"></a>
 
 The following tasks show you how to work with route tables\.

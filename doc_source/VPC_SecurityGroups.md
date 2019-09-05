@@ -95,7 +95,7 @@ The kind of rules you add can depend on the purpose of the instance\. The follow
 |  The ID of the security group for your Microsoft SQL Server database servers  |  TCP  |  1433  |  Allow outbound Microsoft SQL Server access to instances in the specified security group  | 
 |  The ID of the security group for your MySQL database servers  |  TCP  |  3306  |  Allow outbound MySQL access to instances in the specified security group  | 
 
-A database server would need a different set of rules; for example, instead of inbound HTTP and HTTPS traffic, you can add a rule that allows inbound MySQL or Microsoft SQL Server access\. For an example of security group rules for web servers and database servers, see [Security](VPC_Scenario3.md#VPC_Scenario3_Security)\. 
+A database server would need a different set of rules; for example, instead of inbound HTTP and HTTPS traffic, you can add a rule that allows inbound MySQL or Microsoft SQL Server access\. For an example of security group rules for web servers and database servers, see [Security](VPC_Scenario3.md#VPC_Scenario3_Security)\. For more information about security groups for Amazon RDS DB instances, see [Controlling Access with Security Groups](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html) in the *Amazon RDS User Guide*\.
 
 For examples of security group rules for specific kinds of access, see [Security Group Rules Reference](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules-reference.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 

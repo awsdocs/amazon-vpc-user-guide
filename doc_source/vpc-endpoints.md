@@ -10,7 +10,8 @@ There are two types of VPC endpoints: *interface endpoints* and *gateway endpoin
 
 An [interface endpoint](vpce-interface.md) is an elastic network interface with a private IP address from the IP address range of your subnet that serves as an entry point for traffic destined to a supported service\. The following services are supported:
 + [Amazon API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-private-apis.html)
-+ [App Mesh](https://docs.aws.amazon.com//app-mesh/latest/userguide/vpc-endpoints.html)
++ [Amazon AppStream 2\.0](https://docs.aws.amazon.com/appstream2/latest/developerguide/creating-streaming-from-interface-vpc-endpoints.html)
++ [AWS App Mesh](https://docs.aws.amazon.com//app-mesh/latest/userguide/vpc-endpoints.html)
 + [AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-vpce-bucketnames.html)
 + [AWS CloudTrail](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-and-interface-VPC.html)
 + [Amazon CloudWatch](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch-and-interface-VPC.html)
@@ -20,12 +21,11 @@ An [interface endpoint](vpce-interface.md) is an elastic network interface with 
 + [AWS CodeCommit](https://docs.aws.amazon.com/codecommit/latest/userguide/codecommit-and-interface-VPC.html)
 + [AWS CodePipeline](https://docs.aws.amazon.com/codepipeline/latest/userguide/vpc-support.html#use-vpc-endpoints-with-codepipeline)
 + [AWS Config](https://docs.aws.amazon.com/config/latest/developerguide/config-VPC-endpoints.html)
-+ [AWS Glue](https://docs.aws.amazon.com/glue/latest/dg/vpc-endpoint.html)
 + Amazon EC2 API
 + [Elastic Load Balancing](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/load-balancer-vpc-endpoints.html)
 + [Amazon Elastic Container Registry](https://docs.aws.amazon.com/AmazonECR/latest/userguide/vpc-endpoints.html)
 + [Amazon Elastic Container Service](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/vpc-endpoints.html)
-+ [AWS Glue](https://docs.aws.amazon.com/glue/latest/dg/vpc-endpoint.html)
++ [AWS Glue](https://docs.aws.amazon.com/glue/latest/dg/infrastructure-security.html)
 + [AWS Key Management Service](https://docs.aws.amazon.com/kms/latest/developerguide/kms-vpc-endpoint.html)
 + [Amazon Kinesis Data Firehose](https://docs.aws.amazon.com/firehose/latest/dev/vpc-endpoint.html)
 + [Amazon Kinesis Data Streams](https://docs.aws.amazon.com/streams/latest/dev/vpc.html)

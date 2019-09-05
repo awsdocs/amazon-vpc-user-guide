@@ -126,6 +126,9 @@ We recommend that you grant the AWSLogDeliveryAclCheck and AWSLogDeliveryWrite p
 
 If you enabled server\-side encryption for your Amazon S3 bucket using AWS KMS\-managed keys \(SSE\-KMS\) with a customer\-managed Customer Master Key \(CMK\), you must add the following to the key policy for your CMK so that flow logs can write log files to the bucket\.
 
+**Note**  
+Add these elements to the policy for your CMK, not the policy for your bucket\.
+
 ```
 {
     "Sid": "Allow VPC Flow Logs to use the key",

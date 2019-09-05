@@ -91,11 +91,11 @@ In a shared VPC, each participant pays for their application resources including
 
 ## Unsupported Services for Shared Subnets<a name="vpc-share-unsupported-services"></a>
 
-Participants cannot use a shared subnet with the following services:
-+ AWS CloudHSM \(Classic\)
-+ AWS Glue 
-+  Amazon EMR
+Participants cannot create resources for the following services in a shared subnet::
++ AWS CloudHSM Classic
 + Network Load Balancer 
+**Note**  
+VPC Owners can create these resources in shared VPCs if required\.
 
 ## Limitations<a name="vpc-share-limitations"></a>
 

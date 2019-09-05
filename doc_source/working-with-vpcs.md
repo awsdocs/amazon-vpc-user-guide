@@ -24,7 +24,7 @@ You can create an empty VPC using the Amazon VPC console\.
 
 1. In the navigation pane, choose **Your VPCs**, **Create VPC**\.
 
-1. Specify the following VPC details as necessary and choose **Create VPC**\. 
+1. Specify the following VPC details as necessary and choose **Create**\. 
    + **Name tag**: Optionally provide a name for your VPC\. Doing so creates a tag with a key of `Name` and the value that you specify\.
    + **IPv4 CIDR block**: Specify an IPv4 CIDR block for the VPC\. We recommend that you specify a CIDR block from the private \(non\-publicly routable\) IP address ranges as specified in [RFC 1918](http://www.faqs.org/rfcs/rfc1918.html); for example, `10.0.0.0/16`, or `192.168.0.0/16`\. 
 **Note**  
@@ -56,9 +56,9 @@ You can optionally specify an IPv6 CIDR block for your subnet if an IPv6 CIDR bl
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Subnets**, **Create Subnet**\.
+1. In the navigation pane, choose **Subnets**, **Create subnet**\.
 
-1. Specify the subnet details as necessary and choose **Create Subnet**\.
+1. Specify the subnet details as necessary and choose **Create**\.
    + **Name tag**: Optionally provide a name for your subnet\. Doing so creates a tag with a key of `Name` and the value that you specify\.
    + **VPC**: Choose the VPC for which you're creating the subnet\.
    + **Availability Zone**: Optionally choose an Availability Zone in which your subnet will reside, or leave the default **No Preference** to let AWS choose an Availability Zone for you\.
@@ -194,9 +194,9 @@ If you no longer need your subnet, you can delete it\. You must terminate any in
 
 1. In the navigation pane, choose **Subnets**\.
 
-1. Select the subnet to delete and choose **Subnet Actions**, **Delete Subnet**\.
+1. Select the subnet to delete and choose **Actions**, **Delete subnet**\.
 
-1. In the **Delete Subnet** dialog box, choose **Yes, Delete**\.
+1. In the **Delete Subnet** dialog box, choose **Delete subnet**\.
 
 Alternatively, you can use a command line tool\.
 
@@ -238,7 +238,7 @@ To disassociate an IPv6 CIDR block, you must first unassign any IPv6 addresses t
 
 1. In the navigation pane, choose **Subnets**\.
 
-1. Select your subnet, choose **Subnet Actions**, **Edit IPv6 CIDRs**\.
+1. Select your subnet, choose **Actions**, **Edit IPv6 CIDRs**\.
 
 1. Remove the IPv6 CIDR block for the subnet by choosing the cross icon\.
 
@@ -271,7 +271,7 @@ Alternatively, you can use a command line tool\.
 
 ## Deleting Your VPC<a name="VPC_Deleting"></a>
 
-You can delete your VPC at any time\. However, you must terminate all instances in the VPC first\. When you delete a VPC using the VPC console, we delete all its components, such as subnets, security groups, network ACLs, route tables, internet gateways, VPC peering connections, and DHCP options\.
+You can delete your VPC at any time\. However, you must terminate all instances in the VPC, and delete any VPC peering connections first\. When you delete a VPC using the VPC console, we delete all its components, such as subnets, security groups, network ACLs, route tables, internet gateways, and DHCP options\.
 
 If you have a AWS Site\-to\-Site VPN connection, you don't have to delete it or the other components related to the VPN \(such as the customer gateway and virtual private gateway\)\. If you plan to use the customer gateway with another VPC, we recommend that you keep the Site\-to\-Site VPN connection and the gateways\. Otherwise, your network administrator must configure the customer gateway again after you create a new Site\-to\-Site VPN connection\. 
 
@@ -287,9 +287,9 @@ If you have a AWS Site\-to\-Site VPN connection, you don't have to delete it or 
 
 1. Select the VPC to delete and choose **Actions**, **Delete VPC**\.
 
-1. To delete the Site\-to\-Site VPN connection, select the option to do so; otherwise, leave it unselected\. Choose **Yes, Delete**\.
+1. To delete the Site\-to\-Site VPN connection, select the option to do so; otherwise, leave it unselected\. Choose **Delete VPC**\.
 
-Alternatively, you can use a command line tool\. When you delete a VPC using the command line, you must first terminate all instances, delete all subnets, custom security groups, and custom route tables, and detach any internet gateway in the VPC\.
+Alternatively, you can use a command line tool\. When you delete a VPC using the command line, you must first terminate all instances, and delete or detach all associated resources, including subnets, custom security groups, custom route tables, VPC peering connections, and the internet gateway\.
 
 **To delete a VPC using a command line tool**
 + [delete\-vpc](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-vpc.html) \(AWS CLI\)
