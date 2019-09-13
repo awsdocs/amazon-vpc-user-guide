@@ -4,7 +4,7 @@ The following are possible issues you might have when working with flow logs\.
 
 **Topics**
 + [Incomplete Flow Log Records](#flow-logs-troubleshooting-incomplete-records)
-+ [Flow Log is Active, But No Flow Log Records or Log Group](#flow-logs-troubleshooting-no-log-group)
++ [Flow Log Is Active, But No Flow Log Records or Log Group](#flow-logs-troubleshooting-no-log-group)
 + [Error: LogDestinationNotFoundException](#flow-logs-troubleshooting-not-found)
 + [Exceeding the Amazon S3 Bucket Policy Limit](#flow-logs-troubleshooting-policy-limit)
 
@@ -19,10 +19,15 @@ There may be a problem delivering the flow logs to the CloudWatch Logs log group
 **Solution**  
 In either the Amazon EC2 console or the Amazon VPC console, choose the **Flow Logs** tab for the relevant resource\. For more information, see [Viewing Flow Logs](working-with-flow-logs.md#view-flow-logs)\. The flow logs table displays any errors in the **Status** column\. Alternatively, use the [describe\-flow\-logs](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-flow-logs.html) command, and check the value that's returned in the `DeliverLogsErrorMessage` field\. One of the following errors may be displayed:
 + `Rate limited`: This error can occur if CloudWatch logs throttling has been applied — when the number of flow log records for a network interface is higher than the maximum number of records that can be published within a specific timeframe\. This error can also occur if you've reached the limit on the number of CloudWatch Logs log groups that you can create\. For more information, see [CloudWatch Limits](https://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide/cloudwatch_limits.html) in the *Amazon CloudWatch User Guide*\.
-+ `Access error`: This error can occur if the IAM role for your flow log does not have sufficient permissions to publish flow log records to the CloudWatch log group, the IAM role does not have a trust relationship with the flow logs service, or the trust relationship does not specify the flow logs service as the principal\. For more information, see [IAM Roles for Publishing Flow Logs to CloudWatch Logs](flow-logs-cwl.md#flow-logs-iam)\.
++ `Access error`: This error can occur for one of the following reasons:
+  + The IAM role for your flow log does not have sufficient permissions to publish flow log records to the CloudWatch log group
+  + The IAM role does not have a trust relationship with the flow logs service
+  + The trust relationship does not specify the flow logs service as the principal
+
+  For more information, see [IAM Roles for Publishing Flow Logs to CloudWatch Logs](flow-logs-cwl.md#flow-logs-iam)\.
 + `Unknown error`: An internal error has occurred in the flow logs service\. 
 
-## Flow Log is Active, But No Flow Log Records or Log Group<a name="flow-logs-troubleshooting-no-log-group"></a>
+## Flow Log Is Active, But No Flow Log Records or Log Group<a name="flow-logs-troubleshooting-no-log-group"></a>
 
 **Problem**  
 You've created a flow log, and the Amazon VPC or Amazon EC2 console displays the flow log as `Active`\. However, you cannot see any log streams in CloudWatch Logs or log files in your Amazon S3 bucket\. 
@@ -54,14 +59,14 @@ You get the following error when you try to create a flow log: `LogDestinationPe
 **Cause**  
 Amazon S3 bucket policies are limited to 20 KB in size\.
 
-Each time you create a flow log that publishes to an Amazon S3 bucket, we automatically add the specified bucket ARN, which includes the folder path, to the `Resource` element in the bucket's policy\.
+Each time that you create a flow log that publishes to an Amazon S3 bucket, we automatically add the specified bucket ARN, which includes the folder path, to the `Resource` element in the bucket's policy\.
 
 Creating multiple flow logs that publish to the same bucket could cause you to exceed the bucket policy limit\. 
 
 **Solution**  
 Do one of the following:
 + Clean up the bucket's policy by removing the flow log entries that are no longer needed\.
-+ Grant permissions to the entire bucket by replacing the individual flow log entries with the following:
++ Grant permissions to the entire bucket by replacing the individual flow log entries with the following\.
 
   ```
   arn:aws:s3:::bucket_name/*

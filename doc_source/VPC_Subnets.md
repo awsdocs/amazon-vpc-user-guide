@@ -7,7 +7,6 @@ To get started with Amazon Virtual Private Cloud \(Amazon VPC\), you create a VP
 + [VPC and Subnet Sizing](#VPC_Sizing)
 + [Subnet Routing](#SubnetRouting)
 + [Subnet Security](#SubnetSecurity)
-+ [Connections with Your Local Network and Other VPCs](#VGW)
 + [Working with VPCs and Subnets](working-with-vpcs.md)
 + [Working with Shared VPCs](vpc-sharing.md)
 
@@ -200,19 +199,3 @@ AWS provides two features that you can use to increase security in your VPC: *se
 By design, each subnet must be associated with a network ACL\. Every subnet that you create is automatically associated with the VPC's default network ACL\. You can change the association, and you can change the contents of the default network ACL\. For more information, see [Network ACLs](vpc-network-acls.md)\.
 
 You can create a flow log on your VPC or subnet to capture the traffic that flows to and from the network interfaces in your VPC or subnet\. You can also create a flow log on an individual network interface\. Flow logs are published to CloudWatch Logs\. For more information, see [VPC Flow Logs](flow-logs.md)\.
-
-## Connections with Your Local Network and Other VPCs<a name="VGW"></a>
-
-You can optionally set up a connection between your VPC and your corporate or home network\. If you have an IPv4 address prefix in your VPC that overlaps with one of your networks' prefixes, any traffic to the network's prefix is dropped\. For example, let's say that you have the following:
-+ A VPC with CIDR block `10.0.0.0/16`
-+ A subnet in that VPC with CIDR block `10.0.1.0/24`
-+ Instances running in that subnet with IP addresses `10.0.1.4` and `10.0.1.5`
-+ On\-premises host networks using CIDR blocks `10.0.37.0/24` and `10.1.38.0/24`
-
-When those instances in the VPC try to talk to hosts in the `10.0.37.0/24` address space, the traffic is dropped because `10.0.37.0/24` is part of the larger prefix assigned to the VPC \(`10.0.0.0/16`\)\. The instances can talk to hosts in the `10.1.38.0/24` space because that block isn't part of `10.0.0.0/16`\.
-
-You can also create a VPC peering connection between your VPCs, or with a VPC in another AWS account\. A VPC peering connection enables you to route traffic between the VPCs using private IP addresses; however, you cannot create a VPC peering connection between VPCs that have overlapping CIDR blocks\. For more information, see [Amazon VPC Peering Guide](https://docs.aws.amazon.com/vpc/latest/peering/)\.
-
-We therefore recommend that you create a VPC with a CIDR range large enough for expected future growth, but not one that overlaps with current or expected future subnets anywhere in your corporate or home network, or that overlaps with current or future VPCs\. 
-
-We currently do not support AWS Site\-to\-Site VPN connections over IPv6\. 

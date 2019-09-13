@@ -23,6 +23,9 @@ When we create a default VPC, we do the following to set it up for you:
 + Create a default network access control list \(ACL\) and associate it with your default VPC\.
 + Associate the default DHCP options set for your AWS account with your default VPC\.
 
+**Note**  
+ Amazon creates the above resources on behalf of the customer\. IAM policies do not apply to these actions because the customer does not perform these actions\. For example, if you have an IAM policy that denies the ability to call CreateInternetGateway, and then you call CreateDefaultVpc, the internet gateway in the default VPC is still created\.
+
 The following figure illustrates the key components that we set up for a default VPC\.
 
 ![\[A default VPC\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/default-vpc-diagram.png)

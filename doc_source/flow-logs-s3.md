@@ -12,31 +12,31 @@ To create an Amazon S3 bucket for use with flow logs, see [Create a Bucket](http
 + [Amazon S3 Bucket Permissions for Flow Logs](#flow-logs-s3-permissions)
 + [Required CMK Key Policy for Use with SSE\-KMS Buckets](#flow-logs-s3-cmk-policy)
 + [Amazon S3 Log File Permissions](#flow-logs-file-permissions)
-+ [Creating a Flow Log that Publishes to Amazon S3](#flow-logs-s3-create-flow-log)
++ [Creating a Flow Log That Publishes to Amazon S3](#flow-logs-s3-create-flow-log)
 + [Processing Flow Log Records in Amazon S3](#process-records-s3)
 
 ## Flow Log Files<a name="flow-logs-s3-path"></a>
 
 Flow logs collect flow log records, consolidate them into log files, and then publish the log files to the Amazon S3 bucket at 5\-minute intervals\. Each log file contains flow log records for the IP traffic recorded in the previous five minutes\.
 
-The maximum file size for a log file is 75 MB\. If the log file reaches the file size limit within the 5\-minute period, the flow log stops adding flow log records to it, publishes it to the Amazon S3 bucket, and then creates a new log file\.
+The maximum file size for a log file is 75 MB\. If the log file reaches the file size limit within the 5\-minute period, the flow log stops adding flow log records to it\. Then it publishes the flow log to the Amazon S3 bucket, and creates a new log file\.
 
-Log files are saved to the specified Amazon S3 bucket using a folder structure that is determined by the flow log's ID, Region, and the date on which they are created\. The bucket folder structure uses the following format:
+Log files are saved to the specified Amazon S3 bucket using a folder structure that is determined by the flow log's ID, Region, and the date on which they are created\. The bucket folder structure uses the following format\.
 
 ```
 bucket_ARN/optional_folder/AWSLogs/aws_account_id/vpcflowlogs/region/year/month/day/log_file_name.log.gz
 ```
 
-Similarly, the log file's file name is determined by the flow log's ID, Region, and the date and time it was created\. File names use the following format:
+Similarly, the log file's file name is determined by the flow log's ID, Region, and the date and time it was created\. File names use the following format\.
 
 ```
 aws_account_id_vpcflowlogs_region_flow_log_id_timestamp_hash.log.gz
 ```
 
 **Note**  
-The time stamp uses the `YYYYMMDDTHHmmZ` format\.
+The timestamp uses the `YYYYMMDDTHHmmZ` format\.
 
-For example, the following shows the folder structure and file name of a log file for a flow log created by AWS account `123456789012`, for a resource in the `us-east-1` region, on `June 20, 2018` at `16:20 UTC`, which includes flow log records for `16:15:00` to `16:19:59`: 
+For example, the following shows the folder structure and file name of a log file for a flow log created by AWS account `123456789012`, for a resource in the `us-east-1` Region, on `June 20, 2018` at `16:20 UTC`\. It includes flow log records for `16:15:00` to `16:19:59`\. 
 
 ```
 arn:aws:s3:::my-flow-log-bucket/AWSLogs/123456789012/vpcflowlogs/us-east-1/2018/06/20/123456789012_vpcflowlogs_us-east-1_fl-1234abcd_20180620T1620Z_fe123456.log.gz
@@ -44,7 +44,7 @@ arn:aws:s3:::my-flow-log-bucket/AWSLogs/123456789012/vpcflowlogs/us-east-1/2018/
 
 ## IAM Roles for Publishing Flow Logs to Amazon S3<a name="flow-logs-s3-iam"></a>
 
-An IAM principal, such as an IAM user, must have sufficient permissions to publish flow logs to the Amazon S3 bucket\. The IAM policy must include the following permissions:
+An IAM principal, such as an IAM user, must have sufficient permissions to publish flow logs to the Amazon S3 bucket\. The IAM policy must include the following permissions\.
 
 ```
 {
@@ -64,7 +64,7 @@ An IAM principal, such as an IAM user, must have sufficient permissions to publi
 
 ## Amazon S3 Bucket Permissions for Flow Logs<a name="flow-logs-s3-permissions"></a>
 
-By default, Amazon S3 buckets and the objects they contain are private\. Only the bucket owner can access the bucket and the objects stored in it\. The bucket owner however, can grant access to other resources and users by writing an access policy\.
+By default, Amazon S3 buckets and the objects they contain are private\. Only the bucket owner can access the bucket and the objects stored in it\. However, the bucket owner can grant access to other resources and users by writing an access policy\.
 
 If the user creating the flow log owns the bucket, we automatically attach the following policy to the bucket to give the flow log permission to publish logs to it\.
 
@@ -124,7 +124,7 @@ We recommend that you grant the AWSLogDeliveryAclCheck and AWSLogDeliveryWrite p
 
 ## Required CMK Key Policy for Use with SSE\-KMS Buckets<a name="flow-logs-s3-cmk-policy"></a>
 
-If you enabled server\-side encryption for your Amazon S3 bucket using AWS KMS\-managed keys \(SSE\-KMS\) with a customer\-managed Customer Master Key \(CMK\), you must add the following to the key policy for your CMK so that flow logs can write log files to the bucket\.
+If you enabled server\-side encryption for your Amazon S3 bucket using AWS KMS\-managed keys \(SSE\-KMS\) with a customer managed Customer Master Key \(CMK\), you must add the following to the key policy for your CMK so that flow logs can write log files to the bucket\.
 
 **Note**  
 Add these elements to the policy for your CMK, not the policy for your bucket\.
@@ -153,11 +153,11 @@ Add these elements to the policy for your CMK, not the policy for your bucket\.
 
 In addition to the required bucket policies, Amazon S3 uses access control lists \(ACLs\) to manage access to the log files created by a flow log\. By default, the bucket owner has `FULL_CONTROL` permissions on each log file\. The log delivery owner, if different from the bucket owner, has no permissions\. The log delivery account has `READ` and `WRITE` permissions\. For more information, see [Access Control List \(ACL\) Overview](https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html) in the *Amazon Simple Storage Service Developer Guide*\.
 
-## Creating a Flow Log that Publishes to Amazon S3<a name="flow-logs-s3-create-flow-log"></a>
+## Creating a Flow Log That Publishes to Amazon S3<a name="flow-logs-s3-create-flow-log"></a>
 
 After you have created and configured your Amazon S3 bucket, you can create flow logs for your VPCs, subnets, or network interfaces\.
 
-**To create a flow log for a network interface**
+**To create a flow log for a network interface using the console**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -177,9 +177,15 @@ After you have created and configured your Amazon S3 bucket, you can create flow
 
    If you own the bucket, we automatically create a resource policy and attach it to the bucket\. For more information, see [Amazon S3 Bucket Permissions for Flow Logs](#flow-logs-s3-permissions)\.
 
+1. For **Format**, specify the format for the flow log record\.
+   + To use the default flow log record format, choose **AWS default format**\.
+   + To create a custom format, choose **Custom format**\. For **Log line format**, choose the fields to include in the flow log record\.
+**Tip**  
+To create a custom flow log that includes the default format fields, first choose **AWS default format**, copy the fields in **Format preview**, then choose **Custom format** and paste the fields in the text box\.
+
 1. Choose **Create**\.
 
-**To create a flow log for a VPC or a subnet**
+**To create a flow log for a VPC or a subnet using the console**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
@@ -199,10 +205,26 @@ After you have created and configured your Amazon S3 bucket, you can create flow
 
    If you own the bucket, we automatically create a resource policy and attach it to the bucket\. For more information, see [Amazon S3 Bucket Permissions for Flow Logs](#flow-logs-s3-permissions)\.
 
+1. For **Format**, specify the format for the flow log record\.
+   + To use the default flow log record format, choose **AWS default format**\.
+   + To create a custom format, choose **Custom format**\. For **Log line format**, choose each of the fields to include in the flow log record\.
+
 1. Choose **Create**\.
+
+**To create a flow log that publishes to Amazon S3 using a command line tool**  
+Use one of the following commands\.
++ [create\-flow\-logs](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-flow-logs.html) \(AWS CLI\)
++ [New\-EC2FlowLogs](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2FlowLogs.html) \(AWS Tools for Windows PowerShell\)
++ [CreateFlowLogs](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateFlowLogs.html) \(Amazon EC2 Query API\)
+
+The following AWS CLI example creates a flow log that captures all traffic for VPC `vpc-00112233344556677` and delivers the flow logs to an Amazon S3 bucket called `flow-log-bucket`\. The `--log-format` parameter specifies a custom format for the flow log records\.
+
+```
+aws ec2 create-flow-logs --resource-type VPC --resource-ids vpc-00112233344556677 --traffic-type ALL --log-destination-type s3 --log-destination arn:aws:s3:::flow-log-bucket/my-custom-flow-logs/ --log-format '${version} ${vpc-id} ${subnet-id} ${instance-id} ${srcaddr} ${dstaddr} ${srcport} ${dstport} ${protocol} ${tcp-flags} ${type} ${pkt-srcaddr} ${pkt-dstaddr}'
+```
 
 ## Processing Flow Log Records in Amazon S3<a name="process-records-s3"></a>
 
 The log files are compressed\. If you open the log files using the Amazon S3 console, they are decompressed and the flow log records are displayed\. If you download the files, you must decompress them to view the flow log records\.
 
-You can also query the flow log records in the log files using Amazon Athena\. Amazon Athena is an interactive query service that makes it easy to analyze data in Amazon S3 using standard SQL\. For more information, see [Querying Amazon VPC Flow Logs](https://docs.aws.amazon.com/athena/latest/ug/vpc-flow-logs.html) in the *Amazon Athena User Guide*\.
+You can also query the flow log records in the log files using Amazon Athena\. Amazon Athena is an interactive query service that makes it easier to analyze data in Amazon S3 using standard SQL\. For more information, see [Querying Amazon VPC Flow Logs](https://docs.aws.amazon.com/athena/latest/ug/vpc-flow-logs.html) in the *Amazon Athena User Guide*\.

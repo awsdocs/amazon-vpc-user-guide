@@ -2,123 +2,113 @@
 
 VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC\. Flow log data can be published to Amazon CloudWatch Logs and Amazon S3\. After you've created a flow log, you can retrieve and view its data in the chosen destination\.
 
-Flow logs can help you with a number of tasks; for example, to troubleshoot why specific traffic is not reaching an instance, which in turn helps you diagnose overly restrictive security group rules\. You can also use flow logs as a security tool to monitor the traffic that is reaching your instance\. 
+Flow logs can help you with a number of tasks, such as:
++ Diagnosing overly restrictive security group rules
++ Monitoring the traffic that is reaching your instance
++ Determining the direction of the traffic to and from the network interfaces
 
-CloudWatch Logs charges apply when using flow logs, whether you send them to CloudWatch Logs or to Amazon S3\. For more information, see [Amazon CloudWatch Pricing](https://aws.amazon.com/cloudwatch/pricing)\.
+For examples, see [Flow Log Record Examples](flow-logs-records-examples.md)\.
+
+Charges for CloudWatch Logs apply when you use flow logs, whether you send them to CloudWatch Logs or to Amazon S3\. For more information, see [Amazon CloudWatch Pricing](https://aws.amazon.com/cloudwatch/pricing)\.
 
 **Topics**
 + [Flow Logs Basics](#flow-logs-basics)
 + [Flow Log Records](#flow-log-records)
++ [Flow Log Record Examples](flow-logs-records-examples.md)
 + [Flow Log Limitations](#flow-logs-limitations)
 + [Publishing Flow Logs to CloudWatch Logs](flow-logs-cwl.md)
 + [Publishing Flow Logs to Amazon S3](flow-logs-s3.md)
-+ [Working With Flow Logs](working-with-flow-logs.md)
++ [Working with Flow Logs](working-with-flow-logs.md)
 + [Troubleshooting](flow-logs-troubleshooting.md)
 
 ## Flow Logs Basics<a name="flow-logs-basics"></a>
 
-You can create a flow log for a VPC, a subnet, or a network interface\. If you create a flow log for a subnet or VPC, each network interface in the VPC or subnet is monitored\. 
+You can create a flow log for a VPC, a subnet, or a network interface\. If you create a flow log for a subnet or VPC, each network interface in that subnet or VPC is monitored\. 
 
 Flow log data for a monitored network interface is recorded as *flow log records*, which are log events consisting of fields that describe the traffic flow\. For more information, see [Flow Log Records](#flow-log-records)\.
 
-To create a flow log, you specify the resource for which to create the flow log, the type of traffic to capture \(accepted traffic, rejected traffic, or all traffic\), and the destinations to which you want to publish the flow log data\. After you've created a flow log, it can take several minutes to begin collecting and publishing data to the chosen destinations\. Flow logs do not capture real\-time log streams for your network interfaces\. For more information, see [Creating a Flow Log](working-with-flow-logs.md#create-flow-log)\. 
+To create a flow log, you specify:
++ The resource for which to create the flow log
++ The type of traffic to capture \(accepted traffic, rejected traffic, or all traffic\)
++ The destinations to which you want to publish the flow log data
 
-If you launch more instances into your subnet after you've created a flow log for your subnet or VPC, then a new log stream \(for CloudWatch Logs\) or log file object \(for Amazon S3\) is created for each new network interface as soon as any network traffic is recorded for that network interface\.
+After you've created a flow log, it can take several minutes to begin collecting and publishing data to the chosen destinations\. Flow logs do not capture real\-time log streams for your network interfaces\. For more information, see [Creating a Flow Log](working-with-flow-logs.md#create-flow-log)\. 
 
-You can create flow logs for network interfaces that are created by other AWS services; for example, Elastic Load Balancing, Amazon RDS, Amazon ElastiCache, Amazon Redshift, and Amazon WorkSpaces\. However, you cannot use these service consoles or APIs to create the flow logs; you must use the Amazon EC2 console or the Amazon EC2 API\. Similarly, you cannot use the CloudWatch Logs or Amazon S3 consoles or APIs to create flow logs for your network interfaces\.
+If you launch more instances into your subnet after you've created a flow log for your subnet or VPC, a new log stream \(for CloudWatch Logs\) or log file object \(for Amazon S3\) is created for each new network interface\. This occurs as soon as any network traffic is recorded for that network interface\.
 
-If you no longer require a flow log, you can delete it\. Deleting a flow log disables the flow log service for the resource, and no new flow log records are created or published to CloudWatch Logs or Amazon S3\. It does not delete any existing flow log records or log streams \(for CloudWatch Logs\) or log file objects \(for Amazon S3\) for a network interface\. To delete an existing log stream, use the CloudWatch Logs console\. To delete existing log file objects, use the Amazon S3 console\. After you've deleted a flow log, it can take several minutes to stop collecting data\. For more information, see [Deleting a Flow Log](working-with-flow-logs.md#delete-flow-log)\.
+You can create flow logs for network interfaces that are created by other AWS services, such as:
++ Elastic Load Balancing
++ Amazon RDS
++ Amazon ElastiCache
++ Amazon Redshift
++ Amazon WorkSpaces
++ NAT gateways
++ Transit gateways
+
+Regardless of the type of network interface, you must use the Amazon EC2 console or the Amazon EC2 API to create a flow log for a network interface\.
+
+If you no longer require a flow log, you can delete it\. Deleting a flow log disables the flow log service for the resource, and no new flow log records are created or published to CloudWatch Logs or Amazon S3\. Deleting the flow log does not delete any existing flow log records or log streams \(for CloudWatch Logs\) or log file objects \(for Amazon S3\) for a network interface\. To delete an existing log stream, use the CloudWatch Logs console\. To delete existing log file objects, use the Amazon S3 console\. After you've deleted a flow log, it can take several minutes to stop collecting data\. For more information, see [Deleting a Flow Log](working-with-flow-logs.md#delete-flow-log)\.
 
 ## Flow Log Records<a name="flow-log-records"></a>
 
-A flow log record represents a network flow in your flow log\. Each record captures the network flow for a specific 5\-tuple, for a specific capture window\. A 5\-tuple is a set of five different values that specify the source, destination, and protocol for an internet protocol \(IP\) flow\. The capture window is a duration of time during which the flow logs service aggregates data before publishing flow log records\. The capture window is approximately 10 minutes, but can take up to 15 minutes\. 
+A flow log record represents a network flow in your VPC\. By default, each record captures a network internet protocol \(IP\) traffic flow that occurs within a *capture window*\. The capture window is a period of up to 10 minutes during which all flows of data are captured\. The total time it takes to capture, process, and publish the data is the *aggregation period*\. The aggregation period can take up to 15 minutes\.
 
-### Flow Log Record Syntax<a name="flow-logs-records-syntax"></a>
+By default, the record includes values for the different components of the IP flow, including the source, destination, and protocol\. 
 
-A flow log record is a space\-separated string that has the following format:
+When you create a flow log, you can use the default format for the flow log record, or you can specify a custom format \(Amazon S3 only\)\.
+
+### Default Format<a name="flow-logs-default"></a>
+
+By default, the log line format for a flow log record is a space\-separated string that has the following set of fields in the following order\.
 
 ```
 <version> <account-id> <interface-id> <srcaddr> <dstaddr> <srcport> <dstport> <protocol> <packets> <bytes> <start> <end> <action> <log-status>
 ```
 
-The following table describes the fields of a flow log record\.
+For more information about the fields, see [Available Fields](#flow-logs-fields)\. The default format captures only a subset of all of the available fields for a flow log record\. To capture all available fields or a different subset of fields, specify a custom format\. You cannot customize or change the default format\.
+
+The default format is supported for flow logs that publish to CloudWatch Logs or Amazon S3\.
+
+### Custom Format<a name="flow-logs-custom"></a>
+
+You can optionally specify a custom format for the flow log record\. For a custom format, you specify which fields to return in the flow log record, and the order in which they should appear\. This enables you to create flow logs that are specific to your needs and omit fields that are not relevant to you\. A custom format can also help to reduce the need for separate processes to extract specific information from published flow logs\. You can specify any number of the available flow log fields, but you must specify at least one\.
+
+The custom format is supported for flow logs that publish to Amazon S3 only\.
+
+### Available Fields<a name="flow-logs-fields"></a>
+
+The following table describes all of the available fields for a flow log record\. 
+
+**Important**  
+A flow log that publishes to CloudWatch Logs supports the default format only\.
 
 
-| Field | Description | 
-| --- | --- | 
-| version | The VPC Flow Logs version\. | 
-| account\-id | The AWS account ID for the flow log\. | 
-| interface\-id | The ID of the network interface for which the traffic is recorded\. | 
-| srcaddr | The source IPv4 or IPv6 address\. The IPv4 address of the network interface is always its private IPv4 address\. | 
-| dstaddr | The destination IPv4 or IPv6 address\. The IPv4 address of the network interface is always its private IPv4 address\. | 
-| srcport | The source port of the traffic\. | 
-| dstport | The destination port of the traffic\. | 
-| protocol | The IANA protocol number of the traffic\. For more information, see [ Assigned Internet Protocol Numbers](http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml)\. | 
-| packets | The number of packets transferred during the capture window\. | 
-| bytes | The number of bytes transferred during the capture window\. | 
-| start | The time, in Unix seconds, of the start of the capture window\. | 
-| end | The time, in Unix seconds, of the end of the capture window\. | 
-| action | The action associated with the traffic:[\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) | 
-| log\-status | The logging status of the flow log:[\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) | 
+| Field | Description | Flow log destination | 
+| --- | --- | --- | 
+| version | The VPC Flow Logs version\. If you use the default format, the version is 2\. If you specify a custom format, the version is 3\. | CloudWatch Logs or Amazon S3 | 
+| account\-id | The AWS account ID for the flow log\. | CloudWatch Logs or Amazon S3 | 
+| interface\-id | The ID of the network interface for which the traffic is recorded\. | CloudWatch Logs or Amazon S3 | 
+| srcaddr | The source address for incoming traffic, or the IPv4 or IPv6 address of the network interface for outgoing traffic on the network interface\. The IPv4 address of the network interface is always its private IPv4 address\. See also pkt\-srcaddr\. | CloudWatch Logs or Amazon S3 | 
+| dstaddr | The destination address for outgoing traffic, or the IPv4 or IPv6 address of the network interface for incoming traffic on the network interface\. The IPv4 address of the network interface is always its private IPv4 address\. See also pkt\-dstaddr\. | CloudWatch Logs or Amazon S3 | 
+| srcport | The source port of the traffic\. | CloudWatch Logs or Amazon S3 | 
+| dstport | The destination port of the traffic\. | CloudWatch Logs or Amazon S3 | 
+| protocol | The IANA protocol number of the traffic\. For more information, see [ Assigned Internet Protocol Numbers](http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml)\. | CloudWatch Logs or Amazon S3 | 
+| packets | The number of packets transferred during the flow\. | CloudWatch Logs or Amazon S3 | 
+| bytes | The number of bytes transferred during the flow\. | CloudWatch Logs or Amazon S3 | 
+| start | The time, in Unix seconds, of the start of the flow\. | CloudWatch Logs or Amazon S3 | 
+| end | The time, in Unix seconds, of the end of the flow\. | CloudWatch Logs or Amazon S3 | 
+| action | The action that is associated with the traffic:[\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) | CloudWatch Logs or Amazon S3 | 
+| log\-status | The logging status of the flow log:[\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) | CloudWatch Logs or Amazon S3 | 
+| vpc\-id | The ID of the VPC that contains the network interface for which the traffic is recorded\. | Amazon S3 only | 
+| subnet\-id | The ID of the subnet that contains the network interface for which the traffic is recorded\. | Amazon S3 only | 
+| instance\-id | The ID of the instance that's associated with network interface for which the traffic is recorded, if the instance is owned by you\. Returns a '\-' symbol for a [requester\-managed network interface](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/requester-managed-eni.html); for example, the network interface for a NAT gateway\. | Amazon S3 only | 
+| tcp\-flags |  The bitmask value for the following TCP flags: [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) ACK is reported only when it's accompanied with SYN\.  TCP flags are OR\-ed during the capture window\. For short connections, the flags might be set on the same line in the flow log record, for example, `19` for SYN\-ACK and FIN, and `3` for SYN and FIN\. For an example, see [TCP Flag Sequence](flow-logs-records-examples.md#flow-log-example-tcp-flag)\.  | Amazon S3 only | 
+| type | The type of traffic: IPv4, IPv6, or EFA\. For more information about the Elastic Fabric Adapter \(EFA\), see [Elastic Fabric Adapter](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html)\. | Amazon S3 only | 
+| pkt\-srcaddr | The packet\-level \(original\) source IP address of the traffic\. Use this field with the srcaddr field to distinguish between the IP address of an intermediate layer through which traffic flows, and the original source IP address of the traffic\. For example, when traffic flows through [a network interface for a NAT gateway](flow-logs-records-examples.md#flow-log-example-nat), or where the IP address of a pod in Amazon EKS is different from the IP address of the network interface of the instance node on which the pod is running\. | Amazon S3 only | 
+| pkt\-dstaddr | The packet\-level \(original\) destination IP address for the traffic\. Use this field with the dstaddr field to distinguish between the IP address of an intermediate layer through which traffic flows, and the final destination IP address of the traffic\. For example, when traffic flows through [a network interface for a NAT gateway](flow-logs-records-examples.md#flow-log-example-nat), or where the IP address of a pod in Amazon EKS is different from the IP address of the network interface of the instance node on which the pod is running\. | Amazon S3 only | 
 
 **Note**  
 If a field is not applicable for a specific record, the record displays a '\-' symbol for that entry\.
-
-### Flow Log Record Examples<a name="flow-logs-records-examples"></a>
-
-**Flow Log Records for Accepted and Rejected Traffic**
-
-The following is an example of a flow log record in which SSH traffic \(destination port 22, TCP protocol\) to network interface `eni-abc123de` in account `123456789010` was allowed:
-
-```
-2 123456789010 eni-abc123de 172.31.16.139 172.31.16.21 20641 22 6 20 4249 1418530010 1418530070 ACCEPT OK
-```
-
-The following is an example of a flow log record in which RDP traffic \(destination port 3389, TCP protocol\) to network interface `eni-abc123de` in account `123456789010` was rejected:
-
-```
-2 123456789010 eni-abc123de 172.31.9.69 172.31.9.12 49761 3389 6 20 4249 1418530010 1418530070 REJECT OK
-```
-
-**Flow Log Records for No Data and Skipped Records**
-
-The following is an example of a flow log record in which no data was recorded during the capture window:
-
-```
-2 123456789010 eni-1a2b3c4d - - - - - - - 1431280876 1431280934 - NODATA
-```
-
-The following is an example of a flow log record in which records were skipped during the capture window:
-
-```
-2 123456789010 eni-4b118871 - - - - - - - 1431280876 1431280934 - SKIPDATA
-```
-
-**Security Group and Network ACL Rules**
-
-If you're using flow logs to diagnose overly restrictive or permissive security group rules or network ACL rules, then be aware of the statefulness of these resources\. Security groups are stateful — this means that responses to allowed traffic are also allowed, even if the rules in your security group do not permit it\. Conversely, network ACLs are stateless, therefore responses to allowed traffic are subject to network ACL rules\.
-
-For example, you use the `ping` command from your home computer \(IP address is `203.0.113.12`\) to your instance \(the network interface's private IP address is `172.31.16.139`\)\. Your security group's inbound rules allow ICMP traffic and the outbound rules do not allow ICMP traffic; however, because security groups are stateful, the response ping from your instance is allowed\. Your network ACL permits inbound ICMP traffic but does not permit outbound ICMP traffic\. Because network ACLs are stateless, the response ping is dropped and does not reach your home computer\. In a flow log, this is displayed as two flow log records: 
-+ An `ACCEPT` record for the originating ping that was allowed by both the network ACL and the security group, and therefore was allowed to reach your instance\. 
-+ A `REJECT` record for the response ping that the network ACL denied\.
-
-```
-2 123456789010 eni-1235b8ca 203.0.113.12 172.31.16.139 0 0 1 4 336 1432917027 1432917142 ACCEPT OK
-```
-
-```
-2 123456789010 eni-1235b8ca 172.31.16.139 203.0.113.12 0 0 1 4 336 1432917094 1432917142 REJECT OK
-```
-
-If your network ACL permits outbound ICMP traffic, the flow log displays two `ACCEPT` records \(one for the originating ping and one for the response ping\)\. If your security group denies inbound ICMP traffic, the flow log displays a single `REJECT` record, because the traffic was not permitted to reach your instance\.
-
-**Flow Log Record for IPv6 Traffic**
-
-The following is an example of a flow log record in which SSH traffic \(port 22\) from IPv6 address `2001:db8:1234:a100:8d6e:3477:df66:f105` to network interface `eni-f41c42bf` in account `123456789010` was allowed\.
-
-```
-2 123456789010 eni-f41c42bf 2001:db8:1234:a100:8d6e:3477:df66:f105 2001:db8:1234:a102:3304:8879:34cf:4071 34892 22 6 54 8855 1477913708 1477913820 ACCEPT OK
-```
 
 ## Flow Log Limitations<a name="flow-logs-limitations"></a>
 
@@ -126,12 +116,13 @@ To use flow logs, you need to be aware of the following limitations:
 + You cannot enable flow logs for network interfaces that are in the EC2\-Classic platform\. This includes EC2\-Classic instances that have been linked to a VPC through ClassicLink\. 
 + You can't enable flow logs for VPCs that are peered with your VPC unless the peer VPC is in your account\.
 + You cannot tag a flow log\.
-+ After you've created a flow log, you cannot change its configuration; for example, you can't associate a different IAM role with the flow log\. Instead, you can delete the flow log and create a new one with the required configuration\. 
++ After you've created a flow log, you cannot change its configuration or the flow log record format\. For example, you can't associate a different IAM role with the flow log, or add or remove fields in the flow log record\. Instead, you can delete the flow log and create a new one with the required configuration\. 
 + None of the flow log API actions \(`ec2:*FlowLogs`\) support resource\-level permissions\. To create an IAM policy to control the use of the flow log API actions, you must grant users permissions to use all resources for the action by using the \* wildcard for the resource element in your statement\. For more information, see [Controlling Access to Amazon VPC Resources](VPC_IAM.md)\.
-+ If your network interface has multiple IPv4 addresses and traffic is sent to a secondary private IPv4 address, the flow log displays the primary private IPv4 address in the destination IP address field\.
-+  If traffic is sent to an ENI and the destination is not any of the ENI IP addresses, the flow log displays the primary private IPv4 address in the destination IP address field\.
-+ If traffic is sent from an ENI and the source is not any of the ENI IP addresses, the flow log displays the primary private IPv4 address in the source IP address field\.
-+ If traffic is sent to or sent by a network interface, the flow log always displays the primary private IPv4 address, regardless of the packet source or destination, in the interface IPv4 address field\.
++ If your network interface has multiple IPv4 addresses and traffic is sent to a secondary private IPv4 address, the flow log displays the primary private IPv4 address in the `dstaddr` field\. To capture the original destination IP address, create a flow log with the `pkt-dstaddr` field\.
++ If traffic is sent to a network interface and the destination is not any of the network interface's IP addresses, the flow log displays the primary private IPv4 address in the `dstaddr` field\. To capture the original destination IP address, create a flow log with the `pkt-dstaddr` field\.
++ If traffic is sent from a network interface and the source is not any of the network interface's IP addresses, the flow log displays the primary private IPv4 address in the `srcaddr` field\. To capture the original source IP address, create a flow log with the `pkt-srcaddr` field\.
++ If traffic is sent to or sent by a network interface, the `srcaddr` and `dstaddr` fields in the flow log always display the primary private IPv4 address, regardless of the packet source or destination\. To capture the packet source or destination, create a flow log with the `pkt-srcaddr` and `pkt-dstaddr` fields\.
++ You cannot specify a custom format for flow log records that are published to CloudWatch Logs\.
 
 Flow logs do not capture all IP traffic\. The following types of traffic are not logged:
 + Traffic generated by instances when they contact the Amazon DNS server\. If you use your own DNS server, then all traffic to that DNS server is logged\. 

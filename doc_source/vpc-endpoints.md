@@ -29,8 +29,9 @@ An [interface endpoint](vpce-interface.md) is an elastic network interface with 
 + [AWS Key Management Service](https://docs.aws.amazon.com/kms/latest/developerguide/kms-vpc-endpoint.html)
 + [Amazon Kinesis Data Firehose](https://docs.aws.amazon.com/firehose/latest/dev/vpc-endpoint.html)
 + [Amazon Kinesis Data Streams](https://docs.aws.amazon.com/streams/latest/dev/vpc.html)
++ [Amazon Rekognition](https://docs.aws.amazon.com/rekognition/latest/dg//vpc.html)
 + [Amazon SageMaker and Amazon SageMaker Runtime](https://docs.aws.amazon.com/sagemaker/latest/dg/interface-vpc-endpoint.html)
-+ [Amazon SageMaker Notebook Instance](https://docs.aws.amazon.com/sagemaker/latest/dg/notebook-interface-endpoint.html)
++ [Amazon SageMaker Notebook](https://docs.aws.amazon.com/sagemaker/latest/dg/notebook-interface-endpoint.html)
 + [AWS Secrets Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotation-network-rqmts.html)
 + [AWS Security Token Service](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_sts_vpce.html)
 + AWS Service Catalog
@@ -62,3 +63,5 @@ By default, IAM users do not have permission to work with endpoints\. You can cr
   ]
 }
 ```
+
+For information about controlling access to services using VPC endpoints, see [Controlling Access to Services with VPC Endpoints](vpc-endpoints-access.md)\.

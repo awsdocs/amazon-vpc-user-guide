@@ -5,6 +5,7 @@ The following table describes the important changes in each release of the *Amaz
 
 | Feature | API Version | Description | Release Date | 
 | --- | --- | --- | --- | 
+| Flow logs enhancements | 2016\-11\-15 | You can specify a custom format for your flow log and choose which fields to return in the flow log records\. For more information, see [VPC Flow Logs](flow-logs.md)\. | 11 September 2019 | 
 | Inter\-region peering | 2016\-11\-15 | DNS hostname resolution is supported for inter\-region VPC peering connections in the Asia Pacific \(Hong Kong\) Region\. For more information, see the [Amazon VPC Peering Guide](https://docs.aws.amazon.com/vpc/latest/peering/)\. | 26 August 2019 | 
 | AWS Site\-to\-Site VPN | 2016\-11\-15 |  Moved the AWS Managed VPN \(now known as AWS Site\-to\-Site VPN\) content to the [https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html)\.  | 18 December 2018 | 
 | VPC Sharing | 2016\-11\-15 |  You can share subnets that are in the same VPC with multiple accounts in the same AWS organization\.  | 27 November 2018 | 

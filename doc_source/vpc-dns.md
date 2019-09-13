@@ -11,7 +11,7 @@ We provide an Amazon DNS server\. To use your own DNS server, create a new set o
 + [DNS Support in Your VPC](#vpc-dns-support)
 + [DNS Limits](#vpc-dns-limits)
 + [Viewing DNS Hostnames for Your EC2 Instance](#vpc-dns-viewing)
-+ [Updating DNS Support for Your VPC](#vpc-dns-updating)
++ [Viewing and Updating DNS Support for Your VPC](#vpc-dns-updating)
 + [Using Private Hosted Zones](#vpc-private-hosted-zones)
 
 ## DNS Hostnames<a name="vpc-dns-hostnames"></a>
@@ -45,7 +45,7 @@ If either or both of the attributes is set to `false`, the following occurs:
 + The Amazon\-provided DNS server cannot resolve Amazon\-provided private DNS hostnames\.
 + Instances receive custom private DNS hostnames if there is a custom domain name in the [DHCP options set](VPC_DHCP_Options.md)\. If you are not using the Amazon\-provided DNS server, your custom domain name servers must resolve the hostname as appropriate\.
 
-By default, both attributes are set to `true` in a default VPC or a VPC created by the VPC wizard\. By default, only the `enableDnsSupport` attribute is set to `true` in a VPC created any other way\.
+By default, both attributes are set to `true` in a default VPC or a VPC created by the VPC wizard\. By default, only the `enableDnsSupport` attribute is set to `true` in a VPC created any other way\. To check if your VPC is enabled for these attributes, see [Viewing and Updating DNS Support for Your VPC](#vpc-dns-updating)\.
 
 **Important**  
 If you use custom DNS domain names defined in a private hosted zone in Amazon Route 53, or use private DNS with interface VPC endpoints \(AWS PrivateLink\), you must set the `enableDnsHostnames` and `enableDnsSupport` attributes to `true`\.
@@ -101,7 +101,7 @@ You can use one of the following commands\. For more information about these com
 + [describe\-network\-interfaces](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-network-interfaces.html) \(AWS CLI\)
 + [Get\-EC2NetworkInterface](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2NetworkInterface.html) \(AWS Tools for Windows PowerShell\)
 
-## Updating DNS Support for Your VPC<a name="vpc-dns-updating"></a>
+## Viewing and Updating DNS Support for Your VPC<a name="vpc-dns-updating"></a>
 
 You can view and update the DNS support attributes for your VPC using the Amazon VPC console\.
 

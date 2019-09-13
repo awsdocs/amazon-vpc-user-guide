@@ -6,12 +6,12 @@ When publishing to CloudWatch Logs, flow log data is published to a log group, a
 
 **Topics**
 + [IAM Roles for Publishing Flow Logs to CloudWatch Logs](#flow-logs-iam)
-+ [Creating a Flow Log that Publishes to CloudWatch Logs](#flow-logs-cwl-create-flow-log)
++ [Creating a Flow Log That Publishes to CloudWatch Logs](#flow-logs-cwl-create-flow-log)
 + [Processing Flow Log Records in CloudWatch Logs](#process-records-cwl)
 
 ## IAM Roles for Publishing Flow Logs to CloudWatch Logs<a name="flow-logs-iam"></a>
 
-The IAM role that's associated with your flow log must have sufficient permissions to publish flow logs to the specified log group in CloudWatch Logs\. The IAM policy that's attached to your IAM role must include at least the following permissions:
+The IAM role that's associated with your flow log must have sufficient permissions to publish flow logs to the specified log group in CloudWatch Logs\. The IAM policy that's attached to your IAM role must include at least the following permissions\.
 
 ```
 {
@@ -32,7 +32,7 @@ The IAM role that's associated with your flow log must have sufficient permissio
 }
 ```
 
-Also ensure that your role has a trust relationship that allows the flow logs service to assume the role:
+Also ensure that your role has a trust relationship that allows the flow logs service to assume the role\.
 
 ```
 {
@@ -50,7 +50,7 @@ Also ensure that your role has a trust relationship that allows the flow logs se
 }
 ```
 
-Users must also have permissions to use the iam:PassRole action for the IAM role that's associated with the flow log:
+Users must also have permissions to use the iam:PassRole action for the IAM role that's associated with the flow log\.
 
 ```
 {
@@ -91,11 +91,14 @@ You can update an existing role or use the following procedure to create a new r
 
 1. On the **Summary** page, note the ARN for your role\. You need this ARN when you create your flow log\.
 
-## Creating a Flow Log that Publishes to CloudWatch Logs<a name="flow-logs-cwl-create-flow-log"></a>
+## Creating a Flow Log That Publishes to CloudWatch Logs<a name="flow-logs-cwl-create-flow-log"></a>
 
 You can create flow logs for your VPCs, subnets, or network interfaces\.
 
-**To create a flow log for a network interface**
+**Note**  
+You cannot specify a custom format for the flow log record for a flow log that publishes to CloudWatch Logs\.
+
+**To create a flow log for a network interface using the console**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -107,13 +110,13 @@ You can create flow logs for your VPCs, subnets, or network interfaces\.
 
 1. For **Destination**, choose **Send to CloudWatch Logs**\.
 
-1. For **Destination log group**, type the name of a log group in CloudWatch Logs to which the flow logs are to be published\. If you specify the name of a log group that does not exist, we attempt to create the log group for you\.
+1. For **Destination log group**, enter the name of a log group in CloudWatch Logs to which the flow logs are to be published\. If you specify the name of a log group that does not exist, we attempt to create the log group for you\.
 
 1. For **IAM role**, specify the name of the role that has permissions to publish logs to CloudWatch Logs\.
 
 1. Choose **Create**\.
 
-**To create a flow log for a VPC or a subnet**
+**To create a flow log for a VPC or a subnet using the console**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
@@ -125,11 +128,23 @@ You can create flow logs for your VPCs, subnets, or network interfaces\.
 
 1. For **Destination**, choose **Send to CloudWatch Logs**\.
 
-1. For **Destination log group**, type the name of a log group in CloudWatch Logs to which the flow logs are to be published\. If you specify the name of a log group that does not exist, we attempt to create the log group for you\.
+1. For **Destination log group**, enter the name of a log group in CloudWatch Logs to which the flow logs are to be published\. If you specify the name of a log group that does not exist, we attempt to create the log group for you\.
 
 1. For **IAM role**, specify the name of the IAM role that has permissions to publish logs to CloudWatch Logs\.
 
 1. Choose **Create**\.
+
+**To create a flow log that publishes to CloudWatch Logs using a command line tool**  
+Use one of the following commands\.
++ [create\-flow\-logs](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-flow-logs.html) \(AWS CLI\)
++ [New\-EC2FlowLogs](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2FlowLogs.html) \(AWS Tools for Windows PowerShell\)
++ [CreateFlowLogs](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateFlowLogs.html) \(Amazon EC2 Query API\)
+
+The following AWS CLI example creates a flow log that captures all accepted traffic for subnet `subnet-1a2b3c4d`\. The flow logs are delivered to a log group in CloudWatch Logs called `my-flow-logs`, in account 123456789101, using the IAM role `publishFlowLogs`\.
+
+```
+aws ec2 create-flow-logs --resource-type Subnet --resource-ids subnet-1a2b3c4d --traffic-type ACCEPT --log-group-name my-flow-logs --deliver-logs-permission-arn arn:aws:iam::123456789101:role/publishFlowLogs
+```
 
 ## Processing Flow Log Records in CloudWatch Logs<a name="process-records-cwl"></a>
 
@@ -147,7 +162,7 @@ In this example, you have a flow log for `eni-1a2b3c4d`\. You want to create an 
 
 1. Choose the associated **Metric Filters** value for the log group for your flow log, and then choose **Add Metric Filter**\.
 
-1. For **Filter Pattern**, enter the following:
+1. For **Filter Pattern**, enter the following\.
 
    ```
    [version, account, eni, source, destination, srcport, destport="22", protocol="6", packets, bytes, windowstart, windowend, action="REJECT", flowlogstatus]
@@ -160,8 +175,8 @@ In this example, you have a flow log for `eni-1a2b3c4d`\. You want to create an 
 1. In the navigation pane, choose **Alarms**, **Create Alarm**\.
 
 1. In the **Custom Metrics** section, choose the namespace for the metric filter that you created\.
-**Note**  
-It can take a few minutes for a new metric to display in the console\.
+
+   It can take a few minutes for a new metric to display in the console\.
 
 1. Select the metric name that you created, and choose **Next**\.
 

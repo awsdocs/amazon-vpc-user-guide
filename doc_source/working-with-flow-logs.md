@@ -1,4 +1,4 @@
-# Working With Flow Logs<a name="working-with-flow-logs"></a>
+# Working with Flow Logs<a name="working-with-flow-logs"></a>
 
 You can work with flow logs using the Amazon EC2, Amazon VPC, CloudWatch, and Amazon S3 consoles\.
 
@@ -39,7 +39,7 @@ Some additional IAM role and permission configuration is required, depending on 
 
 You can create flow logs for your VPCs, subnets, or network interfaces\. Flow logs can publish data to CloudWatch Logs or Amazon S3\.
 
-For more information, see [Creating a Flow Log that Publishes to CloudWatch Logs](flow-logs-cwl.md#flow-logs-cwl-create-flow-log) and [Creating a Flow Log that Publishes to Amazon S3](flow-logs-s3.md#flow-logs-s3-create-flow-log)\.
+For more information, see [Creating a Flow Log That Publishes to CloudWatch Logs](flow-logs-cwl.md#flow-logs-cwl-create-flow-log) and [Creating a Flow Log That Publishes to Amazon S3](flow-logs-s3.md#flow-logs-s3-create-flow-log)\.
 
 ## Viewing Flow Logs<a name="view-flow-logs"></a>
 
