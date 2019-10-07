@@ -51,6 +51,8 @@ Amazon's trademarks and trade dress may not be used in
 + [VPC Networking Components](VPC_Networking.md)
    + [Elastic Network Interfaces](VPC_ElasticNetworkInterfaces.md)
    + [Route Tables](VPC_Route_Tables.md)
+      + [Routing Options](route-table-options.md)
+      + [Working with Route Tables](WorkWithRouteTables.md)
    + [Internet Gateways](VPC_Internet_Gateway.md)
    + [Egress-Only Internet Gateways](egress-only-internet-gateway.md)
    + [NAT](vpc-nat.md)

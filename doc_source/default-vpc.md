@@ -148,7 +148,7 @@ To launch an EC2 instance into a specific default subnet in your default VPC, sp
 
 ## Deleting Your Default Subnets and Default VPC<a name="deleting-default-vpc"></a>
 
-You can delete a default subnet or default VPC just as you can delete any other subnet or VPC\. However, if you delete your default subnets or default VPC, you must explicitly specify a subnet in another VPC in which to launch your instance, because you can't launch instances into EC2\-Classic\. If you do not have another VPC, you must create a nondefault VPC and nondefault subnet\. For more information, see [Creating a VPC](working-with-vpcs.md#Create-VPC)\. 
+You can delete a default subnet or default VPC just as you can delete any other subnet or VPC\. For more information, see [Working with VPCs and Subnets](working-with-vpcs.md)\. However, if you delete your default subnets or default VPC, you must explicitly specify a subnet in another VPC in which to launch your instance, because you can't launch instances into EC2\-Classic\. If you do not have another VPC, you must create a nondefault VPC and nondefault subnet\. For more information, see [Creating a VPC](working-with-vpcs.md#Create-VPC)\. 
 
 If you delete your default VPC, you can create a new one\. For more information, see [Creating a Default VPC](#create-default-vpc)\. 
 

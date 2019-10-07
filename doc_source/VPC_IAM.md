@@ -277,7 +277,7 @@ The second statement grants users permissions to create the VPC peering connecti
 }
 ```
 
-The following policy allows users in AWS account 333333333333 to create VPC peering connections using any VPC in the us\-east\-1 region, but only if the VPC that will be accepting the peering connection is a specific VPC \(`vpc-aaa111bb`\) in a specific account \(777788889999\)\. 
+The following policy allows users in AWS account 333333333333 to create VPC peering connections using any VPC in the `us-east-1` region, but only if the VPC that will be accepting the peering connection is a specific VPC \(`vpc-aaa111bb`\) in a specific account \(777788889999\)\. 
 
 ```
 {

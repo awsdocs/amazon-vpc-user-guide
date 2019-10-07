@@ -119,7 +119,7 @@ For a private subnet, you must update the route table to enable instances \(such
 
 1. Choose **Add another route**\. For **Destination**, specify `::/0`\. For **Target**, select the ID of the egress\-only internet gateway, and then choose **Save**\.
 
-For more information, see [Routing Options](VPC_Route_Tables.md#route-table-options)\.
+For more information, see [Routing Options](route-table-options.md)\.
 
 ## Step 3: Update Your Security Group Rules<a name="vpc-migrate-ipv6-sg-rules"></a>
 

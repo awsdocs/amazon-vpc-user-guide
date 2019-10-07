@@ -105,7 +105,7 @@ If you're migrating from using a NAT instance, you can replace the current route
 
 1. Choose **Save**\.
 
-To ensure that your NAT gateway can access the internet, the route table associated with the subnet in which your NAT gateway resides must include a route that points internet traffic to an internet gateway\. For more information, see [Creating a Custom Route Table](VPC_Internet_Gateway.md#Add_IGW_Routing)\. If you delete a NAT gateway, the NAT gateway routes remain in a `blackhole` status until you delete or update the routes\. For more information, see [Adding and Removing Routes from a Route Table](VPC_Route_Tables.md#AddRemoveRoutes)\.
+To ensure that your NAT gateway can access the internet, the route table associated with the subnet in which your NAT gateway resides must include a route that points internet traffic to an internet gateway\. For more information, see [Creating a Custom Route Table](VPC_Internet_Gateway.md#Add_IGW_Routing)\. If you delete a NAT gateway, the NAT gateway routes remain in a `blackhole` status until you delete or update the routes\. For more information, see [Adding and Removing Routes from a Route Table](WorkWithRouteTables.md#AddRemoveRoutes)\.
 
 ### Deleting a NAT Gateway<a name="nat-gateway-deleting"></a>
 

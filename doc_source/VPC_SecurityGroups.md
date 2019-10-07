@@ -25,7 +25,7 @@ The following are the basic characteristics of security groups for your VPC:
 **Note**  
 Some types of traffic are tracked differently to others\. For more information, see [Connection Tracking](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html#security-group-connection-tracking) in the *Amazon EC2 User Guide for Linux Instances*\.
 + Instances associated with a security group can't talk to each other unless you add rules allowing it \(exception: the default security group has these rules by default\)\.
-+ Security groups are associated with network interfaces\. After you launch an instance, you can change the security groups associated with the instance, which changes the security groups associated with the primary network interface \(eth0\)\. You can also change the security groups associated with any other network interface\. For more information about network interfaces, see [Elastic Network Interfaces](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html)\.
++ Security groups are associated with network interfaces\. After you launch an instance, you can change the security groups associated with the instance, which changes the security groups associated with the primary network interface \(eth0\)\. You can also specify or change the security groups associated with any other network interface\. By default, when you create a network interface, it's associated with the default security group for the VPC, unless you specify a different security group\. For more information about network interfaces, see [Elastic Network Interfaces](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html)\.
 + When you create a security group, you must provide it with a name and a description\. The following rules apply:
   + Names and descriptions can be up to 255 characters in length\.
   + Names and descriptions are limited to the following characters: a\-z, A\-Z, 0\-9, spaces, and \.\_\-:/\(\)\#,@\[\]\+=&;\{\}\!$\*\.
@@ -45,10 +45,10 @@ The following table describes the default rules for a default security group\.
 |  | 
 | --- |
 | Inbound | 
-|  Source  |  Protocol  |  Port Range  |  Comments  | 
-|  The security group ID \(sg\-*xxxxxxxx*\)  |  All  |  All  |  Allow inbound traffic from instances assigned to the same security group\.  | 
+|  Source  |  Protocol  |  Port Range  |  Description  | 
+|  The security group ID \(sg\-*xxxxxxxx*\)  |  All  |  All  |  Allow inbound traffic from network interfaces \(and their associated instances\) that are assigned to the same security group\.  | 
 |   Outbound   | 
-|  Destination  |  Protocol  |  Port Range  |  Comments  | 
+|  Destination  |  Protocol  |  Port Range  |  Description  | 
 |  0\.0\.0\.0/0  |  All  |  All  |  Allow all outbound IPv4 traffic\.  | 
 | ::/0 | All | All | Allow all outbound IPv6 traffic\. This rule is added by default if you create a VPC with an IPv6 CIDR block or if you associate an IPv6 CIDR block with your existing VPC\.  | 
 
@@ -65,11 +65,13 @@ You can add or remove rules for a security group \(also referred to as *authoriz
 
 The following are the basic parts of a security group rule in a VPC:
 + \(Inbound rules only\) The source of the traffic and the destination port or port range\. The source can be another security group, an IPv4 or IPv6 CIDR block, or a single IPv4 or IPv6 address\.
-+ \(Outbound rules only\) The destination for the traffic and the destination port or port range\. The destination can be another security group, an IPv4 or IPv6 CIDR block, a single IPv4 or IPv6 address, or a prefix list ID \( A service is identified by a prefix list—the name and ID of a service for a Region\)\.
++ \(Outbound rules only\) The destination for the traffic and the destination port or port range\. The destination can be another security group, an IPv4 or IPv6 CIDR block, a single IPv4 or IPv6 address, or a prefix list ID \(a service is identified by a prefix list—the name and ID of a service for a Region\)\.
 + Any protocol that has a standard protocol number \(for a list, see [Protocol Numbers](http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml)\)\. If you specify ICMP as the protocol, you can specify any or all of the ICMP types and codes\.
 + An optional description for the security group rule to help you identify it later\. A description can be up to 255 characters in length\. Allowed characters are a\-z, A\-Z, 0\-9, spaces, and \.\_\-:/\(\)\#,@\[\]\+=;\{\}\!$\*\.
 
-When you specify a CIDR block as the source for a rule, traffic is allowed from the specified addresses for the specified protocol and port\. When you specify a security group as the source for a rule, traffic is allowed from the elastic network interfaces \(ENI\) for the instances associated with the source security group for the specified protocol and port\. Adding a security group as a source does not add rules from the source security group\.
+When you specify a CIDR block as the source for a rule, traffic is allowed from the specified addresses for the specified protocol and port\.
+
+When you specify a security group as the source for a rule, traffic is allowed from the network interfaces that are associated with the source security group for the specified protocol and port\. For an example, see [Default Security Group for Your VPC](#DefaultSecurityGroup)\. Adding a security group as a source does not add rules from the source security group\.
 
 If you specify a single IPv4 address, specify the address using the /32 prefix length\. If you specify a single IPv6 address, specify it using the /128 prefix length\.
 
@@ -77,13 +79,13 @@ Some systems for setting up firewalls let you filter on source ports\. Security 
 
 When you add or remove rules, they are automatically applied to all instances associated with the security group\. 
 
-The kind of rules you add can depend on the purpose of the instance\. The following table describes example rules for a security group for web servers\. The web servers can receive HTTP and HTTPS traffic from all IPv4 and IPv6 addresses, and send SQL or MySQL traffic to a database server\.
+The kind of rules you add can depend on the purpose of the security group\. The following table describes example rules for a security group that's associated with web servers\. The web servers can receive HTTP and HTTPS traffic from all IPv4 and IPv6 addresses, and send SQL or MySQL traffic to a database server\.
 
 
 |  | 
 | --- |
 | Inbound | 
-|  Source  |  Protocol  |  Port Range  |  Comments  | 
+|  Source  |  Protocol  |  Port Range  |  Description  | 
 |  0\.0\.0\.0/0  |  TCP  |  80  |  Allow inbound HTTP access from all IPv4 addresses  | 
 | ::/0 | TCP | 80 | Allow inbound HTTP access from all IPv6 addresses | 
 |  0\.0\.0\.0/0  |  TCP  |  443  |  Allow inbound HTTPS access from all IPv4 addresses  | 
@@ -91,7 +93,7 @@ The kind of rules you add can depend on the purpose of the instance\. The follow
 |  Your network's public IPv4 address range  |  TCP  |  22  |  Allow inbound SSH access to Linux instances from IPv4 IP addresses in your network \(over the Internet gateway\)  | 
 |  Your network's public IPv4 address range  |  TCP  |  3389  |  Allow inbound RDP access to Windows instances from IPv4 IP addresses in your network \(over the Internet gateway\)  | 
 |   Outbound   | 
-|  Destination  |  Protocol  |  Port Range  |  Comments  | 
+|  Destination  |  Protocol  |  Port Range  |  Description  | 
 |  The ID of the security group for your Microsoft SQL Server database servers  |  TCP  |  1433  |  Allow outbound Microsoft SQL Server access to instances in the specified security group  | 
 |  The ID of the security group for your MySQL database servers  |  TCP  |  3306  |  Allow outbound MySQL access to instances in the specified security group  | 
 

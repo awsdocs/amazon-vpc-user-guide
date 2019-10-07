@@ -31,11 +31,13 @@ For more information, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
 You can add or remove rules from the default network ACL, or create additional network ACLs for your VPC\. When you add or remove rules from a network ACL, the changes are automatically applied to the subnets it's associated with\.
 
 The following are the parts of a network ACL rule:
-+ Rule number\. Rules are evaluated starting with the lowest numbered rule\. As soon as a rule matches traffic, it's applied regardless of any higher\-numbered rule that may contradict it\.
-+ Protocol\. You can specify any protocol that has a standard protocol number\. For more information, see [Protocol Numbers](http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml)\. If you specify ICMP as the protocol, you can specify any or all of the ICMP types and codes\.
-+ \[Inbound rules only\] The source of the traffic \(CIDR range\) and the destination \(listening\) port or port range\.
-+ \[Outbound rules only\] The destination for the traffic \(CIDR range\) and the destination port or port range\.
-+ Choice of ALLOW or DENY for the specified traffic\.
++ **Rule number**\. Rules are evaluated starting with the lowest numbered rule\. As soon as a rule matches traffic, it's applied regardless of any higher\-numbered rule that may contradict it\.
++ **Type**\. The type of traffic; for example, SSH\. You can also specify all traffic or a custom range\.
++ **Protocol**\. You can specify any protocol that has a standard protocol number\. For more information, see [Protocol Numbers](http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml)\. If you specify ICMP as the protocol, you can specify any or all of the ICMP types and codes\.
++ **Port range**\. The listening port or port range for the traffic\. For example, 80 for HTTP traffic\.
++ **Source**\. \[Inbound rules only\] The source of the traffic \(CIDR range\)\.
++ **Destination**\. \[Outbound rules only\] The destination for the traffic \(CIDR range\)\.
++ **Allow/Deny**\. Whether to ALLOW or DENY the specified traffic\.
 
 ## Default Network ACL<a name="default-network-acl"></a>
 

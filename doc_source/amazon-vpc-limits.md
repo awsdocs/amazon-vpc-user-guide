@@ -30,11 +30,11 @@ For more information, see [DNS Limits](vpc-dns.md#vpc-dns-limits)\.
 
 | Resource | Default limit | Comments | 
 | --- | --- | --- | 
-|  Customer gateways per Region  |  50  |  \-  | 
+|  Customer gateways per Region  |  \-  |  For more information, see [Site\-to\-Site VPN Limits](https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-limits.html) in the *AWS Site\-to\-Site VPN User Guide*\.  | 
 | Egress\-only internet gateways per Region | 5 | This limit is directly correlated with the limit on VPCs per Region\. To increase this limit, increase the limit on VPCs per Region\. You can attach only one egress\-only internet gateway to a VPC at a time\. | 
 |  Internet gateways per Region  |  5  |  This limit is directly correlated with the limit on VPCs per Region\. To increase this limit, increase the limit on VPCs per Region\. Only one internet gateway can be attached to a VPC at a time\.  | 
 | NAT gateways per Availability Zone | 5 | A NAT gateway in the pending, active, or deleting state counts against your limit\. | 
-|  Virtual private gateways per Region  |  5  |  You can attach only one virtual private gateway to a VPC at a time\.   | 
+|  Virtual private gateways per Region  |  \-  |  For more information, see [Site\-to\-Site VPN Limits](https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-limits.html) in the *AWS Site\-to\-Site VPN User Guide*\.   | 
 
 ## Network ACLs<a name="vpc-limits-nacls"></a>
 
@@ -89,11 +89,7 @@ For more information, see [DNS Limits](vpc-dns.md#vpc-dns-limits)\.
 
 ## AWS Site\-to\-Site VPN Connections<a name="vpc-limits-vpn"></a>
 
-
-| Resource | Default limit | Comments | 
-| --- | --- | --- | 
-|  Site\-to\-Site VPN connections per Region  |  50  |  \-  | 
-|  Site\-to\-Site VPN connections per VPC \(per virtual private gateway\)  | 10 |  \-  | 
+For more information, see [Site\-to\-Site VPN Limits](https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-limits.html) in the *AWS Site\-to\-Site VPN User Guide*\.
 
 ## VPC Sharing<a name="vpc-share-limits"></a>
 
