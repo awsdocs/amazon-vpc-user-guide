@@ -37,7 +37,7 @@ The following table provides an overview of whether your VPC automatically comes
 | Public IPv4 address automatically assigned to instance launched into subnet | Yes \(default subnet\) | No \(nondefault subnet\) | 
 | IPv6 address automatically assigned to instance launched into subnet | No \(default subnet\) | No \(nondefault subnet\) | 
 
-For more information about default VPCs, see [Default VPC and Default Subnets](default-vpc.md)\. For more information about using the VPC wizard to create a VPC with an internet gateway, see [Scenario 1: VPC with a Single Public Subnet](VPC_Scenario1.md) or [Scenario 2: VPC with Public and Private Subnets \(NAT\)](VPC_Scenario2.md)\. 
+For more information about default VPCs, see [Default VPC and Default Subnets](default-vpc.md)\. For more information about using the VPC wizard to create a VPC with an internet gateway, see [VPC with a Single Public Subnet](VPC_Scenario1.md) or [VPC with Public and Private Subnets \(NAT\)](VPC_Scenario2.md)\. 
 
 For more information about IP addressing in your VPC, and controlling how instances are assigned public IPv4 or IPv6 addresses, see [IP Addressing in Your VPC](vpc-ip-addressing.md)\.
 

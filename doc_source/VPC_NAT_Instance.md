@@ -37,7 +37,7 @@ Your NAT instance limit depends on your instance type limit for the region\. For
 
 ## Setting up the NAT Instance<a name="NATInstance"></a>
 
-You can use the VPC wizard to set up a VPC with a NAT instance; for more information, see [Scenario 2: VPC with Public and Private Subnets \(NAT\)](VPC_Scenario2.md)\. The wizard performs many of the configuration steps for you, including launching a NAT instance, and setting up the routing\. However, if you prefer, you can create and configure a VPC and a NAT instance manually using the steps below\. 
+You can use the VPC wizard to set up a VPC with a NAT instance; for more information, see [VPC with Public and Private Subnets \(NAT\)](VPC_Scenario2.md)\. The wizard performs many of the configuration steps for you, including launching a NAT instance, and setting up the routing\. However, if you prefer, you can create and configure a VPC and a NAT instance manually using the steps below\. 
 
 1. Create a VPC with two subnets\.
 **Note**  

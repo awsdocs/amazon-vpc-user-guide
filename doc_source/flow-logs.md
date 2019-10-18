@@ -9,6 +9,8 @@ Flow logs can help you with a number of tasks, such as:
 
 For examples, see [Flow Log Record Examples](flow-logs-records-examples.md)\.
 
+Flow log data is collected outside of the path of your network traffic, and therefore does not affect network throughput or latency\. You can create or delete flow logs without any risk of impact to network performance\.
+
 Charges for CloudWatch Logs apply when you use flow logs, whether you send them to CloudWatch Logs or to Amazon S3\. For more information, see [Amazon CloudWatch Pricing](https://aws.amazon.com/cloudwatch/pricing)\.
 
 **Topics**

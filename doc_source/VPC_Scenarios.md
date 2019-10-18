@@ -1,15 +1,20 @@
-# Scenarios and Examples<a name="VPC_Scenarios"></a>
+# Examples for VPC<a name="VPC_Scenarios"></a>
 
-This section has examples for creating and configuring a VPC, including scenarios for how to use the VPC wizard in the Amazon VPC console\.
+This section has examples for creating and configuring a VPC\.
 
 
-| Scenario | Usage | 
+| Example | Usage | 
 | --- | --- | 
-|  [Scenario 1: VPC with a Single Public Subnet](VPC_Scenario1.md)  |  Use the VPC wizard to create a VPC for running a single\-tier, public\-facing web application such as a blog or simple web site\.  | 
-|  [Scenario 2: VPC with Public and Private Subnets \(NAT\)](VPC_Scenario2.md)  |  Use the VPC wizard to create a VPC for running a public\-facing web application, while still maintaining non\-publicly accessible back\-end servers in a second subnet\.  | 
-|  [Scenario 3: VPC with Public and Private Subnets and AWS Site\-to\-Site VPN Access](VPC_Scenario3.md)  |  Use the VPC wizard to create a VPC for extending your data center into the cloud, and also directly access the Internet from your VPC\.  | 
-|  [Scenario 4: VPC with a Private Subnet Only and AWS Site\-to\-Site VPN Access](VPC_Scenario4.md)  |  Use the VPC wizard to create a VPC for extending your data center into the cloud, and leverage Amazon's infrastructure without exposing your network to the Internet\.  | 
-| [Example: Create an IPv4 VPC and Subnets Using the AWS CLI](vpc-subnets-commands-example.md) | Use the AWS CLI to create a VPC with a public subnet and a private subnet\. | 
+| [Example: Create an IPv4 VPC and Subnets Using the AWS CLI](vpc-subnets-commands-example.md) |  Use the AWS CLI to create a VPC with a public subnet and a private subnet\.  | 
 | [Example: Create an IPv6 VPC and Subnets Using the AWS CLI](vpc-subnets-commands-example-ipv6.md) | Use the AWS CLI to create a VPC with an associated IPv6 CIDR block and a public subnet and a private subnet, each with an associated IPv6 CIDR block\. | 
 | [Example: Sharing Public Subnets and Private Subnets](example-vpc-share.md) | Share private and public subnets with accounts\. | 
 | [Example: Services Using AWS PrivateLink and VPC Peering](vpc-peer-region-example.md) | Learn how to use a combination of VPC peering and AWS PrivateLink to extend access to private services to consumers\. | 
+
+You can also use a transit gateway to connect your VPCs\.
+
+
+| Example | Usage | 
+| --- | --- | 
+|  Centralized router |  You can configure your transit gateway as a centralized router that connects all of your VPCs, AWS Direct Connect, and AWS Site\-to\-Site VPN connections\.  For more information about configuring your transit gateway as a centralized router, see [Transit Gateway Example: Centralized Router](https://docs.aws.amazon.com/vpc/latest/tgw/transit-gateway-centralized-router.html) in *Amazon VPC Transit Gateways*\. | 
+| Isolated VPCs | You can configure your transit gateway as multiple isolated routers\. This is similar to using multiple transit gateways, but provides more flexibility in cases where the routes and attachments might change\.For more information about configuring your transit gateway to isolate your VPCs, see [Transit Gateway Example: Isolated VPCs](https://docs.aws.amazon.com/vpc/latest/tgw/transit-gateway-isolated.html) in *Amazon VPC Transit Gateways*\. | 
+| Isolated VPCs with Shared Services | You can configure your transit gateway as multiple isolated routers that use a shared service This is similar to using multiple transit gateways, but provides more flexibility in cases where the routes and attachments might change\. For more information about configuring your transit gateway to isolate your VPCs, see [Transit Gateway Example: Isolated VPCs with Shared Services](https://docs.aws.amazon.com/vpc/latest/tgw/transit-gateway-isolated-shared.html) in *Amazon VPC Transit Gateways*\. | 

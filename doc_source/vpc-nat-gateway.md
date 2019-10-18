@@ -63,7 +63,7 @@ To avoid data processing charges for NAT gateways when accessing Amazon S3 and D
 
 ## Working with NAT Gateways<a name="nat-gateway-working-with"></a>
 
-You can use the Amazon VPC console to create, view, and delete a NAT gateway\. You can also use the Amazon VPC wizard to create a VPC with a public subnet, a private subnet, and a NAT gateway\. For more information, see [Scenario 2: VPC with Public and Private Subnets \(NAT\)](VPC_Scenario2.md)\.
+You can use the Amazon VPC console to create, view, and delete a NAT gateway\. You can also use the Amazon VPC wizard to create a VPC with a public subnet, a private subnet, and a NAT gateway\. For more information, see [VPC with Public and Private Subnets \(NAT\)](VPC_Scenario2.md)\.
 
 **Topics**
 + [Creating a NAT Gateway](#nat-gateway-creating)

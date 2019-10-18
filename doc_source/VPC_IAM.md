@@ -424,7 +424,7 @@ This section demonstrates policies that enable users to work with specific parts
 
 ### 1\. Using the VPC wizard<a name="vpc-wizard-iam"></a>
 
-You can use the VPC wizard in the Amazon VPC console to create and set up and configure a VPC for you, so that it's ready for you to use\. The wizard provides different configuration options, depending on your requirements\. For more information about using the VPC wizard to create a VPC, see [Scenarios and Examples](VPC_Scenarios.md)\.
+You can use the VPC wizard in the Amazon VPC console to create and set up and configure a VPC for you, so that it's ready for you to use\. The wizard provides different configuration options, depending on your requirements\. For more information about using the VPC wizard to create a VPC, see [Examples for VPC](VPC_Scenarios.md)\.
 
 To enable users to use the VPC wizard, you must grant them permission to create and modify the resources that form part of the selected configuration\. The following example policies show the actions that are required for each of the wizard configuration options\. 
 

@@ -1,4 +1,4 @@
-# Scenario 4: VPC with a Private Subnet Only and AWS Site\-to\-Site VPN Access<a name="VPC_Scenario4"></a>
+# VPC with a Private Subnet Only and AWS Site\-to\-Site VPN Access<a name="VPC_Scenario4"></a>
 
 The configuration for this scenario includes a virtual private cloud \(VPC\) with a single private subnet, and a virtual private gateway to enable communication with your own network over an IPsec VPN tunnel\. There is no Internet gateway to enable communication over the Internet\. We recommend this scenario if you want to extend your network into [the cloud](https://aws.amazon.com/what-is-cloud-computing/) using Amazon's infrastructure without exposing your network to the Internet\.
 
@@ -8,7 +8,6 @@ This scenario can also be optionally configured for IPv6—you can use the VPC w
 + [Overview](#Configuration-4)
 + [Routing](#VPC_Scenario4_Routing)
 + [Security](#VPC_Scenario4_Security)
-+ [Implementing Scenario 4](#VPC_Scenario4_Implementation)
 
 ## Overview<a name="Configuration-4"></a>
 
@@ -17,7 +16,7 @@ The following diagram shows the key components of the configuration for this sce
 ![\[Diagram for scenario 4: VPC with only a virtual private gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/Case4_Diagram.png)
 
 **Important**  
-For this scenario, the [Amazon VPC Network Administrator Guide](https://docs.aws.amazon.com/vpc/latest/adminguide/) describes what your network administrator needs to do to configure the Amazon VPC customer gateway on your side of the Site\-to\-Site VPN connection\.
+For this scenario, the [AWS Site\-to\-Site VPN Network Administrator Guide](https://docs.aws.amazon.com/vpc/latest/adminguide/) describes what your network administrator needs to do to configure the Amazon VPC customer gateway on your side of the Site\-to\-Site VPN connection\.
 
 The configuration for this scenario includes the following:
 + A virtual private cloud \(VPC\) with a size /16 CIDR \(example: 10\.0\.0\.0/16\)\. This provides 65,536 private IP addresses\.
@@ -26,7 +25,7 @@ The configuration for this scenario includes the following:
 + Instances with private IP addresses in the subnet range \(examples: 10\.0\.0\.5, 10\.0\.0\.6, and 10\.0\.0\.7\), which enables the instances to communicate with each other and other instances in the VPC\.
 + The main route table contains a route that enables instances in the subnet to communicate with other instances in the VPC\. Route propagation is enabled, so a route that enables instances in the subnet to communicate directly with your network appears as a propagated route in the main route table\.
 
-For more information about subnets, see [VPCs and Subnets](VPC_Subnets.md) and [IP Addressing in Your VPC](vpc-ip-addressing.md)\. For more information about your Site\-to\-Site VPN connection, see [What is AWS Site\-to\-Site VPN?](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html) in the *AWS Site\-to\-Site VPN User Guide*\. For more information about configuring a customer gateway, see the * [Amazon VPC Network Administrator Guide](https://docs.aws.amazon.com/vpc/latest/adminguide/)*\.
+For more information about subnets, see [VPCs and Subnets](VPC_Subnets.md) and [IP Addressing in Your VPC](vpc-ip-addressing.md)\. For more information about your Site\-to\-Site VPN connection, see [What is AWS Site\-to\-Site VPN?](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html) in the *AWS Site\-to\-Site VPN User Guide*\. For more information about configuring a customer gateway, see the * [AWS Site\-to\-Site VPN Network Administrator Guide](https://docs.aws.amazon.com/vpc/latest/adminguide/)*\.
 
 ### Overview for IPv6<a name="vpc-scenario-4-overview-ipv6"></a>
 
@@ -91,113 +90,3 @@ The following table describes the inbound rules that you should add to the defau
 ### Security for IPv6<a name="vpc-scenario-4-security-ipv6"></a>
 
 If you associate an IPv6 CIDR block with your VPC and subnets, you must add separate rules to your security group to control inbound and outbound IPv6 traffic for your instances\. In this scenario, the database servers cannot be reached over the Site\-to\-Site VPN connection using IPv6; therefore, no additional security group rules are required\.
-
-## Implementing Scenario 4<a name="VPC_Scenario4_Implementation"></a>
-
-To implement scenario 4, get information about your customer gateway, and create the VPC using the VPC wizard, The VPC wizard creates a Site\-to\-Site VPN connection for you with a customer gateway and virtual private gateway\.
-
-**To prepare your customer gateway**
-
-1. Determine the device you'll use as your customer gateway\. For information about the devices that we've tested, see [Amazon Virtual Private Cloud FAQs](http://aws.amazon.com/vpc/faqs/#C9)\. For more information about the requirements for your customer gateway, see the *[Amazon VPC Network Administrator Guide](https://docs.aws.amazon.com/vpc/latest/adminguide/)*\.
-
-1. Obtain the Internet\-routable IP address for the customer gateway's external interface\. The address must be static and may be behind a device performing network address translation \(NAT\)\.
-
-1. If you want to create a statically\-routed Site\-to\-Site VPN connection, get the list of internal IP ranges \(in CIDR notation\) that should be advertised across the Site\-to\-Site VPN connection to the virtual private gateway\. For more information, see [Site\-to\-Site VPN Routing Options](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html) in the *AWS Site\-to\-Site VPN User Guide*\.
-
-Use the VPC wizard to create your VPC and a Site\-to\-Site VPN connection\.
-
-**To create a VPC using the VPC wizard**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. On the dashboard, choose **Launch VPC Wizard**\.  
-![\[The Amazon VPC dashboard\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/VPC-dashboard.png)
-
-1. Choose the fourth option, **VPC with a Private Subnet Only and Hardware VPN Access**, and then choose **Select**\.
-
-1. On the **VPC with a Private Subnet Only and Hardware VPN Access** page, do the following:
-
-   1. \(Optional\) Modify the IPv4 CIDR block ranges for the VPC and subnet as needed, or keep the default values\.
-
-   1. \(Optional\) Name your VPC and subnet\. This helps you identify them later in the console\.
-
-   1. \(Optional, IPv6\-only\) For **IPv6 CIDR block**, choose **Amazon\-provided IPv6 CIDR block**\. For **Private subnet's IPv6 CIDR**, choose **Specify a custom IPv6 CIDR**\. Specify the hexadecimal pair value for the IPv6 subnet or keep the default value \(`00`\)\.
-
-   1. Choose **Next**\.
-
-1. On the **Configure your VPN** page, do the following:
-
-   1. For **Customer Gateway IP**, specify the public IP address of your VPN router\.
-
-   1. \(Optional\) Name your customer gateway and Site\-to\-Site VPN connection\.
-
-   1. For **Routing Type**, select one of the routing options\. For more information, see [Site\-to\-Site VPN Routing Options](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html) in the *AWS Site\-to\-Site VPN User Guide*\.
-      + If your VPN router supports Border Gateway Protocol \(BGP\), select **Dynamic \(requires BGP\)**\.
-      + If your VPN router does not support BGP, choose **Static**\. For **IP Prefix**, add each IP range for your network, in CIDR notation\.
-
-   1. Choose **Create VPC**\.
-
-1. When the wizard is done, choose **Site\-to\-Site VPN Connections** in the navigation pane\. Select the Site\-to\-Site VPN connection that the wizard created, and choose **Download Configuration**\. In the dialog box, select the vendor for the customer gateway, the platform, and the software version, and then choose **Yes, Download**\.
-
-1. Save the text file containing the VPN configuration and give it to the network administrator along with this guide: [Amazon VPC Network Administrator Guide](https://docs.aws.amazon.com/vpc/latest/adminguide/)\. The VPN won't work until the network administrator configures the customer gateway\.
-
-For this scenario, you need to update the default security group with new inbound rules that allow SSH and Remote Desktop \(RDP\) access from your network\. If you don't want instances to initiate outbound communication, you can also remove the default outbound rule\. 
-
-**To update the rules for the default security group**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. Choose **Security Groups** in the navigation pane, and then select the default security group for the VPC\. The details pane displays the details for the security group, plus tabs for working with its inbound and outbound rules\.
-
-1. On the **Inbound Rules** tab, choose **Edit** and add rules for inbound traffic as follows:
-
-   1. Select **SSH** from **Type**, and type your network's private IP address range in **Source** \(for example, `172.0.0.0/12`\)\.
-
-   1. Choose **Add another rule**, then select **RDP** from **Type**, and type your network's private IP address range in **Source**\.
-
-   1. Choose **Save**\.
-
-1. \(Optional\) On the **Outbound Rules** tab, choose **Edit**, locate the default rule that enables all outbound traffic, choose **Remove**, and then choose **Save**\.
-
-After your network administrator configures your customer gateway, you can launch instances into your VPC\. If you're already familiar with launching instances outside a VPC, then you already know most of what you need to know to launch an instance into a VPC\.
-
-**To launch an instance**
-
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-1. Choose **Launch Instance** on the dashboard\.
-
-1. Follow the directions in the wizard\. Choose an AMI, choose an instance type, and then choose **Next: Configure Instance Details**\.
-**Note**  
-If you intend to use your instance for IPv6 communication, you must choose a supported instance type; for example, T2\. For more information, see [Amazon EC2 Instance Types](https://aws.amazon.com/ec2/instance-types/)\.
-
-1. On the **Configure Instance Details** page, select the VPC that you created earlier from the **Network** list, and then select the subnet\. Choose **Next: Add Storage**\.
-
-1. On the next two pages of the wizard, you can configure storage for your instance, and add tags\. On the **Configure Security Group** page, select the **Select an existing security group** option, and select the default security group\. Choose **Review and Launch**\.
-
-1. Review the settings that you've chosen\. Make any changes that you need, and then choose **Launch** to choose a keypair and launch your instance\.
-
-In scenario 4, you need a DNS server that enables your VPN\-only subnet to communicate with servers in your network\. You must create a new set of DHCP options that includes your DNS server and then configure the VPC to use that set of options\.
-
-**Note**  
-Your VPC automatically has a set of DHCP options with domain\-name\-servers=AmazonProvidedDNS\. This is a DNS server that Amazon provides to enable any public subnets in your VPC to communicate with the Internet over an Internet gateway\. Scenario 4 doesn't have any public subnets, so you don't need this set of DHCP options\.
-
-**To update the DHCP options**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **DHCP Options Sets**\.
-
-1. Choose **Create DHCP Options Set**\.
-
-1. In the **Create DHCP Options Set** dialog box, in the **Domain name servers** box, enter the address of your DNS server, and then choose **Yes, Create**\. In this example, your DNS server is 192\.0\.2\.1\.
-
-1. In the navigation pane, choose **Your VPCs**\.
-
-1. Select the VPC, and then choose **Edit** in the **Summary** tab\.
-
-1. Select the ID of the new set of options from the **DHCP options set** list and then choose **Save**\.
-
-1. \(Optional\) The VPC now uses this new set of DHCP options and therefore uses your DNS server\. If you want, you can delete the original set of options that the VPC used\.
-
-You can now use SSH or RDP to connect to your instance in the VPC\. For information about how to connect to a Linux instance, see [Connect to Your Linux Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html#EC2_ConnectToInstance_Linux) in the *Amazon EC2 User Guide for Linux Instances*\. For information about how to connect to a Windows instance, see [Connect to Your Windows Instance](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/EC2Win_GetStarted.html#EC2Win_ConnectToInstanceWindows) in the *Amazon EC2 User Guide for Windows Instances*\. 

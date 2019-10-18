@@ -5,7 +5,7 @@ If you have an existing VPC that supports IPv4 only, and resources in your subne
 You cannot disable IPv4 support for your VPC and subnets; this is the default IP addressing system for Amazon VPC and Amazon EC2\.
 
 **Note**  
-This information assumes that you have an existing VPC with public and private subnets\. For information about setting up a new VPC for use with IPv6, see [Getting Started with IPv6 for Amazon VPC](get-started-ipv6.md)\.
+This information assumes that you have an existing VPC with public and private subnets\. For information about setting up a new VPC for use with IPv6, see [Overview for IPv6](VPC_Scenario1.md#vpc-scenario-1-overview-ipv6)\.
 
 The following table provides an overview of the steps to enable your VPC and subnets to use IPv6\.
 

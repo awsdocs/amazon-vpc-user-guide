@@ -65,6 +65,8 @@ Each Amazon EC2 instance limits the number of packets that can be sent to the Am
 
 You can view the DNS hostnames for a running instance or a network interface using the Amazon EC2 console or the command line\.
 
+The **Public DNS \(IPv4\)** and **Private DNS** fields are available whn the DNS options are enabled for the VPC that is associated with the instance\. For more information, see [DNS Support in Your VPC](#vpc-dns-support)\.
+
 ### Instance<a name="instance-dns"></a>
 
 **To view DNS hostnames for an instance using the console**

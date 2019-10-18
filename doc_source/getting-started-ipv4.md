@@ -1,6 +1,6 @@
 # Getting Started with IPv4 for Amazon VPC<a name="getting-started-ipv4"></a>
 
-In this exercise, you'll create a VPC with IPv4 CIDR block, a subnet with an IPv4 CIDR block, and launch a public\-facing instance into your subnet\. Your instance will be able to communicate with the Internet, and you'll be able to access your instance from your local computer using SSH \(if it's a Linux instance\) or Remote Desktop \(if it's a Windows instance\)\. In your real world environment, you can use this scenario to create a public\-facing web server; for example, to host a blog\. 
+Create a VPC that supports IPv6 addressing\.
 
 **Note**  
 This exercise is intended to help you set up your own nondefault VPC quickly\. If you already have a default VPC and you want to get started launching instances into it \(and not creating or configuring a new VPC\), see [Launching an EC2 Instance into Your Default VPC](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html#launching-into)\. If you want to get started setting up a nondefault VPC that supports IPv6, see [Getting Started with IPv6 for Amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/get-started-ipv6.html)\.
@@ -14,7 +14,7 @@ To complete this exercise, you'll do the following:
 Before you can use Amazon VPC for the first time, you must sign up for Amazon Web Services \(AWS\)\. When you sign up, your AWS account is automatically signed up for all services in AWS, including Amazon VPC\. If you haven't created an AWS account already, go to [https://aws\.amazon\.com/](https://aws.amazon.com/), and then choose **Create a Free Account**\.
 
 **Note**  
-This exercise assumes that your account supports the EC2\-VPC platform only\. If your account also supports the older EC2\-Classic platform, you can still follow the steps in this exercise; however, you will not have a default VPC in your account to compare against your nondefault VPC\. For more information, see [Supported Platforms](what-is-amazon-vpc.md#what-is-supported-platform)\.
+This exercise assumes that your account supports the EC2\-VPC platform only\. If your account also supports the older EC2\-Classic platform, you can still follow the steps in this exercise; however, you will not have a default VPC in your account to compare against your nondefault VPC\. For more information, see [Supported Platforms](how-it-works.md#what-is-supported-platform)\.
 
 **Topics**
 + [Step 1: Create the VPC](#getting-started-create-vpc)
@@ -31,10 +31,6 @@ In this step, you'll use the Amazon VPC wizard in the Amazon VPC console to crea
 + Creates a size /24 IPv4 subnet \(a range of 256 private IP addresses\) in the VPC\. 
 + Creates a custom route table, and associates it with your subnet, so that traffic can flow between the subnet and the Internet gateway\. For more information about route tables, see [Route Tables](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html)\.
 
-The following diagram represents the architecture of your VPC after you've completed this step\.
-
-![\[Getting started: VPC and subnet\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/getting-started-1-diagram.png)
-
 **Note**  
 This exercise covers the first scenario in the VPC wizard\. For more information about the other scenarios, see [Scenarios for Amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenarios.html)\.
 
@@ -44,12 +40,11 @@ This exercise covers the first scenario in the VPC wizard\. For more information
 
 1. In the navigation bar, on the top\-right, take note of the region in which you'll be creating the VPC\. Ensure that you continue working in the same region for the rest of this exercise, as you cannot launch an instance into your VPC from a different region\. For more information, see [Regions and Availability Zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-1. In the navigation pane, choose **VPC dashboard**\. From the dashboard, choose **Launch VPC Wizard**\.  
-![\[The Amazon VPC dashboard\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/VPC-dashboard.png)
+1. In the navigation pane, choose **VPC dashboard**\. From the dashboard, choose **Launch VPC Wizard**\.
 **Note**  
 Do not choose **Your VPCs** in the navigation pane; you cannot access the VPC wizard using the **Create VPC** button on that page\.
 
-1. Choose the first option, **VPC with a Single Public Subnet**, and then choose **Select**\.
+1. Choose the option for the configuration you want to implement, for example, **VPC with a Single Public Subnet**, and then choose **Select**\.
 
 1. On the configuration page, enter a name for your VPC in the **VPC name** field; for example, `my-vpc`, and enter a name for your subnet in the **Subnet name** field\. This helps you to identify the VPC and subnet in the Amazon VPC console after you've created them\. For this exercise, you can leave the rest of the configuration settings on the page, and choose **Create VPC**\. 
 
@@ -62,8 +57,7 @@ Do not choose **Your VPCs** in the navigation pane; you cannot access the VPC wi
 
 1. A status window shows the work in progress\. When the work completes, choose **OK** to close the status window\.
 
-1. The **Your VPCs** page displays your default VPC and the VPC that you just created\. The VPC that you created is a nondefault VPC, therefore the **Default VPC** column displays **No**\.  
-![\[Your VPCs page\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/your-vpcs.png)
+1. The **Your VPCs** page displays your default VPC and the VPC that you just created\. The VPC that you created is a nondefault VPC, therefore the **Default VPC** column displays **No**\.
 
 ### Viewing Information About Your VPC<a name="verify-vpc-components"></a>
 
@@ -90,23 +84,6 @@ After you've created the VPC, you can view information about the subnet, the Int
 A security group acts as a virtual firewall to control the traffic for its associated instances\. To use a security group, you add the inbound rules to control incoming traffic to the instance, and outbound rules to control the outgoing traffic from your instance\. To associate a security group with an instance, you specify the security group when you launch the instance\. If you add and remove rules from the security group, we apply those changes to the instances associated with the security group automatically\. 
 
 Your VPC comes with a *default security group*\. Any instance not associated with another security group during launch is associated with the default security group\. In this exercise, you'll create a new security group, `WebServerSG`, and specify this security group when you launch an instance into your VPC\.
-
-### Rules for the WebServerSG Security Group<a name="getting-started-inbound-outbound-rules"></a>
-
-The following table describes the inbound and outbound rules for the `WebServerSG` security group\. You'll add the inbound rules yourself\. The outbound rule is a default rule that allows all outbound communication to anywhere — you do not need to add this rule yourself\.
-
-
-|  | 
-| --- |
-| Inbound | 
-|  Source IP  |  Protocol  |  Port Range  |  Comments  | 
-|  0\.0\.0\.0/0  |  TCP  |  80  |  Allows inbound HTTP access from any IPv4 address\.  | 
-|  0\.0\.0\.0/0  |  TCP  |  443  |  Allows inbound HTTPS access from any IPv4 address\.  | 
-|  Public IPv4 address range of your home network   |  TCP  |  22  |  Allows inbound SSH access from your home network to a Linux/UNIX instance\.  | 
-|  Public IPv4 address range of your home network   |  TCP  |  3389  |  Allows inbound RDP access from your home network to a Windows instance\.  | 
-| Outbound | 
-|  Destination IP  |  Protocol  |  Port Range  |  Comments  | 
-| 0\.0\.0\.0/0 | All | All | The default outbound rule that allows all outbound IPv4 communication\. | 
 
 ### Creating Your WebServerSG Security Group<a name="getting-started-create-group"></a>
 
@@ -142,10 +119,6 @@ If you use `0.0.0.0/0`, you enable all IP addresses to access your instance usin
 
 When you launch an EC2 instance into a VPC, you must specify the subnet in which to launch the instance\. In this case, you'll launch an instance into the public subnet of the VPC you created\. You'll use the Amazon EC2 launch wizard in the Amazon EC2 console to launch your instance\. 
 
-The following diagram represents the architecture of your VPC after you've completed this step\.
-
-![\[Getting started: Launch instance\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/getting-started-2-diagram.png)
-
 **To launch an EC2 instance into a VPC**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
@@ -177,10 +150,6 @@ For more information about the options available in the Amazon EC2 launch wizard
 ## Step 4: Assign an Elastic IP Address to Your Instance<a name="getting-started-assign-eip"></a>
 
 In the previous step, you launched your instance into a public subnet — a subnet that has a route to an Internet gateway\. However, the instance in your subnet also needs a public IPv4 address to be able to communicate with the Internet\. By default, an instance in a nondefault VPC is not assigned a public IPv4 address\. In this step, you'll allocate an Elastic IP address to your account, and then associate it with your instance\. For more information about Elastic IP addresses, see [Elastic IP Addresses](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-ip-addressing.html#vpc-eips)\.
-
-The following diagram represents the architecture of your VPC after you've completed this step\.
-
-![\[Getting started: Assign an Elastic IP address to your instance\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/getting-started-3-diagram.png)
 
 **To allocate and assign an Elastic IP address**
 
