@@ -92,6 +92,7 @@ In a shared VPC, each participant pays for their application resources including
 ## Unsupported Services for Shared Subnets<a name="vpc-share-unsupported-services"></a>
 
 Participants cannot create resources for the following services in a shared subnet::
++ Amazon FSx
 + AWS CloudHSM Classic
 + Network Load Balancer 
 **Note**  

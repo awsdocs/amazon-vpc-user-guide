@@ -1,6 +1,6 @@
 # Getting Started with IPv4 for Amazon VPC<a name="getting-started-ipv4"></a>
 
-Create a VPC that supports IPv6 addressing\.
+Create a VPC that supports IPv4 addressing\.
 
 **Note**  
 This exercise is intended to help you set up your own nondefault VPC quickly\. If you already have a default VPC and you want to get started launching instances into it \(and not creating or configuring a new VPC\), see [Launching an EC2 Instance into Your Default VPC](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html#launching-into)\. If you want to get started setting up a nondefault VPC that supports IPv6, see [Getting Started with IPv6 for Amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/get-started-ipv6.html)\.

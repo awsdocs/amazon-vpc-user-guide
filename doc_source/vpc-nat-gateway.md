@@ -202,7 +202,7 @@ The following example demonstrates how to test if your instance in a private sub
 
 ## Controlling the Use of NAT Gateways<a name="nat-gateway-iam"></a>
 
-By default, IAM users do not have permission to work with NAT gateways\. You can create an IAM user policy that grants users permissions to create, describe, and delete NAT gateways\. We currently do not support resource\-level permissions for any of the `ec2:*NatGateway*` API operations\. For more information about IAM policies for Amazon VPC, see [Controlling Access to Amazon VPC Resources](VPC_IAM.md)\.
+By default, IAM users do not have permission to work with NAT gateways\. You can create an IAM user policy that grants users permissions to create, describe, and delete NAT gateways\. We currently do not support resource\-level permissions for any of the `ec2:*NatGateway*` API operations\. For more information about IAM policies for Amazon VPC, see [Identity and Access Management for Amazon VPC](security-iam.md)\.
 
 ## Tagging a NAT Gateway<a name="nat-gateway-tagging"></a>
 
