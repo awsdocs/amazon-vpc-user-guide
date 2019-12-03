@@ -15,6 +15,8 @@ When you use the VPC wizard in the console to create a VPC with a gateway, the w
 + [Changing a Subnet Route Table](#ChangeRouteTable)
 + [Disassociating a Subnet from a Route Table](#DisassociateSubnetRouteTable)
 + [Replacing the Main Route Table](#Route_Replacing_Main_Table)
++ [Associating a Gateway with a Route Table](#associate-route-table-gateway)
++ [Replacing and Restoring the Target for a Local Route](#replace-local-route-target)
 + [Deleting a Route Table](#DeleteRouteTable)
 + [API and Command Overview](#route-tables-api-cli)
 
@@ -172,7 +174,7 @@ You can change which route table is the main route table in your VPC\.
 
 1. In the navigation pane, choose **Route Tables**\.
 
-1. Select the route table that should be the new main route table, and then choose **Actions**, **Set Main Route Table**\.
+1. Select the subnet route table that should be the new main route table, and then choose **Actions**, **Set Main Route Table**\.
 
 1. In the confirmation dialog box, choose **Ok**\.
 
@@ -187,6 +189,75 @@ The following procedure describes how to remove an explicit association between 
 1. In the **Subnet Associations** tab, choose **Edit subnet associations**\.
 
 1. Clear the check box for the subnet, and then choose **Save**\.
+
+## Associating a Gateway with a Route Table<a name="associate-route-table-gateway"></a>
+
+You can associate an internet gateway or a virtual private gateway with a route table\. For more information, see [Gateway Route Tables](VPC_Route_Tables.md#gateway-route-table)\.
+
+**To associate a gateway with a route table**
+
+1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
+
+1. In the navigation pane, choose **Route Tables**, and then select the route table\.
+
+1. Choose **Actions**, **Edit edge associations**\.
+
+1. Choose **Internet gateways** or **Virtual private gateways** to display the list of gateways\. 
+
+1. Choose the gateway, and then choose **Save**\.
+
+**To associate an internet gateway with a route table using the AWS CLI**  
+The following command associates internet gateway `igw-11aa22bb33cc44dd1` with route table `rtb-01234567890123456`\.
+
+```
+aws ec2 associate-route-table --route-table-id rtb-01234567890123456 --gateway-id igw-11aa22bb33cc44dd1
+```
+
+## Replacing and Restoring the Target for a Local Route<a name="replace-local-route-target"></a>
+
+You can change the target of the default local route in a [gateway route table](VPC_Route_Tables.md#gateway-route-table) and specify a network interface or instance in the same VPC as the target instead\. If you replace the target of a local route, you can later restore it to the default `local` target\. If your VPC has [multiple CIDR blocks](VPC_Subnets.md#vpc-resize), your route tables have multiple local routes—one per CIDR block\. You can replace or restore the target of each of the local routes as needed\.
+
+You cannot replace the target for a local route in a subnet route table\.
+
+**To replace the target for a local route using the console**
+
+1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
+
+1. In the navigation pane, choose **Route Tables**, and then select the route table\.
+
+1. Choose **Actions**, **Edit routes**\.
+
+1. For **Target**, choose **Network Interface** to display the list of network interfaces, and choose the network interface\.
+
+   Alternatively, choose **Instance** to display the list of instances, and choose the instance\.
+
+1. Choose **Save routes**\.
+
+**To restore the target for a local route using the console**
+
+1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
+
+1. In the navigation pane, choose **Route Tables**, and then select the route table\.
+
+1. Choose **Actions**, **Edit routes**\.
+
+1. For **Target**, choose **local**\.
+
+1. Choose **Save routes**\.
+
+**To replace the target for a local route using the AWS CLI**  
+The following command replaces the target of the local route with `eni-11223344556677889`\.
+
+```
+aws ec2 replace-route --route-table-id rtb-01234567890123456 --destination-cidr-block 10.0.0.0/16 --network-interface-id eni-11223344556677889
+```
+
+**To restore the target for a local route using the AWS CLI**  
+The following command restores the local target for route table `rtb-01234567890123456`\.
+
+```
+aws ec2 replace-route --route-table-id rtb-01234567890123456 --destination-cidr-block 10.0.0.0/16 --local-target
+```
 
 ## Deleting a Route Table<a name="DeleteRouteTable"></a>
 
@@ -214,7 +285,7 @@ You can perform the tasks described on this page using the command line or API\.
 + [create\-route](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-route.html) \(AWS CLI\)
 + [New\-EC2Route](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Route.html) \(AWS Tools for Windows PowerShell\)
 
-**Associate a subnet with a route table**
+**Associate a subnet or gateway with a route table**
 + [associate\-route\-table](https://docs.aws.amazon.com/cli/latest/reference/ec2/associate-route-table.html) \(AWS CLI\)
 + [Register\-EC2RouteTable](https://docs.aws.amazon.com/powershell/latest/reference/items/Register-EC2RouteTable.html) \(AWS Tools for Windows PowerShell\)
 
@@ -230,11 +301,11 @@ You can perform the tasks described on this page using the command line or API\.
 + [replace\-route](https://docs.aws.amazon.com/cli/latest/reference/ec2/replace-route.html) \(AWS CLI\)
 + [Set\-EC2Route](https://docs.aws.amazon.com/powershell/latest/reference/items/Set-EC2Route.html) \(AWS Tools for Windows PowerShell\)
 
-**Disassociate a subnet from a route table**
+**Disassociate a subnet or gateway from a route table**
 + [disassociate\-route\-table](https://docs.aws.amazon.com/cli/latest/reference/ec2/disassociate-route-table.html) \(AWS CLI\)
 + [Unregister\-EC2RouteTable](https://docs.aws.amazon.com/powershell/latest/reference/items/Unregister-EC2RouteTable.html) \(AWS Tools for Windows PowerShell\)
 
-**Change the route table associated with a subnet**
+**Change the route table associated with a subnet or gateway**
 + [replace\-route\-table\-association](https://docs.aws.amazon.com/cli/latest/reference/ec2/replace-route-table-association.html) \(AWS CLI\)
 + [Set\-EC2RouteTableAssociation](https://docs.aws.amazon.com/powershell/latest/reference/items/Set-EC2RouteTableAssociation.html) \(AWS Tools for Windows PowerShell\)
 

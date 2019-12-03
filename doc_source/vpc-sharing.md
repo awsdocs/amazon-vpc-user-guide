@@ -87,16 +87,13 @@ Participants that are in a shared VPC are responsible for the creation, manageme
 
 ## Billing and Metering for the Owner and Participants<a name="vpc-share-billing"></a>
 
-In a shared VPC, each participant pays for their application resources including Amazon EC2 instances, Amazon Relational Database Service databases, Amazon Redshift clusters, and AWS Lambda functions\. Participants also pay for data transfer charges associated with inter\-Availability Zone data transfer, data transfer over VPC peering connections, and data transfer through a AWS Direct Connect gateway\. VPC owners pay hourly charges \(where applicable\), data processing and data transfer charges across NAT gateways, virtual private gateways, transit gateways, PrivateLink, and VPC endpoints\. Data transfer within the same availability zone \(uniquely identified using the AZ\-ID\) is free irrespective of account ownership of the communicating resources\.
+In a shared VPC, each participant pays for their application resources including Amazon EC2 instances, Amazon Relational Database Service databases, Amazon Redshift clusters, and AWS Lambda functions\. Participants also pay for data transfer charges associated with inter\-Availability Zone data transfer, data transfer over VPC peering connections, and data transfer through an AWS Direct Connect gateway\. VPC owners pay hourly charges \(where applicable\), data processing and data transfer charges across NAT gateways, virtual private gateways, transit gateways, AWS PrivateLink, and VPC endpoints\. Data transfer within the same Availability Zone \(uniquely identified using the AZ\-ID\) is free irrespective of account ownership of the communicating resources\.
 
 ## Unsupported Services for Shared Subnets<a name="vpc-share-unsupported-services"></a>
 
 Participants cannot create resources for the following services in a shared subnet::
 + Amazon FSx
 + AWS CloudHSM Classic
-+ Network Load Balancer 
-**Note**  
-VPC Owners can create these resources in shared VPCs if required\.
 
 ## Limitations<a name="vpc-share-limitations"></a>
 

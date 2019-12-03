@@ -40,6 +40,7 @@ A NAT gateway has the following characteristics and limitations:
 + You can use a network ACL to control the traffic to and from the subnet in which the NAT gateway is located\. The network ACL applies to the NAT gateway's traffic\. A NAT gateway uses ports 1024–65535\. For more information, see [Network ACLs](vpc-network-acls.md)\.
 + When a NAT gateway is created, it receives a network interface that's automatically assigned a private IP address from the IP address range of your subnet\. You can view the NAT gateway's network interface in the Amazon EC2 console\. For more information, see [Viewing Details about a Network Interface](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#view_eni_details)\. You cannot modify the attributes of this network interface\.
 + A NAT gateway cannot be accessed by a ClassicLink connection associated with your VPC\.
++ You cannot route traffic to a NAT gateway through a VPC peering connection, a Site\-to\-Site VPN connection, or AWS Direct Connect\. A NAT gateway cannot be used by resources on the other side of these connections\.
 + A NAT gateway can support up to 55,000 simultaneous connections to each unique destination\. This limit also applies if you create approximately 900 connections per second to a single destination \(about 55,000 connections per minute\)\. If the destination IP address, the destination port, or the protocol \(TCP/UDP/ICMP\) changes, you can create an additional 55,000 connections\. For more than 55,000 connections, there is an increased chance of connection errors due to port allocation errors\. These errors can be monitored by viewing the `ErrorPortAllocation` CloudWatch metric for your NAT gateway\. For more information, see [Monitoring NAT Gateways Using Amazon CloudWatch](vpc-nat-gateway-cloudwatch.md)\. 
 
 ### Migrating from a NAT Instance<a name="nat-instance-migrate"></a>
@@ -48,14 +49,6 @@ If you're already using a NAT instance, you can replace it with a NAT gateway\. 
 
 **Note**  
 If you change your routing from a NAT instance to a NAT gateway, or if you disassociate the Elastic IP address from your NAT instance, any current connections are dropped and have to be re\-established\. Ensure that you do not have any critical tasks \(or any other tasks that operate through the NAT instance\) running\.
-
-### Using a NAT Gateway with VPC Endpoints, AWS Site\-to\-Site VPN, AWS Direct Connect, or VPC Peering<a name="nat-gateway-other-services"></a>
-
-A NAT gateway cannot send traffic over VPC endpoints, AWS Site\-to\-Site VPN connections, AWS Direct Connect, or VPC peering connections\. If your instances in the private subnet must access resources over a VPC endpoint, a Site\-to\-Site VPN connection, or AWS Direct Connect, use the private subnet’s route table to route the traffic directly to these devices\. 
-
-For example, your private subnet’s route table has the following routes: internet\-bound traffic \(0\.0\.0\.0/0\) is routed to a NAT gateway, Amazon S3 traffic \(pl\-xxxxxxxx; a specific IP address range for Amazon S3\) is routed to a VPC endpoint, and 10\.25\.0\.0/16 traffic is routed to a VPC peering connection\. The pl\-xxxxxxxx and 10\.25\.0\.0/16 IP address ranges are more specific than 0\.0\.0\.0/0; when your instances send traffic to Amazon S3 or the peered VPC, the traffic is sent to the VPC endpoint or the VPC peering connection\. When your instances send traffic to the internet \(other than the Amazon S3 IP addresses\), the traffic is sent to the NAT gateway\. 
-
-You cannot route traffic to a NAT gateway through a VPC peering connection, a Site\-to\-Site VPN connection, or AWS Direct Connect\. A NAT gateway cannot be used by resources on the other side of these connections\.
 
 ### Best Practice When Sending Traffic to Amazon S3 or DynamoDB in the Same Region<a name="nat-gateway-s3-ddb"></a>
 

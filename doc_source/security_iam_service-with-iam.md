@@ -3,20 +3,20 @@
 Before you use IAM to manage access to Amazon VPC, you should understand what IAM features are available to use with Amazon VPC\. To get a high\-level view of how Amazon VPC and other AWS services work with IAM, see [AWS Services That Work with IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-services-that-work-with-iam.html) in the *IAM User Guide*\.
 
 **Topics**
-+ [Amazon VPC Identity\-Based Policies](#security_iam_service-with-iam-id-based-policies)
++ [Actions](#security_iam_service-with-iam-id-based-policies-actions)
++ [Resources](#security_iam_service-with-iam-id-based-policies-resources)
++ [Condition Keys](#security_iam_service-with-iam-id-based-policies-conditionkeys)
 + [Amazon VPC Resource\-Based Policies](#security_iam_service-with-iam-resource-based-policies)
 + [Authorization Based on Tags](#security_iam_service-with-iam-tags)
 + [IAM Roles](#security_iam_service-with-iam-roles)
 
-## Amazon VPC Identity\-Based Policies<a name="security_iam_service-with-iam-id-based-policies"></a>
-
 With IAM identity\-based policies, you can specify allowed or denied actions, and for some actions, the resources as well as the conditions under which actions are allowed or denied\. Amazon VPC supports specific actions, resources, and condition keys\. To learn about all of the elements that you use in a JSON policy, see [IAM JSON Policy Elements Reference](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements.html) in the *IAM User Guide*\.
 
-### Actions<a name="security_iam_service-with-iam-id-based-policies-actions"></a>
+## Actions<a name="security_iam_service-with-iam-id-based-policies-actions"></a>
 
 The `Action` element of an IAM identity\-based policy describes the specific action or actions that will be allowed or denied by the policy\. Policy actions usually have the same name as the associated AWS API operation\. The action is used in a policy to grant permissions to perform the associated operation\. 
 
-Amazon VPC shares its API namespace Amazon EC2\. Policy actions in Amazon VPC use the following prefix before the action: `ec2:`\. For example, to grant someone permission to create a VPC with the Amazon EC2 `CreateVpc` API operation, you include the `ec2:CreateVpc` action in their policy\. Policy statements must include either an `Action` or `NotAction` element\.
+Amazon VPC shares its API namespace with Amazon EC2\. Policy actions in Amazon VPC use the following prefix before the action: `ec2:`\. For example, to grant someone permission to create a VPC with the Amazon EC2 `CreateVpc` API operation, you include the `ec2:CreateVpc` action in their policy\. Policy statements must include either an `Action` or `NotAction` element\.
 
 To specify multiple actions in a single statement, separate them with commas as follows:
 
@@ -34,7 +34,7 @@ You can specify multiple actions using wildcards \(\*\)\. For example, to specif
 
 To see a list of Amazon VPC actions, see [Actions, Resources, and Condition Keys for Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html) in the *IAM User Guide*\.
 
-### Resources<a name="security_iam_service-with-iam-id-based-policies-resources"></a>
+## Resources<a name="security_iam_service-with-iam-id-based-policies-resources"></a>
 
 The `Resource` element specifies the object or objects to which the action applies\. Statements must include either a `Resource` or a `NotResource` element\. You specify a resource using an ARN or using the wildcard \(\*\) to indicate that the statement applies to all resources\.
 
@@ -77,7 +77,7 @@ Many Amazon EC2 API actions involve multiple resources\. To specify multiple res
 
 To see a list of Amazon VPC resource types and their ARNs, see [Resources Defined by Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html#amazonec2-resources-for-iam-policies) in the *IAM User Guide*\.
 
-### Condition Keys<a name="security_iam_service-with-iam-id-based-policies-conditionkeys"></a>
+## Condition Keys<a name="security_iam_service-with-iam-id-based-policies-conditionkeys"></a>
 
 The `Condition` element \(or `Condition` *block*\) lets you specify conditions in which a statement is in effect\. The `Condition` element is optional\. You can build conditional expressions that use [condition operators](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition_operators.html), such as equals or less than, to match the condition in the policy with values in the request\. 
 
@@ -91,19 +91,11 @@ All Amazon EC2 actions support the `aws:RequestedRegion` and `ec2:Region` condit
 
 To see a list of Amazon VPC condition keys, see [Condition Keys for Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html#amazonec2-policy-keys); in the *IAM User Guide*\. To learn with which actions and resources you can use a condition key, see [Actions Defined by Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html#amazonec2-actions-as-permissions)\.
 
-### Examples<a name="security_iam_service-with-iam-id-based-policies-examples"></a>
-
-To view examples of Amazon VPC identity\-based policies, see [Amazon VPC Identity\-Based Policy Examples](vpc-policy-examples.md#security_iam_id-based-policy-examples)\.
-
 ## Amazon VPC Resource\-Based Policies<a name="security_iam_service-with-iam-resource-based-policies"></a>
 
 Resource\-based policies are JSON policy documents that specify what actions a specified principal can perform on the Amazon VPC resource and under what conditions\.
 
 To enable cross\-account access, you can specify an entire account or IAM entities in another account as the [principal in a resource\-based policy](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html)\. Adding a cross\-account principal to a resource\-based policy is only half of establishing the trust relationship\. When the principal and the resource are in different AWS accounts, you must also grant the principal entity permission to access the resource\. Grant permission by attaching an identity\-based policy to the entity\. However, if a resource\-based policy grants access to a principal in the same account, no additional identity\-based policy is required\. For more information, see [How IAM Roles Differ from Resource\-based Policies ](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_compare-resource-policies.html)in the *IAM User Guide*\. 
-
-### Examples<a name="security_iam_service-with-iam-resource-based-policies-examples"></a>
-
-To view examples of Amazon VPC resource\-based policies, see [Amazon VPC Resource\-Based Policy Examples](vpc-policy-examples.md#security_iam_resource-based-policy-examples),
 
 ## Authorization Based on Tags<a name="security_iam_service-with-iam-tags"></a>
 

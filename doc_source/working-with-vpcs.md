@@ -61,7 +61,9 @@ You can optionally specify an IPv6 CIDR block for your subnet if an IPv6 CIDR bl
 1. Specify the subnet details as necessary and choose **Create**\.
    + **Name tag**: Optionally provide a name for your subnet\. Doing so creates a tag with a key of `Name` and the value that you specify\.
    + **VPC**: Choose the VPC for which you're creating the subnet\.
-   + **Availability Zone**: Optionally choose an Availability Zone in which your subnet will reside, or leave the default **No Preference** to let AWS choose an Availability Zone for you\.
+   + **Availability Zone**: Optionally choose an Availability Zone or Local Zone in which your subnet will reside, or leave the default **No Preference** to let AWS choose an Availability Zone for you\.
+
+     For information about the Regions that support Local Zones, see [Available Regions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions) in the *Amazon EC2 User Guide for Linux Instances*\. 
    + **IPv4 CIDR block**: Specify an IPv4 CIDR block for your subnet, for example, `10.0.1.0/24`\. For more information, see [VPC and Subnet Sizing for IPv4](VPC_Subnets.md#vpc-sizing-ipv4)\.
    + **IPv6 CIDR block**: \(Optional\) If you've associated an IPv6 CIDR block with your VPC, choose **Specify a custom IPv6 CIDR**\. Specify the hexadecimal pair value for the subnet, or leave the default value\. 
 

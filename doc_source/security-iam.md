@@ -18,7 +18,7 @@ How you use AWS Identity and Access Management \(IAM\) differs, depending on the
 
 **Service administrator** – If you're in charge of Amazon VPC resources at your company, you probably have full access to Amazon VPC\. It's your job to determine which Amazon VPC features and resources your employees should access\. You must then submit requests to your IAM administrator to change the permissions of your service users\. Review the information on this page to understand the basic concepts of IAM\. To learn more about how your company can use IAM with Amazon VPC, see [How Amazon VPC Works with IAM](security_iam_service-with-iam.md)\.
 
-**IAM administrator** – If you're an IAM administrator, you might want to learn details about how you can write policies to manage access to Amazon VPC\. To view example Amazon VPC identity\-based policies that you can use in IAM, see [Amazon VPC Identity\-Based Policy Examples](vpc-policy-examples.md#security_iam_id-based-policy-examples)\.
+**IAM administrator** – If you're an IAM administrator, you might want to learn details about how you can write policies to manage access to Amazon VPC\. To view example policies, see [Amazon VPC Policy Examples](vpc-policy-examples.md)\.
 
 ## Authenticating With Identities<a name="security_iam_authentication"></a>
 

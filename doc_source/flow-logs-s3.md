@@ -8,7 +8,7 @@ To create an Amazon S3 bucket for use with flow logs, see [Create a Bucket](http
 
 **Topics**
 + [Flow Log Files](#flow-logs-s3-path)
-+ [IAM Roles for Publishing Flow Logs to Amazon S3](#flow-logs-s3-iam)
++ [IAM Policy for IAM Principals that Publish Flow Logs to Amazon S3](#flow-logs-s3-iam)
 + [Amazon S3 Bucket Permissions for Flow Logs](#flow-logs-s3-permissions)
 + [Required CMK Key Policy for Use with SSE\-KMS Buckets](#flow-logs-s3-cmk-policy)
 + [Amazon S3 Log File Permissions](#flow-logs-file-permissions)
@@ -42,9 +42,9 @@ For example, the following shows the folder structure and file name of a log fil
 arn:aws:s3:::my-flow-log-bucket/AWSLogs/123456789012/vpcflowlogs/us-east-1/2018/06/20/123456789012_vpcflowlogs_us-east-1_fl-1234abcd_20180620T1620Z_fe123456.log.gz
 ```
 
-## IAM Roles for Publishing Flow Logs to Amazon S3<a name="flow-logs-s3-iam"></a>
+## IAM Policy for IAM Principals that Publish Flow Logs to Amazon S3<a name="flow-logs-s3-iam"></a>
 
-An IAM principal, such as an IAM user, must have sufficient permissions to publish flow logs to the Amazon S3 bucket\. The IAM policy must include the following permissions\.
+An IAM principal in your account, such as an IAM user, must have sufficient permissions to publish flow logs to the Amazon S3 bucket\. This includes permissions to work with specific `logs:` actions to create and publish the flow logs\. The IAM policy must include the following permissions\.
 
 ```
 {

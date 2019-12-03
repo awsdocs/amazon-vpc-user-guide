@@ -36,22 +36,22 @@ In this example, your VPC has a public and a private subnet\. You have a databas
 
 ![\[VPC with public and private subnets\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-migrate-ipv6-example-diagram.png)
 
-The security group for your web server \(`sg-11aa22bb`\) has the following inbound rules:
+The security group for your web server \(`sg-11aa22bb11aa22bb1`\) has the following inbound rules:
 
 
 | **Type** | **Protocol** | **Port range** | **Source** | **Comment** | 
 | --- | --- | --- | --- | --- | 
-| All traffic | All | All | sg\-33cc44dd | Allows inbound access for all traffic from instances associated with sg\-33cc44dd \(the database instance\)\. | 
+| All traffic | All | All | sg\-33cc44dd33cc44dd3 | Allows inbound access for all traffic from instances associated with sg\-33cc44dd33cc44dd3 \(the database instance\)\. | 
 | HTTP | TCP | 80 | 0\.0\.0\.0/0 | Allows inbound traffic from the internet over HTTP\. | 
 | HTTPS | TCP | 443 | 0\.0\.0\.0/0 | Allows inbound traffic from the internet over HTTPS\. | 
 | SSH | TCP | 22 | 203\.0\.113\.123/32 | Allows inbound SSH access from your local computer; for example, when you need to connect to your instance to perform administration tasks\. | 
 
-The security group for your database instance \(`sg-33cc44dd`\) has the following inbound rule:
+The security group for your database instance \(`sg-33cc44dd33cc44dd3`\) has the following inbound rule:
 
 
 | **Type** | **Protocol** | **Port range** | **Source** | **Comment** | 
 | --- | --- | --- | --- | --- | 
-| MySQL | TCP | 3306 | sg\-11aa22bb | Allows inbound access for MySQL traffic from instances associated with sg\-11aa22bb \(the web server instance\)\. | 
+| MySQL | TCP | 3306 | sg\-11aa22bb11aa22bb1 | Allows inbound access for MySQL traffic from instances associated with sg\-11aa22bb11aa22bb1 \(the web server instance\)\. | 
 
 Both security groups have the default outbound rule that allows all outbound IPv4 traffic, and no other outbound rules\.
 
@@ -125,7 +125,7 @@ For more information, see [Routing Options](route-table-options.md)\.
 
 To enable your instances to send and receive traffic over IPv6, you must update your security group rules to include rules for IPv6 addresses\.
 
-For example, in the example above, you can update the web server security group \(`sg-11aa22bb`\) to add rules that allow inbound HTTP, HTTPS, and SSH access from IPv6 addresses\. You do not need to make any changes to the inbound rules for your database security group; the rule that allows all communication from `sg-11aa22bb` includes IPv6 communication by default\.
+For example, in the example above, you can update the web server security group \(`sg-11aa22bb11aa22bb1`\) to add rules that allow inbound HTTP, HTTPS, and SSH access from IPv6 addresses\. You do not need to make any changes to the inbound rules for your database security group; the rule that allows all communication from `sg-11aa22bb11aa22bb1` includes IPv6 communication by default\.
 
 **To update your security group rules**
 
@@ -192,7 +192,7 @@ After you've verified that your instance type supports IPv6, you can assign an I
 
 1. Choose **Yes, Update**\.
 
-Alternatively, if you launch a new instance \(for example, if you were unable to resize your instance and you created a new AMI instead\), you can assign an IPv6 address during launch\.
+Alternatively, if you launch a new instance \(for example, if you were unable to change the instance type and you created a new AMI instead\), you can assign an IPv6 address during launch\.
 
 **To assign an IPv6 address to an instance during launch**
 
@@ -203,6 +203,8 @@ Alternatively, if you launch a new instance \(for example, if you were unable to
 1. On the **Configure Instance Details** page, select a VPC for **Network** and a subnet for **Subnet**\. For **Auto\-assign IPv6 IP**, select **Enable**\.
 
 1. Follow the remaining steps in the wizard to launch your instance\.
+
+You can connect to an instance using its IPv6 address\. If you're connecting from a local computer, ensure that your local computer has an IPv6 address and is configured to use IPv6\. For more information, see [Connect to Your Linux Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html) in the *Amazon EC2 User Guide for Linux Instances* and [Connecting to Your Windows Instance](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/connecting_to_windows_instance.html) in the *Amazon EC2 User Guide for Windows Instances*\.
 
 ## Step 6: \(Optional\) Configure IPv6 on Your Instances<a name="vpc-migrate-ipv6-dhcpv6"></a>
 

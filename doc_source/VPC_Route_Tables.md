@@ -1,6 +1,6 @@
 # Route Tables<a name="VPC_Route_Tables"></a>
 
-A *route table* contains a set of rules, called *routes*, that are used to determine where network traffic from your subnet is directed\.
+A *route table* contains a set of rules, called *routes*, that are used to determine where network traffic from your subnet or gateway is directed\.
 
 **Topics**
 + [Route Table Concepts](#RouteTables)
@@ -14,26 +14,32 @@ A *route table* contains a set of rules, called *routes*, that are used to deter
 The following are the key concepts for route tables\.
 + **Main route table**—The route table that automatically comes with your VPC\. It controls the routing for all subnets that are not explicitly associated with any other route table\.
 + **Custom route table**—A route table that you create for your VPC\.
-+ **Route table association**—The association between a route table and subnet\. The route table that's associated with a subnet controls the routing for that subnet\.
-+ **Destination**—The destination CIDR where you want traffic from your subnet to go\. For example, an external corporate network with a `172.16.0.0/12` CIDR\.
++ **Route table association**—The association between a route table and a subnet, internet gateway, or virtual private gateway\.
++ **Subnet route table**—A route table that's associated with a subnet\.
++ **Gateway route table**—A route table that's associated with an internet gateway or virtual private gateway\.
++ **Local gateway route table**—A route table that's associated with an Outposts local gateway\. For information about local gateways, see [Local Gateways](https://docs.aws.amazon.com/outposts/latest/userguide/outposts-local-gateways.html) in the *AWS Outposts User Guide*\.
++ **Destination**—The destination CIDR where you want traffic to go\. For example, an external corporate network with a `172.16.0.0/12` CIDR\.
 + **Target**—The target through which to send the destination traffic; for example, an internet gateway\.
 + **Local route**—A default route for communication within the VPC\.
 
 ## How Route Tables Work<a name="how-route-tables-work"></a>
 
-Your VPC has an implicit router, and you use route tables to control where network traffic is directed\. Each subnet in your VPC must be associated with a route table, which controls the routing for the subnet\. You can explicitly associate a subnet with a particular route table\. Otherwise, the subnet is implicitly associated with the main route table\. A subnet can only be associated with one route table at a time, but you can associate multiple subnets with the same route table\.
+Your VPC has an implicit router, and you use route tables to control where network traffic is directed\. Each subnet in your VPC must be associated with a route table, which controls the routing for the subnet \(subnet route table\)\. You can explicitly associate a subnet with a particular route table\. Otherwise, the subnet is implicitly associated with the main route table\. A subnet can only be associated with one route table at a time, but you can associate multiple subnets with the same subnet route table\.
 
-There is a limit on the number of route tables you can create per VPC\. There is also a limit on the number of routes you can add per route table\. For more information, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
+You can optionally associate a route table with an internet gateway or a virtual private gateway \(gateway route table\)\. This enables you to specify routing rules for inbound traffic that enters your VPC through the gateway\. For more information, see [Gateway Route Tables](#gateway-route-table)\.
+
+There is a limit on the number of route tables that you can create per VPC\. There is also a limit on the number of routes that you can add per route table\. For more information, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
 
 **Topics**
 + [Routes](#route-table-routes)
 + [Main Route Table](#RouteTableDetails)
 + [Custom Route Tables](#CustomRouteTables)
-+ [Route Table Association](#route-table-assocation)
++ [Subnet Route Table Association](#route-table-assocation)
++ [Gateway Route Tables](#gateway-route-table)
 
 ### Routes<a name="route-table-routes"></a>
 
-Each route in a table specifies a destination and a target\. For example, to enable your subnet to access the internet through an internet gateway, add the following route to your route table\.
+Each route in a table specifies a destination and a target\. For example, to enable your subnet to access the internet through an internet gateway, add the following route to your subnet route table\.
 
 
 | Destination | Target | 
@@ -44,7 +50,9 @@ The destination for the route is `0.0.0.0/0`, which represents all IPv4 addresse
 
 CIDR blocks for IPv4 and IPv6 are treated separately\. For example, a route with a destination CIDR of `0.0.0.0/0` does not automatically include all IPv6 addresses\. You must create a route with a destination CIDR of `::/0` for all IPv6 addresses\.
 
-Every route table contains a local route for communication within the VPC\. This route is added by default to all route tables\. If your VPC has more than one IPv4 CIDR block, your route tables contain a local route for each IPv4 CIDR block\. If you've associated an IPv6 CIDR block with your VPC, your route tables contain a local route for the IPv6 CIDR block\. You cannot modify or delete these routes\.
+Every route table contains a local route for communication within the VPC\. This route is added by default to all route tables\. If your VPC has more than one IPv4 CIDR block, your route tables contain a local route for each IPv4 CIDR block\. If you've associated an IPv6 CIDR block with your VPC, your route tables contain a local route for the IPv6 CIDR block\. You cannot modify or delete these routes in a subnet route table or in the main route table\. 
+
+For more information about routes and local routes in a gateway route table, see [Gateway Route Tables](#gateway-route-table)\.
 
 If your route table has multiple routes, we use the most specific route that matches the traffic \(longest prefix match\) to determine how to route the traffic\.
 
@@ -70,7 +78,7 @@ When you create a VPC, it automatically has a main route table\. The main route 
 
 By default, when you create a nondefault VPC, the main route table contains only a local route\. When you use the VPC wizard in the console to create a nondefault VPC with a NAT gateway or virtual private gateway, the wizard automatically adds routes to the main route table for those gateways\.
 
-You can add, remove, and modify routes in the main route table\. You cannot delete the main route table, but you can replace the main route table with a custom route table that you've created\.
+You can add, remove, and modify routes in the main route table\. You cannot create a more specific route than the local route\. You cannot delete the main route table, but you can replace the main route table with a custom subnet route table that you've created\. You cannot set a gateway route table as the main route table\.
 
 You can explicitly associate a subnet with the main route table, even if it's already implicitly associated\. You might want to do that if you change which table is the main route table\. When you change which table is the main route table, it also changes the default for additional new subnets, or for any subnets that are not explicitly associated with any other route table\. For more information, see [Replacing the Main Route Table](WorkWithRouteTables.md#Route_Replacing_Main_Table)\.
 
@@ -78,13 +86,19 @@ You can explicitly associate a subnet with the main route table, even if it's al
 
 By default, a custom route table is empty and you add routes as needed\. When you use the VPC wizard in the console to create a VPC with an internet gateway, the wizard creates a custom route table and adds a route to the internet gateway\. One way to protect your VPC is to leave the main route table in its original default state\. Then, explicitly associate each new subnet that you create with one of the custom route tables you've created\. This ensures that you explicitly control how each subnet routes traffic\. 
 
-You can add, remove, and modify routes in a custom route table\. You can delete a custom route table only if there are no subnets associated with it\.
+You can add, remove, and modify routes in a custom route table\. You can delete a custom route table only if it has no associations\.
 
-### Route Table Association<a name="route-table-assocation"></a>
+### Subnet Route Table Association<a name="route-table-assocation"></a>
 
-A subnet can be explicitly associated with custom route table, or implicitly or explicitly associated with the main route table\. For more information about viewing your subnet and route table associations, see [Determining Which Subnets Are Explicitly Associated with a Table](WorkWithRouteTables.md#Route_Which_Associations)\.
+Each subnet in your VPC must be associated with a route table\. A subnet can be explicitly associated with custom route table, or implicitly or explicitly associated with the main route table\. For more information about viewing your subnet and route table associations, see [Determining Which Subnets Are Explicitly Associated with a Table](WorkWithRouteTables.md#Route_Which_Associations)\.
 
-**Example 1: Implicit and Explicit Association**
+Subnets which are in VPCs associated with Outposts can have an additional target type of a local gateway\. This is the only routing difference from non\-Outposts subnets\.
+
+You cannot associate a subnet with a route table if any of the following applies:
++ The route table contains an existing route that's more specific than the default local route\.
++ The target of the default local route has been replaced\.
+
+**Example 1: Implicit and Explicit Subnet Association**
 
 The following diagram shows the routing for a VPC with an internet gateway, a virtual private gateway, a public subnet, and a VPN\-only subnet\. The main route table has a route to the virtual private gateway\. A custom route table is explicitly associated with the public subnet\. The custom route table has a route to the internet \(`0.0.0.0/0`\) through the internet gateway\.
 
@@ -112,13 +126,49 @@ If you disassociate Subnet 2 from Route Table B, there's still an implicit assoc
 
 ![\[Replace main table: Disassociate\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/routing-Route_Replace_Main_Disassociate-diagram.png)
 
+### Gateway Route Tables<a name="gateway-route-table"></a>
+
+You can associate a route table with an internet gateway or a virtual private gateway\. When a route table is associated with a gateway, it's referred to as a *gateway route table*\. You can create a gateway route table for fine\-grain control over the routing path of traffic entering your VPC\. For example, you can intercept the traffic that enters your VPC through an internet gateway by redirecting that traffic to a security appliance in your VPC\.
+
+A gateway route table supports routes where the target is `local` \(the default local route\) or an elastic network interface \(network interface\) in your VPC\. When the target is a network interface, the following destinations are allowed:
++ The entire IPv4 or IPv6 CIDR block of your VPC\. In this case, you replace the target of the default local route\.
++ The entire IPv4 or IPv6 CIDR block of a subnet in your VPC\. This is a more specific route than the default local route\.
+
+If you change the target of the local route in a gateway route table to a network interface in your VPC, you can later restore it to the default `local` target\. For more information, see [Replacing and Restoring the Target for a Local Route](WorkWithRouteTables.md#replace-local-route-target)\. 
+
+You cannot add routes to any CIDR blocks outside of the ranges in your VPC, including ranges larger than the individual VPC CIDR blocks\. You cannot specify any other types of targets\.
+
+In the following gateway route table, traffic destined for a subnet with the `172.31.0.0/20` CIDR block is routed to a specific network interface\. Traffic destined for all other subnets in the VPC uses the local route\.
+
+
+| Destination | Target | 
+| --- | --- | 
+| 172\.31\.0\.0/16 | Local | 
+| 172\.31\.0\.0/20 | eni\-id | 
+
+In the following gateway route table, the target for the local route is replaced with a network interface ID\. Traffic destined for all subnets within the VPC is routed to the network interface\.
+
+
+| Destination | Target | 
+| --- | --- | 
+| 172\.31\.0\.0/16 | eni\-id | 
+
+You cannot associate a route table with a gateway if any of the following applies:
++ The route table contains existing routes with targets other than a network interface or the default local route\.
++ The route table contains existing routes to CIDR blocks outside of the ranges in your VPC\.
++ Route propagation is enabled for the route table\.
+
+You cannot use a gateway route table to control or intercept traffic outside of your VPC, for example, traffic through an attached transit gateway\. You can intercept traffic that enters your VPC and redirect it to another target in the same VPC only\.
+
+For more information and an example of routing for a security appliance, see [Routing For a Middlebox Appliance in Your VPC](route-table-options.md#route-tables-appliance-routing)\.
+
 ## Route Priority<a name="route-tables-priority"></a>
 
 We use the most specific route in your route table that matches the traffic to determine how to route the traffic \(longest prefix match\)\. 
 
 Routes to IPv4 and IPv6 addresses or CIDR blocks are independent of each other\. We use the most specific route that matches either IPv4 traffic or IPv6 traffic to determine how to route the traffic\. 
 
-For example, the following route table has a route for IPv4 internet traffic \(`0.0.0.0/0`\) that points to an internet gateway, and a route for `172.31.0.0/16` IPv4 traffic that points to a peering connection \(`pcx-11223344556677889`\)\. Any traffic from the subnet that's destined for the `172.31.0.0/16` IP address range uses the peering connection, because this route is more specific than the route for internet gateway\. Any traffic destined for a target within the VPC \(`10.0.0.0/16`\) is covered by the `Local` route, and therefore is routed within the VPC\. All other traffic from the subnet uses the internet gateway\.
+For example, the following subnet route table has a route for IPv4 internet traffic \(`0.0.0.0/0`\) that points to an internet gateway, and a route for `172.31.0.0/16` IPv4 traffic that points to a peering connection \(`pcx-11223344556677889`\)\. Any traffic from the subnet that's destined for the `172.31.0.0/16` IP address range uses the peering connection, because this route is more specific than the route for internet gateway\. Any traffic destined for a target within the VPC \(`10.0.0.0/16`\) is covered by the `Local` route, and therefore is routed within the VPC\. All other traffic from the subnet uses the internet gateway\.
 
 
 | Destination | Target | 
@@ -127,7 +177,7 @@ For example, the following route table has a route for IPv4 internet traffic \(`
 | 172\.31\.0\.0/16 | pcx\-11223344556677889 | 
 | 0\.0\.0\.0/0 | igw\-12345678901234567 | 
 
-If you've attached a virtual private gateway to your VPC and enabled route propagation on your route table, routes representing your Site\-to\-Site VPN connection automatically appear as propagated routes in your route table\. If the propagated routes overlap with static routes and longest prefix match cannot be applied, the static routes take priority over the propagated routes\. For more information, see [Route Tables and VPN Route Priority](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html#vpn-route-priority) in the *AWS Site\-to\-Site VPN User Guide*\.
+If you've attached a virtual private gateway to your VPC and enabled route propagation on your subnet route table, routes representing your Site\-to\-Site VPN connection automatically appear as propagated routes in your route table\. If the propagated routes overlap with static routes and longest prefix match cannot be applied, the static routes take priority over the propagated routes\. For more information, see [Route Tables and VPN Route Priority](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html#vpn-route-priority) in the *AWS Site\-to\-Site VPN User Guide*\.
 
 In this example, your route table has a static route to an internet gateway \(which you added manually\), and a propagated route to a virtual private gateway\. Both routes have a destination of `172.31.0.0/24`\. In this case, all traffic destined for `172.31.0.0/24` is routed to the internet gateway — it is a static route and therefore takes priority over the propagated route\. 
 

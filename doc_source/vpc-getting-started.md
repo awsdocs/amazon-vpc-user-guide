@@ -14,4 +14,4 @@ If you need resources in your VPC to communicate over IPv6, you can set up a VPC
 
 For information about how to configure IPv4 addressing, see [Getting Started with IPv4 for Amazon VPC](getting-started-ipv4.md)\.
 
-For information about how to configure IPv4 addressing, see [Getting Started with IPv6 for Amazon VPC](get-started-ipv6.md)\.
+For information about how to configure IPv6 addressing, see [Getting Started with IPv6 for Amazon VPC](get-started-ipv6.md)\.

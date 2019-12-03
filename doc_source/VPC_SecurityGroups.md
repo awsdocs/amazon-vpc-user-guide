@@ -117,6 +117,8 @@ You can't use the security groups that you've created for use with EC2\-Classic 
 
 The following tasks show you how to work with security groups using the Amazon VPC console\.
 
+For example IAM policies for working with security groups, see [Managing Security Groups](vpc-policy-examples.md#vpc-security-groups-iam)\.
+
 **Topics**
 + [Modifying the Default Security Group](#ModifyingSecurityGroups)
 + [Creating a Security Group](#CreatingSecurityGroups)

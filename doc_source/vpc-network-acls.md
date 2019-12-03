@@ -151,7 +151,15 @@ With Elastic Load Balancing, if the subnet for your back\-end instances has a ne
 
 The example network ACL in the preceding section uses an ephemeral port range of 32768\-65535\. However, you might want to use a different range for your network ACLs depending on the type of client that you're using or with which you're communicating\.
 
-The client that initiates the request chooses the ephemeral port range\. The range varies depending on the client's operating system\. Many Linux kernels \(including the Amazon Linux kernel\) use ports 32768\-61000\. Requests originating from Elastic Load Balancing use ports 1024\-65535\. Windows operating systems through Windows Server 2003 use ports 1025\-5000\. Windows Server 2008 and later versions use ports 49152\-65535\. A NAT gateway uses ports 1024\-65535\. For example, if a request comes into a web server in your VPC from a Windows XP client on the Internet, your network ACL must have an outbound rule to enable traffic destined for ports 1025\-5000\. 
+The client that initiates the request chooses the ephemeral port range\. The range varies depending on the client's operating system\. 
++ Many Linux kernels \(including the Amazon Linux kernel\) use ports 32768\-61000
++ Requests originating from Elastic Load Balancing use ports 1024\-65535
++ Windows operating systems through Windows Server 2003 use ports 1025\-5000
++ Windows Server 2008 and later versions use ports 49152\-65535
++ A NAT gateway uses ports 1024\-65535
++ AWS Lambda functions use ports 1024\-65535
+
+For example, if a request comes into a web server in your VPC from a Windows XP client on the Internet, your network ACL must have an outbound rule to enable traffic destined for ports 1025\-5000\. 
 
 If an instance in your VPC is the client initiating a request, your network ACL must have an inbound rule to enable traffic destined for the ephemeral ports specific to the type of instance \(Amazon Linux, Windows Server 2008, and so on\)\. 
 
