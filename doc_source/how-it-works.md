@@ -23,7 +23,7 @@ A *virtual private cloud* \(VPC\) is a virtual network dedicated to your AWS acc
 
 A *subnet* is a range of IP addresses in your VPC\. You can launch AWS resources into a specified subnet\. Use a public subnet for resources that must be connected to the internet, and a private subnet for resources that won't be connected to the internet\. For more information about public and private subnets, see [VPC and Subnet Basics](VPC_Subnets.md#vpc-subnet-basics)\.
 
-To protect the AWS resources in each subnet, you can use multiple layers of security, including security groups and network access control lists \(ACL\)\. For more information, see [Security](VPC_Security.md)\.
+To protect the AWS resources in each subnet, you can use multiple layers of security, including security groups and network access control lists \(ACL\)\. For more information, see [Internetwork Traffic Privacy in Amazon VPC](VPC_Security.md)\.
 
 ### Supported Platforms<a name="what-is-supported-platform"></a>
 

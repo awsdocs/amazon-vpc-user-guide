@@ -1,6 +1,6 @@
 # Endpoints for Amazon DynamoDB<a name="vpc-endpoints-ddb"></a>
 
-If you've already set up access to your DynamoDB tables from your VPC, you can continue to access the tables as you normally would after you set up an endpoint\. However, take note of the following:
+If you've already set up access to your DynamoDB tables from your VPC, you can continue to access the tables as you normally would after you set up a gateway endpoint\. However, take note of the following:
 + Your endpoint has a policy that controls the use of the endpoint to access DynamoDB resources\. The default policy allows access by any user or service within the VPC, using credentials from any AWS account, to any DynamoDB resource\. For more information, see [Controlling Access to Services with VPC Endpoints](vpc-endpoints-access.md)\.
 + DynamoDB does not support resource\-based policies \(for example, on tables\)\. Access to DynamoDB is controlled through the endpoint policy and IAM policies for individual IAM users and roles\.
 + You cannot access Amazon DynamoDB Streams through a VPC endpoint\.
@@ -10,9 +10,11 @@ If you've already set up access to your DynamoDB tables from your VPC, you can c
 
 Before you use endpoints with DynamoDB, ensure that you have also read the following general limitations: [Gateway Endpoint Limitations](vpce-gateway.md#vpc-endpoints-limitations)\.
 
+For more information about creating a gateway VPC endpoint, see [Gateway VPC Endpoints](vpce-gateway.md)\.
+
 ## Using Endpoint Policies for DynamoDB<a name="vpc-endpoints-policies-ddb"></a>
 
-The following are example endpoint policies for accessing DynamoDB\.
+An endpoint policy is an IAM policy that you attach to an endpoint that allows access to some or all of the service to which you're connecting\. The following are example endpoint policies for accessing DynamoDB\.
 
 **Important**  
 All types of policies — IAM user policies and endpoint policies — must grant the necessary permissions for access to DynamoDB to succeed\. 

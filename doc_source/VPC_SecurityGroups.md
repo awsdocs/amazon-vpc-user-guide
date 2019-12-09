@@ -1,8 +1,8 @@
 # Security Groups for Your VPC<a name="VPC_SecurityGroups"></a>
 
-A *security group* acts as a virtual firewall for your instance to control inbound and outbound traffic\. When you launch an instance in a VPC, you can assign up to five security groups to the instance\. Security groups act at the instance level, not the subnet level\. Therefore, each instance in a subnet in your VPC could be assigned to a different set of security groups\. If you don't specify a particular group at launch time, the instance is automatically assigned to the default security group for the VPC\. 
+A *security group* acts as a virtual firewall for your instance to control inbound and outbound traffic\. When you launch an instance in a VPC, you can assign up to five security groups to the instance\. Security groups act at the instance level, not the subnet level\. Therefore, each instance in a subnet in your VPC can be assigned to a different set of security groups\. If you don't specify a particular group at launch time, the instance is automatically assigned to the default security group for the VPC\. 
 
-For each security group, you add *rules* that control the inbound traffic to instances, and a separate set of rules that control the outbound traffic\. This section describes the basic things you need to know about security groups for your VPC and their rules\.
+For each security group, you add *rules* that control the inbound traffic to instances, and a separate set of rules that control the outbound traffic\. This section describes the basic things that you need to know about security groups for your VPC and their rules\.
 
 You might set up network ACLs with rules similar to your security groups in order to add an additional layer of security to your VPC\. For more information about the differences between security groups and network ACLs, see [Comparison of Security Groups and Network ACLs](VPC_Security.md#VPC_Security_Comparison)\.
 
@@ -16,16 +16,16 @@ You might set up network ACLs with rules similar to your security groups in orde
 ## Security Group Basics<a name="VPCSecurityGroups"></a>
 
 The following are the basic characteristics of security groups for your VPC:
-+ You have limits on the number of security groups that you can create per VPC, the number of rules that you can add to each security group, and the number of security groups you can associate with a network interface\. For more information, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
++ There are limits on the number of security groups that you can create per VPC, the number of rules that you can add to each security group, and the number of security groups that you can associate with a network interface\. For more information, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
 + You can specify allow rules, but not deny rules\.
 + You can specify separate rules for inbound and outbound traffic\. 
 + When you create a security group, it has no inbound rules\. Therefore, no inbound traffic originating from another host to your instance is allowed until you add inbound rules to the security group\.
 + By default, a security group includes an outbound rule that allows all outbound traffic\. You can remove the rule and add outbound rules that allow specific outbound traffic only\. If your security group has no outbound rules, no outbound traffic originating from your instance is allowed\.
 + Security groups are stateful — if you send a request from your instance, the response traffic for that request is allowed to flow in regardless of inbound security group rules\. Responses to allowed inbound traffic are allowed to flow out, regardless of outbound rules\.
 **Note**  
-Some types of traffic are tracked differently to others\. For more information, see [Connection Tracking](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html#security-group-connection-tracking) in the *Amazon EC2 User Guide for Linux Instances*\.
-+ Instances associated with a security group can't talk to each other unless you add rules allowing it \(exception: the default security group has these rules by default\)\.
-+ Security groups are associated with network interfaces\. After you launch an instance, you can change the security groups associated with the instance, which changes the security groups associated with the primary network interface \(eth0\)\. You can also specify or change the security groups associated with any other network interface\. By default, when you create a network interface, it's associated with the default security group for the VPC, unless you specify a different security group\. For more information about network interfaces, see [Elastic Network Interfaces](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html)\.
+Some types of traffic are tracked differently from other types\. For more information, see [Connection Tracking](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html#security-group-connection-tracking) in the *Amazon EC2 User Guide for Linux Instances*\.
++ Instances associated with a security group can't talk to each other unless you add rules allowing the traffic \(exception: the default security group has these rules by default\)\.
++ Security groups are associated with network interfaces\. After you launch an instance, you can change the security groups that are associated with the instance, which changes the security groups associated with the primary network interface \(eth0\)\. You can also specify or change the security groups associated with any other network interface\. By default, when you create a network interface, it's associated with the default security group for the VPC, unless you specify a different security group\. For more information about network interfaces, see [Elastic Network Interfaces](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html)\.
 + When you create a security group, you must provide it with a name and a description\. The following rules apply:
   + Names and descriptions can be up to 255 characters in length\.
   + Names and descriptions are limited to the following characters: a\-z, A\-Z, 0\-9, spaces, and \.\_\-:/\(\)\#,@\[\]\+=&;\{\}\!$\*\.
@@ -54,7 +54,7 @@ The following table describes the default rules for a default security group\.
 
 You can change the rules for the default security group\.
 
-You can't delete a default security group\. If you try to delete the default security group, you'll get the following error: `Client.CannotDelete: the specified group: "sg-51530134" name: "default" cannot be deleted by a user`\. 
+You can't delete a default security group\. If you try to delete the default security group, you get the following error: `Client.CannotDelete: the specified group: "sg-51530134" name: "default" cannot be deleted by a user`\. 
 
 **Note**  
 If you've modified the outbound rules for your security group, we do not automatically add an outbound rule for IPv6 traffic when you associate an IPv6 block with your VPC\.
@@ -79,7 +79,7 @@ Some systems for setting up firewalls let you filter on source ports\. Security 
 
 When you add or remove rules, they are automatically applied to all instances associated with the security group\. 
 
-The kind of rules you add can depend on the purpose of the security group\. The following table describes example rules for a security group that's associated with web servers\. The web servers can receive HTTP and HTTPS traffic from all IPv4 and IPv6 addresses, and send SQL or MySQL traffic to a database server\.
+The kind of rules that you add can depend on the purpose of the security group\. The following table describes example rules for a security group that's associated with web servers\. The web servers can receive HTTP and HTTPS traffic from all IPv4 and IPv6 addresses, and can send SQL or MySQL traffic to a database server\.
 
 
 |  | 
@@ -90,20 +90,20 @@ The kind of rules you add can depend on the purpose of the security group\. The 
 | ::/0 | TCP | 80 | Allow inbound HTTP access from all IPv6 addresses | 
 |  0\.0\.0\.0/0  |  TCP  |  443  |  Allow inbound HTTPS access from all IPv4 addresses  | 
 | ::/0 | TCP | 443 | Allow inbound HTTPS access from all IPv6 addresses | 
-|  Your network's public IPv4 address range  |  TCP  |  22  |  Allow inbound SSH access to Linux instances from IPv4 IP addresses in your network \(over the Internet gateway\)  | 
-|  Your network's public IPv4 address range  |  TCP  |  3389  |  Allow inbound RDP access to Windows instances from IPv4 IP addresses in your network \(over the Internet gateway\)  | 
+|  Your network's public IPv4 address range  |  TCP  |  22  |  Allow inbound SSH access to Linux instances from IPv4 IP addresses in your network \(over the internet gateway\)  | 
+|  Your network's public IPv4 address range  |  TCP  |  3389  |  Allow inbound RDP access to Windows instances from IPv4 IP addresses in your network \(over the internet gateway\)  | 
 |   Outbound   | 
 |  Destination  |  Protocol  |  Port Range  |  Description  | 
 |  The ID of the security group for your Microsoft SQL Server database servers  |  TCP  |  1433  |  Allow outbound Microsoft SQL Server access to instances in the specified security group  | 
 |  The ID of the security group for your MySQL database servers  |  TCP  |  3306  |  Allow outbound MySQL access to instances in the specified security group  | 
 
-A database server would need a different set of rules; for example, instead of inbound HTTP and HTTPS traffic, you can add a rule that allows inbound MySQL or Microsoft SQL Server access\. For an example of security group rules for web servers and database servers, see [Security](VPC_Scenario3.md#VPC_Scenario3_Security)\. For more information about security groups for Amazon RDS DB instances, see [Controlling Access with Security Groups](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html) in the *Amazon RDS User Guide*\.
+A database server would need a different set of rules\. For example, instead of inbound HTTP and HTTPS traffic, you can add a rule that allows inbound MySQL or Microsoft SQL Server access\. For an example of security group rules for web servers and database servers, see [Security](VPC_Scenario3.md#VPC_Scenario3_Security)\. For more information about security groups for Amazon RDS DB instances, see [Controlling Access with Security Groups](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html) in the *Amazon RDS User Guide*\.
 
 For examples of security group rules for specific kinds of access, see [Security Group Rules Reference](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules-reference.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 ### Stale Security Group Rules<a name="vpc-stale-security-group-rules"></a>
 
-If your VPC has a VPC peering connection with another VPC, a security group rule can reference another security group in the peer VPC\. This allows instances associated with the referenced security group to communicate with instances associated with the referencing security group\. 
+If your VPC has a VPC peering connection with another VPC, a security group rule can reference another security group in the peer VPC\. This allows instances that are associated with the referenced security group and those that are associated with the referencing security group to communicate with each other\. 
 
 If the owner of the peer VPC deletes the referenced security group, or if you or the owner of the peer VPC deletes the VPC peering connection, the security group rule is marked as `stale`\. You can delete stale security group rules as you would any other security group rule\.
 
@@ -111,7 +111,7 @@ For more information, see [Working With Stale Security Groups](https://docs.aws.
 
 ## Differences Between Security Groups for EC2\-Classic and EC2\-VPC<a name="VPC_Security_Group_Differences"></a>
 
-You can't use the security groups that you've created for use with EC2\-Classic with instances in your VPC\. You must create security groups specifically for use with instances in your VPC\. The rules you create for use with a security group for a VPC can't reference a security group for EC2\-Classic, and vice versa\. For more information about the differences between security groups for use with EC2\-Classic and those for use with a VPC, see [Differences Between EC2\-Classic and a VPC](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-classic-platform.html#differences-ec2-classic-vpc) in the *Amazon EC2 User Guide for Linux Instances*\.
+You can't use the security groups that you've created for use with EC2\-Classic with instances in your VPC\. You must create security groups specifically for use with instances in your VPC\. The rules that you create for use with a security group for a VPC can't reference a security group for EC2\-Classic, and vice versa\. For more information about the differences between security groups for use with EC2\-Classic and those for use with a VPC, see [Differences Between EC2\-Classic and a VPC](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-classic-platform.html#differences-ec2-classic-vpc) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 ## Working with Security Groups<a name="WorkingWithSecurityGroups"></a>
 
@@ -143,7 +143,7 @@ Although you can use the default security group for your instances, you might wa
 
 1. Choose **Create Security Group**\.
 
-1. Enter a name of the security group \(for example, `my-security-group`\) and provide a description\. Select the ID of your VPC from the **VPC** menu and choose **Yes, Create**\.
+1. Enter a name for the security group \(for example, `my-security-group`\) and provide a description\. Select the ID of your VPC from the **VPC** menu and choose **Yes, Create**\.
 
 **To create a security group using the command line**
 + [create\-security\-group](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-security-group.html) \(AWS CLI\)
@@ -172,12 +172,12 @@ If you have a VPC peering connection, you can reference security groups from the
 1. Choose **Actions**, **Edit inbound rules** or **Actions**, **Edit outbound rules**\.
 
 1. For **Type**, select the traffic type, and then fill in the required information\. For example, for a public web server, choose **HTTP** or **HTTPS** and specify a value for **Source** as `0.0.0.0/0`\. 
-**Note**  
-If you use `0.0.0.0/0`, you enable all IPv4 addresses to access your instance using HTTP or HTTPS\. To restrict access, enter a specific IP address or range of addresses\.
 
-1. You can also allow communication between all instances associated with this security group\. Create an inbound rule with the following options:
+   If you use `0.0.0.0/0`, you enable all IPv4 addresses to access your instance using HTTP or HTTPS\. To restrict access, enter a specific IP address or range of addresses\.
+
+1. You can also allow communication between all instances that are associated with this security group\. Create an inbound rule with the following options:
    + **Type**: **All Traffic**
-   + **Source**: enter the ID of the security group\.
+   + **Source**: Enter the ID of the security group\.
 
 1. Choose **Save rules**\.
 
@@ -211,7 +211,7 @@ When you modify the protocol, port range, or source or destination of an existin
 
 1. Choose **Save rules**\.
 
-To update the protocol, port range, or source or destination of an existing rule using the Amazon EC2 API or a command line tool, you cannot modify the rule; instead, you must delete the existing rule and add a new rule\. To update the rule description only, you can use the [update\-security\-group\-rule\-descriptions\-ingress](https://docs.aws.amazon.com/cli/latest/reference/ec2/update-security-group-rule-descriptions-ingress.html) and [update\-security\-group\-rule\-descriptions\-egress](https://docs.aws.amazon.com/cli/latest/reference/ec2/update-security-group-rule-descriptions-egress.html) commands\. 
+If you are updating the protocol, port range, or source or destination of an existing rule using the Amazon EC2 API or a command line tool, you cannot modify the rule\. Instead, you must delete the existing rule and add a new rule\. To update the rule description only, you can use the [update\-security\-group\-rule\-descriptions\-ingress](https://docs.aws.amazon.com/cli/latest/reference/ec2/update-security-group-rule-descriptions-ingress.html) and [update\-security\-group\-rule\-descriptions\-egress](https://docs.aws.amazon.com/cli/latest/reference/ec2/update-security-group-rule-descriptions-egress.html) commands\. 
 
 **To add a rule to a security group using the command line**
 + [authorize\-security\-group\-ingress](https://docs.aws.amazon.com/cli/latest/reference/ec2/authorize-security-group-ingress.html) and [authorize\-security\-group\-egress](https://docs.aws.amazon.com/cli/latest/reference/ec2/authorize-security-group-egress.html) \(AWS CLI\)
@@ -268,7 +268,7 @@ If you're using the console, you can delete more than one security group at a ti
 
 ### Deleting the 2009\-07\-15\-default Security Group<a name="DeleteSecurityGroup-2009"></a>
 
-Any VPC created using an API version older than 2011\-01\-01 has the `2009-07-15-default` security group\. This security group exists in addition to the regular `default` security group that comes with every VPC\. You can't attach an Internet gateway to a VPC that has the `2009-07-15-default` security group\. Therefore, you must delete this security group before you can attach an Internet gateway to the VPC\.
+Any VPC created using an API version older than 2011\-01\-01 has the `2009-07-15-default` security group\. This security group exists in addition to the regular `default` security group that comes with every VPC\. You can't attach an internet gateway to a VPC that has the `2009-07-15-default` security group\. Therefore, you must delete this security group before you can attach an internet gateway to the VPC\.
 
 **Note**  
 If you assigned this security group to any instances, you must assign these instances a different security group before you can delete the security group\.
@@ -284,8 +284,8 @@ If you assigned this security group to any instances, you must assign these inst
    1. Select the network interface for the instance from the list, and choose **Change Security Groups**, **Actions**\. 
 
    1. In the **Change Security Groups** dialog box, select a new security group from the list, and choose **Save**\.
-**Note**  
-When changing an instance's security group, you can select multiple groups from the list\. The security groups that you select replace the current security groups for the instance\.
+
+      When changing an instance's security group, you can select multiple groups from the list\. The security groups that you select replace the current security groups for the instance\.
 
    1. Repeat the preceding steps for each instance\.
 

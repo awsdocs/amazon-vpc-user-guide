@@ -63,9 +63,9 @@ If you associate an IPv6 CIDR block with your VPC and subnet, your route table m
 
 ## Security<a name="VPC_Scenario1_Security"></a>
 
-AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Security](VPC_Security.md)\. 
+AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Internetwork Traffic Privacy in Amazon VPC](VPC_Security.md)\. 
 
-For this scenario, you use a security group but not a network ACL\. If you'd like to use a network ACL, see [Recommended Rules for Scenario 1](vpc-recommended-nacl-rules.md#nacl-rules-scenario-1)\.
+For this scenario, you use a security group but not a network ACL\. If you'd like to use a network ACL, see [Recommended Rules for a VPC with a Single Public Subnet](vpc-security-best-practices.md#nacl-rules-scenario-1)\.
 
 Your VPC comes with a [default security group](VPC_SecurityGroups.md#DefaultSecurityGroup)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. You can add rules to the default security group, but the rules may not be suitable for other instances that you launch into the VPC\. Instead, we recommend that you create a custom security group for your web server\.
 

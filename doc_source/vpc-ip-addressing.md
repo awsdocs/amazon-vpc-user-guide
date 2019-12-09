@@ -74,7 +74,7 @@ An IPv6 address persists when you stop and start your instance, and is released 
 
 You can assign additional IPv6 addresses to your instance by assigning them to a network interface attached to your instance\. The number of IPv6 addresses you can assign to a network interface, and the number of network interfaces you can attach to an instance varies per instance type\. For more information, see [IP Addresses Per Network Interface Per Instance Type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#AvailableIpPerENI) in the *Amazon EC2 User Guide*\.
 
-IPv6 addresses are globally unique, and therefore reachable over the Internet\. You can control whether instances are reachable via their IPv6 addresses by controlling the routing for your subnet, or by using security group and network ACL rules\. For more information, see [Security](VPC_Security.md)\.
+IPv6 addresses are globally unique, and therefore reachable over the Internet\. You can control whether instances are reachable via their IPv6 addresses by controlling the routing for your subnet, or by using security group and network ACL rules\. For more information, see [Internetwork Traffic Privacy in Amazon VPC](VPC_Security.md)\.
 
 For more information about reserved IPv6 address ranges, see [IANA IPv6 Special\-Purpose Address Registry](http://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml) and [RFC4291](https://tools.ietf.org/html/rfc4291)\.
 

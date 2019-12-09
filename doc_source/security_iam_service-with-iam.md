@@ -10,7 +10,7 @@ Before you use IAM to manage access to Amazon VPC, you should understand what IA
 + [Authorization Based on Tags](#security_iam_service-with-iam-tags)
 + [IAM Roles](#security_iam_service-with-iam-roles)
 
-With IAM identity\-based policies, you can specify allowed or denied actions, and for some actions, the resources as well as the conditions under which actions are allowed or denied\. Amazon VPC supports specific actions, resources, and condition keys\. To learn about all of the elements that you use in a JSON policy, see [IAM JSON Policy Elements Reference](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements.html) in the *IAM User Guide*\.
+With IAM identity\-based policies, you can specify allowed or denied actions\. For some actions, you can specify the resources and conditions under which actions are allowed or denied\. Amazon VPC supports specific actions, resources, and condition keys\. To learn about all of the elements that you use in a JSON policy, see [IAM JSON Policy Elements Reference](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements.html) in the *IAM User Guide*\.
 
 ## Actions<a name="security_iam_service-with-iam-id-based-policies-actions"></a>
 
@@ -18,7 +18,7 @@ The `Action` element of an IAM identity\-based policy describes the specific act
 
 Amazon VPC shares its API namespace with Amazon EC2\. Policy actions in Amazon VPC use the following prefix before the action: `ec2:`\. For example, to grant someone permission to create a VPC with the Amazon EC2 `CreateVpc` API operation, you include the `ec2:CreateVpc` action in their policy\. Policy statements must include either an `Action` or `NotAction` element\.
 
-To specify multiple actions in a single statement, separate them with commas as follows:
+To specify multiple actions in a single statement, separate them with commas as shown in the following example\.
 
 ```
 "Action": [
@@ -26,7 +26,7 @@ To specify multiple actions in a single statement, separate them with commas as 
       "ec2:action2"
 ```
 
-You can specify multiple actions using wildcards \(\*\)\. For example, to specify all actions that begin with the word `Describe`, include the following action: 
+You can specify multiple actions using wildcards \(\*\)\. For example, to specify all actions that begin with the word `Describe`, include the following action\. 
 
 ```
 "Action": "ec2:Describe*"
@@ -41,7 +41,7 @@ The `Resource` element specifies the object or objects to which the action appli
 **Important**  
 Currently, not all Amazon EC2 API actions support resource\-level permissions\. If an Amazon EC2 API action does not support resource\-level permissions, you can grant users permission to use the action, but you have to specify a \* for the resource element of your policy statement\. To learn which actions you can specify the ARN of each resource, see [Actions Defined by Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html#amazonec2-actions-as-permissions)\.
 
-The VPC resource has the following ARN:
+The VPC resource has the ARN shown in the following example\.
 
 ```
 arn:${Partition}:ec2:${Region}:${Account}:vpc/${VpcId}
@@ -49,13 +49,13 @@ arn:${Partition}:ec2:${Region}:${Account}:vpc/${VpcId}
 
 For more information about the format of ARNs, see [Amazon Resource Names \(ARNs\)](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)\.
 
-For example, to specify the `vpc-1234567890abcdef0` VPC in your statement, use the following ARN:
+For example, to specify the `vpc-1234567890abcdef0` VPC in your statement, use the ARN shown in the following example\.
 
 ```
 "Resource": "arn:aws:ec2:us-east-1:123456789012:vpc/vpc-1234567890abcdef0"
 ```
 
-To specify all VPCs that belong to a specific account, use the wildcard \(\*\):
+To specify all VPCs that belong to a specific account, use the wildcard \(\*\)\.
 
 ```
 "Resource": "arn:aws:ec2:us-east-1:123456789012:vpc/*"

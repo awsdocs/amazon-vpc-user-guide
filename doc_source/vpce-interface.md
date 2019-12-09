@@ -58,7 +58,8 @@ An endpoint network interface is a requester\-managed network interface\. You ca
 
 1. \(Optional, AWS services and AWS Marketplace partner services only\) Enable [private DNS](#vpce-private-dns) for the endpoint to enable you to make requests to the service using its default DNS hostname\.
 **Important**  
-Private DNS is enabled by default for endpoints created for AWS services and AWS Marketplace partner services\. 
+Private DNS is enabled by default for endpoints created for AWS services and AWS Marketplace partner services\.   
+Private DNS is enabled in the other subnets which are in the same VPC and Availability Zone or Local Zone\.
 
 1. When the service provider and the consumer are in different accounts, see [Interface Endpoint Availability Zone Considerations](#vpce-interface-availability-zones) for information about how to use Availability Zone IDs to identify the interface endpoint Availability Zone\.
 

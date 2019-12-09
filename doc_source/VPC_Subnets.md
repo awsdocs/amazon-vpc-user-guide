@@ -4,6 +4,8 @@ To get started with Amazon Virtual Private Cloud \(Amazon VPC\), you create a VP
 
 **Topics**
 + [VPC and Subnet Basics](#vpc-subnet-basics)
++ [Extending your VPC Resources to in AWS Local Zones](#local-zone)
++ [Subnets in AWS Outposts](#outposts)
 + [VPC and Subnet Sizing](#VPC_Sizing)
 + [Subnet Routing](#SubnetRouting)
 + [Subnet Security](#SubnetSecurity)
@@ -41,9 +43,9 @@ Regardless of the type of subnet, the internal IPv4 address range of the subnet 
 
 You have a limit on the number of VPCs and subnets you can create in your account\. For more information, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
 
-### Local Zones<a name="local-zone"></a>
+## Extending your VPC Resources to in AWS Local Zones<a name="local-zone"></a>
 
- Local Zones allow you to seamlessly connect to the full range of services in the AWS Region such as Amazon Simple Storage Service and Amazon DynamoDB through the same APIs and tool sets\. You can extend your VPC Region by creating a new subnet that has a Local Zone assignment\. When you create a subnet in a Local Zone, the VPC is also extended to that Local Zone\. 
+AWS Local Zones allow you to seamlessly connect to the full range of services in the AWS Region such as Amazon Simple Storage Service and Amazon DynamoDB through the same APIs and tool sets\. You can extend your VPC Region by creating a new subnet that has a Local Zone assignment\. When you create a subnet in a Local Zone, the VPC is also extended to that Local Zone\. 
 
 The following rules apply to Local Zones:
 + The Local Zone subnets follow the same routing rules, including route tables, security groups, Network ACLs as Availability Zone subnet\.
@@ -52,7 +54,7 @@ The following rules apply to Local Zones:
 + When you allocate addresses, you can specify the location from which the IP address is advertised\. We refer to this as a network border group and you can set this parameter to limit the address to this location\. Currently you must use the AWS CLI or API\. to configure a network border group\.
 + If you have IPV6 addresses for you VPC, when you create a VPC, you can request an IPv6 CIDR block for the VPC for the network border group\.
 
-### AWS Outposts<a name="outposts"></a>
+## Subnets in AWS Outposts<a name="outposts"></a>
 
 AWS Outposts offers you the same AWS hardware infrastructure, services, APIs, and tools to build and run your applications on premises and in the cloud\. AWS Outposts is ideal for workloads that need low latency access to on\-premises applications or systems, and for workloads that need to store and process data locally\. For more information about AWS Outposts, see [AWS Outposts](https://aws.amazon.com/outposts)\. 
 
@@ -98,7 +100,7 @@ There are many tools available to help you calculate subnet CIDR blocks; for exa
 The first four IP addresses and the last IP address in each subnet CIDR block are not available for you to use, and cannot be assigned to an instance\. For example, in a subnet with CIDR block `10.0.0.0/24`, the following five IP addresses are reserved: 
 + `10.0.0.0`: Network address\.
 + `10.0.0.1`: Reserved by AWS for the VPC router\.
-+ `10.0.0.2`: Reserved by AWS\. The IP address of the DNS server is always the base of the VPC network range plus two; however, we also reserve the base of each subnet range plus two\. For VPCs with multiple CIDR blocks, the IP address of the DNS server is located in the primary CIDR\. For more information, see [Amazon DNS Server](VPC_DHCP_Options.md#AmazonDNS)\.
++ `10.0.0.2`: Reserved by AWS\. The IP address of the DNS server is the base of the VPC network range plus two\. For VPCs with multiple CIDR blocks, the IP address of the DNS server is located in the primary CIDR\. We also reserve the base of each subnet range plus two for all CIDR blocks in the VPC\. For more information, see [Amazon DNS Server](VPC_DHCP_Options.md#AmazonDNS)\.
 + `10.0.0.3`: Reserved by AWS for future use\.
 + `10.0.0.255`: Network broadcast address\. We do not support broadcast in a VPC, therefore we reserve this address\. 
 
@@ -217,7 +219,7 @@ The route table associated with subnet 3 routes all IPv4 traffic \(`0.0.0.0/0`\)
 
 ## Subnet Security<a name="SubnetSecurity"></a>
 
-AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Security](VPC_Security.md)\. 
+AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Internetwork Traffic Privacy in Amazon VPC](VPC_Security.md)\. 
 
 By design, each subnet must be associated with a network ACL\. Every subnet that you create is automatically associated with the VPC's default network ACL\. You can change the association, and you can change the contents of the default network ACL\. For more information, see [Network ACLs](vpc-network-acls.md)\.
 

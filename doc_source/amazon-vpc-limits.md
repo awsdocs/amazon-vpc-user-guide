@@ -85,7 +85,7 @@ For more information, see [DNS Limits](vpc-dns.md#vpc-dns-limits)\.
 | Resource | Default limit | Comments | 
 | --- | --- | --- | 
 | Gateway VPC endpoints per Region | 20 | You cannot have more than 255 gateway endpoints per VPC\. | 
-| Interface VPC endpoints per VPC | 50 | This is the limit for the maximum number of endpoints in a VPC\. To increase this limit, contact AWS Support\.  | 
+| Interface VPC endpoints per VPC | 20 | This is the limit for the maximum number of endpoints in a VPC\. To increase this limit, contact AWS Support\.  | 
 
 ## AWS Site\-to\-Site VPN Connections<a name="vpc-limits-vpn"></a>
 
