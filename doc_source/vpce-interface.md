@@ -26,6 +26,7 @@ The following services are supported:
 + [Elastic Load Balancing](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/load-balancer-vpc-endpoints.html)
 + [Amazon Elastic Container Registry](https://docs.aws.amazon.com/AmazonECR/latest/userguide/vpc-endpoints.html)
 + [Amazon Elastic Container Service](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/vpc-endpoints.html)
++ [Amazon EMR](https://docs.aws.amazon.com/emr/latest/ManagementGuide/interface-vpc-endpoint.html)
 + [AWS Glue](https://docs.aws.amazon.com/glue/latest/dg/infrastructure-security.html)
 + [AWS Key Management Service](https://docs.aws.amazon.com/kms/latest/developerguide/kms-vpc-endpoint.html)
 + [Amazon Kinesis Data Firehose](https://docs.aws.amazon.com/firehose/latest/dev/vpc-endpoint.html)
@@ -38,7 +39,8 @@ The following services are supported:
 + [AWS Server Migration Service](https://aws.amazon.com/server-migration-service)
 + AWS Service Catalog
 + [Amazon SNS](https://docs.aws.amazon.com/sns/latest/dg/sns-vpc.html)
-+ [Amazon SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-vpc-endpoints.html)
++ [Amazon SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-internetwork-traffic-privacy.html#sqs-vpc-endpoints)
++ [AWS Step Functions](https://docs.aws.amazon.com/step-functions/latest/dg/vpc-endpoints.html) 
 + [AWS Systems Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-setting-up-vpc.html)
 + [AWS Storage Gateway](https://docs.aws.amazon.com/storagegateway/latest/userguide/gateway-private-link.html)
 + [AWS Transfer for SFTP](https://docs.aws.amazon.com/transfer/latest/userguide/create-server-vpc.html)
@@ -70,6 +72,7 @@ Services cannot initiate requests to resources in your VPC through the endpoint\
 **Topics**
 + [Private DNS](#vpce-private-dns)
 + [Interface Endpoint Properties and Limitations](#vpce-interface-limitations)
++ [Connection to On\-Premises Data Centers](#on-premises-connection)
 + [Interface Endpoint Lifecycle](#vpce-interface-lifecycle)
 + [Interface Endpoint Availability Zone Considerations](#vpce-interface-availability-zones)
 + [Pricing for Interface Endpoints](#vpce-interface-pricing)
@@ -104,11 +107,18 @@ To use interface endpoints, you need to be aware of their properties and current
 + Each interface endpoint can support a bandwidth of up to 10 Gbps per Availability Zone by default\. Additional capacity may be added automatically based on your usage\.
 + If the network ACL for your subnet restricts traffic, you may not be able to send traffic through the endpoint network interface\. Ensure that you add appropriate rules that allow traffic to and from the CIDR block of the subnet\.
 + An interface endpoint supports TCP traffic only\.
-+ When you create an endpoint, you can attach an endpoint policy to it that controls access to the service to which you are connecting\. For more information, see [Controlling Access to Services with VPC Endpoints](vpc-endpoints-access.md)\.
++ When you create an endpoint, you can attach an endpoint policy to it that controls access to the service to which you are connecting\. For more information, see [Policy Best Practices](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-policy-examples.html#security_iam_service-with-iam-policy-best-practices) and [Controlling Access to Services with VPC Endpoints](vpc-endpoints-access.md)\.
++ Review the service\-specific limits for your endpoint service\.
 + Endpoints are supported within the same region only\. You cannot create an endpoint between a VPC and a service in a different region\.
 + Endpoints support IPv4 traffic only\.
 + You cannot transfer an endpoint from one VPC to another, or from one service to another\.
-+ You have a limit on the number of endpoints you can create per VPC\. For more information, see [VPC Endpoints](amazon-vpc-limits.md#vpc-limits-endpoints)\.
++ You have a quota on the number of endpoints you can create per VPC\. For more information, see [VPC Endpoints](amazon-vpc-limits.md#vpc-limits-endpoints)\.
+
+## Connection to On\-Premises Data Centers<a name="on-premises-connection"></a>
+
+You can use the following types of connections for a connection between an interface endpoint and your on\-premises data center:
++ AWS Direct Connect
++ AWS Site\-to\-Site VPN
 
 ## Interface Endpoint Lifecycle<a name="vpce-interface-lifecycle"></a>
 

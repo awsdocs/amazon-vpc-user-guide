@@ -4,7 +4,7 @@ The following topics help you to troubleshoot common issues that you might encou
 
 **Topics**
 + [NAT Gateway Goes to a Status of Failed](#nat-gateway-troubleshooting-failed)
-+ [Elastic IP Address and NAT Gateway Limits](#nat-gateway-troubleshooting-limits)
++ [Elastic IP Address and NAT Gateway Quotas](#nat-gateway-troubleshooting-limits)
 + [Availability Zone Is Unsupported](#nat-gateway-troubleshooting-unsupported-az)
 + [NAT Gateway Is No Longer Visible](#nat-gateway-troubleshooting-gateway-removed)
 + [NAT Gateway Doesn't Respond to a Ping Command](#nat-gateway-troubleshooting-ping)
@@ -40,7 +40,7 @@ A failed NAT gateway is automatically deleted after a short period; usually abou
 | Elastic IP address eipalloc\-xxxxxxxx is already associated | The Elastic IP address that you specified is already associated with another resource, and cannot be associated with the NAT gateway\. | Check which resource is associated with the Elastic IP address\. Go to the Elastic IPs page in the Amazon VPC console, and view the values specified for the instance ID or network interface ID\. If you do not require the Elastic IP address for that resource, you can disassociate it\. Alternatively, allocate a new Elastic IP address to your account\. For more information, see [Working with Elastic IP Addresses](vpc-eips.md#WorkWithEIPs)\. | 
 | Network interface eni\-xxxxxxxx, created and used internally by this NAT gateway is in an invalid state\. Please try again\. | There was a problem creating or using the network interface for the NAT gateway\. | You cannot resolve this error\. Try creating a NAT gateway again\. | 
 
-## Elastic IP Address and NAT Gateway Limits<a name="nat-gateway-troubleshooting-limits"></a>
+## Elastic IP Address and NAT Gateway Quotas<a name="nat-gateway-troubleshooting-limits"></a>
 
 **Problem**  
 When you try to allocate an Elastic IP address, you get the following error:
@@ -57,18 +57,18 @@ Performing this operation would exceed the limit of 5 NAT gateways
 
 **Cause**  
 There are 2 possible causes:
-+ You've reached the limit for the number of Elastic IP addresses for your account for that Region\.
-+ You've reached the limit for the number of NAT gateways for your account for that Availability Zone\.
++ You've reached the quota for the number of Elastic IP addresses for your account for that Region\.
++ You've reached the quota for the number of NAT gateways for your account for that Availability Zone\.
 
 **Solution**  
-If you've reached your Elastic IP address limit, you can disassociate an Elastic IP address from another resource\. Alternatively, you can request a limit increase using the [Amazon VPC Limits form](https://console.aws.amazon.com/support/home#/case/create?issueType=service-limit-increase&limitType=vpc)\. 
+If you've reached your Elastic IP address quota, you can disassociate an Elastic IP address from another resource\. Alternatively, you can request a quota increase using the [Amazon VPC Limits form](https://console.aws.amazon.com/support/home#/case/create?issueType=service-limit-increase&limitType=vpc)\. 
 
-If you've reached your NAT gateway limit, you can do one of the following:
-+ Request a limit increase using the [Amazon VPC Limits form](https://console.aws.amazon.com/support/home#/case/create?issueType=service-limit-increase&limitType=vpc)\. The NAT gateway limit is enforced per Availability Zone\.
-+ Check the status of your NAT gateway\. A status of `Pending`, `Available`, or `Deleting` counts against your limit\. If you've recently deleted a NAT gateway, wait a few minutes for the status to go from `Deleting` to `Deleted`\. Then try creating a new NAT gateway\.
-+ If you do not need your NAT gateway in a specific Availability Zone, try creating a NAT gateway in an Availability Zone where you haven't reached your limit\. 
+If you've reached your NAT gateway quota, you can do one of the following:
++ Request a quota increase using the [Amazon VPC Limits form](https://console.aws.amazon.com/support/home#/case/create?issueType=service-limit-increase&limitType=vpc)\. The NAT gateway quota is enforced per Availability Zone\.
++ Check the status of your NAT gateway\. A status of `Pending`, `Available`, or `Deleting` counts against your quota\. If you've recently deleted a NAT gateway, wait a few minutes for the status to go from `Deleting` to `Deleted`\. Then try creating a new NAT gateway\.
++ If you do not need your NAT gateway in a specific Availability Zone, try creating a NAT gateway in an Availability Zone where you haven't reached your quota\. 
 
-For more information, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
+For more information, see [Amazon VPC Quotas](amazon-vpc-limits.md)\.
 
 ## Availability Zone Is Unsupported<a name="nat-gateway-troubleshooting-unsupported-az"></a>
 

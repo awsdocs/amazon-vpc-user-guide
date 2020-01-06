@@ -98,7 +98,7 @@ If you no longer need an Elastic IP address, we recommend that you release it \(
 
 1. When prompted, choose **Release**\.
 
-If you release your Elastic IP address, you might be able to recover it\. You cannot recover the Elastic IP address if it has been allocated to another AWS account, or if it results in you exceeding your Elastic IP address limit\.
+If you release your Elastic IP address, you might be able to recover it\. You cannot recover the Elastic IP address if it has been allocated to another AWS account, or if it results in you exceeding your Elastic IP address quota\.
 
 Currently, you can recover an Elastic IP address using the Amazon EC2 API or a command line tool only\.
 

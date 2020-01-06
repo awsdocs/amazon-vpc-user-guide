@@ -24,7 +24,7 @@ The following are the basic things that you need to know about network ACLs:
 + A network ACL has separate inbound and outbound rules, and each rule can either allow or deny traffic\. 
 + Network ACLs are stateless, which means that responses to allowed inbound traffic are subject to the rules for outbound traffic \(and vice versa\)\.
 
-For more information, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
+For more information, see [Amazon VPC Quotas](amazon-vpc-limits.md)\.
 
 ## Network ACL Rules<a name="nacl-rules"></a>
 

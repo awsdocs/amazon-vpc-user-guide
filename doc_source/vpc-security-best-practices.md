@@ -2,6 +2,16 @@
 
  The following best practices are general guidelines and don’t represent a complete security solution\. Because these best practices might not be appropriate or sufficient for your environment, treat them as helpful considerations rather than prescriptions\.
 
+The following are general best practices:
++ Use multiple Availability Zone deployments so you have high availability\.
++ Use security groups and Network ACLs\.
++ Use IAM policies to control access\.
++ Use Amazon CloudWatch to monitor your VPCs and VPN connections\.
++ When you create a network access control list \(ACL\), number the rules so that you have room for additions, For example, use 100, 200, and 300 as rules\. For more information, see [Network ACL Rules](vpc-network-acls.md#nacl-rules)\.
+
+## Additional Resources<a name="seccurity-best-practices-additional-resources"></a>
++ [VPC Security Capabilities](https://aws.amazon.com/answers/networking/vpc-security-capabilities/)
+
 ## Recommended Network ACL Rules for Your VPC<a name="vpc-recommended-nacl-rules"></a>
 
 The VPC wizard helps you implement common scenarios for Amazon VPC\. If you implement these scenarios as described in the documentation, you use the default network access control list \(ACL\), which allows all inbound and outbound traffic\. If you need an additional layer of security, you can create a network ACL and add rules\. For more information, see [Network ACLs](vpc-network-acls.md)\.

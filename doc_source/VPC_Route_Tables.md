@@ -14,6 +14,7 @@ A *route table* contains a set of rules, called *routes*, that are used to deter
 The following are the key concepts for route tables\.
 + **Main route table**—The route table that automatically comes with your VPC\. It controls the routing for all subnets that are not explicitly associated with any other route table\.
 + **Custom route table**—A route table that you create for your VPC\.
++ **Edge association **\- A route table that you use to route inbound VPC traffic to an appliance\. You associate a route table with the internet gateway or virtual private gateway, and specify the network interface of your appliance as the target for VPC traffic\. 
 + **Route table association**—The association between a route table and a subnet, internet gateway, or virtual private gateway\.
 + **Subnet route table**—A route table that's associated with a subnet\.
 + **Gateway route table**—A route table that's associated with an internet gateway or virtual private gateway\.
@@ -28,7 +29,7 @@ Your VPC has an implicit router, and you use route tables to control where netwo
 
 You can optionally associate a route table with an internet gateway or a virtual private gateway \(gateway route table\)\. This enables you to specify routing rules for inbound traffic that enters your VPC through the gateway\. For more information, see [Gateway Route Tables](#gateway-route-table)\.
 
-There is a limit on the number of route tables that you can create per VPC\. There is also a limit on the number of routes that you can add per route table\. For more information, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
+There is a quota on the number of route tables that you can create per VPC\. There is also a quota on the number of routes that you can add per route table\. For more information, see [Amazon VPC Quotas](amazon-vpc-limits.md)\.
 
 **Topics**
 + [Routes](#route-table-routes)
@@ -90,7 +91,7 @@ You can add, remove, and modify routes in a custom route table\. You can delete 
 
 ### Subnet Route Table Association<a name="route-table-assocation"></a>
 
-Each subnet in your VPC must be associated with a route table\. A subnet can be explicitly associated with custom route table, or implicitly or explicitly associated with the main route table\. For more information about viewing your subnet and route table associations, see [Determining Which Subnets Are Explicitly Associated with a Table](WorkWithRouteTables.md#Route_Which_Associations)\.
+Each subnet in your VPC must be associated with a route table\. A subnet can be explicitly associated with custom route table, or implicitly or explicitly associated with the main route table\. For more information about viewing your subnet and route table associations, see [Determining Which Subnets and or Gateways Are Explicitly Associated with a Table](WorkWithRouteTables.md#Route_Which_Associations)\.
 
 Subnets which are in VPCs associated with Outposts can have an additional target type of a local gateway\. This is the only routing difference from non\-Outposts subnets\.
 

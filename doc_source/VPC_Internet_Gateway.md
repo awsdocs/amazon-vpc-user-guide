@@ -24,6 +24,8 @@ In the following diagram, Subnet 1 in the VPC is associated with a custom route 
 
 ![\[Using an internet gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/internet-gateway-overview-diagram.png)
 
+To provide your instances with internet access without assigning them public IP addresses, you can use a NAT device\. For more information, see [NAT](vpc-nat.md)\.
+
 **Internet Access for Default and Nondefault VPCs**
 
 The following table provides an overview of whether your VPC automatically comes with the components required for internet access over IPv4 or IPv6\. 
@@ -111,7 +113,7 @@ For more information, see [Route Tables](VPC_Route_Tables.md)\.
 
 ### Updating the Security Group Rules<a name="Add_IG_Security_Groups"></a>
 
-Your VPC comes with a default security group\. Each instance that you launch into a VPC is automatically associated with its default security group\. The default settings for a default security group allow no inbound traffic from the internet and allow all outbound traffic to the internet\. Therefore, to enable your instances to communicate with the internet, create a new security group that allows public instances to access the internet\.
+Your VPC comes with a default security group\. Each instance that you launch into a VPC is automatically associated with its default security group\. The default settings for a default security group allow no inbound traffic from the internet and allow all outbound traffic to the internet\. Therefore, to enable your instances to communicate with the internet, we recommend that you create a new security group that allows public instances to access the internet\.
 
 **To create a new security group and associate it with your instances**
 

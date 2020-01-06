@@ -5,6 +5,7 @@ You can create your own application in your VPC and configure it as an AWS Priva
 **Topics**
 + [Overview](#endpoint-service-overview)
 + [Endpoint Service Availability Zone Considerations](#vpce-endpoint-service-availability-zones)
++ [Connection to On\-Premises Data Centers](#on-premises-connection)
 + [Endpoint Service Limitations](#endpoint-service-limits)
 + [Creating a VPC Endpoint Service Configuration](#create-endpoint-service)
 + [Adding and Removing Permissions for Your Endpoint Service](#add-endpoint-service-permissions)
@@ -47,6 +48,12 @@ In the following diagram, the owner of VPC B is the service provider, and it has
 
 When you create an endpoint service, the service is created in the Availability Zone that is mapped to your account and is independent from other accounts\. When the service provider and the consumer are in different accounts, use the Availability Zone ID to uniquely and consistently identify the endpoint service Availability Zone\. For example, `use1-az1` is an AZ ID for the `us-east-1` Region and maps to the same location in every AWS account\. For information about Availability Zone IDs, see [AZ IDs for Your Resources](https://docs.aws.amazon.com/ram/latest/userguide/working-with-az-ids.html) in the *AWS RAM User Guide* or use [describe\-availability\-zones](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-availability-zones.html)\. 
 
+## Connection to On\-Premises Data Centers<a name="on-premises-connection"></a>
+
+You can use the following types of connections for a connection between an interface endpoint and your on\-premises data center:
++ AWS Direct Connect
++ AWS Site\-to\-Site VPN
+
 ## Endpoint Service Limitations<a name="endpoint-service-limits"></a>
 
 To use endpoint services, you need to be aware of the current rules and limitations:
@@ -55,6 +62,8 @@ To use endpoint services, you need to be aware of the current rules and limitati
 + If an endpoint service is associated with multiple Network Load Balancers, then for a specific Availability Zone, an interface endpoint establishes a connection with one load balancer only\.
 + For the endpoint service, the associated Network Load Balancer can support 55,000 simultaneous connections or about 55,000 connections per minute to each unique target \(IP address and port\)\. If you exceed these connections, there is an increased chance of port allocation errors\. To fix the port allocation errors, add more targets to the target group\. For information about Network Load Balancer target groups, see [Target Groups for Your Network Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-target-groups.html) and [Register Targets with Your Target Group](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/target-group-register-targets.html) in the *User Guide for Network Load Balancers*\.
 + Availability Zones in your account might not map to the same locations as Availability Zones in another account\. For example, your Availability Zone `us-east-1a` might not be the same location as `us-east-1a` for another account\. For more information, see [Region and Availability Zone Concepts](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-regions-availability-zones)\. When you configure an endpoint service, it's configured in the Availability Zones as mapped to your account\.
++ Review the service\-specific limits for your endpoint service\.
++ Review the security best practices and examples for endpoint services\. For more information, see [Policy Best Practices](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-policy-examples.html#security_iam_service-with-iam-policy-best-practices) and [Using VPC Endpoint Policies](vpc/latest/userguide/vpc-endpoints-access.html#vpc-endpoint-policies)\.
 
 ## Creating a VPC Endpoint Service Configuration<a name="create-endpoint-service"></a>
 

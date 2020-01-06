@@ -103,6 +103,6 @@ The following limitations apply to working with VPC sharing:
 + Participants cannot launch resources using security groups that are owned by other participants or the owner\.
 + Participants cannot launch resources using the default security group for the VPC because it belongs to the owner\.
 + Owners cannot launch resources using security groups that are owned by other participants\.
-+ Service limits apply per individual account\. For more information about service limits, see [AWS Service Limits](https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html) in the *Amazon Web Services General Reference*\.
-+ VPC tags are not shared with the participants\.
++ Service quotas apply per individual account\. For more information about service quotas, see [AWS Service Quotas](https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html) in the *Amazon Web Services General Reference*\.
++ VPC tags, and tags for the resources within the shared VPC are not shared with the participants\.
 + When participants launch resources in a shared subnet, they should make sure they attach their security group to the resource, and not rely on the default security group\. Participants cannot use the default security group because it belongs to the VPC owner\.

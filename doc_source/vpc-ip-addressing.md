@@ -18,7 +18,7 @@ The following table summarizes the differences between IPv4 and IPv6 in Amazon E
 
 | IPv4 | IPv6 | 
 | --- | --- | 
-| The format is 32\-bit, 4 groups of up to 3 numerical digits\. | The format is 128\-bit, 8 groups of 4 hexadecimal digits\. | 
+| The format is 32\-bit, 4 groups of up to 3 decimal digits\. | The format is 128\-bit, 8 groups of 4 hexadecimal digits\. | 
 | Default and required for all VPCs; cannot be removed\. | Opt\-in only\. | 
 | The VPC CIDR block size can be from /16 to /28\. | The VPC CIDR block size is fixed at /56\. | 
 | The subnet CIDR block size can be from /16 to /28\. | The subnet CIDR block size is fixed at /64\. | 

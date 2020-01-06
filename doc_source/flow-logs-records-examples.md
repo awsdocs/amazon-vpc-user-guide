@@ -2,6 +2,8 @@
 
 The following are examples of flow log records that capture specific traffic flows\.
 
+For information about flow log record format, see [Flow Log Records](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html#flow-log-records)\.
+
 **Topics**
 + [Accepted and Rejected Traffic](#flow-log-example-accepted-rejected)
 + [No Data and Skipped Records](#flow-log-example-no-data)

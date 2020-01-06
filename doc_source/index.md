@@ -85,5 +85,5 @@ Amazon's trademarks and trade dress may not be used in
    + [VPC Endpoint Services (AWS PrivateLink)](endpoint-service.md)
    + [ClassicLink](vpc-classiclink.md)
 + [VPN Connections](vpn-connections.md)
-+ [Amazon VPC Limits](amazon-vpc-limits.md)
++ [Amazon VPC Quotas](amazon-vpc-limits.md)
 + [Document History](WhatsNew.md)

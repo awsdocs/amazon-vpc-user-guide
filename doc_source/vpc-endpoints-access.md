@@ -32,13 +32,16 @@ The following services support endpoint policies:
 + [Amazon Elastic File System](https://docs.aws.amazon.com/efs/latest/ug/efs-vpc-endpoints.html#create-vpce-policy-efs)
 + [Elastic Load Balancing](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/load-balancer-vpc-endpoints.html)
 + [Amazon Elastic Container Registry](https://docs.aws.amazon.com/AmazonECR/latest/userguide/vpc-endpoints.html#ecr-vpc-endpoint-policy)
++ [Amazon EMR](https://docs.aws.amazon.com/emr/latest/ManagementGuide/interface-vpc-endpoint.html#api-private-link-policy)
 + [Amazon Kinesis Data Firehose](https://docs.aws.amazon.com/firehose/latest/dev/vpc.html)
++ [Amazon Kinesis Data Streams](https://docs.aws.amazon.com/streams/latest/dev/vpc.html#interface-vpc-endpoints-policies)
 + [Amazon SageMaker and Amazon SageMaker Runtime](https://docs.aws.amazon.com/sagemaker/latest/dg/interface-vpc-endpoint.html#api-private-link-policy)
 + [Amazon SageMaker Notebook Instance](https://docs.aws.amazon.com/sagemaker/latest/dg/notebook-interface-endpoint.html#nbi-private-link-policy)
 + [AWS Secrets Manager ](https://docs.aws.amazon.com/secretsmanager/latest/userguide/vpc-endpoint-overview.html#vpc-endpoint-policy)
 + [AWS Security Token Service](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_sts_vpce.html)
 + [Amazon SNS](https://docs.aws.amazon.com/sns/latest/dg/sns-vpc-endpoint-policy.html)
-+ [Amazon SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-vpc-endpoint-policy.html)
++ [Amazon SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-internetwork-traffic-privacy.html#sqs-vpc-endpoint-policy)
++ [AWS Step Functions](https://docs.aws.amazon.com/step-functions/latest/dg/vpc-iam.html)
 
 For example endpoint policies for Amazon S3 and DynamoDB, see the following topics:
 + [Using Endpoint Policies for Amazon S3](vpc-endpoints-s3.md#vpc-endpoints-policies-s3)

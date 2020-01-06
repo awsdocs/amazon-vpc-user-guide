@@ -19,7 +19,7 @@ NAT gateways are not supported for IPv6 traffic—use an egress\-only internet g
 
 To create a NAT gateway, you must specify the public subnet in which the NAT gateway should reside\. For more information about public and private subnets, see [Subnet Routing](VPC_Subnets.md#SubnetRouting)\. You must also specify an [Elastic IP address](vpc-eips.md) to associate with the NAT gateway when you create it\. The Elastic IP address cannot be changed once you associate it with the NAT Gateway\. After you've created a NAT gateway, you must update the route table associated with one or more of your private subnets to point Internet\-bound traffic to the NAT gateway\. This enables instances in your private subnets to communicate with the internet\.
 
-Each NAT gateway is created in a specific Availability Zone and implemented with redundancy in that zone\. You have a limit on the number of NAT gateways you can create in an Availability Zone\. For more information, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
+Each NAT gateway is created in a specific Availability Zone and implemented with redundancy in that zone\. You have a quota on the number of NAT gateways you can create in an Availability Zone\. For more information, see [Amazon VPC Quotas](amazon-vpc-limits.md)\.
 
 **Note**  
 If you have resources in multiple Availability Zones and they share one NAT gateway, in the event that the NAT gateway’s Availability Zone is down, resources in the other Availability Zones lose internet access\. To create an Availability Zone\-independent architecture, create a NAT gateway in each Availability Zone and configure your routing to ensure that resources use the NAT gateway in the same Availability Zone\.

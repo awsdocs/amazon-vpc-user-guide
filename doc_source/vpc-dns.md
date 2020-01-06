@@ -9,7 +9,7 @@ We provide an Amazon DNS server\. To use your own DNS server, create a new set o
 **Topics**
 + [DNS Hostnames](#vpc-dns-hostnames)
 + [DNS Support in Your VPC](#vpc-dns-support)
-+ [DNS Limits](#vpc-dns-limits)
++ [DNS Quotas](#vpc-dns-limits)
 + [Viewing DNS Hostnames for Your EC2 Instance](#vpc-dns-viewing)
 + [Viewing and Updating DNS Support for Your VPC](#vpc-dns-updating)
 + [Using Private Hosted Zones](#vpc-private-hosted-zones)
@@ -57,9 +57,9 @@ If you created your VPC before October 2016, the Amazon DNS server does not reso
 
 If you enable DNS hostnames and DNS support in a VPC that didn't previously support them, an instance that you already launched into that VPC gets a public DNS hostname if it has a public IPv4 address or an Elastic IP address\.
 
-## DNS Limits<a name="vpc-dns-limits"></a>
+## DNS Quotas<a name="vpc-dns-limits"></a>
 
-Each Amazon EC2 instance limits the number of packets that can be sent to the Amazon\-provided DNS server to a maximum of 1024 packets per second per network interface\. This limit cannot be increased\. The number of DNS queries per second supported by the Amazon\-provided DNS server varies by the type of query, the size of response, and the protocol in use\. For more information and recommendations for a scalable DNS architecture, see the [Hybrid Cloud DNS Solutions for Amazon VPC](https://d1.awsstatic.com/whitepapers/hybrid-cloud-dns-options-for-vpc.pdf) whitepaper\.
+Each Amazon EC2 instance limits the number of packets that can be sent to the Amazon\-provided DNS server to a maximum of 1024 packets per second per network interface\. This quota cannot be increased\. The number of DNS queries per second supported by the Amazon\-provided DNS server varies by the type of query, the size of response, and the protocol in use\. For more information and recommendations for a scalable DNS architecture, see the [Hybrid Cloud DNS Solutions for Amazon VPC](https://d1.awsstatic.com/whitepapers/hybrid-cloud-dns-options-for-vpc.pdf) whitepaper\.
 
 ## Viewing DNS Hostnames for Your EC2 Instance<a name="vpc-dns-viewing"></a>
 

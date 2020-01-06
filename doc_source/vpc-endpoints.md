@@ -32,6 +32,7 @@ An [interface endpoint](vpce-interface.md) is an elastic network interface with 
 + [Elastic Load Balancing](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/load-balancer-vpc-endpoints.html)
 + [Amazon Elastic Container Registry](https://docs.aws.amazon.com/AmazonECR/latest/userguide/vpc-endpoints.html)
 + [Amazon Elastic Container Service](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/vpc-endpoints.html)
++ [Amazon EMR](https://docs.aws.amazon.com/emr/latest/ManagementGuide/interface-vpc-endpoint.html)
 + [AWS Glue](https://docs.aws.amazon.com/glue/latest/dg/infrastructure-security.html)
 + [AWS Key Management Service](https://docs.aws.amazon.com/kms/latest/developerguide/kms-vpc-endpoint.html)
 + [Amazon Kinesis Data Firehose](https://docs.aws.amazon.com/firehose/latest/dev/vpc-endpoint.html)
@@ -44,7 +45,8 @@ An [interface endpoint](vpce-interface.md) is an elastic network interface with 
 + [AWS Server Migration Service](https://aws.amazon.com/server-migration-service)
 + AWS Service Catalog
 + [Amazon SNS](https://docs.aws.amazon.com/sns/latest/dg/sns-vpc.html)
-+ [Amazon SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-vpc-endpoints.html)
++ [Amazon SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-internetwork-traffic-privacy.html#sqs-vpc-endpoints)
++ [AWS Step Functions](https://docs.aws.amazon.com/step-functions/latest/dg/vpc-endpoints.html) 
 + [AWS Systems Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-setting-up-vpc.html)
 + [AWS Storage Gateway](https://docs.aws.amazon.com/storagegateway/latest/userguide/gateway-private-link.html)
 + [AWS Transfer for SFTP](https://docs.aws.amazon.com/transfer/latest/userguide/create-server-vpc.html)

@@ -1,6 +1,6 @@
 # Example: Service Provider Configures the Service<a name="vpc--region-peering-provider-side"></a>
 
-Consider the following example, where a service runs on instances in Provider VPC 1\. Resources that are in Consumer VPC 1 through the AWS PrivateLink VPC endpoint in Consumer VPC 1\.
+Consider the following example, where a service runs on instances in Provider VPC 1\. Resources that are in Consumer VPC 1 can directly access the service through the AWS PrivateLink VPC endpoint in Consumer VPC 1\.
 
 ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-inter-region-peering-provider-side.png)
 

@@ -27,7 +27,7 @@ There's no additional charge for using Amazon VPC\. You pay the standard rates f
 
 ## Amazon VPC Limits<a name="CurrentCapabilities"></a>
 
-There are limits to the number of Amazon VPC components that you can provision\. You can request an increase for some of these limits\. For more information, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
+There are quotas on the number of Amazon VPC components that you can provision\. You can request an increase for some of these quotas\. For more information, see [Amazon VPC Quotas](amazon-vpc-limits.md)\.
 
 ## Amazon VPC Resources<a name="howto"></a>
 

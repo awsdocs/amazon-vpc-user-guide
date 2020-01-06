@@ -16,7 +16,7 @@ You might set up network ACLs with rules similar to your security groups in orde
 ## Security Group Basics<a name="VPCSecurityGroups"></a>
 
 The following are the basic characteristics of security groups for your VPC:
-+ There are limits on the number of security groups that you can create per VPC, the number of rules that you can add to each security group, and the number of security groups that you can associate with a network interface\. For more information, see [Amazon VPC Limits](amazon-vpc-limits.md)\.
++ There are quotas on the number of security groups that you can create per VPC, the number of rules that you can add to each security group, and the number of security groups that you can associate with a network interface\. For more information, see [Amazon VPC Quotas](amazon-vpc-limits.md)\.
 + You can specify allow rules, but not deny rules\.
 + You can specify separate rules for inbound and outbound traffic\. 
 + When you create a security group, it has no inbound rules\. Therefore, no inbound traffic originating from another host to your instance is allowed until you add inbound rules to the security group\.

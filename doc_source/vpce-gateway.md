@@ -109,9 +109,10 @@ To use gateway endpoints, you need to be aware of the current limitations:
 + Endpoints are supported within the same region only\. You cannot create an endpoint between a VPC and a service in a different region\.
 + Endpoints support IPv4 traffic only\.
 + You cannot transfer an endpoint from one VPC to another, or from one service to another\.
-+ You have a limit on the number of endpoints you can create per VPC\. For more information, see [VPC Endpoints](amazon-vpc-limits.md#vpc-limits-endpoints)\.
++ You have a quota on the number of endpoints you can create per VPC\. For more information, see [VPC Endpoints](amazon-vpc-limits.md#vpc-limits-endpoints)\.
 + Endpoint connections cannot be extended out of a VPC\. Resources on the other side of a VPN connection, VPC peering connection, transit gateway, AWS Direct Connect connection, or ClassicLink connection in your VPC cannot use the endpoint to communicate with resources in the endpoint service\. 
 + You must enable DNS resolution in your VPC, or if you're using your own DNS server, ensure that DNS requests to the required service \(such as Amazon S3\) are resolved correctly to the IP addresses maintained by AWS\. For more information, see [Using DNS with Your VPC](vpc-dns.md) and [AWS IP Address Ranges](https://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html) in the *Amazon Web Services General Reference*\.
++ Review the service\-specific limits for your endpoint service\.
 
 For more information about rules and limitations that are specific to Amazon S3, see [Endpoints for Amazon S3](vpc-endpoints-s3.md)\.
 
