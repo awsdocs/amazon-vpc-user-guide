@@ -5,16 +5,9 @@ You can create your own application in your VPC and configure it as an AWS Priva
 **Topics**
 + [Overview](#endpoint-service-overview)
 + [Endpoint Service Availability Zone Considerations](#vpce-endpoint-service-availability-zones)
++ [Endpoint Service DNS Names](#vpc-service-private-dns)
 + [Connection to On\-Premises Data Centers](#on-premises-connection)
 + [Endpoint Service Limitations](#endpoint-service-limits)
-+ [Creating a VPC Endpoint Service Configuration](#create-endpoint-service)
-+ [Adding and Removing Permissions for Your Endpoint Service](#add-endpoint-service-permissions)
-+ [Changing the Network Load Balancers and Acceptance Settings](#modify-endpoint-service)
-+ [Accepting and Rejecting Interface Endpoint Connection Requests](#accept-reject-endpoint-requests)
-+ [Creating and Managing a Notification for an Endpoint Service](#create-notification-endpoint-service)
-+ [Using Proxy Protocol for Connection Information](#endpoint-service-proxy-protocol)
-+ [Adding or Removing VPC Endpoint Service Tags](#modify-tags-vpc-endpoint-service-tags)
-+ [Deleting an Endpoint Service Configuration](#delete-endpoint-service)
 
 ## Overview<a name="endpoint-service-overview"></a>
 
@@ -48,6 +41,18 @@ In the following diagram, the owner of VPC B is the service provider, and it has
 
 When you create an endpoint service, the service is created in the Availability Zone that is mapped to your account and is independent from other accounts\. When the service provider and the consumer are in different accounts, use the Availability Zone ID to uniquely and consistently identify the endpoint service Availability Zone\. For example, `use1-az1` is an AZ ID for the `us-east-1` Region and maps to the same location in every AWS account\. For information about Availability Zone IDs, see [AZ IDs for Your Resources](https://docs.aws.amazon.com/ram/latest/userguide/working-with-az-ids.html) in the *AWS RAM User Guide* or use [describe\-availability\-zones](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-availability-zones.html)\. 
 
+## Endpoint Service DNS Names<a name="vpc-service-private-dns"></a>
+
+When you create a VPC endpoint service, AWS generates endpoint\-specific DNS hostnames that you can use to communicate with the service\. These names include the VPC endpoint ID, the Availability Zone name and Region Name, for example, vpce\-1234\-abcdev\-us\-east\-1\.vpce\-svc\-123345\.us\-east\-1\.vpce\.amazonaws\.com\. By default, your consumers access the service with that DNS name and usually need to modify the application configuration\. 
+
+If the endpoint service is for an AWS service, or a service available in the AWS Marketplace, there is a default DNS name\. For other services, the service provider can configure a private DNS name so consumers can access the service using an existing DNS name without making changes to their applications\. For more information, see [Private DNS Name](verify-domains.md)\.
+
+Service providers can use the **ec2:VpceServicePrivateDnsName** condition context key in an IAM policy statement to control what private DNS names can be created\. For more information, see [Actions Defined by Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html) in the *IAM User Guide*\.
+
+### Private DNS Name Requirements<a name="endpoint-dns-requirements"></a>
+
+Service providers can specify a private DNS name for a new endpoint service, or an existing endpoint service\. To use a private DNS name, enable the feature, and then specify a private DNS name\. Before consumers can use the private DNS name, you must verify that you have control of the domain/subdomain\. You can initiate domain ownership verification using the Amazon VPC Console or API\. After the domain ownership verification completes, consumers access the endpoint by using the private DNS name\.
+
 ## Connection to On\-Premises Data Centers<a name="on-premises-connection"></a>
 
 You can use the following types of connections for a connection between an interface endpoint and your on\-premises data center:
@@ -58,393 +63,19 @@ You can use the following types of connections for a connection between an inter
 
 To use endpoint services, you need to be aware of the current rules and limitations:
 + An endpoint service supports IPv4 traffic over TCP only\.
-+ Service consumers must use the endpoint\-specific DNS hostnames to access the endpoint service\. Private DNS is not supported\. For more information, see [Accessing a Service Through an Interface Endpoint](vpce-interface.md#access-service-though-endpoint)\.
++ Service consumers can use the endpoint\-specific DNS hostnames to access the endpoint service, or the private DNS name\. 
 + If an endpoint service is associated with multiple Network Load Balancers, then for a specific Availability Zone, an interface endpoint establishes a connection with one load balancer only\.
 + For the endpoint service, the associated Network Load Balancer can support 55,000 simultaneous connections or about 55,000 connections per minute to each unique target \(IP address and port\)\. If you exceed these connections, there is an increased chance of port allocation errors\. To fix the port allocation errors, add more targets to the target group\. For information about Network Load Balancer target groups, see [Target Groups for Your Network Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-target-groups.html) and [Register Targets with Your Target Group](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/target-group-register-targets.html) in the *User Guide for Network Load Balancers*\.
 + Availability Zones in your account might not map to the same locations as Availability Zones in another account\. For example, your Availability Zone `us-east-1a` might not be the same location as `us-east-1a` for another account\. For more information, see [Region and Availability Zone Concepts](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-regions-availability-zones)\. When you configure an endpoint service, it's configured in the Availability Zones as mapped to your account\.
 + Review the service\-specific limits for your endpoint service\.
-+ Review the security best practices and examples for endpoint services\. For more information, see [Policy Best Practices](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-policy-examples.html#security_iam_service-with-iam-policy-best-practices) and [Using VPC Endpoint Policies](vpc/latest/userguide/vpc-endpoints-access.html#vpc-endpoint-policies)\.
-
-## Creating a VPC Endpoint Service Configuration<a name="create-endpoint-service"></a>
-
-You can create an endpoint service configuration using the Amazon VPC console or the command line\. Before you begin, ensure that you have created one or more Network Load Balancers in your VPC for your service\. For more information, see [Getting Started with Network Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancer-getting-started.html) in the *User Guide for Network Load Balancers*\.
-
-In your configuration, you can optionally specify that any interface endpoint connection requests to your service must be manually accepted by you\. You can [create a notification](#create-notification-endpoint-service) to receive alerts when there are connection requests\. If you do not accept a connection, service consumers cannot access your service\.
-
-**Note**  
-Regardless of the acceptance settings, service consumers must also have [permissions](#add-endpoint-service-permissions) to create a connection to your service\.
-
-**To create an endpoint service using the console**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Endpoint Services**, **Create Endpoint Service**\.
-
-1. For **Associate Network Load Balancers**, select the Network Load Balancers to associate with the endpoint service\. 
-
-1. For **Require acceptance for endpoint**, select the check box to accept connection requests to your service manually\. If you do not select this option, endpoint connections are automatically accepted\.
-
-1. Choose **Create service**\.
-
-After you create an endpoint service configuration, you must add permissions to enable service consumers to create interface endpoints to your service\.
-
-**To create an endpoint service using the AWS CLI**
-+ Use the [create\-vpc\-endpoint\-service\-configuration](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-vpc-endpoint-service-configuration.html) command and specify one or more ARNs for your Network Load Balancers\. You can optionally specify if acceptance is required for connecting to your service\.
-
-  ```
-  aws ec2 create-vpc-endpoint-service-configuration --network-load-balancer-arns arn:aws:elasticloadbalancing:us-east-1:123456789012:loadbalancer/net/nlb-vpce/e94221227f1ba532 --acceptance-required
-  ```
-
-  ```
-  {
-      "ServiceConfiguration": {
-          "ServiceType": [
-              {
-                  "ServiceType": "Interface"
-              }
-          ], 
-          "NetworkLoadBalancerArns": [
-              "arn:aws:elasticloadbalancing:us-east-1:123456789012:loadbalancer/net/nlb-vpce/e94221227f1ba532"
-          ], 
-          "ServiceName": "com.amazonaws.vpce.us-east-1.vpce-svc-03d5ebb7d9579a2b3", 
-          "ServiceState": "Available", 
-          "ServiceId": "vpce-svc-03d5ebb7d9579a2b3", 
-          "AcceptanceRequired": true, 
-          "AvailabilityZones": [
-              "us-east-1d"
-          ], 
-          "BaseEndpointDnsNames": [
-              "vpce-svc-03d5ebb7d9579a2b3.us-east-1.vpce.amazonaws.com"
-          ]
-      }
-  }
-  ```
-
-**To create an endpoint service using the AWS Tools for Windows PowerShell or API**
-+ [New\-EC2VpcEndpointServiceConfiguration](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2VpcEndpointServiceConfiguration.html) \(AWS Tools for Windows PowerShell\)
-+ [CreateVpcEndpointServiceConfiguration](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-CreateVpcEndpointServiceConfiguration.html) \(Amazon EC2 Query API\)
-
-## Adding and Removing Permissions for Your Endpoint Service<a name="add-endpoint-service-permissions"></a>
-
-After you create your endpoint service configuration, you can control which service consumers can create an interface endpoint to connect to your service\. Service consumers are [IAM principals](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html)—IAM users, IAM roles, and AWS accounts\. To add or remove permissions for a principal, you need its Amazon Resource Name \(ARN\)\.
-+ For an AWS account \(and therefore all principals in the account\), the ARN is in the form `arn:aws:iam::aws-account-id:root`\.
-+ For a specific IAM user, the ARN is in the form `arn:aws:iam::aws-account-id:user/user-name`\.
-+ For a specific IAM role, the ARN is in the form `arn:aws:iam::aws-account-id:role/role-name`\.
-
-**To add or remove permissions using the console**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Endpoint Services** and select your endpoint service\.
-
-1. Choose **Actions**, **Add principals to whitelist**\.
-
-1. Specify the ARN for the principal for which to add permissions\. To add more principals, choose **Add principal**\. To remove a principal, choose the cross icon next to the entry\.
-**Note**  
-Specify `*` to add permissions for all principals\. This enables all principals in all AWS accounts to create an interface endpoint to your endpoint service\.
-
-1. Choose **Add to Whitelisted principals**\.
-
-1. To remove a principal, select it in the list and choose **Delete**\.
-
-**To add and remove permissions using the AWS CLI**
-
-1. To add permissions for your endpoint service, use the [modify\-vpc\-endpoint\-service\-permissions](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-vpc-endpoint-service-permissions.html) command and use the `--add-allowed-principals` parameter to add one or more ARNs for the principals\.
-
-   ```
-   aws ec2 modify-vpc-endpoint-service-permissions --service-id vpce-svc-03d5ebb7d9579a2b3 --add-allowed-principals '["arn:aws:iam::123456789012:root"]'
-   ```
-
-1. To view the permissions you added for your endpoint service, use the [describe\-vpc\-endpoint\-service\-permissions](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-service-permissions.html) command\.
-
-   ```
-   aws ec2 describe-vpc-endpoint-service-permissions --service-id vpce-svc-03d5ebb7d9579a2b3
-   ```
-
-   ```
-   {
-       "AllowedPrincipals": [
-           {
-               "PrincipalType": "Account", 
-               "Principal": "arn:aws:iam::123456789012:root"
-           }
-       ]
-   }
-   ```
-
-1. To remove permissions for your endpoint service, use the [modify\-vpc\-endpoint\-service\-permissions](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-vpc-endpoint-service-permissions.html) command and use the `--remove-allowed-principals` parameter to remove one or more ARNs for the principals\.
-
-   ```
-   aws ec2 modify-vpc-endpoint-service-permissions --service-id vpce-svc-03d5ebb7d9579a2b3 --remove-allowed-principals '["arn:aws:iam::123456789012:root"]'
-   ```
-
-**To modify endpoint service permissions using the AWS Tools for Windows PowerShell or API**
-+ [Edit\-EC2EndpointServicePermission](https://docs.aws.amazon.com/powershell/latest/reference/items/Edit-EC2EndpointServicePermission.html) \(AWS Tools for Windows PowerShell\)
-+ [ModifyVpcEndpointServicePermissions](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-ModifyVpcEndpointServicePermissions.html) \(Amazon EC2 Query API\)
-
-## Changing the Network Load Balancers and Acceptance Settings<a name="modify-endpoint-service"></a>
-
-You can modify your endpoint service configuration by changing the Network Load Balancers that are associated with the endpoint service, and by changing whether acceptance is required for requests to connect to your endpoint service\.
-
-You cannot disassociate a load balancer if there are interface endpoints attached to your endpoint service\.
-
-**To change the network load balancers for your endpoint service using the console**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Endpoint Services** and select your endpoint service\.
-
-1. Choose **Actions**, **Associate/Disassociate Network Load Balancers**\.
-
-1. Select or deselect the load balancers as required, and choose **Save**\.
-
-**To modify the acceptance setting using the console**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Endpoint Services** and select your endpoint service\.
-
-1. Choose **Actions**, **Modify endpoint acceptance setting**\.
-
-1. Select or deselect **Require acceptance for endpoint**, and choose **Modify**\.
-
-**To modify the load balancers and acceptance settings using the AWS CLI**
-
-1. To change the load balancers for your endpoint service, use the [modify\-vpc\-endpoint\-service\-configuration](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-vpc-endpoint-service-configuration.html) command and use the `--add-network-load-balancer-arn` or `--remove-network-load-balancer-arn` parameter; for example: 
-
-   ```
-   aws ec2 modify-vpc-endpoint-service-configuration --service-id vpce-svc-09222513e6e77dc86 --remove-network-load-balancer-arn arn:aws:elasticloadbalancing:us-east-1:123456789012:loadbalancer/net/nlb-vpce/e94221227f1ba532
-   ```
-
-1. To change whether acceptance is required, use the [modify\-vpc\-endpoint\-service\-configuration](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-vpc-endpoint-service-configuration.html) command and specify `--acceptance-required` or `--no-acceptance-required`; for example:
-
-   ```
-   aws ec2 modify-vpc-endpoint-service-configuration --service-id vpce-svc-09222513e6e77dc86 --no-acceptance-required
-   ```
-
-**To modify an endpoint service configuration using the AWS Tools for Windows PowerShell or API**
-+ [Edit\-EC2VpcEndpointServiceConfiguration](https://docs.aws.amazon.com/powershell/latest/reference/items/Edit-EC2VpcEndpointServiceConfiguration.html) \(AWS Tools for Windows PowerShell\)
-+ [ModifyVpcEndpointServiceConfiguration](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-ModifyVpcEndpointServiceConfiguration.html) \(Amazon EC2 Query API\)
-
-## Accepting and Rejecting Interface Endpoint Connection Requests<a name="accept-reject-endpoint-requests"></a>
-
-After you create an endpoint service, service consumers for which you've added permission can create an interface endpoint to connect to your service\. For more information about creating an interface endpoint, see [Interface VPC Endpoints \(AWS PrivateLink\)](vpce-interface.md)\.
-
-If you specified that acceptance is required for connection requests, you must manually accept or reject interface endpoint connection requests to your endpoint service\. After an interface endpoint is accepted, it becomes `available`\.
-
-You can reject an interface endpoint connection after it's in the `available` state\.
-
-**To accept or reject a connection request using the console**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Endpoint Services** and select your endpoint service\.
-
-1. The **Endpoint Connections** tab lists endpoint connections that are currently pending your approval\. Select the endpoint, choose **Actions**, and choose **Accept endpoint connection request** to accept the connection or **Reject endpoint connection request** to reject it\.
-
-**To accept or reject a connection request using the AWS CLI**
-
-1. The view the endpoint connections that are pending acceptance, use the [describe\-vpc\-endpoint\-connections](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-connections.html) command and filter by the `pendingAcceptance` state\.
-
-   ```
-   aws ec2 describe-vpc-endpoint-connections --filters Name=vpc-endpoint-state,Values=pendingAcceptance
-   ```
-
-   ```
-   {
-       "VpcEndpointConnections": [
-           {
-               "VpcEndpointId": "vpce-0c1308d7312217abc", 
-               "ServiceId": "vpce-svc-03d5ebb7d9579a2b3", 
-               "CreationTimestamp": "2017-11-30T10:00:24.350Z", 
-               "VpcEndpointState": "pendingAcceptance", 
-               "VpcEndpointOwner": "123456789012"
-           }
-       ]
-   }
-   ```
-
-1. To accept an endpoint connection request, use the [accept\-vpc\-endpoint\-connections](https://docs.aws.amazon.com/cli/latest/reference/ec2/accept-vpc-endpoint-connections.html) command and specify the endpoint ID and endpoint service ID\.
-
-   ```
-   aws ec2 accept-vpc-endpoint-connections --service-id vpce-svc-03d5ebb7d9579a2b3 --vpc-endpoint-ids vpce-0c1308d7312217abc
-   ```
-
-1. To reject an endpoint connection request, use the [reject\-vpc\-endpoint\-connections](https://docs.aws.amazon.com/cli/latest/reference/ec2/reject-vpc-endpoint-connections.html) command\.
-
-   ```
-   aws ec2 reject-vpc-endpoint-connections --service-id vpce-svc-03d5ebb7d9579a2b3 --vpc-endpoint-ids vpce-0c1308d7312217abc
-   ```
-
-**To accept and reject endpoint connections using the AWS Tools for Windows PowerShell or API**
-+ [Confirm\-EC2EndpointConnection](https://docs.aws.amazon.com/powershell/latest/reference/items/Confirm-EC2EndpointConnection.html) and [Deny\-EC2EndpointConnection](https://docs.aws.amazon.com/powershell/latest/reference/items/Deny-EC2EndpointConnection.html) \(AWS Tools for Windows PowerShell\)
-+ [AcceptVpcEndpointConnections](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-AcceptVpcEndpointConnections.html) and [RejectVpcEndpointConnections](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-RejectVpcEndpointConnections.html) \(Amazon EC2 Query API\)
-
-## Creating and Managing a Notification for an Endpoint Service<a name="create-notification-endpoint-service"></a>
-
-You can create a notification to receive alerts for specific events that occur on the endpoints that are attached to your endpoint service\. For example, you can receive an email when an endpoint request is accepted or rejected for your endpoint service\. To create a notification, you must associate an Amazon SNS topic with the notification\. You can subscribe to the SNS topic to receive an email notification when an endpoint event occurs\. For more information, see the [Amazon Simple Notification Service Developer Guide](https://docs.aws.amazon.com/sns/latest/dg/)\.
-
-The Amazon SNS topic that you use for notifications must have a topic policy that allows the Amazon VPC endpoint service to publish notifications on your behalf\. Ensure that you include the following statement in your topic policy\. For more information, see [Managing Access to Your Amazon SNS Topics](https://docs.aws.amazon.com/sns/latest/dg/AccessPolicyLanguage.html) in the *Amazon Simple Notification Service Developer Guide*\.
-
-```
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "vpce.amazonaws.com"
-      },
-      "Action": "SNS:Publish",
-      "Resource": "arn:aws:sns:region:account:topic-name"
-    }
-  ]
-}
-```
-
-**To create a notification for an endpoint service**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Endpoint Services** and select your endpoint service\.
-
-1. Choose **Notifications**, **Create Notification**\.
-
-1. Choose the ARN for the SNS topic to associate with the notification\.
-
-1. For **Events**, select the endpoint events for which to receive notifications\.
-
-1. Choose **Create Notification**\.
-
-After you create a notification, you can change the SNS topic that's associated with the notification, or you can specify different endpoint events for the notification\.
-
-**To modify a notification for an endpoint service**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Endpoint Services** and select your endpoint service\.
-
-1. Choose **Notifications**, **Actions**, **Modify Notification**\.
-
-1. Specify the ARN for the SNS topic and select or deselect the endpoint events as required\.
-
-1. Choose **Modify Notification**\.
-
-If you no longer need a notification, you can delete it\.
-
-**To delete a notification**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Endpoint Services** and select your endpoint service\.
-
-1. Choose **Notifications**, **Actions**, **Delete Notification**\.
-
-1. Choose **Yes, Delete**\.
-
-**To create and manage a notification using the AWS CLI**
-
-1. To create a notification for an endpoint service, use the [create\-vpc\-endpoint\-connection\-notification](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-vpc-endpoint-connection-notification.html) command and specify the ARN of the SNS topic, the events for which to be notified, and the ID of the endpoint service; for example:
-
-   ```
-   aws ec2 create-vpc-endpoint-connection-notification --connection-notification-arn arn:aws:sns:us-east-2:123456789012:VpceNotification --connection-events Connect Accept Delete Reject --service-id vpce-svc-1237881c0d25a3abc
-   ```
-
-   ```
-   {
-       "ConnectionNotification": {
-           "ConnectionNotificationState": "Enabled", 
-           "ConnectionNotificationType": "Topic", 
-           "ServiceId": "vpce-svc-1237881c0d25a3abc", 
-           "ConnectionEvents": [
-               "Reject",
-               "Accept",
-               "Delete",
-               "Connect"
-           ], 
-           "ConnectionNotificationId": "vpce-nfn-008776de7e03f5abc", 
-           "ConnectionNotificationArn": "arn:aws:sns:us-east-2:123456789012:VpceNotification"
-       }
-   }
-   ```
-
-1. To view your notifications, use the [describe\-vpc\-endpoint\-connection\-notifications](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-connection-notifications.html) command:
-
-   ```
-   aws ec2 describe-vpc-endpoint-connection-notifications
-   ```
-
-1. To change the SNS topic or endpoint events for the notification, use the [modify\-vpc\-endpoint\-connection\-notification](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-vpc-endpoint-connection-notification.html) command; for example:
-
-   ```
-   aws ec2 modify-vpc-endpoint-connection-notification --connection-notification-id vpce-nfn-008776de7e03f5abc --connection-events Accept Reject --connection-notification-arn arn:aws:sns:us-east-2:123456789012:mytopic
-   ```
-
-1. To delete a notification, use the [delete\-vpc\-endpoint\-connection\-notifications](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-vpc-endpoint-connection-notifications.html) command:
-
-   ```
-   aws ec2 delete-vpc-endpoint-connection-notifications --connection-notification-ids vpce-nfn-008776de7e03f5abc
-   ```
-
-**To create and manage a notification using the AWS Tools for Windows PowerShell or API**
-+ [New\-EC2VpcEndpointConnectionNotification](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2VpcEndpointConnectionNotification.html), [Get\-EC2EndpointConnectionNotification](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2EndpointConnectionNotification.html), [Edit\-EC2VpcEndpointConnectionNotification](https://docs.aws.amazon.com/powershell/latest/reference/items/Edit-EC2VpcEndpointConnectionNotification.html), and [Remove\-EC2EndpointConnectionNotification](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2EndpointConnectionNotification.html) \(AWS Tools for Windows PowerShell\)
-+ [CreateVpcEndpointConnectionNotification](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-CreateVpcEndpointConnectionNotification.html), [DescribeVpcEndpointConnectionNotifications](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-DescribeVpcEndpointConnectionNotifications.html), [ModifyVpcEndpointConnectionNotification](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-ModifyVpcEndpointConnectionNotification.html), and [DeleteVpcEndpointConnectionNotifications](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-DeleteVpcEndpointConnectionNotifications.html) \(Amazon EC2 Query API\)
-
-## Using Proxy Protocol for Connection Information<a name="endpoint-service-proxy-protocol"></a>
-
-A Network Load Balancer provides source IP addresses to your application \(your service\)\. When service consumers send traffic to your service through an interface endpoint, the source IP addresses provided to your application are the private IP addresses of the Network Load Balancer nodes, and not the IP addresses of the service consumers\.
-
-If you need the IP addresses of the service consumers and their corresponding interface endpoint IDs, enable Proxy Protocol on your load balancer and get the client IP addresses from the Proxy Protocol header\. For more information, see [Proxy Protocol](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-target-groups.html#proxy-protocol) in the *User Guide for Network Load Balancers*\.
-
-## Adding or Removing VPC Endpoint Service Tags<a name="modify-tags-vpc-endpoint-service-tags"></a>
-
-Tags provide a way to identify the VPC endpoint service\. You can add or remove a tag\.
-
-**To add or remove a VPC endpoint service tag**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Endpoint Services**\.
-
-1. Select the VPC endpoint service and choose **Actions**, **Add/Edit Tags**\.
-
-1. Add or remove a tag\.
-
-   \[Add a tag\] Choose **Create tag** and do the following:
-   + For **Key**, enter the key name\.
-   + For **Value**, enter the key value\.
-
-   \[Remove a tag\] Choose the delete button \(“x”\) to the right of the tag’s Key and Value\.
-
-**To add or remove a tag using the AWS Tools for Windows PowerShell or an API**
-+ [create\-tags](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-tags.html) \(AWS CLI\) 
-+ [CreateTags](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateTags.html) \(AWS Tools for Windows PowerShell\)
-+ [delete\-tags](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-tags.html) \(AWS CLI\) 
-+ [DeleteTags](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DeleteTags.html) \(AWS Tools for Windows PowerShell\)
-
-## Deleting an Endpoint Service Configuration<a name="delete-endpoint-service"></a>
-
-You can delete an endpoint service configuration\. Deleting the configuration does not delete the application hosted in your VPC or the associated load balancers\. 
-
-Before you delete the endpoint service configuration, you must reject any `available` or `pending-acceptance` VPC endpoints that are attached to the service\. For more information, see [Accepting and Rejecting Interface Endpoint Connection Requests](#accept-reject-endpoint-requests)\.
-
-**To delete an endpoint service configuration using the console**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Endpoint Services** and select the service\.
-
-1. Choose **Actions**, **Delete**\.
-
-1. Choose **Yes, Delete**\.
-
-**To delete an endpoint service configuration using the AWS CLI**
-+ Use the [delete\-vpc\-endpoint\-service\-configurations](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-vpc-endpoint-service-configurations.html) command and specify the ID of the service\. 
-
-  ```
-  aws ec2 delete-vpc-endpoint-service-configurations --service-ids vpce-svc-03d5ebb7d9579a2b3
-  ```
-
-**To delete an endpoint service configuration using the AWS Tools for Windows PowerShell or API**
-+ [Remove\-EC2EndpointServiceConfiguration](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2EndpointServiceConfiguration.html) \(AWS Tools for Windows PowerShell\)
-+ [DeleteVpcEndpointServiceConfigurations](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-DeleteVpcEndpointServiceConfigurations.html) \(Amazon EC2 Query API\)
++ Review the security best practices and examples for endpoint services\. For more information, see [Policy Best Practices](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-policy-examples.html#security_iam_service-with-iam-policy-best-practices) and [Controlling Access to Services with VPC Endpoints](vpc-endpoints-access.md)\.
+
+**Topics**
++ [Creating a VPC Endpoint Service Configuration](create-endpoint-service.md)
++ [Adding and Removing Permissions for Your Endpoint Service](add-endpoint-service-permissions.md)
++ [Changing the Network Load Balancers and Acceptance Settings](modify-endpoint-service.md)
++ [Accepting and Rejecting Interface Endpoint Connection Requests](accept-reject-endpoint-requests.md)
++ [Creating and Managing a Notification for an Endpoint Service](create-notification-endpoint-service.md)
++ [Using Proxy Protocol for Connection Information](endpoint-service-proxy-protocol.md)
++ [Adding or Removing VPC Endpoint Service Tags](modify-tags-vpc-endpoint-service-tags.md)
++ [Deleting an Endpoint Service Configuration](delete-endpoint-service.md)

@@ -1,8 +1,8 @@
 # VPC Endpoints<a name="vpc-endpoints"></a>
 
-A VPC endpoint enables you to privately connect your VPC to supported AWS services and VPC endpoint services powered by PrivateLink without requiring an internet gateway, NAT device, VPN connection, or AWS Direct Connect connection\. Instances in your VPC do not require public IP addresses to communicate with resources in the service\. Traffic between your VPC and the other service does not leave the Amazon network\. 
+A VPC endpoint enables you to privately connect your VPC to supported AWS services and VPC endpoint services powered by AWS PrivateLink without requiring an internet gateway, NAT device, VPN connection, or AWS Direct Connect connection\. Instances in your VPC do not require public IP addresses to communicate with resources in the service\. Traffic between your VPC and the other service does not leave the Amazon network\. 
 
-Endpoints are virtual devices\. They are horizontally scaled, redundant, and highly available VPC components that allow communication between instances in your VPC and services without imposing availability risks or bandwidth constraints on your network traffic\.
+Endpoints are virtual devices\. They are horizontally scaled, redundant, and highly available VPC components\. They allow communication between instances in your VPC and services without imposing availability risks or bandwidth constraints on your network traffic\.
 
 There are two types of VPC endpoints: *interface endpoints* and *gateway endpoints*\. Create the type of VPC endpoint required by the supported service\.
 
@@ -52,7 +52,7 @@ An [interface endpoint](vpce-interface.md) is an elastic network interface with 
 + [AWS Transfer for SFTP](https://docs.aws.amazon.com/transfer/latest/userguide/create-server-vpc.html)
 +  [Amazon WorkSpaces](https://docs.aws.amazon.com/workspaces/latest/adminguide/infrastructure-security.html#interface-vpc-endpoint) 
 + [Endpoint services](endpoint-service.md) hosted by other AWS accounts
-+ Supported AWS Marketplace partner services
++ Supported AWS Marketplace Partner services
 
 **Gateway Endpoints**
 
@@ -61,7 +61,7 @@ A [gateway endpoint](vpce-gateway.md) is a gateway that you specify as a target 
 + DynamoDB
 
 **Controlling the Use of VPC Endpoints**  
-By default, IAM users do not have permission to work with endpoints\. You can create an IAM user policy that grants users the permissions to create, modify, describe, and delete endpoints\. We currently do not support resource\-level permissions for any of the `ec2:*VpcEndpoint*` API actions, or for the `ec2:DescribePrefixLists` action\. You cannot create an IAM policy that grants users the permissions to use a specific endpoint or prefix list\. The following is an example:
+By default, IAM users do not have permission to work with endpoints\. You can create an IAM user policy that grants users the permissions to create, modify, describe, and delete endpoints\. We currently do not support resource\-level permissions for any of the `ec2:*VpcEndpoint*` API actions, or for the `ec2:DescribePrefixLists` action\. You cannot create an IAM policy that grants users the permissions to use a specific endpoint or prefix list\. The following is an example\.
 
 ```
 {

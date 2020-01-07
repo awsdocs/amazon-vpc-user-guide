@@ -10,7 +10,6 @@ You can use the following components to configure networking in your VPC:
 + [DHCP Options Sets](VPC_DHCP_Options.md)
 + [DNS](vpc-dns.md)
 + [Elastic IP Addresses](vpc-eips.md)
-+ [VPC Endpoints](vpc-endpoints.md)
 + [NAT](vpc-nat.md)
 + [VPC Peering](vpc-peering.md)
 + [ClassicLink](vpc-classiclink.md)

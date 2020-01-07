@@ -1,7 +1,7 @@
 # Amazon Virtual Private Cloud User Guide
 
 -----
-*****Copyright &copy; 2019 Amazon Web Services, Inc. and/or its affiliates. All rights reserved.*****
+*****Copyright &copy; 2020 Amazon Web Services, Inc. and/or its affiliates. All rights reserved.*****
 
 -----
 Amazon's trademarks and trade dress may not be used in 
@@ -75,6 +75,8 @@ Amazon's trademarks and trade dress may not be used in
    + [Using DNS with Your VPC](vpc-dns.md)
    + [VPC Peering](vpc-peering.md)
    + [Elastic IP Addresses](vpc-eips.md)
+   + [ClassicLink](vpc-classiclink.md)
++ [VPC Endpoints and VPC Endpoint Services (AWS PrivateLink)](endpoint-services-overview.md)
    + [VPC Endpoints](vpc-endpoints.md)
       + [Interface VPC Endpoints (AWS PrivateLink)](vpce-interface.md)
       + [Gateway VPC Endpoints](vpce-gateway.md)
@@ -83,7 +85,14 @@ Amazon's trademarks and trade dress may not be used in
       + [Controlling Access to Services with VPC Endpoints](vpc-endpoints-access.md)
       + [Deleting a VPC Endpoint](delete-vpc-endpoint.md)
    + [VPC Endpoint Services (AWS PrivateLink)](endpoint-service.md)
-   + [ClassicLink](vpc-classiclink.md)
+   + [Private DNS Name](verify-domains.md)
+      + [VPC Endpoint Service Private DNS Name Verification](endpoint-services-dns-validation.md)
+      + [Modifying an Existing Endpoint Service Private DNS Name](modify-vpc-endpoint-service-dns-name.md)
+      + [Viewing Endpoint Service Private DNS Name Configuration](view-vpc-endpoint-service-dns-name.md)
+      + [Manually Initiating the Endpoint Service Private DNS Name Domain Verification](verify-vpc-endpoint-service-dns-name.md)
+      + [Removing an Endpoint Service Private DNS Name](remove-vpc-endpoint-service-dns-name.md)
+      + [Amazon VPC Private DNS Name Domain Verification TXT Records](dns-txt-records.md)
+      + [Troubleshooting Common Private DNS Domain Verification Problems](domain-verification-problems.md)
 + [VPN Connections](vpn-connections.md)
 + [Amazon VPC Quotas](amazon-vpc-limits.md)
 + [Document History](WhatsNew.md)

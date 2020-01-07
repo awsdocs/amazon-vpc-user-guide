@@ -1,0 +1,5 @@
+# Using Proxy Protocol for Connection Information<a name="endpoint-service-proxy-protocol"></a>
+
+A Network Load Balancer provides source IP addresses to your application \(your service\)\. When service consumers send traffic to your service through an interface endpoint, the source IP addresses provided to your application are the private IP addresses of the Network Load Balancer nodes, and not the IP addresses of the service consumers\.
+
+If you need the IP addresses of the service consumers and their corresponding interface endpoint IDs, enable Proxy Protocol on your load balancer and get the client IP addresses from the Proxy Protocol header\. For more information, see [Proxy Protocol](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-target-groups.html#proxy-protocol) in the *User Guide for Network Load Balancers*\.

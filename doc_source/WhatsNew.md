@@ -5,6 +5,7 @@ The following table describes the important changes in each release of the *Amaz
 
 | Feature | API Version | Description | Release Date | 
 | --- | --- | --- | --- | 
+| Private DNS Name  | 2016\-11\-15 | You can now access AWS PrivateLink based services privately from within your VPC using Private DNS names\. For more information, see [Private DNS Name](verify-domains.md)\. | 6 January 2020 | 
 | Gateway route tables | 2016\-11\-15 | You can associate a route table with a gateway and route inbound VPC traffic to a specific network interface in your VPC\. For more information, see [Gateway Route Tables](VPC_Route_Tables.md#gateway-route-table)\. | 3 December 2019 | 
 | Flow logs enhancements | 2016\-11\-15 | You can specify a custom format for your flow log and choose which fields to return in the flow log records\. For more information, see [VPC Flow Logs](flow-logs.md)\. | 11 September 2019 | 
 | Inter\-region peering | 2016\-11\-15 | DNS hostname resolution is supported for inter\-region VPC peering connections in the Asia Pacific \(Hong Kong\) Region\. For more information, see the [Amazon VPC Peering Guide](https://docs.aws.amazon.com/vpc/latest/peering/)\. | 26 August 2019 | 

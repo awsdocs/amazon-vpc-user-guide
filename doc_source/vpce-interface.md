@@ -1,6 +1,6 @@
 # Interface VPC Endpoints \(AWS PrivateLink\)<a name="vpce-interface"></a>
 
-An interface VPC endpoint \(interface endpoint\) enables you to connect to services powered by AWS PrivateLink\. These services include some AWS services, services hosted by other AWS customers and partners in their own VPCs \(referred to as *endpoint services*\), and supported AWS Marketplace partner services\. The owner of the service is the *service provider*, and you, as the principal creating the interface endpoint, are the *service consumer*\.
+An interface VPC endpoint \(interface endpoint\) enables you to connect to services powered by AWS PrivateLink\. These services include some AWS services, services hosted by other AWS customers and Partners in their own VPCs \(referred to as *endpoint services*\), and supported AWS Marketplace Partner services\. The owner of the service is the *service provider*, and you, as the principal creating the interface endpoint, are the *service consumer*\.
 
 The following services are supported:
 + [Amazon API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-private-apis.html)
@@ -46,7 +46,7 @@ The following services are supported:
 + [AWS Transfer for SFTP](https://docs.aws.amazon.com/transfer/latest/userguide/create-server-vpc.html)
 +  [Amazon WorkSpaces](https://docs.aws.amazon.com/workspaces/latest/adminguide/infrastructure-security.html#interface-vpc-endpoint) 
 + [Endpoint services](endpoint-service.md) hosted by other AWS accounts
-+ Supported AWS Marketplace partner services
++ Supported AWS Marketplace Partner services
 
 The following are the general steps for setting up an interface endpoint:
 
@@ -58,16 +58,16 @@ An endpoint network interface is a requester\-managed network interface\. You ca
 
 1. Specify the security groups to associate with the endpoint network interface\. The security group rules control the traffic to the endpoint network interface from resources in your VPC\. If you do not specify a security group, we associate the default security group for the VPC\.
 
-1. \(Optional, AWS services and AWS Marketplace partner services only\) Enable [private DNS](#vpce-private-dns) for the endpoint to enable you to make requests to the service using its default DNS hostname\.
+1. \(Optional, AWS services and AWS Marketplace Partner services only\) Enable [private DNS](#vpce-private-dns) for the endpoint to enable you to make requests to the service using its default DNS hostname\.
 **Important**  
-Private DNS is enabled by default for endpoints created for AWS services and AWS Marketplace partner services\.   
+Private DNS is enabled by default for endpoints created for AWS services and AWS Marketplace Partner services\.   
 Private DNS is enabled in the other subnets which are in the same VPC and Availability Zone or Local Zone\.
 
 1. When the service provider and the consumer are in different accounts, see [Interface Endpoint Availability Zone Considerations](#vpce-interface-availability-zones) for information about how to use Availability Zone IDs to identify the interface endpoint Availability Zone\.
 
 1. After you create the interface endpoint, it's available to use when it's accepted by the service provider\. The service provider must configure the service to accept requests automatically or manually\. AWS services and AWS Marketplace services generally accept all endpoint requests automatically\. For more information about the lifecycle of an endpoint, see [Interface Endpoint Lifecycle](#vpce-interface-lifecycle)\.
 
-Services cannot initiate requests to resources in your VPC through the endpoint\. An endpoint only returns responses to traffic initiated from resources in your VPC\. Before you integrate a service and an endpoint, review the service specific VPC endpoint documentation for any service specific configuration, and limitations\. 
+Services cannot initiate requests to resources in your VPC through the endpoint\. An endpoint only returns responses to traffic that is initiated from resources in your VPC\. Before you integrate a service and an endpoint, review the service\-specific VPC endpoint documentation for any service\-specific configuration and limitations\. 
 
 **Topics**
 + [Private DNS](#vpce-private-dns)
@@ -84,13 +84,13 @@ Services cannot initiate requests to resources in your VPC through the endpoint\
 
 ## Private DNS<a name="vpce-private-dns"></a>
 
-When you create an interface endpoint, we generate endpoint\-specific DNS hostnames that you can use to communicate with the service\. For AWS services and AWS Marketplace partner services, private DNS \(enabled by default\) associates a private hosted zone with your VPC\. The hosted zone contains a record set for the default DNS name for the service \(for example, `ec2.us-east-1.amazonaws.com`\) that resolves to the private IP addresses of the endpoint network interfaces in your VPC\. This enables you to make requests to the service using its default DNS hostname instead of the endpoint\-specific DNS hostnames\. For example, if your existing applications make requests to an AWS service, they can continue to make requests through the interface endpoint without requiring any configuration changes\. 
+When you create an interface endpoint, we generate endpoint\-specific DNS hostnames that you can use to communicate with the service\. For AWS services and AWS Marketplace Partner services, private DNS \(enabled by default\) associates a private hosted zone with your VPC\. The hosted zone contains a record set for the default DNS name for the service \(for example, `ec2.us-east-1.amazonaws.com`\) that resolves to the private IP addresses of the endpoint network interfaces in your VPC\. This enables you to make requests to the service using its default DNS hostname instead of the endpoint\-specific DNS hostnames\. For example, if your existing applications make requests to an AWS service, they can continue to make requests through the interface endpoint without requiring any configuration changes\. 
 
-In the following diagram, you have created an interface endpoint for Amazon Kinesis Data Streams and an endpoint network interface in subnet 2\. You have not enabled private DNS for the interface endpoint\. Instances in either subnet can communicate with Amazon Kinesis Data Streams through the interface endpoint using an endpoint\-specific DNS hostname \(DNS name B\)\. Instance in subnet 1 can communicate with Amazon Kinesis Data Streams over public IP address space in the AWS Region using the default DNS name for the service \(DNS name A\)\.
+In the example shown in the following diagram, there is an interface endpoint for Amazon Kinesis Data Streams and an endpoint network interface in subnet 2\. Private DNS for the interface endpoint has not been enabled, and the private DNS name \(for example, `myPrivateLinkService.example.com`\) has not been specified\. Instances in either subnet can communicate with Amazon Kinesis Data Streams through the interface endpoint using an endpoint\-specific DNS hostname \(DNS name B\)\. Instances in subnet 1 can communicate with Amazon Kinesis Data Streams over public IP address space in the AWS Region using the private DNS name\.
 
 ![\[Using an interface endpoint to access Kinesis\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-kinesis-diagram.png)
 
-In the next diagram, you have enabled private DNS for the endpoint\. Instances in either subnet can communicate with Amazon Kinesis Data Streams through the interface endpoint using an endpoint\-specific DNS hostname \(DNS name B\) or the default DNS name for the service \(DNS name A\)\.
+In the next diagram, private DNS for the endpoint has been enabled, and a private DNS name is assigned\. Instances in either subnet can communicate with Amazon Kinesis Data Streams through the interface endpoint using the private DNS name\.
 
 ![\[Using an interface endpoint to access Kinesis\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-kinesis-private-dns-diagram.png)
 
@@ -102,14 +102,14 @@ To use private DNS, you must set the following VPC attributes to `true`: `enable
 To use interface endpoints, you need to be aware of their properties and current limitations:
 + For each interface endpoint, you can choose only one subnet per Availability Zone\.
 + Interface endpoints support the use of policies for services that support endpoint policies\. For information about the services that support policies, see [Controlling Access to Services with VPC Endpoints](vpc-endpoints-access.md)\.
-+ Services may not be available in all Availability Zones through an interface endpoint\. To find out which Availability Zones are supported, use the [describe\-vpc\-endpoint\-services](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-services.html) command or use the Amazon VPC console\. For more information, see [Creating an Interface Endpoint](#create-interface-endpoint)\.
-+ When you create an interface endpoint, the endpoint is created in the Availability Zone that is mapped to your account and is independent from other accounts\. When the service provider and the consumer are in different accounts, see [Interface Endpoint Availability Zone Considerations](#vpce-interface-availability-zones) for information about how to use Availability Zone IDs to identify the interface endpoint Availability Zone\.
-+ Each interface endpoint can support a bandwidth of up to 10 Gbps per Availability Zone by default\. Additional capacity may be added automatically based on your usage\.
-+ If the network ACL for your subnet restricts traffic, you may not be able to send traffic through the endpoint network interface\. Ensure that you add appropriate rules that allow traffic to and from the CIDR block of the subnet\.
++ Services might not be available in all Availability Zones through an interface endpoint\. To find out which Availability Zones are supported, use the [describe\-vpc\-endpoint\-services](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-services.html) command or use the Amazon VPC console\. For more information, see [Creating an Interface Endpoint](#create-interface-endpoint)\.
++ When you create an interface endpoint, the endpoint is created in the Availability Zone that is mapped to your account and that is independent from other accounts\. When the service provider and the consumer are in different accounts, see [Interface Endpoint Availability Zone Considerations](#vpce-interface-availability-zones) for information about how to use Availability Zone IDs to identify the interface endpoint Availability Zone\.
++ By default, each interface endpoint can support a bandwidth of up to 10 Gbps per Availability Zone\. Additional capacity can be added automatically based on your usage\.
++ If the network ACL for your subnet restricts traffic, you might not be able to send traffic through the endpoint network interface\. Ensure that you add appropriate rules that allow traffic to and from the CIDR block of the subnet\.
 + An interface endpoint supports TCP traffic only\.
 + When you create an endpoint, you can attach an endpoint policy to it that controls access to the service to which you are connecting\. For more information, see [Policy Best Practices](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-policy-examples.html#security_iam_service-with-iam-policy-best-practices) and [Controlling Access to Services with VPC Endpoints](vpc-endpoints-access.md)\.
 + Review the service\-specific limits for your endpoint service\.
-+ Endpoints are supported within the same region only\. You cannot create an endpoint between a VPC and a service in a different region\.
++ Endpoints are supported within the same Region only\. You cannot create an endpoint between a VPC and a service in a different Region\.
 + Endpoints support IPv4 traffic only\.
 + You cannot transfer an endpoint from one VPC to another, or from one service to another\.
 + You have a quota on the number of endpoints you can create per VPC\. For more information, see [VPC Endpoints](amazon-vpc-limits.md#vpc-limits-endpoints)\.
@@ -122,7 +122,7 @@ You can use the following types of connections for a connection between an inter
 
 ## Interface Endpoint Lifecycle<a name="vpce-interface-lifecycle"></a>
 
-An interface endpoint goes through various stages starting from when you create it \(the endpoint connection request\)\. At each stage, there may be actions that the service consumer and service provider can take\.
+An interface endpoint goes through various stages starting from when you create it \(the endpoint connection request\)\. At each stage, there might be actions that the service consumer and service provider can take\.
 
 ![\[Interface endpoint lifecycle\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/interface-endpoint-lifecycle-diagram.png)
 
@@ -133,9 +133,9 @@ The following rules apply:
 
 ## Interface Endpoint Availability Zone Considerations<a name="vpce-interface-availability-zones"></a>
 
-When you create an interface endpoint, the endpoint is created in the Availability Zone that is mapped to your account and is independent from other accounts\. When the service provider and the consumer are in different accounts, use the Availability Zone ID to uniquely and consistently identify the interface endpoint Availability Zone\. For example, `use1-az1` is an AZ ID for the `us-east-1` Region and maps to the same location in every AWS account\. For information about Availability Zone IDs, see [AZ IDs for Your Resources](https://docs.aws.amazon.com/ram/latest/userguide/working-with-az-ids.html) in the *AWS RAM User Guide* or use [describe\-availability\-zones](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-availability-zones.html)\. 
+When you create an interface endpoint, the endpoint is created in the Availability Zone that is mapped to your account and that is independent from other accounts\. When the service provider and the consumer are in different accounts, use the Availability Zone ID to uniquely and consistently identify the interface endpoint Availability Zone\. For example, `use1-az1` is an Availability Zone ID for the `us-east-1` Region and maps to the same location in every AWS account\. For information about Availability Zone IDs, see [AZ IDs for Your Resources](https://docs.aws.amazon.com/ram/latest/userguide/working-with-az-ids.html) in the *AWS RAM User Guide* or use [describe\-availability\-zones](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-availability-zones.html)\. 
 
-Services may not be available in all Availability Zones through an interface endpoint\. You can use any of the following operations to find out which Availability Zones are supported for a service:
+Services might not be available in all Availability Zones through an interface endpoint\. You can use any of the following operations to find out which Availability Zones are supported for a service:
 + [describe\-vpc\-endpoint\-services](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-services.html) \(AWS CLI\)
 + [DescribeVpcEndpointServices](https://docs.aws.amazon.com/AWSEC2/latest/APIReference//API_DescribeVpcEndpointServices.html) \(API\)
 + The Amazon VPC console when you create an interface endpoint\. For more information, see [Creating an Interface Endpoint](#create-interface-endpoint)\.
@@ -148,10 +148,10 @@ You are charged for creating and using an interface endpoint to a service\. Hour
 
 To create an interface endpoint, you must specify the VPC in which to create the interface endpoint, and the service to which to establish the connection\. 
 
-For AWS services, or AWS Marketplace partner services, you can optionally enable [private DNS](#vpce-private-dns) for the endpoint to enable you to make requests to the service using its default DNS hostname\.
+For AWS services, or AWS Marketplace Partner services, you can optionally enable [private DNS](#vpce-private-dns) for the endpoint to enable you to make requests to the service using its default DNS hostname\.
 
 **Important**  
-Private DNS is enabled by default for endpoints created for AWS services and AWS Marketplace partner services\. 
+Private DNS is enabled by default for endpoints created for AWS services and AWS Marketplace Partner services\. 
 
 For specific information for AWS services, see [VPC Endpoints](vpc-endpoints.md)\.
 
@@ -168,11 +168,11 @@ For specific information for AWS services, see [VPC Endpoints](vpc-endpoints.md)
 1. Complete the following information and then choose **Create endpoint**\.
    + For **VPC**, select a VPC in which to create the endpoint\.
    + For **Subnets**, select the subnets \(Availability Zones\) in which to create the endpoint network interfaces\.
-**Note**  
-Not all Availability Zones may be supported for all AWS services\.
+
+     Not all Availability Zones may be supported for all AWS services\.
    + To enable private DNS for the interface endpoint, for **Enable Private DNS Name**, select the check box\.
-**Note**  
-This option is enabled by default\. To use the private DNS option, the following attributes of your VPC must be set to `true`: `enableDnsHostnames` and `enableDnsSupport`\. For more information, see [Viewing and Updating DNS Support for Your VPC](vpc-dns.md#vpc-dns-updating)\.
+
+     This option is enabled by default\. To use the private DNS option, the following attributes of your VPC must be set to `true`: `enableDnsHostnames` and `enableDnsSupport`\. For more information, see [Viewing and Updating DNS Support for Your VPC](vpc-dns.md#vpc-dns-updating)\.
    + For **Security group**, select the security groups to associate with the endpoint network interfaces\.
 
 To create an interface endpoint to an endpoint service, you must have the name of the service to which to connect\. The service provider can provide you with the name\. 
@@ -190,13 +190,13 @@ To create an interface endpoint to an endpoint service, you must have the name o
 1. Complete the following information and then choose **Create endpoint**\.
    + For **VPC**, select a VPC in which to create the endpoint\.
    + For **Subnets**, select the subnets \(Availability Zones\) in which to create the endpoint network interfaces\.
-**Note**  
-Not all Availability Zones may be supported for the service\.
+
+     Not all Availability Zones may be supported for the service\.
    + For **Security group**, select the security groups to associate with the endpoint network interfaces\.
 
-**To create an interface endpoint to an AWS Marketplace partner service**
+**To create an interface endpoint to an AWS Marketplace Partner service**
 
-1. Go to the [PrivateLink](https://aws.amazon.com/marketplace/saas/privatelink) page on AWS Marketplace and subscribe to a service from a software as a service \(SaaS\) provider\. Services that support interface endpoints include an option to connect via an endpoint\.
+1. Go to the [PrivateLink](https://aws.amazon.com/marketplace/saas/privatelink) page in AWS Marketplace and subscribe to a service from a software as a service \(SaaS\) provider\. Services that support interface endpoints include an option to connect via an endpoint\.
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
@@ -209,8 +209,8 @@ Not all Availability Zones may be supported for the service\.
 1. Complete the following information and then choose **Create endpoint**\.
    + For **VPC**, select a VPC in which to create the endpoint\.
    + For **Subnets**, select the subnets \(Availability Zones\) in which to create the endpoint network interfaces\.
-**Note**  
-Not all Availability Zones may be supported for the service\.
+
+     Not all Availability Zones may be supported for the service\.
    + For **Security group**, select the security groups to associate with the endpoint network interfaces\.
 
 **To create an interface endpoint using the AWS CLI**
@@ -392,7 +392,7 @@ The Amazon SNS topic that you use for notifications must have a topic policy tha
 
 1. Choose **Create Notification**\.
 
-After you create a notification, you can change the SNS topic that's associated with the notification, or you can specify different endpoint events for the notification\.
+After you create a notification, you can change the SNS topic that's associated with the notification\. You can also specify different endpoint events for the notification\.
 
 **To modify a notification for an endpoint service**
 
@@ -420,25 +420,25 @@ If you no longer need a notification, you can delete it\.
 
 **To create and manage a notification using the AWS CLI**
 
-1. To create a notification for an interface endpoint, use the [create\-vpc\-endpoint\-connection\-notification](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-vpc-endpoint-connection-notification.html) command and specify the ARN of the SNS topic, the events for which to be notified, and the ID of the endpoint; for example:
+1. To create a notification for an interface endpoint, use the [create\-vpc\-endpoint\-connection\-notification](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-vpc-endpoint-connection-notification.html) command\. Specify the ARN of the SNS topic, the events for which to be notified, and the ID of the endpoint, as shown in the following example\.
 
    ```
    aws ec2 create-vpc-endpoint-connection-notification --connection-notification-arn arn:aws:sns:us-east-2:123456789012:EndpointNotification --connection-events Accept Reject --vpc-endpoint-id vpce-123abc3420c1931d7
    ```
 
-1. To view your notifications, use the [describe\-vpc\-endpoint\-connection\-notifications](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-connection-notifications.html) command:
+1. To view your notifications, use the [describe\-vpc\-endpoint\-connection\-notifications](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-connection-notifications.html) command\.
 
    ```
    aws ec2 describe-vpc-endpoint-connection-notifications
    ```
 
-1. To change the SNS topic or endpoint events for the notification, use the [modify\-vpc\-endpoint\-connection\-notification](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-vpc-endpoint-connection-notification.html) command; for example:
+1. To change the SNS topic or endpoint events for the notification, use the [modify\-vpc\-endpoint\-connection\-notification](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-vpc-endpoint-connection-notification.html) command\.
 
    ```
    aws ec2 modify-vpc-endpoint-connection-notification --connection-notification-id vpce-nfn-008776de7e03f5abc --connection-events Accept --connection-notification-arn arn:aws:sns:us-east-2:123456789012:mytopic
    ```
 
-1. To delete a notification, use the [delete\-vpc\-endpoint\-connection\-notifications](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-vpc-endpoint-connection-notifications.html) command:
+1. To delete a notification, use the [delete\-vpc\-endpoint\-connection\-notifications](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-vpc-endpoint-connection-notifications.html) command\.
 
    ```
    aws ec2 delete-vpc-endpoint-connection-notifications --connection-notification-ids vpce-nfn-008776de7e03f5abc
@@ -447,14 +447,14 @@ If you no longer need a notification, you can delete it\.
 ## Accessing a Service Through an Interface Endpoint<a name="access-service-though-endpoint"></a>
 
 After you've created an interface endpoint, you can submit requests to the supported service via an endpoint URL\. You can use the following:
-+ The endpoint\-specific regional DNS hostname that we generate for the interface endpoint\. The hostname includes a unique endpoint identifier, service identifier, the Region, and `vpce.amazonaws.com` in its name; for example, `vpce-0fe5b17a0707d6abc-29p5708s.ec2.us-east-1.vpce.amazonaws.com`\.
-+ The endpoint\-specific zonal DNS hostname that we generate for each Availability Zone in which the endpoint is available\. The hostname includes the Availability Zone in its name; for example, `vpce-0fe5b17a0707d6abc-29p5708s-us-east-1a.ec2.us-east-1.vpce.amazonaws.com`\. You might use this option if your architecture isolates Availability Zones \(for example, for fault containment or to reduce regional data transfer costs\)\.
-**Note**  
-A request to the zonal DNS hostname is destined to the corresponding Availability Zone location in the service provider's account, which might not have the same Availability Zone name as your account\. For more information, see [Region and Availability Zone Concepts](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-regions-availability-zones)\.
-+ If you have enabled private DNS for the endpoint \(a private hosted zone; applicable to AWS services and AWS Marketplace partner services only\), the default DNS hostname for the AWS service for the Region; for example, `ec2.us-east-1.amazonaws.com`\.
++ The endpoint\-specific Regional DNS hostname that we generate for the interface endpoint\. The hostname includes a unique endpoint identifier, service identifier, the Region, and `vpce.amazonaws.com` in its name\. For example, `vpce-0fe5b17a0707d6abc-29p5708s.ec2.us-east-1.vpce.amazonaws.com`\.
++ The endpoint\-specific zonal DNS hostname that we generate for each Availability Zone in which the endpoint is available\. The hostname includes the Availability Zone in its name\. For example, `vpce-0fe5b17a0707d6abc-29p5708s-us-east-1a.ec2.us-east-1.vpce.amazonaws.com`\. You might use this option if your architecture isolates Availability Zones \(for example, for fault containment or to reduce Regional data transfer costs\)\.
+
+  A request to the zonal DNS hostname is destined to the corresponding Availability Zone location in the service provider's account, which might not have the same Availability Zone name as your account\. For more information, see [Region and Availability Zone Concepts](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-regions-availability-zones)\.
++ If you have enabled private DNS for the endpoint \(a private hosted zone; applicable to AWS services and AWS Marketplace Partner services only\), the default DNS hostname for the AWS service for the Region\. For example, `ec2.us-east-1.amazonaws.com`\.
 + The private IP address of the endpoint network interface in the VPC\.
 
-For example, in a subnet in which you have an interface endpoint to Elastic Load Balancing and for which you have not enabled the private DNS option, use the following AWS CLI command from an instance to describe your load balancers\. The command uses the endpoint\-specific regional DNS hostname to make the request using the interface endpoint:
+For example, in a subnet in which you have an interface endpoint to Elastic Load Balancing and for which you have not enabled the private DNS option, use the following AWS CLI command from an instance to describe your load balancers\. The command uses the endpoint\-specific Regional DNS hostname to make the request using the interface endpoint\.
 
 ```
 aws elbv2 describe-load-balancers --endpoint-url https://vpce-0f89a33420c193abc-bluzidnv.elasticloadbalancing.us-east-1.vpce.amazonaws.com/

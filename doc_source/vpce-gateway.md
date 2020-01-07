@@ -40,7 +40,7 @@ When you create or modify an endpoint, you specify the VPC route tables that are
 | 10\.0\.0\.0/16 | Local | 
 | pl\-1a2b3c4d | vpce\-11bb22cc | 
 
-The prefix list ID logically represents the range of public IP addresses used by the service\. All instances in subnets associated with the specified route tables automatically use the endpoint to access the service; subnets that are not associated with the specified route tables do not use the endpoint\. This enables you to keep resources in other subnets separate from your endpoint\. 
+The prefix list ID logically represents the range of public IP addresses used by the service\. All instances in subnets associated with the specified route tables automatically use the endpoint to access the service\. Subnets that are not associated with the specified route tables do not use the endpoint\. This enables you to keep resources in other subnets separate from your endpoint\. 
 
 To view the current public IP address range for a service, you can use the [describe\-prefix\-lists](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-prefix-lists.html) command\.
 
@@ -48,7 +48,7 @@ To view the current public IP address range for a service, you can use the [desc
 The range of public IP addresses for a service may change from time to time\. Consider the implications before you make routing or other decisions based on the current IP address range for a service\.
 
 The following rules apply:
-+ You can have multiple endpoint routes to different services in a route table, and you can have multiple endpoint routes to the same service in different route tables, but you cannot have multiple endpoint routes to the same service in a single route table\. For example, if you create two endpoints to Amazon S3 in your VPC, you cannot create endpoint routes for both endpoints in the same route table\. 
++ You can have multiple endpoint routes to different services in a route table, and you can have multiple endpoint routes to the same service in different route tables\. But you cannot have multiple endpoint routes to the same service in a single route table\. For example, if you create two endpoints to Amazon S3 in your VPC, you cannot create endpoint routes for both endpoints in the same route table\. 
 + You cannot explicitly add, modify, or delete an endpoint route in your route table by using the route table APIs, or by using the Route Tables page in the Amazon VPC console\. You can only add an endpoint route by associating a route table with an endpoint\. To change the route tables that are associated with your endpoint, you can [modify the endpoint](#modify-gateway-endpoint)\. 
 + An endpoint route is automatically deleted when you remove the route table association from the endpoint \(by modifying the endpoint\), or when you delete your endpoint\. 
 
@@ -106,7 +106,7 @@ To ensure that all traffic destined for Amazon S3 in the same Region is routed v
 
 To use gateway endpoints, you need to be aware of the current limitations:
 + You cannot use a prefix list ID in an outbound rule in a network ACL to allow or deny outbound traffic to the service specified in an endpoint\. If your network ACL rules restrict traffic, you must specify the CIDR block \(IP address range\) for the service instead\. You can, however, use a prefix list ID in an outbound security group rule\. For more information, see [Security Groups](vpc-endpoints-access.md#vpc-endpoints-security-groups)\. 
-+ Endpoints are supported within the same region only\. You cannot create an endpoint between a VPC and a service in a different region\.
++ Endpoints are supported within the same Region only\. You cannot create an endpoint between a VPC and a service in a different Region\.
 + Endpoints support IPv4 traffic only\.
 + You cannot transfer an endpoint from one VPC to another, or from one service to another\.
 + You have a quota on the number of endpoints you can create per VPC\. For more information, see [VPC Endpoints](amazon-vpc-limits.md#vpc-limits-endpoints)\.
@@ -133,7 +133,7 @@ To create an endpoint, you must specify the VPC in which you want to create the 
 1. Complete the following information, and choose **Create endpoint**\.
    + For **VPC**, select a VPC in which to create the endpoint\.
    + For **Configure route tables**, select the route tables to be used by the endpoint\. We automatically add a route that points traffic destined for the service to the endpoint to the selected route tables\.
-   + For **Policy**, choose the type of policy\. You can leave the default option, **Full Access**, to allow full access to the service\. Alternatively, you can select **Custom**, and then use the AWS Policy Generator to create a custom policy, or type your own policy in the policy window\. 
+   + For **Policy**, choose the type of policy\. You can leave the default option, **Full Access**, to allow full access to the service\. Alternatively, you can select **Custom**, and then use the AWS Policy Generator to create a custom policy, or enter your own policy in the policy window\. 
 
 After you've created an endpoint, you can view information about it\. 
 
@@ -208,7 +208,7 @@ If the VPC security group associated with your instance restricts outbound traff
 
 1. Select the type of traffic from the **Type** list, and enter the port range, if required\. For example, if you use your instance to retrieve objects from Amazon S3, choose **HTTPS** from the **Type** list\. 
 
-1. The **Destination** list displays the prefix list IDs and names for the available AWS services\. Choose the prefix list ID for the AWS service, or type it in\.
+1. The **Destination** list displays the prefix list IDs and names for the available AWS services\. Choose the prefix list ID for the AWS service, or enter it\.
 
 1. Choose **Save**\.
 
@@ -231,7 +231,7 @@ You can modify a gateway endpoint by changing or removing its policy, and adding
 
 1. Choose **Actions**, **Edit policy**\.
 
-1. You can choose **Full Access** to allow full access\. Alternatively, choose **Custom**, and then use the AWS Policy Generator to create a custom policy, or type your own policy in the policy window\. When you're done, choose **Save**\.
+1. You can choose **Full Access** to allow full access\. Alternatively, choose **Custom**, and then use the AWS Policy Generator to create a custom policy, or enter your own policy in the policy window\. When you're done, choose **Save**\.
 **Note**  
 It can take a few minutes for policy changes to take effect\.
 
