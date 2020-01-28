@@ -24,6 +24,7 @@ To specify multiple actions in a single statement, separate them with commas as 
 "Action": [
       "ec2:action1",
       "ec2:action2"
+]
 ```
 
 You can specify multiple actions using wildcards \(\*\)\. For example, to specify all actions that begin with the word `Describe`, include the following action\. 
@@ -73,6 +74,7 @@ Many Amazon EC2 API actions involve multiple resources\. To specify multiple res
 "Resource": [
       "resource1",
       "resource2"
+]
 ```
 
 To see a list of Amazon VPC resource types and their ARNs, see [Resources Defined by Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html#amazonec2-resources-for-iam-policies) in the *IAM User Guide*\.
