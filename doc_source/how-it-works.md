@@ -65,7 +65,7 @@ Alternatively, to allow an instance in your VPC to initiate outbound connections
 
 For more information, see [NAT](vpc-nat.md)\.
 
-You can optionally associate an Amazon\-provided IPv6 CIDR block with your VPC and assign IPv6 addresses to your instances\. Instances can connect to the internet over IPv6 through an internet gateway\. Alternatively, instances can initiate outbound connections to the internet over IPv6 using an egress\-only internet gateway\. For more information, see [Egress\-Only Internet Gateways](egress-only-internet-gateway.md)\. IPv6 traffic is separate from IPv4 traffic; your route tables must include separate routes for IPv6 traffic\.
+You can optionally associate an IPv6 CIDR block with your VPC and assign IPv6 addresses to your instances\. Instances can connect to the internet over IPv6 through an internet gateway\. Alternatively, instances can initiate outbound connections to the internet over IPv6 using an egress\-only internet gateway\. For more information, see [Egress\-Only Internet Gateways](egress-only-internet-gateway.md)\. IPv6 traffic is separate from IPv4 traffic; your route tables must include separate routes for IPv6 traffic\.
 
 ### Accessing a Corporate or Home Network<a name="what-is-vpn"></a>
 

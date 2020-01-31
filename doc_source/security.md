@@ -14,4 +14,6 @@ This documentation helps you understand how to apply the shared responsibility m
 + [Logging and Monitoring for Amazon VPC](logging-monitoring.md)
 + [Resilience in Amazon Virtual Private Cloud](disaster-recovery-resiliency.md)
 + [Compliance Validation for Amazon Virtual Private Cloud](VPC-compliance.md)
++ [Security Groups for Your VPC](VPC_SecurityGroups.md)
++ [Network ACLs](vpc-network-acls.md)
 + [Security Best Practices for Your VPC](vpc-security-best-practices.md)

@@ -31,9 +31,12 @@ When you launch an instance from a NAT AMI, the following configuration occurs o
 
 **Note**  
 We recommend that you always use the latest version of the NAT AMI to take advantage of configuration updates\.   
+We recommend that you review[ Security in Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security.html) in the *Amazon EC2 User Guide for Linux Instances*\.  
 If you add and remove secondary IPv4 CIDR blocks on your VPC, ensure that you use AMI version `amzn-ami-vpc-nat-hvm-2017.03.1.20170623-x86_64-ebs` or later\. 
 
 Your NAT instance quota depends on your instance quota for the region\. For more information, see the [EC2 FAQs](http://aws.amazon.com/ec2/faqs/#EC2_On-Demand_Instance_limits)\. For a list of available NAT AMIs, see the [Amazon Linux AMI matrix](http://aws.amazon.com/amazon-linux-ami/)\.
+
+For information about Amazon Linux support, see [Amazon Linux AMI FAQs](https://aws.amazon.com/amazon-linux-ami/faqs/)
 
 ## Setting up the NAT Instance<a name="NATInstance"></a>
 

@@ -4,6 +4,8 @@ The configuration for this scenario includes a virtual private cloud \(VPC\) wit
 
 This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnets with associated IPv6 CIDR blocks\. Instances launched into the subnets can receive IPv6 addresses\. Currently, we do not support IPv6 communication over a Site\-to\-Site VPN connection; however, instances in the VPC can communicate with each other via IPv6, and instances in the public subnet can communicate over the Internet via IPv6\. For more information about IPv4 and IPv6 addressing, see [IP Addressing in Your VPC](vpc-ip-addressing.md)\.
 
+For information about managing your EC2 instance software, see [Managing Software on Your Linux Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-software.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+
 **Topics**
 + [Overview](#Configuration-3)
 + [Routing](#VPC_Scenario3_Routing)
@@ -14,7 +16,7 @@ This scenario can also be optionally configured for IPv6—you can use the VPC w
 
 The following diagram shows the key components of the configuration for this scenario\.
 
-![\[Diagram for scenario 3: VPC with public and private subnets and VPN access\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/Case3_Diagram.png)
+![\[Diagram for scenario 3: VPC with public and private subnets and VPN access\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/case-3.png)
 
 **Important**  
 For this scenario, the* [AWS Site\-to\-Site VPN Network Administrator Guide](https://docs.aws.amazon.com/vpc/latest/adminguide/)* describes what your network administrator needs to do to configure the Amazon VPC customer gateway on your side of the Site\-to\-Site VPN connection\.

@@ -53,7 +53,7 @@ The following describe how to manually create a public subnet to support interne
 + [Creating a Subnet](#Add_IGW_Create_Subnet)
 + [Creating and Attaching an Internet Gateway](#Add_IGW_Attach_Gateway)
 + [Creating a Custom Route Table](#Add_IGW_Routing)
-+ [Updating the Security Group Rules](#Add_IG_Security_Groups)
++ [Creating a Security Group for Internet Access](#Add_IG_Security_Groups)
 + [Adding Elastic IP Addresses](#Add_IG_EIPs)
 + [Detaching an Internet Gateway from Your VPC](#detach-igw)
 + [Deleting an Internet Gateway](#delete-igw)
@@ -111,9 +111,9 @@ When you create a subnet, we automatically associate it with the main route tabl
 
 For more information, see [Route Tables](VPC_Route_Tables.md)\.
 
-### Updating the Security Group Rules<a name="Add_IG_Security_Groups"></a>
+### Creating a Security Group for Internet Access<a name="Add_IG_Security_Groups"></a>
 
-Your VPC comes with a default security group\. Each instance that you launch into a VPC is automatically associated with its default security group\. The default settings for a default security group allow no inbound traffic from the internet and allow all outbound traffic to the internet\. Therefore, to enable your instances to communicate with the internet, we recommend that you create a new security group that allows public instances to access the internet\.
+By default, a VPC security group allows all outbound traffic\. You can create a new security group and add rules that allow inbound traffic from the internet\. You can then associate the security group with instances in the public subnet\.
 
 **To create a new security group and associate it with your instances**
 
@@ -129,7 +129,7 @@ Your VPC comes with a default security group\. Each instance that you launch int
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the navigation pane, choose **Instances** \.
+1. In the navigation pane, choose **Instances**\.
 
 1. Select the instance, choose **Actions**, then **Networking**, and then select **Change Security Groups**\. 
 
@@ -174,7 +174,7 @@ If you no longer need internet access for instances that you launch into a nonde
 
 1. Choose **Actions**, **Disassociate address**\. Choose **Disassociate address**\.
 
-1. In the navigation pane, choose **Internet Gateways** \.
+1. In the navigation pane, choose **Internet Gateways**\.
 
 1. Select the internet gateway and choose **Actions, Detach from VPC**\.
 

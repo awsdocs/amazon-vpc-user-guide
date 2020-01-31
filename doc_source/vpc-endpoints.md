@@ -11,7 +11,7 @@ There are two types of VPC endpoints: *interface endpoints* and *gateway endpoin
 An [interface endpoint](vpce-interface.md) is an elastic network interface with a private IP address from the IP address range of your subnet that serves as an entry point for traffic destined to a supported service\. The following services are supported:
 + [Amazon API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-private-apis.html)
 + [Amazon AppStream 2\.0](https://docs.aws.amazon.com/appstream2/latest/developerguide/creating-streaming-from-interface-vpc-endpoints.html)
-+ [AWS App Mesh](https://docs.aws.amazon.com//app-mesh/latest/userguide/vpc-endpoints.html)
++ [AWS App Mesh](https://docs.aws.amazon.com/app-mesh/latest/userguide/vpc-endpoints.html)
 + [Application Auto Scaling](https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-vpc-endpoints.html)
 + [Amazon Athena](https://docs.aws.amazon.com/athena/latest/ug/interface-vpc-endpoint.html)
 + [AWS Auto Scaling](https://docs.aws.amazon.com/autoscaling/plans/userguide/aws-auto-scaling-vpc-endpoints.html)
@@ -26,6 +26,7 @@ An [interface endpoint](vpce-interface.md) is an elastic network interface with 
 + [AWS CodePipeline](https://docs.aws.amazon.com/codepipeline/latest/userguide/vpc-support.html#use-vpc-endpoints-with-codepipeline)
 + [AWS Config](https://docs.aws.amazon.com/config/latest/developerguide/config-VPC-endpoints.html)
 + [AWS DataSync](https://docs.aws.amazon.com/datasync/latest/userguide/datasync-in-vpc.html)
++ [AWS Device Farm](https://docs.aws.amazon.com/devicefarm/latest/developerguide/amazon-vpc-endpoints.html)
 + Amazon EC2 API
 + [Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-vpc-endpoints.html)
 + [Amazon Elastic File System](https://docs.aws.amazon.com/efs/latest/ug/efs-vpc-endpoints.html)
@@ -37,7 +38,9 @@ An [interface endpoint](vpce-interface.md) is an elastic network interface with 
 + [AWS Key Management Service](https://docs.aws.amazon.com/kms/latest/developerguide/kms-vpc-endpoint.html)
 + [Amazon Kinesis Data Firehose](https://docs.aws.amazon.com/firehose/latest/dev/vpc-endpoint.html)
 + [Amazon Kinesis Data Streams](https://docs.aws.amazon.com/streams/latest/dev/vpc.html)
-+ [Amazon Rekognition](https://docs.aws.amazon.com/rekognition/latest/dg//vpc.html)
++ [Amazon Managed Blockchain](https://docs.aws.amazon.com/managed-blockchain/latest/managementguide/managed-blockchain-endpoints.html)
++ [Amazon Quantum Ledger Database \(Amazon QLDB\)](https://docs.aws.amazon.com/qldb/latest/developerguide/vpc-endpoints.html#using-interface-vpc-endpoints)
++ [Amazon Rekognition](https://docs.aws.amazon.com/rekognition/latest/dg/vpc.html)
 + [Amazon SageMaker and Amazon SageMaker Runtime](https://docs.aws.amazon.com/sagemaker/latest/dg/interface-vpc-endpoint.html)
 + [Amazon SageMaker Notebook](https://docs.aws.amazon.com/sagemaker/latest/dg/notebook-interface-endpoint.html)
 + [AWS Secrets Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotation-network-rqmts.html)

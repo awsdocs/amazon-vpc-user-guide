@@ -7,7 +7,15 @@ You can create your own application in your VPC and configure it as an AWS Priva
 + [Endpoint Service Availability Zone Considerations](#vpce-endpoint-service-availability-zones)
 + [Endpoint Service DNS Names](#vpc-service-private-dns)
 + [Connection to On\-Premises Data Centers](#on-premises-connection)
++ [Using Proxy Protocol for Connection Information](#endpoint-service-proxy-protocol)
 + [Endpoint Service Limitations](#endpoint-service-limits)
++ [Creating a VPC Endpoint Service Configuration](create-endpoint-service.md)
++ [Adding and Removing Permissions for Your Endpoint Service](add-endpoint-service-permissions.md)
++ [Changing the Network Load Balancers and Acceptance Settings](modify-endpoint-service.md)
++ [Accepting and Rejecting Interface Endpoint Connection Requests](accept-reject-endpoint-requests.md)
++ [Creating and Managing a Notification for an Endpoint Service](create-notification-endpoint-service.md)
++ [Adding or Removing VPC Endpoint Service Tags](modify-tags-vpc-endpoint-service-tags.md)
++ [Deleting an Endpoint Service Configuration](delete-endpoint-service.md)
 
 ## Overview<a name="endpoint-service-overview"></a>
 
@@ -59,6 +67,12 @@ You can use the following types of connections for a connection between an inter
 + AWS Direct Connect
 + AWS Site\-to\-Site VPN
 
+## Using Proxy Protocol for Connection Information<a name="endpoint-service-proxy-protocol"></a>
+
+A Network Load Balancer provides source IP addresses to your application \(your service\)\. When service consumers send traffic to your service through an interface endpoint, the source IP addresses provided to your application are the private IP addresses of the Network Load Balancer nodes, and not the IP addresses of the service consumers\.
+
+If you need the IP addresses of the service consumers and their corresponding interface endpoint IDs, enable Proxy Protocol on your load balancer and get the client IP addresses from the Proxy Protocol header\. For more information, see [Proxy Protocol](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-target-groups.html#proxy-protocol) in the *User Guide for Network Load Balancers*\.
+
 ## Endpoint Service Limitations<a name="endpoint-service-limits"></a>
 
 To use endpoint services, you need to be aware of the current rules and limitations:
@@ -69,13 +83,3 @@ To use endpoint services, you need to be aware of the current rules and limitati
 + Availability Zones in your account might not map to the same locations as Availability Zones in another account\. For example, your Availability Zone `us-east-1a` might not be the same location as `us-east-1a` for another account\. For more information, see [Region and Availability Zone Concepts](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-regions-availability-zones)\. When you configure an endpoint service, it's configured in the Availability Zones as mapped to your account\.
 + Review the service\-specific limits for your endpoint service\.
 + Review the security best practices and examples for endpoint services\. For more information, see [Policy Best Practices](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-policy-examples.html#security_iam_service-with-iam-policy-best-practices) and [Controlling Access to Services with VPC Endpoints](vpc-endpoints-access.md)\.
-
-**Topics**
-+ [Creating a VPC Endpoint Service Configuration](create-endpoint-service.md)
-+ [Adding and Removing Permissions for Your Endpoint Service](add-endpoint-service-permissions.md)
-+ [Changing the Network Load Balancers and Acceptance Settings](modify-endpoint-service.md)
-+ [Accepting and Rejecting Interface Endpoint Connection Requests](accept-reject-endpoint-requests.md)
-+ [Creating and Managing a Notification for an Endpoint Service](create-notification-endpoint-service.md)
-+ [Using Proxy Protocol for Connection Information](endpoint-service-proxy-protocol.md)
-+ [Adding or Removing VPC Endpoint Service Tags](modify-tags-vpc-endpoint-service-tags.md)
-+ [Deleting an Endpoint Service Configuration](delete-endpoint-service.md)

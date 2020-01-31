@@ -18,6 +18,9 @@ The following procedures are for manually creating a VPC and subnets\. You also 
 
 You can create an empty VPC using the Amazon VPC console\.
 
+**Note**  
+[Bring Your Own IP Addresses](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html) \(BYOIP\) for IPv6 is available as a preview only\.
+
 **To create a VPC using the console**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
@@ -29,7 +32,9 @@ You can create an empty VPC using the Amazon VPC console\.
    + **IPv4 CIDR block**: Specify an IPv4 CIDR block for the VPC\. We recommend that you specify a CIDR block from the private \(non\-publicly routable\) IP address ranges as specified in [RFC 1918](http://www.faqs.org/rfcs/rfc1918.html); for example, `10.0.0.0/16`, or `192.168.0.0/16`\. 
 **Note**  
 You can specify a range of publicly routable IPv4 addresses; however, we currently do not support direct access to the internet from publicly routable CIDR blocks in a VPC\. Windows instances cannot boot correctly if launched into a VPC with ranges from `224.0.0.0` to `255.255.255.255` \(Class D and Class E IP address ranges\)\. 
-   + **IPv6 CIDR block**: Optionally associate an IPv6 CIDR block with your VPC by choosing **Amazon\-provided IPv6 CIDR block**\.
+   + **IPv6 CIDR block**: Optionally associate an IPv6 CIDR block with your VPC by choosing one of the following options:
+     + **Amazon\-provided IPv6 CIDR block**: Requests an IPv6 CIDR block from Amazon's pool of IPv6 addresses\.
+     + **IPv6 CIDR owned by me**: \(BYOIP\) Allocates an IPv6 CIDR block from your IPv6 address pool\. For **Pool,** choose the IPv6 address pool from which to allocate the IPv6 CIDR block\.
    + **Tenancy**: Select a tenancy option\. Dedicated tenancy ensures that your instances run on single\-tenant hardware\. For more information, see [Dedicated Instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-instance.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 Alternatively, you can use a command line tool\.
@@ -116,6 +121,9 @@ After you've added the IPv4 CIDR blocks that you need, you can create subnets\. 
 
 You can associate an IPv6 CIDR block with any existing VPC\. The VPC must not have an existing IPv6 CIDR block associated with it\. 
 
+**Note**  
+[Bring Your Own IP Addresses](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html) \(BYOIP\) for IPv6 is available as a preview only\.
+
 **To associate an IPv6 CIDR block with a VPC using the console**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
@@ -124,7 +132,19 @@ You can associate an IPv6 CIDR block with any existing VPC\. The VPC must not ha
 
 1. Select your VPC, choose **Actions**, **Edit CIDRs**\.
 
-1. Choose **Add IPv6 CIDR**\. After the IPv6 CIDR block is added, choose **Close**\. 
+1. Choose **Add IPv6 CIDR**\. 
+
+1. Choose **Add IPv6 CIDR**\. 
+
+1. For **IPv6 CIDR block**, choose one of the following, and then choose **Select CIDR**:
+   + **Amazon\-provided IPv6 CIDR block**: Requests an IPv6 CIDR block from Amazon's pool of IPv6 addresses\.
+   + **IPv6 CIDR owned by me**: \(BYOIP\) Allocates an IPv6 CIDR block from your IPv6 address pool\. For **Pool,** choose the IPv6 address pool from which to allocate the IPv6 CIDR block\.
+
+1. If you selected **Amazon\-provided IPv6 CIDR block**, from **Network Border Group**, select the group from where AWS advertises the IP addresses\.
+
+1. Choose **Select CIDR**\. 
+
+1. Choose **Close**\.
 
 Alternatively, you can use a command line tool\.
 

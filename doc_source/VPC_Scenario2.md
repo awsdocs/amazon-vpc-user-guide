@@ -9,6 +9,8 @@ You can also use the VPC wizard to configure a VPC with a NAT instance; however,
 
 This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnets with associated IPv6 CIDR blocks\. Instances launched into the subnets can receive IPv6 addresses, and communicate using IPv6\. Instances in the private subnet can use an egress\-only Internet gateway to connect to the Internet over IPv6, but the Internet cannot establish connections to the private instances over IPv6\. For more information about IPv4 and IPv6 addressing, see [IP Addressing in Your VPC](vpc-ip-addressing.md)\.
 
+For information about managing your EC2 instance software, see [Managing Software on Your Linux Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-software.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+
 **Topics**
 + [Overview](#Configuration-2)
 + [Routing](#VPC_Scenario2_Routing)

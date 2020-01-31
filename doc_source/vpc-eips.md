@@ -22,7 +22,10 @@ The following are the basic things that you need to know about Elastic IP addres
 + You're limited to five Elastic IP addresses; to help conserve them, you can use a NAT device \(see [NAT](vpc-nat.md)\)\.
 + An Elastic IP address is accessed through the Internet gateway of a VPC\. If you have set up an AWS Site\-to\-Site VPN connection between your VPC and your network, the VPN traffic traverses a virtual private gateway, not an Internet gateway, and therefore cannot access the Elastic IP address\.
 + You can move an Elastic IP address that you've allocated for use in the EC2\-Classic platform to the VPC platform\. For more information, see [Migrating an Elastic IP Address from EC2\-Classic to EC2\-VPC](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html#migrating-eip) in the *Amazon EC2 User Guide*\.
-+ You can tag an Elastic IP address that's allocated for use in a VPC; however, cost allocation tags are not supported\. If you recover an Elastic IP address, tags are not recovered\.
++ You can tag an Elastic IP address that's allocated for use in a VPC; however, cost allocation tags are not supported\. If you recover an Elastic IP address, tags are not recovered\. 
++ You can use any of the following options for the Elastic IP addresses:
+  + Have Amazon provide the Elastic IP addresses\. When you select this option, you can associate the Elastic IP addresses with a network border group\. This is the location from which we advertise the CIDR block\. Setting the network border group limits the CIDR block to this group\. 
+  + Use your own IP addresses\. For information about bringing your own IP addresses, see [Bring Your Own IP Addresses \(BYOIP\)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html) in the* Amazon EC2 User Guide for Linux Instances*\.
 
 ## Working with Elastic IP Addresses<a name="WorkWithEIPs"></a>
 
@@ -35,6 +38,16 @@ You can allocate an Elastic IP address and then associate it with an instance in
 1. In the navigation pane, choose **Elastic IPs**\.
 
 1. Choose **Allocate new address**\.
+
+1. Specify the Elastic IP addresses\.
+
+   Use an Amazon\-provided pool of addresses\.
+   + Choose **Amazon pool**\.
+   + From **Network Border Group**, select the group from where AWS advertises the IP addresses\.
+
+   Use your own addresses\.
+   + Choose **Owned by me**\.
+   + From **Pool**, select the pool that you created\.
 
 1. Choose **Allocate**\.
 **Note**  

@@ -4,6 +4,8 @@ The configuration for this scenario includes a virtual private cloud \(VPC\) wit
 
 This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnet with associated IPv6 CIDR blocks\. Instances launched into the public subnet can receive IPv6 addresses, and communicate using IPv6\. For more information about IPv4 and IPv6 addressing, see [IP Addressing in Your VPC](vpc-ip-addressing.md)\.
 
+For information about managing your EC2 instance software, see [Managing Software on Your Linux Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-software.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+
 **Topics**
 + [Overview](#Configuration)
 + [Routing](#VPC_Scenario1_Routing)
@@ -13,7 +15,7 @@ This scenario can also be optionally configured for IPv6—you can use the VPC w
 
 The following diagram shows the key components of the configuration for this scenario\.
 
-![\[Diagram for scenario 1: VPC with a public subnet\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/Case1_Diagram.png)
+![\[Diagram for scenario 1: VPC with a public subnet\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/case-1.png)
 
 **Note**  
 If you completed [Getting Started with Amazon VPC](vpc-getting-started.md), then you've already implemented this scenario using the VPC wizard in the Amazon VPC console\.
@@ -35,7 +37,7 @@ You can optionally enable IPv6 for this scenario\. In addition to the components
 + An IPv6 address assigned to the instance from the subnet range \(example: 2001:db8:1234:1a00::123\)\.
 + Route table entries in the custom route table that enable instances in the VPC to use IPv6 to communicate with each other, and directly over the Internet\.
 
-![\[IPv6-enabled VPC with a public subnet\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/scenario-1-ipv6-diagram.png)
+![\[IPv6-enabled VPC with a public subnet\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/getting-started-ipv6-1.png)
 
 ## Routing<a name="VPC_Scenario1_Routing"></a>
 

@@ -17,7 +17,7 @@ The following are the key concepts for VPCs:
 
 You can create, access, and manage your VPCs using any of the following interfaces:
 + **AWS Management Console**— Provides a web interface that you can use to access your VPCs\.
-+ **AWS Command Line Interface \(AWS CLI\)** — Provides commands for a broad set of AWS services, including Amazon VPC, and is supported on Windows, Mac, and Linux\. For more information, see [AWS Command Line Interface](https://aws.amazon.com//cli/)\.
++ **AWS Command Line Interface \(AWS CLI\)** — Provides commands for a broad set of AWS services, including Amazon VPC, and is supported on Windows, Mac, and Linux\. For more information, see [AWS Command Line Interface](https://aws.amazon.com/cli/)\.
 + **AWS SDKs** — Provides language\-specific APIs and takes care of many of the connection details, such as calculating signatures, handling request retries, and error handling\. For more information, see [AWS SDKs](http://aws.amazon.com/tools/#SDKs)\.
 + **Query API**— Provides low\-level API actions that you call using HTTPS requests\. Using the Query API is the most direct way to access Amazon VPC, but it requires that your application handle low\-level details such as generating the hash to sign the request, and error handling\. For more information, see the [Amazon EC2 API Reference](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/)\.
 
@@ -43,6 +43,10 @@ The following table lists related resources that you might find useful as you wo
 |  Resource  |  Description  | 
 | --- | --- | 
 | [Amazon Virtual Private Cloud Connectivity Options](https://docs.aws.amazon.com/aws-technical-content/latest/aws-vpc-connectivity-options/introduction.html) | Provides an overview of the options for network connectivity\. | 
+|  [Peering Guide](https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html)  | Describes VPC peering connection scenarios and supported peering configurations\. | 
+|  [Traffic Mirroring](https://docs.aws.amazon.com/vpc/latest/mirroring/what-is-traffic-mirroring.html)  | Describes traffic mirroring targets, filters, and sessions, and helps administrators configure them\. | 
+|  [Transit Gateways](https://docs.aws.amazon.com/vpc/latest/tgw/what-is-transit-gateway.html)  | Describes transit gateways and helps network administrators configure them\. | 
+|  [Transit Gateway Network Manager Guide](https://docs.aws.amazon.com/vpc/latest/tgw/what-is-network-manager.html)  | Describes Transit Gateway Network Manager and helps you configure and monitor a global network\. | 
 |  [Amazon VPC forum](https://forums.aws.amazon.com/forum.jspa?forumID=58)  |  A community\-based forum for discussing technical questions related to Amazon VPC\.  | 
 |  [Getting Started Resource Center](https://aws.amazon.com/getting-started/)  |  Information to help you get started building on AWS\.  | 
 |  [AWS Support Center](https://console.aws.amazon.com/support/home#/)  |  The home page for AWS Support\.  | 

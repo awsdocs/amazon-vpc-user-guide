@@ -94,6 +94,7 @@ In a shared VPC, each participant pays for their application resources including
 Participants cannot create resources for the following services in a shared subnet::
 + Amazon FSx
 + AWS CloudHSM Classic
++ Route 53 Resolver Endpoints
 
 ## Limitations<a name="vpc-share-limitations"></a>
 

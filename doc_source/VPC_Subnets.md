@@ -47,12 +47,15 @@ You have a quota on the number of VPCs and subnets you can create in your accoun
 
 AWS Local Zones allow you to seamlessly connect to the full range of services in the AWS Region such as Amazon Simple Storage Service and Amazon DynamoDB through the same APIs and tool sets\. You can extend your VPC Region by creating a new subnet that has a Local Zone assignment\. When you create a subnet in a Local Zone, the VPC is also extended to that Local Zone\. 
 
+A network border group is a unique set of Availability Zones or Local Zones from where AWS advertises public IP addresses\.
+
+When you create a VPC that has IPv6 addresses, you can choose to assign a set of Amazon\-provided public IP addresses to the VPC and also set a network border group for the addresses that limits the addresses to the group\. When you set a network border group, the IP addresses cannot move between network border groups\. The `us-west-2` network border group contains the four US West \(Oregon\) Availability Zones\. The `us-west-2-lax-1` network border group contains the Los Angles Local Zones\.
+
 The following rules apply to Local Zones:
 + The Local Zone subnets follow the same routing rules, including route tables, security groups, Network ACLs as Availability Zone subnet\.
 + You can assign Local Zones to subnets using the Amazon VPC Console, AWS CLI or API\.
-+ You must provision public IP addresses for use in a Local Zone\. After you provision the IP addresses, you cannot move them between the Local Zone and the parent region \(for example, from u`s-west-2-lax-1a` to `us-west-2`\)\. 
-+ When you allocate addresses, you can specify the location from which the IP address is advertised\. We refer to this as a network border group and you can set this parameter to limit the address to this location\. Currently you must use the AWS CLI or API\. to configure a network border group\.
-+ If you have IPV6 addresses for you VPC, when you create a VPC, you can request an IPv6 CIDR block for the VPC for the network border group\.
++ You must provision public IP addresses for use in a Local Zone\. When you allocate addresses, you can specify the location from which the IP address is advertised\. We refer to this as a network border group and you can set this parameter to limit the address to this location\. After you provision the IP addresses, you cannot move them between the Local Zone and the parent region \(for example, from u`s-west-2-lax-1a` to `us-west-2`\)\. 
++ You can request the IPv6 Amazon\-provided IP addresses and associate them with the network border group for a new or existing VPC\. 
 
 ## Subnets in AWS Outposts<a name="outposts"></a>
 
@@ -189,11 +192,11 @@ In the output that's returned, the primary CIDR is returned in the top\-level `C
 
 ### VPC and Subnet Sizing for IPv6<a name="vpc-sizing-ipv6"></a>
 
-You can associate a single IPv6 CIDR block with an existing VPC in your account, or when you create a new VPC\. The CIDR block uses a fixed prefix length of `/56`\. You cannot choose the range of addresses or the IPv6 CIDR block size; we assign the block to your VPC from Amazon's pool of IPv6 addresses\. 
+You can associate a single IPv6 CIDR block with an existing VPC in your account, or when you create a new VPC\. The CIDR block is a fixed prefix length of `/56`\. You can request an IPv6 CIDR block from Amazon's pool of IPv6 addresses\.
 
-If you've associated an IPv6 CIDR block with your VPC, you can associate an IPv6 CIDR block with an existing subnet in your VPC, or when you create a new subnet\. A subnet's IPv6 CIDR block uses a fixed prefix length of `/64`\.
+If you've associated an IPv6 CIDR block with your VPC, you can associate an IPv6 CIDR block with an existing subnet in your VPC, or when you create a new subnet\. A subnet's IPv6 CIDR block is a fixed prefix length of `/64`\.
 
-For example, you create a VPC and specify that you want to associate an IPv6 CIDR block with the VPC\. Amazon assigns the following IPv6 CIDR block to your VPC: `2001:db8:1234:1a00::/56`\. You can create a subnet and associate an IPv6 CIDR block from this range; for example, `2001:db8:1234:1a00::/64`\.
+For example, you create a VPC and specify that you want to associate an Amazon\-provided IPv6 CIDR block with the VPC\. Amazon assigns the following IPv6 CIDR block to your VPC: `2001:db8:1234:1a00::/56`\. You cannot choose the range of IP addresses yourself\. You can create a subnet and associate an IPv6 CIDR block from this range; for example, `2001:db8:1234:1a00::/64`\.
 
 You can disassociate an IPv6 CIDR block from a subnet, and you can disassociate an IPv6 CIDR block from a VPC\. After you've disassociated an IPv6 CIDR block from a VPC, you cannot expect to receive the same CIDR if you associate an IPv6 CIDR block with your VPC again later\.
 
@@ -223,4 +226,4 @@ AWS provides two features that you can use to increase security in your VPC: *se
 
 By design, each subnet must be associated with a network ACL\. Every subnet that you create is automatically associated with the VPC's default network ACL\. You can change the association, and you can change the contents of the default network ACL\. For more information, see [Network ACLs](vpc-network-acls.md)\.
 
-You can create a flow log on your VPC or subnet to capture the traffic that flows to and from the network interfaces in your VPC or subnet\. You can also create a flow log on an individual network interface\. Flow logs are published to CloudWatch Logs\. For more information, see [VPC Flow Logs](flow-logs.md)\.
+You can create a flow log on your VPC or subnet to capture the traffic that flows to and from the network interfaces in your VPC or subnet\. You can also create a flow log on an individual network interface\. Flow logs are published to CloudWatch Logs or Amazon S3\. For more information, see [VPC Flow Logs](flow-logs.md)\.

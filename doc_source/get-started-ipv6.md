@@ -6,6 +6,7 @@ To complete this exercise, do the following:
 + Create a nondefault VPC with an IPv6 CIDR block and a single public subnet\. Subnets enable you to group instances based on your security and operational needs\. A public subnet is a subnet that has access to the Internet through an Internet gateway\.
 + Create a security group for your instance that allows traffic only through specific ports\.
 + Launch an Amazon EC2 instance into your subnet, and associate an IPv6 address with your instance during launch\. An IPv6 address is globally unique, and allows your instance to communicate with the Internet\.
++ You can request an IPv6 CIDR block for the VPC\. When you select this option, you can set the network border group, which is the location from which we advertise the IPV6 CIDR block\. Setting the network border group limits the CiDR block to this group\. 
 
 For more information about IPv4 and IPv6 addressing, see [IP Addressing in Your VPC](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-ip-addressing.html)\.
 
@@ -23,11 +24,12 @@ In this step, you use the Amazon VPC wizard in the Amazon VPC console to create 
 + Attaches an Internet gateway to the VPC\. For more information about Internet gateways, see [Internet Gateways](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html)\.
 + Creates a subnet with an /24 IPv4 CIDR block and a /64 IPv6 CIDR block in the VPC\. The size of the IPv6 CIDR block is fixed \(/64\)\.
 + Creates a custom route table, and associates it with your subnet, so that traffic can flow between the subnet and the Internet gateway\. For more information about route tables, see [Route Tables](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html)\.
++ Associates an IPv6 Amazon\-provided CIDR block with a network border group\. For more information, see [Extending your VPC Resources to in AWS Local Zones](VPC_Subnets.md#local-zone)\.
 
 **Note**  
 This exercise covers the first scenario in the VPC wizard\. For more information about the other scenarios, see [Scenarios for Amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenarios.html)\.
 
-**To create a VPC using the Amazon VPC wizard**
+**To create a VPC in the default Availability Zone**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
@@ -41,11 +43,37 @@ Do not choose **Your VPCs** in the navigation pane; you cannot access the VPC wi
 
 1. On the configuration page, enter a name for your VPC for **VPC name**; for example, `my-vpc`, and enter a name for your subnet for **Subnet name**\. This helps you to identify the VPC and subnet in the Amazon VPC console after you've created them\. 
 
-1. For **IPv4 CIDR block**, you can leave the default setting \(`10.0.0.0/16`\), or specify your own\. For more information, see [VPC Sizing](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html#VPC_Sizing)\. 
+1. \(For **IPv4 CIDR block**, you can leave the default setting \(`10.0.0.0/16`\), or specify your own\. For more information, see [VPC Sizing](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html#VPC_Sizing)\. 
 
    For **IPv6 CIDR block**, choose **Amazon\-provided IPv6 CIDR block**\.
 
 1. For **Public subnet's IPv4 CIDR**, leave the default setting, or specify your own\. For **Public subnet's IPv6 CIDR**, choose **Specify a custom IPv6 CIDR**\. You can leave the default hexadecimal pair value for the IPv6 subnet \(`00`\)\.
+
+1. Leave the rest of the default configurations on the page, and choose **Create VPC**\.
+
+1. A status window shows the work in progress\. When the work completes, choose **OK** to close the status window\.
+
+1. The **Your VPCs** page displays your default VPC and the VPC that you just created\. 
+
+**To create a VPC in a Local Zone**
+
+1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
+
+1. In the navigation bar, on the top\-right, take note of the region in which you'll be creating the VPC\. Ensure that you continue working in the same region for the rest of this exercise, as you cannot launch an instance into your VPC from a different region\. For more information, see [Regions and Availability Zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+
+1. In the navigation pane, choose **VPC dashboard** and choose **Launch VPC Wizard**\.
+**Note**  
+Do not choose **Your VPCs** in the navigation pane; you cannot access the VPC wizard using the **Create VPC** button on that page\.
+
+1. Choose the option for the configuration you want to implement, for example, **VPC with a Single Public Subnet**, and then choose **Select**\.
+
+1. On the configuration page, enter a name for your VPC for **VPC name**; for example, `my-vpc`, and enter a name for your subnet for **Subnet name**\. This helps you to identify the VPC and subnet in the Amazon VPC console after you've created them\. 
+
+1. \(For **IPv4 CIDR block**, specify the CIDR block\. For more information, see [VPC Sizing](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html#VPC_Sizing)\. 
+
+1. For **IPv6 CIDR block**, choose **Amazon\-provided IPv6 CIDR block**\.
+
+1. For **Network Border Group**, choose the group from where AWS advertises the IP addresses\.
 
 1. Leave the rest of the default configurations on the page, and choose **Create VPC**\.
 
@@ -62,6 +90,8 @@ After you've created the VPC, you can view information about the subnet, Interne
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
 1. In the navigation pane, choose **Your VPCs**\. Take note of the name and the ID of the VPC that you created \(look in the **Name** and **VPC ID** columns\)\. You use this information to identify the components that are associated with your VPC\. 
+
+   When you use Local Zones, the IPv6 \(Network Border Group\) entry indicates the VPC network border group \(for example, `us-west-2-lax-1` \)\.
 
 1. In the navigation pane, choose **Subnets**\. The console displays the subnet that was created when you created your VPC\. You can identify the subnet by its name in **Name** column, or you can use the VPC information that you obtained in the previous step and look in the **VPC** column\.
 

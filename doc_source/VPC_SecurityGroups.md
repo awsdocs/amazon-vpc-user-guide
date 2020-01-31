@@ -1,6 +1,8 @@
 # Security Groups for Your VPC<a name="VPC_SecurityGroups"></a>
 
-A *security group* acts as a virtual firewall for your instance to control inbound and outbound traffic\. When you launch an instance in a VPC, you can assign up to five security groups to the instance\. Security groups act at the instance level, not the subnet level\. Therefore, each instance in a subnet in your VPC can be assigned to a different set of security groups\. If you don't specify a particular group at launch time, the instance is automatically assigned to the default security group for the VPC\. 
+A *security group* acts as a virtual firewall for your instance to control inbound and outbound traffic\. When you launch an instance in a VPC, you can assign up to five security groups to the instance\. Security groups act at the instance level, not the subnet level\. Therefore, each instance in a subnet in your VPC can be assigned to a different set of security groups\. 
+
+If you launch an instance using the Amazon EC2 API or a command line tool and you don't specify a security group, the instance is automatically assigned to the default security group for the VPC\. If you launch an instance using the Amazon EC2 console, you have an option to create a new security group for the instance\.
 
 For each security group, you add *rules* that control the inbound traffic to instances, and a separate set of rules that control the outbound traffic\. This section describes the basic things that you need to know about security groups for your VPC and their rules\.
 

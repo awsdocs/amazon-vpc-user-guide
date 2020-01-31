@@ -5,7 +5,7 @@ An interface VPC endpoint \(interface endpoint\) enables you to connect to servi
 The following services are supported:
 + [Amazon API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-private-apis.html)
 + [Amazon AppStream 2\.0](https://docs.aws.amazon.com/appstream2/latest/developerguide/creating-streaming-from-interface-vpc-endpoints.html)
-+ [AWS App Mesh](https://docs.aws.amazon.com//app-mesh/latest/userguide/vpc-endpoints.html)
++ [AWS App Mesh](https://docs.aws.amazon.com/app-mesh/latest/userguide/vpc-endpoints.html)
 + [Application Auto Scaling](https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-vpc-endpoints.html)
 + [Amazon Athena](https://docs.aws.amazon.com/athena/latest/ug/interface-vpc-endpoint.html)
 + [AWS Auto Scaling](https://docs.aws.amazon.com/autoscaling/plans/userguide/aws-auto-scaling-vpc-endpoints.html)
@@ -20,6 +20,7 @@ The following services are supported:
 + [AWS CodePipeline](https://docs.aws.amazon.com/codepipeline/latest/userguide/vpc-support.html#use-vpc-endpoints-with-codepipeline)
 + [AWS Config](https://docs.aws.amazon.com/config/latest/developerguide/config-VPC-endpoints.html)
 + [AWS DataSync](https://docs.aws.amazon.com/datasync/latest/userguide/datasync-in-vpc.html)
++ [AWS Device Farm](https://docs.aws.amazon.com/devicefarm/latest/developerguide/amazon-vpc-endpoints.html)
 + Amazon EC2 API
 + [Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-vpc-endpoints.html)
 + [Amazon Elastic File System](https://docs.aws.amazon.com/efs/latest/ug/efs-vpc-endpoints.html)
@@ -31,7 +32,9 @@ The following services are supported:
 + [AWS Key Management Service](https://docs.aws.amazon.com/kms/latest/developerguide/kms-vpc-endpoint.html)
 + [Amazon Kinesis Data Firehose](https://docs.aws.amazon.com/firehose/latest/dev/vpc-endpoint.html)
 + [Amazon Kinesis Data Streams](https://docs.aws.amazon.com/streams/latest/dev/vpc.html)
-+ [Amazon Rekognition](https://docs.aws.amazon.com/rekognition/latest/dg//vpc.html)
++ [Amazon Managed Blockchain](https://docs.aws.amazon.com/managed-blockchain/latest/managementguide/managed-blockchain-endpoints.html)
++ [Amazon Quantum Ledger Database \(Amazon QLDB\)](https://docs.aws.amazon.com/qldb/latest/developerguide/vpc-endpoints.html#using-interface-vpc-endpoints)
++ [Amazon Rekognition](https://docs.aws.amazon.com/rekognition/latest/dg/vpc.html)
 + [Amazon SageMaker and Amazon SageMaker Runtime](https://docs.aws.amazon.com/sagemaker/latest/dg/interface-vpc-endpoint.html)
 + [Amazon SageMaker Notebook](https://docs.aws.amazon.com/sagemaker/latest/dg/notebook-interface-endpoint.html)
 + [AWS Secrets Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotation-network-rqmts.html)
@@ -136,8 +139,8 @@ The following rules apply:
 When you create an interface endpoint, the endpoint is created in the Availability Zone that is mapped to your account and that is independent from other accounts\. When the service provider and the consumer are in different accounts, use the Availability Zone ID to uniquely and consistently identify the interface endpoint Availability Zone\. For example, `use1-az1` is an Availability Zone ID for the `us-east-1` Region and maps to the same location in every AWS account\. For information about Availability Zone IDs, see [AZ IDs for Your Resources](https://docs.aws.amazon.com/ram/latest/userguide/working-with-az-ids.html) in the *AWS RAM User Guide* or use [describe\-availability\-zones](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-availability-zones.html)\. 
 
 Services might not be available in all Availability Zones through an interface endpoint\. You can use any of the following operations to find out which Availability Zones are supported for a service:
-+ [describe\-vpc\-endpoint\-services](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-services.html) \(AWS CLI\)
-+ [DescribeVpcEndpointServices](https://docs.aws.amazon.com/AWSEC2/latest/APIReference//API_DescribeVpcEndpointServices.html) \(API\)
++ [describe\-vpc\-endpoint\-services](https://docs.aws.amazon.com/cli/latest/reference/ec2describe-vpc-endpoint-services.html) \(AWS CLI\)
++ [DescribeVpcEndpointServices](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeVpcEndpointServices.html) \(API\)
 + The Amazon VPC console when you create an interface endpoint\. For more information, see [Creating an Interface Endpoint](#create-interface-endpoint)\.
 
 ## Pricing for Interface Endpoints<a name="vpce-interface-pricing"></a>
