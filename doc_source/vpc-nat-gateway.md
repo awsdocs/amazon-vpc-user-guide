@@ -116,7 +116,7 @@ You can delete a NAT gateway using the Amazon VPC console\. After you've deleted
 
 ### Testing a NAT Gateway<a name="nat-gateway-testing"></a>
 
-After you've created your NAT gateway and updated your route tables, you can ping the internet from an instance in your private subnet to test that it can connect to the internet\. For an example of how to do this, see [Testing the Internet Connection](#nat-gateway-testing-example)\.
+After you've created your NAT gateway and updated your route tables, you can ping some remote addresses on the internet from an instance in your private subnet to test that it can connect to the internet\. For an example of how to do this, see [Testing the Internet Connection](#nat-gateway-testing-example)\.
 
 If you're able to connect to the internet, you can also perform the following tests to determine if the internet traffic is being routed through the NAT gateway:
 + You can trace the route of traffic from an instance in your private subnet\. To do this, run the `traceroute` command from a Linux instance in your private subnet\. In the output, you should see the private IP address of the NAT gateway in one of the hops \(it's usually the first hop\)\.
