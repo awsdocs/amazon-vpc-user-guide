@@ -16,9 +16,12 @@ You can create multiple endpoints in a single VPC, for example, to multiple serv
 
 After you've created an endpoint, you can modify the endpoint policy that's attached to your endpoint, and add or remove the route tables that are used by the endpoint\.
 
+## Pricing for Gateway Endpoints<a name="gateway-endpoint-pricing"></a>
+
 There is no additional charge for using gateway endpoints\. Standard charges for data transfer and resource usage apply\. For more information about pricing, see [Amazon EC2 Pricing](http://aws.amazon.com/ec2/pricing/)\.
 
 **Topics**
++ [Pricing for Gateway Endpoints](#gateway-endpoint-pricing)
 + [Routing for Gateway Endpoints](#vpc-endpoints-routing)
 + [Gateway Endpoint Limitations](#vpc-endpoints-limitations)
 + [Endpoints for Amazon S3](vpc-endpoints-s3.md)
@@ -113,6 +116,7 @@ To use gateway endpoints, you need to be aware of the current limitations:
 + Endpoint connections cannot be extended out of a VPC\. Resources on the other side of a VPN connection, VPC peering connection, transit gateway, AWS Direct Connect connection, or ClassicLink connection in your VPC cannot use the endpoint to communicate with resources in the endpoint service\. 
 + You must enable DNS resolution in your VPC, or if you're using your own DNS server, ensure that DNS requests to the required service \(such as Amazon S3\) are resolved correctly to the IP addresses maintained by AWS\. For more information, see [Using DNS with Your VPC](vpc-dns.md) and [AWS IP Address Ranges](https://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html) in the *Amazon Web Services General Reference*\.
 + Review the service\-specific limits for your endpoint service\.
++ When the service provider and the consumer have different accounts multiple Availability Zones, and the consumer views the VPC endpoint service information, the response only includes the common Availability Zones\. For example, when the service provider account uses `us-east-1a` and `us-east-1c` and the consumer uses `us-east-1a` and us\-east\-1a and us\-east\-1b, the response includes the VPC endpoint services in the common Availability Zone, `us-east-1a`\.
 
 For more information about rules and limitations that are specific to Amazon S3, see [Endpoints for Amazon S3](vpc-endpoints-s3.md)\.
 
@@ -134,6 +138,13 @@ To create an endpoint, you must specify the VPC in which you want to create the 
    + For **VPC**, select a VPC in which to create the endpoint\.
    + For **Configure route tables**, select the route tables to be used by the endpoint\. We automatically add a route that points traffic destined for the service to the endpoint to the selected route tables\.
    + For **Policy**, choose the type of policy\. You can leave the default option, **Full Access**, to allow full access to the service\. Alternatively, you can select **Custom**, and then use the AWS Policy Generator to create a custom policy, or enter your own policy in the policy window\. 
+   + \(Optional\) Add or remove a tag\.
+
+     \[Add a tag\] Choose **Add tag** and do the following:
+     + For **Key**, enter the key name\.
+     + For **Value**, enter the key value\.
+
+     \[Remove a tag\] Choose the delete button \(“x”\) to the right of the tag’s Key and Value\.
 
 After you've created an endpoint, you can view information about it\. 
 
@@ -208,7 +219,7 @@ If the VPC security group associated with your instance restricts outbound traff
 
 1. Select the type of traffic from the **Type** list, and enter the port range, if required\. For example, if you use your instance to retrieve objects from Amazon S3, choose **HTTPS** from the **Type** list\. 
 
-1. The **Destination** list displays the prefix list IDs and names for the available AWS services\. Choose the prefix list ID for the AWS service, or enter it\.
+1. For **Destination**, start entering `pl-` to display a list of prefix list IDs and names for the available AWS services\. Choose the prefix list ID for the AWS service, or enter it\.
 
 1. Choose **Save**\.
 

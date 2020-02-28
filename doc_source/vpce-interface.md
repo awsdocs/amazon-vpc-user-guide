@@ -89,7 +89,7 @@ Services cannot initiate requests to resources in your VPC through the endpoint\
 
 When you create an interface endpoint, we generate endpoint\-specific DNS hostnames that you can use to communicate with the service\. For AWS services and AWS Marketplace Partner services, private DNS \(enabled by default\) associates a private hosted zone with your VPC\. The hosted zone contains a record set for the default DNS name for the service \(for example, `ec2.us-east-1.amazonaws.com`\) that resolves to the private IP addresses of the endpoint network interfaces in your VPC\. This enables you to make requests to the service using its default DNS hostname instead of the endpoint\-specific DNS hostnames\. For example, if your existing applications make requests to an AWS service, they can continue to make requests through the interface endpoint without requiring any configuration changes\. 
 
-In the example shown in the following diagram, there is an interface endpoint for Amazon Kinesis Data Streams and an endpoint network interface in subnet 2\. Private DNS for the interface endpoint has not been enabled, and the private DNS name \(for example, `myPrivateLinkService.example.com`\) has not been specified\. Instances in either subnet can communicate with Amazon Kinesis Data Streams through the interface endpoint using an endpoint\-specific DNS hostname \(DNS name B\)\. Instances in subnet 1 can communicate with Amazon Kinesis Data Streams over public IP address space in the AWS Region using the private DNS name\.
+In the example shown in the following diagram, there is an interface endpoint for Amazon Kinesis Data Streams and an endpoint network interface in subnet 2\. Private DNS for the interface endpoint has not been enabled, and the private DNS name \(for example, `myPrivateLinkService.example.com`\) has not been specified\. Instances in either subnet can communicate with Amazon Kinesis Data Streams through the interface endpoint using an endpoint\-specific DNS hostname \(DNS name B\)\. Instances in subnet 1 can communicate with Amazon Kinesis Data Streams over public IP address space in the AWS Region using its default DNS name\.
 
 ![\[Using an interface endpoint to access Kinesis\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-kinesis-diagram.png)
 
@@ -107,6 +107,7 @@ To use interface endpoints, you need to be aware of their properties and current
 + Interface endpoints support the use of policies for services that support endpoint policies\. For information about the services that support policies, see [Controlling Access to Services with VPC Endpoints](vpc-endpoints-access.md)\.
 + Services might not be available in all Availability Zones through an interface endpoint\. To find out which Availability Zones are supported, use the [describe\-vpc\-endpoint\-services](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-services.html) command or use the Amazon VPC console\. For more information, see [Creating an Interface Endpoint](#create-interface-endpoint)\.
 + When you create an interface endpoint, the endpoint is created in the Availability Zone that is mapped to your account and that is independent from other accounts\. When the service provider and the consumer are in different accounts, see [Interface Endpoint Availability Zone Considerations](#vpce-interface-availability-zones) for information about how to use Availability Zone IDs to identify the interface endpoint Availability Zone\.
++ When the service provider and the consumer have different accounts multiple Availability Zones, and the consumer views the VPC endpoint service information, the response only includes the common Availability Zones\. For example, when the service provider account uses `us-east-1a` and `us-east-1c` and the consumer uses `us-east-1a` and us\-east\-1a and us\-east\-1b, the response includes the VPC endpoint services in the common Availability Zone, `us-east-1a`\.
 + By default, each interface endpoint can support a bandwidth of up to 10 Gbps per Availability Zone\. Additional capacity can be added automatically based on your usage\.
 + If the network ACL for your subnet restricts traffic, you might not be able to send traffic through the endpoint network interface\. Ensure that you add appropriate rules that allow traffic to and from the CIDR block of the subnet\.
 + An interface endpoint supports TCP traffic only\.
@@ -145,7 +146,7 @@ Services might not be available in all Availability Zones through an interface e
 
 ## Pricing for Interface Endpoints<a name="vpce-interface-pricing"></a>
 
-You are charged for creating and using an interface endpoint to a service\. Hourly usage rates and data processing rates apply\. For more information, see [AWS PrivateLink Pricing](https://aws.amazon.com/privatelink/pricing/)\.
+You are charged for creating and using an interface endpoint to a service\. Hourly usage rates and data processing rates apply\. For more information about interface endpoint pricing, see [AWS PrivateLink Pricing](https://aws.amazon.com/privatelink/pricing/)\. You can view the total number of interface endpoints using the Amazon VPC Console, or the AWS CLI\.
 
 ## Creating an Interface Endpoint<a name="create-interface-endpoint"></a>
 
@@ -177,6 +178,13 @@ For specific information for AWS services, see [VPC Endpoints](vpc-endpoints.md)
 
      This option is enabled by default\. To use the private DNS option, the following attributes of your VPC must be set to `true`: `enableDnsHostnames` and `enableDnsSupport`\. For more information, see [Viewing and Updating DNS Support for Your VPC](vpc-dns.md#vpc-dns-updating)\.
    + For **Security group**, select the security groups to associate with the endpoint network interfaces\.
+   + \(Optional\) Add or remove a tag\.
+
+     \[Add a tag\] Choose **Add tag** and do the following:
+     + For **Key**, enter the key name\.
+     + For **Value**, enter the key value\.
+
+     \[Remove a tag\] Choose the delete button \(“x”\) to the right of the tag’s Key and Value\.
 
 To create an interface endpoint to an endpoint service, you must have the name of the service to which to connect\. The service provider can provide you with the name\. 
 
@@ -196,6 +204,13 @@ To create an interface endpoint to an endpoint service, you must have the name o
 
      Not all Availability Zones may be supported for the service\.
    + For **Security group**, select the security groups to associate with the endpoint network interfaces\.
+   + \(Optional\) Add or remove a tag\.
+
+     \[Add a tag\] Choose **Add tag** and do the following:
+     + For **Key**, enter the key name\.
+     + For **Value**, enter the key value\.
+
+     \[Remove a tag\] Choose the delete button \(“x”\) to the right of the tag’s Key and Value\.
 
 **To create an interface endpoint to an AWS Marketplace Partner service**
 
@@ -215,6 +230,13 @@ To create an interface endpoint to an endpoint service, you must have the name o
 
      Not all Availability Zones may be supported for the service\.
    + For **Security group**, select the security groups to associate with the endpoint network interfaces\.
+   + \(Optional\) Add or remove a tag\.
+
+     \[Add a tag\] Choose **Add tag** and do the following:
+     + For **Key**, enter the key name\.
+     + For **Value**, enter the key value\.
+
+     \[Remove a tag\] Choose the delete button \(“x”\) to the right of the tag’s Key and Value\.
 
 **To create an interface endpoint using the AWS CLI**
 

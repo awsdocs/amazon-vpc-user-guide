@@ -1,6 +1,6 @@
 # VPC with a Single Public Subnet<a name="VPC_Scenario1"></a>
 
-The configuration for this scenario includes a virtual private cloud \(VPC\) with a single public subnet, and an Internet gateway to enable communication over the Internet\. We recommend this configuration if you need to run a single\-tier, public\-facing web application, such as a blog or a simple website\.
+The configuration for this scenario includes a virtual private cloud \(VPC\) with a single public subnet, and an internet gateway to enable communication over the internet\. We recommend this configuration if you need to run a single\-tier, public\-facing web application, such as a blog or a simple website\.
 
 This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnet with associated IPv6 CIDR blocks\. Instances launched into the public subnet can receive IPv6 addresses, and communicate using IPv6\. For more information about IPv4 and IPv6 addressing, see [IP Addressing in Your VPC](vpc-ip-addressing.md)\.
 
@@ -23,11 +23,11 @@ If you completed [Getting Started with Amazon VPC](vpc-getting-started.md), then
 The configuration for this scenario includes the following:
 + A virtual private cloud \(VPC\) with a size /16 IPv4 CIDR block \(example: 10\.0\.0\.0/16\)\. This provides 65,536 private IPv4 addresses\.
 + A subnet with a size /24 IPv4 CIDR block \(example: 10\.0\.0\.0/24\)\. This provides 256 private IPv4 addresses\.
-+ An Internet gateway\. This connects the VPC to the Internet and to other AWS services\.
-+ An instance with a private IPv4 address in the subnet range \(example: 10\.0\.0\.6\), which enables the instance to communicate with other instances in the VPC, and an Elastic IPv4 address \(example: 198\.51\.100\.2\), which is a public IPv4 address that enables the instance to connect to the Internet and to be reached from the Internet\.
-+ A custom route table associated with the subnet\. The route table entries enable instances in the subnet to use IPv4 to communicate with other instances in the VPC, and to communicate directly over the Internet\. A subnet that's associated with a route table that has a route to an Internet gateway is known as a *public subnet*\.
++ An internet gateway\. This connects the VPC to the internet and to other AWS services\.
++ An instance with a private IPv4 address in the subnet range \(example: 10\.0\.0\.6\), which enables the instance to communicate with other instances in the VPC, and an Elastic IPv4 address \(example: 198\.51\.100\.2\), which is a public IPv4 address that enables the instance to connect to the internet and to be reached from the internet\.
++ A custom route table associated with the subnet\. The route table entries enable instances in the subnet to use IPv4 to communicate with other instances in the VPC, and to communicate directly over the internet\. A subnet that's associated with a route table that has a route to an internet gateway is known as a *public subnet*\.
 
-For more information about subnets, see [VPCs and Subnets](VPC_Subnets.md)\. For more information about Internet gateways, see [Internet Gateways](VPC_Internet_Gateway.md)\.
+For more information about subnets, see [VPCs and Subnets](VPC_Subnets.md)\. For more information about internet gateways, see [Internet Gateways](VPC_Internet_Gateway.md)\.
 
 ### Overview for IPv6<a name="vpc-scenario-1-overview-ipv6"></a>
 
@@ -35,15 +35,15 @@ You can optionally enable IPv6 for this scenario\. In addition to the components
 + A size /56 IPv6 CIDR block associated with the VPC \(example: 2001:db8:1234:1a00::/56\)\. Amazon automatically assigns the CIDR; you cannot choose the range yourself\.
 + A size /64 IPv6 CIDR block associated with the public subnet \(example: 2001:db8:1234:1a00::/64\)\. You can choose the range for your subnet from the range allocated to the VPC\. You cannot choose the size of the subnet IPv6 CIDR block\.
 + An IPv6 address assigned to the instance from the subnet range \(example: 2001:db8:1234:1a00::123\)\.
-+ Route table entries in the custom route table that enable instances in the VPC to use IPv6 to communicate with each other, and directly over the Internet\.
++ Route table entries in the custom route table that enable instances in the VPC to use IPv6 to communicate with each other, and directly over the internet\.
 
 ![\[IPv6-enabled VPC with a public subnet\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/getting-started-ipv6-1.png)
 
 ## Routing<a name="VPC_Scenario1_Routing"></a>
 
-Your VPC has an implied router \(shown in the configuration diagram above\)\. In this scenario, the VPC wizard creates a custom route table that routes all traffic destined for an address outside the VPC to the Internet gateway, and associates this route table with the subnet\. 
+Your VPC has an implied router \(shown in the configuration diagram above\)\. In this scenario, the VPC wizard creates a custom route table that routes all traffic destined for an address outside the VPC to the internet gateway, and associates this route table with the subnet\. 
 
-The following table shows the route table for the example in the configuration diagram above\. The first entry is the default entry for local IPv4 routing in the VPC; this entry enables the instances in this VPC to communicate with each other\. The second entry routes all other IPv4 subnet traffic to the Internet gateway \(for example, `igw-1a2b3c4d`\)\.
+The following table shows the route table for the example in the configuration diagram above\. The first entry is the default entry for local IPv4 routing in the VPC; this entry enables the instances in this VPC to communicate with each other\. The second entry routes all other IPv4 subnet traffic to the internet gateway \(for example, `igw-1a2b3c4d`\)\.
 
 
 | Destination | Target | 
@@ -53,7 +53,7 @@ The following table shows the route table for the example in the configuration d
 
 ### Routing for IPv6<a name="vpc-scenario-1-routing-ipv6"></a>
 
-If you associate an IPv6 CIDR block with your VPC and subnet, your route table must include separate routes for IPv6 traffic\. The following table shows the custom route table for this scenario if you choose to enable IPv6 communication in your VPC\. The second entry is the default route that's automatically added for local routing in the VPC over IPv6\. The fourth entry routes all other IPv6 subnet traffic to the Internet gateway\.
+If you associate an IPv6 CIDR block with your VPC and subnet, your route table must include separate routes for IPv6 traffic\. The following table shows the custom route table for this scenario if you choose to enable IPv6 communication in your VPC\. The second entry is the default route that's automatically added for local routing in the VPC over IPv6\. The fourth entry routes all other IPv6 subnet traffic to the internet gateway\.
 
 
 | Destination | Target | 
@@ -91,7 +91,7 @@ The following are the inbound and outbound rules for IPv4 traffic for the WebSer
 
 ### Security for IPv6<a name="vpc-scenario-1-security-ipv6"></a>
 
-If you associate an IPv6 CIDR block with your VPC and subnet, you must add separate rules to your security group to control inbound and outbound IPv6 traffic for your web server instance\. In this scenario, the web server will be able to receive all Internet traffic over IPv6, and SSH or RDP traffic from your local network over IPv6\. 
+If you associate an IPv6 CIDR block with your VPC and subnet, you must add separate rules to your security group to control inbound and outbound IPv6 traffic for your web server instance\. In this scenario, the web server will be able to receive all internet traffic over IPv6, and SSH or RDP traffic from your local network over IPv6\. 
 
 The following are the IPv6\-specific rules for the WebServerSG security group \(which are in addition to the rules listed above\)\.
 

@@ -27,7 +27,7 @@ Log files are saved to the specified Amazon S3 bucket using a folder structure t
 bucket_ARN/optional_folder/AWSLogs/aws_account_id/vpcflowlogs/region/year/month/day/log_file_name.log.gz
 ```
 
-Similarly, the log file's file name is determined by the flow log's ID, Region, and the date and time it was created\. File names use the following format\.
+Similarly, the log file's file name is determined by the flow log's ID, Region, and the date and time that it was created by the flow logs service\. File names use the following format\.
 
 ```
 aws_account_id_vpcflowlogs_region_flow_log_id_timestamp_hash.log.gz
@@ -41,6 +41,8 @@ For example, the following shows the folder structure and file name of a log fil
 ```
 arn:aws:s3:::my-flow-log-bucket/AWSLogs/123456789012/vpcflowlogs/us-east-1/2018/06/20/123456789012_vpcflowlogs_us-east-1_fl-1234abcd_20180620T1620Z_fe123456.log.gz
 ```
+
+In Amazon S3, the **Last modified** field for the flow log file indicates the date and time at which the file was uploaded to the Amazon S3 bucket\. This is later than the timestamp in the file name, and differs by the amount of time taken to upload the file to the Amazon S3 bucket\.
 
 ## IAM Policy for IAM Principals that Publish Flow Logs to Amazon S3<a name="flow-logs-s3-iam"></a>
 
@@ -167,6 +169,8 @@ After you have created and configured your Amazon S3 bucket, you can create flow
 
 1. For **Filter**, specify the type of IP traffic data to log\. Choose **All** to log accepted and rejected traffic, **Rejected** to record only rejected traffic, or **Accepted** to record only accepted traffic\.
 
+1. For **Maximum aggregation interval**, choose the maximum period of time during which a flow is captured and aggregated into one flow log record\.
+
 1. For **Destination**, choose **Send to an Amazon S3 bucket**\.
 
 1. For **S3 bucket ARN**, specify the Amazon Resource Name \(ARN\) of an existing Amazon S3 bucket\. You can include a subfolder in the bucket ARN\. The bucket cannot use `AWSLogs` as a subfolder name, as this is a reserved term\.
@@ -194,6 +198,8 @@ To create a custom flow log that includes the default format fields, first choos
 1. Select one or more VPCs or subnets and then choose **Actions**, **Create flow log**\.
 
 1. For **Filter**, specify the type of IP traffic data to log\. Choose **All** to log accepted and rejected traffic, **Rejected** to record only rejected traffic, or **Accepted** to record only accepted traffic\.
+
+1. For **Maximum aggregation interval**, choose the maximum period of time during which a flow is captured and aggregated into one flow log record\.
 
 1. For **Destination**, choose **Send to an Amazon S3 bucket**\.
 

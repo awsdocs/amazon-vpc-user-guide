@@ -10,7 +10,8 @@ The following are general best practices:
 + When you create a network access control list \(ACL\), number the rules so that you have room for additions, For example, use 100, 200, and 300 as rules\. For more information, see [Network ACL Rules](vpc-network-acls.md#nacl-rules)\.
 
 ## Additional Resources<a name="seccurity-best-practices-additional-resources"></a>
-+ [VPC Security Capabilities](https://aws.amazon.com/answers/networking/vpc-security-capabilities/)
++ Manage access to AWS resources and APIs using identity federation, IAM users, and IAM roles\. Establish credential management policies and procedures for creating, distributing, rotating, and revoking AWS access credentials\. For more information, see [IAM Best Practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html) in the *IAM User Guide*\.
++ For answers to frequently asked questions for VPC security, see [Amazon VPC FAQs](https://aws.amazon.com/vpc/faqs/)\.
 
 ## Recommended Network ACL Rules for Your VPC<a name="vpc-recommended-nacl-rules"></a>
 

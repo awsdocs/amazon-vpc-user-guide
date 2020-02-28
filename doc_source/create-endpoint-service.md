@@ -24,6 +24,14 @@ After you create an endpoint service configuration, you must add permissions to 
 
 1. To associate a private DNS name with the service, select **Enable private DNS** name, and then for** Private DNS name**, enter the private DNS name\.
 
+1. \(Optional\) Add or remove a tag\.
+
+   \[Add a tag\] Choose **Add tag** and do the following:
+   + For **Key**, enter the key name\.
+   + For **Value**, enter the key value\.
+
+   \[Remove a tag\] Choose the delete button \(“x”\) to the right of the tag’s Key and Value\.
+
 1. Choose **Create service**\.
 
 ------

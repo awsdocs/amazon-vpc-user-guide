@@ -49,7 +49,7 @@ AWS Local Zones allow you to seamlessly connect to the full range of services in
 
 A network border group is a unique set of Availability Zones or Local Zones from where AWS advertises public IP addresses\.
 
-When you create a VPC that has IPv6 addresses, you can choose to assign a set of Amazon\-provided public IP addresses to the VPC and also set a network border group for the addresses that limits the addresses to the group\. When you set a network border group, the IP addresses cannot move between network border groups\. The `us-west-2` network border group contains the four US West \(Oregon\) Availability Zones\. The `us-west-2-lax-1` network border group contains the Los Angles Local Zones\.
+When you create a VPC that has IPv6 addresses, you can choose to assign a set of Amazon\-provided public IP addresses to the VPC and also set a network border group for the addresses that limits the addresses to the group\. When you set a network border group, the IP addresses cannot move between network border groups\. The `us-west-2` network border group contains the four US West \(Oregon\) Availability Zones\. The `us-west-2-lax-1` network border group contains the Los Angeles Local Zones\.
 
 The following rules apply to Local Zones:
 + The Local Zone subnets follow the same routing rules, including route tables, security groups, Network ACLs as Availability Zone subnet\.

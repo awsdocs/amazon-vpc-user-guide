@@ -115,7 +115,7 @@ You can view and update the DNS support attributes for your VPC using the Amazon
 
 1. Select the VPC from the list\.
 
-1. Review the information in the **Summary** tab\. In this example, both settings are enabled\.  
+1. Review the information in the **Description** tab\. In this example, both settings are enabled\.  
 ![\[The DNS Settings tab\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/dns-settings-gwt.png)
 
 1. To update these settings, choose **Actions** and either **Edit DNS Resolution** or **Edit DNS Hostnames**\. In the dialog box that opens, choose **Yes** or **No**, and then choose **Save**\.

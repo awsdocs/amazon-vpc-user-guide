@@ -86,6 +86,7 @@ For more information, see [DNS Quotas](vpc-dns.md#vpc-dns-limits)\.
 | --- | --- | --- | 
 | Gateway VPC endpoints per Region | 20 | You cannot have more than 255 gateway endpoints per VPC\. | 
 | Interface VPC endpoints per VPC | 50 | This is the quota for the maximum number of endpoints in a VPC\. To increase this quota, contact AWS Support\.  | 
+|  VPC endpoint policy size  | 20,480 characters \(including white space\) | This quota cannot be increased\. | 
 
 ## AWS Site\-to\-Site VPN Connections<a name="vpc-limits-vpn"></a>
 

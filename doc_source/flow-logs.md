@@ -1,6 +1,6 @@
 # VPC Flow Logs<a name="flow-logs"></a>
 
-VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC\. Flow log data can be published to Amazon CloudWatch Logs and Amazon S3\. After you've created a flow log, you can retrieve and view its data in the chosen destination\.
+VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC\. Flow log data can be published to Amazon CloudWatch Logs or Amazon S3\. After you've created a flow log, you can retrieve and view its data in the chosen destination\.
 
 Flow logs can help you with a number of tasks, such as:
 + Diagnosing overly restrictive security group rules
@@ -53,11 +53,25 @@ If you no longer require a flow log, you can delete it\. Deleting a flow log dis
 
 ## Flow Log Records<a name="flow-log-records"></a>
 
-A flow log record represents a network flow in your VPC\. By default, each record captures a network internet protocol \(IP\) traffic flow that occurs within a *capture window*\. The capture window is a period of up to 10 minutes during which all flows of data are captured\. The total time it takes to capture, process, and publish the data is the *aggregation period*\. The aggregation period can take up to 15 minutes\.
+A flow log record represents a network flow in your VPC\. By default, each record captures a network internet protocol \(IP\) traffic flow \(characterized by a 5\-tuple on a per network interface basis\) that occurs within an *aggregation interval*, also referred to as a *capture window*\. 
 
 By default, the record includes values for the different components of the IP flow, including the source, destination, and protocol\. 
 
 When you create a flow log, you can use the default format for the flow log record, or you can specify a custom format \(Amazon S3 only\)\.
+
+**Topics**
++ [Aggregation Interval](#flow-logs-aggregration-interval)
++ [Default Format](#flow-logs-default)
++ [Custom Format](#flow-logs-custom)
++ [Available Fields](#flow-logs-fields)
+
+### Aggregation Interval<a name="flow-logs-aggregration-interval"></a>
+
+The aggregation interval is the period of time during which a particular flow is captured and aggregated into a flow log record\. By default, the maximum aggregation interval is 10 minutes\. When you create a flow log, you can optionally specify a maximum aggregation interval of 1 minute\. Flow logs with a maximum aggregation interval of 1 minute produce a higher volume of flow log records than flow logs with a maximum aggregation interval of 10 minutes\.
+
+When a network interface is attached to a [Nitro\-based instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances), the aggregation interval is always 1 minute or less, regardless of the specified maximum aggregation interval\.
+
+After data is captured within an aggregation interval, it takes additional time to process and publish the data to CloudWatch Logs or Amazon S3\. This additional time could be up to 5 minutes to publish to CloudWatch Logs, and up to 10 minutes to publish to Amazon S3\.
 
 ### Default Format<a name="flow-logs-default"></a>
 
@@ -73,7 +87,7 @@ The default format is supported for flow logs that publish to CloudWatch Logs or
 
 ### Custom Format<a name="flow-logs-custom"></a>
 
-You can optionally specify a custom format for the flow log record\. For a custom format, you specify which fields to return in the flow log record, and the order in which they should appear\. This enables you to create flow logs that are specific to your needs and omit fields that are not relevant to you\. A custom format can also help to reduce the need for separate processes to extract specific information from published flow logs\. You can specify any number of the available flow log fields, but you must specify at least one\.
+You can optionally specify a custom format for the flow log record\. For a custom format, you specify which fields to return in the flow log record, and the order in which they should appear\. This enables you to create flow logs that are specific to your needs and to omit fields that are not relevant to you\. A custom format can also help to reduce the need for separate processes to extract specific information from published flow logs\. You can specify any number of the available flow log fields, but you must specify at least one\.
 
 The custom format is supported for flow logs that publish to Amazon S3 only\.
 
@@ -97,17 +111,17 @@ A flow log that publishes to CloudWatch Logs supports the default format only\.
 | protocol | The IANA protocol number of the traffic\. For more information, see [ Assigned Internet Protocol Numbers](http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml)\. | CloudWatch Logs or Amazon S3 | 
 | packets | The number of packets transferred during the flow\. | CloudWatch Logs or Amazon S3 | 
 | bytes | The number of bytes transferred during the flow\. | CloudWatch Logs or Amazon S3 | 
-| start | The time, in Unix seconds, of the start of the flow\. | CloudWatch Logs or Amazon S3 | 
-| end | The time, in Unix seconds, of the end of the flow\. | CloudWatch Logs or Amazon S3 | 
+| start | The time, in Unix seconds, when the first packet of the flow was received within the aggregation interval\. This might be up to 60 seconds after the packet was transmitted or received on the network interface\. | CloudWatch Logs or Amazon S3 | 
+| end | The time, in Unix seconds, when the last packet of the flow was received within the aggregation interval\. This might be up to 60 seconds after the packet was transmitted or received on the network interface\. | CloudWatch Logs or Amazon S3 | 
 | action | The action that is associated with the traffic:[\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) | CloudWatch Logs or Amazon S3 | 
 | log\-status | The logging status of the flow log:[\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) | CloudWatch Logs or Amazon S3 | 
 | vpc\-id | The ID of the VPC that contains the network interface for which the traffic is recorded\. | Amazon S3 only | 
 | subnet\-id | The ID of the subnet that contains the network interface for which the traffic is recorded\. | Amazon S3 only | 
 | instance\-id | The ID of the instance that's associated with network interface for which the traffic is recorded, if the instance is owned by you\. Returns a '\-' symbol for a [requester\-managed network interface](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/requester-managed-eni.html); for example, the network interface for a NAT gateway\. | Amazon S3 only | 
-| tcp\-flags |  The bitmask value for the following TCP flags: [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) ACK is reported only when it's accompanied with SYN\.  TCP flags are OR\-ed during the capture window\. For short connections, the flags might be set on the same line in the flow log record, for example, `19` for SYN\-ACK and FIN, and `3` for SYN and FIN\. For an example, see [TCP Flag Sequence](flow-logs-records-examples.md#flow-log-example-tcp-flag)\.  | Amazon S3 only | 
+| tcp\-flags |  The bitmask value for the following TCP flags: [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) ACK is reported only when it's accompanied with SYN\.  TCP flags can be OR\-ed during the aggregation interval\. For short connections, the flags might be set on the same line in the flow log record, for example, `19` for SYN\-ACK and FIN, and `3` for SYN and FIN\. For an example, see [TCP Flag Sequence](flow-logs-records-examples.md#flow-log-example-tcp-flag)\.  | Amazon S3 only | 
 | type | The type of traffic: IPv4, IPv6, or EFA\. For more information about the Elastic Fabric Adapter \(EFA\), see [Elastic Fabric Adapter](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html)\. | Amazon S3 only | 
-| pkt\-srcaddr | The packet\-level \(original\) source IP address of the traffic\. Use this field with the srcaddr field to distinguish between the IP address of an intermediate layer through which traffic flows, and the original source IP address of the traffic\. For example, when traffic flows through [a network interface for a NAT gateway](flow-logs-records-examples.md#flow-log-example-nat), or where the IP address of a pod in Amazon EKS is different from the IP address of the network interface of the instance node on which the pod is running\. | Amazon S3 only | 
-| pkt\-dstaddr | The packet\-level \(original\) destination IP address for the traffic\. Use this field with the dstaddr field to distinguish between the IP address of an intermediate layer through which traffic flows, and the final destination IP address of the traffic\. For example, when traffic flows through [a network interface for a NAT gateway](flow-logs-records-examples.md#flow-log-example-nat), or where the IP address of a pod in Amazon EKS is different from the IP address of the network interface of the instance node on which the pod is running\. | Amazon S3 only | 
+| pkt\-srcaddr | The packet\-level \(original\) source IP address of the traffic\. Use this field with the srcaddr field to distinguish between the IP address of an intermediate layer through which traffic flows, and the original source IP address of the traffic\. For example, when traffic flows through [a network interface for a NAT gateway](flow-logs-records-examples.md#flow-log-example-nat), or where the IP address of a pod in Amazon EKS is different from the IP address of the network interface of the instance node on which the pod is running \(for communication within a VPC\)\. | Amazon S3 only | 
+| pkt\-dstaddr | The packet\-level \(original\) destination IP address for the traffic\. Use this field with the dstaddr field to distinguish between the IP address of an intermediate layer through which traffic flows, and the final destination IP address of the traffic\. For example, when traffic flows through [a network interface for a NAT gateway](flow-logs-records-examples.md#flow-log-example-nat), or where the IP address of a pod in Amazon EKS is different from the IP address of the network interface of the instance node on which the pod is running \(for communication within a VPC\)\. | Amazon S3 only | 
 
 **Note**  
 If a field is not applicable for a specific record, the record displays a '\-' symbol for that entry\.
@@ -125,8 +139,9 @@ To use flow logs, you need to be aware of the following limitations:
 + If traffic is sent from a network interface and the source is not any of the network interface's IP addresses, the flow log displays the primary private IPv4 address in the `srcaddr` field\. To capture the original source IP address, create a flow log with the `pkt-srcaddr` field\.
 + If traffic is sent to or sent by a network interface, the `srcaddr` and `dstaddr` fields in the flow log always display the primary private IPv4 address, regardless of the packet source or destination\. To capture the packet source or destination, create a flow log with the `pkt-srcaddr` and `pkt-dstaddr` fields\.
 + You cannot specify a custom format for flow log records that are published to CloudWatch Logs\.
-+ If you create a flow log in a Region introduced after March 20, 2019 \(an [opt\-in Region](https://docs.aws.amazon.com/general/latest/gr/rande-manage.html)\), such as Asia Pacific \(Hong Kong\) or Middle East \(Bahrain\), the destination Amazon S3 bucket must be in the same Region as the flow log\. 
++ If you create a flow log in a Region introduced after March 20, 2019 \(an [opt\-in Region](https://docs.aws.amazon.com/general/latest/gr/rande-manage.html)\), such as Asia Pacific \(Hong Kong\) or Middle East \(Bahrain\), the destination Amazon S3 bucket must be in the same Region and the same AWS account as the flow log\. 
 + If you create a flow log in a Region introduced before March 20, 2019, the destination Amazon S3 bucket must be in the same Region as the flow log, or in another Region introduced before March 20, 2019\. You cannot specify an Amazon S3 bucket that's in an opt\-in Region\.
++ When your network interface is attached to a [Nitro\-based instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances), the aggregation interval is always 1 minute or less, regardless of the specified maximum aggregation interval\.
 
 Flow logs do not capture all IP traffic\. The following types of traffic are not logged:
 + Traffic generated by instances when they contact the Amazon DNS server\. If you use your own DNS server, then all traffic to that DNS server is logged\. 

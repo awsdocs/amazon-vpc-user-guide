@@ -20,6 +20,7 @@ The following are the key concepts for route tables\.
 + **Gateway route table**—A route table that's associated with an internet gateway or virtual private gateway\.
 + **Local gateway route table**—A route table that's associated with an Outposts local gateway\. For information about local gateways, see [Local Gateways](https://docs.aws.amazon.com/outposts/latest/userguide/outposts-local-gateways.html) in the *AWS Outposts User Guide*\.
 + **Destination**—The destination CIDR where you want traffic to go\. For example, an external corporate network with a `172.16.0.0/12` CIDR\.
++ **Propagation**—Route propagation allows a virtual private gateway to automatically propagate routes to the route tables\. This means that you don't need to manually enter VPN routes to your route tables\. For more information about VPN routing options, see [Site\-to\-Site VPN Routing Options](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html) in the *Site\-to\-Site VPN User Guide*\.
 + **Target**—The target through which to send the destination traffic; for example, an internet gateway\.
 + **Local route**—A default route for communication within the VPC\.
 

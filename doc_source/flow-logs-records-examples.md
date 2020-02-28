@@ -33,13 +33,13 @@ In this example, RDP traffic \(destination port 3389, TCP protocol\) to network 
 
 The following are examples of default flow log records that are published to CloudWatch Logs or Amazon S3\.
 
-In this example, no data was recorded during the capture window\.
+In this example, no data was recorded during the aggregation interval\.
 
 ```
 2 123456789010 eni-1235b8ca123456789 - - - - - - - 1431280876 1431280934 - NODATA
 ```
 
-In this example, records were skipped during the capture window\.
+In this example, records were skipped during the aggregation interval\.
 
 ```
 2 123456789010 eni-11111111aaaaaaaaa - - - - - - - 1431280876 1431280934 - SKIPDATA
@@ -91,14 +91,14 @@ The `tcp-flags` field can help you identify the direction of the traffic, for ex
 3 vpc-abcdefab012345678 subnet-aaaaaaaa012345678 i-01234567890123456 eni-1235b8ca123456789 123456789010 IPv4 10.0.0.62 52.213.180.42 5001 43418 10.0.0.62 52.213.180.42 6 632 12 1566848875 1566848933 ACCEPT 18 OK
 ```
 
-In the second capture window, one of the connections that was established during the previous flow is now closed\. The client sent a FIN flag \(`1`\) to the server for the connection on port `43418`\. The server sent a FIN to the client on port `43418`\.
+In the second aggregation interval, one of the connections that was established during the previous flow is now closed\. The client sent a FIN flag \(`1`\) to the server for the connection on port `43418`\. The server sent a FIN to the client on port `43418`\.
 
 ```
 3 vpc-abcdefab012345678 subnet-aaaaaaaa012345678 i-01234567890123456 eni-1235b8ca123456789 123456789010 IPv4 10.0.0.62 52.213.180.42 5001 43418 10.0.0.62 52.213.180.42 6 63388 1219 1566848933 1566849113 ACCEPT 1 OK
 3 vpc-abcdefab012345678 subnet-aaaaaaaa012345678 i-01234567890123456 eni-1235b8ca123456789 123456789010 IPv4 52.213.180.42 10.0.0.62 43418 5001 52.213.180.42 10.0.0.62 6 23294588 15774 1566848933 1566849113 ACCEPT 1 OK
 ```
 
-For short connections \(for example, a few seconds\) that are opened and closed within a single capture window, the flags might be set on the same line in the flow log record for traffic flow in the same direction\. In the following example, the connection is established and finished within the same capture window\. In the first line, the TCP flag value is `3`, which indicates that there was a SYN and a FIN message sent from the client to the server\. In the second line, the TCP flag value is `19`, which indicates that there was SYN\-ACK and a FIN message sent from the server to the client\.
+For short connections \(for example, a few seconds\) that are opened and closed within a single aggregation interval, the flags might be set on the same line in the flow log record for traffic flow in the same direction\. In the following example, the connection is established and finished within the same aggregation interval\. In the first line, the TCP flag value is `3`, which indicates that there was a SYN and a FIN message sent from the client to the server\. In the second line, the TCP flag value is `19`, which indicates that there was SYN\-ACK and a FIN message sent from the server to the client\.
 
 ```
 3 vpc-abcdefab012345678 subnet-aaaaaaaa012345678 i-01234567890123456 eni-1235b8ca123456789 123456789010 IPv4 52.213.180.42 10.0.0.62 43638 5001 52.213.180.42 10.0.0.62 6 1260 17 1566933133 1566933193 ACCEPT 3 OK
