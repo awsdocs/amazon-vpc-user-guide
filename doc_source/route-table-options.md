@@ -125,9 +125,9 @@ For more information about VPC peering connections, see the [Amazon VPC Peering 
 
 ClassicLink is a feature that enables you to link an EC2\-Classic instance to a VPC, allowing communication between the EC2\-Classic instance and instances in the VPC using private IPv4 addresses\. For more information about ClassicLink, see [ClassicLink](vpc-classiclink.md)\.
 
-When you enable a VPC for ClassicLink, a route is added to all of the subnet route tables with a destination of `10.0.0.0/8` and a target of `local`\. This allows communication between instances in the VPC and any EC2\-Classic instances that are then linked to the VPC\. If you add another route table to a ClassicLink\-enabled VPC, it automatically receives a route with a destination of `10.0.0.0/8` and a target of `local`\. If you disable ClassicLink for a VPC, this route is automatically deleted in all the VPC route tables\.
+When you enable a VPC for ClassicLink, a route is added to all of the subnet route tables with a destination of `10.0.0.0/8` and a target of `local`\. This allows communication between instances in the VPC and any EC2\-Classic instances that are then linked to the VPC\. If you add another route table to a ClassicLink\-enabled VPC, it automatically receives a route with a destination of `10.0.0.0/8` and a target of `local`\. If you disable ClassicLink for a VPC, this route is automatically deleted in all the subnet route tables\.
 
-If any of your VPC route tables have existing routes for address ranges within the `10.0.0.0/8` CIDR, you cannot enable your VPC for ClassicLink\. This does not include local routes for VPCs with `10.0.0.0/16` and `10.1.0.0/16` IP address ranges\. 
+If any of your subnet route tables have existing routes for address ranges within the `10.0.0.0/8` CIDR, you cannot enable your VPC for ClassicLink\. This does not include local routes for VPCs with `10.0.0.0/16` and `10.1.0.0/16` IP address ranges\. 
 
 If you've already enabled a VPC for ClassicLink, you may not be able to add any more specific routes to your route tables for the `10.0.0.0/8` IP address range\.
 
@@ -183,6 +183,9 @@ For more information about transit gateway route tables, see [Routing](https://d
 You can intercept traffic that enters your VPC through an internet gateway or a virtual private gateway by directing it to a middlebox appliance in your VPC\. You can configure the appliance to suit your needs\. For example, you can configure a security appliance that screens all traffic, or a WAN acceleration appliance\. The appliance is deployed as an Amazon EC2 instance in a subnet in your VPC, and is represented by an elastic network interface \(network interface\) in your subnet\.
 
 To route inbound VPC traffic to an appliance, you associate a route table with the internet gateway or virtual private gateway, and specify the network interface of your appliance as the target for VPC traffic\. For more information, see [Gateway Route Tables](VPC_Route_Tables.md#gateway-route-table)\. You can also route outbound traffic from your subnet to a middlebox appliance in another subnet\.
+
+**Note**  
+If you've enabled route propagation for the destination subnet route table, be aware of route priority\. We prioritize the most specific route, and if the routes match, we prioritize static routes over propagated routes\. Review your routes to ensure that traffic is routed correctly and that there are no unintended consequences if you enable or disable route propagation \(for example, route propagation is required for an AWS Direct Connect connection that supports jumbo frames\)\.
 
 ### Appliance Considerations<a name="appliance-considerations"></a>
 

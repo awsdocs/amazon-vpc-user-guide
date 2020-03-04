@@ -2,6 +2,8 @@
 
 VPC sharing allows multiple AWS accounts to create their application resources, such as Amazon EC2 instances, Amazon Relational Database Service \(RDS\) databases, Amazon Redshift clusters, and AWS Lambda functions, into shared, centrally\-managed Amazon Virtual Private Clouds \(VPCs\)\. In this model, the account that owns the VPC \(owner\) shares one or more subnets with other accounts \(participants\) that belong to the same organization from AWS Organizations\. After a subnet is shared, the participants can view, create, modify, and delete their application resources in the subnets shared with them\. Participants cannot view, modify, or delete resources that belong to other participants or the VPC owner\.
 
+You can share Amazon VPCs to leverage the implicit routing within a VPC for applications that require a high degree of interconnectivity and are within the same trust boundaries\. This reduces the number of VPCs that you create and manage, while using separate accounts for billing and access control\. You can simplify network topologies by interconnecting shared Amazon VPCs using connectivity features, such as AWS PrivateLink, AWS Transit Gateway, and Amazon VPC peering\. For more information about VPC sharing benefits, see [VPC sharing: A new approach to multiple accounts and VPC management](https://aws.amazon.com/blogs/networking-and-content-delivery/vpc-sharing-a-new-approach-to-multiple-accounts-and-vpc-management/)\.
+
 **Topics**
 + [Shared VPCs Prerequisites](#vpc-share-prerequisites)
 + [Sharing a Subnet](#vpc-sharing-share-subnet)
@@ -77,7 +79,7 @@ Use the [describe\-subnets](https://docs.aws.amazon.com/cli/latest/reference/ec2
 
 ### Owner Permissions<a name="vpc-owner-permissions"></a>
 
-VPC owners are responsible for creating, managing and deleting all VPC\-level resources including subnets, route tables, network ACLs, peering connections, VPC endpoints, PrivateLink endpoints, internet gateways, NAT gateways, virtual private gateways, and transit gateway attachments\.
+VPC owners are responsible for creating, managing and deleting all VPC\-level resources including subnets, route tables, network ACLs, peering connections, gateway endpoints, interface endpoints, Amazon Route 53 Resolver endpoints, Amazon Route 53 endpoints, internet gateways, NAT gateways, virtual private gateways, and transit gateway attachments\. 
 
 VPC owners cannot modify or delete participant resources including security groups that participants created\. VPC owners can view the details for all the network interfaces, and the security groups that are attached to the participant resources in order to facilitate troubleshooting, and auditing\. VPC owners can create flow log subscriptions at the VPC, subnet, or ENI level for traffic monitoring or troubleshooting\.
 
@@ -92,9 +94,7 @@ In a shared VPC, each participant pays for their application resources including
 ## Unsupported Services for Shared Subnets<a name="vpc-share-unsupported-services"></a>
 
 Participants cannot create resources for the following services in a shared subnet::
-+ Amazon FSx
 + AWS CloudHSM Classic
-+ Route 53 Resolver Endpoints
 
 ## Limitations<a name="vpc-share-limitations"></a>
 

@@ -62,20 +62,3 @@ An [interface endpoint](vpce-interface.md) is an elastic network interface with 
 A [gateway endpoint](vpce-gateway.md) is a gateway that you specify as a target for a route in your route table for traffic destined to a supported AWS service\. The following AWS services are supported:
 + Amazon S3
 + DynamoDB
-
-**Controlling the Use of VPC Endpoints**  
-By default, IAM users do not have permission to work with endpoints\. You can create an IAM user policy that grants users the permissions to create, modify, describe, and delete endpoints\. We currently do not support resource\-level permissions for any of the `ec2:*VpcEndpoint*` API actions, or for the `ec2:DescribePrefixLists` action\. You cannot create an IAM policy that grants users the permissions to use a specific endpoint or prefix list\. The following is an example\.
-
-```
-{
-    "Version": "2012-10-17",
-    "Statement":[{
-    "Effect":"Allow",
-    "Action":"ec2:*VpcEndpoint*",
-    "Resource":"*"
-    }
-  ]
-}
-```
-
-For information about controlling access to services using VPC endpoints, see [Controlling Access to Services with VPC Endpoints](vpc-endpoints-access.md)\.

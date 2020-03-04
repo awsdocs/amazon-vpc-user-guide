@@ -92,6 +92,7 @@ Amazon's trademarks and trade dress may not be used in
       + [Creating and Managing a Notification for an Endpoint Service](create-notification-endpoint-service.md)
       + [Adding or Removing VPC Endpoint Service Tags](modify-tags-vpc-endpoint-service-tags.md)
       + [Deleting an Endpoint Service Configuration](delete-endpoint-service.md)
+   + [Identity and Access Management for VPC Endpoints and VPC Endpoint Services](vpc-endpoints-iam.md)
    + [Private DNS Name](verify-domains.md)
       + [VPC Endpoint Service Private DNS Name Verification](endpoint-services-dns-validation.md)
       + [Modifying an Existing Endpoint Service Private DNS Name](modify-vpc-endpoint-service-dns-name.md)

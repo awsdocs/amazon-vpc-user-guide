@@ -4,6 +4,8 @@ Flow logs can publish flow log data directly to Amazon CloudWatch\.
 
 When publishing to CloudWatch Logs, flow log data is published to a log group, and each network interface has a unique log stream in the log group\. Log streams contain flow log records\. You can create multiple flow logs that publish data to the same log group\. If the same network interface is present in one or more flow logs in the same log group, it has one combined log stream\. If you've specified that one flow log should capture rejected traffic, and the other flow log should capture accepted traffic, then the combined log stream captures all traffic\. For more information, see [Flow Log Records](flow-logs.md#flow-log-records)\.
 
+In CloudWatch Logs, the **timestamp** field corresponds to the start time that's captured in the flow log record\. The **ingestionTime** field indicates the date and time when the flow log record was received by CloudWatch Logs\. This timestamp is later than the end time that's captured in the flow log record\.
+
 **Topics**
 + [IAM Roles for Publishing Flow Logs to CloudWatch Logs](#flow-logs-iam)
 + [Creating a Flow Log That Publishes to CloudWatch Logs](#flow-logs-cwl-create-flow-log)
@@ -108,6 +110,8 @@ You cannot specify a custom format for the flow log record for a flow log that p
 
 1. For **Filter**, specify the type of IP traffic data to log\. Choose **All** to log accepted and rejected traffic, **Rejected** to record only rejected traffic, or **Accepted** to record only accepted traffic\.
 
+1. For **Maximum aggregation interval**, choose the maximum period of time during which a flow is captured and aggregated into one flow log record\.
+
 1. For **Destination**, choose **Send to CloudWatch Logs**\.
 
 1. For **Destination log group**, enter the name of a log group in CloudWatch Logs to which the flow logs are to be published\. If you specify the name of a log group that does not exist, we attempt to create the log group for you\.
@@ -125,6 +129,8 @@ You cannot specify a custom format for the flow log record for a flow log that p
 1. Select one or more VPCs or subnets and then choose **Actions**, **Create flow log**\.
 
 1. For **Filter**, specify the type of IP traffic data to log\. Choose **All** to log accepted and rejected traffic, **Rejected** to record only rejected traffic, or **Accepted** to record only accepted traffic\.
+
+1. For **Maximum aggregation interval**, choose the maximum period of time during which a flow is captured and aggregated into one flow log record\.
 
 1. For **Destination**, choose **Send to CloudWatch Logs**\.
 

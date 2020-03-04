@@ -59,7 +59,7 @@ If you enable DNS hostnames and DNS support in a VPC that didn't previously supp
 
 ## DNS Quotas<a name="vpc-dns-limits"></a>
 
-Each Amazon EC2 instance limits the number of packets that can be sent to the Amazon\-provided DNS server to a maximum of 1024 packets per second per network interface\. This quota cannot be increased\. The number of DNS queries per second supported by the Amazon\-provided DNS server varies by the type of query, the size of response, and the protocol in use\. For more information and recommendations for a scalable DNS architecture, see the [Hybrid Cloud DNS Solutions for Amazon VPC](https://d1.awsstatic.com/whitepapers/hybrid-cloud-dns-options-for-vpc.pdf) whitepaper\.
+Each EC2 instance limits the number of packets that can be sent to the Amazon\-provided DNS server to a maximum of 1024 packets per second per network interface\. This quota cannot be increased\. The number of DNS queries per second supported by the Amazon\-provided DNS server varies by the type of query, the size of response, and the protocol in use\. For more information and recommendations for a scalable DNS architecture, see the [Hybrid Cloud DNS Solutions for Amazon VPC](https://d1.awsstatic.com/whitepapers/hybrid-cloud-dns-options-for-vpc.pdf) whitepaper\.
 
 ## Viewing DNS Hostnames for Your EC2 Instance<a name="vpc-dns-viewing"></a>
 
@@ -115,7 +115,7 @@ You can view and update the DNS support attributes for your VPC using the Amazon
 
 1. Select the VPC from the list\.
 
-1. Review the information in the **Summary** tab\. In this example, both settings are enabled\.  
+1. Review the information in the **Description** tab\. In this example, both settings are enabled\.  
 ![\[The DNS Settings tab\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/dns-settings-gwt.png)
 
 1. To update these settings, choose **Actions** and either **Edit DNS Resolution** or **Edit DNS Hostnames**\. In the dialog box that opens, choose **Yes** or **No**, and then choose **Save**\.

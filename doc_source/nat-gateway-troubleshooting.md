@@ -128,7 +128,7 @@ Check the following information:
 + Ensure that the network ACLs that are associated with the private subnet and public subnets do not have rules that block inbound or outbound internet traffic\. For the `ping` command to work, the rules must also allow inbound and outbound ICMP traffic\.
 **Note**  
 You can enable flow logs to help you diagnose dropped connections because of network ACL or security group rules\. For more information, see [VPC Flow Logs](flow-logs.md)\.
-+ If you are using the `ping` command, ensure that you are pinging a website that has ICMP enabled\. If ICMP is not enabled, you will not receive reply packets\. To test this, perform the same `ping` command from the command line terminal on your own computer\. 
++ If you are using the `ping` command, ensure that you are pinging a host that has ICMP enabled\. If ICMP is not enabled, you will not receive reply packets\. To test this, perform the same `ping` command from the command line terminal on your own computer\. 
 + Check that your instance is able to ping other resources, for example, other instances in the private subnet \(assuming that security group rules allow this\)\.
 + Ensure that your connection is using a TCP, UDP, or ICMP protocol only\.
 

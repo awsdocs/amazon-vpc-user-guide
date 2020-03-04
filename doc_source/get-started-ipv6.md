@@ -24,7 +24,7 @@ In this step, you use the Amazon VPC wizard in the Amazon VPC console to create 
 + Attaches an Internet gateway to the VPC\. For more information about Internet gateways, see [Internet Gateways](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html)\.
 + Creates a subnet with an /24 IPv4 CIDR block and a /64 IPv6 CIDR block in the VPC\. The size of the IPv6 CIDR block is fixed \(/64\)\.
 + Creates a custom route table, and associates it with your subnet, so that traffic can flow between the subnet and the Internet gateway\. For more information about route tables, see [Route Tables](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html)\.
-+ Associates an IPv6 Amazon\-provided CIDR block with a network border group\. For more information, see [Extending your VPC Resources to in AWS Local Zones](VPC_Subnets.md#local-zone)\.
++ Associates an IPv6 Amazon\-provided CIDR block with a network border group\. For more information, see [Extending Your VPC Resources to AWS Local Zones](VPC_Subnets.md#local-zone)\.
 
 **Note**  
 This exercise covers the first scenario in the VPC wizard\. For more information about the other scenarios, see [Scenarios for Amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenarios.html)\.

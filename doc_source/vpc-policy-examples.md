@@ -327,6 +327,6 @@ You can find additional example IAM policies related to Amazon VPC in the follow
 + [ClassicLink](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html#iam-example-classiclink)
 + [Traffic mirroring](https://docs.aws.amazon.com/vpc/latest/mirroring/traffic-mirroring-security.html)
 + [Transit gateways](https://docs.aws.amazon.com/vpc/latest/tgw/transit-gateway-authentication-access-control.html#tgw-example-iam-policies)
-+ [VPC endpoints](vpc-endpoints.md)
++ [VPC Endpoints and VPC Endpoint Services](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints-iam.html)
 + [VPC endpoint policies](vpc-endpoints-access.md)
 + [VPC Peering](https://docs.aws.amazon.com/vpc/latest/peering/security-iam.html)

@@ -4,7 +4,7 @@ To get started with Amazon Virtual Private Cloud \(Amazon VPC\), you create a VP
 
 **Topics**
 + [VPC and Subnet Basics](#vpc-subnet-basics)
-+ [Extending your VPC Resources to in AWS Local Zones](#local-zone)
++ [Extending Your VPC Resources to AWS Local Zones](#local-zone)
 + [Subnets in AWS Outposts](#outposts)
 + [VPC and Subnet Sizing](#VPC_Sizing)
 + [Subnet Routing](#SubnetRouting)
@@ -43,13 +43,13 @@ Regardless of the type of subnet, the internal IPv4 address range of the subnet 
 
 You have a quota on the number of VPCs and subnets you can create in your account\. For more information, see [Amazon VPC Quotas](amazon-vpc-limits.md)\.
 
-## Extending your VPC Resources to in AWS Local Zones<a name="local-zone"></a>
+## Extending Your VPC Resources to AWS Local Zones<a name="local-zone"></a>
 
 AWS Local Zones allow you to seamlessly connect to the full range of services in the AWS Region such as Amazon Simple Storage Service and Amazon DynamoDB through the same APIs and tool sets\. You can extend your VPC Region by creating a new subnet that has a Local Zone assignment\. When you create a subnet in a Local Zone, the VPC is also extended to that Local Zone\. 
 
 A network border group is a unique set of Availability Zones or Local Zones from where AWS advertises public IP addresses\.
 
-When you create a VPC that has IPv6 addresses, you can choose to assign a set of Amazon\-provided public IP addresses to the VPC and also set a network border group for the addresses that limits the addresses to the group\. When you set a network border group, the IP addresses cannot move between network border groups\. The `us-west-2` network border group contains the four US West \(Oregon\) Availability Zones\. The `us-west-2-lax-1` network border group contains the Los Angles Local Zones\.
+When you create a VPC that has IPv6 addresses, you can choose to assign a set of Amazon\-provided public IP addresses to the VPC and also set a network border group for the addresses that limits the addresses to the group\. When you set a network border group, the IP addresses cannot move between network border groups\. The `us-west-2` network border group contains the four US West \(Oregon\) Availability Zones\. The `us-west-2-lax-1` network border group contains the Los Angeles Local Zones\.
 
 The following rules apply to Local Zones:
 + The Local Zone subnets follow the same routing rules, including route tables, security groups, Network ACLs as Availability Zone subnet\.

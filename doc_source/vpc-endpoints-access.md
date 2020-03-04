@@ -35,6 +35,7 @@ The following services support endpoint policies:
 + [Amazon EMR](https://docs.aws.amazon.com/emr/latest/ManagementGuide/interface-vpc-endpoint.html#api-private-link-policy)
 + [Amazon Kinesis Data Firehose](https://docs.aws.amazon.com/firehose/latest/dev/vpc.html)
 + [Amazon Kinesis Data Streams](https://docs.aws.amazon.com/streams/latest/dev/vpc.html#interface-vpc-endpoints-policies)
++ [Amazon Rekognition](https://docs.aws.amazon.com/rekognition/latest/dg/vpc.html)
 + [Amazon SageMaker and Amazon SageMaker Runtime](https://docs.aws.amazon.com/sagemaker/latest/dg/interface-vpc-endpoint.html#api-private-link-policy)
 + [Amazon SageMaker Notebook Instance](https://docs.aws.amazon.com/sagemaker/latest/dg/notebook-interface-endpoint.html#nbi-private-link-policy)
 + [AWS Secrets Manager ](https://docs.aws.amazon.com/secretsmanager/latest/userguide/vpc-endpoint-overview.html#vpc-endpoint-policy)
