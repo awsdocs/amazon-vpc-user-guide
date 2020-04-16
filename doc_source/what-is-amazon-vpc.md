@@ -23,7 +23,7 @@ You can create, access, and manage your VPCs using any of the following interfac
 
 ## Pricing for Amazon VPC<a name="Paying"></a>
 
-There's no additional charge for using Amazon VPC\. You pay the standard rates for the instances and other Amazon EC2 features that you use\. There are charges for using an Site\-to\-Site VPN connection and using a NAT gateway\. For more information, see [Amazon VPC Pricing](https://aws.amazon.com/vpc/pricing/) and [Amazon EC2 Pricing](https://aws.amazon.com/ec2/pricing/)\.
+There's no additional charge for using Amazon VPC\. You pay the standard rates for the instances and other Amazon EC2 features that you use\. There are charges for using a Site\-to\-Site VPN connection and using a NAT gateway\. For more information, see [Amazon VPC Pricing](https://aws.amazon.com/vpc/pricing/) and [Amazon EC2 Pricing](https://aws.amazon.com/ec2/pricing/)\.
 
 ## Amazon VPC Limits<a name="CurrentCapabilities"></a>
 
