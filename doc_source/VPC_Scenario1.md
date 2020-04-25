@@ -69,7 +69,8 @@ AWS provides two features that you can use to increase security in your VPC: *se
 
 For this scenario, you use a security group but not a network ACL\. If you'd like to use a network ACL, see [Recommended Rules for a VPC with a Single Public Subnet](vpc-security-best-practices.md#nacl-rules-scenario-1)\.
 
-Your VPC comes with a [default security group](VPC_SecurityGroups.md#DefaultSecurityGroup)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. You can add rules to the default security group, but the rules may not be suitable for other instances that you launch into the VPC\. Instead, we recommend that you create a custom security group for your web server\.
+Your VPC comes with a [default security group](VPC_SecurityGroups.md#DefaultSecurityGroup)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. You can add 
+specific rules to the default security group, but the rules may not be suitable for other instances that you launch into the VPC\. Instead, Recommend that you create a custom security group for your web server\.
 
 For this scenario, create a security group named `WebServerSG`\. When you create a security group, it has a single outbound rule that allows all traffic to leave the instances\. You must modify the rules to enable inbound traffic and restrict the outbound traffic as needed\. You specify this security group when you launch instances into the VPC\. 
 
