@@ -16,7 +16,16 @@ You cannot attach more than one policy to an endpoint\. However, you can modify 
 
 Your endpoint policy can be like any IAM policy; however, take note of the following:
 + Only the parts of the policy that relate to the specified service will work\. You cannot use an endpoint policy to allow resources in your VPC to perform other actions; for example, if you add EC2 actions to an endpoint policy for an endpoint to Amazon S3, they will have no effect\. 
-+ Your policy must contain a [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html) element\. Specify `"*"` to grant access to all IAM roles and users\. Additionally, for gateway endpoints only, if you specify the principal in the format `"AWS":"AWS-account-ID"` or `"AWS":"arn:aws:iam::AWS-account-ID:root"`, access is granted to the AWS account root user only, and not all IAM users and roles for the account\.
++ Your policy must contain a [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html) element\. Specify `"*"` to grant access to all IAM roles and users\. For gateway endpoints only:
+  + you cannot limit the principal to a specific IAM role or user using the Principal element. A [Condition](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition.html) element needs to be used instead, in combination with the [aws:PrincipalArn](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html) key:
+  ```
+  "Condition": {
+    "StringEquals": {
+      "aws:PrincipalArn": <the_ARN>
+    }
+  }
+  ```
+  + if you specify the Principal element in the format `"AWS":"AWS-account-ID"` or `"AWS":"arn:aws:iam::AWS-account-ID:root"`, access is granted to the AWS account root user only, and not all IAM users and roles for the account\.
 + The size of an endpoint policy cannot exceed 20,480 characters \(including white space\)\.
 
 The following services support endpoint policies:
