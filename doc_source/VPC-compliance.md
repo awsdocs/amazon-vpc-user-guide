@@ -1,4 +1,4 @@
-# Compliance Validation for Amazon Virtual Private Cloud<a name="VPC-compliance"></a>
+# Compliance validation for Amazon Virtual Private Cloud<a name="VPC-compliance"></a>
 
 Third\-party auditors assess the security and compliance of Amazon Virtual Private Cloud as part of multiple AWS compliance programs\. These include SOC, PCI, FedRAMP, DoD CCSRG, HIPAA BAA, IRAP, MTCS, C5, K\-ISMS, ENS\-High, OSPAR, and HITRUST\-CSF\.
 

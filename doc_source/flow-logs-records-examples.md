@@ -1,21 +1,21 @@
-# Flow Log Record Examples<a name="flow-logs-records-examples"></a>
+# Flow log record examples<a name="flow-logs-records-examples"></a>
 
 The following are examples of flow log records that capture specific traffic flows\.
 
-For information about flow log record format, see [Flow Log Records](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html#flow-log-records)\.
+For information about flow log record format, see [Flow log records](flow-logs.md#flow-log-records)\.
 
 **Topics**
-+ [Accepted and Rejected Traffic](#flow-log-example-accepted-rejected)
-+ [No Data and Skipped Records](#flow-log-example-no-data)
-+ [Security Group and Network ACL Rules](#flow-log-example-security-groups)
-+ [IPv6 Traffic](#flow-log-example-ipv6)
-+ [TCP Flag Sequence](#flow-log-example-tcp-flag)
-+ [Traffic Through a NAT Gateway](#flow-log-example-nat)
-+ [Traffic Through a Transit Gateway](#flow-log-example-tgw)
++ [Accepted and rejected Traffic](#flow-log-example-accepted-rejected)
++ [No data and skipped records](#flow-log-example-no-data)
++ [Security group and network ACL rules](#flow-log-example-security-groups)
++ [IPv6 traffic](#flow-log-example-ipv6)
++ [TCP flag sequence](#flow-log-example-tcp-flag)
++ [Traffic through a NAT gateway](#flow-log-example-nat)
++ [Traffic through a transit gateway](#flow-log-example-tgw)
 
-## Accepted and Rejected Traffic<a name="flow-log-example-accepted-rejected"></a>
+## Accepted and rejected Traffic<a name="flow-log-example-accepted-rejected"></a>
 
-The following are examples of default flow log records that are published to CloudWatch Logs or Amazon S3\.
+The following are examples of default flow log records\.
 
 In this example, SSH traffic \(destination port 22, TCP protocol\) to network interface `eni-1235b8ca123456789` in account `123456789010` was allowed\.
 
@@ -29,9 +29,9 @@ In this example, RDP traffic \(destination port 3389, TCP protocol\) to network 
 2 123456789010 eni-1235b8ca123456789 172.31.9.69 172.31.9.12 49761 3389 6 20 4249 1418530010 1418530070 REJECT OK
 ```
 
-## No Data and Skipped Records<a name="flow-log-example-no-data"></a>
+## No data and skipped records<a name="flow-log-example-no-data"></a>
 
-The following are examples of default flow log records that are published to CloudWatch Logs or Amazon S3\.
+The following are examples of default flow log records\.
 
 In this example, no data was recorded during the aggregation interval\.
 
@@ -45,7 +45,7 @@ In this example, records were skipped during the aggregation interval\.
 2 123456789010 eni-11111111aaaaaaaaa - - - - - - - 1431280876 1431280934 - SKIPDATA
 ```
 
-## Security Group and Network ACL Rules<a name="flow-log-example-security-groups"></a>
+## Security group and network ACL rules<a name="flow-log-example-security-groups"></a>
 
 If you're using flow logs to diagnose overly restrictive or permissive security group rules or network ACL rules, be aware of the statefulness of these resources\. Security groups are stateful — this means that responses to allowed traffic are also allowed, even if the rules in your security group do not permit it\. Conversely, network ACLs are stateless, therefore responses to allowed traffic are subject to network ACL rules\.
 
@@ -63,24 +63,21 @@ For example, you use the `ping` command from your home computer \(IP address is 
 
 If your network ACL permits outbound ICMP traffic, the flow log displays two `ACCEPT` records \(one for the originating ping and one for the response ping\)\. If your security group denies inbound ICMP traffic, the flow log displays a single `REJECT` record, because the traffic was not permitted to reach your instance\.
 
-## IPv6 Traffic<a name="flow-log-example-ipv6"></a>
+## IPv6 traffic<a name="flow-log-example-ipv6"></a>
 
-The following is an example of a default flow log record that is published to CloudWatch Logs or Amazon S3\. In the example, SSH traffic \(port 22\) from IPv6 address `2001:db8:1234:a100:8d6e:3477:df66:f105` to network interface `eni-1235b8ca123456789` in account `123456789010` was allowed\.
+The following is an example of a default flow log record\. In the example, SSH traffic \(port 22\) from IPv6 address `2001:db8:1234:a100:8d6e:3477:df66:f105` to network interface `eni-1235b8ca123456789` in account `123456789010` was allowed\.
 
 ```
 2 123456789010 eni-1235b8ca123456789 2001:db8:1234:a100:8d6e:3477:df66:f105 2001:db8:1234:a102:3304:8879:34cf:4071 34892 22 6 54 8855 1477913708 1477913820 ACCEPT OK
 ```
 
-## TCP Flag Sequence<a name="flow-log-example-tcp-flag"></a>
+## TCP flag sequence<a name="flow-log-example-tcp-flag"></a>
 
 The following is an example of a custom flow log that captures the following fields in the following order\.
 
 ```
 version vpc-id subnet-id instance-id interface-id account-id type srcaddr dstaddr srcport dstport pkt-srcaddr pkt-dstaddr protocol bytes packets start end action tcp-flags log-status
 ```
-
-**Note**  
-Custom flow logs can be published to Amazon S3 only\.
 
 The `tcp-flags` field can help you identify the direction of the traffic, for example, which server initiated the connection\. In the following records \(starting at 7:47:55 PM and ending at 7:48:53 PM\), two connections were started by a client to a server running on port 5001\. Two SYN flags \(`2`\) were received by server from the client from different source ports on the client \(`43416` and `43418`\)\. For each SYN, a SYN\-ACK was sent from the server to the client \(`18`\) on the corresponding port\.
 
@@ -105,7 +102,7 @@ For short connections \(for example, a few seconds\) that are opened and closed 
 3 vpc-abcdefab012345678 subnet-aaaaaaaa012345678 i-01234567890123456 eni-1235b8ca123456789 123456789010 IPv4 10.0.0.62 52.213.180.42 5001 43638  10.0.0.62 52.213.180.42 6 967 14 1566933133 1566933193 ACCEPT 19 OK
 ```
 
-## Traffic Through a NAT Gateway<a name="flow-log-example-nat"></a>
+## Traffic through a NAT gateway<a name="flow-log-example-nat"></a>
 
 In this example, an instance in a private subnet accesses the internet through a NAT gateway that's in a public subnet\.
 
@@ -116,9 +113,6 @@ The following custom flow log for the NAT gateway network interface captures the
 ```
 instance-id interface-id srcaddr dstaddr pkt-srcaddr pkt-dstaddr
 ```
-
-**Note**  
-Custom flow logs can be published to Amazon S3 only\.
 
 The flow log shows the flow of traffic from the instance IP address \(10\.0\.1\.5\) through the NAT gateway network interface to a host on the internet \(203\.0\.113\.5\)\. The NAT gateway network interface is a requester\-managed network interface, therefore the flow log record displays a '\-' symbol for the `instance-id` field\. The following line shows traffic from the source instance to the NAT gateway network interface\. The values for the `dstaddr` and `pkt-dstaddr` fields are different\. The `dstaddr` field displays the private IP address of the NAT gateway network interface, and the `pkt-dstaddr` field displays the final destination IP address of the host on the internet\. 
 
@@ -146,7 +140,7 @@ i-01234567890123456 eni-1111aaaa2222bbbb3 10.0.1.5 203.0.113.5 10.0.1.5 203.0.11
 i-01234567890123456 eni-1111aaaa2222bbbb3 203.0.113.5 10.0.1.5 203.0.113.5 10.0.1.5 #Response traffic from host on the internet to the source instance
 ```
 
-## Traffic Through a Transit Gateway<a name="flow-log-example-tgw"></a>
+## Traffic through a transit gateway<a name="flow-log-example-tgw"></a>
 
 In this example, a client in VPC A connects to a web server in VPC B through a transit gateway\. The client and server are in different Availability Zones\. Therefore, traffic arrives at the server in VPC B using `eni-11111111111111111` and leaves VPC B using `eni-22222222222222222`\.
 
@@ -157,9 +151,6 @@ You create a custom flow log for VPC B with the following format\.
 ```
 version interface-id account-id vpc-id subnet-id instance-id srcaddr dstaddr srcport dstport protocol tcp-flags type pkt-srcaddr pkt-dstaddr action log-status
 ```
-
-**Note**  
-Custom flow logs can be published to Amazon S3 only\.
 
 The following lines from the flow log records demonstrate the flow of traffic on the network interface for the web server\. The first line is the request traffic from the client, and the last line is the response traffic from the web server\.
 

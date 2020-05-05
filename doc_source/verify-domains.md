@@ -1,25 +1,29 @@
-# Private DNS Name<a name="verify-domains"></a>
+# Private DNS names for endpoint services<a name="verify-domains"></a>
+
+When you create a VPC endpoint service, AWS generates endpoint\-specific DNS hostnames that you can use to communicate with the service\. These names include the VPC endpoint ID, the Availability Zone name and Region Name, for example, vpce\-1234\-abcdev\-us\-east\-1\.vpce\-svc\-123345\.us\-east\-1\.vpce\.amazonaws\.com\. By default, your consumers access the service with that DNS name and usually need to modify the application configuration\.
+
+If the endpoint service is for an AWS service, or a service available in the AWS Marketplace, there is a default DNS name\. For other services, the service provider can configure a private DNS name so consumers can access the service using an existing DNS name without making changes to their applications\. For more information, see [VPC endpoint services \(AWS PrivateLink\)](endpoint-service.md)\.
 
 Service providers can specify a private DNS name for a new endpoint service, or an existing endpoint service\. To use a private DNS name, enable the feature, and then specify a private DNS name\. Before consumers can use the private DNS name, you must verify that you have control of the domain/subdomain\. You can initiate domain ownership verification using the Amazon VPC Console or API\. After the domain ownership verification completes, consumers access the endpoint by using the private DNS name\.
 
 The high\-level procedure is as follows:
 
-1. Add a private DNS name\. For more information, see [Creating a VPC Endpoint Service Configuration](create-endpoint-service.md) or [Modifying an Existing Endpoint Service Private DNS Name](modify-vpc-endpoint-service-dns-name.md)\.
+1. Add a private DNS name\. For more information, see [Creating a VPC endpoint service configuration](create-endpoint-service.md) or [Modifying an existing endpoint service private DNS name](modify-vpc-endpoint-service-dns-name.md)\.
 
-1. Note the **Domain verification value** and **Domain verification name** that you need for the DNS server records\. For more information, see [Viewing Endpoint Service Private DNS Name Configuration](view-vpc-endpoint-service-dns-name.md)\.
+1. Note the **Domain verification value** and **Domain verification name** that you need for the DNS server records\. For more information, see [Viewing endpoint service private DNS name configuration](view-vpc-endpoint-service-dns-name.md)\.
 
-1. Add a record to the DNS server\. For more information, see [VPC Endpoint Service Private DNS Name Verification](endpoint-services-dns-validation.md)\.
+1. Add a record to the DNS server\. For more information, see [VPC endpoint service private DNS name verification](endpoint-services-dns-validation.md)\.
 
-1. Verify the private DNS name\. For more information, see [Manually Initiating the Endpoint Service Private DNS Name Domain Verification](verify-vpc-endpoint-service-dns-name.md)\.
+1. Verify the private DNS name\. For more information, see [Manually initiating the endpoint service private DNS name domain verification](verify-vpc-endpoint-service-dns-name.md)\.
 
 You can manage the verification process by using the Amazon VPC console or the Amazon VPC API\.
-+ [VPC Endpoint Service Private DNS Name Verification](endpoint-services-dns-validation.md)
-+ [Modifying an Existing Endpoint Service Private DNS Name](modify-vpc-endpoint-service-dns-name.md)
-+ [Removing an Endpoint Service Private DNS Name](remove-vpc-endpoint-service-dns-name.md)
-+ [Viewing Endpoint Service Private DNS Name Configuration](view-vpc-endpoint-service-dns-name.md)
-+ [Amazon VPC Private DNS Name Domain Verification TXT Records](dns-txt-records.md)
++ [VPC endpoint service private DNS name verification](endpoint-services-dns-validation.md)
++ [Modifying an existing endpoint service private DNS name](modify-vpc-endpoint-service-dns-name.md)
++ [Removing an endpoint service private DNS name](remove-vpc-endpoint-service-dns-name.md)
++ [Viewing endpoint service private DNS name configuration](view-vpc-endpoint-service-dns-name.md)
++ [Amazon VPC private DNS name domain verification TXT records](dns-txt-records.md)
 
-## Domain Name Verification Considerations<a name="considerations"></a>
+## Domain name verification considerations<a name="considerations"></a>
 
 Make note of the following important points about domain ownership verification:
 + A consumer can only use the private DNS name to access the endpoint service when the verification status is **verified**\.

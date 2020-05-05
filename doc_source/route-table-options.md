@@ -1,20 +1,20 @@
-# Routing Options<a name="route-table-options"></a>
+# Example routing options<a name="route-table-options"></a>
 
 The following topics describe routing for specific gateways or connections in your VPC\. 
 
 **Topics**
-+ [Routing to an Internet Gateway](#route-tables-internet-gateway)
-+ [Routing to a NAT Device](#route-tables-nat)
-+ [Routing to a Virtual Private Gateway](#route-tables-vgw)
-+ [Routing to an AWS Outposts Local Gateway](#route-tables-lgw)
-+ [Routing to a VPC Peering Connection](#route-tables-vpc-peering)
++ [Routing to an internet gateway](#route-tables-internet-gateway)
++ [Routing to a NAT device](#route-tables-nat)
++ [Routing to a virtual private gateway](#route-tables-vgw)
++ [Routing to an AWS Outposts local gateway](#route-tables-lgw)
++ [Routing to a VPC peering connection](#route-tables-vpc-peering)
 + [Routing for ClassicLink](#route-tables-classiclink)
-+ [Routing to a Gateway VPC Endpoint](#route-tables-vpce)
-+ [Routing to an Egress\-Only Internet Gateway](#route-tables-eigw)
-+ [Routing for a Transit Gateway](#route-tables-tgw)
-+ [Routing For a Middlebox Appliance in Your VPC](#route-tables-appliance-routing)
++ [Routing to a gateway VPC endpoint](#route-tables-vpce)
++ [Routing to an egress\-only internet gateway](#route-tables-eigw)
++ [Routing for a transit gateway](#route-tables-tgw)
++ [Routing for a middlebox appliance in your VPC](#route-tables-appliance-routing)
 
-## Routing to an Internet Gateway<a name="route-tables-internet-gateway"></a>
+## Routing to an internet gateway<a name="route-tables-internet-gateway"></a>
 
 You can make a subnet a public subnet by adding a route in your subnet route table to an internet gateway\. To do this, create and attach an internet gateway to your VPC, and then add a route with a destination of `0.0.0.0/0` for IPv4 traffic or `::/0` for IPv6 traffic, and a target of the internet gateway ID \(`igw-xxxxxxxxxxxxxxxxx`\)\. 
 
@@ -24,9 +24,9 @@ You can make a subnet a public subnet by adding a route in your subnet route tab
 | 0\.0\.0\.0/0 | igw\-id | 
 | ::/0 | igw\-id | 
 
-For more information, see [Internet Gateways](VPC_Internet_Gateway.md)\.
+For more information, see [Internet gateways](VPC_Internet_Gateway.md)\.
 
-## Routing to a NAT Device<a name="route-tables-nat"></a>
+## Routing to a NAT device<a name="route-tables-nat"></a>
 
 To enable instances in a private subnet to connect to the internet, you can create a NAT gateway or launch a NAT instance in a public subnet\. Then add a route for the private subnet's route table that routes IPv4 internet traffic \(`0.0.0.0/0`\) to the NAT device\. 
 
@@ -44,9 +44,9 @@ You can also create more specific routes to other targets to avoid unnecessary d
 | pl\-xxxxxxxx | vpce\-id | 
 | 10\.25\.0\.0/16 | pcx\-id | 
 
-For more information, see [NAT Gateways](vpc-nat-gateway.md) and [NAT Instances](VPC_NAT_Instance.md)\. NAT devices cannot be used for IPv6 traffic\.
+For more information, see [NAT gateways](vpc-nat-gateway.md) and [NAT instances](VPC_NAT_Instance.md)\. NAT devices cannot be used for IPv6 traffic\.
 
-## Routing to a Virtual Private Gateway<a name="route-tables-vgw"></a>
+## Routing to a virtual private gateway<a name="route-tables-vgw"></a>
 
 You can use an AWS Site\-to\-Site VPN connection to enable instances in your VPC to communicate with your own network\. To do this, create and attach a virtual private gateway to your VPC\. Then add a route in your subnet route table with the destination of your network and a target of the virtual private gateway \(`vgw-xxxxxxxxxxxxxxxxx`\)\.
 
@@ -55,11 +55,11 @@ You can use an AWS Site\-to\-Site VPN connection to enable instances in your VPC
 | --- | --- | 
 | 10\.0\.0\.0/16 | vgw\-id | 
 
-You can then create and configure your Site\-to\-Site VPN connection\. For more information, see [What is AWS Site\-to\-Site VPN?](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html) and [Route Tables and VPN Route Priority](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html#vpn-route-priority) in the *AWS Site\-to\-Site VPN User Guide*\.
+You can then create and configure your Site\-to\-Site VPN connection\. For more information, see [What is AWS Site\-to\-Site VPN?](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html) and [Route tables and VPN route priority](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html#vpn-route-priority) in the *AWS Site\-to\-Site VPN User Guide*\.
 
 We currently do not support IPv6 traffic over an AWS Site\-to\-Site VPN connection\. However, we support IPv6 traffic routed through a virtual private gateway to an AWS Direct Connect connection\. For more information, see the [AWS Direct Connect User Guide](https://docs.aws.amazon.com/directconnect/latest/UserGuide/)\.
 
-## Routing to an AWS Outposts Local Gateway<a name="route-tables-lgw"></a>
+## Routing to an AWS Outposts local gateway<a name="route-tables-lgw"></a>
 
 Subnets that are in VPCs associated with AWS Outposts can have an additional target type of a local gateway\. Consider the case where you want to have the local gateway route traffic with a destination address of 192\.168\.10\.0/24 to the customer network\. To do this, add the following route with the destination network and a target of the local gateway \(`lgw-xxxx`\)\.
 
@@ -69,7 +69,7 @@ Subnets that are in VPCs associated with AWS Outposts can have an additional tar
 | 192\.168\.10\.0/24 | lgw\-id | 
 | 2002:bc9:1234:1a00::/56 | igw\-id | 
 
-## Routing to a VPC Peering Connection<a name="route-tables-vpc-peering"></a>
+## Routing to a VPC peering connection<a name="route-tables-vpc-peering"></a>
 
 A VPC peering connection is a networking connection between two VPCs that allows you to route traffic between them using private IPv4 addresses\. Instances in either VPC can communicate with each other as if they are part of the same network\. 
 
@@ -95,7 +95,7 @@ The VPC B route table is configured as follows\.
 | 172\.31\.0\.0/16 | Local | 
 | 10\.0\.0\.0/16 | pcx\-11223344556677889 | 
 
-Your VPC peering connection can also support IPv6 communication between instances in the VPCs, if the VPCs and instances are enabled for IPv6 communication\. For more information, see [VPCs and Subnets](VPC_Subnets.md)\. To enable the routing of IPv6 traffic between VPCs, you must add a route to your route table that points to the VPC peering connection to access all or part of the IPv6 CIDR block of the peer VPC\.
+Your VPC peering connection can also support IPv6 communication between instances in the VPCs, if the VPCs and instances are enabled for IPv6 communication\. For more information, see [VPCs and subnets](VPC_Subnets.md)\. To enable the routing of IPv6 traffic between VPCs, you must add a route to your route table that points to the VPC peering connection to access all or part of the IPv6 CIDR block of the peer VPC\.
 
 For example, using the same VPC peering connection \(`pcx-11223344556677889`\) above, assume the VPCs have the following information:
 + VPC A: IPv6 CIDR block is `2001:db8:1234:1a00::/56`
@@ -133,13 +133,13 @@ If you've already enabled a VPC for ClassicLink, you may not be able to add any 
 
 If you modify a VPC peering connection to enable communication between instances in your VPC and an EC2\-Classic instance that's linked to the peer VPC, a static route is automatically added to your route tables with a destination of `10.0.0.0/8` and a target of `local`\. If you modify a VPC peering connection to enable communication between a local EC2\-Classic instance linked to your VPC and instances in a peer VPC, you must manually add a route to your main route table with a destination of the peer VPC CIDR block, and a target of the VPC peering connection\. The EC2\-Classic instance relies on the main route table for routing to the peer VPC\. For more information, see [Configurations With ClassicLink](https://docs.aws.amazon.com/vpc/latest/peering/peering-configurations-classiclink.html) in the *Amazon VPC Peering Guide*\.
 
-## Routing to a Gateway VPC Endpoint<a name="route-tables-vpce"></a>
+## Routing to a gateway VPC endpoint<a name="route-tables-vpce"></a>
 
 A gateway VPC endpoint enables you to create a private connection between your VPC and another AWS service\. When you create a gateway endpoint, you specify the subnet route tables in your VPC that are used by the gateway endpoint\. A route is automatically added to each of the route tables with a destination that specifies the prefix list ID of the service \(`pl-xxxxxxxx`\), and a target with the endpoint ID \(`vpce-xxxxxxxxxxxxxxxxx`\)\. You cannot explicitly delete or modify the endpoint route, but you can change the route tables that are used by the endpoint\.
 
-For more information about routing for endpoints, and the implications for routes to AWS services, see [Routing for Gateway Endpoints](vpce-gateway.md#vpc-endpoints-routing)\.
+For more information about routing for endpoints, and the implications for routes to AWS services, see [Routing for gateway endpoints](vpce-gateway.md#vpc-endpoints-routing)\.
 
-## Routing to an Egress\-Only Internet Gateway<a name="route-tables-eigw"></a>
+## Routing to an egress\-only internet gateway<a name="route-tables-eigw"></a>
 
 You can create an egress\-only internet gateway for your VPC to enable instances in a private subnet to initiate outbound communication to the internet, but prevent the internet from initiating connections with the instances\. An egress\-only internet gateway is used for IPv6 traffic only\. To configure routing for an egress\-only internet gateway, add a route in the private subnet's route table that routes IPv6 internet traffic \(`::/0`\) to the egress\-only internet gateway\. 
 
@@ -148,9 +148,9 @@ You can create an egress\-only internet gateway for your VPC to enable instances
 | --- | --- | 
 | ::/0 | eigw\-id | 
 
-For more information, see [Egress\-Only Internet Gateways](egress-only-internet-gateway.md)\.
+For more information, see [Egress\-only internet gateways](egress-only-internet-gateway.md)\.
 
-## Routing for a Transit Gateway<a name="route-tables-tgw"></a>
+## Routing for a transit gateway<a name="route-tables-tgw"></a>
 
 When you attach a VPC to a transit gateway, you need to add a route to your subnet route table for traffic to route through the transit gateway\. 
 
@@ -178,16 +178,16 @@ The following is an example of the transit gateway route table entries for the V
 
 For more information about transit gateway route tables, see [Routing](https://docs.aws.amazon.com/vpc/latest/tgw/how-transit-gateways-work.html#tgw-routing-overview) in *Amazon VPC Transit Gateways*\.
 
-## Routing For a Middlebox Appliance in Your VPC<a name="route-tables-appliance-routing"></a>
+## Routing for a middlebox appliance in your VPC<a name="route-tables-appliance-routing"></a>
 
 You can intercept traffic that enters your VPC through an internet gateway or a virtual private gateway by directing it to a middlebox appliance in your VPC\. You can configure the appliance to suit your needs\. For example, you can configure a security appliance that screens all traffic, or a WAN acceleration appliance\. The appliance is deployed as an Amazon EC2 instance in a subnet in your VPC, and is represented by an elastic network interface \(network interface\) in your subnet\.
 
-To route inbound VPC traffic to an appliance, you associate a route table with the internet gateway or virtual private gateway, and specify the network interface of your appliance as the target for VPC traffic\. For more information, see [Gateway Route Tables](VPC_Route_Tables.md#gateway-route-table)\. You can also route outbound traffic from your subnet to a middlebox appliance in another subnet\.
+To route inbound VPC traffic to an appliance, you associate a route table with the internet gateway or virtual private gateway, and specify the network interface of your appliance as the target for VPC traffic\. For more information, see [Gateway route tables](VPC_Route_Tables.md#gateway-route-table)\. You can also route outbound traffic from your subnet to a middlebox appliance in another subnet\.
 
 **Note**  
 If you've enabled route propagation for the destination subnet route table, be aware of route priority\. We prioritize the most specific route, and if the routes match, we prioritize static routes over propagated routes\. Review your routes to ensure that traffic is routed correctly and that there are no unintended consequences if you enable or disable route propagation \(for example, route propagation is required for an AWS Direct Connect connection that supports jumbo frames\)\.
 
-### Appliance Considerations<a name="appliance-considerations"></a>
+### Appliance considerations<a name="appliance-considerations"></a>
 
 You can choose a third\-party appliance from [AWS Marketplace](https://aws.amazon.com/marketplace), or you can configure your own appliance\. When you create or configure an appliance, take note of the following:
 + The appliance must be configured in a separate subnet to the source or destination traffic\.
@@ -196,9 +196,9 @@ You can choose a third\-party appliance from [AWS Marketplace](https://aws.amazo
 + You cannot route traffic between hosts in the same subnet through an appliance\.
 + You cannot route traffic between subnets through an appliance\.
 + The appliance does not have to perform network address translation \(NAT\)\.
-+ To intercept IPv6 traffic, ensure that you configure your VPC, subnet, and appliance for IPv6\. For more information, see [Working with VPCs and Subnets](working-with-vpcs.md)\. Virtual private gateways do not support IPv6 traffic\.
++ To intercept IPv6 traffic, ensure that you configure your VPC, subnet, and appliance for IPv6\. For more information, see [Working with VPCs and subnets](working-with-vpcs.md)\. Virtual private gateways do not support IPv6 traffic\.
 
-### Appliance Routing Configuration<a name="appliance-routing-configuration"></a>
+### Appliance routing configuration<a name="appliance-routing-configuration"></a>
 
 To route inbound traffic to an appliance, create a route table and add a route that points the traffic destined for a subnet to the appliance's network interface\. This route is more specific than the local route for the route table\. Associate this route table with your internet gateway or virtual private gateway\. The following route table routes IPv4 traffic destined for a subnet to the appliance's network interface\.
 

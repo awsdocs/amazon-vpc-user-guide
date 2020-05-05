@@ -1,10 +1,10 @@
-# VPC with a Private Subnet Only and AWS Site\-to\-Site VPN Access<a name="VPC_Scenario4"></a>
+# VPC with a private subnet only and AWS Site\-to\-Site VPN access<a name="VPC_Scenario4"></a>
 
 The configuration for this scenario includes a virtual private cloud \(VPC\) with a single private subnet, and a virtual private gateway to enable communication with your own network over an IPsec VPN tunnel\. There is no Internet gateway to enable communication over the Internet\. We recommend this scenario if you want to extend your network into [the cloud](https://aws.amazon.com/what-is-cloud-computing/) using Amazon's infrastructure without exposing your network to the Internet\.
 
-This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnet with associated IPv6 CIDR blocks\. Instances launched into the subnet can receive IPv6 addresses\. Currently, we do not support IPv6 communication over a AWS Site\-to\-Site VPN connection; however, instances in the VPC can communicate with each other via IPv6\. For more information about IPv4 and IPv6 addressing, see [IP Addressing in Your VPC](vpc-ip-addressing.md)\.
+This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnet with associated IPv6 CIDR blocks\. Instances launched into the subnet can receive IPv6 addresses\. Currently, we do not support IPv6 communication over a AWS Site\-to\-Site VPN connection; however, instances in the VPC can communicate with each other via IPv6\. For more information about IPv4 and IPv6 addressing, see [IP Addressing in your VPC](vpc-ip-addressing.md)\.
 
-For information about managing your EC2 instance software, see [Managing Software on Your Linux Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-software.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+For information about managing your EC2 instance software, see [Managing software on your Linux instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-software.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **Topics**
 + [Overview](#Configuration-4)
@@ -18,7 +18,7 @@ The following diagram shows the key components of the configuration for this sce
 ![\[Diagram for scenario 4: VPC with only a virtual private gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/case-4.png)
 
 **Important**  
-For this scenario, the [AWS Site\-to\-Site VPN Network Administrator Guide](https://docs.aws.amazon.com/vpc/latest/adminguide/) describes what your network administrator needs to do to configure the Amazon VPC customer gateway on your side of the Site\-to\-Site VPN connection\.
+For this scenario, see [Your customer gateway device](https://docs.aws.amazon.com/vpn/latest/s2svpn/your-cgw.html) to configure the customer gateway device on your side of the Site\-to\-Site VPN connection\.
 
 The configuration for this scenario includes the following:
 + A virtual private cloud \(VPC\) with a size /16 CIDR \(example: 10\.0\.0\.0/16\)\. This provides 65,536 private IP addresses\.
@@ -27,7 +27,7 @@ The configuration for this scenario includes the following:
 + Instances with private IP addresses in the subnet range \(examples: 10\.0\.0\.5, 10\.0\.0\.6, and 10\.0\.0\.7\), which enables the instances to communicate with each other and other instances in the VPC\.
 + The main route table contains a route that enables instances in the subnet to communicate with other instances in the VPC\. Route propagation is enabled, so a route that enables instances in the subnet to communicate directly with your network appears as a propagated route in the main route table\.
 
-For more information about subnets, see [VPCs and Subnets](VPC_Subnets.md) and [IP Addressing in Your VPC](vpc-ip-addressing.md)\. For more information about your Site\-to\-Site VPN connection, see [What is AWS Site\-to\-Site VPN?](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html) in the *AWS Site\-to\-Site VPN User Guide*\. For more information about configuring a customer gateway, see the * [AWS Site\-to\-Site VPN Network Administrator Guide](https://docs.aws.amazon.com/vpc/latest/adminguide/)*\.
+For more information about subnets, see [VPCs and subnets](VPC_Subnets.md) and [IP Addressing in your VPC](vpc-ip-addressing.md)\. For more information about your Site\-to\-Site VPN connection, see [What is AWS Site\-to\-Site VPN?](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html) in the *AWS Site\-to\-Site VPN User Guide*\. For more information about configuring a customer gateway device, see [Your customer gateway device](https://docs.aws.amazon.com/vpn/latest/s2svpn/your-cgw.html)\.
 
 ### Overview for IPv6<a name="vpc-scenario-4-overview-ipv6"></a>
 
@@ -68,9 +68,9 @@ If you associate an IPv6 CIDR block with your VPC and subnets, your route table 
 
 ## Security<a name="VPC_Scenario4_Security"></a>
 
-AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Internetwork Traffic Privacy in Amazon VPC](VPC_Security.md)\. 
+AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Internetwork traffic privacy in Amazon VPC](VPC_Security.md)\. 
 
-For scenario 4, you'll use the default security group for your VPC but not a network ACL\. If you'd like to use a network ACL, see [Recommended Rules for a VPC with a Private Subnet Only and AWS Site\-to\-Site VPN Access](vpc-security-best-practices.md#nacl-rules-scenario-4)\.
+For scenario 4, you'll use the default security group for your VPC but not a network ACL\. If you'd like to use a network ACL, see [Recommended rules for a VPC with a private subnet only and AWS Site\-to\-Site VPN access](vpc-security-best-practices.md#nacl-rules-scenario-4)\.
 
 Your VPC comes with a default security group whose initial settings deny all inbound traffic, allow all outbound traffic, and allow all traffic between the instances assigned to the security group\. For this scenario, we recommend that you add inbound rules to the default security group to allow SSH traffic \(Linux\) and Remote Desktop traffic \(Windows\) from your network\.
 
@@ -80,7 +80,7 @@ The default security group automatically allows assigned instances to communicat
 The following table describes the inbound rules that you should add to the default security group for your VPC\.
 
 
-**Default Security Group: Recommended Rules**  
+**Default security group: recommended rules**  
 
 |  | 
 | --- |

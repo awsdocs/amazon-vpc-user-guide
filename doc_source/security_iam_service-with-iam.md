@@ -1,14 +1,14 @@
-# How Amazon VPC Works with IAM<a name="security_iam_service-with-iam"></a>
+# How Amazon VPC works with IAM<a name="security_iam_service-with-iam"></a>
 
 Before you use IAM to manage access to Amazon VPC, you should understand what IAM features are available to use with Amazon VPC\. To get a high\-level view of how Amazon VPC and other AWS services work with IAM, see [AWS Services That Work with IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-services-that-work-with-iam.html) in the *IAM User Guide*\.
 
 **Topics**
 + [Actions](#security_iam_service-with-iam-id-based-policies-actions)
 + [Resources](#security_iam_service-with-iam-id-based-policies-resources)
-+ [Condition Keys](#security_iam_service-with-iam-id-based-policies-conditionkeys)
-+ [Amazon VPC Resource\-Based Policies](#security_iam_service-with-iam-resource-based-policies)
-+ [Authorization Based on Tags](#security_iam_service-with-iam-tags)
-+ [IAM Roles](#security_iam_service-with-iam-roles)
++ [Condition keys](#security_iam_service-with-iam-id-based-policies-conditionkeys)
++ [Amazon VPC resource\-based policies](#security_iam_service-with-iam-resource-based-policies)
++ [Authorization based on tags](#security_iam_service-with-iam-tags)
++ [IAM roles](#security_iam_service-with-iam-roles)
 
 With IAM identity\-based policies, you can specify allowed or denied actions\. For some actions, you can specify the resources and conditions under which actions are allowed or denied\. Amazon VPC supports specific actions, resources, and condition keys\. To learn about all of the elements that you use in a JSON policy, see [IAM JSON Policy Elements Reference](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements.html) in the *IAM User Guide*\.
 
@@ -79,7 +79,7 @@ Many Amazon EC2 API actions involve multiple resources\. To specify multiple res
 
 To see a list of Amazon VPC resource types and their ARNs, see [Resources Defined by Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html#amazonec2-resources-for-iam-policies) in the *IAM User Guide*\.
 
-## Condition Keys<a name="security_iam_service-with-iam-id-based-policies-conditionkeys"></a>
+## Condition keys<a name="security_iam_service-with-iam-id-based-policies-conditionkeys"></a>
 
 The `Condition` element \(or `Condition` *block*\) lets you specify conditions in which a statement is in effect\. The `Condition` element is optional\. You can build conditional expressions that use [condition operators](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition_operators.html), such as equals or less than, to match the condition in the policy with values in the request\. 
 
@@ -91,38 +91,38 @@ Amazon VPC defines its own set of condition keys and also supports using some gl
 
 All Amazon EC2 actions support the `aws:RequestedRegion` and `ec2:Region` condition keys\. For more information, see [Example: Restricting Access to a Specific Region](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html#iam-example-region)\. 
 
-To see a list of Amazon VPC condition keys, see [Condition Keys for Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html#amazonec2-policy-keys); in the *IAM User Guide*\. To learn with which actions and resources you can use a condition key, see [Actions Defined by Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html#amazonec2-actions-as-permissions)\.
+To see a list of Amazon VPC condition keys, see [Condition Keys for Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html#amazonec2-policy-keys) in the *IAM User Guide*\. To learn with which actions and resources you can use a condition key, see [Actions Defined by Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html#amazonec2-actions-as-permissions)\.
 
-## Amazon VPC Resource\-Based Policies<a name="security_iam_service-with-iam-resource-based-policies"></a>
+## Amazon VPC resource\-based policies<a name="security_iam_service-with-iam-resource-based-policies"></a>
 
 Resource\-based policies are JSON policy documents that specify what actions a specified principal can perform on the Amazon VPC resource and under what conditions\.
 
 To enable cross\-account access, you can specify an entire account or IAM entities in another account as the [principal in a resource\-based policy](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html)\. Adding a cross\-account principal to a resource\-based policy is only half of establishing the trust relationship\. When the principal and the resource are in different AWS accounts, you must also grant the principal entity permission to access the resource\. Grant permission by attaching an identity\-based policy to the entity\. However, if a resource\-based policy grants access to a principal in the same account, no additional identity\-based policy is required\. For more information, see [How IAM Roles Differ from Resource\-based Policies ](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_compare-resource-policies.html)in the *IAM User Guide*\. 
 
-## Authorization Based on Tags<a name="security_iam_service-with-iam-tags"></a>
+## Authorization based on tags<a name="security_iam_service-with-iam-tags"></a>
 
 You can attach tags to Amazon VPC resources or pass tags in a request\. To control access based on tags, you provide tag information in the [condition element](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition.html) of a policy using the `ec2:ResourceTag/key-name`, `aws:RequestTag/key-name`, or `aws:TagKeys` condition keys\. For more information, see [Resource\-Level Permissions for Tagging](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-supported-iam-actions-resources.html#supported-iam-actions-tagging) in the *Amazon EC2 User Guide*\.
 
-To view an example identity\-based policy for limiting access to a resource based on the tags on that resource, see [Launching Instances Into a Specific VPC](vpc-policy-examples.md#subnet-ami-example-iam)\.
+To view an example identity\-based policy for limiting access to a resource based on the tags on that resource, see [Launching instances into a specific VPC](vpc-policy-examples.md#subnet-ami-example-iam)\.
 
-## IAM Roles<a name="security_iam_service-with-iam-roles"></a>
+## IAM roles<a name="security_iam_service-with-iam-roles"></a>
 
 An [IAM role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html) is an entity within your AWS account that has specific permissions\.
 
-### Using Temporary Credentials<a name="security_iam_service-with-iam-roles-tempcreds"></a>
+### Using temporary credentials<a name="security_iam_service-with-iam-roles-tempcreds"></a>
 
 You can use temporary credentials to sign in with federation, assume an IAM role, or to assume a cross\-account role\. You obtain temporary security credentials by calling AWS STS API operations such as [AssumeRole](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html) or [GetFederationToken](https://docs.aws.amazon.com/STS/latest/APIReference/API_GetFederationToken.html)\. 
 
 Amazon VPC supports using temporary credentials\. 
 
-### Service\-Linked Roles<a name="security_iam_service-with-iam-roles-service-linked"></a>
+### Service\-linked roles<a name="security_iam_service-with-iam-roles-service-linked"></a>
 
 [Service\-linked roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_terms-and-concepts.html#iam-term-service-linked-role) allow AWS services to access resources in other services to complete an action on your behalf\. Service\-linked roles appear in your IAM account and are owned by the service\. An IAM administrator can view but not edit the permissions for service\-linked roles\.
 
 [Transit gateways](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-service-linked-roles.html) support service\-linked roles\. 
 
-### Service Roles<a name="security_iam_service-with-iam-roles-service"></a>
+### Service roles<a name="security_iam_service-with-iam-roles-service"></a>
 
 This feature allows a service to assume a [service role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_terms-and-concepts.html#iam-term-service-role) on your behalf\. This role allows the service to access resources in other services to complete an action on your behalf\. Service roles appear in your IAM account and are owned by the account\. This means that an IAM administrator can change the permissions for this role\. However, doing so might break the functionality of the service\.
 
-Amazon VPC supports service roles for flow logs\. When you create a flow log, you must choose a role that allows the flow logs service to access CloudWatch Logs\. For more information, see [IAM Roles for Publishing Flow Logs to CloudWatch Logs](flow-logs-cwl.md#flow-logs-iam)\.
+Amazon VPC supports service roles for flow logs\. When you create a flow log, you must choose a role that allows the flow logs service to access CloudWatch Logs\. For more information, see [IAM roles for publishing flow logs to CloudWatch Logs](flow-logs-cwl.md#flow-logs-iam)\.

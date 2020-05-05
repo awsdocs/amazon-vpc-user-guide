@@ -1,11 +1,11 @@
-# VPC Endpoint Service Private DNS Name Verification<a name="endpoint-services-dns-validation"></a>
+# VPC endpoint service private DNS name verification<a name="endpoint-services-dns-validation"></a>
 
 Your domain is associated with a set of Domain Name System \(DNS\) records that you manage through your DNS provider\. A TXT record is a type of DNS record that provides additional information about your domain\. Each TXT record consists of a name and a value\.
 
 When you initiate domain ownership verification using the Amazon VPC Console or API, we give you the name and value to use for the TXT record\. For example, if your domain is myexampleservice\.com, the TXT record settings that we generate will look similar to the following example:
 
 
-**Endpoint private DNS Name TXT Record**  
+**Endpoint private DNS name TXT record**  
 
 | Domain verification name | Type | Domain verification value | 
 | --- | --- | --- | 
@@ -15,7 +15,7 @@ Add a TXT record to your domain's DNS server using the specified **Domain verifi
 
 If your DNS provider does not allow DNS record names to contain underscores, you can omit *\_aksldja21i1* from the **Domain verification name**\. In that case, for the preceding example, the TXT record name would be myexampleservice\.com instead of *\_vpce:aksldja21i1\.myexampleservice\.com*\.
 
-## Adding a TXT Record to Your Domain's DNS Server<a name="add-dns-txt-record"></a>
+## Adding a TXT record to your domain's DNS server<a name="add-dns-txt-record"></a>
 
 The procedure for adding TXT records to your domain's DNS server depends on who provides your DNS service\. Your DNS provider might be Amazon Route 53 or another domain name registrar\. This section provides procedures for adding a TXT record to Route 53, and generic procedures that apply to other DNS providers\.
 
@@ -36,4 +36,4 @@ The procedure for adding TXT records to your domain's DNS server depends on who 
 
 1. You can now use the private domain name for the VPC endpoint service\.
 
-If the DNS settings are not correctly updated, the domain status displays a status of **failed** on the **Details** tab\. If this happens, complete the steps on the troubleshooting page at [Troubleshooting Common Private DNS Domain Verification Problems](domain-verification-problems.md)\. After you verify that your TXT record was created correctly, retry the operation\.
+If the DNS settings are not correctly updated, the domain status displays a status of **failed** on the **Details** tab\. If this happens, complete the steps on the troubleshooting page at [Troubleshooting common private DNS domain verification problems](domain-verification-problems.md)\. After you verify that your TXT record was created correctly, retry the operation\.

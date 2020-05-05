@@ -1,4 +1,4 @@
-# Example: Service Consumer Configures Access<a name="vpc-region-peering-consumer-side"></a>
+# Example: Service consumer configures access<a name="vpc-region-peering-consumer-side"></a>
 
 Consider the following example, where a service runs on instances in Provider VPC\. Resources that are in Consumer VPC 3 can directly access the service through an AWS PrivateLink VPC interface endpoint service in Consumer VPC 3\.
 

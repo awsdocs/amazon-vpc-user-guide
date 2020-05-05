@@ -1,4 +1,4 @@
-# Creating a VPC Endpoint Service Configuration<a name="create-endpoint-service"></a>
+# Creating a VPC endpoint service configuration<a name="create-endpoint-service"></a>
 
 You can create an endpoint service configuration using the Amazon VPC console or the command line\. Before you begin, ensure that you have created one or more Network Load Balancers in your VPC for your service\. For more information, see [Getting Started with Network Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancer-getting-started.html) in the *User Guide for Network Load Balancers*\.
 

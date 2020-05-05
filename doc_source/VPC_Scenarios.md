@@ -5,10 +5,10 @@ This section has examples for creating and configuring a VPC\.
 
 | Example | Usage | 
 | --- | --- | 
-| [Example: Create an IPv4 VPC and Subnets Using the AWS CLI](vpc-subnets-commands-example.md) |  Use the AWS CLI to create a VPC with a public subnet and a private subnet\.  | 
-| [Example: Create an IPv6 VPC and Subnets Using the AWS CLI](vpc-subnets-commands-example-ipv6.md) | Use the AWS CLI to create a VPC with an associated IPv6 CIDR block and a public subnet and a private subnet, each with an associated IPv6 CIDR block\. | 
-| [Example: Sharing Public Subnets and Private Subnets](example-vpc-share.md) | Share private and public subnets with accounts\. | 
-| [Example: Services Using AWS PrivateLink and VPC Peering](vpc-peer-region-example.md) | Learn how to use a combination of VPC peering and AWS PrivateLink to extend access to private services to consumers\. | 
+| [Example: Create an IPv4 VPC and subnets using the AWS CLI](vpc-subnets-commands-example.md) |  Use the AWS CLI to create a VPC with a public subnet and a private subnet\.  | 
+| [Example: Create an IPv6 VPC and subnets using the AWS CLI](vpc-subnets-commands-example-ipv6.md) | Use the AWS CLI to create a VPC with an associated IPv6 CIDR block and a public subnet and a private subnet, each with an associated IPv6 CIDR block\. | 
+| [Example: Sharing public subnets and private subnets](example-vpc-share.md) | Share private and public subnets with accounts\. | 
+| [Examples: Services using AWS PrivateLink and VPC peering](vpc-peer-region-example.md) | Learn how to use a combination of VPC peering and AWS PrivateLink to extend access to private services to consumers\. | 
 
 You can also use a transit gateway to connect your VPCs\.
 

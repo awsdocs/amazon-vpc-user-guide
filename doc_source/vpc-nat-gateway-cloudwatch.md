@@ -1,10 +1,10 @@
-# Monitoring NAT Gateways Using Amazon CloudWatch<a name="vpc-nat-gateway-cloudwatch"></a>
+# Monitoring NAT gateways using Amazon CloudWatch<a name="vpc-nat-gateway-cloudwatch"></a>
 
 You can monitor your NAT gateway using CloudWatch, which collects information from your NAT gateway and creates readable, near real\-time metrics\. You can use this information to monitor and troubleshoot your NAT gateway\. NAT gateway metric data is provided at 1\-minute intervals, and statistics are recorded for a period of 15 months\.
 
 For more information about Amazon CloudWatch, see the [Amazon CloudWatch User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/)\. For more information about pricing, see [Amazon CloudWatch Pricing](http://aws.amazon.com/cloudwatch/pricing)\.
 
-## NAT Gateway Metrics and Dimensions<a name="metrics-dimensions-nat-gateway"></a>
+## NAT gateway metrics and dimensions<a name="metrics-dimensions-nat-gateway"></a>
 
 The following metrics are available for your NAT gateways\.
 
@@ -33,7 +33,7 @@ To filter the metric data, use the following dimension\.
 | --- | --- | 
 | NatGatewayId | Filter the metric data by the NAT gateway ID\. | 
 
-## Viewing NAT Gateway CloudWatch Metrics<a name="viewing-metrics"></a>
+## Viewing NAT gateway CloudWatch metrics<a name="viewing-metrics"></a>
 
 NAT gateway metrics are sent to CloudWatch at 1\-minute intervals\. You can view the metrics for your NAT gateways as follows\.
 
@@ -47,16 +47,16 @@ Metrics are grouped first by the service namespace, and then by the various dime
 
 1. Under **All metrics**, choose the **NAT gateway** metric namespace\.
 
-1. To view the metrics, select the metric dimension \.
+1. To view the metrics, select the metric dimension\.
 
 **To view metrics using the AWS CLI**  
-At a command prompt, use the following command to list the metrics that are available for the NAT gateway service:
+At a command prompt, use the following command to list the metrics that are available for the NAT gateway service\.
 
 ```
 aws cloudwatch list-metrics --namespace "AWS/NATGateway"
 ```
 
-## Creating CloudWatch Alarms to Monitor a NAT Gateway<a name="creating-alarms-nat-gateway"></a>
+## Creating CloudWatch alarms to monitor a NAT gateway<a name="creating-alarms-nat-gateway"></a>
 
 You can create a CloudWatch alarm that sends an Amazon SNS message when the alarm changes state\. An alarm watches a single metric over a time period that you specify\. It sends a notification to an Amazon SNS topic based on the value of the metric relative to a given threshold over a number of time periods\. 
 

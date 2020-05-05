@@ -1,4 +1,4 @@
-# Manually Initiating the Endpoint Service Private DNS Name Domain Verification<a name="verify-vpc-endpoint-service-dns-name"></a>
+# Manually initiating the endpoint service private DNS name domain verification<a name="verify-vpc-endpoint-service-dns-name"></a>
 
 The service provider must prove that they own the private DNS name domain before consumers can use the private DNS name\.
 
@@ -15,7 +15,7 @@ The service provider must prove that they own the private DNS name domain before
 
 1. Choose **Verify**\.
 
-   If the DNS settings are not correctly updated, the domain will display a status of **failed** on the **Details** tab\. If this happens, complete the steps on the troubleshooting page at [Troubleshooting Common Private DNS Domain Verification Problems](domain-verification-problems.md)\. 
+   If the DNS settings are not correctly updated, the domain will display a status of **failed** on the **Details** tab\. If this happens, complete the steps on the troubleshooting page at [Troubleshooting common private DNS domain verification problems](domain-verification-problems.md)\. 
 
 ------
 #### [ AWS CLI ]

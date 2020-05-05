@@ -1,4 +1,4 @@
-# Viewing Endpoint Service Private DNS Name Configuration<a name="view-vpc-endpoint-service-dns-name"></a>
+# Viewing endpoint service private DNS name configuration<a name="view-vpc-endpoint-service-dns-name"></a>
 
 You can modify the endpoint service private DNS name for a new or existing endpoint service\.
 

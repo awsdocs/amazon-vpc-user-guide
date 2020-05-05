@@ -1,18 +1,18 @@
-# VPCs and Subnets<a name="VPC_Subnets"></a>
+# VPCs and subnets<a name="VPC_Subnets"></a>
 
-To get started with Amazon Virtual Private Cloud \(Amazon VPC\), you create a VPC and subnets\. For a general overview of Amazon VPC, see [What Is Amazon VPC?](what-is-amazon-vpc.md)\.
+To get started with Amazon Virtual Private Cloud \(Amazon VPC\), you create a VPC and subnets\. For a general overview of Amazon VPC, see [What is Amazon VPC?](what-is-amazon-vpc.md)\.
 
 **Topics**
-+ [VPC and Subnet Basics](#vpc-subnet-basics)
-+ [Extending Your VPC Resources to AWS Local Zones](#local-zone)
++ [VPC and subnet basics](#vpc-subnet-basics)
++ [Extending your VPC resources to AWS Local Zones](#local-zone)
 + [Subnets in AWS Outposts](#outposts)
-+ [VPC and Subnet Sizing](#VPC_Sizing)
-+ [Subnet Routing](#SubnetRouting)
-+ [Subnet Security](#SubnetSecurity)
-+ [Working with VPCs and Subnets](working-with-vpcs.md)
-+ [Working with Shared VPCs](vpc-sharing.md)
++ [VPC and subnet sizing](#VPC_Sizing)
++ [Subnet routing](#SubnetRouting)
++ [Subnet security](#SubnetSecurity)
++ [Working with VPCs and subnets](working-with-vpcs.md)
++ [Working with shared VPCs](vpc-sharing.md)
 
-## VPC and Subnet Basics<a name="vpc-subnet-basics"></a>
+## VPC and subnet basics<a name="vpc-subnet-basics"></a>
 
 A virtual private cloud \(VPC\) is a virtual network dedicated to your AWS account\. It is logically isolated from other virtual networks in the AWS Cloud\. You can launch your AWS resources, such as Amazon EC2 instances, into your VPC\.
 
@@ -30,20 +30,20 @@ The following diagram shows a VPC that has been configured with subnets in multi
 
 ![\[VPC with multiple Availability Zones\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/subnets-diagram.png)
 
-If a subnet's traffic is routed to an internet gateway, the subnet is known as a *public subnet*\. In this diagram, subnet 1 is a public subnet\. If you want your instance in a public subnet to communicate with the internet over IPv4, it must have a public IPv4 address or an Elastic IP address \(IPv4\)\. For more information about public IPv4 addresses, see [Public IPv4 Addresses](vpc-ip-addressing.md#vpc-public-ipv4-addresses)\. If you want your instance in the public subnet to communicate with the internet over IPv6, it must have an IPv6 address\.
+If a subnet's traffic is routed to an internet gateway, the subnet is known as a *public subnet*\. In this diagram, subnet 1 is a public subnet\. If you want your instance in a public subnet to communicate with the internet over IPv4, it must have a public IPv4 address or an Elastic IP address \(IPv4\)\. For more information about public IPv4 addresses, see [Public IPv4 addresses](vpc-ip-addressing.md#vpc-public-ipv4-addresses)\. If you want your instance in the public subnet to communicate with the internet over IPv6, it must have an IPv6 address\.
 
 If a subnet doesn't have a route to the internet gateway, the subnet is known as a *private subnet*\. In this diagram, subnet 2 is a private subnet\.
 
 If a subnet doesn't have a route to the internet gateway, but has its traffic routed to a virtual private gateway for a Site\-to\-Site VPN connection, the subnet is known as a *VPN\-only subnet*\. In this diagram, subnet 3 is a VPN\-only subnet\. Currently, we do not support IPv6 traffic over a Site\-to\-Site VPN connection\.
 
-For more information, see [Examples for VPC](VPC_Scenarios.md), [Internet Gateways](VPC_Internet_Gateway.md), and [What is AWS Site\-to\-Site VPN?](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html) in the *AWS Site\-to\-Site VPN User Guide*\.
+For more information, see [Examples for VPC](VPC_Scenarios.md), [Internet gateways](VPC_Internet_Gateway.md), and [What is AWS Site\-to\-Site VPN?](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html) in the *AWS Site\-to\-Site VPN User Guide*\.
 
 **Note**  
 Regardless of the type of subnet, the internal IPv4 address range of the subnet is always private—we do not announce the address block to the internet\.
 
-You have a quota on the number of VPCs and subnets you can create in your account\. For more information, see [Amazon VPC Quotas](amazon-vpc-limits.md)\.
+You have a quota on the number of VPCs and subnets you can create in your account\. For more information, see [Amazon VPC quotas](amazon-vpc-limits.md)\.
 
-## Extending Your VPC Resources to AWS Local Zones<a name="local-zone"></a>
+## Extending your VPC resources to AWS Local Zones<a name="local-zone"></a>
 
 AWS Local Zones allow you to seamlessly connect to the full range of services in the AWS Region such as Amazon Simple Storage Service and Amazon DynamoDB through the same APIs and tool sets\. You can extend your VPC Region by creating a new subnet that has a Local Zone assignment\. When you create a subnet in a Local Zone, the VPC is also extended to that Local Zone\. 
 
@@ -52,7 +52,7 @@ A network border group is a unique set of Availability Zones or Local Zones from
 When you create a VPC that has IPv6 addresses, you can choose to assign a set of Amazon\-provided public IP addresses to the VPC and also set a network border group for the addresses that limits the addresses to the group\. When you set a network border group, the IP addresses cannot move between network border groups\. The `us-west-2` network border group contains the four US West \(Oregon\) Availability Zones\. The `us-west-2-lax-1` network border group contains the Los Angeles Local Zones\.
 
 The following rules apply to Local Zones:
-+ The Local Zone subnets follow the same routing rules, including route tables, security groups, Network ACLs as Availability Zone subnet\.
++ The Local Zone subnets follow the same routing rules as Availability Zone subnet, including route tables, security groups, and Network ACLs\.
 + You can assign Local Zones to subnets using the Amazon VPC Console, AWS CLI or API\.
 + You must provision public IP addresses for use in a Local Zone\. When you allocate addresses, you can specify the location from which the IP address is advertised\. We refer to this as a network border group and you can set this parameter to limit the address to this location\. After you provision the IP addresses, you cannot move them between the Local Zone and the parent region \(for example, from u`s-west-2-lax-1a` to `us-west-2`\)\. 
 + You can request the IPv6 Amazon\-provided IP addresses and associate them with the network border group for a new or existing VPC\. 
@@ -69,20 +69,20 @@ The following rules apply to AWS Outposts:
 + If your account is associated with AWS Outposts, you assign the subnet to an Outpost by specifying the Outpost ARN when you create the subnet\. 
 + By default, every subnet that you create in a VPC associated with an Outpost inherits the main VPC route table, including the local gateway route\. You can also explicitly associate a custom route table with the subnets in your VPC and have a local gateway as a next\-hop target for all traffic that needs to be routed to the on\-premises network\.
 
-## VPC and Subnet Sizing<a name="VPC_Sizing"></a>
+## VPC and subnet sizing<a name="VPC_Sizing"></a>
 
 Amazon VPC supports IPv4 and IPv6 addressing, and has different CIDR block size quotas for each\. By default, all VPCs and subnets must have IPv4 CIDR blocks—you can't change this behavior\. You can optionally associate an IPv6 CIDR block with your VPC\. 
 
-For more information about IP addressing, see [IP Addressing in Your VPC](vpc-ip-addressing.md)\.
+For more information about IP addressing, see [IP Addressing in your VPC](vpc-ip-addressing.md)\.
 
 **Topics**
-+ [VPC and Subnet Sizing for IPv4](#vpc-sizing-ipv4)
-+ [Adding IPv4 CIDR Blocks to a VPC](#vpc-resize)
-+ [VPC and Subnet Sizing for IPv6](#vpc-sizing-ipv6)
++ [VPC and subnet sizing for IPv4](#vpc-sizing-ipv4)
++ [Adding IPv4 CIDR blocks to a VPC](#vpc-resize)
++ [VPC and subnet sizing for IPv6](#vpc-sizing-ipv6)
 
-### VPC and Subnet Sizing for IPv4<a name="vpc-sizing-ipv4"></a>
+### VPC and subnet sizing for IPv4<a name="vpc-sizing-ipv4"></a>
 
-When you create a VPC, you must specify an IPv4 CIDR block for the VPC\. The allowed block size is between a `/16` netmask \(65,536 IP addresses\) and `/28` netmask \(16 IP addresses\)\. After you've created your VPC, you can associate secondary CIDR blocks with the VPC\. For more information, see [Adding IPv4 CIDR Blocks to a VPC](#vpc-resize)\. 
+When you create a VPC, you must specify an IPv4 CIDR block for the VPC\. The allowed block size is between a `/16` netmask \(65,536 IP addresses\) and `/28` netmask \(16 IP addresses\)\. After you've created your VPC, you can associate secondary CIDR blocks with the VPC\. For more information, see [Adding IPv4 CIDR blocks to a VPC](#vpc-resize)\. 
 
 When you create a VPC, we recommend that you specify a CIDR block \(of `/16` or smaller\) from the private IPv4 address ranges as specified in [RFC 1918](http://www.faqs.org/rfcs/rfc1918.html):
 + `10.0.0.0` \- `10.255.255.255` \(10/8 prefix\)
@@ -103,11 +103,11 @@ There are many tools available to help you calculate subnet CIDR blocks; for exa
 The first four IP addresses and the last IP address in each subnet CIDR block are not available for you to use, and cannot be assigned to an instance\. For example, in a subnet with CIDR block `10.0.0.0/24`, the following five IP addresses are reserved: 
 + `10.0.0.0`: Network address\.
 + `10.0.0.1`: Reserved by AWS for the VPC router\.
-+ `10.0.0.2`: Reserved by AWS\. The IP address of the DNS server is the base of the VPC network range plus two\. For VPCs with multiple CIDR blocks, the IP address of the DNS server is located in the primary CIDR\. We also reserve the base of each subnet range plus two for all CIDR blocks in the VPC\. For more information, see [Amazon DNS Server](VPC_DHCP_Options.md#AmazonDNS)\.
++ `10.0.0.2`: Reserved by AWS\. The IP address of the DNS server is the base of the VPC network range plus two\. For VPCs with multiple CIDR blocks, the IP address of the DNS server is located in the primary CIDR\. We also reserve the base of each subnet range plus two for all CIDR blocks in the VPC\. For more information, see [Amazon DNS server](VPC_DHCP_Options.md#AmazonDNS)\.
 + `10.0.0.3`: Reserved by AWS for future use\.
 + `10.0.0.255`: Network broadcast address\. We do not support broadcast in a VPC, therefore we reserve this address\. 
 
-### Adding IPv4 CIDR Blocks to a VPC<a name="vpc-resize"></a>
+### Adding IPv4 CIDR blocks to a VPC<a name="vpc-resize"></a>
 
 You can associate secondary IPv4 CIDR blocks with your VPC\. When you associate a CIDR block with your VPC, a route is automatically added to your VPC route tables to enable routing within the VPC \(the destination is the CIDR block and the target is `local`\)\. 
 
@@ -118,22 +118,22 @@ In the following example, the VPC on the left has a single CIDR block \(`10.0.0.
 To add a CIDR block to your VPC, the following rules apply:
 + The allowed block size is between a `/28` netmask and `/16` netmask\.
 + The CIDR block must not overlap with any existing CIDR block that's associated with the VPC\.
-+ There are restrictions on the ranges of IPv4 addresses you can use\. For more information, see [IPv4 CIDR Block Association Restrictions](#add-cidr-block-restrictions)\.
++ There are restrictions on the ranges of IPv4 addresses you can use\. For more information, see [IPv4 CIDR block association restrictions](#add-cidr-block-restrictions)\.
 + You cannot increase or decrease the size of an existing CIDR block\.
-+ You have a quota on the number of CIDR blocks you can associate with a VPC and the number of routes you can add to a route table\. You cannot associate a CIDR block if this results in you exceeding your quotas\. For more information, see [Amazon VPC Quotas](amazon-vpc-limits.md)\.
++ You have a quota on the number of CIDR blocks you can associate with a VPC and the number of routes you can add to a route table\. You cannot associate a CIDR block if this results in you exceeding your quotas\. For more information, see [Amazon VPC quotas](amazon-vpc-limits.md)\.
 + The CIDR block must not be the same or larger than the CIDR range of a route in any of the VPC route tables\. For example, in a VPC where the primary CIDR block is `10.2.0.0/16`, you want to associate a secondary CIDR block in the `10.0.0.0/16` range\. You already have a route with a destination of `10.0.0.0/24` to a virtual private gateway, therefore you cannot associate a CIDR block of the same range or larger\. However, you can associate a CIDR block of `10.0.0.0/25` or smaller\.
 + If you've enabled your VPC for ClassicLink, you can associate CIDR blocks from the `10.0.0.0/16` and `10.1.0.0/16` ranges, but you cannot associate any other CIDR block from the `10.0.0.0/8` range\. 
 + The following rules apply when you add IPv4 CIDR blocks to a VPC that's part of a VPC peering connection:
   + If the VPC peering connection is `active`, you can add CIDR blocks to a VPC provided they do not overlap with a CIDR block of the peer VPC\.
   + If the VPC peering connection is `pending-acceptance`, the owner of the requester VPC cannot add any CIDR block to the VPC, regardless of whether it overlaps with the CIDR block of the accepter VPC\. Either the owner of the accepter VPC must accept the peering connection, or the owner of the requester VPC must delete the VPC peering connection request, add the CIDR block, and then request a new VPC peering connection\.
   + If the VPC peering connection is `pending-acceptance`, the owner of the accepter VPC can add CIDR blocks to the VPC\. If a secondary CIDR block overlaps with a CIDR block of the requester VPC, the VPC peering connection request fails and cannot be accepted\.
-+ If you're using AWS Direct Connect to connect to multiple VPCs through a Direct Connect gateway, the VPCs that are associated with the Direct Connect gateway must not have overlapping CIDR blocks\. If you add a CIDR block to one of the VPCs that's associated with the Direct Connect gateway, ensure that the new CIDR block does not overlap with an existing CIDR block of any other associated VPC\. For more information, see [Direct Connect Gateways](https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-gateways.html) in the *AWS Direct Connect User Guide*\.
++ If you're using AWS Direct Connect to connect to multiple VPCs through a Direct Connect gateway, the VPCs that are associated with the Direct Connect gateway must not have overlapping CIDR blocks\. If you add a CIDR block to one of the VPCs that's associated with the Direct Connect gateway, ensure that the new CIDR block does not overlap with an existing CIDR block of any other associated VPC\. For more information, see [Direct Connect gateways](https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-gateways.html) in the *AWS Direct Connect User Guide*\.
 + When you add or remove a CIDR block, it can go through various states: `associating` \| `associated` \| `disassociating` \| `disassociated` \| `failing` \| `failed`\. The CIDR block is ready for you to use when it's in the `associated` state\.
 
 The following table provides an overview of permitted and restricted CIDR block associations, which depend on the IPv4 address range in which your VPC's primary CIDR block resides\.
 
 
-**IPv4 CIDR Block Association Restrictions**  
+**IPv4 CIDR block association restrictions**  
 
 | IP address range in which your primary VPC CIDR block resides | Restricted CIDR block associations | Permitted CIDR block associations | 
 | --- | --- | --- | 
@@ -190,7 +190,7 @@ In the output that's returned, the primary CIDR is returned in the top\-level `C
 }
 ```
 
-### VPC and Subnet Sizing for IPv6<a name="vpc-sizing-ipv6"></a>
+### VPC and subnet sizing for IPv6<a name="vpc-sizing-ipv6"></a>
 
 You can associate a single IPv6 CIDR block with an existing VPC in your account, or when you create a new VPC\. The CIDR block is a fixed prefix length of `/56`\. You can request an IPv6 CIDR block from Amazon's pool of IPv6 addresses\.
 
@@ -207,22 +207,22 @@ The first four IPv6 addresses and the last IPv6 address in each subnet CIDR bloc
 + `2001:db8:1234:1a00::3`
 + `2001:db8:1234:1a00:ffff:ffff:ffff:ffff`
 
-## Subnet Routing<a name="SubnetRouting"></a>
+## Subnet routing<a name="SubnetRouting"></a>
 
-Each subnet must be associated with a route table, which specifies the allowed routes for outbound traffic leaving the subnet\. Every subnet that you create is automatically associated with the main route table for the VPC\. You can change the association, and you can change the contents of the main route table\. For more information, see [Route Tables](VPC_Route_Tables.md)\.
+Each subnet must be associated with a route table, which specifies the allowed routes for outbound traffic leaving the subnet\. Every subnet that you create is automatically associated with the main route table for the VPC\. You can change the association, and you can change the contents of the main route table\. For more information, see [Route tables](VPC_Route_Tables.md)\.
 
 In the previous diagram, the route table associated with subnet 1 routes all IPv4 traffic \(`0.0.0.0/0`\) and IPv6 traffic \(`::/0`\) to an internet gateway \(for example, `igw-1a2b3c4d`\)\. Because instance 1A has an IPv4 Elastic IP address and instance 1B has an IPv6 address, they can be reached from the internet over IPv4 and IPv6 respectively\. 
 
 **Note**  
 \(IPv4 only\) The Elastic IPv4 address or public IPv4 address that's associated with your instance is accessed through the internet gateway of your VPC\. Traffic that goes through an AWS Site\-to\-Site VPN connection between your instance and another network traverses a virtual private gateway, not the internet gateway, and therefore does not access the Elastic IPv4 address or public IPv4 address\. 
 
-The instance 2A can't reach the internet, but can reach other instances in the VPC\. You can allow an instance in your VPC to initiate outbound connections to the internet over IPv4 but prevent unsolicited inbound connections from the internet using a network address translation \(NAT\) gateway or instance\. Because you can allocate a limited number of Elastic IP addresses, we recommend that you use a NAT device if you have more instances that require a static public IP address\. For more information, see [NAT](vpc-nat.md)\. To initiate outbound\-only communication to the internet over IPv6, you can use an egress\-only internet gateway\. For more information, see [Egress\-Only Internet Gateways](egress-only-internet-gateway.md)\.
+The instance 2A can't reach the internet, but can reach other instances in the VPC\. You can allow an instance in your VPC to initiate outbound connections to the internet over IPv4 but prevent unsolicited inbound connections from the internet using a network address translation \(NAT\) gateway or instance\. Because you can allocate a limited number of Elastic IP addresses, we recommend that you use a NAT device if you have more instances that require a static public IP address\. For more information, see [NAT](vpc-nat.md)\. To initiate outbound\-only communication to the internet over IPv6, you can use an egress\-only internet gateway\. For more information, see [Egress\-only internet gateways](egress-only-internet-gateway.md)\.
 
 The route table associated with subnet 3 routes all IPv4 traffic \(`0.0.0.0/0`\) to a virtual private gateway \(for example, `vgw-1a2b3c4d`\)\. Instance 3A can reach computers in the corporate network over the Site\-to\-Site VPN connection\.
 
-## Subnet Security<a name="SubnetSecurity"></a>
+## Subnet security<a name="SubnetSecurity"></a>
 
-AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Internetwork Traffic Privacy in Amazon VPC](VPC_Security.md)\. 
+AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Internetwork traffic privacy in Amazon VPC](VPC_Security.md)\. 
 
 By design, each subnet must be associated with a network ACL\. Every subnet that you create is automatically associated with the VPC's default network ACL\. You can change the association, and you can change the contents of the default network ACL\. For more information, see [Network ACLs](vpc-network-acls.md)\.
 

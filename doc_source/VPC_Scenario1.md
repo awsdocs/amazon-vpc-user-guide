@@ -1,10 +1,10 @@
-# VPC with a Single Public Subnet<a name="VPC_Scenario1"></a>
+# VPC with a single public subnet<a name="VPC_Scenario1"></a>
 
 The configuration for this scenario includes a virtual private cloud \(VPC\) with a single public subnet, and an internet gateway to enable communication over the internet\. We recommend this configuration if you need to run a single\-tier, public\-facing web application, such as a blog or a simple website\.
 
-This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnet with associated IPv6 CIDR blocks\. Instances launched into the public subnet can receive IPv6 addresses, and communicate using IPv6\. For more information about IPv4 and IPv6 addressing, see [IP Addressing in Your VPC](vpc-ip-addressing.md)\.
+This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnet with associated IPv6 CIDR blocks\. Instances launched into the public subnet can receive IPv6 addresses, and communicate using IPv6\. For more information about IPv4 and IPv6 addressing, see [IP Addressing in your VPC](vpc-ip-addressing.md)\.
 
-For information about managing your EC2 instance software, see [Managing Software on Your Linux Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-software.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+For information about managing your EC2 instance software, see [Managing software on your Linux instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-software.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **Topics**
 + [Overview](#Configuration)
@@ -18,7 +18,7 @@ The following diagram shows the key components of the configuration for this sce
 ![\[Diagram for scenario 1: VPC with a public subnet\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/case-1.png)
 
 **Note**  
-If you completed [Getting Started with Amazon VPC](vpc-getting-started.md), then you've already implemented this scenario using the VPC wizard in the Amazon VPC console\.
+If you completed [Getting started with Amazon VPC](vpc-getting-started.md), then you've already implemented this scenario using the VPC wizard in the Amazon VPC console\.
 
 The configuration for this scenario includes the following:
 + A virtual private cloud \(VPC\) with a size /16 IPv4 CIDR block \(example: 10\.0\.0\.0/16\)\. This provides 65,536 private IPv4 addresses\.
@@ -27,7 +27,7 @@ The configuration for this scenario includes the following:
 + An instance with a private IPv4 address in the subnet range \(example: 10\.0\.0\.6\), which enables the instance to communicate with other instances in the VPC, and an Elastic IPv4 address \(example: 198\.51\.100\.2\), which is a public IPv4 address that enables the instance to connect to the internet and to be reached from the internet\.
 + A custom route table associated with the subnet\. The route table entries enable instances in the subnet to use IPv4 to communicate with other instances in the VPC, and to communicate directly over the internet\. A subnet that's associated with a route table that has a route to an internet gateway is known as a *public subnet*\.
 
-For more information about subnets, see [VPCs and Subnets](VPC_Subnets.md)\. For more information about internet gateways, see [Internet Gateways](VPC_Internet_Gateway.md)\.
+For more information about subnets, see [VPCs and subnets](VPC_Subnets.md)\. For more information about internet gateways, see [Internet gateways](VPC_Internet_Gateway.md)\.
 
 ### Overview for IPv6<a name="vpc-scenario-1-overview-ipv6"></a>
 
@@ -65,9 +65,9 @@ If you associate an IPv6 CIDR block with your VPC and subnet, your route table m
 
 ## Security<a name="VPC_Scenario1_Security"></a>
 
-AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Internetwork Traffic Privacy in Amazon VPC](VPC_Security.md)\. 
+AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Internetwork traffic privacy in Amazon VPC](VPC_Security.md)\. 
 
-For this scenario, you use a security group but not a network ACL\. If you'd like to use a network ACL, see [Recommended Rules for a VPC with a Single Public Subnet](vpc-security-best-practices.md#nacl-rules-scenario-1)\.
+For this scenario, you use a security group but not a network ACL\. If you'd like to use a network ACL, see [Recommended rules for a VPC with a single public subnet](vpc-security-best-practices.md#nacl-rules-scenario-1)\.
 
 Your VPC comes with a [default security group](VPC_SecurityGroups.md#DefaultSecurityGroup)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. You can add rules to the default security group, but the rules may not be suitable for other instances that you launch into the VPC\. Instead, we recommend that you create a custom security group for your web server\.
 
@@ -79,14 +79,14 @@ The following are the inbound and outbound rules for IPv4 traffic for the WebSer
 |  | 
 | --- |
 | Inbound | 
-|  Source  |  Protocol  |  Port Range  |  Comments  | 
+|  Source  |  Protocol  |  Port range  |  Comments  | 
 |  0\.0\.0\.0/0  |  TCP  |  80  |  Allow inbound HTTP access to the web servers from any IPv4 address\.  | 
 |  0\.0\.0\.0/0  |  TCP  |  443  |  Allow inbound HTTPS access to the web servers from any IPv4 address  | 
 |  Public IPv4 address range of your network   |  TCP  |  22  |  \(Linux instances\) Allow inbound SSH access from your network over IPv4\. You can get the public IPv4 address of your local computer using a service such as [http://checkip\.amazonaws\.com](http://checkip.amazonaws.com) or [https://checkip\.amazonaws\.com](https://checkip.amazonaws.com)\. If you are connecting through an ISP or from behind your firewall without a static IP address, you need to find out the range of IP addresses used by client computers\.   | 
 |  Public IPv4 address range of your network   |  TCP  |  3389  |  \(Windows instances\) Allow inbound RDP access from your network over IPv4\.  | 
 | The security group ID \(sg\-xxxxxxxx\) | All | All | \(Optional\) Allow inbound traffic from other instances associated with this security group\. This rule is automatically added to the default security group for the VPC; for any custom security group you create, you must manually add the rule to allow this type of communication\. | 
 | Outbound \(Optional\) | 
-| Destination | Protocol | Port Range | Comments | 
+| Destination | Protocol | Port range | Comments | 
 | 0\.0\.0\.0/0 | All | All | Default rule to allow all outbound access to any IPv4 address\. If you want your web server to initiate outbound traffic, for example, to get software updates, you can keep the default outbound rule\. Otherwise, you can remove this rule\. | 
 
 ### Security for IPv6<a name="vpc-scenario-1-security-ipv6"></a>
@@ -99,11 +99,11 @@ The following are the IPv6\-specific rules for the WebServerSG security group \(
 |  | 
 | --- |
 | Inbound | 
-|  Source  |  Protocol  |  Port Range  |  Comments  | 
+|  Source  |  Protocol  |  Port range  |  Comments  | 
 |  ::/0  |  TCP  |  80  |  Allow inbound HTTP access to the web servers from any IPv6 address\.  | 
 |  ::/0  |  TCP  |  443  |  Allow inbound HTTPS access to the web servers from any IPv6 address\.  | 
 |  IPv6 address range of your network   |  TCP  |  22  |  \(Linux instances\) Allow inbound SSH access over IPv6 from your network\.   | 
 |  IPv6 address range of your network   |  TCP  |  3389  |  \(Windows instances\) Allow inbound RDP access over IPv6 from your network  | 
 | Outbound \(Optional\) | 
-| Destination | Protocol | Port Range | Comments | 
+| Destination | Protocol | Port range | Comments | 
 | ::/0 | All | All | Default rule to allow all outbound access to any IPv6 address\. If you want your web server to initiate outbound traffic, for example, to get software updates, you can keep the default outbound rule\. Otherwise, you can remove this rule\. | 

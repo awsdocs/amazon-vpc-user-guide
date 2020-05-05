@@ -1,4 +1,4 @@
-# Example: Service Provider Configures a Service to Span Regions<a name="vpc-inter-region-peering-provider-side"></a>
+# Example: Service provider configures a service to span Regions<a name="vpc-inter-region-peering-provider-side"></a>
 
 Consider the following example, where a service runs on instances in Provider VPC 1 in Region A, for example the us\-east\-1 Region\. Resources that are in Consumer VPC 1 in the same Region can directly access the service through the AWS PrivateLink VPC endpoint in Consumer VPC 1\.
 

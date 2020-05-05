@@ -1,6 +1,6 @@
-# Example: Service Consumer Configures Access Across Regions<a name="vpc-inter-region-peering-consumer-side"></a>
+# Example: Service consumer configures access across Regions<a name="vpc-inter-region-peering-consumer-side"></a>
 
-Consider the following example, where a service runs on instances in Provider VPC in Region A, for example the us\-east\-1 Region\. Resources that are in Consumer VPC 3 can directly access the service through an AWS PrivateLink VPC interface endpoint in Consumer VPC 3\.
+Consider the following example, where a service runs on instances in Provider VPC in Region B, for example the us\-east\-1 Region\. Resources that are in Consumer VPC 3 can directly access the service through an AWS PrivateLink VPC interface endpoint in Consumer VPC 3\.
 
 ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/inter-region-peering-customer-side.png)
 
