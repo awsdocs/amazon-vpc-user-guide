@@ -1,4 +1,4 @@
-# Adding and Removing Permissions for Your Endpoint Service<a name="add-endpoint-service-permissions"></a>
+# Adding and removing permissions for your endpoint service<a name="add-endpoint-service-permissions"></a>
 
 After you create your endpoint service configuration, you can control which service consumers can create an interface endpoint to connect to your service\. Service consumers are [IAM principals](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html)—IAM users, IAM roles, and AWS accounts\. To add or remove permissions for a principal, you need its Amazon Resource Name \(ARN\)\.
 + For an AWS account \(and therefore all principals in the account\), the ARN is in the form `arn:aws:iam::aws-account-id:root`\.

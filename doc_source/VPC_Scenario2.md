@@ -1,22 +1,22 @@
-# VPC with Public and Private Subnets \(NAT\)<a name="VPC_Scenario2"></a>
+# VPC with public and private subnets \(NAT\)<a name="VPC_Scenario2"></a>
 
 The configuration for this scenario includes a virtual private cloud \(VPC\) with a public subnet and a private subnet\. We recommend this scenario if you want to run a public\-facing web application, while maintaining back\-end servers that aren't publicly accessible\. A common example is a multi\-tier website, with the web servers in a public subnet and the database servers in a private subnet\. You can set up security and routing so that the web servers can communicate with the database servers\.
 
 The instances in the public subnet can send outbound traffic directly to the Internet, whereas the instances in the private subnet can't\. Instead, the instances in the private subnet can access the Internet by using a network address translation \(NAT\) gateway that resides in the public subnet\. The database servers can connect to the Internet for software updates using the NAT gateway, but the Internet cannot establish connections to the database servers\.
 
 **Note**  
-You can also use the VPC wizard to configure a VPC with a NAT instance; however, we recommend that you use a NAT gateway\. For more information, see [NAT Gateways](vpc-nat-gateway.md)\.
+You can also use the VPC wizard to configure a VPC with a NAT instance; however, we recommend that you use a NAT gateway\. For more information, see [NAT gateways](vpc-nat-gateway.md)\.
 
-This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnets with associated IPv6 CIDR blocks\. Instances launched into the subnets can receive IPv6 addresses, and communicate using IPv6\. Instances in the private subnet can use an egress\-only Internet gateway to connect to the Internet over IPv6, but the Internet cannot establish connections to the private instances over IPv6\. For more information about IPv4 and IPv6 addressing, see [IP Addressing in Your VPC](vpc-ip-addressing.md)\.
+This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnets with associated IPv6 CIDR blocks\. Instances launched into the subnets can receive IPv6 addresses, and communicate using IPv6\. Instances in the private subnet can use an egress\-only Internet gateway to connect to the Internet over IPv6, but the Internet cannot establish connections to the private instances over IPv6\. For more information about IPv4 and IPv6 addressing, see [IP Addressing in your VPC](vpc-ip-addressing.md)\.
 
-For information about managing your EC2 instance software, see [Managing Software on Your Linux Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-software.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+For information about managing your EC2 instance software, see [Managing software on your Linux instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-software.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **Topics**
 + [Overview](#Configuration-2)
 + [Routing](#VPC_Scenario2_Routing)
 + [Security](#VPC_Scenario2_Security)
-+ [Implementing Scenario 2](#VPC_Scenario2_Implementation)
-+ [Implementing Scenario 2 with a NAT Instance](#vpc-scenario-2-nat-instance)
++ [Implementing scenario 2](#VPC_Scenario2_Implementation)
++ [Implementing scenario 2 with a NAT instance](#vpc-scenario-2-nat-instance)
 
 ## Overview<a name="Configuration-2"></a>
 
@@ -35,7 +35,7 @@ The configuration for this scenario includes the following:
 + A custom route table associated with the public subnet\. This route table contains an entry that enables instances in the subnet to communicate with other instances in the VPC over IPv4, and an entry that enables instances in the subnet to communicate directly with the Internet over IPv4\.
 + The main route table associated with the private subnet\. The route table contains an entry that enables instances in the subnet to communicate with other instances in the VPC over IPv4, and an entry that enables instances in the subnet to communicate with the Internet through the NAT gateway over IPv4\.
 
-For more information about subnets, see [VPCs and Subnets](VPC_Subnets.md)\. For more information about Internet gateways, see [Internet Gateways](VPC_Internet_Gateway.md)\. For more information about NAT gateways, see [NAT Gateways](vpc-nat-gateway.md)\.
+For more information about subnets, see [VPCs and subnets](VPC_Subnets.md)\. For more information about Internet gateways, see [Internet gateways](VPC_Internet_Gateway.md)\. For more information about NAT gateways, see [NAT gateways](vpc-nat-gateway.md)\.
 
 ### Overview for IPv6<a name="vpc-scenario-2-overview-ipv6"></a>
 
@@ -44,7 +44,7 @@ You can optionally enable IPv6 for this scenario\. In addition to the components
 + A size /64 IPv6 CIDR block associated with the public subnet \(example: 2001:db8:1234:1a00::/64\)\. You can choose the range for your subnet from the range allocated to the VPC\. You cannot choose the size of the VPC IPv6 CIDR block\.
 + A size /64 IPv6 CIDR block associated with the private subnet \(example: 2001:db8:1234:1a01::/64\)\. You can choose the range for your subnet from the range allocated to the VPC\. You cannot choose the size of the subnet IPv6 CIDR block\.
 + IPv6 addresses assigned to the instances from the subnet range \(example: 2001:db8:1234:1a00::1a\)\.
-+ An egress\-only Internet gateway\. This enables instances in the private subnet to send requests to the Internet over IPv6 \(for example, for software updates\)\. An egress\-only Internet gateway is necessary if you want instances in the private subnet to be able to initiate communication with the Internet over IPv6\. For more information, see [Egress\-Only Internet Gateways](egress-only-internet-gateway.md)\.
++ An egress\-only Internet gateway\. This enables instances in the private subnet to send requests to the Internet over IPv6 \(for example, for software updates\)\. An egress\-only Internet gateway is necessary if you want instances in the private subnet to be able to initiate communication with the Internet over IPv6\. For more information, see [Egress\-only internet gateways](egress-only-internet-gateway.md)\.
 + Route table entries in the custom route table that enable instances in the public subnet to use IPv6 to communicate with each other, and directly over the Internet\.
 + Route table entries in the main route table that enable instances in the private subnet to use IPv6 to communicate with each other, and to communicate with the Internet through an egress\-only Internet gateway\.
 
@@ -60,7 +60,7 @@ Any additional subnets that you create use the main route table by default, whic
 
 The following tables describe the route tables for this scenario\.
 
-### Main Route Table<a name="scenario-2-main-route-table"></a>
+### Main route table<a name="scenario-2-main-route-table"></a>
 
 The first entry is the default entry for local routing in the VPC; this entry enables the instances in the VPC to communicate with each other\. The second entry sends all other subnet traffic to the NAT gateway \(for example, `nat-12345678901234567`\)\.
 
@@ -70,7 +70,7 @@ The first entry is the default entry for local routing in the VPC; this entry en
 |  `10.0.0.0/16`  |  local  | 
 |  `0.0.0.0/0`  |  *nat\-gateway\-id*  | 
 
-### Custom Route Table<a name="scenario-2-custom-route-table"></a>
+### Custom route table<a name="scenario-2-custom-route-table"></a>
 
 The first entry is the default entry for local routing in the VPC; this entry enables the instances in this VPC to communicate with each other\. The second entry routes all other subnet traffic to the Internet over the Internet gateway \(for example, `igw-1a2b3d4d`\)\.
 
@@ -84,7 +84,7 @@ The first entry is the default entry for local routing in the VPC; this entry en
 
 If you associate an IPv6 CIDR block with your VPC and subnets, your route tables must include separate routes for IPv6 traffic\. The following tables show the route tables for this scenario if you choose to enable IPv6 communication in your VPC\. 
 
-**Main Route Table**
+**Main route table**
 
 The second entry is the default route that's automatically added for local routing in the VPC over IPv6\. The fourth entry routes all other IPv6 subnet traffic to the egress\-only Internet gateway\.
 
@@ -96,7 +96,7 @@ The second entry is the default route that's automatically added for local routi
 |  0\.0\.0\.0/0  |  *nat\-gateway\-id*  | 
 |  ::/0  | egress\-only\-igw\-id | 
 
-**Custom Route Table**
+**Custom route table**
 
 The second entry is the default route that's automatically added for local routing in the VPC over IPv6\. The fourth entry routes all other IPv6 subnet traffic to the Internet gateway\.
 
@@ -110,9 +110,9 @@ The second entry is the default route that's automatically added for local routi
 
 ## Security<a name="VPC_Scenario2_Security"></a>
 
-AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Internetwork Traffic Privacy in Amazon VPC](VPC_Security.md)\. 
+AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Internetwork traffic privacy in Amazon VPC](VPC_Security.md)\. 
 
-For scenario 2, you'll use security groups but not network ACLs\. If you'd like to use a network ACL, see [Recommended Rules for a VPC with Public and Private Subnets \(NAT\)](vpc-security-best-practices.md#nacl-rules-scenario-2)\.
+For scenario 2, you'll use security groups but not network ACLs\. If you'd like to use a network ACL, see [Recommended rules for a VPC with public and private subnets \(NAT\)](vpc-security-best-practices.md#nacl-rules-scenario-2)\.
 
 Your VPC comes with a [default security group](VPC_SecurityGroups.md#DefaultSecurityGroup)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. For this scenario, we recommend that you create the following security groups instead of using the default security group:
 + **WebServerSG**: Specify this security group when you launch the web servers in the public subnet\.
@@ -126,18 +126,18 @@ The following table describes the recommended rules for the WebServerSG security
 These recommendations include both SSH and RDP access, and both Microsoft SQL Server and MySQL access\. For your situation, you might only need rules for Linux \(SSH and MySQL\) or Windows \(RDP and Microsoft SQL Server\)\.
 
 
-**WebServerSG: Recommended Rules**  
+**WebServerSG: recommended rules**  
 
 |  | 
 | --- |
 | Inbound | 
-|  Source  |  Protocol  |  Port Range  |  Comments  | 
+|  Source  |  Protocol  |  Port range  |  Comments  | 
 |  0\.0\.0\.0/0  |  TCP  |  80  |  Allow inbound HTTP access to the web servers from any IPv4 address\.  | 
 |  0\.0\.0\.0/0  |  TCP  |  443  |  Allow inbound HTTPS access to the web servers from any IPv4 address\.  | 
 |  Your home network's public IPv4 address range  |  TCP  |  22  |  Allow inbound SSH access to Linux instances from your home network \(over the Internet gateway\)\. You can get the public IPv4 address of your local computer using a service such as [http://checkip\.amazonaws\.com](http://checkip.amazonaws.com) or [https://checkip\.amazonaws\.com](https://checkip.amazonaws.com)\. If you are connecting through an ISP or from behind your firewall without a static IP address, you need to find out the range of IP addresses used by client computers\.   | 
 |  Your home network's public IPv4 address range  |  TCP  |  3389  |  Allow inbound RDP access to Windows instances from your home network \(over the Internet gateway\)\.  | 
 |   **Outbound**   | 
-|  Destination  |  Protocol  |  Port Range  |  Comments  | 
+|  Destination  |  Protocol  |  Port range  |  Comments  | 
 |  The ID of your DBServerSG security group  |  TCP  |  1433  |  Allow outbound Microsoft SQL Server access to the database servers assigned to the DBServerSG security group\.  | 
 |  The ID of your DBServerSG security group  |  TCP  |  3306  |  Allow outbound MySQL access to the database servers assigned to the DBServerSG security group\.  | 
 |  0\.0\.0\.0/0  |  TCP  |  80  |  Allow outbound HTTP access to any IPv4 address\.  | 
@@ -146,16 +146,16 @@ These recommendations include both SSH and RDP access, and both Microsoft SQL Se
 The following table describes the recommended rules for the DBServerSG security group, which allow read or write database requests from the web servers\. The database servers can also initiate traffic bound for the Internet \(the route table sends that traffic to the NAT gateway, which then forwards it to the Internet over the Internet gateway\)\.
 
 
-**DBServerSG: Recommended Rules**  
+**DBServerSG: recommended rules**  
 
 |  | 
 | --- |
 | Inbound | 
-|  Source  |  Protocol  |  Port Range  |  Comments  | 
+|  Source  |  Protocol  |  Port range  |  Comments  | 
 |  The ID of your WebServerSG security group  |  TCP  |  1433  |  Allow inbound Microsoft SQL Server access from the web servers associated with the WebServerSG security group\.  | 
 |  The ID of your WebServerSG security group  |  TCP  |  3306  |  Allow inbound MySQL Server access from the web servers associated with the WebServerSG security group\.  | 
 |   **Outbound**   | 
-|  Destination  |  Protocol  |  Port Range  |  Comments  | 
+|  Destination  |  Protocol  |  Port range  |  Comments  | 
 |  0\.0\.0\.0/0  |  TCP  |  80  |  Allow outbound HTTP access to the Internet over IPv4 \(for example, for software updates\)\.  | 
 |  0\.0\.0\.0/0  |  TCP  |  443  |  Allow outbound HTTPS access to the Internet over IPv4 \(for example, for software updates\)\.  | 
 
@@ -165,10 +165,10 @@ The following table describes the recommended rules for the DBServerSG security 
 |  | 
 | --- |
 | Inbound | 
-|  Source  |  Protocol  |  Port Range  |  Comments  | 
+|  Source  |  Protocol  |  Port range  |  Comments  | 
 |  The ID of the security group  |  All  |  All  |  Allow inbound traffic from other instances assigned to this security group\.  | 
 | Outbound | 
-| Destination  |  Protocol  |  Port Range  |  Comments  | 
+| Destination  |  Protocol  |  Port range  |  Comments  | 
 | The ID of the security group | All | All | Allow outbound traffic to other instances assigned to this security group\. | 
 
 \(Optional\) If you launch a bastion host in your public subnet to use as a proxy for SSH or RDP traffic from your home network to your private subnet, add a rule to the DBServerSG security group that allows inbound SSH or RDP traffic from the bastion instance or its associated security group\.
@@ -183,13 +183,13 @@ The following are the IPv6\-specific rules for the WebServerSG security group \(
 |  | 
 | --- |
 | Inbound | 
-|  Source  |  Protocol  |  Port Range  |  Comments  | 
+|  Source  |  Protocol  |  Port range  |  Comments  | 
 |  ::/0  |  TCP  |  80  |  Allow inbound HTTP access to the web servers from any IPv6 address\.  | 
 |  ::/0  |  TCP  |  443  |  Allow inbound HTTPS access to the web servers from any IPv6 address\.  | 
 |  IPv6 address range of your network   |  TCP  |  22  |  \(Linux instances\) Allow inbound SSH access over IPv6 from your network\.   | 
 |  IPv6 address range of your network   |  TCP  |  3389  |  \(Windows instances\) Allow inbound RDP access over IPv6 from your network  | 
 | Outbound | 
-| Destination | Protocol | Port Range | Comments | 
+| Destination | Protocol | Port range | Comments | 
 | ::/0 | TCP | HTTP | Allow outbound HTTP access to any IPv6 address\. | 
 | ::/0 | TCP | HTTPS | Allow outbound HTTPS access to any IPv6 address\. | 
 
@@ -199,33 +199,33 @@ The following are the IPv6\-specific rules for the DBServerSG security group \(w
 |  | 
 | --- |
 |   **Outbound**   | 
-|  Destination  |  Protocol  |  Port Range  |  Comments  | 
+|  Destination  |  Protocol  |  Port range  |  Comments  | 
 |  ::/0  |  TCP  |  80  |  Allow outbound HTTP access to any IPv6 address\.  | 
 |  ::/0  |  TCP  |  443  |  Allow outbound HTTPS access to any IPv6 address\.  | 
 
-## Implementing Scenario 2<a name="VPC_Scenario2_Implementation"></a>
+## Implementing scenario 2<a name="VPC_Scenario2_Implementation"></a>
 
 You can use the VPC wizard to create the VPC, subnets, NAT gateway, and optionally, an egress\-only Internet gateway\. You must specify an Elastic IP address for your NAT gateway; if you don't have one, you must first allocate one to your account\. If you want to use an existing Elastic IP address, ensure that it's not currently associated with another instance or network interface\. The NAT gateway is automatically created in the public subnet of your VPC\.
 
-## Implementing Scenario 2 with a NAT Instance<a name="vpc-scenario-2-nat-instance"></a>
+## Implementing scenario 2 with a NAT instance<a name="vpc-scenario-2-nat-instance"></a>
 
-You can implement scenario 2 using a NAT instance instead of a NAT gateway\. For more information about NAT instances, see [NAT Instances](VPC_NAT_Instance.md)\. 
+You can implement scenario 2 using a NAT instance instead of a NAT gateway\. For more information about NAT instances, see [NAT instances](VPC_NAT_Instance.md)\. 
 
 You can follow the same procedures as above; however, in the NAT section of the VPC wizard, choose **Use a NAT instance instead** and specify the details for your NAT instance\. You will also require a security group for your NAT instance \(`NATSG`\), which allows the NAT instance to receive Internet\-bound traffic from instances in the private subnet, as well as SSH traffic from your network\. The NAT instance can also send traffic to the Internet, so that instances in the private subnet can get software updates\. 
 
 After you've created the VPC with the NAT instance, you must change the security group associated with the NAT instance to the new `NATSG` security group \(by default, the NAT instance is launched using the default security group\)\.
 
 
-**NATSG: Recommended Rules**  
+**NATSG: recommended rules**  
 
 |  | 
 | --- |
 | Inbound | 
-|  Source  |  Protocol  |  Port Range  |  Comments  | 
+|  Source  |  Protocol  |  Port range  |  Comments  | 
 |  10\.0\.1\.0/24  |  TCP  |  80  |  Allow inbound HTTP traffic from database servers that are in the private subnet  | 
 |  10\.0\.1\.0/24  |  TCP  |  443  |  Allow inbound HTTPS traffic from database servers that are in the private subnet  | 
 |  Your network's public IP address range  |  TCP  |  22  |  Allow inbound SSH access to the NAT instance from your network \(over the Internet gateway\)  | 
 |   **Outbound**   | 
-|  Destination  |  Protocol  |  Port Range  |  Comments  | 
+|  Destination  |  Protocol  |  Port range  |  Comments  | 
 |  0\.0\.0\.0/0  |  TCP  |  80  |  Allow outbound HTTP access to the Internet \(over the Internet gateway\)  | 
 |  0\.0\.0\.0/0  |  TCP  |  443  |  Allow outbound HTTPS access to the Internet \(over the Internet gateway\)  | 

@@ -1,19 +1,19 @@
-# Default VPC and Default Subnets<a name="default-vpc"></a>
+# Default VPC and default subnets<a name="default-vpc"></a>
 
 If you created your AWS account after 2013\-12\-04, it supports only EC2\-VPC\. In this case, you have a *default VPC* in each AWS Region\. A default VPC is ready for you to use so that you don't have to create and configure your own VPC\. You can immediately start launching Amazon EC2 instances into your default VPC\. You can also use services such as Elastic Load Balancing, Amazon RDS, and Amazon EMR in your default VPC\.
 
 A default VPC is suitable for getting started quickly, and for launching public instances such as a blog or simple website\. You can modify the components of your default VPC as needed\. If you prefer to create a nondefault VPC that suits your specific requirements; for example, using your preferred CIDR block range and subnet sizes, see the [example scenarios](VPC_Scenarios.md)\.
 
 **Topics**
-+ [Default VPC Components](#default-vpc-components)
-+ [Availability and Supported Platforms](#default-vpc-availability)
-+ [Viewing Your Default VPC and Default Subnets](#view-default-vpc)
-+ [Launching an EC2 Instance into Your Default VPC](#launching-into)
-+ [Deleting Your Default Subnets and Default VPC](#deleting-default-vpc)
-+ [Creating a Default VPC](#create-default-vpc)
-+ [Creating a Default Subnet](#create-default-subnet)
++ [Default VPC components](#default-vpc-components)
++ [Availability and supported platforms](#default-vpc-availability)
++ [Viewing your default VPC and default subnets](#view-default-vpc)
++ [Launching an EC2 instance into your default VPC](#launching-into)
++ [Deleting your default subnets and default VPC](#deleting-default-vpc)
++ [Creating a default VPC](#create-default-vpc)
++ [Creating a default subnet](#create-default-subnet)
 
-## Default VPC Components<a name="default-vpc-components"></a>
+## Default VPC components<a name="default-vpc-components"></a>
 
 When we create a default VPC, we do the following to set it up for you:
 + Create a VPC with a size `/16` IPv4 CIDR block \(`172.31.0.0/16`\)\. This provides up to 65,536 private IPv4 addresses\. 
@@ -24,7 +24,7 @@ When we create a default VPC, we do the following to set it up for you:
 + Associate the default DHCP options set for your AWS account with your default VPC\.
 
 **Note**  
- Amazon creates the above resources on behalf of the customer\. IAM policies do not apply to these actions because the customer does not perform these actions\. For example, if you have an IAM policy that denies the ability to call CreateInternetGateway, and then you call CreateDefaultVpc, the internet gateway in the default VPC is still created\.
+Amazon creates the above resources on your behalf\. IAM policies do not apply to these actions because you do not perform these actions\. For example, if you have an IAM policy that denies the ability to call CreateInternetGateway, and then you call CreateDefaultVpc, the internet gateway in the default VPC is still created\.
 
 The following figure illustrates the key components that we set up for a default VPC\.
 
@@ -41,23 +41,23 @@ You can use a default VPC as you would use any other VPC:
 
 You can use a default subnet as you would use any other subnet; add custom route tables and set network ACLs\. You can also specify a specific default subnet when you launch an EC2 instance\.
 
-You can optionally associate an IPv6 CIDR block with your default VPC\. For more information, [Working with VPCs and Subnets](working-with-vpcs.md)\.
+You can optionally associate an IPv6 CIDR block with your default VPC\. For more information, [Working with VPCs and subnets](working-with-vpcs.md)\.
 
-### Default Subnets<a name="default-subnet"></a>
+### Default subnets<a name="default-subnet"></a>
 
 By default, a default subnet is a public subnet, because the main route table sends the subnet's traffic that is destined for the internet to the internet gateway\. You can make a default subnet into a private subnet by removing the route from the destination 0\.0\.0\.0/0 to the internet gateway\. However, if you do this, no EC2 instance running in that subnet can access the internet\. 
 
-Instances that you launch into a default subnet receive both a public IPv4 address and a private IPv4 address, and both public and private DNS hostnames\. Instances that you launch into a nondefault subnet in a default VPC don't receive a public IPv4 address or a DNS hostname\. You can change your subnet's default public IP addressing behavior\. For more information, see [Modifying the Public IPv4 Addressing Attribute for Your Subnet](vpc-ip-addressing.md#subnet-public-ip)\.
+Instances that you launch into a default subnet receive both a public IPv4 address and a private IPv4 address, and both public and private DNS hostnames\. Instances that you launch into a nondefault subnet in a default VPC don't receive a public IPv4 address or a DNS hostname\. You can change your subnet's default public IP addressing behavior\. For more information, see [Modifying the public IPv4 addressing attribute for your subnet](vpc-ip-addressing.md#subnet-public-ip)\.
 
-From time to time, AWS may add a new Availability Zone to a region\. In most cases, we automatically create a new default subnet in this Availability Zone for your default VPC within a few days\. However, if you made any modifications to your default VPC, we do not add a new default subnet\. If you want a default subnet for the new Availability Zone, you can create one yourself\. For more information, see [Creating a Default Subnet](#create-default-subnet)\.
+From time to time, AWS may add a new Availability Zone to a region\. In most cases, we automatically create a new default subnet in this Availability Zone for your default VPC within a few days\. However, if you made any modifications to your default VPC, we do not add a new default subnet\. If you want a default subnet for the new Availability Zone, you can create one yourself\. For more information, see [Creating a default subnet](#create-default-subnet)\.
 
-## Availability and Supported Platforms<a name="default-vpc-availability"></a>
+## Availability and supported platforms<a name="default-vpc-availability"></a>
 
 If you created your AWS account after 2013\-12\-04, it supports only EC2\-VPC\. In this case, we create a default VPC for you in each AWS Region\. Therefore, unless you create a nondefault VPC and specify it when you launch an instance, we launch your instances into your default VPC\.
 
 If you created your AWS account before 2013\-03\-18, it supports both EC2\-Classic and EC2\-VPC in regions that you've used before, and only EC2\-VPC in regions that you haven't used\. In this case, we create a default VPC in each region in which you haven't created any AWS resources\. Unless you create a nondefault VPC and specify it when you launch an instance in a new region, we launch the instance into your default VPC for that region\. However, if you launch an instance in a region that you've used before, we launch the instance into EC2\-Classic\.
 
-If you created your AWS account between 2013\-03\-18 and 2013\-12\-04, it may support only EC2\-VPC\. Alternatively, it may support both EC2\-Classic and EC2\-VPC in some of the regions that you've used\. For information about detecting the platform support in each region for your AWS account, see [Detecting Your Supported Platforms and Whether You Have a Default VPC](#detecting-platform)\. For information about when each region was enabled for default VPCs, see [Announcement: Enabling regions for the default VPC feature set](https://forums.aws.amazon.com/ann.jspa?annID=1875#) in the AWS forum for Amazon VPC\.
+If you created your AWS account between 2013\-03\-18 and 2013\-12\-04, it may support only EC2\-VPC\. Alternatively, it may support both EC2\-Classic and EC2\-VPC in some of the regions that you've used\. For information about detecting the platform support in each region for your AWS account, see [Detecting your supported platforms and whether you have a default VPC](#detecting-platform)\. For information about when each region was enabled for default VPCs, see [Announcement: Enabling regions for the default VPC feature set](https://forums.aws.amazon.com/ann.jspa?annID=1875#) in the AWS forum for Amazon VPC\.
 
 If an AWS account supports only EC2\-VPC, any IAM accounts associated with this AWS account also support only EC2\-VPC, and use the same default VPC as the AWS account\.
 
@@ -65,7 +65,7 @@ If your AWS account supports both EC2\-Classic and EC2\-VPC, you can either crea
 
 For more information about the EC2\-Classic and EC2\-VPC platforms, see [Supported Platforms](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-supported-platforms.html)\.
 
-### Detecting Your Supported Platforms and Whether You Have a Default VPC<a name="detecting-platform"></a>
+### Detecting your supported platforms and whether you have a default VPC<a name="detecting-platform"></a>
 
  You can use the Amazon EC2 console or the command line to determine whether your AWS account supports both platforms, or if you have a default VPC\.
 
@@ -80,7 +80,7 @@ For more information about the EC2\-Classic and EC2\-VPC platforms, see [Support
    For example, the following indicates that the account supports the EC2\-VPC platform only, and has a default VPC with the identifier `vpc-1a2b3c4d`\.  
 ![\[The Supported Platforms indicator.\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc_indicator.png)
 
-   If you delete your default VPC, the **Default VPC** value displayed is `None`\. For more information, see [Deleting Your Default Subnets and Default VPC](#deleting-default-vpc)\.
+   If you delete your default VPC, the **Default VPC** value displayed is `None`\. For more information, see [Deleting your default subnets and default VPC](#deleting-default-vpc)\.
 
 **To detect platform support using the command line**
 + [describe\-account\-attributes](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-account-attributes.html) \(AWS CLI\)
@@ -88,7 +88,7 @@ For more information about the EC2\-Classic and EC2\-VPC platforms, see [Support
 
 The `supported-platforms` attribute in the output indicates which platforms you can launch EC2 instances into\.
 
-## Viewing Your Default VPC and Default Subnets<a name="view-default-vpc"></a>
+## Viewing your default VPC and default subnets<a name="view-default-vpc"></a>
 
 You can view your default VPC and subnets using the Amazon VPC console or the command line\.
 
@@ -118,11 +118,11 @@ Use the commands with the `isDefault` filter and set the filter value to `true`\
 
 Use the commands with the `vpc-id` filter and set the filter value to the ID of the default VPC\. In the output, the `DefaultForAz` field is set to `true` for default subnets\.
 
-## Launching an EC2 Instance into Your Default VPC<a name="launching-into"></a>
+## Launching an EC2 instance into your default VPC<a name="launching-into"></a>
 
 When you launch an EC2 instance without specifying a subnet, it's automatically launched into a default subnet in your default VPC\. By default, we select an Availability Zone for you and launch the instance into the corresponding subnet for that Availability Zone\. Alternatively, you can select the Availability Zone for your instance by selecting its corresponding default subnet in the console, or by specifying the subnet or the Availability Zone in the AWS CLI\. 
 
-### Launching an EC2 Instance Using the Console<a name="launching-into-console"></a>
+### Launching an EC2 instance using the console<a name="launching-into-console"></a>
 
 **To launch an EC2 instance into your default VPC**
 
@@ -136,7 +136,7 @@ When you launch an EC2 instance without specifying a subnet, it's automatically 
 
 1. Choose **Launch** to choose a key pair and launch the instance\.
 
-### Launching an EC2 Instance Using the Command Line<a name="launching-into-cli"></a>
+### Launching an EC2 instance using the command line<a name="launching-into-cli"></a>
 
 You can use one of the following commands to launch an EC2 instance:
 + [run\-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html) \(AWS CLI\)
@@ -146,15 +146,15 @@ To launch an EC2 instance into your default VPC, use these commands without spec
 
 To launch an EC2 instance into a specific default subnet in your default VPC, specify its subnet ID or Availability Zone\.
 
-## Deleting Your Default Subnets and Default VPC<a name="deleting-default-vpc"></a>
+## Deleting your default subnets and default VPC<a name="deleting-default-vpc"></a>
 
-You can delete a default subnet or default VPC just as you can delete any other subnet or VPC\. For more information, see [Working with VPCs and Subnets](working-with-vpcs.md)\. However, if you delete your default subnets or default VPC, you must explicitly specify a subnet in another VPC in which to launch your instance, because you can't launch instances into EC2\-Classic\. If you do not have another VPC, you must create a nondefault VPC and nondefault subnet\. For more information, see [Creating a VPC](working-with-vpcs.md#Create-VPC)\. 
+You can delete a default subnet or default VPC just as you can delete any other subnet or VPC\. For more information, see [Working with VPCs and subnets](working-with-vpcs.md)\. However, if you delete your default subnets or default VPC, you must explicitly specify a subnet in another VPC in which to launch your instance, because you can't launch instances into EC2\-Classic\. If you do not have another VPC, you must create a nondefault VPC and nondefault subnet\. For more information, see [Creating a VPC](working-with-vpcs.md#Create-VPC)\. 
 
-If you delete your default VPC, you can create a new one\. For more information, see [Creating a Default VPC](#create-default-vpc)\. 
+If you delete your default VPC, you can create a new one\. For more information, see [Creating a default VPC](#create-default-vpc)\. 
 
-If you delete a default subnet, you can create a new one\. For more information, see [Creating a Default Subnet](#create-default-subnet)\. Alternatively, you can create a nondefault subnet in your default VPC and contact AWS Support to mark the subnet as a default subnet\. You must provide the following details: your AWS account ID, the region, and the subnet ID\. To ensure that your new default subnet behaves as expected, modify the subnet attribute to assign public IP addresses to instances that are launched in that subnet\. For more information, see [Modifying the Public IPv4 Addressing Attribute for Your Subnet](vpc-ip-addressing.md#subnet-public-ip)\. You can only have one default subnet per Availability Zone\. You cannot create a default subnet in a nondefault VPC\. 
+If you delete a default subnet, you can create a new one\. For more information, see [Creating a default subnet](#create-default-subnet)\. Alternatively, you can create a nondefault subnet in your default VPC and contact AWS Support to mark the subnet as a default subnet\. You must provide the following details: your AWS account ID, the region, and the subnet ID\. To ensure that your new default subnet behaves as expected, modify the subnet attribute to assign public IP addresses to instances that are launched in that subnet\. For more information, see [Modifying the public IPv4 addressing attribute for your subnet](vpc-ip-addressing.md#subnet-public-ip)\. You can only have one default subnet per Availability Zone\. You cannot create a default subnet in a nondefault VPC\. 
 
-## Creating a Default VPC<a name="create-default-vpc"></a>
+## Creating a default VPC<a name="create-default-vpc"></a>
 
 If you delete your default VPC, you can create a new one\. You cannot restore a previous default VPC that you deleted, and you cannot mark an existing nondefault VPC as a default VPC\. If your account supports EC2\-Classic, you cannot use these procedures to create a default VPC in a region that supports EC2\-Classic\.
 
@@ -196,7 +196,7 @@ If you already have a default VPC in the region, you cannot create another one\.
 
 Alternatively, you can use the [New\-EC2DefaultVpc](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2DefaultVpc.html) Tools for Windows PowerShell command or the [CreateDefaultVpc](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateDefaultVpc.html) Amazon EC2 API action\.
 
-## Creating a Default Subnet<a name="create-default-subnet"></a>
+## Creating a default subnet<a name="create-default-subnet"></a>
 
 You can create a default subnet in an Availability Zone that does not have one\. For example, you might want to create a default subnet if you have deleted a default subnet, or if AWS has added a new Availability Zone and did not automatically create a default subnet for that zone in your default VPC\. 
 
@@ -208,11 +208,11 @@ When you create a default subnet, it is created with a size `/20` IPv4 CIDR bloc
 
 If there is not enough address space in your default VPC to create a size `/20` CIDR block, the request fails\. If you need more address space, you can [add an IPv4 CIDR block to your VPC](VPC_Subnets.md#vpc-resize)\.
 
-If you've associated an IPv6 CIDR block with your default VPC, the new default subnet does not automatically receive an IPv6 CIDR block\. Instead, you can associate an IPv6 CIDR block with the default subnet after you create it\. For more information, see [Associating an IPv6 CIDR Block with Your Subnet](working-with-vpcs.md#subnet-associate-ipv6-cidr)\.
+If you've associated an IPv6 CIDR block with your default VPC, the new default subnet does not automatically receive an IPv6 CIDR block\. Instead, you can associate an IPv6 CIDR block with the default subnet after you create it\. For more information, see [Associating an IPv6 CIDR block with your subnet](working-with-vpcs.md#subnet-associate-ipv6-cidr)\.
 
 Currently, you can create a default subnet using the AWS CLI, an AWS SDK, or the Amazon EC2 API only\.
 
-**To create a default subnet using the command line**
+**To create a default subnet using the AWS CLI**
 + Use the [create\-default\-subnet](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-default-subnet.html) AWS CLI command and specify the Availability Zone in which to create the subnet\.
 
   ```
@@ -237,4 +237,6 @@ Currently, you can create a default subnet using the AWS CLI, an AWS SDK, or the
   }
   ```
 
-  Alternatively, you can use the [CreateDefaultSubnet](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateDefaultSubnet.html) Amazon EC2 API action\.
+  For more information about setting up the AWS CLI, see the [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\.
+
+  Alternatively, you can use the [New\-EC2DefaultSubnet](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2DefaultSubnet.html) Tools for Windows PowerShell command or the [CreateDefaultSubnet](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateDefaultSubnet.html) Amazon EC2 API action\.

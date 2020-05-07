@@ -1,4 +1,4 @@
-# Changing the Network Load Balancers and Acceptance Settings<a name="modify-endpoint-service"></a>
+# Changing the Network Load Balancers and acceptance settings<a name="modify-endpoint-service"></a>
 
 You can modify your endpoint service configuration by changing the Network Load Balancers that are associated with the endpoint service, and by changing whether acceptance is required for requests to connect to your endpoint service\.
 

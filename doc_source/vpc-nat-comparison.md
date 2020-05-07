@@ -1,4 +1,4 @@
-# Comparison of NAT Instances and NAT Gateways<a name="vpc-nat-comparison"></a>
+# Comparison of NAT instances and NAT gateways<a name="vpc-nat-comparison"></a>
 
 The following is a high\-level summary of the differences between NAT instances and NAT gateways\.
 

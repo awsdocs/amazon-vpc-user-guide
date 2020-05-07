@@ -1,8 +1,8 @@
-# What Is Amazon VPC?<a name="what-is-amazon-vpc"></a>
+# What is Amazon VPC?<a name="what-is-amazon-vpc"></a>
 
 Amazon Virtual Private Cloud \(Amazon VPC\) enables you to launch AWS resources into a virtual network that you've defined\. This virtual network closely resembles a traditional network that you'd operate in your own data center, with the benefits of using the scalable infrastructure of AWS\.
 
-## Amazon VPC Concepts<a name="Overview"></a>
+## Amazon VPC concepts<a name="Overview"></a>
 
 Amazon VPC is the networking layer for Amazon EC2\. If you're new to Amazon EC2, see [What is Amazon EC2?](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html) in the *Amazon EC2 User Guide for Linux Instances* to get a brief overview\.
 
@@ -25,15 +25,15 @@ You can create, access, and manage your VPCs using any of the following interfac
 
 There's no additional charge for using Amazon VPC\. You pay the standard rates for the instances and other Amazon EC2 features that you use\. There are charges for using a Site\-to\-Site VPN connection and using a NAT gateway\. For more information, see [Amazon VPC Pricing](https://aws.amazon.com/vpc/pricing/) and [Amazon EC2 Pricing](https://aws.amazon.com/ec2/pricing/)\.
 
-## Amazon VPC Limits<a name="CurrentCapabilities"></a>
+## Amazon VPC quotas<a name="CurrentCapabilities"></a>
 
-There are quotas on the number of Amazon VPC components that you can provision\. You can request an increase for some of these quotas\. For more information, see [Amazon VPC Quotas](amazon-vpc-limits.md)\.
+There are quotas on the number of Amazon VPC components that you can provision\. You can request an increase for some of these quotas\. For more information, see [Amazon VPC quotas](amazon-vpc-limits.md)\.
 
-## Amazon VPC Resources<a name="howto"></a>
+## Amazon VPC resources<a name="howto"></a>
 
-To get a hands\-on introduction to Amazon VPC, complete [Getting Started with Amazon VPC](vpc-getting-started.md)\. This exercise guides you through the steps to create a nondefault VPC with a public subnet, and to launch an instance into your subnet\.
+To get a hands\-on introduction to Amazon VPC, complete [Getting started with Amazon VPC](vpc-getting-started.md)\. This exercise guides you through the steps to create a nondefault VPC with a public subnet, and to launch an instance into your subnet\.
 
-If you have a default VPC, and you want to get started launching instances into your VPC without performing any additional configuration on your VPC, see [Launching an EC2 Instance into Your Default VPC](default-vpc.md#launching-into)\.
+If you have a default VPC, and you want to get started launching instances into your VPC without performing any additional configuration on your VPC, see [Launching an EC2 instance into your default VPC](default-vpc.md#launching-into)\.
 
 To learn about the basic scenarios for Amazon VPC, see [Examples for VPC](VPC_Scenarios.md)\. You can configure your VPC and subnets in other ways to suit your needs\.
 
@@ -52,6 +52,6 @@ The following table lists related resources that you might find useful as you wo
 |  [AWS Support Center](https://console.aws.amazon.com/support/home#/)  |  The home page for AWS Support\.  | 
 |  [Contact Us](https://aws.amazon.com/contact-us/)  |  A central contact point for inquiries concerning AWS billing, accounts, and events\.  | 
 
-## PCI DSS Compliance<a name="pci-compliance"></a>
+## PCI DSS compliance<a name="pci-compliance"></a>
 
 Amazon VPC supports the processing, storage, and transmission of credit card data by a merchant or service provider, and has been validated as being compliant with Payment Card Industry \(PCI\) Data Security Standard \(DSS\)\. For more information about PCI DSS, including how to request a copy of the AWS PCI Compliance Package, see [PCI DSS Level 1](https://aws.amazon.com/compliance/pci-dss-level-1-faqs/)\. 

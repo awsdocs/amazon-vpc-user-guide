@@ -1,21 +1,21 @@
-# Amazon VPC Private DNS Name Domain Verification TXT Records<a name="dns-txt-records"></a>
+# Amazon VPC private DNS name domain verification TXT records<a name="dns-txt-records"></a>
 
 Your domain is associated with a set of Domain Name System \(DNS\) records that you manage through your DNS provider\. A TXT record is a type of DNS record that provides additional information about your domain\. Each TXT record consists of a name and a value\.
 
 When you initiate domain ownership verification using the Amazon VPC Console or API, we give you the name and value to use for the TXT record\. For example, if your domain is myexampleservice\.com, the TXT record settings that Amazon VPC generates will look similar to the following example:
 
 
-**Endpoint private DNS Name TXT Record**  
+**Endpoint private DNS name TXT record**  
 
 | Domain verification name | Type | Domain verification value | 
 | --- | --- | --- | 
-|  \_vpce:aksldja21i1  |  TXT  |  vpce:asjdakjshd78126eu21  | 
+|  \_vpce:aksldja21i1\.myexampleservice\.com  |  TXT  |  vpce:asjdakjshd78126eu21  | 
 
 Add a TXT record to your domain's DNS server using the specified **Domain verification name** and **Domain verification value**\. Amazon VPC domain ownership verification is complete when Amazon VPC detects the existence of the TXT record in your domain's DNS settings\.
 
-If your DNS provider does not allow DNS record names to contain underscores, you can omit *\_vpce:aksldja21i1* from the **Domain verification name**\. In that case, for the preceding example, the TXT record name would be myexampleservice\.com instead of *\_vpce:aksldja21i1\.myexampleservice\.com*\. 
+If your DNS provider does not allow DNS record names to contain underscores, you can use the domain name for the **Domain verification name**\. In that case, for the preceding example, the TXT record name would be myexampleservice\.com\. 
 
-You can find troubleshooting information and instructions on how to check your domain ownership verification settings in [Troubleshooting Common Private DNS Domain Verification Problems](domain-verification-problems.md)\.
+You can find troubleshooting information and instructions on how to check your domain ownership verification settings in [Troubleshooting common private DNS domain verification problems](domain-verification-problems.md)\.
 
 ------
 #### [ Amazon Route 53 ]
@@ -52,7 +52,7 @@ The procedure for adding TXT records to your domain's DNS server depends on who 
 
    1. Choose **Create**\.
 
-1. On the **Details** tab of the **Endpoint Services** page in the Amazon VPC console, check the value in the **Domain verification status** column next for the endpoint\. If the status is "pending verification," wait a few minutes, and then choose **refresh**\. Repeat this process until the value in the status column is "verified"\. You can manually start the verification process\. For more information, see [Manually Initiating the Endpoint Service Private DNS Name Domain Verification](verify-vpc-endpoint-service-dns-name.md)\.
+1. On the **Details** tab of the **Endpoint Services** page in the Amazon VPC console, check the value in the **Domain verification status** column next for the endpoint\. If the status is "pending verification," wait a few minutes, and then choose **refresh**\. Repeat this process until the value in the status column is "verified"\. You can manually start the verification process\. For more information, see [Manually initiating the endpoint service private DNS name domain verification](verify-vpc-endpoint-service-dns-name.md)\.
 
 ------
 #### [ Generic procedures for other DNS providers ]

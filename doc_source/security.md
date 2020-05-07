@@ -9,11 +9,12 @@ Security is a shared responsibility between AWS and you\. The [shared responsibi
 This documentation helps you understand how to apply the shared responsibility model when using Amazon VPC\. The following topics show you how to configure Amazon VPC to meet your security and compliance objectives\. You also learn how to use other AWS services that help you to monitor and secure your Amazon VPC resources\. 
 
 **Topics**
-+ [Data Protection in Amazon Virtual Private Cloud](data-protection.md)
-+ [Identity and Access Management for Amazon VPC](security-iam.md)
-+ [Logging and Monitoring for Amazon VPC](logging-monitoring.md)
++ [Data protection in Amazon Virtual Private Cloud](data-protection.md)
++ [Identity and access management for Amazon VPC](security-iam.md)
++ [Logging and monitoring for Amazon VPC](logging-monitoring.md)
 + [Resilience in Amazon Virtual Private Cloud](disaster-recovery-resiliency.md)
-+ [Compliance Validation for Amazon Virtual Private Cloud](VPC-compliance.md)
-+ [Security Groups for Your VPC](VPC_SecurityGroups.md)
++ [Compliance validation for Amazon Virtual Private Cloud](VPC-compliance.md)
++ [Security groups for your VPC](VPC_SecurityGroups.md)
 + [Network ACLs](vpc-network-acls.md)
-+ [Security Best Practices for Your VPC](vpc-security-best-practices.md)
++ [VPC Flow Logs](flow-logs.md)
++ [Security best practices for your VPC](vpc-security-best-practices.md)

@@ -1,8 +1,8 @@
-# Troubleshooting Common Private DNS Domain Verification Problems<a name="domain-verification-problems"></a>
+# Troubleshooting common private DNS domain verification problems<a name="domain-verification-problems"></a>
 
 To verify an endpoint service private DNS domain name with Amazon VPC, you initiate the process using either the Amazon VPC console or the API\. This section contains information that can help you resolve issues with the verification process\.
 
-## Common Domain Verification Problems<a name="domain-verification-common-problems"></a>
+## Common domain verification problems<a name="domain-verification-common-problems"></a>
 
 If you attempt to verify a domain and you encounter problems, review the possible causes and solutions below\.
 + You're attempting to verify a domain that you don't own\. You can't verify a domain unless you own it\. 
@@ -19,7 +19,7 @@ If you attempt to verify a domain and you encounter problems, review the possibl
 
   If your DNS provider doesn't allow you to assign multiple values to the same TXT record, you can verify the domain once with the value in the attribute name of the TXT record, and another time with the value removed from the attribute name\. For example, you verify with “\_asnbcdasd”, and then with "asnbcdasd”\. The downside of this solution is that you can only verify the same domain two times\.
 
-## How to Check Domain Verification Settings<a name="domain-verification-check-dns"></a>
+## How to check domain verification settings<a name="domain-verification-check-dns"></a>
 
 You can verify that your private DNS name domain ownership verification TXT record is published correctly to your DNS server by using the following procedure\. This procedure uses the [nslookup](http://en.wikipedia.org/wiki/Nslookup) tool, which is available for Windows and Linux\. On Linux, you can also use [dig](http://en.wikipedia.org/wiki/Dig_(command))\.
 

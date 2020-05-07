@@ -1,4 +1,4 @@
-# Getting Started with IPv6 for Amazon VPC<a name="get-started-ipv6"></a>
+# Getting started with IPv6 for Amazon VPC<a name="get-started-ipv6"></a>
 
 Create a VPC that supports IPv6 addressing\.
 
@@ -8,23 +8,23 @@ To complete this exercise, do the following:
 + Launch an Amazon EC2 instance into your subnet, and associate an IPv6 address with your instance during launch\. An IPv6 address is globally unique, and allows your instance to communicate with the Internet\.
 + You can request an IPv6 CIDR block for the VPC\. When you select this option, you can set the network border group, which is the location from which we advertise the IPV6 CIDR block\. Setting the network border group limits the CiDR block to this group\. 
 
-For more information about IPv4 and IPv6 addressing, see [IP Addressing in Your VPC](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-ip-addressing.html)\.
+For more information about IPv4 and IPv6 addressing, see [IP addressing in your VPC](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-ip-addressing.html)\.
 
 Before you can use Amazon VPC for the first time, you must sign up for Amazon Web Services \(AWS\)\. When you sign up, your AWS account is automatically signed up for all services in AWS, including Amazon VPC\. If you haven't created an AWS account already, go to [https://aws\.amazon\.com/](https://aws.amazon.com/) and choose **Create a Free Account**\.
 
 **Topics**
 + [Step 1: Create the VPC](#get-started-ipv6-vpc)
-+ [Step 2: Create a Security Group](#get-started-ipv6-sg)
-+ [Step 3: Launch an Instance](#get-started-ipv6-instance)
++ [Step 2: Create a security group](#get-started-ipv6-sg)
++ [Step 3: Launch an instance](#get-started-ipv6-instance)
 
 ## Step 1: Create the VPC<a name="get-started-ipv6-vpc"></a>
 
 In this step, you use the Amazon VPC wizard in the Amazon VPC console to create a VPC\. By default, the wizard performs the following steps for you:
 + Creates a VPC with a /16 IPv4 CIDR block and associates a /56 IPv6 CIDR block with the VPC\. For more information, see [Your VPC](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html#YourVPC)\. The size of the IPv6 CIDR block is fixed \(/56\) and the range of IPv6 addresses is automatically allocated from Amazon's pool of IPv6 addresses \(you cannot select the range yourself\)\.
-+ Attaches an Internet gateway to the VPC\. For more information about Internet gateways, see [Internet Gateways](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html)\.
++ Attaches an Internet gateway to the VPC\. For more information about Internet gateways, see [Internet gateways](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html)\.
 + Creates a subnet with an /24 IPv4 CIDR block and a /64 IPv6 CIDR block in the VPC\. The size of the IPv6 CIDR block is fixed \(/64\)\.
-+ Creates a custom route table, and associates it with your subnet, so that traffic can flow between the subnet and the Internet gateway\. For more information about route tables, see [Route Tables](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html)\.
-+ Associates an IPv6 Amazon\-provided CIDR block with a network border group\. For more information, see [Extending Your VPC Resources to AWS Local Zones](VPC_Subnets.md#local-zone)\.
++ Creates a custom route table, and associates it with your subnet, so that traffic can flow between the subnet and the Internet gateway\. For more information about route tables, see [Route tables](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html)\.
++ Associates an IPv6 Amazon\-provided CIDR block with a network border group\. For more information, see [Extending your VPC resources to AWS Local Zones](VPC_Subnets.md#local-zone)\.
 
 **Note**  
 This exercise covers the first scenario in the VPC wizard\. For more information about the other scenarios, see [Scenarios for Amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenarios.html)\.
@@ -69,7 +69,7 @@ Do not choose **Your VPCs** in the navigation pane; you cannot access the VPC wi
 
 1. On the configuration page, enter a name for your VPC for **VPC name**; for example, `my-vpc`, and enter a name for your subnet for **Subnet name**\. This helps you to identify the VPC and subnet in the Amazon VPC console after you've created them\. 
 
-1. \(For **IPv4 CIDR block**, specify the CIDR block\. For more information, see [VPC Sizing](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html#VPC_Sizing)\. 
+1. \(For **IPv4 CIDR block**, specify the CIDR block\. For more information, see [VPC sizing](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html#VPC_Sizing)\. 
 
 1. For **IPv6 CIDR block**, choose **Amazon\-provided IPv6 CIDR block**\.
 
@@ -81,7 +81,7 @@ Do not choose **Your VPCs** in the navigation pane; you cannot access the VPC wi
 
 1. The **Your VPCs** page displays your default VPC and the VPC that you just created\. 
 
-### Viewing Information About Your VPC<a name="verify-vpc-components-ipv6"></a>
+### Viewing information about your VPC<a name="verify-vpc-components-ipv6"></a>
 
 After you've created the VPC, you can view information about the subnet, Internet gateway, and route tables\. The VPC that you created has two route tables — a main route table that all VPCs have by default, and a custom route table that was created by the wizard\. The custom route table is associated with your subnet, which means that the routes in that table determine how the traffic for the subnet flows\. If you add a new subnet to your VPC, it uses the main route table by default\.
 
@@ -104,13 +104,13 @@ After you've created the VPC, you can view information about the subnet, Interne
 
 1. Select the main route table\. The main route table has a local route, but no other routes\. 
 
-## Step 2: Create a Security Group<a name="get-started-ipv6-sg"></a>
+## Step 2: Create a security group<a name="get-started-ipv6-sg"></a>
 
 A security group acts as a virtual firewall to control the traffic for its associated instances\. To use a security group, add the inbound rules to control incoming traffic to the instance, and outbound rules to control the outgoing traffic from your instance\. To associate a security group with an instance, specify the security group when you launch the instance\. 
 
 Your VPC comes with a *default security group*\. Any instance not associated with another security group during launch is associated with the default security group\. In this exercise, you create a new security group, `WebServerSG`, and specify this security group when you launch an instance into your VPC\.
 
-### Creating Your WebServerSG Security Group<a name="getting-started-ipv6-create-group"></a>
+### Creating your WebServerSG security group<a name="getting-started-ipv6-create-group"></a>
 
 You can create your security group using the Amazon VPC console\.
 
@@ -138,7 +138,7 @@ If you use `::/0`, you enable all IPv6 addresses to access your instance using S
 
    1. Choose **Save**\.
 
-## Step 3: Launch an Instance<a name="get-started-ipv6-instance"></a>
+## Step 3: Launch an instance<a name="get-started-ipv6-instance"></a>
 
 When you launch an EC2 instance into a VPC, you must specify the subnet in which to launch the instance\. In this case, you'll launch an instance into the public subnet of the VPC you created\. Use the Amazon EC2 launch wizard in the Amazon EC2 console to launch your instance\.
 
@@ -146,7 +146,7 @@ To ensure that your instance is accessible from the Internet, assign an IPv6 add
 
 **To launch an EC2 instance into a VPC**
 
-Before you launch the EC2 instance into the VPC, configure the subnet of the VPC to automatically assign IPv6 IP addresses\. For more information, see [Modifying the IPv6 Addressing Attribute for Your Subnet](vpc-ip-addressing.md#subnet-ipv6)\.
+Before you launch the EC2 instance into the VPC, configure the subnet of the VPC to automatically assign IPv6 IP addresses\. For more information, see [Modifying the IPv6 addressing attribute for your subnet](vpc-ip-addressing.md#subnet-ipv6)\.
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -176,9 +176,9 @@ Before you launch the EC2 instance into the VPC, configure the subnet of the VPC
 
 1. On the confirmation page, choose **View Instances** to view your instance on the **Instances** page\. Select your instance, and view its details in the **Description** tab\. The **Private IPs** field displays the private IPv4 address that's assigned to your instance from the range of IPv4 addresses in your subnet\. The **IPv6 IPs** field displays the IPv6 address that's assigned to your instance from the range of IPv6 addresses in your subnet\. 
 
-For more information about the options available in the Amazon EC2 launch wizard, see [Launching an Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/launching-instance.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+For more information about the options available in the Amazon EC2 launch wizard, see [Launching an instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/launching-instance.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-You can connect to your instance through its IPv6 address using SSH or Remote Desktop from your home network\. Your local computer must have an IPv6 address and must be configured to use IPv6\. For more information about how to connect to a Linux instance, see [Connecting to Your Linux Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html) in the *Amazon EC2 User Guide for Linux Instances*\. For more information about how to connect to a Windows instance, see [Connect to Your Windows Instance Using RDP](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/connecting_to_windows_instance.html) in the *Amazon EC2 User Guide for Windows Instances*\.
+You can connect to your instance through its IPv6 address using SSH or Remote Desktop from your home network\. Your local computer must have an IPv6 address and must be configured to use IPv6\. For more information about how to connect to a Linux instance, see [Connecting to your Linux instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html) in the *Amazon EC2 User Guide for Linux Instances*\. For more information about how to connect to a Windows instance, see [Connect to your Windows instance using RDP](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/connecting_to_windows_instance.html) in the *Amazon EC2 User Guide for Windows Instances*\.
 
 **Note**  
-If you also want your instance to be accessible via an IPv4 address over the Internet, SSH, or RDP, you must associate an Elastic IP address \(a static public IPv4 address\) to your instance, and you must adjust your security group rules to allow access over IPv4\. For more information, see [Getting Started with Amazon VPC](vpc-getting-started.md)\.
+If you also want your instance to be accessible via an IPv4 address over the Internet, SSH, or RDP, you must associate an Elastic IP address \(a static public IPv4 address\) to your instance, and you must adjust your security group rules to allow access over IPv4\. For more information, see [Getting started with Amazon VPC](vpc-getting-started.md)\.

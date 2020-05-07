@@ -1,6 +1,6 @@
-# Accepting and Rejecting Interface Endpoint Connection Requests<a name="accept-reject-endpoint-requests"></a>
+# Accepting and rejecting interface endpoint connection requests<a name="accept-reject-endpoint-requests"></a>
 
-After you create an endpoint service, service consumers for which you've added permission can create an interface endpoint to connect to your service\. For more information about creating an interface endpoint, see [Interface VPC Endpoints \(AWS PrivateLink\)](vpce-interface.md)\.
+After you create an endpoint service, service consumers for which you've added permission can create an interface endpoint to connect to your service\. For more information about creating an interface endpoint, see [Interface VPC endpoints \(AWS PrivateLink\)](vpce-interface.md)\.
 
 If you specified that acceptance is required for connection requests, you must manually accept or reject interface endpoint connection requests to your endpoint service\. After an interface endpoint is accepted, it becomes `available`\.
 

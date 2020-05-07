@@ -1,16 +1,16 @@
-# Example: Create an IPv4 VPC and Subnets Using the AWS CLI<a name="vpc-subnets-commands-example"></a>
+# Example: Create an IPv4 VPC and subnets using the AWS CLI<a name="vpc-subnets-commands-example"></a>
 
-The following example uses AWS CLI commands to create a nondefault VPC with an IPv4 CIDR block, and a public and private subnet in the VPC\. After you've created the VPC and subnets, you can launch an instance in the public subnet and connect to it\. To begin, you must first install and configure the AWS CLI\. For more information, see [Getting Set Up with the AWS Command Line Interface](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html)\.
+The following example uses AWS CLI commands to create a nondefault VPC with an IPv4 CIDR block, and a public and private subnet in the VPC\. After you've created the VPC and subnets, you can launch an instance in the public subnet and connect to it\. To begin, you must first install and configure the AWS CLI\. For more information, see [Installing the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html)\.
 
 **Topics**
-+ [Step 1: Create a VPC and Subnets](#vpc-subnets-commands-example-create-vpc)
-+ [Step 2: Make Your Subnet Public](#vpc-subnets-commands-example-public-subnet)
-+ [Step 3: Launch an Instance into Your Subnet](#vpc-subnets-commands-example-launch-instance)
-+ [Step 4: Clean Up](#vpc-subnets-commands-example-clean-up)
++ [Step 1: Create a VPC and subnets](#vpc-subnets-commands-example-create-vpc)
++ [Step 2: Make your subnet public](#vpc-subnets-commands-example-public-subnet)
++ [Step 3: Launch an instance into your subnet](#vpc-subnets-commands-example-launch-instance)
++ [Step 4: Clean up](#vpc-subnets-commands-example-clean-up)
 
-## Step 1: Create a VPC and Subnets<a name="vpc-subnets-commands-example-create-vpc"></a>
+## Step 1: Create a VPC and subnets<a name="vpc-subnets-commands-example-create-vpc"></a>
 
-The first step is to create a VPC and two subnets\. This example uses the CIDR block `10.0.0.0/16` for the VPC, but you can choose a different CIDR block\. For more information, see [VPC and Subnet Sizing](VPC_Subnets.md#VPC_Sizing)\.
+The first step is to create a VPC and two subnets\. This example uses the CIDR block `10.0.0.0/16` for the VPC, but you can choose a different CIDR block\. For more information, see [VPC and subnet sizing](VPC_Subnets.md#VPC_Sizing)\.
 
 **To create a VPC and subnets using the AWS CLI**
 
@@ -43,7 +43,7 @@ The first step is to create a VPC and two subnets\. This example uses the CIDR b
    aws ec2 create-subnet --vpc-id vpc-2f09a348 --cidr-block 10.0.0.0/24
    ```
 
-## Step 2: Make Your Subnet Public<a name="vpc-subnets-commands-example-public-subnet"></a>
+## Step 2: Make your subnet public<a name="vpc-subnets-commands-example-public-subnet"></a>
 
 After you've created the VPC and subnets, you can make one of the subnets a public subnet by attaching an Internet gateway to your VPC, creating a custom route table, and configuring routing for the subnet to the Internet gateway\.
 
@@ -162,9 +162,9 @@ After you've created the VPC and subnets, you can make one of the subnets a publ
    aws ec2 modify-subnet-attribute --subnet-id subnet-b46032ec --map-public-ip-on-launch
    ```
 
-## Step 3: Launch an Instance into Your Subnet<a name="vpc-subnets-commands-example-launch-instance"></a>
+## Step 3: Launch an instance into your subnet<a name="vpc-subnets-commands-example-launch-instance"></a>
 
-To test that your subnet is public and that instances in the subnet are accessible via the Internet, launch an instance into your public subnet and connect to it\. First, you must create a security group to associate with your instance, and a key pair with which you'll connect to your instance\. For more information about security groups, see [Security Groups for Your VPC](VPC_SecurityGroups.md)\. For more information about key pairs, see [Amazon EC2 Key Pairs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+To test that your subnet is public and that instances in the subnet are accessible via the Internet, launch an instance into your public subnet and connect to it\. First, you must create a security group to associate with your instance, and a key pair with which you'll connect to your instance\. For more information about security groups, see [Security groups for your VPC](VPC_SecurityGroups.md)\. For more information about key pairs, see [Amazon EC2 Key Pairs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **To launch and connect to an instance in your public subnet**
 
@@ -240,9 +240,9 @@ In this example, the AMI is an Amazon Linux AMI in the US East \(N\. Virginia\) 
    ssh -i "MyKeyPair.pem" ec2-user@52.87.168.235
    ```
 
-   If you're connecting from a Windows computer, use the following instructions: [Connecting to Your Linux Instance from Windows Using PuTTY](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html)\.
+   If you're connecting from a Windows computer, use the following instructions: [Connecting to your Linux instance from Windows using PuTTY](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html)\.
 
-## Step 4: Clean Up<a name="vpc-subnets-commands-example-clean-up"></a>
+## Step 4: Clean up<a name="vpc-subnets-commands-example-clean-up"></a>
 
 After you've verified that you can connect to your instance, you can terminate it if you no longer need it\. To do this, use the [terminate\-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/terminate-instances.html) command\. To delete the other resources you've created in this example, use the following commands in their listed order:
 

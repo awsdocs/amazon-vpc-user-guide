@@ -1,4 +1,4 @@
-# Working with Route Tables<a name="WorkWithRouteTables"></a>
+# Working with route tables<a name="WorkWithRouteTables"></a>
 
 The following tasks show you how to work with route tables\.
 
@@ -6,21 +6,21 @@ The following tasks show you how to work with route tables\.
 When you use the VPC wizard in the console to create a VPC with a gateway, the wizard automatically updates the route tables to use the gateway\. If you're using the command line tools or API to set up your VPC, you must update the route tables yourself\.
 
 **Topics**
-+ [Determining Which Route Table a Subnet Is Associated With](#SubnetRouteTables)
-+ [Determining Which Subnets and or Gateways Are Explicitly Associated with a Table](#Route_Which_Associations)
-+ [Creating a Custom Route Table](#CustomRouteTable)
-+ [Adding and Removing Routes from a Route Table](#AddRemoveRoutes)
-+ [Enabling and Disabling Route Propagation](#EnableDisableRouteProp)
-+ [Associating a Subnet with a Route Table](#AssociateSubnet)
-+ [Changing a Subnet Route Table](#ChangeRouteTable)
-+ [Disassociating a Subnet from a Route Table](#DisassociateSubnetRouteTable)
-+ [Replacing the Main Route Table](#Route_Replacing_Main_Table)
-+ [Associating a Gateway with a Route Table](#associate-route-table-gateway)
-+ [Disassociating a Gateway from a Route Table](#disassociate-route-table-gateway)
-+ [Replacing and Restoring the Target for a Local Route](#replace-local-route-target)
-+ [Deleting a Route Table](#DeleteRouteTable)
++ [Determining which route table a subnet is associated with](#SubnetRouteTables)
++ [Determining which subnets and or gateways are explicitly associated with a table](#Route_Which_Associations)
++ [Creating a custom route table](#CustomRouteTable)
++ [Adding and removing routes from a route table](#AddRemoveRoutes)
++ [Enabling and disabling route propagation](#EnableDisableRouteProp)
++ [Associating a subnet with a route table](#AssociateSubnet)
++ [Changing a subnet route table](#ChangeRouteTable)
++ [Disassociating a subnet from a route table](#DisassociateSubnetRouteTable)
++ [Replacing the main route table](#Route_Replacing_Main_Table)
++ [Associating a gateway with a route table](#associate-route-table-gateway)
++ [Disassociating a gateway from a route table](#disassociate-route-table-gateway)
++ [Replacing and restoring the target for a local route](#replace-local-route-target)
++ [Deleting a route table](#DeleteRouteTable)
 
-## Determining Which Route Table a Subnet Is Associated With<a name="SubnetRouteTables"></a>
+## Determining which route table a subnet is associated with<a name="SubnetRouteTables"></a>
 
 You can determine which route table a subnet is associated with by looking at the subnet details in the Amazon VPC console\.
 
@@ -30,15 +30,15 @@ You can determine which route table a subnet is associated with by looking at th
 
 1. In the navigation pane, choose **Subnets**\.
 
-1. Choose the **Route Table** tab to view the route table ID and its routes\. If it's the main route table, the console doesn't indicate whether the association is implicit or explicit\. To determine if the association to the main route table is explicit, see [Determining Which Subnets and or Gateways Are Explicitly Associated with a Table](#Route_Which_Associations)\.
+1. Choose the **Route Table** tab to view the route table ID and its routes\. If it's the main route table, the console doesn't indicate whether the association is implicit or explicit\. To determine if the association to the main route table is explicit, see [Determining which subnets and or gateways are explicitly associated with a table](#Route_Which_Associations)\.
 
-## Determining Which Subnets and or Gateways Are Explicitly Associated with a Table<a name="Route_Which_Associations"></a>
+## Determining which subnets and or gateways are explicitly associated with a table<a name="Route_Which_Associations"></a>
 
 You can determine how many and which subnets or gateways are explicitly associated with a route table\. 
 
 The main route table can have explicit and implicit subnet associations\. Custom route tables have only explicit associations\.
 
-Subnets that aren't explicitly associated with any route table have an implicit association with the main route table\. You can explicitly associate a subnet with the main route table\. For an example of why you might do that, see [Replacing the Main Route Table](#Route_Replacing_Main_Table)\.
+Subnets that aren't explicitly associated with any route table have an implicit association with the main route table\. You can explicitly associate a subnet with the main route table\. For an example of why you might do that, see [Replacing the main route table](#Route_Replacing_Main_Table)\.
 
 **To determine which subnets are explicitly associated using the console**
 
@@ -68,7 +68,7 @@ Subnets that aren't explicitly associated with any route table have an implicit 
 + [describe\-route\-tables](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-route-tables.html) \(AWS CLI\)
 + [Get\-EC2RouteTable](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2RouteTable.html) \(AWS Tools for Windows PowerShell\)
 
-## Creating a Custom Route Table<a name="CustomRouteTable"></a>
+## Creating a custom route table<a name="CustomRouteTable"></a>
 
 You can create a custom route table for your VPC using the Amazon VPC console\.
 
@@ -86,7 +86,7 @@ You can create a custom route table for your VPC using the Amazon VPC console\.
 + [create\-route\-table](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-route-table.html) \(AWS CLI\)
 + [New\-EC2RouteTable](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2RouteTable.html) \(AWS Tools for Windows PowerShell\)
 
-## Adding and Removing Routes from a Route Table<a name="AddRemoveRoutes"></a>
+## Adding and removing routes from a route table<a name="AddRemoveRoutes"></a>
 
 You can add, delete, and modify routes in your route tables\. You can only modify routes that you've added\.
 
@@ -133,11 +133,11 @@ If you add a route using a command line tool or the API, the destination CIDR bl
 + [delete\-route](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-route.html) \(AWS CLI\)
 + [Remove\-EC2Route](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2Route.html) \(AWS Tools for Windows PowerShell\)
 
-## Enabling and Disabling Route Propagation<a name="EnableDisableRouteProp"></a>
+## Enabling and disabling route propagation<a name="EnableDisableRouteProp"></a>
 
 Route propagation allows a virtual private gateway to automatically propagate routes to the route tables\. This means that you don't need to manually enter VPN routes to your route tables\. You can enable or disable route propagation\.
 
-For more information about VPN routing options, see [Site\-to\-Site VPN Routing Options](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html) in the *Site\-to\-Site VPN User Guide*\.
+For more information about VPN routing options, see [Site\-to\-Site VPN routing options](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html) in the *Site\-to\-Site VPN User Guide*\.
 
 **To enable route propagation using the console**
 
@@ -167,7 +167,7 @@ For more information about VPN routing options, see [Site\-to\-Site VPN Routing 
 + [disable\-vgw\-route\-propagation](https://docs.aws.amazon.com/cli/latest/reference/ec2/disable-vgw-route-propagation.html) \(AWS CLI\)
 + [Disable\-EC2VgwRoutePropagation](https://docs.aws.amazon.com/powershell/latest/reference/items/Disable-EC2VgwRoutePropagation.html) \(AWS Tools for Windows PowerShell\)
 
-## Associating a Subnet with a Route Table<a name="AssociateSubnet"></a>
+## Associating a subnet with a route table<a name="AssociateSubnet"></a>
 
 To apply route table routes to a particular subnet, you must associate the route table with the subnet\. A route table can be associated with multiple subnets\. However, a subnet can only be associated with one route table at a time\. Any subnet not explicitly associated with a table is implicitly associated with the main route table by default\.
 
@@ -185,7 +185,7 @@ To apply route table routes to a particular subnet, you must associate the route
 + [associate\-route\-table](https://docs.aws.amazon.com/cli/latest/reference/ec2/associate-route-table.html) \(AWS CLI\)
 + [Register\-EC2RouteTable](https://docs.aws.amazon.com/powershell/latest/reference/items/Register-EC2RouteTable.html) \(AWS Tools for Windows PowerShell\)
 
-## Changing a Subnet Route Table<a name="ChangeRouteTable"></a>
+## Changing a subnet route table<a name="ChangeRouteTable"></a>
 
 You can change which route table a subnet is associated with\. 
 
@@ -203,7 +203,7 @@ You can change which route table a subnet is associated with\.
 + [replace\-route\-table\-association](https://docs.aws.amazon.com/cli/latest/reference/ec2/replace-route-table-association.html) \(AWS CLI\)
 + [Set\-EC2RouteTableAssociation](https://docs.aws.amazon.com/powershell/latest/reference/items/Set-EC2RouteTableAssociation.html) \(AWS Tools for Windows PowerShell\)
 
-## Disassociating a Subnet from a Route Table<a name="DisassociateSubnetRouteTable"></a>
+## Disassociating a subnet from a route table<a name="DisassociateSubnetRouteTable"></a>
 
 You can disassociate a subnet from a route table\. Until you associate the subnet with another route table, it's implicitly associated with the main route table\.
 
@@ -221,7 +221,7 @@ You can disassociate a subnet from a route table\. Until you associate the subne
 + [disassociate\-route\-table](https://docs.aws.amazon.com/cli/latest/reference/ec2/disassociate-route-table.html) \(AWS CLI\)
 + [Unregister\-EC2RouteTable](https://docs.aws.amazon.com/powershell/latest/reference/items/Unregister-EC2RouteTable.html) \(AWS Tools for Windows PowerShell\)
 
-## Replacing the Main Route Table<a name="Route_Replacing_Main_Table"></a>
+## Replacing the main route table<a name="Route_Replacing_Main_Table"></a>
 
 You can change which route table is the main route table in your VPC\. 
 
@@ -251,9 +251,9 @@ The following procedure describes how to remove an explicit association between 
 
 1. Clear the check box for the subnet, and then choose **Save**\.
 
-## Associating a Gateway with a Route Table<a name="associate-route-table-gateway"></a>
+## Associating a gateway with a route table<a name="associate-route-table-gateway"></a>
 
-You can associate an internet gateway or a virtual private gateway with a route table\. For more information, see [Gateway Route Tables](VPC_Route_Tables.md#gateway-route-table)\.
+You can associate an internet gateway or a virtual private gateway with a route table\. For more information, see [Gateway route tables](VPC_Route_Tables.md#gateway-route-table)\.
 
 **To associate a gateway with a route table using the console**
 
@@ -274,7 +274,7 @@ Use the [associate\-route\-table](https://docs.aws.amazon.com/cli/latest/referen
 aws ec2 associate-route-table --route-table-id rtb-01234567890123456 --gateway-id igw-11aa22bb33cc44dd1
 ```
 
-## Disassociating a Gateway from a Route Table<a name="disassociate-route-table-gateway"></a>
+## Disassociating a gateway from a route table<a name="disassociate-route-table-gateway"></a>
 
 You can disassociate an internet gateway or a virtual private gateway from a route table\.
 
@@ -294,7 +294,7 @@ You can disassociate an internet gateway or a virtual private gateway from a rou
 + [disassociate\-route\-table](https://docs.aws.amazon.com/cli/latest/reference/ec2/disassociate-route-table.html) \(AWS CLI\)
 + [Unregister\-EC2RouteTable](https://docs.aws.amazon.com/powershell/latest/reference/items/Unregister-EC2RouteTable.html) \(AWS Tools for Windows PowerShell\)
 
-## Replacing and Restoring the Target for a Local Route<a name="replace-local-route-target"></a>
+## Replacing and restoring the target for a local route<a name="replace-local-route-target"></a>
 
 You can change the target of the default local route in a [gateway route table](VPC_Route_Tables.md#gateway-route-table) and specify a network interface or instance in the same VPC as the target instead\. If you replace the target of a local route, you can later restore it to the default `local` target\. If your VPC has [multiple CIDR blocks](VPC_Subnets.md#vpc-resize), your route tables have multiple local routes—one per CIDR block\. You can replace or restore the target of each of the local routes as needed\.
 
@@ -340,7 +340,7 @@ The following example restores the local target for route table `rtb-01234567890
 aws ec2 replace-route --route-table-id rtb-01234567890123456 --destination-cidr-block 10.0.0.0/16 --local-target
 ```
 
-## Deleting a Route Table<a name="DeleteRouteTable"></a>
+## Deleting a route table<a name="DeleteRouteTable"></a>
 
 You can delete a route table only if there are no subnets associated with it\. You can't delete the main route table\.
 

@@ -1,19 +1,19 @@
-# Example: Create an IPv6 VPC and Subnets Using the AWS CLI<a name="vpc-subnets-commands-example-ipv6"></a>
+# Example: Create an IPv6 VPC and subnets using the AWS CLI<a name="vpc-subnets-commands-example-ipv6"></a>
 
-The following example uses AWS CLI commands to create a nondefault VPC with an IPv6 CIDR block, a public subnet, and a private subnet with outbound Internet access only\. After you've created the VPC and subnets, you can launch an instance in the public subnet and connect to it\. You can launch an instance in your private subnet and verify that it can connect to the Internet\. To begin, you must first install and configure the AWS CLI\. For more information, see [Getting Set Up with the AWS Command Line Interface](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html)\.
+The following example uses AWS CLI commands to create a nondefault VPC with an IPv6 CIDR block, a public subnet, and a private subnet with outbound Internet access only\. After you've created the VPC and subnets, you can launch an instance in the public subnet and connect to it\. You can launch an instance in your private subnet and verify that it can connect to the Internet\. To begin, you must first install and configure the AWS CLI\. For more information, see [Installing the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html)\.
 
 **Topics**
-+ [Step 1: Create a VPC and Subnets](#vpc-subnets-commands-example-create-ipv6-vpc)
-+ [Step 2: Configure a Public Subnet](#vpc-subnets-commands-example-public-subnet-ipv6)
-+ [Step 3: Configure an Egress\-Only Private Subnet](#vpc-subnets-commands-example-private-subnet-ipv6)
-+ [Step 4: Modify the IPv6 Addressing Behavior of the Subnets](#vpc-subnets-commands-example-subnet-addressing)
-+ [Step 5: Launch an Instance into Your Public Subnet](#vpc-subnets-commands-example-launch-instance-ipv6)
-+ [Step 6: Launch an Instance into Your Private Subnet](#vpc-subnets-commands-example-launch-instance-ipv6-private)
-+ [Step 7: Clean Up](#vpc-subnets-commands-example-clean-up-ipv6)
++ [Step 1: Create a VPC and subnets](#vpc-subnets-commands-example-create-ipv6-vpc)
++ [Step 2: Configure a public subnet](#vpc-subnets-commands-example-public-subnet-ipv6)
++ [Step 3: Configure an egress\-only private subnet](#vpc-subnets-commands-example-private-subnet-ipv6)
++ [Step 4: Modify the IPv6 addressing behavior of the subnets](#vpc-subnets-commands-example-subnet-addressing)
++ [Step 5: Launch an instance into your public subnet](#vpc-subnets-commands-example-launch-instance-ipv6)
++ [Step 6: Launch an instance into your private subnet](#vpc-subnets-commands-example-launch-instance-ipv6-private)
++ [Step 7: Clean up](#vpc-subnets-commands-example-clean-up-ipv6)
 
-## Step 1: Create a VPC and Subnets<a name="vpc-subnets-commands-example-create-ipv6-vpc"></a>
+## Step 1: Create a VPC and subnets<a name="vpc-subnets-commands-example-create-ipv6-vpc"></a>
 
-The first step is to create a VPC and two subnets\. This example uses the IPv4 CIDR block `10.0.0.0/16` for the VPC, but you can choose a different CIDR block\. For more information, see [VPC and Subnet Sizing](VPC_Subnets.md#VPC_Sizing)\.
+The first step is to create a VPC and two subnets\. This example uses the IPv4 CIDR block `10.0.0.0/16` for the VPC, but you can choose a different CIDR block\. For more information, see [VPC and subnet sizing](VPC_Subnets.md#VPC_Sizing)\.
 
 **To create a VPC and subnets using the AWS CLI**
 
@@ -69,7 +69,7 @@ The first step is to create a VPC and two subnets\. This example uses the IPv4 C
    aws ec2 create-subnet --vpc-id vpc-2f09a348 --cidr-block 10.0.1.0/24 --ipv6-cidr-block 2001:db8:1234:1a01::/64
    ```
 
-## Step 2: Configure a Public Subnet<a name="vpc-subnets-commands-example-public-subnet-ipv6"></a>
+## Step 2: Configure a public subnet<a name="vpc-subnets-commands-example-public-subnet-ipv6"></a>
 
 After you've created the VPC and subnets, you can make one of the subnets a public subnet by attaching an Internet gateway to your VPC, creating a custom route table, and configuring routing for the subnet to the Internet gateway\. In this example, a route table is created that routes all IPv4 traffic and IPv6 traffic to an Internet gateway\. 
 
@@ -196,7 +196,7 @@ If you intend to use your public subnet for IPv4 traffic too, you need to add an
    aws ec2 associate-route-table  --subnet-id subnet-b46032ec --route-table-id rtb-c1c8faa6
    ```
 
-## Step 3: Configure an Egress\-Only Private Subnet<a name="vpc-subnets-commands-example-private-subnet-ipv6"></a>
+## Step 3: Configure an egress\-only private subnet<a name="vpc-subnets-commands-example-private-subnet-ipv6"></a>
 
 You can configure the second subnet in your VPC to be an IPv6 egress\-only private subnet\. Instances that are launched in this subnet are able to access the Internet over IPv6 \(for example, to get software updates\) through an egress\-only Internet gateway, but hosts on the Internet cannot reach your instances\. 
 
@@ -240,7 +240,7 @@ You can configure the second subnet in your VPC to be an IPv6 egress\-only priva
    aws ec2 associate-route-table --subnet-id subnet-a46032fc --route-table-id rtb-abc123ab
    ```
 
-## Step 4: Modify the IPv6 Addressing Behavior of the Subnets<a name="vpc-subnets-commands-example-subnet-addressing"></a>
+## Step 4: Modify the IPv6 addressing behavior of the subnets<a name="vpc-subnets-commands-example-subnet-addressing"></a>
 
 You can modify the IP addressing behavior of your subnets so that instances launched into the subnets automatically receive IPv6 addresses\. When you launch an instance into the subnet, a single IPv6 address is assigned from the range of the subnet to the primary network interface \(eth0\) of the instance\.
 
@@ -252,9 +252,9 @@ aws ec2 modify-subnet-attribute --subnet-id subnet-b46032ec --assign-ipv6-addres
 aws ec2 modify-subnet-attribute --subnet-id subnet-a46032fc --assign-ipv6-address-on-creation
 ```
 
-## Step 5: Launch an Instance into Your Public Subnet<a name="vpc-subnets-commands-example-launch-instance-ipv6"></a>
+## Step 5: Launch an instance into your public subnet<a name="vpc-subnets-commands-example-launch-instance-ipv6"></a>
 
-To test that your public subnet is public and that instances in the subnet are accessible from the Internet, launch an instance into your public subnet and connect to it\. First, you must create a security group to associate with your instance, and a key pair with which you'll connect to your instance\. For more information about security groups, see [Security Groups for Your VPC](VPC_SecurityGroups.md)\. For more information about key pairs, see [Amazon EC2 Key Pairs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+To test that your public subnet is public and that instances in the subnet are accessible from the Internet, launch an instance into your public subnet and connect to it\. First, you must create a security group to associate with your instance, and a key pair with which you'll connect to your instance\. For more information about security groups, see [Security groups for your VPC](VPC_SecurityGroups.md)\. For more information about key pairs, see [Amazon EC2 key pairs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **To launch and connect to an instance in your public subnet**
 
@@ -333,9 +333,9 @@ In this example, the AMI is an Amazon Linux AMI in the US East \(N\. Virginia\) 
    ssh -i "MyKeyPair.pem" ec2-user@2001:db8:1234:1a00::123
    ```
 
-   If you're connecting from a Windows computer, use the following instructions: [Connecting to Your Linux Instance from Windows Using PuTTY](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html)\.
+   If you're connecting from a Windows computer, use the following instructions: [Connecting to your Linux instance from Windows using PuTTY](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html)\.
 
-## Step 6: Launch an Instance into Your Private Subnet<a name="vpc-subnets-commands-example-launch-instance-ipv6-private"></a>
+## Step 6: Launch an instance into your private subnet<a name="vpc-subnets-commands-example-launch-instance-ipv6-private"></a>
 
 To test that instances in your egress\-only private subnet can access the Internet, launch an instance in your private subnet and connect to it using a bastion instance in your public subnet \(you can use the instance you launched in the previous section\)\. First, you must create a security group for the instance\. The security group must have a rule that allows your bastion instance to connect using SSH, and a rule that allows the `ping6` command \(ICMPv6 traffic\) to verify that the instance is not accessible from the Internet\.
 
@@ -415,7 +415,7 @@ To test that instances in your egress\-only private subnet can access the Intern
    ping6 2001:db8:1234:1a01::456
    ```
 
-## Step 7: Clean Up<a name="vpc-subnets-commands-example-clean-up-ipv6"></a>
+## Step 7: Clean up<a name="vpc-subnets-commands-example-clean-up-ipv6"></a>
 
 After you've verified that you can connect to your instance in the public subnet and that your instance in the private subnet can access the Internet, you can terminate the instances if you no longer need them\. To do this, use the [terminate\-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/terminate-instances.html) command\. To delete the other resources you've created in this example, use the following commands in their listed order:
 

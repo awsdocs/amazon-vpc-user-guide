@@ -1,4 +1,4 @@
-# Deleting a VPC Endpoint<a name="delete-vpc-endpoint"></a>
+# Deleting a VPC endpoint<a name="delete-vpc-endpoint"></a>
 
 If you no longer require an endpoint, you can delete it\. Deleting a gateway endpoint also deletes the endpoint routes in the route tables that were used by the endpoint, but doesn't affect any security groups associated with the VPC in which the endpoint resides\. Deleting an interface endpoint also deletes the endpoint network interfaces\.
 

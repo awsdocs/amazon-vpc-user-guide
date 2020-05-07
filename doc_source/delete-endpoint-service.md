@@ -1,8 +1,8 @@
-# Deleting an Endpoint Service Configuration<a name="delete-endpoint-service"></a>
+# Deleting an endpoint service configuration<a name="delete-endpoint-service"></a>
 
 You can delete an endpoint service configuration\. Deleting the configuration does not delete the application hosted in your VPC or the associated load balancers\. 
 
-Before you delete the endpoint service configuration, you must reject any `available` or `pending-acceptance` VPC endpoints that are attached to the service\. For more information, see [Accepting and Rejecting Interface Endpoint Connection Requests](accept-reject-endpoint-requests.md)\.
+Before you delete the endpoint service configuration, you must reject any `available` or `pending-acceptance` VPC endpoints that are attached to the service\. For more information, see [Accepting and rejecting interface endpoint connection requests](accept-reject-endpoint-requests.md)\.
 
 ------
 #### [ Console ]

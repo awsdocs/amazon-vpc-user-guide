@@ -3,12 +3,12 @@
 The following are possible issues you might have when working with flow logs\.
 
 **Topics**
-+ [Incomplete Flow Log Records](#flow-logs-troubleshooting-incomplete-records)
-+ [Flow Log Is Active, But No Flow Log Records or Log Group](#flow-logs-troubleshooting-no-log-group)
++ [Incomplete flow log records](#flow-logs-troubleshooting-incomplete-records)
++ [Flow log is active, but no flow log records or log group](#flow-logs-troubleshooting-no-log-group)
 + [Error: LogDestinationNotFoundException](#flow-logs-troubleshooting-not-found)
-+ [Exceeding the Amazon S3 Bucket Policy Limit](#flow-logs-troubleshooting-policy-limit)
++ [Exceeding the Amazon S3 bucket policy limit](#flow-logs-troubleshooting-policy-limit)
 
-## Incomplete Flow Log Records<a name="flow-logs-troubleshooting-incomplete-records"></a>
+## Incomplete flow log records<a name="flow-logs-troubleshooting-incomplete-records"></a>
 
 **Problem**  
 Your flow log records are incomplete, or are no longer being published\.
@@ -17,17 +17,17 @@ Your flow log records are incomplete, or are no longer being published\.
 There may be a problem delivering the flow logs to the CloudWatch Logs log group\.
 
 **Solution**  
-In either the Amazon EC2 console or the Amazon VPC console, choose the **Flow Logs** tab for the relevant resource\. For more information, see [Viewing Flow Logs](working-with-flow-logs.md#view-flow-logs)\. The flow logs table displays any errors in the **Status** column\. Alternatively, use the [describe\-flow\-logs](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-flow-logs.html) command, and check the value that's returned in the `DeliverLogsErrorMessage` field\. One of the following errors may be displayed:
+In either the Amazon EC2 console or the Amazon VPC console, choose the **Flow Logs** tab for the relevant resource\. For more information, see [Viewing flow logs](working-with-flow-logs.md#view-flow-logs)\. The flow logs table displays any errors in the **Status** column\. Alternatively, use the [describe\-flow\-logs](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-flow-logs.html) command, and check the value that's returned in the `DeliverLogsErrorMessage` field\. One of the following errors may be displayed:
 + `Rate limited`: This error can occur if CloudWatch Logs throttling has been applied — when the number of flow log records for a network interface is higher than the maximum number of records that can be published within a specific timeframe\. This error can also occur if you've reached the quota for the number of CloudWatch Logs log groups that you can create\. For more information, see [CloudWatch Service Quotas](https://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide/cloudwatch_limits.html) in the *Amazon CloudWatch User Guide*\.
 + `Access error`: This error can occur for one of the following reasons:
   + The IAM role for your flow log does not have sufficient permissions to publish flow log records to the CloudWatch log group
   + The IAM role does not have a trust relationship with the flow logs service
   + The trust relationship does not specify the flow logs service as the principal
 
-  For more information, see [IAM Roles for Publishing Flow Logs to CloudWatch Logs](flow-logs-cwl.md#flow-logs-iam)\.
+  For more information, see [IAM roles for publishing flow logs to CloudWatch Logs](flow-logs-cwl.md#flow-logs-iam)\.
 + `Unknown error`: An internal error has occurred in the flow logs service\. 
 
-## Flow Log Is Active, But No Flow Log Records or Log Group<a name="flow-logs-troubleshooting-no-log-group"></a>
+## Flow log is active, but no flow log records or log group<a name="flow-logs-troubleshooting-no-log-group"></a>
 
 **Problem**  
 You've created a flow log, and the Amazon VPC or Amazon EC2 console displays the flow log as `Active`\. However, you cannot see any log streams in CloudWatch Logs or log files in your Amazon S3 bucket\. 
@@ -51,7 +51,7 @@ You might get this error when creating a flow log that publishes data to an Amaz
 **Solution**  
 Ensure that you have specified the ARN for an existing S3 bucket, and that the ARN is in the correct format\.
 
-## Exceeding the Amazon S3 Bucket Policy Limit<a name="flow-logs-troubleshooting-policy-limit"></a>
+## Exceeding the Amazon S3 bucket policy limit<a name="flow-logs-troubleshooting-policy-limit"></a>
 
 **Problem**  
 You get the following error when you try to create a flow log: `LogDestinationPermissionIssueException`\.

@@ -1,4 +1,4 @@
-# Modifying an Existing Endpoint Service Private DNS Name<a name="modify-vpc-endpoint-service-dns-name"></a>
+# Modifying an existing endpoint service private DNS name<a name="modify-vpc-endpoint-service-dns-name"></a>
 
 You can modify the endpoint service private DNS name for a new or existing endpoint service\.
 
@@ -14,7 +14,7 @@ You can modify the endpoint service private DNS name for a new or existing endpo
 
 1. Choose **Modify**\.
 
-After you update the name, update the entry for the domain on your DNS server\. We automatically poll the DNS server to verify that the record exists on the server\. DNS record updates can take up to 48 hours to take effect, but they often take effect much sooner\. For more information, see [Amazon VPC Private DNS Name Domain Verification TXT Records](dns-txt-records.md) and [VPC Endpoint Service Private DNS Name Verification](endpoint-services-dns-validation.md)\.
+After you update the name, update the entry for the domain on your DNS server\. We automatically poll the DNS server to verify that the record exists on the server\. DNS record updates can take up to 48 hours to take effect, but they often take effect much sooner\. For more information, see [Amazon VPC private DNS name domain verification TXT records](dns-txt-records.md) and [VPC endpoint service private DNS name verification](endpoint-services-dns-validation.md)\.
 
 **To modify the endpoint service private DNS name using the AWS CLI or API**
 + [modify\-vpc\-endpoint\-service\-configuration](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-vpc-endpoint-service-configuration.html)

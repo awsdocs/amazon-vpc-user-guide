@@ -1,4 +1,4 @@
-# Adding or Removing VPC Endpoint Service Tags<a name="modify-tags-vpc-endpoint-service-tags"></a>
+# Adding or removing VPC endpoint service tags<a name="modify-tags-vpc-endpoint-service-tags"></a>
 
 Tags provide a way to identify the VPC endpoint service\. You can add or remove a tag\.
 
