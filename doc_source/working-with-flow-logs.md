@@ -9,6 +9,7 @@ You can work with flow logs using the Amazon EC2, Amazon VPC, CloudWatch, and Am
 + [Adding or removing tags for flow logs](#modify-tags-flow-logs)
 + [Viewing flow log records](#view-flow-log-records)
 + [Deleting a flow log](#delete-flow-log)
++ [Searching flow log records](#search-flow-log-records)
 + [API and CLI overview](#flow-logs-api-cli)
 
 ## Controlling the use of flow logs<a name="controlling-use-of-flow-logs"></a>
@@ -140,6 +141,29 @@ These procedures disable the flow log service for a resource\. Deleting a flow l
 1. Choose **Flow Logs**, and then choose the delete button \(a cross\) for the flow log to delete\.
 
 1. In the confirmation dialog box, choose **Yes, Delete**\.
+
+## Searching flow log records<a name="search-flow-log-records"></a>
+
+You can search your flow log records using the CloudWatch Logs console\.
+
+1. Open the CloudWatch console at [https://console\.aws\.amazon\.com/cloudwatch/](https://console.aws.amazon.com/cloudwatch/)\.
+
+1. In the navigation pane, choose **Logs**, and select the log group that contains your flow log\. A list of log streams for each network interface is displayed\.
+
+1. You can select the individual log stream if your know the ENI that you are searching for, or hit the "Search Log Group" button which will search the entire log group\. It may take a long time if there are many ENIs in your Log Group, and depending on what time range you select\.
+
+1. The filter window is the [Standard Cloudwatch Log filter](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html), and the VPC Flow logs are space deliminated logs\.
+
+1. Paste the following string into the search window `[version, accountid, interfaceid, srcaddr, dstaddr, srcport, dstport, protocol, packets, bytes, start, end, action, logstatus]` (This assumes you do not have a custom VPC Flow log config)\.
+
+1. Modify the filter based on what you are searching for, like in the following examples:
+
+```
+[version, accountid, interfaceid, srcaddr = 10.0.0.1, dstaddr, srcport, dstport, protocol, packets, bytes, start, end, action, logstatus]
+[version, accountid, interfaceid, srcaddr = 10.0.2.*, dstaddr, srcport, dstport, protocol, packets, bytes, start, end, action, logstatus]
+[version, accountid, interfaceid, srcaddr, dstaddr, srcport, dstport = 80 || dstport = 8080, protocol, packets, bytes, start, end, action, logstatus]
+[version, accountid, interfaceid, srcaddr, dstaddr, srcport, dstport = 80 || dstport = 8080, protocol, packets, bytes >= 400, start, end, action = REJECT, logstatus]
+```
 
 ## API and CLI overview<a name="flow-logs-api-cli"></a>
 
