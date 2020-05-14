@@ -144,19 +144,21 @@ These procedures disable the flow log service for a resource\. Deleting a flow l
 
 ## Searching flow log records<a name="search-flow-log-records"></a>
 
-You can search your flow log records using the CloudWatch Logs console\.
+You can search your flow log records that are published to CloudWatch Logs using the CloudWatch Logs console\.
+
+**To search flow log records**
 
 1. Open the CloudWatch console at [https://console\.aws\.amazon\.com/cloudwatch/](https://console.aws.amazon.com/cloudwatch/)\.
 
-1. In the navigation pane, choose **Logs**, and select the log group that contains your flow log\. A list of log streams for each network interface is displayed\.
+1. In the navigation pane, choose **Log groups**, and select the log group that contains your flow log\. A list of log streams for each network interface is displayed\.
 
-1. You can select the individual log stream if your know the ENI that you are searching for, or hit the "Search Log Group" button which will search the entire log group\. It may take a long time if there are many ENIs in your Log Group, and depending on what time range you select\.
+1. You can select the individual log stream if you know the network interface that you are searching for, or choose **Search Log Group** to search the entire log group\. It may take a long time if there are many network interfaces in your log group, and depending on what time range you select\.
 
-1. The filter window is the [Standard Cloudwatch Log filter](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html), and the VPC Flow logs are space deliminated logs\.
+1. You can use the [standard Cloudwatch Log filter](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html) to filter the flow logs. The flow logs are space delimited logs\.
 
-1. Paste the following string into the search window `[version, accountid, interfaceid, srcaddr, dstaddr, srcport, dstport, protocol, packets, bytes, start, end, action, logstatus]` (This assumes you do not have a custom VPC Flow log config)\.
+1. For **Filter events**, paste the following string: `[version, accountid, interfaceid, srcaddr, dstaddr, srcport, dstport, protocol, packets, bytes, start, end, action, logstatus]` (This assumes you do not have a custom flow log format)\.
 
-1. Modify the filter based on what you are searching for, like in the following examples:
+1. Modify the filter based on what you are searching for. The following are example filters:
 
 ```
 [version, accountid, interfaceid, srcaddr = 10.0.0.1, dstaddr, srcport, dstport, protocol, packets, bytes, start, end, action, logstatus]
