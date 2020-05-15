@@ -73,7 +73,7 @@ You can use the `ec2:VpceServicePrivateDnsName` condition key to control what VP
 ```
 
 **Control the service names that can be specified for VPC endpoint services**  
-You can use the `ec2:VpceServiceName` condition key to control what VPC endpoint can be created based on the VPC endpoint service name\. In the following example, you can only create or VPC endpoint when the when the service name is `com.amazonaws.us-east-1.s3`\. To use this example, substitute the account ID, the service name, and the Region \(unless you are in the `us-east-1` Region\)\.
+You can use the `ec2:VpceServiceName` condition key to control what VPC endpoint can be created based on the VPC endpoint service name\. In the following example, you can only create or VPC endpoint when the service name is `com.amazonaws.us-east-1.s3`\. To use this example, substitute the account ID, the service name, and the Region \(unless you are in the `us-east-1` Region\)\.
 
 ```
 {
