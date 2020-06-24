@@ -26,7 +26,7 @@ We do not provide DNS hostnames for IPv6 addresses\.
 
 ## DNS support in your VPC<a name="vpc-dns-support"></a>
 
-Your VPC has attributes that determine whether instances launched in the VPC receive public DNS hostnames that correspond to their public IP addresses, and whether DNS resolution through the Amazon DNS server is supported for the VPC\. 
+Your VPC has attributes that determine whether instances launched in the VPC receive public DNS hostnames that correspond to their public IP addresses, and whether DNS resolution through the Route 53 Resolver is supported for the VPC\. 
 
 
 ****  
@@ -34,32 +34,32 @@ Your VPC has attributes that determine whether instances launched in the VPC rec
 | Attribute | Description | 
 | --- | --- | 
 | enableDnsHostnames |  Indicates whether instances with public IP addresses get corresponding public DNS hostnames\. If this attribute is `true`, instances in the VPC get public DNS hostnames, but only if the `enableDnsSupport` attribute is also set to `true`\.  | 
-| enableDnsSupport |  Indicates whether the DNS resolution is supported\. If this attribute is `false`, the Amazon\-provided DNS server that resolves public DNS hostnames to IP addresses is not enabled\. If this attribute is `true`, queries to the Amazon provided DNS server at the 169\.254\.169\.253 IP address, or the reserved IP address at the base of the VPC IPv4 network range plus two will succeed\. For more information, see [Amazon DNS server](VPC_DHCP_Options.md#AmazonDNS)\.  | 
+| enableDnsSupport |  Indicates whether the DNS resolution is supported\. If this attribute is `false`, the Route 53 Resolver that resolves public DNS hostnames to IP addresses is not enabled\. If this attribute is `true`, queries to the Amazon provided DNS server at the 169\.254\.169\.253 IP address, or the reserved IP address at the base of the VPC IPv4 network range plus two will succeed\. For more information, see [Amazon DNS server](VPC_DHCP_Options.md#AmazonDNS)\.  | 
 
 If both attributes are set to `true`, the following occurs:
 + Instances with a public IP address receive corresponding public DNS hostnames\.
-+ The Amazon\-provided DNS server can resolve Amazon\-provided private DNS hostnames\.
++ The Route 53 Resolver can resolve Amazon\-provided private DNS hostnames\.
 
 If either or both of the attributes is set to `false`, the following occurs:
 + Instances with a public IP address do not receive corresponding public DNS hostnames\.
-+ The Amazon\-provided DNS server cannot resolve Amazon\-provided private DNS hostnames\.
-+ Instances receive custom private DNS hostnames if there is a custom domain name in the [DHCP options set](VPC_DHCP_Options.md)\. If you are not using the Amazon\-provided DNS server, your custom domain name servers must resolve the hostname as appropriate\.
++ The Route 53 Resolver cannot resolve Amazon\-provided private DNS hostnames\.
++ Instances receive custom private DNS hostnames if there is a custom domain name in the [DHCP options set](VPC_DHCP_Options.md)\. If you are not using the Route 53 Resolver, your custom domain name servers must resolve the hostname as appropriate\.
 
 By default, both attributes are set to `true` in a default VPC or a VPC created by the VPC wizard\. By default, only the `enableDnsSupport` attribute is set to `true` in a VPC created any other way\. To check if your VPC is enabled for these attributes, see [Viewing and updating DNS support for your VPC](#vpc-dns-updating)\.
 
 **Important**  
 If you use custom DNS domain names defined in a private hosted zone in Amazon Route 53, or use private DNS with interface VPC endpoints \(AWS PrivateLink\), you must set the `enableDnsHostnames` and `enableDnsSupport` attributes to `true`\.
 
-The Amazon DNS server can resolve private DNS hostnames to private IPv4 addresses for all address spaces, including where the IPv4 address range of your VPC falls outside of the private IPv4 addresses ranges specified by [RFC 1918](https://tools.ietf.org/html/rfc1918)\.
+The Route 53 Resolver can resolve private DNS hostnames to private IPv4 addresses for all address spaces, including where the IPv4 address range of your VPC falls outside of the private IPv4 addresses ranges specified by [RFC 1918](https://tools.ietf.org/html/rfc1918)\.
 
 **Important**  
-If you created your VPC before October 2016, the Amazon DNS server does not resolve private DNS hostnames if your VPC's IPv4 address range falls outside of the private IPv4 addresses ranges specified by RFC 1918\. If you want to enable the Amazon DNS server to resolve private DNS hostnames for these addresses, contact [AWS Support](https://aws.amazon.com/contact-us/)\.
+If you created your VPC before October 2016, the Route 53 Resolver does not resolve private DNS hostnames if your VPC's IPv4 address range falls outside of the private IPv4 addresses ranges specified by RFC 1918\. If you want to enable the Route 53 Resolver to resolve private DNS hostnames for these addresses, contact [AWS Support](https://aws.amazon.com/contact-us/)\.
 
 If you enable DNS hostnames and DNS support in a VPC that didn't previously support them, an instance that you already launched into that VPC gets a public DNS hostname if it has a public IPv4 address or an Elastic IP address\.
 
 ## DNS quotas<a name="vpc-dns-limits"></a>
 
-Each EC2 instance limits the number of packets that can be sent to the Amazon\-provided DNS server to a maximum of 1024 packets per second per network interface\. This quota cannot be increased\. The number of DNS queries per second supported by the Amazon\-provided DNS server varies by the type of query, the size of response, and the protocol in use\. For more information and recommendations for a scalable DNS architecture, see the [Hybrid Cloud DNS Solutions for Amazon VPC](https://d1.awsstatic.com/whitepapers/hybrid-cloud-dns-options-for-vpc.pdf) whitepaper\.
+Each EC2 instance limits the number of packets that can be sent to the Route 53 Resolver to a maximum of 1024 packets per second per network interface\. This quota cannot be increased\. The number of DNS queries per second supported by the Route 53 Resolver varies by the type of query, the size of response, and the protocol in use\. For more information and recommendations for a scalable DNS architecture, see the [Hybrid Cloud DNS Solutions for Amazon VPC](https://d1.awsstatic.com/whitepapers/hybrid-cloud-dns-options-for-vpc.pdf) whitepaper\.
 
 ## Viewing DNS hostnames for your EC2 instance<a name="vpc-dns-viewing"></a>
 
