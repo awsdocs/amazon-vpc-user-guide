@@ -4,6 +4,7 @@ The following table describes the important changes in each release of the *Amaz
 
 | Change | Description | Date | 
 | --- |--- |--- |
+| [Managed prefix lists](https://docs.aws.amazon.com/vpc/latest/userguide/managed-prefix-lists.html) | You can create and manage a set of CIDR blocks in prefix list\. | June 29, 2020 | 
 | [Flow logs enhancements](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) | New flow log fields are available, and you can specify a custom format for flow logs that publish to CloudWatch Logs\. | May 4, 2020 | 
 | [Tagging support for flow logs](https://docs.aws.amazon.com/vpc/latest/userguide/working-with-flow-logs.html#modify-tags-flow-logs) | You can add tags to your flow logs\. | March 16, 2020 | 
 | [Tag on NAT gateway creation](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html#nat-gateway-creating) | You can add a tag when you create a NAT gateway\. | March 9, 2020 | 

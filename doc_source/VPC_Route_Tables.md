@@ -19,9 +19,9 @@ The following are the key concepts for route tables\.
 + **Subnet route table**—A route table that's associated with a subnet\.
 + **Gateway route table**—A route table that's associated with an internet gateway or virtual private gateway\.
 + **Local gateway route table**—A route table that's associated with an Outposts local gateway\. For information about local gateways, see [Local Gateways](https://docs.aws.amazon.com/outposts/latest/userguide/outposts-local-gateways.html) in the *AWS Outposts User Guide*\.
-+ **Destination**—The destination CIDR where you want traffic to go\. For example, an external corporate network with a `172.16.0.0/12` CIDR\.
++ **Destination**—The range of IP addresses where you want traffic to go \(destination CIDR\)\. For example, an external corporate network with a `172.16.0.0/12` CIDR\.
 + **Propagation**—Route propagation allows a virtual private gateway to automatically propagate routes to the route tables\. This means that you don't need to manually enter VPN routes to your route tables\. For more information about VPN routing options, see [Site\-to\-Site VPN routing options](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html) in the *Site\-to\-Site VPN User Guide*\.
-+ **Target**—The target through which to send the destination traffic; for example, an internet gateway\.
++ **Target**—The gateway, network interface, or connection through which to send the destination traffic; for example, an internet gateway\.
 + **Local route**—A default route for communication within the VPC\.
 
 For example routing options, see [Example routing options](route-table-options.md)\.
@@ -76,6 +76,8 @@ In the following example, an IPv6 CIDR block is associated with your VPC\. In yo
 | 0\.0\.0\.0/0 | igw\-12345678901234567 | 
 | ::/0 | eigw\-aabbccddee1122334 | 
 
+If you frequently reference the same set of CIDR blocks across your AWS resources, you can create a [customer\-managed prefix list](managed-prefix-lists.md) to group them together\. You can then specify the prefix list as the destination in your route table entry\. 
+
 ### Main route table<a name="RouteTableDetails"></a>
 
 When you create a VPC, it automatically has a main route table\. The main route table controls the routing for all subnets that are not explicitly associated with any other route table\. On the **Route Tables** page in the Amazon VPC console, you can view the main route table for a VPC by looking for **Yes** in the **Main** column\. 
@@ -96,7 +98,7 @@ You can add, remove, and modify routes in a custom route table\. You can delete 
 
 Each subnet in your VPC must be associated with a route table\. A subnet can be explicitly associated with custom route table, or implicitly or explicitly associated with the main route table\. For more information about viewing your subnet and route table associations, see [Determining which subnets and or gateways are explicitly associated with a table](WorkWithRouteTables.md#Route_Which_Associations)\.
 
-Subnets which are in VPCs associated with Outposts can have an additional target type of a local gateway\. This is the only routing difference from non\-Outposts subnets\.
+Subnets that are in VPCs associated with Outposts can have an additional target type of a local gateway\. This is the only routing difference from non\-Outposts subnets\.
 
 You cannot associate a subnet with a route table if any of the following applies:
 + The route table contains an existing route that's more specific than the default local route\.
@@ -140,8 +142,6 @@ A gateway route table supports routes where the target is `local` \(the default 
 
 If you change the target of the local route in a gateway route table to a network interface in your VPC, you can later restore it to the default `local` target\. For more information, see [Replacing and restoring the target for a local route](WorkWithRouteTables.md#replace-local-route-target)\. 
 
-You cannot add routes to any CIDR blocks outside of the ranges in your VPC, including ranges larger than the individual VPC CIDR blocks\. You cannot specify any other types of targets\.
-
 In the following gateway route table, traffic destined for a subnet with the `172.31.0.0/20` CIDR block is routed to a specific network interface\. Traffic destined for all other subnets in the VPC uses the local route\.
 
 
@@ -157,16 +157,23 @@ In the following gateway route table, the target for the local route is replaced
 | --- | --- | 
 | 172\.31\.0\.0/16 | eni\-id | 
 
+#### Rules and considerations<a name="gateway-route-table-rules"></a>
+
 You cannot associate a route table with a gateway if any of the following applies:
 + The route table contains existing routes with targets other than a network interface or the default local route\.
 + The route table contains existing routes to CIDR blocks outside of the ranges in your VPC\.
 + Route propagation is enabled for the route table\.
 
-You cannot use a gateway route table to control or intercept traffic outside of your VPC, for example, traffic through an attached transit gateway\. You can intercept traffic that enters your VPC and redirect it to another target in the same VPC only\.
+In addition, the following rules and considerations apply:
++ You cannot add routes to any CIDR blocks outside of the ranges in your VPC, including ranges larger than the individual VPC CIDR blocks\. 
++ You can only specify `local` or a network interface as a target\. You cannot specify any other types of targets, including individual host IP addresses\.
++ You cannot specify a prefix list as a destination\.
++ You cannot use a gateway route table to control or intercept traffic outside of your VPC, for example, traffic through an attached transit gateway\. You can intercept traffic that enters your VPC and redirect it to another target in the same VPC only\.
++ To ensure that traffic reaches your middlebox appliance, the target network interface must be attached to a running instance\. For a traffic that flows through an internet gateway, the target network interface must also have a public IP address\.
++ When configuring your middlebox appliance, take note of the[ appliance considerations](route-table-options.md#appliance-considerations)\.
++ When you route traffic through a middlebox appliance, the return traffic from the destination subnet must be routed through the same appliance\. Asymmetric routing is not supported\.
 
-To ensure that traffic reaches your middlebox appliance, the target network interface must be attached to a running instance\. For a traffic that flows through an internet gateway, the target network interface must also have a public IP address\.
-
-For more information and an example of routing for a security appliance, see [Routing for a middlebox appliance in your VPC](route-table-options.md#route-tables-appliance-routing)\.
+For an example of routing for a security appliance, see [Routing for a middlebox appliance in your VPC](route-table-options.md#route-tables-appliance-routing)\.
 
 ## Route priority<a name="route-tables-priority"></a>
 
@@ -203,3 +210,11 @@ The same rule applies if your route table contains a static route to any of the 
 + VPC peering connection
 
 If the destinations for the static and propagated routes are the same, the static route takes priority\.
+
+### Route priority for prefix lists<a name="route-priority-managed-prefix-list"></a>
+
+If your route table references a prefix list, the following rules apply: 
++ If your route table contains a static route that overlaps with another route that references a prefix list, the static route with the destination CIDR block takes priority\.
++ If your route table contains a propagated route that overlaps with a route that references a prefix list, the route that references the prefix list takes priority\.
++ If your route table references multiple prefix lists that have overlapping CIDR blocks to different targets, we randomly choose which route takes priority\. Thereafter, the same route always takes priority\.
++ If the CIDR block in a prefix list entry is not valid for the route table, that CIDR block is ignored\. For example, in a subnet route table, if the prefix list contains an entry with a more specific CIDR than the VPC CIDR, that entry is ignored\.

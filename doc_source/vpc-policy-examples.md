@@ -324,6 +324,7 @@ The policy also grants users permission to launch instances using only AMIs that
 
 You can find additional example IAM policies related to Amazon VPC in the following topics:
 + [ClassicLink](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html#iam-example-classiclink)
++ [Managed prefix lists](managed-prefix-lists.md#managed-prefix-lists-iam)
 + [Traffic mirroring](https://docs.aws.amazon.com/vpc/latest/mirroring/traffic-mirroring-security.html)
 + [Transit gateways](https://docs.aws.amazon.com/vpc/latest/tgw/transit-gateway-authentication-access-control.html#tgw-example-iam-policies)
 + [VPC endpoints and VPC endpoint services](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints-iam.html)

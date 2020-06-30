@@ -9,9 +9,10 @@ A *network access control list \(ACL\)* is an optional layer of security for you
 + [Custom network ACL](#custom-network-acl)
 + [Custom network ACLs and other AWS services](#nacl-other-services)
 + [Ephemeral ports](#nacl-ephemeral-ports)
++ [Path MTU Discovery](#path_mtu_discovery)
 + [Working with network ACLs](#nacl-tasks)
 + [Example: Controlling access to instances in a subnet](#nacl-examples)
-+ [API and command overview](#nacl-api-cli)
++ [Recommended rules for VPC wizard scenarios](#vpc-recommended-nacl-rules)
 
 ## Network ACL basics<a name="nacl-basics"></a>
 
@@ -39,6 +40,8 @@ The following are the parts of a network ACL rule:
 + **Destination**\. \[Outbound rules only\] The destination for the traffic \(CIDR range\)\.
 + **Allow/Deny**\. Whether to *allow* or *deny* the specified traffic\.
 
+If you add a rule using a command line tool or the Amazon EC2 API, the CIDR range is automatically modified to its canonical form\. For example, if you specify `100.68.0.18/18` for the CIDR range, we create a rule with a `100.68.0.0/18` CIDR range\.
+
 ## Default network ACL<a name="default-network-acl"></a>
 
 The default network ACL is configured to allow all traffic to flow in and out of the subnets with which it is associated\. Each network ACL also includes a rule whose rule number is an asterisk\. This rule ensures that if a packet doesn't match any of the other numbered rules, it's denied\. You can't modify or remove this rule\. 
@@ -46,13 +49,15 @@ The default network ACL is configured to allow all traffic to flow in and out of
 The following is an example default network ACL for a VPC that supports IPv4 only\.
 
 
-|  | 
+| 
+| 
+| **Inbound ** | 
 | --- |
-| Inbound  | 
 | Rule \# | Type |  Protocol |  Port range  | Source |  Allow/Deny | 
 |  100  | All IPv4 traffic |  All  |  All  | 0\.0\.0\.0/0 |  ALLOW  | 
 |  \*  | All IPv4 traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  | 
-|  Outbound  | 
+|  **Outbound**  | 
+| --- |
 | Rule \# | Type |  Protocol  |  Port range | Destination |  Allow/Deny | 
 |  100  | All IPv4 traffic |  All  |  All  | 0\.0\.0\.0/0 |  ALLOW  | 
 |  \*  | All IPv4 traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  | 
@@ -63,15 +68,17 @@ If you create a VPC with an IPv6 CIDR block or if you associate an IPv6 CIDR blo
 If you've modified your default network ACL's inbound rules, we do not automatically add an *allow* rule for inbound IPv6 traffic when you associate an IPv6 block with your VPC\. Similarly, if you've modified the outbound rules, we do not automatically add an *allow* rule for outbound IPv6 traffic\. 
 
 
-|  | 
+| 
+| 
+| **Inbound ** | 
 | --- |
-| Inbound  | 
 | Rule \# | Type |  Protocol |  Port range  | Source |  Allow/Deny | 
 |  100  | All IPv4 traffic |  All  |  All  | 0\.0\.0\.0/0 |  ALLOW  | 
 |  101  |  All IPv6 traffic  |  All  |  All  |  ::/0  |  ALLOW  | 
 |  \*  | All traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  | 
 |  \*  |  All IPv6 traffic  |  All  |  All  |  ::/0  |  DENY  | 
-|  Outbound  | 
+|  **Outbound**  | 
+| --- |
 | Rule \# | Type |  Protocol  |  Port range | Destination |  Allow/Deny | 
 |  100  | All traffic |  All  |  All  | 0\.0\.0\.0/0 |  ALLOW  | 
 |  101  |  All IPv6 traffic  |  All  |  All  |  ::/0  |  ALLOW  | 
@@ -90,9 +97,10 @@ The network ACL has outbound rules \(100 and 110\) that allow outbound HTTP and 
 Each network ACL includes a default rule whose rule number is an asterisk\. This rule ensures that if a packet doesn't match any of the other rules, it's denied\. You can't modify or remove this rule\.
 
 
-|  | 
+| 
+| 
+|  **Inbound**  | 
 | --- |
-|  Inbound  | 
 |  Rule \#  | Type |  Protocol  |  Port range  | Source  |  Allow/Deny  |  Comments  | 
 |  100  | HTTP |  TCP  |  80  | 0\.0\.0\.0/0 |  ALLOW  |  Allows inbound HTTP traffic from any IPv4 address\.  | 
 |  110  | HTTPS |  TCP  |  443  | 0\.0\.0\.0/0 |  ALLOW  |  Allows inbound HTTPS traffic from any IPv4 address\.  | 
@@ -100,7 +108,8 @@ Each network ACL includes a default rule whose rule number is an asterisk\. This
 |  130  | RDP |  TCP  |  3389  | 192\.0\.2\.0/24 |  ALLOW  |  Allows inbound RDP traffic to the web servers from your home network's public IPv4 address range \(over the internet gateway\)\.   | 
 |  140  | Custom TCP |  TCP  |  32768\-65535  | 0\.0\.0\.0/0 |  ALLOW  |  Allows inbound return IPv4 traffic from the internet \(that is, for requests that originate in the subnet\)\. This range is an example only\. For more information about how to select the appropriate ephemeral port range, see [Ephemeral ports](#nacl-ephemeral-ports)\.  | 
 |  \*  | All traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  |  Denies all inbound IPv4 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
-|  Outbound  | 
+|  **Outbound**  | 
+| --- |
 |  Rule \#  | Type |  Protocol  |  Port range  | Destination |  Allow/Deny  |  Comments  | 
 |  100  | HTTP |  TCP  |  80  | 0\.0\.0\.0/0 |  ALLOW  |  Allows outbound IPv4 HTTP traffic from the subnet to the internet\.  | 
 |  110  | HTTPS |  TCP  |  443  | 0\.0\.0\.0/0 |  ALLOW  |  Allows outbound IPv4 HTTPS traffic from the subnet to the internet\.  | 
@@ -116,9 +125,10 @@ You add *allow* rules depending on your use case\. For example, you can add a ru
 The following table shows the same example of a custom network ACL for a VPC that has an associated IPv6 CIDR block\. This network ACL includes rules for all IPv6 HTTP and HTTPS traffic\. In this case, new rules were inserted between the existing rules for IPv4 traffic\. You can also add the rules as higher number rules after the IPv4 rules\. IPv4 and IPv6 traffic are separate, and therefore none of the rules for the IPv4 traffic apply to the IPv6 traffic\.
 
 
-|  | 
+| 
+| 
+|  **Inbound**  | 
 | --- |
-|  Inbound  | 
 |  Rule \#  | Type |  Protocol  |  Port range  | Source  |  Allow/Deny  |  Comments  | 
 |  100  | HTTP |  TCP  |  80  | 0\.0\.0\.0/0 |  ALLOW  |  Allows inbound HTTP traffic from any IPv4 address\.  | 
 |  105  |  HTTP  |  TCP  |  80  |  ::/0  |  ALLOW  |  Allows inbound HTTP traffic from any IPv6 address\.  | 
@@ -130,7 +140,8 @@ The following table shows the same example of a custom network ACL for a VPC tha
 |  145  | Custom TCP | TCP | 32768\-65535 | ::/0 | ALLOW |  Allows inbound return IPv6 traffic from the internet \(that is, for requests that originate in the subnet\)\. This range is an example only\. For more information about how to select the appropriate ephemeral port range, see [Ephemeral ports](#nacl-ephemeral-ports)\.  | 
 |  \*  | All traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  |  Denies all inbound IPv4 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
 |  \*  |  All traffic  |  All  |  All  |  ::/0  |  DENY  |  Denies all inbound IPv6 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
-|  Outbound  | 
+|  **Outbound**  | 
+| --- |
 |  Rule \#  | Type |  Protocol  |  Port range  | Destination |  Allow/Deny  |  Comments  | 
 |  100  | HTTP |  TCP  |  80  | 0\.0\.0\.0/0 |  ALLOW  |  Allows outbound IPv4 HTTP traffic from the subnet to the internet\.  | 
 |  105  |  HTTP  |  TCP  |  80  |  ::/0  |  ALLOW  |  Allows outbound IPv6 HTTP traffic from the subnet to the internet\.  | 
@@ -141,7 +152,7 @@ The following table shows the same example of a custom network ACL for a VPC tha
 |  \*  | All traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  |  Denies all outbound IPv4 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
 |  \*  |  All traffic  |  All  |  All  |  ::/0  |  DENY  |  Denies all outbound IPv6 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
 
-For more examples, see [Recommended network ACL rules for your VPC](vpc-security-best-practices.md#vpc-recommended-nacl-rules)\.
+For more examples, see [Recommended rules for VPC wizard scenarios](#vpc-recommended-nacl-rules)\.
 
 ## Custom network ACLs and other AWS services<a name="nacl-other-services"></a>
 
@@ -167,6 +178,12 @@ If an instance in your VPC is the client initiating a request, your network ACL 
 
 In practice, to cover the different types of clients that might initiate traffic to public\-facing instances in your VPC, you can open ephemeral ports 1024\-65535\. However, you can also add rules to the ACL to deny traffic on any malicious ports within that range\. Ensure that you place the *deny* rules earlier in the table than the *allow* rules that open the wide range of ephemeral ports\.
 
+## Path MTU Discovery<a name="path_mtu_discovery"></a>
+
+Path MTU Discovery is used to determine the path MTU between two devices\. The path MTU is the maximum packet size that's supported on the path between the originating host and the receiving host\. If a host sends a packet that's larger than the MTU of the receiving host or that's larger than the MTU of a device along the path, the receiving host or device returns the following ICMP message: `Destination Unreachable: Fragmentation Needed and Don't Fragment was Set` \(Type 3, Code 4\)\. This instructs the original host to adjust the MTU until the packet can be transmitted\. 
+
+If the maximum transmission unit \(MTU\) between hosts in your subnets is different, you must add the following network ACL rule, both inbound and outbound\. This ensures that Path MTU Discovery can function correctly and prevent packet loss\. Select **Custom ICMP Rule** for the type and **Destination Unreachable**, **fragmentation required, and DF flag set** for the port range \(type 3, code 4\)\. If you use traceroute, also add the following rule: select **Custom ICMP Rule** for the type and **Time Exceeded**, **TTL expired transit** for the port range \(type 11, code 0\)\. For more information, see [Network maximum transmission unit \(MTU\) for your EC2 instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+
 ## Working with network ACLs<a name="nacl-tasks"></a>
 
 The following tasks show you how to work with network ACLs using the Amazon VPC console\.
@@ -179,6 +196,7 @@ The following tasks show you how to work with network ACLs using the Amazon VPC 
 + [Disassociating a network ACL from a subnet](#DisassociateNetworkACL)
 + [Changing a subnet's network ACL](#ChangeNetworkACL)
 + [Deleting a network ACL](#DeleteNetworkACL)
++ [API and command overview](#nacl-api-cli)
 
 ### Determining network ACL associations<a name="ACLSubnet"></a>
 
@@ -312,6 +330,38 @@ You can delete a network ACL only if there are no subnets associated with it\. Y
 
 1. In the confirmation dialog box, choose **Yes, Delete**\.
 
+### API and command overview<a name="nacl-api-cli"></a>
+
+You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+
+**Create a network ACL for your VPC**
++ [create\-network\-acl](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-network-acl.html) \(AWS CLI\)
++ [New\-EC2NetworkAcl](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2NetworkAcl.html) \(AWS Tools for Windows PowerShell\)
+
+**Describe one or more of your network ACLs**
++ [describe\-network\-acls](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-network-acls.html) \(AWS CLI\)
++ [Get\-EC2NetworkAcl](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2NetworkAcl.html) \(AWS Tools for Windows PowerShell\)
+
+**Add a rule to a network ACL**
++ [create\-network\-acl\-entry](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-network-acl-entry.html) \(AWS CLI\)
++ [New\-EC2NetworkAclEntry](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2NetworkAclEntry.html) \(AWS Tools for Windows PowerShell\)
+
+**Delete a rule from a network ACL**
++ [delete\-network\-acl\-entry](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-network-acl-entry.html) \(AWS CLI\)
++ [Remove\-EC2NetworkAclEntry](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2NetworkAclEntry.html) \(AWS Tools for Windows PowerShell\)
+
+**Replace an existing rule in a network ACL**
++ [replace\-network\-acl\-entry](https://docs.aws.amazon.com/cli/latest/reference/ec2/replace-network-acl-entry.html) \(AWS CLI\)
++ [Set\-EC2NetworkAclEntry](https://docs.aws.amazon.com/powershell/latest/reference/items/Set-EC2NetworkAclEntry.html) \(AWS Tools for Windows PowerShell\)
+
+**Replace a network ACL association**
++ [replace\-network\-acl\-association](https://docs.aws.amazon.com/cli/latest/reference/ec2/replace-network-acl-association.html) \(AWS CLI\)
++ [Set\-EC2NetworkAclAssociation](https://docs.aws.amazon.com/powershell/latest/reference/items/Set-EC2NetworkAclAssociation.html) \(AWS Tools for Windows PowerShell\)
+
+**Delete a network ACL**
++ [delete\-network\-acl](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-network-acl.html) \(AWS CLI\)
++ [Remove\-EC2NetworkAcl](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2NetworkAcl.html) \(AWS Tools for Windows PowerShell\)
+
 ## Example: Controlling access to instances in a subnet<a name="nacl-examples"></a>
 
 In this example, instances in your subnet can communicate with each other, and are accessible from a trusted remote computer\. The remote computer might be a computer in your local network or an instance in a different subnet or VPC\. You use it to connect to your instances to perform administrative tasks\. Your security group rules and network ACL rules allow access from the IP address of your remote computer \(172\.31\.1\.2/32\)\. All other traffic from the internet or other networks is denied\.
@@ -360,34 +410,6 @@ This scenario gives you the flexibility to change the security groups or securit
 
 However, only other instances within the subnet and your remote computer are able to access this instance\. The network ACL rules still prevent all inbound traffic to the subnet except from your remote computer\.
 
-## API and command overview<a name="nacl-api-cli"></a>
+## Recommended rules for VPC wizard scenarios<a name="vpc-recommended-nacl-rules"></a>
 
-You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
-
-**Create a network ACL for your VPC**
-+ [create\-network\-acl](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-network-acl.html) \(AWS CLI\)
-+ [New\-EC2NetworkAcl](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2NetworkAcl.html) \(AWS Tools for Windows PowerShell\)
-
-**Describe one or more of your network ACLs**
-+ [describe\-network\-acls](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-network-acls.html) \(AWS CLI\)
-+ [Get\-EC2NetworkAcl](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2NetworkAcl.html) \(AWS Tools for Windows PowerShell\)
-
-**Add a rule to a network ACL**
-+ [create\-network\-acl\-entry](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-network-acl-entry.html) \(AWS CLI\)
-+ [New\-EC2NetworkAclEntry](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2NetworkAclEntry.html) \(AWS Tools for Windows PowerShell\)
-
-**Delete a rule from a network ACL**
-+ [delete\-network\-acl\-entry](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-network-acl-entry.html) \(AWS CLI\)
-+ [Remove\-EC2NetworkAclEntry](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2NetworkAclEntry.html) \(AWS Tools for Windows PowerShell\)
-
-**Replace an existing rule in a network ACL**
-+ [replace\-network\-acl\-entry](https://docs.aws.amazon.com/cli/latest/reference/ec2/replace-network-acl-entry.html) \(AWS CLI\)
-+ [Set\-EC2NetworkAclEntry](https://docs.aws.amazon.com/powershell/latest/reference/items/Set-EC2NetworkAclEntry.html) \(AWS Tools for Windows PowerShell\)
-
-**Replace a network ACL association**
-+ [replace\-network\-acl\-association](https://docs.aws.amazon.com/cli/latest/reference/ec2/replace-network-acl-association.html) \(AWS CLI\)
-+ [Set\-EC2NetworkAclAssociation](https://docs.aws.amazon.com/powershell/latest/reference/items/Set-EC2NetworkAclAssociation.html) \(AWS Tools for Windows PowerShell\)
-
-**Delete a network ACL**
-+ [delete\-network\-acl](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-network-acl.html) \(AWS CLI\)
-+ [Remove\-EC2NetworkAcl](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2NetworkAcl.html) \(AWS Tools for Windows PowerShell\)
+You can use the VPC wizard in the Amazon VPC console to implement common scenarios for Amazon VPC\. If you implement these scenarios as described in the documentation, you use the default network access control list \(ACL\), which allows all inbound and outbound traffic\. If you need an additional layer of security, you can create a network ACL and add rules\. For more information, see [ Amazon VPC console wizard configurations](VPC_wizard.md)\.

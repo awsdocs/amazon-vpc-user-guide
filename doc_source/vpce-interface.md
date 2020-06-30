@@ -24,6 +24,7 @@ The following services are supported:
 + [AWS DataSync](https://docs.aws.amazon.com/datasync/latest/userguide/datasync-in-vpc.html)
 + [AWS Device Farm](https://docs.aws.amazon.com/devicefarm/latest/developerguide/amazon-vpc-endpoints.html)
 + [Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/interface-vpc-endpoints.html)
++ [EC2 Image Builder](https://docs.aws.amazon.com/imagebuilder/latest/userguide/vpc-interface-endpoints.html)
 + [Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-vpc-endpoints.html)
 + [AWS Elastic Beanstalk](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/vpc-vpce.html)
 + [Amazon Elastic File System](https://docs.aws.amazon.com/efs/latest/ug/efs-vpc-endpoints.html)
@@ -31,8 +32,10 @@ The following services are supported:
 + [Amazon Elastic Container Registry](https://docs.aws.amazon.com/AmazonECR/latest/userguide/vpc-endpoints.html)
 + [Amazon Elastic Container Service](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/vpc-endpoints.html)
 + [Amazon EMR](https://docs.aws.amazon.com/emr/latest/ManagementGuide/interface-vpc-endpoint.html)
++ [Amazon Fraud Detector](https://docs.aws.amazon.com/frauddetector/latest/ug/vpc-interface-endpoints.html)
 + [AWS Glue](https://docs.aws.amazon.com/glue/latest/dg/infrastructure-security.html)
 + [AWS Key Management Service](https://docs.aws.amazon.com/kms/latest/developerguide/kms-vpc-endpoint.html)
++ [Amazon Keyspaces \(for Apache Cassandra\)](https://docs.aws.amazon.com/keyspaces/latest/devguide/vpc-endpoints.html)
 + [Amazon Kinesis Data Firehose](https://docs.aws.amazon.com/firehose/latest/dev/vpc-endpoint.html)
 + [Amazon Kinesis Data Streams](https://docs.aws.amazon.com/streams/latest/dev/vpc.html)
 + [AWS License Manager](https://docs.aws.amazon.com/license-manager/latest/userguide/interface-vpc-endpoints.html)
@@ -52,6 +55,8 @@ The following services are supported:
 + [AWS Step Functions](https://docs.aws.amazon.com/step-functions/latest/dg/vpc-endpoints.html) 
 + [AWS Systems Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-setting-up-vpc.html)
 + [AWS Storage Gateway](https://docs.aws.amazon.com/storagegateway/latest/userguide/gateway-private-link.html)
++ [Amazon Transcribe](https://docs.aws.amazon.com/transcribe/latest/dg/vpc-interface-endpoints.html)
++ [Amazon Transcribe Medical](https://docs.aws.amazon.com/transcribe/latest/dg/med-vpc-interface-endpoints.html)
 + [AWS Transfer for SFTP](https://docs.aws.amazon.com/transfer/latest/userguide/create-server-vpc.html)
 +  [Amazon WorkSpaces](https://docs.aws.amazon.com/workspaces/latest/adminguide/infrastructure-security.html#interface-vpc-endpoint) 
 + [Endpoint services](endpoint-service.md) hosted by other AWS accounts
@@ -85,6 +90,7 @@ Services cannot initiate requests to resources in your VPC through the endpoint\
 + [Interface endpoint lifecycle](#vpce-interface-lifecycle)
 + [Interface endpoint Availability Zone considerations](#vpce-interface-availability-zones)
 + [Pricing for interface endpoints](#vpce-interface-pricing)
++ [Viewing available AWS service names](#vpce-view-services)
 + [Creating an interface endpoint](#create-interface-endpoint)
 + [Viewing your interface endpoint](#describe-interface-endpoint)
 + [Creating and managing a notification for an interface endpoint](#create-notification-interface-endpoint)
@@ -160,13 +166,88 @@ The following rules apply:
 When you create an interface endpoint, the endpoint is created in the Availability Zone that is mapped to your account and that is independent from other accounts\. When the service provider and the consumer are in different accounts, use the Availability Zone ID to uniquely and consistently identify the interface endpoint Availability Zone\. For example, `use1-az1` is an Availability Zone ID for the `us-east-1` Region and maps to the same location in every AWS account\. For information about Availability Zone IDs, see [AZ IDs for Your Resources](https://docs.aws.amazon.com/ram/latest/userguide/working-with-az-ids.html) in the *AWS RAM User Guide* or use [describe\-availability\-zones](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-availability-zones.html)\. 
 
 Services might not be available in all Availability Zones through an interface endpoint\. You can use any of the following operations to find out which Availability Zones are supported for a service:
-+ [describe\-vpc\-endpoint\-services](https://docs.aws.amazon.com/cli/latest/reference/ec2describe-vpc-endpoint-services.html) \(AWS CLI\)
++ [describe\-vpc\-endpoint\-services](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-services.html) \(AWS CLI\)
 + [DescribeVpcEndpointServices](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeVpcEndpointServices.html) \(API\)
 + The Amazon VPC console when you create an interface endpoint\. For more information, see [Creating an interface endpoint](#create-interface-endpoint)\.
 
 ## Pricing for interface endpoints<a name="vpce-interface-pricing"></a>
 
 You are charged for creating and using an interface endpoint to a service\. Hourly usage rates and data processing rates apply\. For more information about interface endpoint pricing, see [AWS PrivateLink Pricing](https://aws.amazon.com/privatelink/pricing/)\. You can view the total number of interface endpoints using the Amazon VPC Console, or the AWS CLI\.
+
+## Viewing available AWS service names<a name="vpce-view-services"></a>
+
+You can get a list of available AWS service names using the console or the command line\.
+
+------
+#### [ Console ]
+
+**To view available AWS services using the console**
+
+1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
+
+1. In the navigation pane, choose **Endpoints**, **Create Endpoint**\.
+
+1. In the **Service Name** section, the available services are listed\.
+
+------
+#### [ Command line ]
+
+**To view available AWS services using the AWS CLI**
++ Use the [describe\-vpc\-endpoint\-services](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-services.html) command to get a list of available services\. In the output that's returned, take note of the name of the service to which to connect\. The `ServiceType` field indicates whether you connect to the service via an interface or gateway endpoint\. The `ServiceName` field provides the name of the service\.
+
+  ```
+  aws ec2 describe-vpc-endpoint-services
+  ```
+
+  ```
+  {
+      "VpcEndpoints": [
+          {
+              "VpcEndpointId": "vpce-08a979e28f97a9f7c",
+              "VpcEndpointType": "Interface",
+              "VpcId": "vpc-06e4ab6c6c3b23ae3",
+              "ServiceName": "com.amazonaws.us-east-2.monitoring",
+              "State": "available",
+              "PolicyDocument": "{\n  \"Statement\": [\n    {\n      \"Action\": \"*\", \n      \"Effect\": \"Allow\", \n      \"Principal\": \"*\", \n      \"Resource\": \"*\"\n    }\n  ]\n}",
+              "RouteTableIds": [],
+              "SubnetIds": [
+                  "subnet-0931fc2fa5f1cbe44"
+              ],
+              "Groups": [
+                  {
+                      "GroupId": "sg-06e1d57ab87d8f182",
+                      "GroupName": "default"
+                  }
+              ],
+              "PrivateDnsEnabled": false,
+              "RequesterManaged": false,
+              "NetworkInterfaceIds": [
+                  "eni-019b0bb3ede80ebfd"
+              ],
+              "DnsEntries": [
+                  {
+                      "DnsName": "vpce-08a979e28f97a9f7c-4r5zme9n.monitoring.us-east-2.vpce.amazonaws.com",
+                      "HostedZoneId": "ZC8PG0KIFKBRI"
+                  },
+                  {
+                      "DnsName": "vpce-08a979e28f97a9f7c-4r5zme9n-us-east-2c.monitoring.us-east-2.vpce.amazonaws.com",
+                      "HostedZoneId": "ZC8PG0KIFKBRI"
+                  }
+              ],
+              "CreationTimestamp": "2019-06-04T19:10:37.000Z",
+              "Tags": [],
+              "OwnerId": "123456789012"
+          }
+      ]
+  ```
+
+**To view available AWS services using the AWS Tools for Windows PowerShell**
++ [Get\-EC2VpcEndpointService](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2VpcEndpointService.html) 
+
+**To view available AWS services using the API**
++ [DescribeVpcEndpointServices](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-DescribeVpcEndpointServices.html)
+
+------
 
 ## Creating an interface endpoint<a name="create-interface-endpoint"></a>
 
@@ -265,52 +346,6 @@ To create an interface endpoint to an endpoint service, you must have the name o
 **To create an interface endpoint using the AWS CLI**
 
 1. Use the [describe\-vpc\-endpoint\-services](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-services.html) command to get a list of available services\. In the output that's returned, take note of the name of the service to which to connect\. The `ServiceType` field indicates whether you connect to the service via an interface or gateway endpoint\. The `ServiceName` field provides the name of the service\.
-
-   ```
-   aws ec2 describe-vpc-endpoint-services
-   ```
-
-   ```
-   {
-       "VpcEndpoints": [
-           {
-               "VpcEndpointId": "vpce-08a979e28f97a9f7c",
-               "VpcEndpointType": "Interface",
-               "VpcId": "vpc-06e4ab6c6c3b23ae3",
-               "ServiceName": "com.amazonaws.us-east-2.monitoring",
-               "State": "available",
-               "PolicyDocument": "{\n  \"Statement\": [\n    {\n      \"Action\": \"*\", \n      \"Effect\": \"Allow\", \n      \"Principal\": \"*\", \n      \"Resource\": \"*\"\n    }\n  ]\n}",
-               "RouteTableIds": [],
-               "SubnetIds": [
-                   "subnet-0931fc2fa5f1cbe44"
-               ],
-               "Groups": [
-                   {
-                       "GroupId": "sg-06e1d57ab87d8f182",
-                       "GroupName": "default"
-                   }
-               ],
-               "PrivateDnsEnabled": false,
-               "RequesterManaged": false,
-               "NetworkInterfaceIds": [
-                   "eni-019b0bb3ede80ebfd"
-               ],
-               "DnsEntries": [
-                   {
-                       "DnsName": "vpce-08a979e28f97a9f7c-4r5zme9n.monitoring.us-east-2.vpce.amazonaws.com",
-                       "HostedZoneId": "ZC8PG0KIFKBRI"
-                   },
-                   {
-                       "DnsName": "vpce-08a979e28f97a9f7c-4r5zme9n-us-east-2c.monitoring.us-east-2.vpce.amazonaws.com",
-                       "HostedZoneId": "ZC8PG0KIFKBRI"
-                   }
-               ],
-               "CreationTimestamp": "2019-06-04T19:10:37.000Z",
-               "Tags": [],
-               "OwnerId": "123456789012"
-           }
-       ]
-   ```
 
 1. To create an interface endpoint, use the [create\-vpc\-endpoint](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-vpc-endpoint.html) command and specify the VPC ID, type of VPC endpoint \(interface\), service name, subnets that will use the endpoint, and security groups to associate with the endpoint network interfaces\.
 

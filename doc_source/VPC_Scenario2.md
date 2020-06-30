@@ -17,6 +17,7 @@ For information about managing your EC2 instance software, see [Managing softwar
 + [Security](#VPC_Scenario2_Security)
 + [Implementing scenario 2](#VPC_Scenario2_Implementation)
 + [Implementing scenario 2 with a NAT instance](#vpc-scenario-2-nat-instance)
++ [Recommended network ACL rules for a VPC with public and private subnets \(NAT\)](#nacl-rules-scenario-2)
 
 ## Overview<a name="Configuration-2"></a>
 
@@ -112,7 +113,7 @@ The second entry is the default route that's automatically added for local routi
 
 AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Internetwork traffic privacy in Amazon VPC](VPC_Security.md)\. 
 
-For scenario 2, you'll use security groups but not network ACLs\. If you'd like to use a network ACL, see [Recommended rules for a VPC with public and private subnets \(NAT\)](vpc-security-best-practices.md#nacl-rules-scenario-2)\.
+For scenario 2, you'll use security groups but not network ACLs\. If you'd like to use a network ACL, see [Recommended network ACL rules for a VPC with public and private subnets \(NAT\)](#nacl-rules-scenario-2)\.
 
 Your VPC comes with a [default security group](VPC_SecurityGroups.md#DefaultSecurityGroup)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. For this scenario, we recommend that you create the following security groups instead of using the default security group:
 + **WebServerSG**: Specify this security group when you launch the web servers in the public subnet\.
@@ -128,15 +129,17 @@ These recommendations include both SSH and RDP access, and both Microsoft SQL Se
 
 **WebServerSG: recommended rules**  
 
-|  | 
+| 
+| 
+| **Inbound** | 
 | --- |
-| Inbound | 
 |  Source  |  Protocol  |  Port range  |  Comments  | 
 |  0\.0\.0\.0/0  |  TCP  |  80  |  Allow inbound HTTP access to the web servers from any IPv4 address\.  | 
 |  0\.0\.0\.0/0  |  TCP  |  443  |  Allow inbound HTTPS access to the web servers from any IPv4 address\.  | 
 |  Your home network's public IPv4 address range  |  TCP  |  22  |  Allow inbound SSH access to Linux instances from your home network \(over the Internet gateway\)\. You can get the public IPv4 address of your local computer using a service such as [http://checkip\.amazonaws\.com](http://checkip.amazonaws.com) or [https://checkip\.amazonaws\.com](https://checkip.amazonaws.com)\. If you are connecting through an ISP or from behind your firewall without a static IP address, you need to find out the range of IP addresses used by client computers\.   | 
 |  Your home network's public IPv4 address range  |  TCP  |  3389  |  Allow inbound RDP access to Windows instances from your home network \(over the Internet gateway\)\.  | 
 |   **Outbound**   | 
+| --- |
 |  Destination  |  Protocol  |  Port range  |  Comments  | 
 |  The ID of your DBServerSG security group  |  TCP  |  1433  |  Allow outbound Microsoft SQL Server access to the database servers assigned to the DBServerSG security group\.  | 
 |  The ID of your DBServerSG security group  |  TCP  |  3306  |  Allow outbound MySQL access to the database servers assigned to the DBServerSG security group\.  | 
@@ -148,13 +151,15 @@ The following table describes the recommended rules for the DBServerSG security 
 
 **DBServerSG: recommended rules**  
 
-|  | 
+| 
+| 
+| **Inbound** | 
 | --- |
-| Inbound | 
 |  Source  |  Protocol  |  Port range  |  Comments  | 
 |  The ID of your WebServerSG security group  |  TCP  |  1433  |  Allow inbound Microsoft SQL Server access from the web servers associated with the WebServerSG security group\.  | 
 |  The ID of your WebServerSG security group  |  TCP  |  3306  |  Allow inbound MySQL Server access from the web servers associated with the WebServerSG security group\.  | 
 |   **Outbound**   | 
+| --- |
 |  Destination  |  Protocol  |  Port range  |  Comments  | 
 |  0\.0\.0\.0/0  |  TCP  |  80  |  Allow outbound HTTP access to the Internet over IPv4 \(for example, for software updates\)\.  | 
 |  0\.0\.0\.0/0  |  TCP  |  443  |  Allow outbound HTTPS access to the Internet over IPv4 \(for example, for software updates\)\.  | 
@@ -162,33 +167,37 @@ The following table describes the recommended rules for the DBServerSG security 
 \(Optional\) The default security group for a VPC has rules that automatically allow assigned instances to communicate with each other\. To allow that type of communication for a custom security group, you must add the following rules:
 
 
-|  | 
+| 
+| 
+| **Inbound** | 
 | --- |
-| Inbound | 
 |  Source  |  Protocol  |  Port range  |  Comments  | 
 |  The ID of the security group  |  All  |  All  |  Allow inbound traffic from other instances assigned to this security group\.  | 
-| Outbound | 
+| **Outbound** | 
+| --- |
 | Destination  |  Protocol  |  Port range  |  Comments  | 
 | The ID of the security group | All | All | Allow outbound traffic to other instances assigned to this security group\. | 
 
 \(Optional\) If you launch a bastion host in your public subnet to use as a proxy for SSH or RDP traffic from your home network to your private subnet, add a rule to the DBServerSG security group that allows inbound SSH or RDP traffic from the bastion instance or its associated security group\.
 
-### Security for IPv6<a name="vpc-scenario-2-security-ipv6"></a>
+### Security group rules for IPv6<a name="vpc-scenario-2-security-ipv6"></a>
 
 If you associate an IPv6 CIDR block with your VPC and subnets, you must add separate rules to your WebServerSG and DBServerSG security groups to control inbound and outbound IPv6 traffic for your instances\. In this scenario, the web servers will be able to receive all Internet traffic over IPv6, and SSH or RDP traffic from your local network over IPv6\. They can also initiate outbound IPv6 traffic to the Internet\. The database servers can initiate outbound IPv6 traffic to the Internet\.
 
 The following are the IPv6\-specific rules for the WebServerSG security group \(which are in addition to the rules listed above\)\.
 
 
-|  | 
+| 
+| 
+| **Inbound** | 
 | --- |
-| Inbound | 
 |  Source  |  Protocol  |  Port range  |  Comments  | 
 |  ::/0  |  TCP  |  80  |  Allow inbound HTTP access to the web servers from any IPv6 address\.  | 
 |  ::/0  |  TCP  |  443  |  Allow inbound HTTPS access to the web servers from any IPv6 address\.  | 
 |  IPv6 address range of your network   |  TCP  |  22  |  \(Linux instances\) Allow inbound SSH access over IPv6 from your network\.   | 
 |  IPv6 address range of your network   |  TCP  |  3389  |  \(Windows instances\) Allow inbound RDP access over IPv6 from your network  | 
-| Outbound | 
+| **Outbound** | 
+| --- |
 | Destination | Protocol | Port range | Comments | 
 | ::/0 | TCP | HTTP | Allow outbound HTTP access to any IPv6 address\. | 
 | ::/0 | TCP | HTTPS | Allow outbound HTTPS access to any IPv6 address\. | 
@@ -196,9 +205,10 @@ The following are the IPv6\-specific rules for the WebServerSG security group \(
 The following are the IPv6\-specific rules for the DBServerSG security group \(which are in addition to the rules listed above\)\.
 
 
-|  | 
-| --- |
+| 
+| 
 |   **Outbound**   | 
+| --- |
 |  Destination  |  Protocol  |  Port range  |  Comments  | 
 |  ::/0  |  TCP  |  80  |  Allow outbound HTTP access to any IPv6 address\.  | 
 |  ::/0  |  TCP  |  443  |  Allow outbound HTTPS access to any IPv6 address\.  | 
@@ -218,14 +228,116 @@ After you've created the VPC with the NAT instance, you must change the security
 
 **NATSG: recommended rules**  
 
-|  | 
+| 
+| 
+| **Inbound** | 
 | --- |
-| Inbound | 
 |  Source  |  Protocol  |  Port range  |  Comments  | 
 |  10\.0\.1\.0/24  |  TCP  |  80  |  Allow inbound HTTP traffic from database servers that are in the private subnet  | 
 |  10\.0\.1\.0/24  |  TCP  |  443  |  Allow inbound HTTPS traffic from database servers that are in the private subnet  | 
 |  Your network's public IP address range  |  TCP  |  22  |  Allow inbound SSH access to the NAT instance from your network \(over the Internet gateway\)  | 
 |   **Outbound**   | 
+| --- |
 |  Destination  |  Protocol  |  Port range  |  Comments  | 
 |  0\.0\.0\.0/0  |  TCP  |  80  |  Allow outbound HTTP access to the Internet \(over the Internet gateway\)  | 
 |  0\.0\.0\.0/0  |  TCP  |  443  |  Allow outbound HTTPS access to the Internet \(over the Internet gateway\)  | 
+
+## Recommended network ACL rules for a VPC with public and private subnets \(NAT\)<a name="nacl-rules-scenario-2"></a>
+
+For this scenario, you have a network ACL for the public subnet, and a separate network ACL for the private subnet\. The following table shows the rules that we recommend for each ACL\. They block all traffic except that which is explicitly required\. They mostly mimic the security group rules for the scenario\.
+
+
+**ACL rules for the public subnet**  
+
+| 
+| 
+|  Inbound  | 
+| --- |
+|  Rule \#  |  Source IP  |  Protocol  |  Port  |  Allow/Deny  |  Comments  | 
+|  100  |  0\.0\.0\.0/0  |  TCP  |  80  |  ALLOW  |  Allows inbound HTTP traffic from any IPv4 address\.  | 
+|  110  |  0\.0\.0\.0/0  |  TCP  |  443  |  ALLOW  |  Allows inbound HTTPS traffic from any IPv4 address\.  | 
+|  120  |  Public IP address range of your home network  |  TCP  |  22  |  ALLOW  |  Allows inbound SSH traffic from your home network \(over the internet gateway\)\.  | 
+|  130  |  Public IP address range of your home network  |  TCP  |  3389  |  ALLOW  |  Allows inbound RDP traffic from your home network \(over the internet gateway\)\.  | 
+|  140  |  0\.0\.0\.0/0  |  TCP  |  1024\-65535  |  ALLOW  |  Allows inbound return traffic from hosts on the internet that are responding to requests originating in the subnet\. This range is an example only\. For information about choosing the correct ephemeral ports for your configuration, see [Ephemeral ports](vpc-network-acls.md#nacl-ephemeral-ports)\.  | 
+|  \*  |  0\.0\.0\.0/0  |  all  |  all  |  DENY  |  Denies all inbound IPv4 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
+|  Outbound  | 
+| --- |
+|  Rule \#  |  Dest IP  |  Protocol  |  Port  |  Allow/Deny  |  Comments  | 
+|  100  |  0\.0\.0\.0/0  |  TCP  |  80  |  ALLOW  |  Allows outbound HTTP traffic from the subnet to the internet\.  | 
+|  110  |  0\.0\.0\.0/0  |  TCP  |  443  |  ALLOW  |  Allows outbound HTTPS traffic from the subnet to the internet\.  | 
+|  120  |  10\.0\.1\.0/24  |  TCP  |  1433  |  ALLOW  |  Allows outbound MS SQL access to database servers in the private subnet\.  This port number is an example only\. Other examples include 3306 for MySQL/Aurora access, 5432 for PostgreSQL access, 5439 for Amazon Redshift access, and 1521 for Oracle access\.  | 
+|  140  |  0\.0\.0\.0/0  |  TCP  |  32768\-65535  |  ALLOW  |  Allows outbound responses to clients on the internet \(for example, serving webpages to people visiting the web servers in the subnet\)\. This range is an example only\. For information about choosing the correct ephemeral ports for your configuration, see [Ephemeral ports](vpc-network-acls.md#nacl-ephemeral-ports)\.  | 
+|  150  | 10\.0\.1\.0/24 | TCP | 22 | ALLOW |  Allows outbound SSH access to instances in your private subnet \(from an SSH bastion, if you have one\)\.  | 
+|  \*  |  0\.0\.0\.0/0  |  all  |  all  |  DENY  |  Denies all outbound IPv4 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
+
+
+**ACL rules for the private subnet**  
+
+| 
+| 
+|  Inbound  | 
+| --- |
+|  Rule \#  |  Source IP  |  Protocol  |  Port  |  Allow/Deny  |  Comments  | 
+|  100  |  10\.0\.0\.0/24  |  TCP  |  1433  |  ALLOW  |  Allows web servers in the public subnet to read and write to MS SQL servers in the private subnet\. This port number is an example only\. Other examples include 3306 for MySQL/Aurora access, 5432 for PostgreSQL access, 5439 for Amazon Redshift access, and 1521 for Oracle access\.  | 
+|  120  |  10\.0\.0\.0/24  |  TCP  |  22  |  ALLOW  |  Allows inbound SSH traffic from an SSH bastion in the public subnet \(if you have one\)\.  | 
+|  130  |  10\.0\.0\.0/24  |  TCP  |  3389  |  ALLOW  |  Allows inbound RDP traffic from the Microsoft Terminal Services gateway in the public subnet\.  | 
+|  140  |  0\.0\.0\.0/0  |  TCP  |  1024\-65535  |  ALLOW  |  Allows inbound return traffic from the NAT device in the public subnet for requests originating in the private subnet\. For information about specifying the correct ephemeral ports, see the important note at the beginning of this topic\.  | 
+|  \*  |  0\.0\.0\.0/0  |  all  |  all  |  DENY  |  Denies all IPv4 inbound traffic not already handled by a preceding rule \(not modifiable\)\.  | 
+|  Outbound  | 
+| --- |
+|  Rule \#  |  Dest IP  |  Protocol  |  Port  |  Allow/Deny  |  Comments  | 
+|  100  |  0\.0\.0\.0/0  |  TCP  |  80  |  ALLOW  |  Allows outbound HTTP traffic from the subnet to the internet\.  | 
+|  110  |  0\.0\.0\.0/0  |  TCP  |  443  |  ALLOW  |  Allows outbound HTTPS traffic from the subnet to the internet\.  | 
+|  120  |  10\.0\.0\.0/24  |  TCP  |  32768\-65535  |  ALLOW  |  Allows outbound responses to the public subnet \(for example, responses to web servers in the public subnet that are communicating with DB servers in the private subnet\)\. This range is an example only\. For information about choosing the correct ephemeral ports for your configuration, see [Ephemeral ports](vpc-network-acls.md#nacl-ephemeral-ports)\.  | 
+|  \*  |  0\.0\.0\.0/0  |  all  |  all  |  DENY  |  Denies all outbound IPv4 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
+
+### Recommended network ACL rules for IPv6<a name="vpc-nacls-scenario-2-ipv6"></a>
+
+If you implemented IPv6 support and created a VPC and subnets with associated IPv6 CIDR blocks, you must add separate rules to your network ACLs to control inbound and outbound IPv6 traffic\. 
+
+The following are the IPv6\-specific rules for your network ACLs \(which are in addition to the preceding rules\)\.
+
+
+**ACL rules for the public subnet**  
+
+| 
+| 
+|  Inbound  | 
+| --- |
+|  Rule \#  |  Source IP  |  Protocol  |  Port  |  Allow/Deny  |  Comments  | 
+|  150  |  ::/0  |  TCP  |  80  |  ALLOW  |  Allows inbound HTTP traffic from any IPv6 address\.  | 
+|  160  |  ::/0  |  TCP  |  443  |  ALLOW  |  Allows inbound HTTPS traffic from any IPv6 address\.  | 
+|  170  |  IPv6 address range of your home network  |  TCP  |  22  |  ALLOW  |  Allows inbound SSH traffic over IPv6 from your home network \(over the internet gateway\)\.  | 
+|  180  |  IPv6 address range of your home network  |  TCP  |  3389  |  ALLOW  |  Allows inbound RDP traffic over IPv6 from your home network \(over the internet gateway\)\.  | 
+|  190  |  ::/0  |  TCP  |  1024\-65535  |  ALLOW  |  Allows inbound return traffic from hosts on the internet that are responding to requests originating in the subnet\. This range is an example only\. For information about choosing the correct ephemeral ports for your configuration, see [Ephemeral ports](vpc-network-acls.md#nacl-ephemeral-ports)\.  | 
+|  \*  |  ::/0  |  all  |  all  |  DENY  |  Denies all inbound IPv6 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
+|  Outbound  | 
+| --- |
+|  Rule \#  |  Dest IP  |  Protocol  |  Port  |  Allow/Deny  |  Comments  | 
+|  160  |  ::/0  |  TCP  |  80  |  ALLOW  |  Allows outbound HTTP traffic from the subnet to the internet\.  | 
+|  170  |  ::/0  |  TCP  |  443  |  ALLOW  |  Allows outbound HTTPS traffic from the subnet to the internet  | 
+|  180  |  2001:db8:1234:1a01::/64  |  TCP  |  1433  |  ALLOW  |  Allows outbound MS SQL access to database servers in the private subnet\. This port number is an example only\. Other examples include 3306 for MySQL/Aurora access, 5432 for PostgreSQL access, 5439 for Amazon Redshift access, and 1521 for Oracle access\.  | 
+|  200  |  ::/0  |  TCP  |  32768\-65535  |  ALLOW  |  Allows outbound responses to clients on the internet \(for example, serving webpages to people visiting the web servers in the subnet\)\. This range is an example only\. For information about choosing the correct ephemeral ports for your configuration, see [Ephemeral ports](vpc-network-acls.md#nacl-ephemeral-ports)\.  | 
+|  210  |  2001:db8:1234:1a01::/64  |  TCP  |  22  |  ALLOW  |  Allows outbound SSH access to instances in your private subnet \(from an SSH bastion, if you have one\)\.  | 
+|  \*  | ::/0 |  all  |  all  |  DENY  |  Denies all outbound IPv6 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
+
+
+**ACL rules for the private subnet**  
+
+| 
+| 
+|  Inbound  | 
+| --- |
+|  Rule \#  |  Source IP  |  Protocol  |  Port  |  Allow/Deny  |  Comments  | 
+|  150  |  2001:db8:1234:1a00::/64  |  TCP  |  1433  |  ALLOW  |  Allows web servers in the public subnet to read and write to MS SQL servers in the private subnet\. This port number is an example only\. Other examples include 3306 for MySQL/Aurora access, 5432 for PostgreSQL access, 5439 for Amazon Redshift access, and 1521 for Oracle access\.  | 
+|  170  |  2001:db8:1234:1a00::/64  |  TCP  |  22  |  ALLOW  |  Allows inbound SSH traffic from an SSH bastion in the public subnet \(if applicable\)\.  | 
+|  180  |  2001:db8:1234:1a00::/64  |  TCP  |  3389  |  ALLOW  |  Allows inbound RDP traffic from a Microsoft Terminal Services gateway in the public subnet, if applicable\.  | 
+|  190  |  ::/0  |  TCP  |  1024\-65535  |  ALLOW  |  Allows inbound return traffic from the egress\-only internet gateway for requests originating in the private subnet\.  This range is an example only\. For information about choosing the correct ephemeral ports for your configuration, see [Ephemeral ports](vpc-network-acls.md#nacl-ephemeral-ports)\.  | 
+|  \*  | ::/0 |  all  |  all  |  DENY  |  Denies all inbound IPv6 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
+|  Outbound  | 
+| --- |
+|  Rule \#  |  Dest IP  |  Protocol  |  Port  |  Allow/Deny  |  Comments  | 
+|  130  |  ::/0  |  TCP  |  80  |  ALLOW  |  Allows outbound HTTP traffic from the subnet to the internet\.  | 
+|  140  |  ::/0  |  TCP  |  443  |  ALLOW  |  Allows outbound HTTPS traffic from the subnet to the internet\.  | 
+|  150  |  2001:db8:1234:1a00::/64  |  TCP  |  32768\-65535  |  ALLOW  |  Allows outbound responses to the public subnet \(for example, responses to web servers in the public subnet that are communicating with DB servers in the private subnet\)\. This range is an example only\. For information about choosing the correct ephemeral ports for your configuration, see [Ephemeral ports](vpc-network-acls.md#nacl-ephemeral-ports)\.  | 
+|  \*  |  ::/0  |  all  |  all  |  DENY  |  Denies all outbound IPv6 traffic not already handled by a preceding rule \(not modifiable\)\.  | 

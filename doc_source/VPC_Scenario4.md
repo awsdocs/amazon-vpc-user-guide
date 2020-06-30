@@ -70,7 +70,7 @@ If you associate an IPv6 CIDR block with your VPC and subnets, your route table 
 
 AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Internetwork traffic privacy in Amazon VPC](VPC_Security.md)\. 
 
-For scenario 4, you'll use the default security group for your VPC but not a network ACL\. If you'd like to use a network ACL, see [Recommended rules for a VPC with a private subnet only and AWS Site\-to\-Site VPN access](vpc-security-best-practices.md#nacl-rules-scenario-4)\.
+For scenario 4, you'll use the default security group for your VPC but not a network ACL\. If you'd like to use a network ACL, see [Recommended network ACL rules for a VPC with a private subnet only and AWS Site\-to\-Site VPN access](#nacl-rules-scenario-4)\.
 
 Your VPC comes with a default security group whose initial settings deny all inbound traffic, allow all outbound traffic, and allow all traffic between the instances assigned to the security group\. For this scenario, we recommend that you add inbound rules to the default security group to allow SSH traffic \(Linux\) and Remote Desktop traffic \(Windows\) from your network\.
 
@@ -82,13 +82,54 @@ The following table describes the inbound rules that you should add to the defau
 
 **Default security group: recommended rules**  
 
-|  | 
+| 
+| 
+|  **Inbound**  | 
 | --- |
-|  Inbound  | 
 |  Source  |  Protocol  |  Port Range  |  Comments  | 
 |  Private IPv4 address range of your network  |  TCP  |  22  |  \(Linux instances\) Allow inbound SSH traffic from your network\.  | 
 |  Private IPv4 address range of your network  |  TCP  |  3389  |  \(Windows instances\) Allow inbound RDP traffic from your network\.  | 
 
-### Security for IPv6<a name="vpc-scenario-4-security-ipv6"></a>
-
+**Security group rules for IPv6**  
 If you associate an IPv6 CIDR block with your VPC and subnets, you must add separate rules to your security group to control inbound and outbound IPv6 traffic for your instances\. In this scenario, the database servers cannot be reached over the Site\-to\-Site VPN connection using IPv6; therefore, no additional security group rules are required\.
+
+### Recommended network ACL rules for a VPC with a private subnet only and AWS Site\-to\-Site VPN access<a name="nacl-rules-scenario-4"></a>
+
+The following table shows the rules that we recommend\. They block all traffic except that which is explicitly required\.
+
+
+| 
+| 
+|  Inbound  | 
+| --- |
+|  Rule \#  |  Source IP  |  Protocol  |  Port  |  Allow/Deny  |  Comments  | 
+|  100  |  Private IP address range of your home network  |  TCP  |  22  |  ALLOW  |  Allows inbound SSH traffic to the subnet from your home network\.  | 
+|  110  |  Private IP address range of your home network  |  TCP  |  3389  |  ALLOW  |  Allows inbound RDP traffic to the subnet from your home network\.  | 
+|  120  |  Private IP address range of your home network  |  TCP  |  32768\-65535  |  ALLOW  |  Allows inbound return traffic from requests originating in the subnet\. This range is an example only\. For information about choosing the correct ephemeral ports for your configuration, see [Ephemeral ports](vpc-network-acls.md#nacl-ephemeral-ports)\.  | 
+|  \*  |  0\.0\.0\.0/0  |  all  |  all  |  DENY  |  Denies all inbound traffic not already handled by a preceding rule \(not modifiable\)\.  | 
+|  Outbound  | 
+| --- |
+|  Rule \#  |  Dest IP  |  Protocol  |  Port  |  Allow/Deny  |  Comments  | 
+|  100  |  Private IP address range of your home network  |  All  |  All  |  ALLOW  |  Allows all outbound traffic from the subnet to your home network\. This rule also covers rule 120\. However, you can make this rule more restrictive by using a specific protocol type and port number\. If you make this rule more restrictive, you must include rule 120 in your network ACL to ensure that outbound responses are not blocked\.   | 
+|  120  |  Private IP address range of your home network  |  TCP  |  32768\-65535  |  ALLOW  |  Allows outbound responses to clients in the home network\. This range is an example only\. For information about choosing the correct ephemeral ports for your configuration, see [Ephemeral ports](vpc-network-acls.md#nacl-ephemeral-ports)\.  | 
+|  \*  |  0\.0\.0\.0/0  |  all  |  all  |  DENY  |  Denies all outbound traffic not already handled by a preceding rule \(not modifiable\)\.  | 
+
+#### Recommended network ACL rules for IPv6<a name="vpc-nacls-scenario-4-ipv6"></a>
+
+If you implemented scenario 4 with IPv6 support and created a VPC and subnet with associated IPv6 CIDR blocks, you must add separate rules to your network ACL to control inbound and outbound IPv6 traffic\. 
+
+In this scenario, the database servers cannot be reached over the VPN communication via IPv6, therefore no additional network ACL rules are required\. The following are the default rules that deny IPv6 traffic to and from the subnet\.
+
+
+**ACL rules for the VPN\-only subnet**  
+
+| 
+| 
+|  Inbound  | 
+| --- |
+|  Rule \#  |  Source IP  |  Protocol  |  Port  |  Allow/Deny  |  Comments  | 
+|  \*  |  ::/0  |  all  |  all  |  DENY  |  Denies all inbound IPv6 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
+|  Outbound  | 
+| --- |
+|  Rule \#  |  Dest IP  |  Protocol  |  Port  |  Allow/Deny  |  Comments  | 
+|  \*  | ::/0 |  all  |  all  |  DENY  |  Denies all outbound IPv6 traffic not already handled by a preceding rule \(not modifiable\)\.  | 

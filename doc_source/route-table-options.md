@@ -13,6 +13,7 @@ The following topics describe routing for specific gateways or connections in yo
 + [Routing to an egress\-only internet gateway](#route-tables-eigw)
 + [Routing for a transit gateway](#route-tables-tgw)
 + [Routing for a middlebox appliance in your VPC](#route-tables-appliance-routing)
++ [Routing using a prefix list](#route-tables-managed-prefix-list)
 
 ## Routing to an internet gateway<a name="route-tables-internet-gateway"></a>
 
@@ -160,7 +161,7 @@ For example, you have two VPCs, with the following information:
 + VPC A: 10\.1\.0\.0/16, attachment ID tgw\-attach\-11111111111111111
 + VPC B: 10\.2\.0\.0/16, attachment ID tgw\-attach\-22222222222222222
 
-To enable traffic between the VPCs and allow access to the transit gateway the VPC A route table is configured as follows\.
+To enable traffic between the VPCs and allow access to the transit gateway, the VPC A route table is configured as follows\.
 
 
 | Destination | Target | 
@@ -246,3 +247,21 @@ In the following diagram, a firewall appliance is installed and configured on an
 The following example has the same setup as the preceding example, but includes IPv6 traffic\. IPv6 traffic that's destined for subnet B that enters the VPC through the internet gateway is routed to the appliance's network interface \(`eni-11223344556677889`\)\. All traffic \(IPv4 and IPv6\) that leaves subnet B is also routed to the appliance's network interface\.
 
 ![\[Inbound IPv4 and IPv6 routing to a VPC\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/ingress-routing-firewall-ipv6.png)
+
+## Routing using a prefix list<a name="route-tables-managed-prefix-list"></a>
+
+If you frequently reference the same set of CIDR blocks across your AWS resources, you can create a [customer\-managed prefix list](managed-prefix-lists.md) to group them together\. You can then specify the prefix list as the destination in your route table entry\. You can later add or remove entries for the prefix list without needing to update your route tables\.
+
+For example, you have a transit gateway with multiple VPC attachments\. The VPCs must be able to communicate with two specific VPC attachments that have the following CIDR blocks:
++ 10\.0\.0\.0/16
++ 10\.2\.0\.0/16
+
+You create a prefix list with both entries\. In your subnet route tables, you create a route and specify the prefix list as the destination, and the transit gateway as the target\.
+
+
+| Destination | Target | 
+| --- | --- | 
+| 172\.31\.0\.0/16 | Local | 
+| pl\-123abc123abc123ab | tgw\-id | 
+
+The maximum number of entries for the prefix lists equals the same number of entries in the route table\.

@@ -141,7 +141,7 @@ By default, an outbound rule that allows all IPv6 traffic is automatically added
 
 ### Update your network ACL rules<a name="vpc-migrate-ipv6-nacl-rules"></a>
 
-If you associate an IPv6 CIDR block with your VPC, we automatically add rules to the default network ACL to allow IPv6 traffic, provided you haven't modified its default rules\. If you've modified your default network ACL or if you've created a custom network ACL with rules to control the flow of traffic to and from your subnet, you must manually add rules for IPv6 traffic\. For more information, see [Recommended network ACL rules for your VPC](vpc-security-best-practices.md#vpc-recommended-nacl-rules)\.
+If you associate an IPv6 CIDR block with your VPC, we automatically add rules to the default network ACL to allow IPv6 traffic, provided you haven't modified its default rules\. If you've modified your default network ACL or if you've created a custom network ACL with rules to control the flow of traffic to and from your subnet, you must manually add rules for IPv6 traffic\. For more information, see [Network ACLs](vpc-network-acls.md)\.
 
 ## Step 4: Change your instance type<a name="vpc-migrate-ipv6-instance-types"></a>
 

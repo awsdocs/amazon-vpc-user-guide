@@ -11,7 +11,7 @@ For examples, see [Flow log record examples](flow-logs-records-examples.md)\.
 
 Flow log data is collected outside of the path of your network traffic, and therefore does not affect network throughput or latency\. You can create or delete flow logs without any risk of impact to network performance\.
 
-Charges for CloudWatch Logs apply when you use flow logs, whether you send them to CloudWatch Logs or to Amazon S3\. For more information, see [Amazon CloudWatch Pricing](https://aws.amazon.com/cloudwatch/pricing)\.
+Data ingestion charges apply when you use flow logs\. Charges for vended logs apply when you publish flow logs to CloudWatch Logs\. Charges to deliver logs to Amazon S3 apply when you publish flow logs to Amazon S3\. For more information, see [Amazon CloudWatch Pricing](https://aws.amazon.com/cloudwatch/pricing)\.
 
 **Topics**
 + [Flow logs basics](#flow-logs-basics)
@@ -97,7 +97,7 @@ The following table describes all of the available fields for a flow log record\
 | Field | Description | Version | 
 | --- | --- | --- | 
 |  version  |  The VPC Flow Logs version\. If you use the default format, the version is `2`\. If you use a custom format, the version is the highest version among the specified fields\. For example, if you only specify fields from version 2, the version is `2`\. If you specify a mixture of fields from versions 2, 3, and 4, the version is `4`\.  | 2 | 
-|  account\-id  |  The AWS account ID for the flow log\.  | 2 | 
+|  account\-id  |  The AWS account ID of the owner of the source network interface for which traffic is recorded\. If the network interface is created by an AWS service, for example when creating a VPC endpoint or Network Load Balancer, the record may display `unknown` for this field\.  | 2 | 
 |  interface\-id  |  The ID of the network interface for which the traffic is recorded\.  | 2 | 
 |  srcaddr  |  The source address for incoming traffic, or the IPv4 or IPv6 address of the network interface for outgoing traffic on the network interface\. The IPv4 address of the network interface is always its private IPv4 address\. See also pkt\-srcaddr\.  | 2 | 
 |  dstaddr  |  The destination address for outgoing traffic, or the IPv4 or IPv6 address of the network interface for incoming traffic on the network interface\. The IPv4 address of the network interface is always its private IPv4 address\. See also pkt\-dstaddr\.  | 2 | 

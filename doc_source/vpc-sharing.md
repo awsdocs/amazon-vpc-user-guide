@@ -95,13 +95,14 @@ In a shared VPC, each participant pays for their application resources including
 
 Participants cannot create resources for the following services in a shared subnet::
 + AWS CloudHSM Classic
++ AWS Transit Gateways
 
 ## Limitations<a name="vpc-share-limitations"></a>
 
 The following limitations apply to working with VPC sharing:
 + Owners can share subnets only with other accounts or organizational units that are in the same organization from AWS Organizations\.
 + Owners cannot share subnets that are in a default VPC\.
-+ Participants cannot launch resources using security groups that are owned by other participants or the owner\.
++ Participants cannot launch resources using security groups that are owned by other participants that share the VPC, or the VPC owner\.
 + Participants cannot launch resources using the default security group for the VPC because it belongs to the owner\.
 + Owners cannot launch resources using security groups that are owned by other participants\.
 + Service quotas apply per individual account\. For more information about service quotas, see [AWS service quotas](https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html) in the *Amazon Web Services General Reference*\.

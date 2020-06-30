@@ -18,9 +18,6 @@ The following procedures are for manually creating a VPC and subnets\. You also 
 
 You can create an empty VPC using the Amazon VPC console\.
 
-**Note**  
-[Bring your own IP addresses](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html) \(BYOIP\) for IPv6 is available as a preview only\.
-
 **To create a VPC using the console**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
@@ -120,9 +117,6 @@ After you've added the IPv4 CIDR blocks that you need, you can create subnets\. 
 ## Associating an IPv6 CIDR block with your VPC<a name="vpc-associate-ipv6-cidr"></a>
 
 You can associate an IPv6 CIDR block with any existing VPC\. The VPC must not have an existing IPv6 CIDR block associated with it\. 
-
-**Note**  
-[Bring your own IP addresses](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html) \(BYOIP\) for IPv6 is available as a preview only\.
 
 **To associate an IPv6 CIDR block with a VPC using the console**
 
@@ -293,9 +287,23 @@ Alternatively, you can use a command line tool\.
 
 ## Deleting your VPC<a name="VPC_Deleting"></a>
 
-You can delete your VPC at any time\. However, you must terminate all instances in the VPC, and delete any VPC peering connections first\. When you delete a VPC using the VPC console, we delete all its components, such as subnets, security groups, network ACLs, route tables, internet gateways, and DHCP options\.
+To delete a VPC using the VPC console, you must first terminate or delete the following components:
++ All instances in the VPC
++ VPC peering connections
++ Interface endpoints
++ NAT gateways
 
-If you have a AWS Site\-to\-Site VPN connection, you don't have to delete it or the other components related to the VPN \(such as the customer gateway and virtual private gateway\)\. If you plan to use the customer gateway with another VPC, we recommend that you keep the Site\-to\-Site VPN connection and the gateways\. Otherwise, your network administrator must configure the customer gateway again after you create a new Site\-to\-Site VPN connection\. 
+When you delete a VPC using the VPC console, we also delete the following VPC components for you:
++ Subnets
++ Security groups
++ Network ACLs
++ Route tables
++ Gateway endpoints
++ Internet gateways
++ Egress\-only internet gateways
++ DHCP options
+
+If you have a AWS Site\-to\-Site VPN connection, you don't have to delete it or the other components related to the VPN \(such as the customer gateway and virtual private gateway\)\. If you plan to use the customer gateway with another VPC, we recommend that you keep the Site\-to\-Site VPN connection and the gateways\. Otherwise, you must configure your customer gateway device again after you create a new Site\-to\-Site VPN connection\. 
 
 **To delete your VPC using the console**
 
@@ -309,9 +317,9 @@ If you have a AWS Site\-to\-Site VPN connection, you don't have to delete it or 
 
 1. Select the VPC to delete and choose **Actions**, **Delete VPC**\.
 
-1. To delete the Site\-to\-Site VPN connection, select the option to do so; otherwise, leave it unselected\. Choose **Delete VPC**\.
+1. If you have a Site\-to\-Site VPN connection, select the option to delete it; otherwise, leave it unselected\. Choose **Delete VPC**\.
 
-Alternatively, you can use a command line tool\. When you delete a VPC using the command line, you must first terminate all instances, and delete or detach all associated resources, including subnets, custom security groups, custom route tables, VPC peering connections, and the internet gateway\.
+Alternatively, you can use a command line tool\. When you delete a VPC using the command line, you must first terminate all instances, and delete or detach all associated resources, including subnets, custom security groups, custom network ACLs, custom route tables, VPC peering connections, endpoints, the NAT gateway, the internet gateway, and the egress\-only internet gateway\.
 
 **To delete a VPC using a command line tool**
 + [delete\-vpc](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-vpc.html) \(AWS CLI\)

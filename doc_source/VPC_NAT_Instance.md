@@ -1,16 +1,19 @@
 # NAT instances<a name="VPC_NAT_Instance"></a>
 
-You can use a network address translation \(NAT\) instance in a public subnet in your VPC to enable instances in the private subnet to initiate outbound IPv4 traffic to the Internet or other AWS services, but prevent the instances from receiving inbound traffic initiated by someone on the Internet\.
+You can use a network address translation \(NAT\) instance in a public subnet in your VPC to enable instances in the private subnet to initiate outbound IPv4 traffic to the internet or other AWS services, but prevent the instances from receiving inbound traffic initiated by someone on the internet\.
 
 For more information about public and private subnets, see [Subnet routing](VPC_Subnets.md#SubnetRouting)\. For more information about NAT, see [NAT](vpc-nat.md)\.
 
-NAT is not supported for IPv6 traffic—use an egress\-only Internet gateway instead\. For more information, see [Egress\-only internet gateways](egress-only-internet-gateway.md)\.
+NAT is not supported for IPv6 traffic—use an egress\-only internet gateway instead\. For more information, see [Egress\-only internet gateways](egress-only-internet-gateway.md)\.
+
+Your NAT instance quota depends on your instance quota for the region\. For more information, see the [EC2 FAQs](http://aws.amazon.com/ec2/faqs/#EC2_On-Demand_Instance_limits)\. 
 
 **Note**  
 You can also use a NAT gateway, which is a managed NAT service that provides better availability, higher bandwidth, and requires less administrative effort\. For common use cases, we recommend that you use a NAT gateway rather than a NAT instance\. For more information, see [NAT gateways](vpc-nat-gateway.md) and [Comparison of NAT instances and NAT gateways](vpc-nat-comparison.md)\.
 
 **Topics**
 + [NAT instance basics](#basics)
++ [NAT instance AMI](#nat-instance-ami)
 + [Setting up the NAT instance](#NATInstance)
 + [Creating the NATSG security group](#NATSG)
 + [Disabling source/destination checks](#EIP_Disable_SrcDestCheck)
@@ -19,28 +22,48 @@ You can also use a NAT gateway, which is a managed NAT service that provides bet
 
 ## NAT instance basics<a name="basics"></a>
 
-The following figure illustrates the NAT instance basics\. The main route table is associated with the private subnet and sends the traffic from the instances in the private subnet to the NAT instance in the public subnet\. The NAT instance sends the traffic to the Internet gateway for the VPC\. The traffic is attributed to the Elastic IP address of the NAT instance\. The NAT instance specifies a high port number for the response; if a response comes back, the NAT instance sends it to an instance in the private subnet based on the port number for the response\. 
+The following figure illustrates the NAT instance basics\. The main route table is associated with the private subnet and sends the traffic from the instances in the private subnet to the NAT instance in the public subnet\. The NAT instance sends the traffic to the internet gateway for the VPC\. The traffic is attributed to the Elastic IP address of the NAT instance\. The NAT instance specifies a high port number for the response; if a response comes back, the NAT instance sends it to an instance in the private subnet based on the port number for the response\. 
 
 ![\[NAT instance setup\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/nat-instance-diagram.png)
 
-Amazon provides Amazon Linux AMIs that are configured to run as NAT instances\. These AMIs include the string `amzn-ami-vpc-nat` in their names, so you can search for them in the Amazon EC2 console\. 
+## NAT instance AMI<a name="nat-instance-ami"></a>
+
+Amazon provides Amazon Linux AMIs that are configured to run as NAT instances\. These AMIs include the string `amzn-ami-vpc-nat` in their names, so that you can identify them in the Amazon EC2 console or search for them using the AWS CLI\.
 
 When you launch an instance from a NAT AMI, the following configuration occurs on the instance:
 + IPv4 forwarding is enabled and ICMP redirects are disabled in `/etc/sysctl.d/10-nat-settings.conf`
 + A script located at `/usr/sbin/configure-pat.sh` runs at startup and configures iptables IP masquerading\. 
 
-**Note**  
-We recommend that you always use the latest version of the NAT AMI to take advantage of configuration updates\.   
-We recommend that you review[ Security in Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security.html) in the *Amazon EC2 User Guide for Linux Instances*\.  
-If you add and remove secondary IPv4 CIDR blocks on your VPC, ensure that you use AMI version `amzn-ami-vpc-nat-hvm-2017.03.1.20170623-x86_64-ebs` or later\. 
+For information about Amazon Linux support, see [Amazon Linux AMI FAQs](https://aws.amazon.com/amazon-linux-ami/faqs/)\.
 
-Your NAT instance quota depends on your instance quota for the region\. For more information, see the [EC2 FAQs](http://aws.amazon.com/ec2/faqs/#EC2_On-Demand_Instance_limits)\. For a list of available NAT AMIs, see the [Amazon Linux AMI matrix](http://aws.amazon.com/amazon-linux-ami/)\.
+**Important**  
+We recommend that you always use the latest version of the NAT AMI, and that you update your existing NAT instance take advantage of configuration and security updates\. 
 
-For information about Amazon Linux support, see [Amazon Linux AMI FAQs](https://aws.amazon.com/amazon-linux-ami/faqs/)
+### Getting the ID of a NAT AMI<a name="get-nat-ami-id"></a>
+
+We recommend that you use the latest Amazon Linux AMI 2018\.03\. For a list of AMI IDs, see the [Amazon Linux AMI 2018\.03 release notes](https://aws.amazon.com/amazon-linux-ami/2018.03-release-notes/)\. Look for the AMI that includes the string `amzn-ami-vpc-nat` in its name, and copy its ID\. 
+
+Alternatively, you can use the AWS CLI\. Use the `describe-images` command, and use filters to return results only for AMIs that are owned by Amazon, and that have the `amzn-ami-vpc-nat-2018.03` string in their names\. The following example uses the [`--query` parameter](https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-output.html#cli-usage-output-filter) to display only the AMI ID, name, and creation date in the output to help you quickly identify the most recent AMI\.
+
+```
+aws ec2 describe-images --filter Name="owner-alias",Values="amazon" --filter Name="name",Values="amzn-ami-vpc-nat-2018.03*" --query "Images[*].[ImageId,Name,CreationDate]"
+```
+
+### Updating your existing NAT instance<a name="update-nat-instance"></a>
+
+If you already have a NAT instance, run the following command to apply security updates on the instance\.
+
+```
+sudo yum update --security
+```
+
+You can also use AWS Systems Manager Patch Manager to automate the process of installing security\-related updates\. For more information, see [AWS Systems Manager Patch Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-patch.html) in the *AWS Systems Manager User Guide*\.
 
 ## Setting up the NAT instance<a name="NATInstance"></a>
 
 You can use the VPC wizard to set up a VPC with a NAT instance; for more information, see [VPC with public and private subnets \(NAT\)](VPC_Scenario2.md)\. The wizard performs many of the configuration steps for you, including launching a NAT instance, and setting up the routing\. However, if you prefer, you can create and configure a VPC and a NAT instance manually using the steps below\. 
+
+Before you begin, get the ID of an AMI that's configured to run as a NAT instance\. For more information, see [Getting the ID of a NAT AMI](#get-nat-ami-id)\.
 
 1. Create a VPC with two subnets\.
 **Note**  
@@ -50,19 +73,19 @@ The steps below are for manually creating and configuring a VPC; not for creatin
 
    1. Create two subnets \(see [Creating a subnet](VPC_Internet_Gateway.md#Add_IGW_Create_Subnet)\)
 
-   1. Attach an Internet gateway to the VPC \(see [Creating and attaching an internet gateway](VPC_Internet_Gateway.md#Add_IGW_Attach_Gateway)\)
+   1. Attach an internet gateway to the VPC \(see [Creating and attaching an internet gateway](VPC_Internet_Gateway.md#Add_IGW_Attach_Gateway)\)
 
-   1. Create a custom route table that sends traffic destined outside the VPC to the Internet gateway, and then associate it with one subnet, making it a public subnet \(see [Creating a custom route table](VPC_Internet_Gateway.md#Add_IGW_Routing)\)
+   1. Create a custom route table that sends traffic destined outside the VPC to the internet gateway, and then associate it with one subnet, making it a public subnet \(see [Creating a custom route table](VPC_Internet_Gateway.md#Add_IGW_Routing)\)
 
 1. Create the NATSG security group \(see [Creating the NATSG security group](#NATSG)\)\. You'll specify this security group when you launch the NAT instance\.
 
-1. Launch an instance into your public subnet from an AMI that's been configured to run as a NAT instance\. Amazon provides Amazon Linux AMIs that are configured to run as NAT instances\. These AMIs include the string `amzn-ami-vpc-nat` in their names, so you can search for them in the Amazon EC2 console\.
+1. Launch an instance into your public subnet from an AMI that's been configured to run as a NAT instance\.
 
    1. Open the Amazon EC2 console\.
 
    1. On the dashboard, choose the **Launch Instance** button, and complete the wizard as follows:
 
-      1. On the **Choose an Amazon Machine Image \(AMI\)** page, select the **Community AMIs** category, and search for `amzn-ami-vpc-nat`\. In the results list, each AMI's name includes the version to enable you to select the most recent AMI, for example, `2013.09`\. Choose **Select**\.
+      1. On the **Choose an Amazon Machine Image \(AMI\)** page, select the **Community AMIs** category\. In the search field, enter the ID of the AMI [that you identified earlier](#get-nat-ami-id)\. Choose **Select**\.
 
       1. On the **Choose an Instance Type** page, select the instance type, then choose **Next: Configure Instance Details**\.
 
@@ -96,34 +119,30 @@ The steps below are for manually creating and configuring a VPC; not for creatin
 
 ### Launching a NAT instance using the command line<a name="launch-nat-instance-cli"></a>
 
-To launch a NAT instance into your subnet, use one of the following commands\. For more information, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+To launch a NAT instance into your subnet, use one of the following commands\. For more information, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\. To get the ID of an AMI that's configured to run as a NAT instance, see [Getting the ID of a NAT AMI](#get-nat-ami-id)\.
 + [run\-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html) \(AWS CLI\)
 + [New\-EC2Instance](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Instance.html) \(AWS Tools for Windows PowerShell\)
 
-To get the ID of an AMI that's configured to run as a NAT instance, use a command to describe images, and use filters to return results only for AMIs that are owned by Amazon, and that have the `amzn-ami-vpc-nat` string in their names\. The following example uses the AWS CLI:
-
-```
-aws ec2 describe-images --filter Name="owner-alias",Values="amazon" --filter Name="name",Values="amzn-ami-vpc-nat*" 
-```
-
 ## Creating the NATSG security group<a name="NATSG"></a>
 
-Define the NATSG security group as described in the following table to enable your NAT instance to receive Internet\-bound traffic from instances in a private subnet, as well as SSH traffic from your network\. The NAT instance can also send traffic to the Internet, which enables the instances in the private subnet to get software updates\. 
+Define the NATSG security group as described in the following table to enable your NAT instance to receive internet\-bound traffic from instances in a private subnet, as well as SSH traffic from your network\. The NAT instance can also send traffic to the internet, which enables the instances in the private subnet to get software updates\. 
 
 
 **NATSG: recommended rules**  
 
-|  | 
+| 
+| 
+| `Inbound` | 
 | --- |
-| Inbound | 
 |  Source  |  Protocol  |  Port range  |  Comments  | 
 |  `10.0.1.0/24`  |  TCP  |  80  |  Allow inbound HTTP traffic from servers in the private subnet  | 
 |  `10.0.1.0/24`  |  TCP  |  443  |  Allow inbound HTTPS traffic from servers in the private subnet  | 
-|  Public IP address range of your home network   |  TCP  |  22  |  Allow inbound SSH access to the NAT instance from your home network \(over the Internet gateway\)  | 
+|  Public IP address range of your home network   |  TCP  |  22  |  Allow inbound SSH access to the NAT instance from your home network \(over the internet gateway\)  | 
 |   `Outbound`   | 
+| --- |
 |  Destination  |  Protocol  |  Port range  |  Comments  | 
-|  `0.0.0.0/0`  |  TCP  |  80  |  Allow outbound HTTP access to the Internet  | 
-|  `0.0.0.0/0`  |  TCP  |  443  |  Allow outbound HTTPS access to the Internet  | 
+|  `0.0.0.0/0`  |  TCP  |  80  |  Allow outbound HTTP access to the internet  | 
+|  `0.0.0.0/0`  |  TCP  |  443  |  Allow outbound HTTPS access to the internet  | 
 
 **To create the NATSG security group**
 
@@ -185,7 +204,7 @@ You can use one of the following commands\. For more information, see [Accessing
 
 ## Updating the main route table<a name="nat-routing-table"></a>
 
-The private subnet in your VPC is not associated with a custom route table, therefore it uses the main route table\. By default, the main route table enables the instances in your VPC to communicate with each other\. You must add route that sends all other subnet traffic to the NAT instance\.
+The private subnet in your VPC is not associated with a custom route table, therefore it uses the main route table\. By default, the main route table enables the instances in your VPC to communicate with each other\. You must add a route that sends all other subnet traffic to the NAT instance\.
 
 **To update the main route table**
 
@@ -197,13 +216,13 @@ The private subnet in your VPC is not associated with a custom route table, ther
 
 1. On the **Routes** tab, choose **Edit**, specify `0.0.0.0/0` in the **Destination** box, select the instance ID of the NAT instance from the **Target** list, and then choose **Save**\. 
 
-1. On the **Subnet Associations** tab, choose **Edit**, and then select the **Associate** check box for the subnet\. Choose **Save**\.
+1. On the **Subnet Associations** tab, choose **Edit**, and then select the **Associate** check box for the private subnet\. Choose **Save**\.
 
 For more information, see [Route tables](VPC_Route_Tables.md)\.
 
 ## Testing your NAT instance configuration<a name="nat-test-configuration"></a>
 
-After you have launched a NAT instance and completed the configuration steps above, you can perform a test to check if an instance in your private subnet can access the Internet through the NAT instance by using the NAT instance as a bastion server\. To do this, update your NAT instance's security group rules to allow inbound and outbound ICMP traffic and allow outbound SSH traffic, launch an instance into your private subnet, configure SSH agent forwarding to access instances in your private subnet, connect to your instance, and then test the Internet connectivity\.
+After you have launched a NAT instance and completed the configuration steps above, you can perform a test to check if an instance in your private subnet can access the internet through the NAT instance by using the NAT instance as a bastion server\. To do this, update your NAT instance's security group rules to allow inbound and outbound ICMP traffic and allow outbound SSH traffic, launch an instance into your private subnet, configure SSH agent forwarding to access instances in your private subnet, connect to your instance, and then test the internet connectivity\.
 
 **To update your NAT instance's security group**
 
@@ -265,9 +284,9 @@ After you have launched a NAT instance and completed the configuration steps abo
 
 1. Start a PuTTY session to connect to your NAT instance\. In the **Auth** category, ensure that you select the **Allow agent forwarding** option, and leave the **Private key file for authentication** field blank\.
 
-**To test the Internet connection**
+**To test the internet connection**
 
-1. Test that your NAT instance can communicate with the Internet by running the `ping` command for a website that has ICMP enabled; for example:
+1. Test that your NAT instance can communicate with the internet by running the `ping` command for a website that has ICMP enabled; for example:
 
    ```
    ping ietf.org
@@ -288,7 +307,7 @@ After you have launched a NAT instance and completed the configuration steps abo
    ssh ec2-user@10.0.1.123
    ```
 
-1. From your private instance, test that you can connect to the Internet by running the `ping` command:
+1. From your private instance, test that you can connect to the internet by running the `ping` command:
 
    ```
    ping ietf.org

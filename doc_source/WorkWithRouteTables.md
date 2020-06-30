@@ -100,7 +100,7 @@ For more information about working with static routes for a Site\-to\-Site VPN c
 
 1. Choose **Actions**, **Edit routes**\.
 
-1. To add a route, choose **Add route**\. For **Destination** enter the destination CIDR block or a single IP address\. 
+1. To add a route, choose **Add route**\. For **Destination** enter the destination CIDR block, a single IP address, or the ID of a prefix list\. 
 
 1. To modify an existing route, for **Destination**, replace the destination CIDR block or single IP address\. For **Target**, choose a target\.
 

@@ -14,6 +14,7 @@ You might set up network ACLs with rules similar to your security groups in orde
 + [Security group rules](#SecurityGroupRules)
 + [Differences between security groups for EC2\-Classic and EC2\-VPC](#VPC_Security_Group_Differences)
 + [Working with security groups](#WorkingWithSecurityGroups)
++ [Centrally manage VPC security groups using AWS Firewall Manager](#aws-firewall-manager)
 
 ## Security group basics<a name="VPCSecurityGroups"></a>
 
@@ -33,6 +34,7 @@ Some types of traffic are tracked differently from other types\. For more inform
   + Names and descriptions are limited to the following characters: a\-z, A\-Z, 0\-9, spaces, and \.\_\-:/\(\)\#,@\[\]\+=&;\{\}\!$\*\.
   + A security group name cannot start with `sg-` as these indicate a default security group\.
   + A security group name must be unique within the VPC\.
++ A security group can only be used in the VPC that you specify when you create the security group\.
 
 ## Default security group for your VPC<a name="DefaultSecurityGroup"></a>
 
@@ -44,12 +46,14 @@ If you launch an instance in the Amazon EC2 console, the launch instance wizard 
 The following table describes the default rules for a default security group\.
 
 
-|  | 
-| --- |
+| 
+| 
 | Inbound | 
+| --- |
 |  Source  |  Protocol  |  Port range  |  Description  | 
 |  The security group ID \(sg\-*xxxxxxxx*\)  |  All  |  All  |  Allow inbound traffic from network interfaces \(and their associated instances\) that are assigned to the same security group\.  | 
 |   Outbound   | 
+| --- |
 |  Destination  |  Protocol  |  Port range  |  Description  | 
 |  0\.0\.0\.0/0  |  All  |  All  |  Allow all outbound IPv4 traffic\.  | 
 | ::/0 | All | All | Allow all outbound IPv6 traffic\. This rule is added by default if you create a VPC with an IPv6 CIDR block or if you associate an IPv6 CIDR block with your existing VPC\.  | 
@@ -66,11 +70,11 @@ If you've modified the outbound rules for your security group, we do not automat
 You can add or remove rules for a security group \(also referred to as *authorizing* or *revoking* inbound or outbound access\)\. A rule applies either to inbound traffic \(ingress\) or outbound traffic \(egress\)\. You can grant access to a specific CIDR range, or to another security group in your VPC or in a peer VPC \(requires a VPC peering connection\)\.
 
 The following are the basic parts of a security group rule in a VPC:
-+ \(Inbound rules only\) The source of the traffic and the destination port or port range\. The source can be another security group, an IPv4 or IPv6 CIDR block, or a single IPv4 or IPv6 address\.
-+ \(Outbound rules only\) The destination for the traffic and the destination port or port range\. The destination can be another security group, an IPv4 or IPv6 CIDR block, a single IPv4 or IPv6 address, or a prefix list ID \(a service is identified by a prefix list—the name and ID of a service for a Region\)\.
++ \(Inbound rules only\) The source of the traffic and the destination port or port range\. The source can be another security group, an IPv4 or IPv6 CIDR block, a single IPv4 or IPv6 address, or a prefix list ID\.
++ \(Outbound rules only\) The destination for the traffic and the destination port or port range\. The destination can be another security group, an IPv4 or IPv6 CIDR block, a single IPv4 or IPv6 address, or a prefix list ID\.
 + Any protocol that has a standard protocol number \(for a list, see [Protocol Numbers](http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml)\)\. If you specify ICMP as the protocol, you can specify any or all of the ICMP types and codes\.
 + An optional description for the security group rule to help you identify it later\. A description can be up to 255 characters in length\. Allowed characters are a\-z, A\-Z, 0\-9, spaces, and \.\_\-:/\(\)\#,@\[\]\+=;\{\}\!$\*\.
-+ If you add a security group rule using the AWS CLI or the API, we automatically set the destination CIDR block to the canonical form\. For example, if you specify 100\.68\.0\.18/18 for the CIDR block, we create a rule with a CIDR block of 100\.68\.0\.0/18\. 
++ If you add a security group rule using the AWS CLI or the API, we automatically set the source or destination CIDR block to the canonical form\. For example, if you specify 100\.68\.0\.18/18 for the CIDR block, we create a rule with a CIDR block of 100\.68\.0\.0/18\. 
 
 When you specify a CIDR block as the source for a rule, traffic is allowed from the specified addresses for the specified protocol and port\.
 
@@ -85,9 +89,10 @@ When you add or remove rules, they are automatically applied to all instances as
 The kind of rules that you add can depend on the purpose of the security group\. The following table describes example rules for a security group that's associated with web servers\. The web servers can receive HTTP and HTTPS traffic from all IPv4 and IPv6 addresses, and can send SQL or MySQL traffic to a database server\.
 
 
-|  | 
-| --- |
+| 
+| 
 | Inbound | 
+| --- |
 |  Source  |  Protocol  |  Port range  |  Description  | 
 |  0\.0\.0\.0/0  |  TCP  |  80  |  Allow inbound HTTP access from all IPv4 addresses  | 
 | ::/0 | TCP | 80 | Allow inbound HTTP access from all IPv6 addresses | 
@@ -96,6 +101,7 @@ The kind of rules that you add can depend on the purpose of the security group\.
 |  Your network's public IPv4 address range  |  TCP  |  22  |  Allow inbound SSH access to Linux instances from IPv4 IP addresses in your network \(over the internet gateway\)  | 
 |  Your network's public IPv4 address range  |  TCP  |  3389  |  Allow inbound RDP access to Windows instances from IPv4 IP addresses in your network \(over the internet gateway\)  | 
 |   Outbound   | 
+| --- |
 |  Destination  |  Protocol  |  Port range  |  Description  | 
 |  The ID of the security group for your Microsoft SQL Server database servers  |  TCP  |  1433  |  Allow outbound Microsoft SQL Server access to instances in the specified security group  | 
 |  The ID of the security group for your MySQL database servers  |  TCP  |  3306  |  Allow outbound MySQL access to instances in the specified security group  | 
@@ -174,7 +180,7 @@ If you have a VPC peering connection, you can reference security groups from the
 
 1. Choose **Actions**, **Edit inbound rules** or **Actions**, **Edit outbound rules**\.
 
-1. For **Type**, select the traffic type, and then fill in the required information\. For example, for a public web server, choose **HTTP** or **HTTPS** and specify a value for **Source** as `0.0.0.0/0`\. 
+1. Choose **Add rule**\. For **Type**, select the traffic type, and then specify the source \(inbound rules\) or destination \(outbound rules\)\. For example, for a public web server, choose **HTTP** or **HTTPS** and specify a value for **Source** as `0.0.0.0/0`\. 
 
    If you use `0.0.0.0/0`, you enable all IPv4 addresses to access your instance using HTTP or HTTPS\. To restrict access, enter a specific IP address or range of addresses\.
 
@@ -299,3 +305,18 @@ If you assigned this security group to any instances, you must assign these inst
 1. Choose the `2009-07-15-default` security group, then choose **Security Group Actions**, **Delete Security Group**\.
 
 1. In the **Delete Security Group** dialog box, choose **Yes, Delete**\.
+
+## Centrally manage VPC security groups using AWS Firewall Manager<a name="aws-firewall-manager"></a>
+
+AWS Firewall Manager simplifies your VPC security groups administration and maintenance tasks across multiple accounts and resources\. With Firewall Manager, you can configure and audit your security groups for your organization from a single central administrator account\. Firewall Manager automatically applies the rules and protections across your accounts and resources, even as you add new resources\. Firewall Manager is particularly useful when you want to protect your entire organization, or if you frequently add new resources that you want to protect from a central administrator account\.
+
+You can use Firewall Manager to centrally manage security groups in the following ways:
++ **Configure common baseline security groups across your organization**: You can use a common security group policy to provide a centrally controlled association of security groups to accounts and resources across your organization\. You specify where and how to apply the policy in your organization\.
++ **Audit existing security groups in your organization**: You can use an audit security group policy to check the existing rules that are in use in your organization's security groups\. You can scope the policy to audit all accounts, specific accounts, or resources tagged within your organization\. Firewall Manager automatically detects new accounts and resources and audits them\. You can create audit rules to set guardrails on which security group rules to allow or disallow within your organization, and to check for unused or redundant security groups\. 
++ **Get reports on non\-compliant resources and remediate them**: You can get reports and alerts for non\-compliant resources for your baseline and audit policies\. You can also set auto\-remediation workflows to remediate any non\-compliant resources that Firewall Manager detects\.
+
+To learn more about using Firewall Manager to manage your security groups, see the following topics in the *AWS WAF Developer Guide*:
++ [AWS Firewall Manager prerequisites](https://docs.aws.amazon.com/waf/latest/developerguide/fms-prereq.html)
++ [Getting started with AWS Firewall Manager Amazon VPC security group policies](https://docs.aws.amazon.com/waf/latest/developerguide/getting-started-fms-security-group.html)
++ [How security group policies work in AWS Firewall Manager](https://docs.aws.amazon.com/waf/latest/developerguide/security-group-policies.html)
++ [Security group policy use cases](https://docs.aws.amazon.com/waf/latest/developerguide/security-group-policies-use-cases.html)

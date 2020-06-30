@@ -1,15 +1,16 @@
 # VPC networking components<a name="VPC_Networking"></a>
 
-You can use the following components to configure networking in your VPC:
+You can use the following components to configure networking in your VPC\.
 
-**Networking Components**
-+ [Network Interfaces](VPC_ElasticNetworkInterfaces.md)
+**Topics**
++ [Elastic network interfaces](VPC_ElasticNetworkInterfaces.md)
 + [Route tables](VPC_Route_Tables.md)
-+ [Internet Gateways](VPC_Internet_Gateway.md)
-+ [Egress\-Only Internet Gateways](egress-only-internet-gateway.md)
-+ [DHCP Options Sets](VPC_DHCP_Options.md)
-+ [DNS](vpc-dns.md)
-+ [Elastic IP Addresses](vpc-eips.md)
++ [Managed prefix lists](managed-prefix-lists.md)
++ [Internet gateways](VPC_Internet_Gateway.md)
++ [Egress\-only internet gateways](egress-only-internet-gateway.md)
 + [NAT](vpc-nat.md)
++ [DHCP options sets](VPC_DHCP_Options.md)
++ [Using DNS with your VPC](vpc-dns.md)
 + [VPC peering](vpc-peering.md)
++ [Elastic IP addresses](vpc-eips.md)
 + [ClassicLink](vpc-classiclink.md)

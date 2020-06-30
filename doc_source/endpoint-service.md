@@ -46,6 +46,8 @@ In the following diagram, the owner of VPC B is the service provider, and it has
 
 ![\[Using interface endpoints to access an endpoint service\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-service-multi-az.png)
 
+For examples of configuring a service and enabling service consumers to access it over a VPC peering connection, see [Examples: Services using AWS PrivateLink and VPC peering](vpc-peer-region-example.md)\.
+
 ## Endpoint service Availability Zone considerations<a name="vpce-endpoint-service-availability-zones"></a>
 
 When you create an endpoint service, the service is created in the Availability Zone that is mapped to your account and is independent from other accounts\. When the service provider and the consumer are in different accounts, use the Availability Zone ID to uniquely and consistently identify the endpoint service Availability Zone\. For example, `use1-az1` is an AZ ID for the `us-east-1` Region and maps to the same location in every AWS account\. For information about Availability Zone IDs, see [AZ IDs for Your Resources](https://docs.aws.amazon.com/ram/latest/userguide/working-with-az-ids.html) in the *AWS RAM User Guide* or use [describe\-availability\-zones](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-availability-zones.html)\. 

@@ -2,7 +2,7 @@
 
 To create and set up a gateway endpoint, follow these general steps:
 
-1. Specify the VPC in which to create the endpoint, and the service to which you're connecting\. A service is identified by a *prefix list*—the name and ID of a service for a Region\. A prefix list ID uses the form `pl-xxxxxxx` and a prefix list name uses the form "com\.amazonaws\.*region*\.*service*"\. Use the prefix list name \(service name\) to create an endpoint\.
+1. Specify the VPC in which to create the endpoint, and the service to which you're connecting\. A service is identified by an AWS\-managed *prefix list*—the name and ID of a service for a Region\. An AWS prefix list ID uses the form `pl-xxxxxxx` and an AWS prefix list name uses the form "com\.amazonaws\.*region*\.*service*"\. Use the AWS prefix list name \(service name\) to create an endpoint\.
 
 1. Attach an *endpoint policy* to your endpoint that allows access to some or all of the service to which you're connecting\. For more information, see [Using VPC endpoint policies](vpc-endpoints-access.md#vpc-endpoint-policies)\. 
 
@@ -33,7 +33,7 @@ There is no additional charge for using gateway endpoints\. Standard charges for
 
 ## Routing for gateway endpoints<a name="vpc-endpoints-routing"></a>
 
-When you create or modify an endpoint, you specify the VPC route tables that are used to access the service via the endpoint\. A route is automatically added to each of the route tables with a destination that specifies the prefix list ID of the service \(`pl-xxxxxxxx`\), and a target with the endpoint ID \(`vpce-xxxxxxxx`\); for example:
+When you create or modify an endpoint, you specify the VPC route tables that are used to access the service via the endpoint\. A route is automatically added to each of the route tables with a destination that specifies the AWS prefix list ID of the service \(`pl-xxxxxxxx`\), and a target with the endpoint ID \(`vpce-xxxxxxxx`\); for example:
 
 
 ****  
@@ -43,7 +43,7 @@ When you create or modify an endpoint, you specify the VPC route tables that are
 | 10\.0\.0\.0/16 | Local | 
 | pl\-1a2b3c4d | vpce\-11bb22cc | 
 
-The prefix list ID logically represents the range of public IP addresses used by the service\. All instances in subnets associated with the specified route tables automatically use the endpoint to access the service\. Subnets that are not associated with the specified route tables do not use the endpoint\. This enables you to keep resources in other subnets separate from your endpoint\. 
+The AWS prefix list ID logically represents the range of public IP addresses used by the service\. All instances in subnets associated with the specified route tables automatically use the endpoint to access the service\. Subnets that are not associated with the specified route tables do not use the endpoint\. This enables you to keep resources in other subnets separate from your endpoint\. 
 
 To view the current public IP address range for a service, you can use the [describe\-prefix\-lists](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-prefix-lists.html) command\.
 
@@ -108,7 +108,7 @@ To ensure that all traffic destined for Amazon S3 in the same Region is routed v
 ## Gateway endpoint limitations<a name="vpc-endpoints-limitations"></a>
 
 To use gateway endpoints, you need to be aware of the current limitations:
-+ You cannot use a prefix list ID in an outbound rule in a network ACL to allow or deny outbound traffic to the service specified in an endpoint\. If your network ACL rules restrict traffic, you must specify the CIDR block \(IP address range\) for the service instead\. You can, however, use a prefix list ID in an outbound security group rule\. For more information, see [Security groups](vpc-endpoints-access.md#vpc-endpoints-security-groups)\. 
++ You cannot use an AWS prefix list ID in an outbound rule in a network ACL to allow or deny outbound traffic to the service specified in an endpoint\. If your network ACL rules restrict traffic, you must specify the CIDR block \(IP address range\) for the service instead\. You can, however, use an AWS prefix list ID in an outbound security group rule\. For more information, see [Security groups](vpc-endpoints-access.md#vpc-endpoints-security-groups)\. 
 + Endpoints are supported within the same Region only\. You cannot create an endpoint between a VPC and a service in a different Region\.
 + Endpoints support IPv4 traffic only\.
 + You cannot transfer an endpoint from one VPC to another, or from one service to another\.
@@ -116,7 +116,6 @@ To use gateway endpoints, you need to be aware of the current limitations:
 + Endpoint connections cannot be extended out of a VPC\. Resources on the other side of a VPN connection, VPC peering connection, transit gateway, AWS Direct Connect connection, or ClassicLink connection in your VPC cannot use the endpoint to communicate with resources in the endpoint service\. 
 + You must enable DNS resolution in your VPC, or if you're using your own DNS server, ensure that DNS requests to the required service \(such as Amazon S3\) are resolved correctly to the IP addresses maintained by AWS\. For more information, see [Using DNS with your VPC](vpc-dns.md) and [AWS IP Address Ranges](https://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html) in the *Amazon Web Services General Reference*\.
 + Review the service\-specific limits for your endpoint service\.
-+ 
 
 For more information about rules and limitations that are specific to Amazon S3, see [Endpoints for Amazon S3](vpc-endpoints-s3.md)\.
 
@@ -154,7 +153,7 @@ After you've created an endpoint, you can view information about it\.
 
 1. In the navigation pane, choose **Endpoints** and select your endpoint\.
 
-1. To view information about the endpoint, choose **Summary**\. You can get the prefix list name for the service in the **Service** box\.
+1. To view information about the endpoint, choose **Summary**\. You can get the AWS prefix list name for the service in the **Service** box\.
 
 1. To view information about the route tables that are used by the endpoint, choose **Route Tables**\. 
 
@@ -225,7 +224,7 @@ If the VPC security group associated with your instance restricts outbound traff
 
  For more information about security groups, see [Security groups for your VPC](VPC_SecurityGroups.md)\.
 
-**To get the prefix list name, ID, and IP address range for an AWS service using the command line or API**
+**To get the AWS prefix list name, ID, and IP address range for an AWS service using the command line or API**
 + [describe\-prefix\-lists](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-prefix-lists.html) \(AWS CLI\)
 + [Get\-EC2PrefixList](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2PrefixList.html) \(AWS Tools for Windows PowerShell\)
 + [DescribePrefixLists](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-DescribePrefixLists.html) \(Amazon EC2 Query API\)

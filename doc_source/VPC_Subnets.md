@@ -18,15 +18,22 @@ A virtual private cloud \(VPC\) is a virtual network dedicated to your AWS accou
 
 When you create a VPC, you must specify a range of IPv4 addresses for the VPC in the form of a Classless Inter\-Domain Routing \(CIDR\) block; for example, `10.0.0.0/16`\. This is the primary CIDR block for your VPC\. For more information about CIDR notation, see [RFC 4632](https://tools.ietf.org/html/rfc4632)\.
 
-The following diagram shows a new VPC with an IPv4 CIDR block, and the main route table\.
+The following diagram shows a new VPC with an IPv4 CIDR block\.
 
 ![\[VPC with the main route table\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-diagram.png)
+
+The main route table has the following routes\.
+
+
+| Destination | Target | 
+| --- | --- | 
+| 10\.0\.0\.0/16 | local | 
 
 A VPC spans all of the Availability Zones in the Region\. After creating a VPC, you can add one or more subnets in each Availability Zone\. You can optionally add subnets in a Local Zone, which is an AWS infrastructure deployment that places compute, storage, database, and other select services closer to your end users\. A Local Zone enables your end users to run applications that require single\-digit millisecond latencies\. For information about the Regions that support Local Zones, see [Available Regions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions) in the *Amazon EC2 User Guide for Linux Instances*\. When you create a subnet, you specify the CIDR block for the subnet, which is a subset of the VPC CIDR block\. Each subnet must reside entirely within one Availability Zone and cannot span zones\. Availability Zones are distinct locations that are engineered to be isolated from failures in other Availability Zones\. By launching instances in separate Availability Zones, you can protect your applications from the failure of a single location\. We assign a unique ID to each subnet\.
 
 You can also optionally assign an IPv6 CIDR block to your VPC, and assign IPv6 CIDR blocks to your subnets\.
 
-The following diagram shows a VPC that has been configured with subnets in multiple Availability Zones\. 1A, 1B, 2A, and 3A are instances in your VPC\. An IPv6 CIDR block is associated with the VPC, and an IPv6 CIDR block is associated with subnet 1\. An internet gateway enables communication over the internet, and a virtual private network \(VPN\) connection enables communication with your corporate network\.
+The following diagram shows a VPC that has been configured with subnets in multiple Availability Zones\. 1A, 2A, and 3A are instances in your VPC\. An IPv6 CIDR block is associated with the VPC, and an IPv6 CIDR block is associated with subnet 1\. An internet gateway enables communication over the internet, and a virtual private network \(VPN\) connection enables communication with your corporate network\.
 
 ![\[VPC with multiple Availability Zones\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/subnets-diagram.png)
 
@@ -106,6 +113,8 @@ The first four IP addresses and the last IP address in each subnet CIDR block ar
 + `10.0.0.2`: Reserved by AWS\. The IP address of the DNS server is the base of the VPC network range plus two\. For VPCs with multiple CIDR blocks, the IP address of the DNS server is located in the primary CIDR\. We also reserve the base of each subnet range plus two for all CIDR blocks in the VPC\. For more information, see [Amazon DNS server](VPC_DHCP_Options.md#AmazonDNS)\.
 + `10.0.0.3`: Reserved by AWS for future use\.
 + `10.0.0.255`: Network broadcast address\. We do not support broadcast in a VPC, therefore we reserve this address\. 
+
+If you create a VPC or subnet using a command line tool or the Amazon EC2 API, the CIDR block is automatically modified to its canonical form\. For example, if you specify `100.68.0.18/18` for the CIDR block, we create a CIDR block of `100.68.0.0/18`\.
 
 ### Adding IPv4 CIDR blocks to a VPC<a name="vpc-resize"></a>
 

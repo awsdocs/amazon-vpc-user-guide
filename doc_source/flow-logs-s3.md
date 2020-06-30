@@ -70,7 +70,7 @@ An IAM principal in your account, such as an IAM user, must have sufficient perm
 
 By default, Amazon S3 buckets and the objects they contain are private\. Only the bucket owner can access the bucket and the objects stored in it\. However, the bucket owner can grant access to other resources and users by writing an access policy\.
 
-If the user creating the flow log owns the bucket, we automatically attach the following policy to the bucket to give the flow log permission to publish logs to it\.
+The following bucket policy gives the flow log permission to publish logs to it\. If the bucket already has a policy with the following permissions, the policy is kept as is\.
 
 ```
 {
@@ -94,6 +94,8 @@ If the user creating the flow log owns the bucket, we automatically attach the f
     ]
 }
 ```
+
+If the user creating the flow log owns the bucket, has `PutBucketPolicy` permissions for the bucket, and the bucket does not have a policy with sufficient log delivery permissions, we automatically attach the preceding policy to the bucket\. This policy overwrites any existing policy attached to the bucket\.
 
 If the user creating the flow log does not own the bucket, or does not have the `GetBucketPolicy` and `PutBucketPolicy` permissions for the bucket, the flow log creation fails\. In this case, the bucket owner must manually add the above policy to the bucket and specify the flow log creator's AWS account ID\. For more information, see [How Do I Add an S3 Bucket Policy?](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/add-bucket-policy.html) in the *Amazon Simple Storage Service Console User Guide*\. If the bucket receives flow logs from multiple accounts, add a `Resource` element entry to the `AWSLogDeliveryWrite` policy statement for each account\. For example, the following bucket policy allows AWS accounts `123123123123` and `456456456456` to publish flow logs to a folder named `flow-logs` in a bucket named `log-bucket`\.
 
