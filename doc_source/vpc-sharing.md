@@ -96,7 +96,7 @@ In a shared VPC, each participant pays for their application resources including
 Participants cannot create resources for the following services in a shared subnet::
 + AWS CloudHSM Classic
 + AWS Transit Gateways
-+ AWS Transfer (with VPC_ENDPOINT)
++ AWS Transfer (with VPC and VPC_ENDPOINT mode)
 
 ## Limitations<a name="vpc-share-limitations"></a>
 
