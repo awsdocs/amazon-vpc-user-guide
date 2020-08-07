@@ -16,4 +16,4 @@ To allow resources that are in Consumer VPC 2 to privately access the service, t
 
 1. Adjust the security groups that are associated with the service instances in Provider VPC 1 so that they allow traffic from Network Load Balancer 2\.
 
-1. Create a VPC endpoint service configuration in Consumer VPC 2 and associate it with Network Load Balancer 2\.
+1. Create a VPC endpoint service configuration in Provider VPC 2 and associate it with Network Load Balancer 2\. The service consumer can then create an interface endpoint in Consumer VPC 2 to the service in Provider VPC 2\.

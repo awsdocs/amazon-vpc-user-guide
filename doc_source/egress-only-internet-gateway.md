@@ -28,7 +28,7 @@ In the following diagram, a VPC has an IPv6 CIDR block, and a subnet in the VPC 
 
 ## Working with egress\-only internet gateways<a name="egress-only-internet-gateway-working-with"></a>
 
-The following sections describe how to create an egress\-only internet gateway for your private subnet, and configure routing for the subnet\. 
+The following sections describe how to create an egress\-only \(outbound\) internet gateway for your private subnet, and to configure routing for the subnet\. 
 
 ### Creating an egress\-only internet gateway<a name="egress-only-internet-gateway-create"></a>
 
@@ -42,7 +42,17 @@ You can create an egress\-only internet gateway for your VPC using the Amazon VP
 
 1. Choose **Create Egress Only Internet Gateway**\.
 
-1. Select the VPC in which to create the egress\-only internet gateway\. Choose **Create**\.
+1. \(Optional\) Add or remove a tag\.
+
+   \[Add a tag\] Choose **Add new tag** and do the following:
+   + For **Key**, enter the key name\.
+   + For **Value**, enter the key value\.
+
+   \[Remove a tag\] Choose **Remove** to the right of the tag’s Key and Value\.
+
+1. Select the VPC in which to create the egress\-only internet gateway\. 
+
+1. Choose **Create**\.
 
 ### Viewing your egress\-only internet gateway<a name="egress-only-internet-gateway-describe"></a>
 
@@ -66,13 +76,13 @@ To send traffic destined outside the VPC to the egress\-only internet gateway, y
 
 1. In the navigation pane, choose **Route Tables**, **Create Route Table**\.
 
-1. In the **Create Route Table** dialog box, optionally name your route table, then select your VPC, and then choose **Yes, Create**\.
+1. In the **Create Route Table** dialog box, optionally name your route table, then select your VPC and choose **Yes, Create**\.
 
 1. Select the custom route table that you just created\. The details pane displays tabs for working with its routes, associations, and route propagation\.
 
 1. On the **Routes** tab, choose **Edit**, specify `::/0` in the **Destination** box, select the egress\-only internet gateway ID in the **Target** list, and then choose **Save**\. 
 
-1. On the **Subnet Associations** tab, choose **Edit** and select the **Associate** check box for the subnet\. Choose **Save**\.
+1. On the **Subnet Associations** tab, choose **Edit**, and select the **Associate** check box for the subnet\. Choose **Save**\.
 
 Alternatively, you can add a route to an existing route table that's associated with your subnet\. Select your existing route table, and follow steps 5 and 6 above to add a route for the egress\-only internet gateway\.
 
@@ -86,7 +96,7 @@ If you no longer need an egress\-only internet gateway, you can delete it\. Any 
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Egress Only Internet Gateways** and select the egress\-only internet gateway\.
+1. In the navigation pane, choose **Egress Only Internet Gateways**, and select the egress\-only internet gateway\.
 
 1. Choose **Delete**\.
 

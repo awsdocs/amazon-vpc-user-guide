@@ -7,6 +7,7 @@ The following topics describe routing for specific gateways or connections in yo
 + [Routing to a NAT device](#route-tables-nat)
 + [Routing to a virtual private gateway](#route-tables-vgw)
 + [Routing to an AWS Outposts local gateway](#route-tables-lgw)
++ [Routing to carrier gateway](#route-tables-cgw)
 + [Routing to a VPC peering connection](#route-tables-vpc-peering)
 + [Routing for ClassicLink](#route-tables-classiclink)
 + [Routing to a gateway VPC endpoint](#route-tables-vpce)
@@ -63,6 +64,16 @@ We currently do not support IPv6 traffic over an AWS Site\-to\-Site VPN connecti
 ## Routing to an AWS Outposts local gateway<a name="route-tables-lgw"></a>
 
 Subnets that are in VPCs associated with AWS Outposts can have an additional target type of a local gateway\. Consider the case where you want to have the local gateway route traffic with a destination address of 192\.168\.10\.0/24 to the customer network\. To do this, add the following route with the destination network and a target of the local gateway \(`lgw-xxxx`\)\.
+
+
+| Destination | Target | 
+| --- | --- | 
+| 192\.168\.10\.0/24 | lgw\-id | 
+| 2002:bc9:1234:1a00::/56 | igw\-id | 
+
+## Routing to carrier gateway<a name="route-tables-cgw"></a>
+
+Subnets that are in Wavelength Zones can have an additional target type of a carrier gateway\. Consider the case where you want to have the carrier gateway route traffic to route all non\-VPC traffic to the carrier network\. To do this, create and attach a carrier gateway to your VPC, and then add a route with a destination of `0.0.0.0/0` for IPv4 traffic or `::/0` for IPv6 traffic, and a target of the carrier gateway ID \(`cgw-xxxxxxxxxxxxxxxxx`\)\. 
 
 
 | Destination | Target | 

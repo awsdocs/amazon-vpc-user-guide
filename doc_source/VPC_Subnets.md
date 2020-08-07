@@ -4,7 +4,8 @@ To get started with Amazon Virtual Private Cloud \(Amazon VPC\), you create a VP
 
 **Topics**
 + [VPC and subnet basics](#vpc-subnet-basics)
-+ [Extending your VPC resources to AWS Local Zones](#local-zone)
++ [Extending your VPC resources to Local Zones](#local-zone)
++ [Extending your VPC resources to Wavelength Zones](#subnet-wavelength)
 + [Subnets in AWS Outposts](#outposts)
 + [VPC and subnet sizing](#VPC_Sizing)
 + [Subnet routing](#SubnetRouting)
@@ -50,19 +51,40 @@ Regardless of the type of subnet, the internal IPv4 address range of the subnet 
 
 You have a quota on the number of VPCs and subnets you can create in your account\. For more information, see [Amazon VPC quotas](amazon-vpc-limits.md)\.
 
-## Extending your VPC resources to AWS Local Zones<a name="local-zone"></a>
+## Extending your VPC resources to Local Zones<a name="local-zone"></a>
 
 AWS Local Zones allow you to seamlessly connect to the full range of services in the AWS Region such as Amazon Simple Storage Service and Amazon DynamoDB through the same APIs and tool sets\. You can extend your VPC Region by creating a new subnet that has a Local Zone assignment\. When you create a subnet in a Local Zone, the VPC is also extended to that Local Zone\. 
+
+To use a Local Zone, you must first opt in to the Zone\. Next, create a subnet in the Local Zone\. Finally, launch any of the following resources in the Local Zone subnet, so that your applications are closer to your end users:
++ Amazon EC2 instances
++ Amazon EBS volumes
++ Amazon FSx file servers
++ Application Load Balancer
++ Dedicated Hosts
 
 A network border group is a unique set of Availability Zones or Local Zones from where AWS advertises public IP addresses\.
 
 When you create a VPC that has IPv6 addresses, you can choose to assign a set of Amazon\-provided public IP addresses to the VPC and also set a network border group for the addresses that limits the addresses to the group\. When you set a network border group, the IP addresses cannot move between network border groups\. The `us-west-2` network border group contains the four US West \(Oregon\) Availability Zones\. The `us-west-2-lax-1` network border group contains the Los Angeles Local Zones\.
 
 The following rules apply to Local Zones:
-+ The Local Zone subnets follow the same routing rules as Availability Zone subnet, including route tables, security groups, and Network ACLs\.
++ The Local Zone subnets follow the same routing rules as Availability Zone subnet, including route tables, security groups, and network ACLs\.
 + You can assign Local Zones to subnets using the Amazon VPC Console, AWS CLI or API\.
 + You must provision public IP addresses for use in a Local Zone\. When you allocate addresses, you can specify the location from which the IP address is advertised\. We refer to this as a network border group and you can set this parameter to limit the address to this location\. After you provision the IP addresses, you cannot move them between the Local Zone and the parent region \(for example, from u`s-west-2-lax-1a` to `us-west-2`\)\. 
 + You can request the IPv6 Amazon\-provided IP addresses and associate them with the network border group for a new or existing VPC\. 
+
+## Extending your VPC resources to Wavelength Zones<a name="subnet-wavelength"></a>
+
+*AWS Wavelength* allows developers to build applications that deliver ultra\-low latencies to mobile devices and end\-users\. Wavelength deploys standard AWS compute and storage services to the edge of telecommunication carriers' 5G networks\. Developers can extend a Amazon Virtual Private Cloud \(VPC\) to one or more Wavelength Zones, and then use AWS resources like Amazon Elastic Compute Cloud \(EC2\) instances to run applications that require ultra\-low latency and connect to AWS services in the Region\. 
+
+To use a Wavelength Zones, you must first opt in to the Zone\. Next, create a subnet in the Wavelength Zone\. You can create Amazon EC2 instances, Amazon EBS volumes, and Amazon VPC subnets and carrier gateways in Wavelength Zones\. You can also use services that orchestrate or work with EC2, EBS and VPC such as Amazon EC2 Auto Scaling, Amazon EKS clusters, Amazon ECS clusters, Amazon EC2 Systems Manager, Amazon CloudWatch, AWS CloudTrail, and AWS CloudFormation\. The services in Wavelength are part of a VPC that is connected over a reliable, high bandwidth connection to an AWS Region for easy access to services including Amazon DynamoDB and Amazon RDS\.
+
+The following rules apply to Wavelength Zones:
++ A VPC extends to a Wavelength Zone when you create a subnet in the VPC and associate it with the Wavelength Zone\.
++ By default, every subnet that you create in a VPC that spans a Wavelength Zone inherits the main VPC route table, including the local route\. 
++ When you launch an EC2 instance in a subnet in a Wavelength Zone, you assign a carrier IP address to it\. The carrier gateway uses the address for traffic from the interface to the internet, or mobile devices\. The carrier gateway uses NAT to translate the address, and then sends the traffic to the destination\. Traffic from the telecommunication carrier network routes through the carrier gateway\.
++ You can set the target of a VPC route table, or subnet route table in a Wavelength Zone to a carrier gateway, which allows inbound traffic from a carrier network in a specific location, and outbound traffic to the carrier network and internet\. For more information about routing options in a Wavelength Zone, see [Routing](https://docs.aws.amazon.com/wavelength/latest/developerguide/how-wavelengths-work.html#wavelength-routing-overview) in the *AWS Wavelength Developer Guide*\.
++ You can assign Wavelength Zones to subnets using the Amazon VPC Console, AWS CLI or API\.
++ Subnets in Wavelength Zones have the same networking components as subnets in Availability Zones, including IPv4 addresses, DHCP Option sets, and network ACLs\. 
 
 ## Subnets in AWS Outposts<a name="outposts"></a>
 

@@ -40,7 +40,7 @@ To see a list of Amazon VPC actions, see [Actions, Resources, and Condition Keys
 The `Resource` element specifies the object or objects to which the action applies\. Statements must include either a `Resource` or a `NotResource` element\. You specify a resource using an ARN or using the wildcard \(\*\) to indicate that the statement applies to all resources\.
 
 **Important**  
-Currently, not all Amazon EC2 API actions support resource\-level permissions\. If an Amazon EC2 API action does not support resource\-level permissions, you can grant users permission to use the action, but you have to specify a \* for the resource element of your policy statement\. To learn which actions you can specify the ARN of each resource, see [Actions Defined by Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html#amazonec2-actions-as-permissions)\.
+Currently, not all Amazon EC2 API actions support resource\-level permissions\. If an Amazon EC2 API action does not support resource\-level permissions, you can grant users permission to use the action, but you have to specify a \* for the resource element of your policy statement\. To view the actions for which you can specify an ARN for the resource element, see [Actions Defined by Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html#amazonec2-actions-as-permissions)\.
 
 The VPC resource has the ARN shown in the following example\.
 

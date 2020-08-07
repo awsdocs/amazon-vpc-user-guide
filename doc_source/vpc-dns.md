@@ -38,11 +38,11 @@ Your VPC has attributes that determine whether instances launched in the VPC rec
 
 If both attributes are set to `true`, the following occurs:
 + Instances with a public IP address receive corresponding public DNS hostnames\.
-+ The Amazon Route 53 Resolver server can resolve Amazon\-provided private DNS hostnames\.
++ The Amazon Route 53 Resolver server can resolve Amazon\-provided public DNS hostnames\.
 
 If either or both of the attributes is set to `false`, the following occurs:
 + Instances with a public IP address do not receive corresponding public DNS hostnames\.
-+ The Amazon Route 53 Resolver cannot resolve Amazon\-provided private DNS hostnames\.
++ The Amazon Route 53 Resolver cannot resolve Amazon\-provided public DNS hostnames\.
 + Instances receive custom private DNS hostnames if there is a custom domain name in the [DHCP options set](VPC_DHCP_Options.md)\. If you are not using the Amazon Route 53 Resolver server, your custom domain name servers must resolve the hostname as appropriate\.
 
 By default, both attributes are set to `true` in a default VPC or a VPC created by the VPC wizard\. By default, only the `enableDnsSupport` attribute is set to `true` in a VPC created any other way\. To check if your VPC is enabled for these attributes, see [Viewing and updating DNS support for your VPC](#vpc-dns-updating)\.

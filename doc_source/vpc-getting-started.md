@@ -6,6 +6,8 @@ Alternatively, to get started launching an instance into your existing default V
 
 Before you can use Amazon VPC for the first time, you must sign up for Amazon Web Services \(AWS\)\. When you sign up, your AWS account is automatically signed up for all services in AWS, including Amazon VPC\. If you haven't created an AWS account already, go to [https://aws\.amazon\.com/](https://aws.amazon.com/), and then choose **Create a Free Account**\.
 
+If you want to use a Local Zone for your VPC, create a VPC, and then create a subnet in the Local Zone\. For more information, see [Creating a VPC](working-with-vpcs.md#Create-VPC) and [Creating a subnet in your VPC](working-with-vpcs.md#AddaSubnet)\.
+
 **Topics**
 + [Overview](#getting-started-overview)
 + [Step 1: Create the VPC](#getting-started-create-vpc)
@@ -22,6 +24,8 @@ To complete this exercise, do the following:
 + Create a nondefault VPC with a single public subnet\.
 + Launch an Amazon EC2 instance into your subnet\.
 + Associate an Elastic IP address with your instance\. This allows your instance to access the internet\.
+
+For more information about granting permissions to IAM users to work with Amazon VPC, see [Identity and access management for Amazon VPC](security-iam.md) and [Amazon VPC policy examples](vpc-policy-examples.md)\.
 
 ## Step 1: Create the VPC<a name="getting-started-create-vpc"></a>
 

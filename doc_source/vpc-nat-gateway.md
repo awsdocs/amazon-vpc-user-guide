@@ -88,7 +88,7 @@ To create a NAT gateway, you must specify a subnet and an Elastic IP address\. E
 
 1. The NAT gateway displays in the console\. After a few moments, its status changes to `Available`, after which it's ready for you to use\.
 
-If the NAT gateway goes to a status of `Failed`, there was an error during creation\. For more information, see [NAT gateway goes to a status of failed](nat-gateway-troubleshooting.md#nat-gateway-troubleshooting-failed)\.
+If the NAT gateway goes to a status of `Failed`, there was an error during creation\. For more information, see [NAT gateway creation fails](nat-gateway-troubleshooting.md#nat-gateway-troubleshooting-failed)\.
 
 ### Updating your route table<a name="nat-gateway-create-route"></a>
 

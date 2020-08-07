@@ -4,7 +4,7 @@ An internet gateway is a horizontally scaled, redundant, and highly available VP
 
 An internet gateway serves two purposes: to provide a target in your VPC route tables for internet\-routable traffic, and to perform network address translation \(NAT\) for instances that have been assigned public IPv4 addresses\. 
 
-An internet gateway supports IPv4 and IPv6 traffic\. It does not cause availability risks or bandwidth constraints on your network traffic\. 
+An internet gateway supports IPv4 and IPv6 traffic\. It does not cause availability risks or bandwidth constraints on your network traffic\. There's no additional charge for having an internet gateway in your account\.
 
 ## Enabling internet access<a name="vpc-igw-internet-access"></a>
 
@@ -65,13 +65,18 @@ The following describes how to manually create a public subnet and attach an int
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Subnets**, and then choose **Create Subnet**\.
+1. In the navigation pane, choose **Subnets**, **Create subnet**\.
 
-1. In the **Create Subnet** dialog box, select the VPC, select the Availability Zone, and specify the IPv4 CIDR block for the subnet\.
+1. Specify the subnet details as needed:\.
+   + **Name tag**: Optionally provide a name for your subnet\. Doing so creates a tag with a key of `Name` and the value that you specify\.
+   + **VPC**: Choose the VPC for which you're creating the subnet\.
+   + **Availability Zone**: Optionally choose an Availability Zone or Local Zone in which your subnet will reside, or leave the default **No Preference** to let AWS choose an Availability Zone for you\.
 
-1. \(Optional, IPv6 only\) For **IPv6 CIDR block**, choose **Specify a custom IPv6 CIDR**\. 
+     For information about the Regions that support Local Zones, see [Available Regions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions) in the *Amazon EC2 User Guide for Linux Instances*\. 
+   + **IPv4 CIDR block**: Specify an IPv4 CIDR block for your subnet, for example, `10.0.1.0/24`\. For more information, see [VPC and subnet sizing for IPv4](VPC_Subnets.md#vpc-sizing-ipv4)\.
+   + **IPv6 CIDR block**: \(Optional\) If you've associated an IPv6 CIDR block with your VPC, choose **Specify a custom IPv6 CIDR**\. Specify the hexadecimal pair value for the subnet, or leave the default value\. 
 
-1. Choose **Yes, Create**\.
+1. Choose **Create**\.
 
 For more information about subnets, see [VPCs and subnets](VPC_Subnets.md)\.
 
@@ -85,11 +90,21 @@ After you create an internet gateway, attach it to your VPC\.
 
 1. In the navigation pane, choose **Internet Gateways**, and then choose **Create internet gateway**\.
 
-1. Optionally name your internet gateway, and then choose **Create**\.
+1. Optionally name your internet gateway\.
+
+1. Optionally add or remove a tag\.
+
+   \[Add a tag\] Choose **Add tag** and do the following:
+   + For **Key**, enter the key name\.
+   + For **Value**, enter the key value\.
+
+   \[Remove a tag\] Choose **Remove** to the right of the tag’s Key and Value\.
+
+1.  Choose **Create internet gateway**\.
 
 1. Select the internet gateway that you just created, and then choose **Actions, Attach to VPC**\.
 
-1. Select your VPC from the list, and then choose **Attach**\.
+1. Select your VPC from the list, and then choose **Attach internet gateway**\.
 
 ### Creating a custom route table<a name="Add_IGW_Routing"></a>
 
@@ -180,7 +195,7 @@ If you no longer need internet access for instances that you launch into a nonde
 
 1. Select the internet gateway and choose **Actions, Detach from VPC**\.
 
-1. In the **Detach from VPC** dialog box, choose **Detach**\.
+1. In the **Detach from VPC** dialog box, choose **Detach internet gateway**\.
 
 ### Deleting an internet gateway<a name="delete-igw"></a>
 
@@ -194,7 +209,7 @@ If you no longer need an internet gateway, you can delete it\. You can't delete 
 
 1. Select the internet gateway and choose **Actions**, **Delete internet gateway**\.
 
-1. In the **Delete internet gateway** dialog box, choose **Delete**\.
+1. In the **Delete internet gateway** dialog box, enter `delete`, and choose **Delete internet gateway**\.
 
 ### API and command overview<a name="api_cli_overview"></a>
 

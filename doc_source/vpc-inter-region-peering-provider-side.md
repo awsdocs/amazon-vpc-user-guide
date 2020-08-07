@@ -12,10 +12,10 @@ To allow resources that are in Consumer VPC 2 in Region B, for example the eu\-w
 
 1. Create Network Load Balancer 2 in Provider VPC 2\.
 
-1. Configure target groups on Network Load Balancer 2 that point to the IP addresses of the service instances that are in VPC 1\.
+1. Configure target groups on Network Load Balancer 2 that point to the IP addresses of the service instances that are in Provider VPC 1\.
 
 1. Adjust the security groups that are associated with the service instances in Provider VPC 1 so that they allow traffic from Network Load Balancer 2\.
 
-1. Create a VPC interface endpoint service configuration in Provider VPC 2 and associate it with Network Load Balancer 2\.
+1. Create a VPC endpoint service configuration in Provider VPC 2 and associate it with Network Load Balancer 2\. The service consumer can then create an interface endpoint in Consumer VPC 2 to the service in Provider VPC 2\.
 
  The Provider 2 account incurs the inter\-region peering data transfer charges, Network Load Balancer charges\. The Provider 1 account incurs the service instances charges\.

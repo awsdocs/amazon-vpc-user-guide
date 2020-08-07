@@ -35,6 +35,7 @@ Each EC2 instance limits the number of packets that can be sent to the Amazon Ro
 |  Internet gateways per Region  |  5  |  This quota is directly correlated with the quota on VPCs per Region\. To increase this quota, increase the quota on VPCs per Region\. Only one internet gateway can be attached to a VPC at a time\.  | 
 | NAT gateways per Availability Zone | 5 | A NAT gateway in the pending, active, or deleting state counts against your quota\. | 
 |  Virtual private gateways per Region  |  \-  |  For more information, see [Site\-to\-Site VPN Quotas](https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-limits.html) in the *AWS Site\-to\-Site VPN User Guide*\.   | 
+| Carrier gateways per VPC | 1 |  | 
 
 ## Customer\-managed prefix lists<a name="vpc-quotas-managed-prefix-lists"></a>
 
@@ -43,7 +44,7 @@ Each EC2 instance limits the number of packets that can be sent to the Amazon Ro
 | --- | --- | --- | 
 |  Prefix lists per Region  |  100  |  \-  | 
 |  Versions per prefix list  |  1,000  |  \-  | 
-|  References to prefix lists per resource type  |  5,000  |  This quota applies per resource type that can reference a prefix list\. For example, you can have 5,000 references to prefix lists across all of your security groups plus 5,000 references to prefix lists across all of your subnet route tables\.  | 
+|  References to a prefix list per resource type  |  5,000  |  This quota applies per resource type that can reference a prefix list\. For example, you can have 5,000 references to a prefix list across all of your security groups plus 5,000 references to a prefix list across all of your subnet route tables\. If you share a prefix list with other AWS accounts, the other accounts' references to your prefix list count toward this quota\.  | 
 
 ## Network ACLs<a name="vpc-limits-nacls"></a>
 

@@ -46,6 +46,7 @@ The following policy grants users permission to list resources in the VPC consol
                 "ec2:DescribeEgressOnlyInternetGateways",
                 "ec2:DescribeFlowLogs",
                 "ec2:DescribeInternetGateways",
+                "ec2:DescribeManagedPrefixLists",
                 "ec2:DescribeMovingAddresses",
                 "ec2:DescribeNatGateways",
                 "ec2:DescribeNetworkAcls",
@@ -77,7 +78,9 @@ The following policy grants users permission to list resources in the VPC consol
                 "ec2:DescribeVpcPeeringConnections",
                 "ec2:DescribeVpcs",
                 "ec2:DescribeVpnConnections",
-                "ec2:DescribeVpnGateways"
+                "ec2:DescribeVpnGateways",
+                "ec2:GetManagedPrefixListAssociations",
+                "ec2:GetManagedPrefixListEntries"
             ],
             "Resource": "*"
         }
@@ -330,3 +333,4 @@ You can find additional example IAM policies related to Amazon VPC in the follow
 + [VPC endpoints and VPC endpoint services](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints-iam.html)
 + [VPC endpoint policies](vpc-endpoints-access.md)
 + [VPC Peering](https://docs.aws.amazon.com/vpc/latest/peering/security-iam.html)
++ [AWS Wavelength](https://docs.aws.amazon.com/wavelength/latest/developerguide/wavelength-policy-examples.html)

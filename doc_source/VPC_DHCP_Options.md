@@ -69,11 +69,21 @@ You can create as many additional DHCP options sets as you want\. However, you c
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **DHCP Options Sets**, and then choose **Create DHCP options set**\.
+1. In the navigation pane, choose **DHCP Options Sets**\.
 
-1. In the dialog box, enter values for the options that you want to use, and then choose **Create DHCP options set**\.
+1. In the dialog box, enter values for the options that you want to use\.
 **Important**  
 If your VPC has an internet gateway, make sure to specify your own DNS server or Amazon's DNS server \(AmazonProvidedDNS\) for the **Domain name servers** value\. Otherwise, the instances that need to communicate with the internet won't have access to DNS\.
+
+1. Optionally add or remove a tag\.
+
+   \[Add a tag\] Choose **Add new tag** and do the following:
+   + For **Key**, enter the key name\.
+   + For **Value**, enter the key value\.
+
+   \[Remove a tag\] Choose **Remove** to the right of the tag’s Key and Value\.
+
+1. Choose **Create DHCP options set**\.
 
    The new set of DHCP options appears in your list of DHCP options\.
 
@@ -94,7 +104,7 @@ The following procedure assumes that you've already created the DHCP options set
 
 1. In the navigation pane, choose **Your VPCs**\.
 
-1. Select the VPC, and select **Actions , Edit DHCP options set**\.
+1. Select the VPC, and select **Actions, Edit DHCP options set**\.
 
 1. In the **DHCP options set** list, select a set of options from the list, and then choose **Save**\.
 

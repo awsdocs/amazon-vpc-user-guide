@@ -7,17 +7,14 @@ Flow logs can help you with a number of tasks, such as:
 + Monitoring the traffic that is reaching your instance
 + Determining the direction of the traffic to and from the network interfaces
 
-For examples, see [Flow log record examples](flow-logs-records-examples.md)\.
-
 Flow log data is collected outside of the path of your network traffic, and therefore does not affect network throughput or latency\. You can create or delete flow logs without any risk of impact to network performance\.
-
-Data ingestion charges apply when you use flow logs\. Charges for vended logs apply when you publish flow logs to CloudWatch Logs\. Charges to deliver logs to Amazon S3 apply when you publish flow logs to Amazon S3\. For more information, see [Amazon CloudWatch Pricing](https://aws.amazon.com/cloudwatch/pricing)\.
 
 **Topics**
 + [Flow logs basics](#flow-logs-basics)
 + [Flow log records](#flow-log-records)
 + [Flow log record examples](flow-logs-records-examples.md)
 + [Flow log limitations](#flow-logs-limitations)
++ [Flow logs pricing](#flow-logs-pricing)
 + [Publishing flow logs to CloudWatch Logs](flow-logs-cwl.md)
 + [Publishing flow logs to Amazon S3](flow-logs-s3.md)
 + [Working with flow logs](working-with-flow-logs.md)
@@ -34,7 +31,9 @@ To create a flow log, you specify:
 + The type of traffic to capture \(accepted traffic, rejected traffic, or all traffic\)
 + The destinations to which you want to publish the flow log data
 
-You can apply tags to your flow logs\. Each tag consists of a key and an optional value, both of which you define\. Tags can help you organize your flow logs, for example by purpose or owner\.
+In the following example, you create a flow log \(`fl-aaa`\) that captures accepted traffic for the network interface for instance A1 and publishes the flow log records to an Amazon S3 bucket\. You create a second flow log that captures all traffic for subnet B and publishes the flow log records to Amazon CloudWatch Logs\. The flow log \(`fl-bbb`\) captures traffic for all network interfaces in subnet B\. There are no flow logs that capture traffic for instance A2's network interface\.
+
+![\[Flow logs for a subnet and an instance\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/flow-logs-diagram.png)
 
 After you've created a flow log, it can take several minutes to begin collecting and publishing data to the chosen destinations\. Flow logs do not capture real\-time log streams for your network interfaces\. For more information, see [Creating a flow log](working-with-flow-logs.md#create-flow-log)\. 
 
@@ -50,6 +49,8 @@ You can create flow logs for network interfaces that are created by other AWS se
 + Transit gateways
 
 Regardless of the type of network interface, you must use the Amazon EC2 console or the Amazon EC2 API to create a flow log for a network interface\.
+
+You can apply tags to your flow logs\. Each tag consists of a key and an optional value, both of which you define\. Tags can help you organize your flow logs, for example by purpose or owner\.
 
 If you no longer require a flow log, you can delete it\. Deleting a flow log disables the flow log service for the resource, and no new flow log records are created or published to CloudWatch Logs or Amazon S3\. Deleting the flow log does not delete any existing flow log records or log streams \(for CloudWatch Logs\) or log file objects \(for Amazon S3\) for a network interface\. To delete an existing log stream, use the CloudWatch Logs console\. To delete existing log file objects, use the Amazon S3 console\. After you've deleted a flow log, it can take several minutes to stop collecting data\. For more information, see [Deleting a flow log](working-with-flow-logs.md#delete-flow-log)\.
 
@@ -147,3 +148,7 @@ Flow logs do not capture all IP traffic\. The following types of traffic are not
 + DHCP traffic\.
 + Traffic to the reserved IP address for the default VPC router\. For more information, see [VPC and subnet sizing](VPC_Subnets.md#VPC_Sizing)\.
 + Traffic between an endpoint network interface and a Network Load Balancer network interface\. For more information, see [VPC endpoint services \(AWS PrivateLink\)](endpoint-service.md)\.
+
+## Flow logs pricing<a name="flow-logs-pricing"></a>
+
+Data ingestion charges apply when you use flow logs\. Charges for vended logs apply when you publish flow logs to CloudWatch Logs\. Charges to deliver logs to Amazon S3 apply when you publish flow logs to Amazon S3\. For more information, see [Amazon CloudWatch Pricing](https://aws.amazon.com/cloudwatch/pricing)\.

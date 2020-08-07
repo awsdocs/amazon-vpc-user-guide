@@ -138,7 +138,7 @@ The following table lists additional resources that you might find helpful as yo
 |  [Transit Gateways](https://docs.aws.amazon.com/vpc/latest/tgw/what-is-transit-gateway.html)  | Describes transit gateways and helps network administrators configure them\. | 
 |  [Transit Gateway Network Manager Guide](https://docs.aws.amazon.com/vpc/latest/tgw/what-is-network-manager.html)  | Describes Transit Gateway Network Manager and helps you configure and monitor a global network\. | 
 |  [AWS Direct Connect User Guide](https://docs.aws.amazon.com/directconnect/latest/UserGuide/)  |  Describes how to use AWS Direct Connect to create a dedicated private connection from a remote network to your VPC\.   | 
-|  [AWS Client VPN Administrator Guide](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/)  |  Describes how to create and configure a Client VPN endpoint to enable remote users to access resources a VPC\.  | 
+|  [AWS Client VPN Administrator Guide](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/)  |  Describes how to create and configure a Client VPN endpoint to enable remote users to access resources in a VPC\.  | 
 |  [Amazon VPC forum](https://forums.aws.amazon.com/forum.jspa?forumID=58)  |  A community\-based forum for discussing technical questions related to Amazon VPC\.  | 
 |  [Getting Started Resource Center](https://aws.amazon.com/getting-started/)  |  Information to help you get started building on AWS\.  | 
 |  [AWS Support Center](https://console.aws.amazon.com/support/home#/)  |  The home page for AWS Support\.  | 

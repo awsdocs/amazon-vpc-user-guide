@@ -6,8 +6,6 @@ When publishing to Amazon S3, flow log data is published to an existing Amazon S
 
 To create an Amazon S3 bucket for use with flow logs, see [Create a Bucket](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html) in the *Amazon Simple Storage Service Getting Started Guide*\.
 
-For information about multiple account logging, see [Central Logging in Multi\-Account Environments](https://aws.amazon.com/blogs/architecture/central-logging-in-multi-account-environments/)\.
-
 **Topics**
 + [Flow log files](#flow-logs-s3-path)
 + [IAM policy for IAM principals that publish flow logs to Amazon S3](#flow-logs-s3-iam)

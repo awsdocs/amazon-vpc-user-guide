@@ -5,7 +5,7 @@ The following are possible issues you might have when working with flow logs\.
 **Topics**
 + [Incomplete flow log records](#flow-logs-troubleshooting-incomplete-records)
 + [Flow log is active, but no flow log records or log group](#flow-logs-troubleshooting-no-log-group)
-+ [Error: LogDestinationNotFoundException](#flow-logs-troubleshooting-not-found)
++ ['LogDestinationNotFoundException' or 'Access Denied for LogDestination' error](#flow-logs-troubleshooting-not-found)
 + [Exceeding the Amazon S3 bucket policy limit](#flow-logs-troubleshooting-policy-limit)
 
 ## Incomplete flow log records<a name="flow-logs-troubleshooting-incomplete-records"></a>
@@ -40,16 +40,18 @@ The cause may be one of the following:
 **Solution**  
 Wait a few minutes for the log group to be created, or for traffic to be recorded\.
 
-## Error: LogDestinationNotFoundException<a name="flow-logs-troubleshooting-not-found"></a>
+## 'LogDestinationNotFoundException' or 'Access Denied for LogDestination' error<a name="flow-logs-troubleshooting-not-found"></a>
 
 **Problem**  
-You get the following error when you try to create a flow log: `LogDestinationNotFoundException`\.
+You get a `Access Denied for LogDestination` or a `LogDestinationNotFoundException` error when you try to create a flow log\.
 
 **Cause**  
-You might get this error when creating a flow log that publishes data to an Amazon S3 bucket\. This error indicates that the specified S3 bucket could not be found\.
+You might get these errors when creating a flow log that publishes data to an Amazon S3 bucket\. This error indicates that the specified S3 bucket could not be found or that there is an issue with the bucket policy\.
 
 **Solution**  
-Ensure that you have specified the ARN for an existing S3 bucket, and that the ARN is in the correct format\.
+Do one of the following: 
++ Ensure that you have specified the ARN for an existing S3 bucket, and that the ARN is in the correct format\.
++ If you do not own the S3 bucket, verify that the [bucket policy](flow-logs-s3.md#flow-logs-s3-permissions) has sufficient permissions to publish logs to it\. In the bucket policy, verify the account ID and bucket name\. 
 
 ## Exceeding the Amazon S3 bucket policy limit<a name="flow-logs-troubleshooting-policy-limit"></a>
 

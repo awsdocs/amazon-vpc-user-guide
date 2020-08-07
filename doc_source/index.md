@@ -66,6 +66,7 @@ Amazon's trademarks and trade dress may not be used in
       + [Working with shared prefix lists](sharing-managed-prefix-lists.md)
    + [Internet gateways](VPC_Internet_Gateway.md)
    + [Egress-only internet gateways](egress-only-internet-gateway.md)
+   + [Carrier gateways](Carrier_Gateway.md)
    + [NAT](vpc-nat.md)
       + [NAT gateways](vpc-nat-gateway.md)
          + [Monitoring NAT gateways using Amazon CloudWatch](vpc-nat-gateway-cloudwatch.md)

@@ -32,6 +32,7 @@ Some types of traffic are tracked differently from other types\. For more inform
 + When you create a security group, you must provide it with a name and a description\. The following rules apply:
   + Names and descriptions can be up to 255 characters in length\.
   + Names and descriptions are limited to the following characters: a\-z, A\-Z, 0\-9, spaces, and \.\_\-:/\(\)\#,@\[\]\+=&;\{\}\!$\*\.
+  + When the name contains trailing spaces, we trim the spaces when we save the name\. For example, if you enter "Test Security Group " for the name, we store it as "Test Security Group"\.
   + A security group name cannot start with `sg-` as these indicate a default security group\.
   + A security group name must be unique within the VPC\.
 + A security group can only be used in the VPC that you specify when you create the security group\.
@@ -78,7 +79,7 @@ The following are the basic parts of a security group rule in a VPC:
 
 When you specify a CIDR block as the source for a rule, traffic is allowed from the specified addresses for the specified protocol and port\.
 
-When you specify a security group as the source for a rule, traffic is allowed from the network interfaces that are associated with the source security group for the specified protocol and port\. For an example, see [Default security group for your VPC](#DefaultSecurityGroup)\. Adding a security group as a source does not add rules from the source security group\.
+When you specify a security group as the source for a rule, traffic is allowed from the network interfaces that are associated with the source security group for the specified protocol and port\. Incoming traffic is allowed based on the private IP addresses of the network interfaces that are associated with the source security group \(and not the public IP or Elastic IP addresses\)\. Adding a security group as a source does not add rules from the source security group\. For an example, see [Default security group for your VPC](#DefaultSecurityGroup)\.
 
 If you specify a single IPv4 address, specify the address using the /32 prefix length\. If you specify a single IPv6 address, specify it using the /128 prefix length\.
 
@@ -152,13 +153,25 @@ Although you can use the default security group for your instances, you might wa
 
 1. Choose **Create Security Group**\.
 
-1. Enter a name for the security group \(for example, `my-security-group`\) and provide a description\. Select the ID of your VPC from the **VPC** menu and choose **Yes, Create**\.
+1. Enter a name for the security group \(for example, `my-security-group`\), and then provide a description\. 
+
+1. From **VPC**, select the ID of your VPC\.
+
+1. \(Optional\) Add or remove a tag\.
+
+   \[Add a tag\] Choose **Add tag** and do the following:
+   + For **Key**, enter the key name\.
+   + For **Value**, enter the key value\.
+
+   \[Remove a tag\] Choose **Remove** to the right of the tag’s Key and Value\.
+
+1. Choose **Create**\.
 
 **To create a security group using the command line**
 + [create\-security\-group](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-security-group.html) \(AWS CLI\)
 + [New\-EC2SecurityGroup](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2SecurityGroup.html) \(AWS Tools for Windows PowerShell\)
 
-**Describe one or more security groups using the command line**
+**To describe one or more security groups using the command line**
 + [describe\-security\-groups](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-security-groups.html) \(AWS CLI\)
 + [Get\-EC2SecurityGroup](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2SecurityGroup.html) \(AWS Tools for Windows PowerShell\)
 

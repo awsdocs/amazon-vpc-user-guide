@@ -8,6 +8,7 @@ The following services are supported:
 + [AWS App Mesh](https://docs.aws.amazon.com/app-mesh/latest/userguide/vpc-endpoints.html)
 + [Application Auto Scaling](https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-vpc-endpoints.html)
 + [Amazon Athena](https://docs.aws.amazon.com/athena/latest/ug/interface-vpc-endpoint.html)
++ [Amazon Aurora](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/vpc-interface-endpoints.html)
 + [AWS Auto Scaling](https://docs.aws.amazon.com/autoscaling/plans/userguide/aws-auto-scaling-vpc-endpoints.html)
 + [AWS Certificate Manager Private Certificate Authority](https://docs.aws.amazon.com/acm-pca/latest/userguide/vpc-endpoints.html)
 + [Amazon Cloud Directory](https://docs.aws.amazon.com/clouddirectory/latest/developerguide/getting_started_using_vpc_endpoints.html)
@@ -36,11 +37,12 @@ The following services are supported:
 + [AWS Glue](https://docs.aws.amazon.com/glue/latest/dg/infrastructure-security.html)
 + [AWS Key Management Service](https://docs.aws.amazon.com/kms/latest/developerguide/kms-vpc-endpoint.html)
 + [Amazon Keyspaces \(for Apache Cassandra\)](https://docs.aws.amazon.com/keyspaces/latest/devguide/vpc-endpoints.html)
-+ [Amazon Kinesis Data Firehose](https://docs.aws.amazon.com/firehose/latest/dev/vpc-endpoint.html)
++ [Amazon Kinesis Data Firehose](https://docs.aws.amazon.com/firehose/latest/dev/vpc.html)
 + [Amazon Kinesis Data Streams](https://docs.aws.amazon.com/streams/latest/dev/vpc.html)
 + [AWS License Manager](https://docs.aws.amazon.com/license-manager/latest/userguide/interface-vpc-endpoints.html)
 + [Amazon Managed Blockchain](https://docs.aws.amazon.com/managed-blockchain/latest/managementguide/managed-blockchain-endpoints.html)
 + [Amazon Quantum Ledger Database \(Amazon QLDB\)](https://docs.aws.amazon.com/qldb/latest/developerguide/vpc-endpoints.html#using-interface-vpc-endpoints)
++ [Amazon RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/vpc-interface-endpoints.html)
 + [Amazon RDS Data API](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html#data-api.vpc-endpoint)
 + [Amazon Rekognition](https://docs.aws.amazon.com/rekognition/latest/dg/vpc.html)
 + [Amazon SageMaker and Amazon SageMaker Runtime](https://docs.aws.amazon.com/sagemaker/latest/dg/interface-vpc-endpoint.html)
@@ -176,7 +178,9 @@ You are charged for creating and using an interface endpoint to a service\. Hour
 
 ## Viewing available AWS service names<a name="vpce-view-services"></a>
 
-You can get a list of available AWS service names using the console or the command line\.
+When you use the Amazon VPC console to create an endpoint, you can get a list of available AWS service names\.
+
+When you use the AWS CLI to create an endpoint, you can use the [describe\-vpc\-endpoint\-services](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-services.html) command to view the service names, and then create the endpoint using the [create\-vpc\-endpoint](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-vpc-endpoint.html) command \.
 
 ------
 #### [ Console ]

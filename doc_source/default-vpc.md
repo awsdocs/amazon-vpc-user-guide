@@ -38,6 +38,7 @@ You can use a default VPC as you would use any other VPC:
 + Update the rules of the default security group\.
 + Add AWS Site\-to\-Site VPN connections\.
 + Add more IPv4 CIDR blocks\.
++ Access VPCs in a remote Region by using a Direct Connect gateway\. For information about Direct Connect gateway options, see [Direct Connect gateways](https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-gateways-intro.html) in the *AWS Direct Connect User Guide*\.
 
 You can use a default subnet as you would use any other subnet; add custom route tables and set network ACLs\. You can also specify a specific default subnet when you launch an EC2 instance\.
 

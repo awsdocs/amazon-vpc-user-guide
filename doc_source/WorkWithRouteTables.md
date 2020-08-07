@@ -80,7 +80,19 @@ You can create a custom route table for your VPC using the Amazon VPC console\.
 
 1. Choose **Create route table**\.
 
-1. For **Name tag**, you can optionally provide a name for your route table\. Doing so creates a tag with a key of `Name` and a value that you specify\. For **VPC**, choose your VPC, and then choose **Create**\.
+1. \(Optional\) For **Name tag**, enter a name for your route table\. 
+
+1. For **VPC**, choose your VPC\. 
+
+1. \(Optional\) Add or remove a tag\.
+
+   \[Add a tag\] Choose **Add tag** and do the following:
+   + For **Key**, enter the key name\.
+   + For **Value**, enter the key value\.
+
+   \[Remove a tag\] Choose the Delete button \("X"\) to the right of the tag’s Key and Value\.
+
+1. Choose **Create**\.
 
 **To create a custom route table using the command line**
 + [create\-route\-table](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-route-table.html) \(AWS CLI\)

@@ -5,3 +5,5 @@ The AWS global infrastructure is built around AWS Regions and Availability Zones
 For more information about AWS Regions and Availability Zones, see [AWS Global Infrastructure](http://aws.amazon.com/about-aws/global-infrastructure/)\.
 
 In addition to the AWS global infrastructure, Amazon VPC offers several features to help support your data resiliency and backup needs\.
++ [Amazon VPC\-to\-Amazon VPC Connectivity Options](https://aws.amazon.com/answers/networking/aws-single-data-center-ha-network-connectivity/)
++ [Network\-to\-Amazon VPC Connectivity Options](https://aws.amazon.com/answers/networking/aws-single-data-center-ha-network-connectivity/)
