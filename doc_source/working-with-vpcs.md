@@ -29,8 +29,8 @@ You can create an empty VPC using the Amazon VPC console\.
    + **IPv4 CIDR block**: Specify an IPv4 CIDR block for the VPC\. We recommend that you specify a CIDR block from the private \(non\-publicly routable\) IP address ranges as specified in [RFC 1918](http://www.faqs.org/rfcs/rfc1918.html); for example, `10.0.0.0/16`, or `192.168.0.0/16`\. 
 **Note**  
 You can specify a range of publicly routable IPv4 addresses\. However, we currently do not support direct access to the internet from publicly routable CIDR blocks in a VPC\. Windows instances cannot boot correctly if launched into a VPC with ranges from `224.0.0.0` to `255.255.255.255` \(Class D and Class E IP address ranges\)\. 
-   + **IPv6 CIDR block**: Optionally associate an IPv6 CIDR block with your VPC by choosing one of the following options:
-     + **Amazon\-provided IPv6 CIDR block**: Requests an IPv6 CIDR block from Amazon's pool of IPv6 addresses\.
+   + **IPv6 CIDR block**: Optionally associate an IPv6 CIDR block with your VPC\. Choose one of the following options, and then choose **Select CIDR**:
+     + **Amazon\-provided IPv6 CIDR block**: Requests an IPv6 CIDR block from Amazon's pool of IPv6 addresses\. For **Network Border Group**, select the group from which AWS advertises IP addresses\. 
      + **IPv6 CIDR owned by me**: \([BYOIP](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html)\) Allocates an IPv6 CIDR block from your IPv6 address pool\. For **Pool,** choose the IPv6 address pool from which to allocate the IPv6 CIDR block\.
    + **Tenancy**: Select a tenancy option\. Dedicated tenancy ensures that your instances run on single\-tenant hardware\. For more information, see [Dedicated instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-instance.html) in the *Amazon EC2 User Guide for Linux Instances*\.
    + \(Optional\) Add or remove a tag\.

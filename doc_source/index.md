@@ -35,6 +35,7 @@ Amazon's trademarks and trade dress may not be used in
 + [VPCs and subnets](VPC_Subnets.md)
    + [Working with VPCs and subnets](working-with-vpcs.md)
    + [Working with shared VPCs](vpc-sharing.md)
+   + [Extending Your VPCs](Extend_VPCs.md)
 + [Default VPC and default subnets](default-vpc.md)
 + [IP Addressing in your VPC](vpc-ip-addressing.md)
    + [Migrating to IPv6](vpc-migrate-ipv6.md)

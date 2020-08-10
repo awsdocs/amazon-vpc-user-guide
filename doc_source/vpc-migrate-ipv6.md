@@ -75,7 +75,9 @@ You can associate an IPv6 CIDR block with your VPC, and then associate a `/64` C
 
 1. Select your VPC, choose **Actions**, **Edit CIDRs**\.
 
-1. Choose **Add IPv6 CIDR**\. After the IPv6 CIDR block has been added, choose **Close**\. 
+1. Choose **Add IPv6 CIDR**, choose one of the following options, and then choose **Select CIDR**:
+   + **Amazon\-provided IPv6 CIDR block**: Requests an IPv6 CIDR block from Amazon's pool of IPv6 addresses\. For **Network Border Group**, select the group from which AWS advertises IP addresses\. 
+   + **IPv6 CIDR owned by me**: \([BYOIP](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html)\) Allocates an IPv6 CIDR block from your IPv6 address pool\. For **Pool,** choose the IPv6 address pool from which to allocate the IPv6 CIDR block\.
 
 **To associate an IPv6 CIDR block with a subnet**
 
