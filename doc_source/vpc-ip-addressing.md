@@ -29,7 +29,7 @@ The following table summarizes the differences between IPv4 and IPv6 in Amazon E
 | Supported on all AMIs\. | Automatically supported on AMIs that are configured for DHCPv6\. Amazon Linux versions 2016\.09\.0 and later and Windows Server 2008 R2 and later are configured for DHCPv6\. For other AMIs, you must [manually configure your instance](vpc-migrate-ipv6.md#vpc-migrate-ipv6-dhcpv6) to recognize any assigned IPv6 addresses\. | 
 | An instance receives an Amazon\-provided private DNS hostname that corresponds to its private IPv4 address, and if applicable, a public DNS hostname that corresponds to its public IPv4 or Elastic IP address\. | Amazon\-provided DNS hostnames are not supported\. | 
 | Elastic IPv4 addresses are supported\. | Elastic IPv6 addresses are not supported\.  | 
-| Supported for AWS Site\-to\-Site VPN connections and customer gateways, NAT devices, and VPC endpoints\. | Not supported for AWS Site\-to\-Site VPN connections and customer gateways, NAT devices, and VPC endpoints\. | 
+| Supported for customer gateways, virtual private gateways, NAT devices, and VPC endpoints\. | Not supported for customer gateways, virtual private gateways, NAT devices, and VPC endpoints\. | 
 
 We support IPv6 traffic over a virtual private gateway to an AWS Direct Connect connection\. For more information, see the [AWS Direct Connect User Guide](https://docs.aws.amazon.com/directconnect/latest/UserGuide/)\.
 

@@ -75,7 +75,7 @@ The following are the basic parts of a security group rule in a VPC:
 + \(Outbound rules only\) The destination for the traffic and the destination port or port range\. The destination can be another security group, an IPv4 or IPv6 CIDR block, a single IPv4 or IPv6 address, or a prefix list ID\.
 + Any protocol that has a standard protocol number \(for a list, see [Protocol Numbers](http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml)\)\. If you specify ICMP as the protocol, you can specify any or all of the ICMP types and codes\.
 + An optional description for the security group rule to help you identify it later\. A description can be up to 255 characters in length\. Allowed characters are a\-z, A\-Z, 0\-9, spaces, and \.\_\-:/\(\)\#,@\[\]\+=;\{\}\!$\*\.
-+ If you add a security group rule using the AWS CLI or the API, we automatically set the source or destination CIDR block to the canonical form\. For example, if you specify 100\.68\.0\.18/18 for the CIDR block, we create a rule with a CIDR block of 100\.68\.0\.0/18\. 
++ If you add a security group rule using the AWS CLI, the console, or the API, we automatically set the source or destination CIDR block to the canonical form\. For example, if you specify 100\.68\.0\.18/18 for the CIDR block, we create a rule with a CIDR block of 100\.68\.0\.0/18\. 
 
 When you specify a CIDR block as the source for a rule, traffic is allowed from the specified addresses for the specified protocol and port\.
 

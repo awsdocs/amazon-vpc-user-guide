@@ -19,41 +19,7 @@ Your endpoint policy can be like any IAM policy; however, take note of the follo
 + Your policy must contain a [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html) element\. For additional information related gateway endpoints, see [Endpoint policies for gateway endpoints](#vpc-endpoint-policies-gateway)\.
 + The size of an endpoint policy cannot exceed 20,480 characters \(including white space\)\.
 
-The following services support endpoint policies:
-+ [Amazon API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-vpc-endpoint-policies.html)
-+ [Application Auto Scaling](https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-vpc-endpoints.html)
-+ [Amazon Athena](https://docs.aws.amazon.com/athena/latest/ug/interface-vpc-endpoint.html#api-private-link-policy)
-+ [Amazon Aurora](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/vpc-interface-endpoints.html)
-+ [AWS Auto Scaling](https://docs.aws.amazon.com/autoscaling/plans/userguide/aws-auto-scaling-vpc-endpoints.html)
-+ [Amazon CloudWatch](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch-and-interface-VPC.html)
-+ [Amazon CloudWatch Events](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/cloudwatch-events-and-interface-VPC.html)
-+ [Amazon CloudWatch Logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/cloudwatch-logs-and-interface-VPC.html#CloudWatchLogs-VPC-endpoint-policy)
-+ [AWS CodeBuild](https://docs.aws.amazon.com/codebuild/latest/userguide/use-vpc-endpoints-with-codebuild.html#creating-vpc-endpoint-policy)
-+ [AWS CodeCommit](https://docs.aws.amazon.com/codecommit/latest/userguide/codecommit-and-interface-VPC.html#create-vpc-endpoint-policy-for-codecommit)
-+ [Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/interface-vpc-endpoints.html#endpoint-policy)
-+ [EC2 Image Builder](https://docs.aws.amazon.com/imagebuilder/latest/userguide/vpc-interface-endpoints.html#vpc-endpoint-policy)
-+ [Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-vpc-endpoints.html)
-+ [AWS Elastic Beanstalk](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/vpc-vpce.html#vpc-vpce.policy)
-+ [Amazon Elastic File System](https://docs.aws.amazon.com/efs/latest/ug/efs-vpc-endpoints.html#create-vpce-policy-efs)
-+ [Elastic Load Balancing](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/load-balancer-vpc-endpoints.html)
-+ [Amazon Elastic Container Registry](https://docs.aws.amazon.com/AmazonECR/latest/userguide/vpc-endpoints.html#ecr-vpc-endpoint-policy)
-+ [Amazon EMR](https://docs.aws.amazon.com/emr/latest/ManagementGuide/interface-vpc-endpoint.html#api-private-link-policy)
-+ [Amazon Fraud Detector](https://docs.aws.amazon.com/frauddetector/latest/ug/vpc-interface-endpoints.html)
-+ [AWS Key Management Service](https://docs.aws.amazon.com/kms/latest/developerguide/kms-vpc-endpoint.html#vpce-policy)
-+ [Amazon Keyspaces \(for Apache Cassandra\)](https://docs.aws.amazon.com/keyspaces/latest/devguide/vpc-endpoints.html)
-+ [Amazon Kinesis Data Firehose](https://docs.aws.amazon.com/firehose/latest/dev/vpc.html)
-+ [Amazon Kinesis Data Streams](https://docs.aws.amazon.com/streams/latest/dev/vpc.html#interface-vpc-endpoints-policies)
-+ [AWS License Manager](https://docs.aws.amazon.com/license-manager/latest/userguide/interface-vpc-endpoints.html#create-vpce-policy)
-+ [Amazon Rekognition](https://docs.aws.amazon.com/rekognition/latest/dg/vpc.html)
-+ [Amazon RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/vpc-interface-endpoints.html)
-+ [Amazon RDS Data API](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html#data-api.vpc-endpoint)
-+ [Amazon SageMaker and Amazon SageMaker Runtime](https://docs.aws.amazon.com/sagemaker/latest/dg/interface-vpc-endpoint.html#api-private-link-policy)
-+ [Amazon SageMaker Notebook Instance](https://docs.aws.amazon.com/sagemaker/latest/dg/notebook-interface-endpoint.html#nbi-private-link-policy)
-+ [AWS Secrets Manager ](https://docs.aws.amazon.com/secretsmanager/latest/userguide/vpc-endpoint-overview.html#vpc-endpoint-policy)
-+ [AWS Security Token Service](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_sts_vpce.html)
-+ [Amazon SNS](https://docs.aws.amazon.com/sns/latest/dg/sns-internetwork-traffic-privacy.html#sns-vpc-endpoint-policy)
-+ [Amazon SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-internetwork-traffic-privacy.html#sqs-vpc-endpoint-policy)
-+ [AWS Step Functions](https://docs.aws.amazon.com/step-functions/latest/dg/vpc-iam.html)
+For information about the AWS services that support endpoint policies, see [AWS services that you can use with AWS PrivateLink](integrated-services-vpce-list.md)\.
 
 ### Endpoint policies for gateway endpoints<a name="vpc-endpoint-policies-gateway"></a>
 

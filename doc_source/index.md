@@ -104,6 +104,7 @@ Amazon's trademarks and trade dress may not be used in
       + [Removing an endpoint service private DNS name](remove-vpc-endpoint-service-dns-name.md)
       + [Amazon VPC private DNS name domain verification TXT records](dns-txt-records.md)
       + [Troubleshooting common private DNS domain verification problems](domain-verification-problems.md)
+   + [AWS services that you can use with AWS PrivateLink](integrated-services-vpce-list.md)
 + [VPN connections](vpn-connections.md)
 + [Amazon VPC quotas](amazon-vpc-limits.md)
 + [Document history](WhatsNew.md)
