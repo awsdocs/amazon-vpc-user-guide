@@ -158,7 +158,7 @@ If you used the Amazon EC2 console to launch the instance, or you did not use th
    Example
 
    ```
-   aws ec2 allocate-address--address --region us-east-1 --domain vpc --network-border-group us-east-1-wl1-bos-wlz-1
+   aws ec2 allocate-address --region us-east-1 --domain vpc --network-border-group us-east-1-wl1-bos-wlz-1
    ```
 
    Output
