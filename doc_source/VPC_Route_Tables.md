@@ -14,7 +14,7 @@ A *route table* contains a set of rules, called *routes*, that are used to deter
 The following are the key concepts for route tables\.
 + **Main route table**—The route table that automatically comes with your VPC\. It controls the routing for all subnets that are not explicitly associated with any other route table\.
 + **Custom route table**—A route table that you create for your VPC\.
-+ **Edge association **\- A route table that you use to route inbound VPC traffic to an appliance\. You associate a route table with the internet gateway or virtual private gateway, and specify the network interface of your appliance as the target for VPC traffic\. 
++ **Edge association**-A route table that you use to route inbound VPC traffic to an appliance\. You associate a route table with the internet gateway or virtual private gateway, and specify the network interface of your appliance as the target for VPC traffic\. 
 + **Route table association**—The association between a route table and a subnet, internet gateway, or virtual private gateway\.
 + **Subnet route table**—A route table that's associated with a subnet\.
 + **Gateway route table**—A route table that's associated with an internet gateway or virtual private gateway\.
