@@ -4,7 +4,7 @@ You can host VPC resources such as subnets, in multiple locations world\-wide\. 
 + Availability Zones are multiple, isolated locations within each Region\.
 + Local Zones provide you the ability to place resources, such as compute and storage, in multiple locations closer to your end users\.
 + AWS Outposts brings native AWS services, infrastructure, and operating models to virtually any data center, co\-location space, or on\-premises facility\.
-+ Wavelength Zones allow developers to build applications that deliver ultra\-low latencies to 5G devices and end users\. Wavelength deploys standard AWS compute and storage services to the edge of telecommunication carriers' 5G networks\.
++ Wavelength Zones allow developers to build applications that deliver ultra\-low latencies to [5G](https://en.wikipedia.org/wiki/5G) devices and end users\. Wavelength deploys standard AWS compute and storage services to the edge of telecommunication carriers' 5G networks\.
 
 AWS operates state\-of\-the\-art, highly available data centers\. Although rare, failures can occur that affect the availability of instances that are in the same location\. If you host all of your instances in a single location that is affected by a failure, none of your instances would be available\.
 
@@ -12,7 +12,7 @@ To help you determine which deployment is best for you, see [AWS Wavelength FAQs
 
 ## Extending your VPC resources to Local Zones<a name="local-zone"></a>
 
-AWS Local Zones allow you to seamlessly connect to the full range of services in the AWS Region such as Amazon Simple Storage Service and Amazon DynamoDB through the same APIs and tool sets\. You can extend your VPC Region by creating a new subnet that has a Local Zone assignment\. When you create a subnet in a Local Zone, the VPC is also extended to that Local Zone\. 
+AWS Local Zones allow you to seamlessly connect to the full range of services in the AWS Region such as Amazon Simple Storage Service (S3) and Amazon DynamoDB through the same APIs and tool sets\. You can extend your VPC Region by creating a new subnet that has a Local Zone assignment\. When you create a subnet in a Local Zone, the VPC is also extended to that Local Zone\. 
 
 To use a Local Zone, you must first opt in to the Zone\. Next, create a subnet in the Local Zone\. Finally, launch any of the following resources in the Local Zone subnet, so that your applications are closer to your end users:
 + Amazon EC2 instances
