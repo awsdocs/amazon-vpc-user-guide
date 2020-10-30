@@ -5,7 +5,7 @@ You can use the following components to configure networking in your VPC\.
 **Topics**
 + [Elastic network interfaces](VPC_ElasticNetworkInterfaces.md)
 + [Route tables](VPC_Route_Tables.md)
-+ [Managed prefix lists](managed-prefix-lists.md)
++ [Prefix lists](managed-prefix-lists.md)
 + [Internet gateways](VPC_Internet_Gateway.md)
 + [Egress\-only internet gateways](egress-only-internet-gateway.md)
 + [Carrier gateways](Carrier_Gateway.md)

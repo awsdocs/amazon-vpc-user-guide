@@ -19,7 +19,7 @@ An endpoint policy is an IAM policy that you attach to an endpoint that allows a
 **Important**  
 All types of policies — IAM user policies and endpoint policies — must grant the necessary permissions for access to DynamoDB to succeed\. 
 
-**Example Example: Read\-only access**  
+**Example: Read\-only access**  
 You can create a policy that restricts actions to only listing and describing DynamoDB tables through the VPC endpoint\.   
 
 ```
@@ -39,7 +39,7 @@ You can create a policy that restricts actions to only listing and describing Dy
 }
 ```
 
-**Example Example: Restrict access to a specific table**  
+**Example: Restrict access to a specific table**  
 You can create a policy that restricts access to a specific DynamoDB table\. In this example, the endpoint policy allows access to `StockTable` only\.  
 
 ```
@@ -69,7 +69,7 @@ You can create an IAM policy for your IAM users, groups, or roles to restrict ac
 
 For more information about managing access to DynamoDB, see [Authentication and Access Control for Amazon DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/authentication-and-access-control.html) in the *Amazon DynamoDB Developer Guide*\.
 
-**Example Example: Restrict access from a specific endpoint**  
+**Example: Restrict access from a specific endpoint**  
 In this example, users are denied permission to work with DynamoDB tables, except if accessed through endpoint `vpce-11aa22bb`\.  
 
 ```

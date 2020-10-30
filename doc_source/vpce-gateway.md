@@ -214,7 +214,7 @@ If the VPC security group associated with your instance restricts outbound traff
 
 1. In the navigation pane, choose **Security Groups**\.
 
-1. Select your VPC security group, choose the **Outbound Rules** tab, and then choose **Edit**\.
+1. Select your VPC security group, choose the **Outbound rules** tab, and then choose **Edit outbound rules**\.
 
 1. Select the type of traffic from the **Type** list, and enter the port range, if required\. For example, if you use your instance to retrieve objects from Amazon S3, choose **HTTPS** from the **Type** list\. 
 
@@ -251,7 +251,7 @@ It can take a few minutes for policy changes to take effect\.
 
 1. In the navigation pane, choose **Endpoints** and select your endpoint\.
 
-1. Choose **Actions**, **Manage route tables**\.
+1. Choose **Actions**, **Manage Route Tables**\.
 
 1. Select or deselect the required route tables, and choose **Modify Route Tables**\.
 

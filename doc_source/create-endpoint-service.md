@@ -1,6 +1,6 @@
 # Creating a VPC endpoint service configuration<a name="create-endpoint-service"></a>
 
-You can create an endpoint service configuration using the Amazon VPC console or the command line\. Before you begin, ensure that you have created one or more Network Load Balancers in your VPC for your service\. For more information, see [Getting Started with Network Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancer-getting-started.html) in the *User Guide for Network Load Balancers*\.
+You can create an endpoint service configuration using the Amazon VPC console or the command line\. Before you begin, ensure that you have created one or more Network Load Balancers in your VPC for your service\. For more information, see [Getting started with Network Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancer-getting-started.html) in the *User Guide for Network Load Balancers*\.
 
 In your configuration, you can optionally specify that any interface endpoint connection requests to your service must be manually accepted by you\. You can [create a notification](create-notification-endpoint-service.md) to receive alerts when there are connection requests\. If you do not accept a connection, service consumers cannot access your service\.
 
@@ -18,11 +18,11 @@ After you create an endpoint service configuration, you must add permissions to 
 
 1. In the navigation pane, choose **Endpoint Services**, **Create Endpoint Service**\.
 
-1. For **Associate Network Load Balancers**, select the Network Load Balancers to associate with the endpoint service\. 
+1. For **Associate Load Balancers**, select the Network Load Balancers to associate with the endpoint service\. 
 
 1. For **Require acceptance for endpoint**, select the check box to accept connection requests to your service manually\. If you do not select this option, endpoint connections are automatically accepted\.
 
-1. To associate a private DNS name with the service, select **Enable private DNS** name, and then for** Private DNS name**, enter the private DNS name\.
+1. To associate a private DNS name with the service, select **Enable private DNS name**, and then for **Private DNS name**, enter the private DNS name\.
 
 1. \(Optional\) Add or remove a tag\.
 

@@ -23,17 +23,9 @@ For information about the AWS services that support endpoint policies, see [AWS 
 
 ### Endpoint policies for gateway endpoints<a name="vpc-endpoint-policies-gateway"></a>
 
-For endpoint polices that are applied to gateway endpoints, you cannot limit the `Principal` element to a specific IAM role or user\. You can specify `"*"` to grant access to all IAM roles and users\. If you specify `Principal` in the format `"AWS":"AWS-account-ID"` or `"AWS":"arn:aws:iam::AWS-account-ID:root"`, access is granted to the AWS account root user only, and not all IAM users and roles for the account\.
+For endpoint polices that are applied to gateway endpoints, if you specify `Principal` in the format `"AWS":"AWS-account-ID"` or `"AWS":"arn:aws:iam::AWS-account-ID:root"`, access is granted to the AWS account root user only, and not all IAM users and roles for the account\.
 
-To limit use of the gateway endpoint to a specific principal, you can use the `Condition` element in your endpoint policy and specify the [aws:PrincipalArn](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html#condition-keys-principalarn) condition key, for example:
-
-```
-"Condition": {
-    "StringEquals": {
-        "aws:PrincipalArn": "arn:aws:iam::123456789012:user/endpointuser"
-    }
-}
-```
+If you specify an Amazon Resource Name \(ARN\) for the `Principal` element, the ARN is transformed to a unique principal ID when the policy is saved\.
 
 For example endpoint policies for Amazon S3 and DynamoDB, see the following topics:
 + [Using endpoint policies for Amazon S3](vpc-endpoints-s3.md#vpc-endpoints-policies-s3)

@@ -201,6 +201,8 @@ To apply route table routes to a particular subnet, you must associate the route
 
 You can change which route table a subnet is associated with\. 
 
+When you change the route table, your existing connections in the subnet are dropped unless the new route table contains a route for the same traffic to the same target\.
+
 **To change a subnet route table association using the console**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.

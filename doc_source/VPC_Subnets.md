@@ -64,10 +64,14 @@ For more information about IP addressing, see [IP Addressing in your VPC](vpc-ip
 
 When you create a VPC, you must specify an IPv4 CIDR block for the VPC\. The allowed block size is between a `/16` netmask \(65,536 IP addresses\) and `/28` netmask \(16 IP addresses\)\. After you've created your VPC, you can associate secondary CIDR blocks with the VPC\. For more information, see [Adding IPv4 CIDR blocks to a VPC](#vpc-resize)\. 
 
-When you create a VPC, we recommend that you specify a CIDR block \(of `/16` or smaller\) from the private IPv4 address ranges as specified in [RFC 1918](http://www.faqs.org/rfcs/rfc1918.html):
-+ `10.0.0.0` \- `10.255.255.255` \(10/8 prefix\)
-+ `172.16.0.0` \- `172.31.255.255` \(172\.16/12 prefix\)
-+ `192.168.0.0` \- `192.168.255.255` \(192\.168/16 prefix\) 
+When you create a VPC, we recommend that you specify a CIDR block from the private IPv4 address ranges as specified in [RFC 1918](http://www.faqs.org/rfcs/rfc1918.html):
+
+
+| RFC 1918 range | Example CIDR block | 
+| --- | --- | 
+| 10\.0\.0\.0 \- 10\.255\.255\.255 \(10/8 prefix\) | Your VPC must be /16 or smaller, for example, 10\.0\.0\.0/16\. | 
+| 172\.16\.0\.0 \- 172\.31\.255\.255 \(172\.16/12 prefix\) | Your VPC must be /16 or smaller, for example, 172\.31\.0\.0/16\. | 
+| 192\.168\.0\.0 \- 192\.168\.255\.255 \(192\.168/16 prefix\) | Your VPC can be smaller, for example 192\.168\.0\.0/20\. | 
 
 You can create a VPC with a publicly routable CIDR block that falls outside of the private IPv4 address ranges specified in RFC 1918; however, for the purposes of this documentation, we refer to *private IP addresses* as the IPv4 addresses that are within the CIDR range of your VPC\.
 
@@ -78,7 +82,7 @@ The CIDR block of a subnet can be the same as the CIDR block for the VPC \(for a
 
 For example, if you create a VPC with CIDR block `10.0.0.0/24`, it supports 256 IP addresses\. You can break this CIDR block into two subnets, each supporting 128 IP addresses\. One subnet uses CIDR block `10.0.0.0/25` \(for addresses `10.0.0.0` \- `10.0.0.127`\) and the other uses CIDR block `10.0.0.128/25` \(for addresses `10.0.0.128` \- `10.0.0.255`\)\.
 
-There are tools available on the internet to help you calculate and create IPv4 subnet CIDR blocks; for example, see [subnet calculator](https://network00.com/NetworkTools/IPv4VisualSubnetCalculatorCreator)\. You can find other tools that suit your needs by searching for terms such as 'subnet calculator' or 'CIDR calculator'. Your network engineering group can also help you determine the CIDR blocks to specify for your subnets.
+There are tools available on the internet to help you calculate and create IPv4 subnet CIDR blocks; for example, [IPv4 Address Planner](https://network00.com/NetworkTools/IPv4VisualSubnetCalculatorCreator)\. You can find other tools that suit your needs by searching for terms such as 'subnet calculator' or 'CIDR calculator'\. Your network engineering group can also help you determine the CIDR blocks to specify for your subnets\.
 
 The first four IP addresses and the last IP address in each subnet CIDR block are not available for you to use, and cannot be assigned to an instance\. For example, in a subnet with CIDR block `10.0.0.0/24`, the following five IP addresses are reserved: 
 + `10.0.0.0`: Network address\.
@@ -103,7 +107,7 @@ To add a CIDR block to your VPC, the following rules apply:
 + There are restrictions on the ranges of IPv4 addresses you can use\. For more information, see [IPv4 CIDR block association restrictions](#add-cidr-block-restrictions)\.
 + You cannot increase or decrease the size of an existing CIDR block\.
 + You have a quota on the number of CIDR blocks you can associate with a VPC and the number of routes you can add to a route table\. You cannot associate a CIDR block if this results in you exceeding your quotas\. For more information, see [Amazon VPC quotas](amazon-vpc-limits.md)\.
-+ The CIDR block must not be the same or larger than the CIDR range of a route in any of the VPC route tables\. For example, in a VPC where the primary CIDR block is `10.2.0.0/16`, you want to associate a secondary CIDR block in the `10.0.0.0/16` range\. You already have a route with a destination of `10.0.0.0/24` to a virtual private gateway, therefore you cannot associate a CIDR block of the same range or larger\. However, you can associate a CIDR block of `10.0.0.0/25` or smaller\.
++ The CIDR block must not be the same or larger than a destination CIDR range in a route in any of the VPC route tables\. For example, in a VPC where the primary CIDR block is `10.2.0.0/16`, you have an existing route in a route table with a destination of `10.0.0.0/24` to a virtual private gateway\. You want to associate a secondary CIDR block in the `10.0.0.0/16` range\. Because of the existing route, you cannot associate a CIDR block of `10.0.0.0/24` or larger\. However, you can associate a secondary CIDR block of `10.0.0.0/25` or smaller\.
 + If you've enabled your VPC for ClassicLink, you can associate CIDR blocks from the `10.0.0.0/16` and `10.1.0.0/16` ranges, but you cannot associate any other CIDR block from the `10.0.0.0/8` range\. 
 + The following rules apply when you add IPv4 CIDR blocks to a VPC that's part of a VPC peering connection:
   + If the VPC peering connection is `active`, you can add CIDR blocks to a VPC provided they do not overlap with a CIDR block of the peer VPC\.
@@ -180,7 +184,7 @@ If you've associated an IPv6 CIDR block with your VPC, you can associate an IPv6
 
 For example, you create a VPC and specify that you want to associate an Amazon\-provided IPv6 CIDR block with the VPC\. Amazon assigns the following IPv6 CIDR block to your VPC: `2001:db8:1234:1a00::/56`\. You cannot choose the range of IP addresses yourself\. You can create a subnet and associate an IPv6 CIDR block from this range; for example, `2001:db8:1234:1a00::/64`\.
 
-There are tools available on the internet to help you calculate and create IPv6 subnet CIDR blocks; for example, see [subnet calculator](https://network00.com/NetworkTools/IPv6VisualSubnetCalculatorCreator)\. You can find other tools that suit your needs by searching for terms such as 'IPv6 subnet calculator' or 'IPv6 CIDR calculator'. Your network engineering group can also help you determine the IPv6 CIDR blocks to specify for your subnets.
+There are tools available on the internet to help you calculate and create IPv6 subnet CIDR blocks; for example, [IPv6 Address Planner](https://network00.com/NetworkTools/IPv6VisualSubnetCalculatorCreator)\. You can find other tools that suit your needs by searching for terms such as 'IPv6 subnet calculator' or 'IPv6 CIDR calculator'\. Your network engineering group can also help you determine the IPv6 CIDR blocks to specify for your subnets\.
 
 You can disassociate an IPv6 CIDR block from a subnet, and you can disassociate an IPv6 CIDR block from a VPC\. After you've disassociated an IPv6 CIDR block from a VPC, you cannot expect to receive the same CIDR if you associate an IPv6 CIDR block with your VPC again later\.
 

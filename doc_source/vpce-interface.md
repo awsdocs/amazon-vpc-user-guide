@@ -6,10 +6,10 @@ The following are the general steps for setting up an interface endpoint:
 
 1. Choose the VPC in which to create the interface endpoint, and provide the name of the AWS service, endpoint service, or AWS Marketplace service to which you're connecting\.
 
-1. Choose a subnet in your VPC to use the interface endpoint\. We create an *endpoint network interface* in the subnet\. You can specify more than one subnet in different Availability Zones \(as supported by the service\) to help ensure that your interface endpoint is resilient to Availability Zone failures\. In that case, we create an endpoint network interface in each subnet that you specify\.  
+1. Choose a subnet in your VPC to use the interface endpoint\. We create an *endpoint network interface* in the subnet\. You can specify more than one subnet in different Availability Zones \(as supported by the service\) to help ensure that your interface endpoint is resilient to Availability Zone failures\. In that case, we create an endpoint network interface in each subnet that you specify\. 
 **Note**  
 An endpoint network interface is assigned a private IP address from the IP address range of your subnet, and keeps this IP address until the interface endpoint is deleted\.  
-An endpoint network interface is a requester\-managed network interface\. You can view it in your account, but you cannot manage it yourself\. For more information, see [Elastic Network Interfaces](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html)\.
+An endpoint network interface is a requester\-managed network interface\. You can view it in your account, but you cannot manage it yourself\. For more information, see [Requester\-managed network interfaces](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/requester-managed-eni.html)\.
 
 1. Specify the security groups to associate with the endpoint network interface\. The security group rules control the traffic to the endpoint network interface from resources in your VPC\. If you do not specify a security group, we associate the default security group for the VPC\.
 
@@ -76,7 +76,7 @@ To use interface endpoints, you need to be aware of their properties and current
 + When the service provider and the consumer have different accounts and use multiple Availability Zones, and the consumer views the VPC endpoint service information, the response only includes the common Availability Zones\. For example, when the service provider account uses `us-east-1a` and `us-east-1c` and the consumer uses `us-east-1a` and `us-east-1b`, the response includes the VPC endpoint services in the common Availability Zone, `us-east-1a`\.
 + By default, each interface endpoint can support a bandwidth of up to 10 Gbps per Availability Zone\. and bursts of up to 40Gbps\. If your application needs higher bursts or sustained throughput, contact AWS support\. 
 + If the network ACL for your subnet restricts traffic, you might not be able to send traffic through the endpoint network interface\. Ensure that you add appropriate rules that allow traffic to and from the CIDR block of the subnet\.
-+ Ensure that the security group that's associated with the endpoint network interface allows communication between the endpoint network interface and the resources in your VPC that communicate with the service\. If the security group restricts inbound HTTPS traffic \(port 443\) from resources in the VPC, you might not be able to send traffic through the endpoint network interface\.
++ Ensure that the security group that's associated with the endpoint network interface allows communication between the endpoint network interface and the resources in your VPC that communicate with the service\. To ensure that AWS command line tools such as the AWS CLI can make requests over HTTPS from resources in the VPC to an AWS service, the security group must allow inbound HTTPS \(port 443\) traffic \.
 + An interface endpoint supports TCP traffic only\.
 + When you create an endpoint, you can attach an endpoint policy to it that controls access to the service to which you are connecting\. For more information, see [Policy Best Practices](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-policy-examples.html#security_iam_service-with-iam-policy-best-practices) and [Controlling access to services with VPC endpoints](vpc-endpoints-access.md)\.
 + Review the service\-specific limits for your endpoint service\.
@@ -219,7 +219,7 @@ Private DNS is enabled by default for endpoints created for AWS services and AWS
    + For **Subnets**, select the subnets \(Availability Zones\) in which to create the endpoint network interfaces\.
 
      Not all Availability Zones may be supported for all AWS services\.
-   + To enable private DNS for the interface endpoint, for **Enable Private DNS Name**, select the check box\.
+   + To enable private DNS for the interface endpoint, for **Enable DNS Name**, select the check box\.
 
      This option is enabled by default\. To use the private DNS option, the following attributes of your VPC must be set to `true`: `enableDnsHostnames` and `enableDnsSupport`\. For more information, see [Viewing and updating DNS support for your VPC](vpc-dns.md#vpc-dns-updating)\.
    + For **Security group**, select the security groups to associate with the endpoint network interfaces\.
@@ -424,7 +424,7 @@ The Amazon SNS topic that you use for notifications must have a topic policy tha
 
 1. In the navigation pane, choose **Endpoints** and select your interface endpoint\.
 
-1. Choose **Actions**, **Create notification**\.
+1. In the **Notifications** tab, choose **Create notification**\.
 
 1. Choose the ARN for the SNS topic to associate with the notification\.
 
@@ -440,7 +440,7 @@ After you create a notification, you can change the SNS topic that's associated 
 
 1. In the navigation pane, choose **Endpoints** and select your interface endpoint\.
 
-1. Choose **Actions**, **Modify Notification**\.
+1. In the **Notifications** tab, select the notification and choose **Actions**, **Modify Notification**\.
 
 1. Specify the ARN for the SNS topic and change the endpoint events as required\.
 
@@ -454,7 +454,7 @@ If you no longer need a notification, you can delete it\.
 
 1. In the navigation pane, choose **Endpoints** and select your interface endpoint\.
 
-1. Choose **Actions**, **Delete notification**\.
+1. In the **Notifications** tab, select the notification and choose **Actions**, **Delete notification**\.
 
 1. Choose **Yes, Delete**\.
 
@@ -516,6 +516,8 @@ You can modify the following attributes of an interface endpoint:
 + The security groups that are associated with the endpoint network interface
 + The tags
 + The private DNS option
+**Note**  
+When you enable private DNS, it might take a few minutes for the private IP addresses to become available\.
 + The endpoint policy \(if supported by the service\)
 
  If you remove a subnet for the interface endpoint, the corresponding endpoint network interface in the subnet is deleted\.

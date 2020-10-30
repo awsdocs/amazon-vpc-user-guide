@@ -7,7 +7,7 @@ The following topics describe routing for specific gateways or connections in yo
 + [Routing to a NAT device](#route-tables-nat)
 + [Routing to a virtual private gateway](#route-tables-vgw)
 + [Routing to an AWS Outposts local gateway](#route-tables-lgw)
-+ [Routing to carrier gateway](#route-tables-cgw)
++ [Routing to A Wavelength Zone carrier gateway](#route-tables-cgw)
 + [Routing to a VPC peering connection](#route-tables-vpc-peering)
 + [Routing for ClassicLink](#route-tables-classiclink)
 + [Routing to a gateway VPC endpoint](#route-tables-vpce)
@@ -71,15 +71,15 @@ Subnets that are in VPCs associated with AWS Outposts can have an additional tar
 | 192\.168\.10\.0/24 | lgw\-id | 
 | 2002:bc9:1234:1a00::/56 | igw\-id | 
 
-## Routing to carrier gateway<a name="route-tables-cgw"></a>
+## Routing to A Wavelength Zone carrier gateway<a name="route-tables-cgw"></a>
 
-Subnets that are in Wavelength Zones can have an additional target type of a carrier gateway\. Consider the case where you want to have the carrier gateway route traffic to route all non\-VPC traffic to the carrier network\. To do this, create and attach a carrier gateway to your VPC, and then add a route with a destination of `0.0.0.0/0` for IPv4 traffic or `::/0` for IPv6 traffic, and a target of the carrier gateway ID \(`cgw-xxxxxxxxxxxxxxxxx`\)\. 
+Subnets that are in Wavelength Zones can have an additional target type of a carrier gateway\. Consider the case where you want to have the carrier gateway route traffic to route all non\-VPC traffic to the carrier network\. To do this, create and attach a carrier gateway to your VPC, and then add the following routes:
 
 
 | Destination | Target | 
 | --- | --- | 
-| 192\.168\.10\.0/24 | lgw\-id | 
-| 2002:bc9:1234:1a00::/56 | igw\-id | 
+| 0\.0\.0\.0/0 | cagw\-id | 
+| ::/0 | cagw\-id | 
 
 ## Routing to a VPC peering connection<a name="route-tables-vpc-peering"></a>
 

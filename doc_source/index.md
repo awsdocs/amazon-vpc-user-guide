@@ -63,7 +63,7 @@ Amazon's trademarks and trade dress may not be used in
    + [Route tables](VPC_Route_Tables.md)
       + [Example routing options](route-table-options.md)
       + [Working with route tables](WorkWithRouteTables.md)
-   + [Managed prefix lists](managed-prefix-lists.md)
+   + [Prefix lists](managed-prefix-lists.md)
       + [Working with shared prefix lists](sharing-managed-prefix-lists.md)
    + [Internet gateways](VPC_Internet_Gateway.md)
    + [Egress-only internet gateways](egress-only-internet-gateway.md)

@@ -111,3 +111,7 @@ All standard VPC quotas apply to a shared VPC\.
 | --- | --- | --- | 
 |  Participant accounts per VPC  |   100  | This is the quota for the number of distinct participant accounts that subnets in a VPC can be shared with\. This is a per VPC quota and applies across all the subnets shared in a VPC\. To increase this quota, contact AWS Support\. VPC owners can view the network interfaces and security groups that are attached to the participant resources\. Therefore, AWS recommends that you paginate your `DescribeSecurityGroups` and `DescribeNetworkInterfaces` API calls before requesting an increase for this quota\. | 
 | Subnets that can be shared with an account |  100 |  This is the quota for maximum number of subnets that can be shared with an AWS account\. To increase this quota contact AWS Support\. AWS recommends that you paginate your `DescribeSecurityGroups` and `DescribeSubnets` API calls before requesting an increase for this quota\.   | 
+
+## Amazon EC2 API throttling<a name="api-limits"></a>
+
+For information about Amazon EC2 throttling, see [API Request Throttling](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/throttling.html) in the *Amazon EC2 API Reference*\.

@@ -112,7 +112,7 @@ To ensure that your NAT gateway can access the internet, the route table associa
 
 ### Deleting a NAT gateway<a name="nat-gateway-deleting"></a>
 
-You can delete a NAT gateway using the Amazon VPC console\. After you've deleted a NAT gateway, its entry remains visible in the Amazon VPC console for a short time period \(usually an hour\), after which it's automatically removed\. You cannot remove this entry yourself\. 
+You can delete a NAT gateway using the Amazon VPC console\. After you delete a NAT gateway, its entry remains visible in the Amazon VPC console for a short time period \(usually an hour\), after which it's automatically removed\. You cannot remove this entry yourself\. 
 
 **To delete a NAT gateway**
 
@@ -123,6 +123,8 @@ You can delete a NAT gateway using the Amazon VPC console\. After you've deleted
 1. Select the NAT gateway, and choose **Actions**, **Delete NAT Gateway**\.
 
 1. In the confirmation dialog box, choose **Delete NAT Gateway**\.
+
+1. If you no longer need the Elastic IP address that was associated with the NAT gateway, we recommend that you release it\. For more information, see [Releasing an Elastic IP address](vpc-eips.md#release-eip)\.
 
 ### Testing a NAT gateway<a name="nat-gateway-testing"></a>
 

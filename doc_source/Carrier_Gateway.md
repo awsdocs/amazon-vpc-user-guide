@@ -86,7 +86,7 @@ When you choose to automatically route traffic from subnets to the carrier gatew
 
 1. Choose **Route subnet traffic to carrier gateway**, and under **Subnets to route** do the following\.
 
-   1. Under **Existing subnets in Wavelength Zone**, select the box for each Wavelength subnet to route to the carrier gateway\.
+   1. Under **Existing subnets in Wavelength Zone**, select the box for each subnet to route to the carrier gateway\.
 
    1. To create a subnet in the Wavelength Zone, choose **Add new subnet**, specify the following information, and then choose **Add new subnet**:
       + **Name tag**: Optionally provide a name for your subnet\. Doing so creates a tag with a key of `Name` and the value that you specify\.
@@ -106,6 +106,13 @@ When you choose to automatically route traffic from subnets to the carrier gatew
 
 **To create a carrier gateway**
 + Use `create-carrier-gateway`\. For more information, see [create\-carrier\-gateway](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-carrier-gateway.html) in the* AWS CLI Command Reference*\.
+
+  After you create the carrier gateway, add a VPC route table with the following resources:
+  + A route for all VPC local traffic
+  + A route that routes all non\-local traffic to the carrier gateway
+  + An association with the subnets in the Wavelength Zone
+
+  For more information, see [Routing to A Wavelength Zone carrier gateway](route-table-options.md#route-tables-cgw) and [Working with route tables](WorkWithRouteTables.md)\.
 
 ------
 

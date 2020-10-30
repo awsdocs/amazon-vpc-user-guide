@@ -4,6 +4,8 @@ The following are examples of flow log records that capture specific traffic flo
 
 For information about flow log record format, see [Flow log records](flow-logs.md#flow-log-records)\.
 
+For information about how to create flow logs, see [Working with flow logs](working-with-flow-logs.md)\.
+
 **Topics**
 + [Accepted and rejected Traffic](#flow-log-example-accepted-rejected)
 + [No data and skipped records](#flow-log-example-no-data)

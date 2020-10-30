@@ -28,8 +28,27 @@ When you create a VPC that has IPv6 addresses, you can choose to assign a set of
 The following rules apply to Local Zones:
 + The Local Zone subnets follow the same routing rules as Availability Zone subnet, including route tables, security groups, and network ACLs\.
 + You can assign Local Zones to subnets using the Amazon VPC Console, AWS CLI or API\.
-+ You must provision public IP addresses for use in a Local Zone\. When you allocate addresses, you can specify the location from which the IP address is advertised\. We refer to this as a network border group and you can set this parameter to limit the address to this location\. After you provision the IP addresses, you cannot move them between the Local Zone and the parent region \(for example, from u`s-west-2-lax-1a` to `us-west-2`\)\. 
++ You must provision public IP addresses for use in a Local Zone\. When you allocate addresses, you can specify the location from which the IP address is advertised\. We refer to this as a network border group and you can set this parameter to limit the address to this location\. After you provision the IP addresses, you cannot move them between the Local Zone and the parent Region \(for example, from u`s-west-2-lax-1a` to `us-west-2`\)\. 
 + You can request the IPv6 Amazon\-provided IP addresses and associate them with the network border group for a new or existing VPC\. 
+
+### Connecting Local Zone subnets to a transit gateway<a name="connect-local-zone-tgw"></a>
+
+The following diagram shows how to configure your network so that subnets in the Local Zone connect to a transit gateway\. You have a subnet in the Local Zone \(subnet 3\) and a subnet in the parent Availability Zone \(subnet 2\)\. You connect subnet 2 to the transit gateway, and then create a route in the VPC 2 route table that routes traffic for the VPC 1 CIDR to the transit gateway\.
+
+![\[Local Zone to transit gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/lz-tgw.png)
+
+You need to create the following resources to enable communication:
++ A subnet in the parent Availability Zone\. For information about creating subnets, see [Creating a subnet in your VPC](working-with-vpcs.md#AddaSubnet)\. Use [describe\-availability\-zones](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-availability-zones.html) to find the parent zone\.
++ A transit gateway\. For information about how to create a transit gateway, see [Create a transit gateway](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-transit-gateways.html#create-tgw) in the *AWS Transit Gateways Guide*\.
++ A VPC attachment for the Availability Zone VPC to the transit gateway\. For information about how to create a transit gateway attachment to a VPC, see [Transit gateway attachments to a VPC](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-vpc-attachments.html) in the *AWS Transit Gateways Guide*\.
++ An entry for the Availability Zone VPC in the transit gateway route table\. For information about how to create transit gateway routes, see [Transit gateway route tables](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-route-tables.html) in the *AWS Transit Gateways Guide*\.
++ For each VPC, an entry in the VPC route table that has the other VPC CIDR as the destination, and the transit gateway ID as the target\. For more information, see [Routing for a transit gateway](route-table-options.md#route-tables-tgw)\.
+
+  In the example, the route table for VPC 1 contains the following entry:    
+[\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/Extend_VPCs.html)
+
+  The route table for VPC 2 has the following entry:     
+[\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/Extend_VPCs.html)
 
 ## Extending your VPC resources to Wavelength Zones<a name="subnet-wavelength"></a>
 
@@ -44,6 +63,27 @@ The following rules apply to Wavelength Zones:
 + You can set the target of a VPC route table, or subnet route table in a Wavelength Zone to a carrier gateway, which allows inbound traffic from a carrier network in a specific location, and outbound traffic to the carrier network and internet\. For more information about routing options in a Wavelength Zone, see [Routing](https://docs.aws.amazon.com/wavelength/latest/developerguide/how-wavelengths-work.html#wavelength-routing-overview) in the *AWS Wavelength Developer Guide*\.
 + You can assign Wavelength Zones to subnets using the Amazon VPC Console, AWS CLI or API\.
 + Subnets in Wavelength Zones have the same networking components as subnets in Availability Zones, including IPv4 addresses, DHCP Option sets, and network ACLs\. 
+
+### Multiple Wavelength Zone considerations<a name="multiple-wavelength-zones"></a>
+
+**Note**  
+EC2 instances that are in two different Wavelength Zones in the same VPC are not allowed to communicate with each other\. If you need Wavelength Zone to Wavelength Zone communication, AWS recommends that you use multiple VPCs, one for each Wavelength Zone\. You can use a transit gateway to connect the VPCs\. This configuration enables communication between instances in the Wavelength Zones\.  
+Wavelength Zone to Wavelength Zone traffic routes through the AWS region\. For more information, see [AWS Transit Gateway](https://aws.amazon.com/transit-gateway/)\.
+
+The following diagram shows how to configure your network so that instances in two different Wavelength Zones can communicate\. You have two Wavelength Zones \(Wavelength Zone A and Wavelength Zone B\)\. You need to create the following resources to enable communication:
++ For each Wavelength Zone, a subnet in an Availability Zone that is the parent Availability Zone for the Wavelength Zone\. In the example, you create subnet 1 and subnet 2\. For information about creating subnets, see [Creating a subnet in your VPC](working-with-vpcs.md#AddaSubnet)\. Use [describe\-availability\-zones](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-availability-zones.html) to find the parent zone\.
++ A transit gateway\. The transit gateway connects the VPCs\. For information about how to create a transit gateway, see [Create a transit gateway](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-transit-gateways.html#create-tgw) in the *AWS Transit Gateways Guide*\.
++ For each VPC, a VPC attachment to the transit gateway\. For information about how to create a transit gateway attachment to a VPC, see [Transit gateway attachments to a VPC](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-vpc-attachments.html) in the *AWS Transit Gateways Guide*\.
++ Entries for each VPC in the transit gateway route table\. For information about how to create transit gateway routes, see [Transit gateway route tables](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-route-tables.html) in the *AWS Transit Gateways Guide*\.
++ For each VPC, an entry in the VPC route table that has the other VPC CIDR as the destination, and the transit gateway ID as the target\. For more information, see [Routing for a transit gateway](route-table-options.md#route-tables-tgw)\.
+
+  In the example, the route table for VPC 1 has the following entry:     
+[\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/Extend_VPCs.html)
+
+  The route table for VPC 2 has the following entry:     
+[\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/Extend_VPCs.html)
+
+![\[Multiple Wavelength Zones\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/mult-wavelength-zones.png)
 
 ## Subnets in AWS Outposts<a name="outposts"></a>
 

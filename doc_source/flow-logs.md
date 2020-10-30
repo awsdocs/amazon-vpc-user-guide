@@ -74,7 +74,7 @@ The aggregation interval is the period of time during which a particular flow is
 
 When a network interface is attached to a [Nitro\-based instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances), the aggregation interval is always 1 minute or less, regardless of the specified maximum aggregation interval\.
 
-After data is captured within an aggregation interval, it takes additional time to process and publish the data to CloudWatch Logs or Amazon S3\. This additional time could be up to 5 minutes to publish to CloudWatch Logs, and up to 10 minutes to publish to Amazon S3\.
+After data is captured within an aggregation interval, it takes additional time to process and publish the data to CloudWatch Logs or Amazon S3\. This additional time could be around 5 minutes to publish to CloudWatch Logs, and around 10 minutes to publish to Amazon S3\. The flow logs service delivers within this additional time in a best effort manner\. In some cases, your logs might be delayed beyond the 5 to 10 minutes additional time mentioned previously\.
 
 ### Default format<a name="flow-logs-default"></a>
 
@@ -136,8 +136,6 @@ To use flow logs, you need to be aware of the following limitations:
 + If traffic is sent to a network interface and the destination is not any of the network interface's IP addresses, the flow log displays the primary private IPv4 address in the `dstaddr` field\. To capture the original destination IP address, create a flow log with the `pkt-dstaddr` field\.
 + If traffic is sent from a network interface and the source is not any of the network interface's IP addresses, the flow log displays the primary private IPv4 address in the `srcaddr` field\. To capture the original source IP address, create a flow log with the `pkt-srcaddr` field\.
 + If traffic is sent to or sent by a network interface, the `srcaddr` and `dstaddr` fields in the flow log always display the primary private IPv4 address, regardless of the packet source or destination\. To capture the packet source or destination, create a flow log with the `pkt-srcaddr` and `pkt-dstaddr` fields\.
-+ If you create a flow log in a Region introduced after March 20, 2019 \(an [opt\-in Region](https://docs.aws.amazon.com/general/latest/gr/rande-manage.html)\), such as Asia Pacific \(Hong Kong\) or Middle East \(Bahrain\), the destination Amazon S3 bucket must be in the same Region and the same AWS account as the flow log\. 
-+ If you create a flow log in a Region introduced before March 20, 2019, the destination Amazon S3 bucket must be in the same Region as the flow log, or in another Region introduced before March 20, 2019\. You cannot specify an Amazon S3 bucket that's in an opt\-in Region\.
 + When your network interface is attached to a [Nitro\-based instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances), the aggregation interval is always 1 minute or less, regardless of the specified maximum aggregation interval\.
 
 Flow logs do not capture all IP traffic\. The following types of traffic are not logged:
@@ -151,4 +149,6 @@ Flow logs do not capture all IP traffic\. The following types of traffic are not
 
 ## Flow logs pricing<a name="flow-logs-pricing"></a>
 
-Data ingestion charges apply when you use flow logs\. Charges for vended logs apply when you publish flow logs to CloudWatch Logs\. Charges to deliver logs to Amazon S3 apply when you publish flow logs to Amazon S3\. For more information, see [Amazon CloudWatch Pricing](https://aws.amazon.com/cloudwatch/pricing)\.
+Data ingestion and archival charges for vended logs apply when you publish flow logs to CloudWatch Logs or to Amazon S3\. For more information and examples, see [Amazon CloudWatch Pricing](https://aws.amazon.com/cloudwatch/pricing)\.
+
+To track charges from publishing flow logs to your Amazon S3 buckets, you can apply cost allocation tags to your flow log subscriptions\. To track charges from publishing flow logs to CloudWatch Logs, you can apply cost allocation tags to your destination CloudWatch Logs log group\. Thereafter, your AWS cost allocation report will include usage and costs aggregated by these tags\. You can apply tags that represent business categories \(such as cost centers, application names, or owners\) to organize your costs\. For more information, see [Using Cost Allocation Tags](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html) in the *AWS Billing and Cost Management User Guide*\.

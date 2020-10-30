@@ -8,6 +8,7 @@ In CloudWatch Logs, the **timestamp** field corresponds to the start time that's
 
 **Topics**
 + [IAM roles for publishing flow logs to CloudWatch Logs](#flow-logs-iam)
++ [Permissions for IAM users to pass a role](#flow-logs-iam-user)
 + [Creating a flow log that publishes to CloudWatch Logs](#flow-logs-cwl-create-flow-log)
 + [Processing flow log records in CloudWatch Logs](#process-records-cwl)
 
@@ -54,21 +55,6 @@ Also ensure that your role has a trust relationship that allows the flow logs se
 }
 ```
 
-Users must also have permissions to use the iam:PassRole action for the IAM role that's associated with the flow log\.
-
-```
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": ["iam:PassRole"],
-      "Resource": "arn:aws:iam::account-id:role/flow-log-role-name"
-    }
-  ]
-}
-```
-
 You can update an existing role or use the following procedure to create a new role for use with flow logs\.
 
 ### Creating a flow logs role<a name="create-flow-logs-role"></a>
@@ -95,9 +81,26 @@ You can update an existing role or use the following procedure to create a new r
 
 1. On the **Summary** page, note the ARN for your role\. You need this ARN when you create your flow log\.
 
+## Permissions for IAM users to pass a role<a name="flow-logs-iam-user"></a>
+
+Users must also have permissions to use the `iam:PassRole` action for the IAM role that's associated with the flow log\.
+
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": ["iam:PassRole"],
+      "Resource": "arn:aws:iam::account-id:role/flow-log-role-name"
+    }
+  ]
+}
+```
+
 ## Creating a flow log that publishes to CloudWatch Logs<a name="flow-logs-cwl-create-flow-log"></a>
 
-You can create flow logs for your VPCs, subnets, or network interfaces\.
+You can create flow logs for your VPCs, subnets, or network interfaces\. If you perform these steps as an IAM user, ensure that you have permissions to use the `iam:PassRole` action\. For more information, see [Permissions for IAM users to pass a role](#flow-logs-iam-user)\.
 
 **To create a flow log for a network interface using the console**
 

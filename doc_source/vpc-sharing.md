@@ -16,7 +16,7 @@ You can share Amazon VPCs to leverage the implicit routing within a VPC for appl
 
 ## Shared VPCs prerequisites<a name="vpc-share-prerequisites"></a>
 
-You must enable resource sharing from the master account for your organization\. For information about enabling resource sharing, see [Enable sharing with AWS Organizations](https://docs.aws.amazon.com/ram/latest/userguide/getting-started-sharing.html#getting-started-sharing-orgs) in the *AWS RAM User Guide*\.
+You must enable resource sharing from the management account for your organization\. For information about enabling resource sharing, see [Enable sharing with AWS Organizations](https://docs.aws.amazon.com/ram/latest/userguide/getting-started-sharing.html#getting-started-sharing-orgs) in the *AWS RAM User Guide*\.
 
 ## Sharing a subnet<a name="vpc-sharing-share-subnet"></a>
 
@@ -93,9 +93,10 @@ In a shared VPC, each participant pays for their application resources including
 
 ## Unsupported services for shared subnets<a name="vpc-share-unsupported-services"></a>
 
-Participants cannot create resources for the following services in a shared subnet::
+Participants cannot create resources for the following services in a shared subnet:
 + AWS CloudHSM Classic
-+ AWS Transit Gateways
+
+A subnet owner can attach a transit gateway to the subnet\. The participants \(other accounts within owner's organization that share the subnet\) cannot attach the transit gateway to the subnet\.
 
 ## Limitations<a name="vpc-share-limitations"></a>
 
@@ -108,4 +109,3 @@ The following limitations apply to working with VPC sharing:
 + Service quotas apply per individual account\. For more information about service quotas, see [AWS service quotas](https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html) in the *Amazon Web Services General Reference*\.
 + VPC tags, and tags for the resources within the shared VPC are not shared with the participants\.
 + When participants launch resources in a shared subnet, they should make sure they attach their security group to the resource, and not rely on the default security group\. Participants cannot use the default security group because it belongs to the VPC owner\.
-+ AWS Firewall Manager security group policies are not supported for participants' resources in a shared VPC\.

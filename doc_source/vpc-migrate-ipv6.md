@@ -210,7 +210,7 @@ You can connect to an instance using its IPv6 address\. If you're connecting fro
 
 ## Step 6: \(Optional\) Configure IPv6 on your instances<a name="vpc-migrate-ipv6-dhcpv6"></a>
 
-If you launched your instance using Amazon Linux 2016\.09\.0 or later, or Windows Server 2008 R2 or later, your instance is configured for IPv6 and no additional steps are required\. 
+If you launched your instance using Amazon Linux 2016\.09\.0 or later, Windows Server 2008 R2 or later, or Ubuntu Server 2018 or later, your instance is configured for IPv6 and no additional steps are required\. 
 
 If you launched your instance from a different AMI, it may not be configured for DHCPv6, which means that any IPv6 address that you assign to the instance is not automatically recognized on the primary network interface\. To verify if the IPv6 address is configured on your network interface, use the `ifconfig` command on Linux, or the `ipconfig` command on Windows\.
 

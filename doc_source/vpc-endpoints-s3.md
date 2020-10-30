@@ -27,7 +27,7 @@ The following table lists AWS services that may be affected by an endpoint, and 
 | Amazon EMR | Your endpoint policy must allow access to the Amazon Linux repositories and other buckets that are used by Amazon EMR\. For more information, see [Minimum Amazon S3 Policy for Private Subnet](https://docs.aws.amazon.com/emr/latest/ManagementGuide/private-subnet-iampolicy.html) in the Amazon EMR Management Guide\. | 
 | AWS OpsWorks | Your endpoint policy must allow at least access to specific buckets that are used by AWS OpsWorks\. For more information, see [Running a Stack in a VPC](https://docs.aws.amazon.com/opsworks/latest/userguide/workingstacks-vpc.html) in the AWS OpsWorks User Guide\.  | 
 | AWS Systems Manager |  Your endpoint policy must allow access to the Amazon S3 buckets used by Patch Manager for patch baseline operations in your AWS Region\. These buckets contain the code that is retrieved and run on instances by the patch baseline service\. For more information, see [Create a Virtual Private Cloud Endpoint](https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-setting-up-vpc.html) in the *AWS Systems Manager User Guide*\. For a list of S3 bucket permissions required by SSM Agent for its operations, see [Minimum S3 Bucket Permissions for SSM Agent](https://docs.aws.amazon.com/systems-manager/latest/userguide/ssm-agent-minimum-s3-permissions.html) in the *AWS Systems Manager User Guide*\.  | 
-| Amazon Elastic Container Registry | Your endpoint policy must allow access to the Amazon S3 buckets used by Amazon ECR to store Docker image layers\. For more information, see [Minimum Amazon S3 Bucket Permissions for Amazon ECR]( https://docs.aws.amazon.com/AmazonECR/latest/userguide/ecr-minimum-s3-perms.html) in the Amazon Elastic Container Registry User Guide\. | 
+| Amazon Elastic Container Registry | Your endpoint policy must allow access to the Amazon S3 buckets used by Amazon ECR to store Docker image layers\. For more information, see [Minimum Amazon S3 Bucket Permissions for Amazon ECR]( https://docs.aws.amazon.com/AmazonECR/latest/userguide/vpc-endpoints.html#ecr-minimum-s3-perms) in the Amazon Elastic Container Registry User Guide\. | 
 | Amazon WorkDocs | If you use an Amazon WorkDocs client in Amazon WorkSpaces or an EC2 instance, your endpoint policy must allow full access to Amazon S3\. | 
 | Amazon WorkSpaces | Amazon WorkSpaces does not directly depend on Amazon S3\. However, if you provide Amazon WorkSpaces users with internet access, then take note that websites, HTML emails, and internet services from other companies may depend on Amazon S3\. Ensure that your endpoint policy allows full access to Amazon S3 to allow these services to continue to work correctly\.  | 
 
@@ -40,7 +40,7 @@ The following are example endpoint policies for accessing Amazon S3\. For more i
 **Important**  
 All types of policies — IAM user policies, endpoint policies, S3 bucket policies, and Amazon S3 ACL policies \(if any\) — must grant the necessary permissions for access to Amazon S3 to succeed\. 
 
-**Example Example: Restricting access to a specific bucket**  
+**Example: Restricting access to a specific bucket**  
 You can create a policy that restricts access to specific S3 buckets only\. This is useful if you have other AWS services in your VPC that use S3 buckets\. The following is an example of a policy that restricts access to `my_secure_bucket` only\.  
 
 ```
@@ -61,9 +61,10 @@ You can create a policy that restricts access to specific S3 buckets only\. This
 }
 ```
 
-**Example Example: Enabling access to the Amazon Linux AMI repositories**  
+**Example: Enabling access to the Amazon Linux AMI repositories**  
 The Amazon Linux AMI repositories are Amazon S3 buckets in each Region\. If you want instances in your VPC to access the repositories through an endpoint, create an endpoint policy that enables access to these buckets\.  
 The following policy allows access to the Amazon Linux repositories\.  
+You need to replace `region` with your AWS Region, for example, **us\-east\-1**\.  
 
 ```
 {
@@ -76,14 +77,15 @@ The following policy allows access to the Amazon Linux repositories\.
       ],
       "Effect": "Allow",
       "Resource": [
-        "arn:aws:s3:::packages.*.amazonaws.com/*",
-        "arn:aws:s3:::repo.*.amazonaws.com/*"
+        "arn:aws:s3:::packages.region.amazonaws.com/*",
+        "arn:aws:s3:::repo.region.amazonaws.com/*"
       ]
     }
   ]
 }
 ```
 The following policy allows access to the Amazon Linux 2 repositories\.  
+You need to replace `region` with your AWS Region, for example, **us\-east\-1**\.  
 
 ```
 {
@@ -96,7 +98,7 @@ The following policy allows access to the Amazon Linux 2 repositories\.
       ],
       "Effect": "Allow",
       "Resource": [
-        "arn:aws:s3:::amazonlinux.*.amazonaws.com/*"
+        "arn:aws:s3:::amazonlinux.region.amazonaws.com/*"
       ]
     }
   ]
@@ -117,7 +119,7 @@ For more information about bucket policies for Amazon S3, see [Using Bucket Poli
 
 The following are example bucket policies that limit access to a specific VPC endpoint or specific VPC\. To enable IAM users to work with bucket policies, you must grant them permission to use the `s3:GetBucketPolicy` and `s3:PutBucketPolicy` actions\.
 
-**Example Example: Restricting access to a specific endpoint**  
+**Example: Restricting access to a specific endpoint**  
 The following is an example of an S3 bucket policy that allows access to a specific bucket, `my_secure_bucket`, from endpoint `vpce-1a2b3c4d` only\. The policy denies all access to the bucket if the specified endpoint is not being used\. The `aws:sourceVpce` condition is used to specify the endpoint\. The `aws:sourceVpce` condition does not require an ARN for the VPC endpoint resource, only the endpoint ID\.  
 
 ```
@@ -142,7 +144,7 @@ The following is an example of an S3 bucket policy that allows access to a speci
 }
 ```
 
-**Example Example: Restricting access to a specific VPC**  
+**Example: Restricting access to a specific VPC**  
 You can create a bucket policy that restricts access to a specific VPC by using the `aws:sourceVpc` condition\. This is useful if you have multiple endpoints configured in the same VPC, and you want to manage access to your S3 buckets for all of your endpoints\. The following is an example of a policy that allows VPC `vpc-111bbb22` to access `my_secure_bucket` and its objects\. The policy denies all access to the bucket if the specified VPC is not being used\. The `aws:sourceVpc` condition does not require an ARN for the VPC resource, only the VPC ID\.  
 
 ```

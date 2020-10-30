@@ -172,7 +172,7 @@ The client that initiates the request chooses the ephemeral port range\. The ran
 + A NAT gateway uses ports 1024\-65535\.
 + AWS Lambda functions use ports 1024\-65535\.
 
-For example, if a request comes into a web server in your VPC from a Windows XP client on the internet, your network ACL must have an outbound rule to enable traffic destined for ports 1025\-5000\. 
+For example, if a request comes into a web server in your VPC from a Windows 10 client on the internet, your network ACL must have an outbound rule to enable traffic destined for ports 49152\-65535\. 
 
 If an instance in your VPC is the client initiating a request, your network ACL must have an inbound rule to enable traffic destined for the ephemeral ports specific to the type of instance \(Amazon Linux, Windows Server 2008, and so on\)\. 
 
@@ -412,4 +412,8 @@ However, only other instances within the subnet and your remote computer are abl
 
 ## Recommended rules for VPC wizard scenarios<a name="vpc-recommended-nacl-rules"></a>
 
-You can use the VPC wizard in the Amazon VPC console to implement common scenarios for Amazon VPC\. If you implement these scenarios as described in the documentation, you use the default network access control list \(ACL\), which allows all inbound and outbound traffic\. If you need an additional layer of security, you can create a network ACL and add rules\. For more information, see [ Amazon VPC console wizard configurations](VPC_wizard.md)\.
+You can use the VPC wizard in the Amazon VPC console to implement common scenarios for Amazon VPC\. If you implement these scenarios as described in the documentation, you use the default network access control list \(ACL\), which allows all inbound and outbound traffic\. If you need an additional layer of security, you can create a network ACL and add rules\. For more information, see one of the following:
++ [Recommended network ACL rules for a VPC with a single public subnet](VPC_Scenario1.md#nacl-rules-scenario-1)
++ [Recommended network ACL rules for a VPC with public and private subnets \(NAT\)](VPC_Scenario2.md#nacl-rules-scenario-2)
++ [Recommended network ACL rules for a VPC with public and private subnets and AWS Site\-to\-Site VPN access](VPC_Scenario3.md#nacl-rules-scenario-3)
++ [Recommended network ACL rules for a VPC with a private subnet only and AWS Site\-to\-Site VPN access](VPC_Scenario4.md#nacl-rules-scenario-4)

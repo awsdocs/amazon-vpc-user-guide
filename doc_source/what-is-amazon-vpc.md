@@ -11,7 +11,7 @@ The following are the key concepts for VPCs:
 + **Subnet** — A range of IP addresses in your VPC\. 
 + **Route table** — A set of rules, called routes, that are used to determine where network traffic is directed\. 
 + **Internet gateway** — A gateway that you attach to your VPC to enable communication between resources in your VPC and the internet\.
-+ **VPC endpoint** — Enables you to privately connect your VPC to supported AWS services and VPC endpoint services powered by PrivateLink without requiring an internet gateway, NAT device, VPN connection, or AWS Direct Connect connection\. Instances in your VPC do not require public IP addresses to communicate with resources in the service\. Traffic between your VPC and the other service does not leave the Amazon network\.
++ **VPC endpoint** — Enables you to privately connect your VPC to supported AWS services and VPC endpoint services powered by PrivateLink without requiring an internet gateway, NAT device, VPN connection, or AWS Direct Connect connection\. Instances in your VPC do not require public IP addresses to communicate with resources in the service\. Traffic between your VPC and the other service does not leave the Amazon network\. For more information, see [VPC endpoints and VPC endpoint services \(AWS PrivateLink\)](endpoint-services-overview.md)\.
 
 ## Accessing Amazon VPC<a name="VPCInterfaces"></a>
 
@@ -23,9 +23,7 @@ You can create, access, and manage your VPCs using any of the following interfac
 
 ## Pricing for Amazon VPC<a name="Paying"></a>
 
-There's no additional charge for using Amazon VPC\. You pay the standard rates for the instances and other Amazon EC2 features that you use\. There are charges for using a Site\-to\-Site VPN connection, PrivateLink, Traffic Mirroring, and a NAT gateway\. For more information, see the following pricing pages:
-+ [Amazon VPC Pricing](https://aws.amazon.com/vpc/pricing/)
-+ [Amazon EC2 Pricing](https://aws.amazon.com/ec2/pricing/)
+There's no additional charge for using a VPC\. There are charges for the following VPC components: Site\-to\-Site VPN connection, PrivateLink, Traffic Mirroring, and a NAT gateway\. For more information, see [Amazon VPC Pricing](https://aws.amazon.com/vpc/pricing/)\.
 
 ## Amazon VPC quotas<a name="vpc-quotas"></a>
 
