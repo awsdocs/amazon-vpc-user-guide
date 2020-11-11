@@ -31,6 +31,27 @@ The following rules apply to Local Zones:
 + You must provision public IP addresses for use in a Local Zone\. When you allocate addresses, you can specify the location from which the IP address is advertised\. We refer to this as a network border group and you can set this parameter to limit the address to this location\. After you provision the IP addresses, you cannot move them between the Local Zone and the parent Region \(for example, from u`s-west-2-lax-1a` to `us-west-2`\)\. 
 + You can request the IPv6 Amazon\-provided IP addresses and associate them with the network border group for a new or existing VPC\. 
 
+### Accessing Local Zones using a Direct Connect gateway<a name="access-local-zone"></a>
+
+Consider the scenario where you want an on\-premises data center to access resources that are in a Local Zone\. You use a virtual private gateway for the VPC associated with the Local Zone to connect to a Direct Connect gateway\. The Direct Connect gateway connects to an AWS Direct Connect location in a Region\. The on\-premises data center has an AWS Direct Connect connection to the AWS Direct Connect location\.
+
+![\[Image NOT FOUND\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/dxgw-lz.png)
+
+You configure the following resources for this configuration:
++ A virtual private gateway for the VPC that is associated with the Local Zone subnet\. You can view the VPC for the subnet on the subnet details page in the Amazon VPC Console, or use [describe\-subnets](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-subnets.html)\.
+
+  For information about how to create a virtual private gateway, see [Create a target gateway](vpn/latest/s2svpn/SetUpVPNConnections.html#vpn-create-target-gateway) in the *AWS Site\-to\-Site VPN User Guide*\.
++ A Direct Connect connection\. AWS recommends that you use one of the following locations for the best latency performance to the LA Local Zones:
+  + T5 at El Segundo, Los Angeles, CA \(AWS recommends this location for the lowest latency to the LA Local Zone\)
+  + CoreSite LA1, Los Angeles, CA
+  + Equinix LA3, El Segundo, CA
+
+  For information about how to order a connection, see [Cross connects](https://docs.aws.amazon.com/directconnect/latest/UserGuide/Colocation.html#cross-connect-us-west-1) in the *AWS Direct Connect User Guide*\.
++ A Direct Connect gateway\. For information about how to create a Direct Connect gateway, see [Create a Direct Connect gateway](https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-gateways-intro.html#create-direct-connect-gateway) in the *AWS Direct Connect User Guide*\.
++ A virtual private gateway association to connect the VPC to the Direct Connect gateway\. For information about how to create a virtual private gateway association, see [Associating and disassociating virtual private gateways](https://docs.aws.amazon.com/directconnect/latest/UserGuide/directconnect/latest/UserGuide/virtualgateways.html#associate-vgw-with-direct-connect-gateway) in the *AWS Direct Connect User Guide*\.
++ A private virtual interface on the connection from the AWS Direct Connect location to the on\-premises data center\. 
++ For information about how to create a Direct Connect gateway, see [Creating a private virtual interface to the Direct Connect gateway ](https://docs.aws.amazon.com/directconnect/latest/UserGuide/virtualgateways.html#create-private-vif-for-gateway) in the *AWS Direct Connect User Guide*\.
+
 ### Connecting Local Zone subnets to a transit gateway<a name="connect-local-zone-tgw"></a>
 
 The following diagram shows how to configure your network so that subnets in the Local Zone connect to a transit gateway\. You have a subnet in the Local Zone \(subnet 3\) and a subnet in the parent Availability Zone \(subnet 2\)\. You connect subnet 2 to the transit gateway, and then create a route in the VPC 2 route table that routes traffic for the VPC 1 CIDR to the transit gateway\.

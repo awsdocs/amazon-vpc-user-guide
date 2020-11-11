@@ -1,6 +1,6 @@
 # Controlling access to services with VPC endpoints<a name="vpc-endpoints-access"></a>
 
-When you create an endpoint, you can attach an endpoint policy to it that controls access to the service to which you are connecting\. Endpoint policies must be written in JSON format\. Not all services support endpoint policies\.
+When you create an interface or gateway endpoint, you can attach an endpoint policy to it that controls access to the service to which you are connecting\. Endpoint policies must be written in JSON format\. Not all services support endpoint policies\.
 
 If you're using an endpoint to Amazon S3, you can also use Amazon S3 bucket policies to control access to buckets from specific endpoints, or specific VPCs\. For more information, see [Using Amazon S3 bucket policies](vpc-endpoints-s3.md#vpc-endpoints-s3-bucket-policies)\.
 

@@ -45,7 +45,7 @@ You can use the `ec2:VpceServiceOwner` condition key to control what VPC endpoin
 ```
 
 **Control the private DNS names that can be specified for VPC endpoint services**  
-You can use the `ec2:VpceServicePrivateDnsName` condition key to control what VPC endpoint service can be modified or created based on the Private DNS name associated with the VPC endpoint service\. In the following example, you can only create or VPC endpoint service when the when the Private DNS name is `example.com`\. To use this example, substitute the account ID, the Private DNS name, and the Region \(unless you are in the `us-east-1` Region\)\.
+You can use the `ec2:VpceServicePrivateDnsName` condition key to control what VPC endpoint service can be modified or created based on the Private DNS name associated with the VPC endpoint service\. In the following example, you can only create or VPC endpoint service when the Private DNS name is `example.com`\. To use this example, substitute the account ID, the Private DNS name, and the Region \(unless you are in the `us-east-1` Region\)\.
 
 ```
 {

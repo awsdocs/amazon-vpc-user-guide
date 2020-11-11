@@ -95,7 +95,7 @@ Each EC2 instance limits the number of packets that can be sent to the Amazon Ro
 | Resource | Default | Comments | 
 | --- | --- | --- | 
 | Gateway VPC endpoints per Region | 20 | You cannot have more than 255 gateway endpoints per VPC\. | 
-| Interface VPC endpoints per VPC | 50 | This is the quota for the maximum number of endpoints in a VPC\. To increase this quota, contact AWS Support\.  | 
+| Interface and Gateway Load Balancer endpoints per VPC | 50 | This is the combined quota for the maximum number of interface endpoints and Gateway Load Balancer endpoints in a VPC\. To increase this quota, contact AWS Support\.  | 
 |  VPC endpoint policy size  | 20,480 characters \(including white space\) | This quota cannot be increased\. | 
 
 ## AWS Site\-to\-Site VPN connections<a name="vpc-limits-vpn"></a>

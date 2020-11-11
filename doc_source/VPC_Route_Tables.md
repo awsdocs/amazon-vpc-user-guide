@@ -136,7 +136,7 @@ If you disassociate Subnet 2 from Route Table B, there's still an implicit assoc
 
 You can associate a route table with an internet gateway or a virtual private gateway\. When a route table is associated with a gateway, it's referred to as a *gateway route table*\. You can create a gateway route table for fine\-grain control over the routing path of traffic entering your VPC\. For example, you can intercept the traffic that enters your VPC through an internet gateway by redirecting that traffic to a middlebox appliance \(such as a security appliance\) in your VPC\.
 
-A gateway route table supports routes where the target is `local` \(the default local route\) or an elastic network interface \(network interface\) in your VPC that's attached to your middlebox appliance\. When the target is a network interface, the following destinations are allowed:
+A gateway route table supports routes where the target is `local` \(the default local route\), a [Gateway Load Balancer endpoint](https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/introduction.html), or an elastic network interface \(network interface\) in your VPC that's attached to your middlebox appliance\. When the target is a Gateway Load Balancer endpoint or a network interface, the following destinations are allowed:
 + The entire IPv4 or IPv6 CIDR block of your VPC\. In this case, you replace the target of the default local route\.
 + The entire IPv4 or IPv6 CIDR block of a subnet in your VPC\. This is a more specific route than the default local route\.
 
@@ -160,13 +160,14 @@ In the following gateway route table, the target for the local route is replaced
 #### Rules and considerations<a name="gateway-route-table-rules"></a>
 
 You cannot associate a route table with a gateway if any of the following applies:
-+ The route table contains existing routes with targets other than a network interface or the default local route\.
++ The route table contains existing routes with targets other than a network interface, Gateway Load Balancer endpoint, or the default local route\.
 + The route table contains existing routes to CIDR blocks outside of the ranges in your VPC\.
 + Route propagation is enabled for the route table\.
 
 In addition, the following rules and considerations apply:
 + You cannot add routes to any CIDR blocks outside of the ranges in your VPC, including ranges larger than the individual VPC CIDR blocks\. 
-+ You can only specify `local` or a network interface as a target\. You cannot specify any other types of targets, including individual host IP addresses\.
++ You can only specify `local`, a Gateway Load Balancer endpoint, or a network interface as a target\. You cannot specify any other types of targets, including individual host IP addresses\.
++ You cannot route traffic from a virtual private gateway to a Gateway Load Balancer endpoint\. If you associate your route table with a virtual private gateway and you add a route with a Gateway Load Balancer endpoint as the target, traffic that's destined for the endpoint is dropped\.
 + You cannot specify a prefix list as a destination\.
 + You cannot use a gateway route table to control or intercept traffic outside of your VPC, for example, traffic through an attached transit gateway\. You can intercept traffic that enters your VPC and redirect it to another target in the same VPC only\.
 + To ensure that traffic reaches your middlebox appliance, the target network interface must be attached to a running instance\. For a traffic that flows through an internet gateway, the target network interface must also have a public IP address\.
@@ -208,6 +209,7 @@ The same rule applies if your route table contains a static route to any of the 
 + Gateway VPC endpoint
 + Transit gateway
 + VPC peering connection
++ Gateway Load Balancer endpoint
 
 If the destinations for the static and propagated routes are the same, the static route takes priority\.
 

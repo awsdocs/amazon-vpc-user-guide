@@ -15,6 +15,7 @@ The following topics describe routing for specific gateways or connections in yo
 + [Routing for a transit gateway](#route-tables-tgw)
 + [Routing for a middlebox appliance in your VPC](#route-tables-appliance-routing)
 + [Routing using a prefix list](#route-tables-managed-prefix-list)
++ [Routing to a Gateway Load Balancer endpoint](#route-tables-gwlbe)
 
 ## Routing to an internet gateway<a name="route-tables-internet-gateway"></a>
 
@@ -276,3 +277,41 @@ You create a prefix list with both entries\. In your subnet route tables, you cr
 | pl\-123abc123abc123ab | tgw\-id | 
 
 The maximum number of entries for the prefix lists equals the same number of entries in the route table\.
+
+## Routing to a Gateway Load Balancer endpoint<a name="route-tables-gwlbe"></a>
+
+A Gateway Load Balancer enables you to distribute traffic to a fleet of virtual appliances, such as firewalls\. You can configure the load balancer as a service by creating a [VPC endpoint service configuration](vpc-endpoint-services-gwlbe.md)\. You then create a [Gateway Load Balancer endpoint](vpce-gateway-load-balancer.md) in your VPC to connect your VPC to the service\.
+
+To route your traffic to the Gateway Load Balancer \(for example, for security inspection\), specify the Gateway Load Balancer endpoint as a target in your route tables\.
+
+In the following example, a fleet of security appliances is configured behind a Gateway Load Balancer in the security VPC\. An endpoint service is configured for the Gateway Load Balancer\. The owner of the service consumer VPC creates a Gateway Load Balancer endpoint in subnet 2 in their VPC \(represented by an endpoint network interface\)\. All traffic entering the VPC through the internet gateway is first routed to the Gateway Load Balancer endpoint for inspection in the security VPC before it's routed to the destination subnet\. Similarly, all traffic leaving the EC2 instance in subnet 1 is first routed to Gateway Load Balancer endpoint for inspection in the security VPC before it's routed to the internet\.
+
+![\[Using a Gateway Load Balancer endpoint to access an endpoint service\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-service-gwlbe.png)
+
+You configure the following route tables for the service consumer VPC\.
+
+Create a gateway route table and associate it with the internet gateway\. Add a route that points traffic destined for subnet 1 to the Gateway Load Balancer endpoint\. To specify the Gateway Load Balancer endpoint in the route table, use the ID of the VPC endpoint\.
+
+
+| Destination | Target | 
+| --- | --- | 
+| 10\.0\.0\.0/16 | Local | 
+| 10\.0\.1\.0/24 | vpc\-endpoint\-id | 
+
+For the route table for subnet 1, create a route that points all traffic \(`0.0.0.0/0`\) to the Gateway Load Balancer endpoint\. This ensures that all traffic leaving the subnet \(destined for the internet\) is first routed to the Gateway Load Balancer endpoint\.
+
+
+| Destination | Target | 
+| --- | --- | 
+| 10\.0\.0\.0/16 | Local | 
+| 0\.0\.0\.0/0 | vpc\-endpoint\-id | 
+
+For subnet 2, the route table routes the traffic that returns from inspection to its final destination\. For the traffic that originated from the internet, the local route ensures that it is routed to its destination in subnet 1\. For the traffic that originated from subnet 1, create a route that routes all traffic to the internet gateway\.
+
+
+| Destination | Target | 
+| --- | --- | 
+| 10\.0\.0\.0/16 | Local | 
+| 0\.0\.0\.0/0 | igw\-id | 
+
+For more information about Gateway Load Balancers, see [Gateway Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/introduction.html)\.

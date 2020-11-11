@@ -4,6 +4,7 @@ The following table describes the important changes in each release of the *Amaz
 
 | Change | Description | Date | 
 | --- |--- |--- |
+| [Gateway Load Balancer endpoints](https://docs.aws.amazon.com/vpc/latest/userguide/vpce-gateway-load-balancer.html) | You can create a Gateway Load Balancer endpoint in your VPC to route traffic to a VPC endpoint service that you've configured using a Gateway Load Balancer\. | November 10, 2020 | 
 | [Carrier gateways](https://docs.aws.amazon.com/vpc/latest/userguide/Carrier_Gateway.html) | Create carrier gateways to allow inbound traffic from a carrier network in a specific location, and to allow outbound traffic to the carrier network and internet\. | August 6, 2020 | 
 | [Tag on create](#WhatsNew) | You can add tags when you create a VPC peering connection and route table\. | July 20, 2020 | 
 | [Tag on create](#WhatsNew) | You can add tags when you create a VPC, DHCP options, internet gateway, egress\-only gateway, network ACL, and security group\. | June 30, 2020 | 

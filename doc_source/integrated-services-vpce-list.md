@@ -1,6 +1,6 @@
 # AWS services that you can use with AWS PrivateLink<a name="integrated-services-vpce-list"></a>
 
-The following services integrate with AWS PrivateLink\.
+The following services integrate with AWS PrivateLink\. You can create an [interface endpoint](vpce-interface.md) to connect to these services\.
 
 The **Supports VPC endpoint policies** column displays "No", when the service integrates with AWS PrivateLink, but does not support VPC endpoint policies\. 
 
@@ -59,6 +59,7 @@ The **Supports VPC endpoint policies** column displays "No", when the service in
 |  [Amazon RDS Data API](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html#data-api.vpc-endpoint)  |   ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/icon-yes.png) Yes  [Learn more](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html#data-api.vpc-endpoint)  | 
 |  [Amazon Redshift](https://docs.aws.amazon.com/redshift/latest/mgmt/security-private-link.html)  |   ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/icon-yes.png) Yes  [Learn more](https://docs.aws.amazon.com/redshift/latest/mgmt/security-private-link.html)  | 
 |  [Amazon Rekognition](https://docs.aws.amazon.com/rekognition/latest/dg/vpc.html)  |   ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/icon-yes.png) Yes  [Learn more](https://docs.aws.amazon.com/rekognition/latest/dg/vpc.html#api-private-link-policy)  | 
+|  [Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/dev/inter-network-traffic-privacy.html#inter-network-traffic-privacy-within-region)  |   ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/icon-yes.png) Yes  [Learn more](https://docs.aws.amazon.com/AmazonS3/latest/dev/example-bucket-policies-vpc-endpoint.html)  | 
 |  [Amazon SageMaker and Amazon SageMaker Runtime](https://docs.aws.amazon.com/sagemaker/latest/dg/interface-vpc-endpoint.html)  |   ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/icon-yes.png) Yes  [Learn more](https://docs.aws.amazon.com/sagemaker/latest/dg/interface-vpc-endpoint.html#api-private-link-policy)  | 
 |  [Amazon SageMaker Notebook](https://docs.aws.amazon.com/sagemaker/latest/dg/notebook-interface-endpoint.html)  |   ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/icon-yes.png) Yes  [Learn more](https://docs.aws.amazon.com/sagemaker/latest/dg/notebook-interface-endpoint.html#nbi-private-link-policy)  | 
 |  [AWS Secrets Manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/vpc-endpoint-overview.html)  |   ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/icon-yes.png) Yes  [Learn more](https://docs.aws.amazon.com/secretsmanager/latest/userguide/vpc-endpoint-overview.html#vpc-endpoint-policy)  | 

@@ -16,12 +16,14 @@ The following rules apply:
 + You're limited to five Elastic IP addresses\. To help conserve them, you can use a NAT device\. For more information, see [NAT](vpc-nat.md)\.
 + Elastic IP addresses for IPv6 are not supported\.
 + You can tag an Elastic IP address that's allocated for use in a VPC, however, cost allocation tags are not supported\. If you recover an Elastic IP address, tags are not recovered\. 
-+ You can access an Elastic IP address from the internet when the security group and Network ACL allow traffic from the source IP address\. The reply traffic from within the VPC back to the internet requires an internet gateway\. For more information, see [Security groups for your VPC](VPC_SecurityGroups.md) and [Network ACLs](vpc-network-acls.md)\.
++ You can access an Elastic IP address from the internet when the security group and network ACL allow traffic from the source IP address\. The reply traffic from within the VPC back to the internet requires an internet gateway\. For more information, see [Security groups for your VPC](VPC_SecurityGroups.md) and [Network ACLs](vpc-network-acls.md)\.
 + You can use any of the following options for the Elastic IP addresses:
   + Have Amazon provide the Elastic IP addresses\. When you select this option, you can associate the Elastic IP addresses with a network border group\. This is the location from which we advertise the CIDR block\. Setting the network border group limits the CIDR block to this group\. 
   + Use your own IP addresses\. For information about bringing your own IP addresses, see [Bring your own IP addresses \(BYOIP\)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html) in the* Amazon EC2 User Guide for Linux Instances*\.
 
 There are differences between an Elastic IP address that you use in a VPC and one that you use in EC2\-Classic\. For more information, see [Differences between EC2\-Classic and VPC](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-classic-platform.html#differences-ec2-classic-vpc) in the *Amazon EC2 User Guide for Linux Instances*\. You can move an Elastic IP address that you've allocated for use in the EC2\-Classic platform to the VPC platform\. For more information, see [Migrating an Elastic IP address from EC2\-Classic](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-classic-platform.html#migrating-eip)\.
+
+Elastic IP addresses are regional\. For more information about using Global Accelerator to provision global IP addresses, see [Using global static IP addresses instead of regional static IP addresses](https://docs.aws.amazon.com/global-accelerator/latest/dg/about-accelerators.eip-accelerator.html) in the *AWS Global Accelerator Developer Guide*\.
 
 ## Working with Elastic IP addresses<a name="WorkWithEIPs"></a>
 

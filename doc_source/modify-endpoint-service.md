@@ -1,19 +1,19 @@
-# Changing the Network Load Balancers and acceptance settings<a name="modify-endpoint-service"></a>
+# Changing the load balancers and acceptance settings<a name="modify-endpoint-service"></a>
 
-You can modify your endpoint service configuration by changing the Network Load Balancers that are associated with the endpoint service, and by changing whether acceptance is required for requests to connect to your endpoint service\.
+You can modify your endpoint service configuration by changing the load balancers that are associated with the endpoint service, and by changing whether acceptance is required for requests to connect to your endpoint service\.
 
-You cannot disassociate a load balancer if there are interface endpoints attached to your endpoint service\.
+You cannot disassociate a load balancer if there are endpoints attached to your endpoint service\.
 
 ------
 #### [ Console ]
 
-**To change the network load balancers for your endpoint service using the console**
+**To change the load balancers for your endpoint service using the console**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
 1. In the navigation pane, choose **Endpoint Services** and select your endpoint service\.
 
-1. Choose **Actions**, **Associate/Disassociate Network Load Balancers**\.
+1. Choose **Actions**, **Associate/Disassociate Load Balancers**\.
 
 1. Select or deselect the load balancers as required, and choose **Save**\.
 
@@ -30,7 +30,7 @@ You cannot disassociate a load balancer if there are interface endpoints attache
 ------
 #### [ AWS CLI ]
 
-To change the load balancers for your endpoint service, use the [modify\-vpc\-endpoint\-service\-configuration](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-vpc-endpoint-service-configuration.html) command and use the `--add-network-load-balancer-arn` or `--remove-network-load-balancer-arn` parameter\. 
+To change the load balancers for your endpoint service, use the [modify\-vpc\-endpoint\-service\-configuration](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-vpc-endpoint-service-configuration.html) command\. The following example uses the `--remove-network-load-balancer-arn` parameter to remove a Network Load Balancer\. 
 
 ```
 aws ec2 modify-vpc-endpoint-service-configuration --service-id vpce-svc-09222513e6e77dc86 --remove-network-load-balancer-arn arn:aws:elasticloadbalancing:us-east-1:123456789012:loadbalancer/net/nlb-vpce/e94221227f1ba532

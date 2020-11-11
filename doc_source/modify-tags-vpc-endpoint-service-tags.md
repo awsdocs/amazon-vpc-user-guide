@@ -26,8 +26,6 @@ Tags provide a way to identify the VPC endpoint service\. You can add or remove 
 
 Use [CreateTags](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateTags.html) and [DeleteTags](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DeleteTags.html)\.
 
-To accept an endpoint connection request, use the [accept\-vpc\-endpoint\-connections](https://docs.aws.amazon.com/cli/latest/reference/ec2/accept-vpc-endpoint-connections.html) command and specify the endpoint ID and endpoint service ID\.
-
 ------
 #### [ API ]
 

@@ -91,7 +91,7 @@ A Site\-to\-Site VPN connection consists of two VPN tunnels between a virtual pr
 
 AWS PrivateLink is a highly available, scalable technology that enables you to privately connect your VPC to supported AWS services, services hosted by other AWS accounts \(VPC endpoint services\), and supported AWS Marketplace partner services\. You do not require an internet gateway, NAT device, public IP address, AWS Direct Connect connection, or AWS Site\-to\-Site VPN connection to communicate with the service\. Traffic between your VPC and the service does not leave the Amazon network\.
 
-To use AWS PrivateLink, create an interface VPC endpoint for a service in your VPC\. This creates an elastic network interface in your subnet with a private IP address that serves as an entry point for traffic destined to the service\.
+To use AWS PrivateLink, create a VPC endpoint for a service in your VPC\. You create the type of VPC endpoint required by the supported service\. This creates an elastic network interface in your subnet with a private IP address that serves as an entry point for traffic destined to the service\.
 
 ![\[Using an interface endpoint to access an AWS service\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-privatelink-diagram.png)
 

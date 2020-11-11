@@ -1,21 +1,23 @@
 # VPC endpoints<a name="vpc-endpoints"></a>
 
-A VPC endpoint enables private connections between your VPC and supported AWS services and VPC endpoint services powered by AWS PrivateLink\. A VPC endpoint does not require an internet gateway, NAT device, VPN connection, or AWS Direct Connect connection\. Instances in your VPC do not require public IP addresses to communicate with resources in the service\. Traffic between your VPC and the other service does not leave the Amazon network\. 
+A VPC endpoint enables private connections between your VPC and supported AWS services and VPC endpoint services powered by AWS PrivateLink\. AWS PrivateLink is a technology that enables you to privately access services by using private IP addresses\. Traffic between your VPC and the other service does not leave the Amazon network\. A VPC endpoint does not require an internet gateway, virtual private gateway, NAT device, VPN connection, or AWS Direct Connect connection\. Instances in your VPC do not require public IP addresses to communicate with resources in the service\. 
 
-Endpoints are virtual devices\. They are horizontally scaled, redundant, and highly available VPC components\. They allow communication between instances in your VPC and services without imposing availability risks or bandwidth constraints on your network traffic\.
+VPC endpoints are virtual devices\. They are horizontally scaled, redundant, and highly available VPC components\. They allow communication between instances in your VPC and services without imposing availability risks\.
 
-There are two types of VPC endpoints: *interface endpoints* and *gateway endpoints*\. Create the type of VPC endpoint required by the supported service\.
+The following are the different types of VPC endpoints\. You create the type of VPC endpoint required by the supported service\.
 
 ** Interface endpoints**
 
-An [interface endpoint](vpce-interface.md) is an elastic network interface with a private IP address from the IP address range of your subnet that serves as an entry point for traffic destined to a supported service\. Interface endpoints are powered by AWS PrivateLink, a technology that enables you to privately access services by using private IP addresses\. AWS PrivateLink restricts all network traffic between your VPC and services to the Amazon network\. You do not need an internet gateway, a NAT device, or a virtual private gateway\.
+An [interface endpoint](vpce-interface.md) is an elastic network interface with a private IP address from the IP address range of your subnet that serves as an entry point for traffic destined to a supported AWS service or a VPC endpoint service\. Interface endpoints are powered by AWS PrivateLink\.
 
-For information about the AWS services that integrate with AWS PrivateLink, see [AWS services that you can use with AWS PrivateLink](integrated-services-vpce-list.md)\.
+For information about the AWS services that integrate with AWS PrivateLink, see [AWS services that you can use with AWS PrivateLink](integrated-services-vpce-list.md)\. You can also view all of the available AWS service names\. For more information, see [Viewing available AWS service names](vpce-interface.md#vpce-view-services)\.
+
+ **Gateway Load Balancer endpoints**
+
+A [Gateway Load Balancer endpoint](vpce-gateway-load-balancer.md) is an elastic network interface with a private IP address from the IP address range of your subnet\. Gateway Load Balancer endpoints are powered by AWS PrivateLink\. This type of endpoint serves an entry point to intercept traffic and route it to a service that you've configured using [Gateway Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/introduction.html), for example, for security inspection\. You specify a Gateway Load Balancer endpoint as a target for a route in a route table\. Gateway Load Balancer endpoints are supported for endpoint services that are configured for Gateway Load Balancers only\.
 
 ** Gateway endpoints**
 
-A [gateway endpoint](vpce-gateway.md) is a gateway that you specify as a target for a route in your route table for traffic destined to a supported AWS service\. The following AWS services are supported:
+A [gateway endpoint](vpce-gateway.md) is a gateway that you specify as a target for a route in your route table for traffic destined to a supported AWS service\. Gateway endpoints are supported for AWS services only\. The following AWS services are supported:
 + Amazon S3
 + DynamoDB
-
-To view all of the available AWS service names, see [Viewing available AWS service names](vpce-interface.md#vpce-view-services)\.

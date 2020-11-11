@@ -7,11 +7,12 @@ If the endpoint service is for an AWS service, or a service available in the AWS
 Service providers can specify a private DNS name for a new endpoint service, or an existing endpoint service\. To use a private DNS name, enable the feature, and then specify a private DNS name\. Before consumers can use the private DNS name, you must verify that you have control of the domain/subdomain\. You can initiate domain ownership verification using the Amazon VPC Console or API\. After the domain ownership verification completes, consumers access the endpoint by using the private DNS name\.
 
 **Note**  
-In order to verify the domain, you need to have a public hosted name, or a public DNS provider\.
+In order to verify the domain, you need to have a public hosted name, or a public DNS provider\.  
+Private DNS names are not supported for endpoint services that you create for Gateway Load Balancer endpoints\.
 
 The high\-level procedure is as follows:
 
-1. Add a private DNS name\. For more information, see [Creating a VPC endpoint service configuration](create-endpoint-service.md) or [Modifying an existing endpoint service private DNS name](modify-vpc-endpoint-service-dns-name.md)\.
+1. Add a private DNS name\. For more information, see [Creating a VPC endpoint service configuration for interface endpoints](create-endpoint-service.md) or [Modifying an existing endpoint service private DNS name](modify-vpc-endpoint-service-dns-name.md)\.
 
 1. Note the **Domain verification value** and **Domain verification name** that you need for the DNS server records\. For more information, see [Viewing endpoint service private DNS name configuration](view-vpc-endpoint-service-dns-name.md)\.
 
