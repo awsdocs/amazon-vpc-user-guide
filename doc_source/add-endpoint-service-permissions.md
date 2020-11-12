@@ -13,7 +13,7 @@ If you set permission to "anyone can access" and you set the acceptance model to
 
 **To add or remove permissions using the console**
 
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
+1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/home)\.
 
 1. In the navigation pane, choose **Endpoint Services** and select your endpoint service\.
 
