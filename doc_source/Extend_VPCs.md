@@ -40,7 +40,7 @@ Consider the scenario where you want an on\-premises data center to access resou
 You configure the following resources for this configuration:
 + A virtual private gateway for the VPC that is associated with the Local Zone subnet\. You can view the VPC for the subnet on the subnet details page in the Amazon VPC Console, or use [describe\-subnets](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-subnets.html)\.
 
-  For information about how to create a virtual private gateway, see [Create a target gateway](vpn/latest/s2svpn/SetUpVPNConnections.html#vpn-create-target-gateway) in the *AWS Site\-to\-Site VPN User Guide*\.
+  For information about how to create a virtual private gateway, see [Create a target gateway](https://docs.aws.amazon.com/vpn/latest/s2svpn/SetUpVPNConnections.html#vpn-create-target-gateway) in the *AWS Site\-to\-Site VPN User Guide*\.
 + A Direct Connect connection\. AWS recommends that you use one of the following locations for the best latency performance to the LA Local Zones:
   + T5 at El Segundo, Los Angeles, CA \(AWS recommends this location for the lowest latency to the LA Local Zone\)
   + CoreSite LA1, Los Angeles, CA
@@ -48,7 +48,7 @@ You configure the following resources for this configuration:
 
   For information about how to order a connection, see [Cross connects](https://docs.aws.amazon.com/directconnect/latest/UserGuide/Colocation.html#cross-connect-us-west-1) in the *AWS Direct Connect User Guide*\.
 + A Direct Connect gateway\. For information about how to create a Direct Connect gateway, see [Create a Direct Connect gateway](https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-gateways-intro.html#create-direct-connect-gateway) in the *AWS Direct Connect User Guide*\.
-+ A virtual private gateway association to connect the VPC to the Direct Connect gateway\. For information about how to create a virtual private gateway association, see [Associating and disassociating virtual private gateways](https://docs.aws.amazon.com/directconnect/latest/UserGuide/directconnect/latest/UserGuide/virtualgateways.html#associate-vgw-with-direct-connect-gateway) in the *AWS Direct Connect User Guide*\.
++ A virtual private gateway association to connect the VPC to the Direct Connect gateway\. For information about how to create a virtual private gateway association, see [Associating and disassociating virtual private gateways](https://docs.aws.amazon.com/directconnect/latest/UserGuide/virtualgateways.html#associate-vgw-with-direct-connect-gateway) in the *AWS Direct Connect User Guide*\.
 + A private virtual interface on the connection from the AWS Direct Connect location to the on\-premises data center\. 
 + For information about how to create a Direct Connect gateway, see [Creating a private virtual interface to the Direct Connect gateway ](https://docs.aws.amazon.com/directconnect/latest/UserGuide/virtualgateways.html#create-private-vif-for-gateway) in the *AWS Direct Connect User Guide*\.
 

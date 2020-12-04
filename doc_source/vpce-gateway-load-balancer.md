@@ -27,7 +27,7 @@ You can specify only one subnet for the Gateway Load Balancer endpoint\. You can
 
 ## Gateway Load Balancer endpoint properties and limitations<a name="gwlbe-limitations"></a>
 
-To use Gateway Load Balancer endpoints, be aware of the following:
+To use a Gateway Load Balancer endpoint, be aware of the following:
 + For each Gateway Load Balancer endpoint, you can choose only one Availability Zone \(subnet\) in your VPC\. You cannot change the subnet later\. To use a Gateway Load Balancer endpoint in a different subnet, create a new Gateway Load Balancer endpoint in that subnet\. You can create a single Gateway Load Balancer endpoint per Availability Zone for a service\.
 + Each Gateway Load Balancer endpoint supports a maximum bandwidth of up to 40 Gbps\. 
 + If the network ACL for your subnet restricts traffic, you might not be able to send traffic through the Gateway Load Balancer endpoint\. Ensure that you add appropriate rules that allow traffic to and from the CIDR block of the subnet\.
@@ -43,7 +43,7 @@ To use Gateway Load Balancer endpoints, be aware of the following:
 
 ## Gateway Load Balancer endpoint lifecycle<a name="gwlbe-lifecycle"></a>
 
-A Gateway Load Balancer endpoint goes through various stages starting from when you create it \(the endpoint connection request\)\. At each stage, there might be actions that the service consumer and service provider can take\.
+A Gateway Load Balancer endpoint goes through various stages, starting from when you create it \(the endpoint connection request\)\. At each stage, there might be actions that the service consumer and service provider can take\.
 
 ![\[Gateway Load Balancer endpoint lifecycle\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/interface-endpoint-lifecycle-diagram.png)
 
@@ -58,7 +58,7 @@ You are charged for creating and using a Gateway Load Balancer endpoint to a ser
 
 ## Creating a Gateway Load Balancer endpoint<a name="create-gwlbe"></a>
 
-To create a Gateway Load Balancer endpoint you must specify the VPC in which to create the endpoint, and the service to which to establish the connection\. 
+To create a Gateway Load Balancer endpoint, you must specify the VPC in which to create the endpoint, and the service to which to establish the connection\. 
 
 ------
 #### [ Console ]
@@ -76,7 +76,7 @@ To create a Gateway Load Balancer endpoint you must specify the VPC in which to 
 1. Complete the following information and then choose **Create endpoint**\.
    + For **VPC**, select a VPC in which to create the endpoint\.
    + For **Subnets**, select the subnet \(Availability Zone\) in which to create the Gateway Load Balancer endpoint\.
-   + \(Optional\) To add a tag, choose **Add tag** and specify a key and value for the tag\.
+   + \(Optional\) To add a tag, choose **Add tag** and then specify a key and value for the tag\.
 
 ------
 #### [ Command line ]
@@ -123,7 +123,7 @@ After you've created a Gateway Load Balancer endpoint, you can view information 
 
 ## Adding or removing tags for a Gateway Load Balancer endpoint<a name="update-gwlbe-tags"></a>
 
-You can add or remove the tags for your Gateway Load Balancer endpoint: 
+You can add or remove the tags for your Gateway Load Balancer endpoint\. 
 
 ------
 #### [ Console ]
@@ -149,7 +149,7 @@ You can add or remove the tags for your Gateway Load Balancer endpoint:
 
 **To add or remove tags using a command line tool or an API**
 + Use [create\-tags](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-tags.html) and [delete\-tags](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-tags.html)\. \(AWS CLI\)
-+ Use [New\-EC2Tag](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Tag.html) and [Remove\-EC2Tag](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2Tag.html)\(AWS Tools for Windows PowerShell\)
++ Use [New\-EC2Tag](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Tag.html) and [Remove\-EC2Tag](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2Tag.html) \(AWS Tools for Windows PowerShell\)
 + Use [CreateTags](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateTags.html) and [DeleteTags](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DeleteTags.html)\. \(Amazon EC2 Query API\)
 
 ------

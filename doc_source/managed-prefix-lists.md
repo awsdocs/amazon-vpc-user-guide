@@ -23,6 +23,7 @@ The following rules apply to customer\-managed prefix lists:
 + A prefix list supports a single type of IP addressing only \(IPv4 or IPv6\)\. You cannot combine IPv4 and IPv6 CIDR blocks in a single prefix list\.
 + There are quotas related to prefix lists\. For more information, see [Amazon VPC quotas](amazon-vpc-limits.md)\.
 + When you reference a prefix list in a route table, route priority rules apply\. For more information, see [Route priority for prefix lists](VPC_Route_Tables.md#route-priority-managed-prefix-list)\.
++ A prefix list only applies to the Region where you created it\. For example, if you create a list in `us-east-1`, it is not available in `eu-west-1`\.
 
 The following rules apply to AWS\-managed prefix lists:
 + You cannot create, modify, share, or delete an AWS\-managed prefix list\.

@@ -2,7 +2,7 @@
 
 To create and set up a gateway endpoint, follow these general steps:
 
-1. Specify the VPC in which to create the endpoint, and the service to which you're connecting\. A service is identified by an AWS\-managed *prefix list*—the name and ID of a service for a Region\. An AWS prefix list ID uses the form `pl-xxxxxxx` and an AWS prefix list name uses the form "com\.amazonaws\.*region*\.*service*"\. Use the AWS prefix list name \(service name\) to create an endpoint\.
+1. Specify the VPC in which to create the endpoint, and the service to which you're connecting\. A service is identified by an AWS managed *prefix list*—the name and ID of a service for a Region\. An AWS prefix list ID uses the form `pl-xxxxxxx` and an AWS prefix list name uses the form "com\.amazonaws\.*region*\.*service*"\. Use the AWS prefix list name \(service name\) to create an endpoint\.
 
 1. Attach an *endpoint policy* to your endpoint that allows access to some or all of the service to which you're connecting\. For more information, see [Using VPC endpoint policies](vpc-endpoints-access.md#vpc-endpoint-policies)\. 
 

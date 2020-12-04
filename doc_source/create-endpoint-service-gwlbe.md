@@ -1,10 +1,10 @@
-# Creating a VPC endpoint service configuration for Gateway Load Balancer endpoints<a name="create-endpoint-service-gwlbe"></a>
+# Creating a VPC endpoint service configuration for Gateway Load balancer endpoints<a name="create-endpoint-service-gwlbe"></a>
 
 You can create an endpoint service configuration using the Amazon VPC console or the command line\. Before you begin, ensure that you have created one or more Gateway Load Balancers in your VPC for your service\. For more information, see [Getting started with Gateway Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/getting-started.html)\.
 
-In your configuration, you can optionally specify that any endpoint Gateway Load Balancer endpoint connection requests to your service must be manually accepted by you\. You can [create a notification](create-notification-endpoint-service.md) to receive alerts when there are connection requests\. If you do not accept a connection, service consumers cannot access your service\. 
+In your configuration, you can optionally specify that any Gateway Load Balancer endpoint connection requests to your service must be manually accepted by you\. You can [create a notification](create-notification-endpoint-service.md) to receive alerts when there are connection requests\. If you do not accept a connection, service consumers cannot access your service\. 
 
-After you create an endpoint service configuration, you must add [permissions](add-endpoint-service-permissions.md) to enable service consumers to create Gateway Load Balancer endpoint to your service\.
+After you create an endpoint service configuration, you must add [permissions](add-endpoint-service-permissions.md) to enable service consumers to create a Gateway Load Balancer endpoint to your service\.
 
 ------
 #### [ Console ]

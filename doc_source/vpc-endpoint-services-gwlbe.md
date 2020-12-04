@@ -2,7 +2,7 @@
 
 You can use a Gateway Load Balancer to distribute traffic to a fleet of network virtual appliances\. The appliances can be used for security inspection, compliance, policy controls, and other networking services\. You can then configure the Gateway Load Balancer as a VPC endpoint service, to enable other AWS principals to access the service through a Gateway Load Balancer endpoint\.
 
-The following are the general steps to create an endpoint service for Gateway Load Balancer endpoints\.
+The following are the general steps to create an endpoint service for a Gateway Load Balancer endpoint\.
 
 1. Create a Gateway Load Balancer for your virtual appliances\. For more information, see [Getting started with Gateway Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/getting-started.html)\.
 

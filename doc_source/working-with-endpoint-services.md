@@ -4,7 +4,7 @@ You can work with VPC endpoint services using the Amazon VPC console or the comm
 
 **Topics**
 + [Creating a VPC endpoint service configuration for interface endpoints](create-endpoint-service.md)
-+ [Creating a VPC endpoint service configuration for Gateway Load Balancer endpoints](create-endpoint-service-gwlbe.md)
++ [Creating a VPC endpoint service configuration for Gateway Load balancer endpoints](create-endpoint-service-gwlbe.md)
 + [Adding and removing permissions for your endpoint service](add-endpoint-service-permissions.md)
 + [Changing the load balancers and acceptance settings](modify-endpoint-service.md)
 + [Accepting and rejecting endpoint connection requests](accept-reject-endpoint-requests.md)
