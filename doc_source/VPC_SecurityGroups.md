@@ -265,7 +265,7 @@ This procedure changes the security groups that are associated with the primary 
 
 1. Choose **Actions**, **Security**, **Change security groups**\. 
 
-1. For **Associated security groups**, select a security group from the list and choose **Add security group**\.
+1. For **Associated security groups**, select a security group from the list, and then choose **Add security group**\.
 
    To remove an already associated security group, choose **Remove** for that security group\.
 
@@ -322,7 +322,7 @@ If you assigned this security group to any instances, you must assign these inst
 
 1. In the navigation pane, choose **Security Groups**\.
 
-1. Choose the `2009-07-15-default` security group, then choose **Security Group Actions**, **Delete Security Group**\.
+1. Choose the `2009-07-15-default` security group, and then choose **Security Group Actions**, **Delete Security Group**\.
 
 1. In the **Delete Security Group** dialog box, choose **Yes, Delete**\.
 
