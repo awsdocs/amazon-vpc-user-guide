@@ -98,6 +98,12 @@ Each EC2 instance limits the number of packets that can be sent to the Amazon Ro
 | Interface and Gateway Load Balancer endpoints per VPC | 50 | This is the combined quota for the maximum number of interface endpoints and Gateway Load Balancer endpoints in a VPC\. To increase this quota, contact AWS Support\.  | 
 |  VPC endpoint policy size  | 20,480 characters \(including white space\) | This quota cannot be increased\. | 
 
+The following maximum transmission unit \(MTU\) rules apply to traffic that passes through a VPC endpoint\.
++ The maximum transmission unit \(MTU\) of a network connection is the size, in bytes, of the largest permissible packet that can be passed through the VPC endpoint\. The larger the MTU, the more data that can be passed in a single packet\. A VPC endpoint supports an MTU of 8500 bytes\.
++ Packets with a size larger than 8500 bytes that arrive at the VPC endpoint are dropped\.
++ The VPC endpoint does not generate the FRAG\_NEEDEDICMP packet, so Path MTU Discovery \(PMTUD\) is not supported\.
++ The VPC endpoint enforces Maximum Segment Size \(MSS\) clamping for all packets\. For more information, see [RFC879](https://tools.ietf.org/html/rfc879)\.
+
 ## AWS Site\-to\-Site VPN connections<a name="vpc-limits-vpn"></a>
 
 For more information, see [Site\-to\-Site VPN Quotas](https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-limits.html) in the *AWS Site\-to\-Site VPN User Guide*\.

@@ -2,6 +2,13 @@
 
 The following example uses AWS CLI commands to create a nondefault VPC with an IPv6 CIDR block, a public subnet, and a private subnet with outbound Internet access only\. After you've created the VPC and subnets, you can launch an instance in the public subnet and connect to it\. You can launch an instance in your private subnet and verify that it can connect to the Internet\. To begin, you must first install and configure the AWS CLI\. For more information, see [Installing the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html)\.
 
+You will create the following AWS resources:
++ A VPC
++ Two subnets
++ An internet gateway
++ A route table
++ An EC2 instance
+
 **Topics**
 + [Step 1: Create a VPC and subnets](#vpc-subnets-commands-example-create-ipv6-vpc)
 + [Step 2: Configure a public subnet](#vpc-subnets-commands-example-public-subnet-ipv6)

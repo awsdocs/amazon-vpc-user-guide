@@ -84,9 +84,15 @@ When you create a VPC, it automatically has a main route table\. The main route 
 
 By default, when you create a nondefault VPC, the main route table contains only a local route\. When you use the VPC wizard in the console to create a nondefault VPC with a NAT gateway or virtual private gateway, the wizard automatically adds routes to the main route table for those gateways\.
 
-You can add, remove, and modify routes in the main route table\. You cannot create a more specific route than the local route\. You cannot delete the main route table, but you can replace the main route table with a custom subnet route table that you've created\. You cannot set a gateway route table as the main route table\.
+The following rules apply to the main route table:
++ You cannot delete the main route table\.
++ You cannot set a gateway route table as the main route table\.
++ You can replace the main route table with a custom subnet route table\.
++ You can add, remove, and modify routes in the main route table\.
++ You cannot create a route that is more specific than the local route\.
++ You can explicitly associate a subnet with the main route table, even if it's already implicitly associated\. 
 
-You can explicitly associate a subnet with the main route table, even if it's already implicitly associated\. You might want to do that if you change which table is the main route table\. When you change which table is the main route table, it also changes the default for additional new subnets, or for any subnets that are not explicitly associated with any other route table\. For more information, see [Replacing the main route table](WorkWithRouteTables.md#Route_Replacing_Main_Table)\.
+  You might want to do that if you change which table is the main route table\. When you change which table is the main route table, it also changes the default for additional new subnets, or for any subnets that are not explicitly associated with any other route table\. For more information, see [Replacing the main route table](WorkWithRouteTables.md#Route_Replacing_Main_Table)\.
 
 ### Custom route tables<a name="CustomRouteTables"></a>
 

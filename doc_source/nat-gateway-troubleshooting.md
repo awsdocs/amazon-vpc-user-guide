@@ -190,6 +190,8 @@ Your instances can access the internet, but the connection drops after 350 secon
 **Cause**  
 If a connection that's using a NAT gateway is idle for 350 seconds or more, the connection times out\.
 
+When a connection times out, a NAT gateway returns an RST packet to any resources behind the NAT gateway that attempt to continue the connection \(it does not send a FIN packet\)\. 
+
 **Solution**  
 To prevent the connection from being dropped, you can initiate more traffic over the connection\. Alternatively, you can enable TCP keepalive on the instance with a value less than 350 seconds\.
 

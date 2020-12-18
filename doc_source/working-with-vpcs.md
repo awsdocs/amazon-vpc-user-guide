@@ -5,6 +5,7 @@ The following procedures are for manually creating a VPC and subnets\. You also 
 **Topics**
 + [Creating a VPC](#Create-VPC)
 + [Creating a subnet in your VPC](#AddaSubnet)
++ [Viewing your subnet](#view-subnet)
 + [Associating a secondary IPv4 CIDR block with your VPC](#add-ipv4-cidr)
 + [Associating an IPv6 CIDR block with your VPC](#vpc-associate-ipv6-cidr)
 + [Associating an IPv6 CIDR block with your subnet](#subnet-associate-ipv6-cidr)
@@ -88,16 +89,28 @@ Alternatively, you can use a command line tool\.
 + [create\-subnet](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-subnet.html) \(AWS CLI\)
 + [New\-EC2Subnet](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Subnet.html) \(AWS Tools for Windows PowerShell\)
 
-**To describe a subnet using a command line tool**
-+ [describe\-subnets](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-subnets.html) \(AWS CLI\)
-+ [Get\-EC2Subnet](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2Subnet.html) \(AWS Tools for Windows PowerShell\)
-
-After you've created a subnet, you can do the following:
+After you create a subnet, you can do the following:
 + Configure your routing\. To make your subnet a public subnet, you must attach an internet gateway to your VPC\. For more information, see [Creating and attaching an internet gateway](VPC_Internet_Gateway.md#Add_IGW_Attach_Gateway)\. You can then create a custom route table, and add route to the internet gateway\. For more information, see [Creating a custom route table](VPC_Internet_Gateway.md#Add_IGW_Routing)\. For other routing options, see [Route tables](VPC_Route_Tables.md)\.
 + Modify the subnet settings to specify that all instances launched in that subnet receive a public IPv4 address, or an IPv6 address, or both\. For more information, see [IP addressing behavior for your subnet](vpc-ip-addressing.md#vpc-ip-addressing-subnet)\.
 + Create or modify your security groups as needed\. For more information, see [Security groups for your VPC](VPC_SecurityGroups.md)\.
 + Create or modify your network ACLs as needed\. For more information, see [Network ACLs](vpc-network-acls.md)\.
 + Share the subnet with other accounts\. For more information, see [Sharing a subnet](vpc-sharing.md#vpc-sharing-share-subnet)\.
+
+## Viewing your subnet<a name="view-subnet"></a>
+
+You van view the details about your subnet\.
+
+**To view subnet details using the console**
+
+1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
+
+1. In the navigation pane, choose **Subnets**\.
+
+1. Select the subnet, and then choose **View Details**\.
+
+**To describe a subnet using a command line tool**
++ [describe\-subnets](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-subnets.html) \(AWS CLI\)
++ [Get\-EC2Subnet](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2Subnet.html) \(AWS Tools for Windows PowerShell\)
 
 ## Associating a secondary IPv4 CIDR block with your VPC<a name="add-ipv4-cidr"></a>
 

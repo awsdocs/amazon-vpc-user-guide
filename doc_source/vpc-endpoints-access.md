@@ -15,7 +15,6 @@ A VPC endpoint policy is an IAM resource policy that you attach to an endpoint w
 You cannot attach more than one policy to an endpoint\. However, you can modify the policy at any time\. If you do modify a policy, it can take a few minutes for the changes to take effect\. For more information about writing policies, see [Overview of IAM Policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/PoliciesOverview.html) in the *IAM User Guide*\.
 
 Your endpoint policy can be like any IAM policy; however, take note of the following:
-+ Only the parts of the policy that relate to the specified service will work\. You cannot use an endpoint policy to allow resources in your VPC to perform other actions; for example, if you add EC2 actions to an endpoint policy for an endpoint to Amazon S3, they will have no effect\. 
 + Your policy must contain a [Principal](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html) element\. For additional information related gateway endpoints, see [Endpoint policies for gateway endpoints](#vpc-endpoint-policies-gateway)\.
 + The size of an endpoint policy cannot exceed 20,480 characters \(including white space\)\.
 
@@ -38,3 +37,5 @@ By default, Amazon VPC security groups allow all outbound traffic, unless you've
 When you create an interface endpoint, you can associate security groups with the endpoint network interface that is created in your VPC\. If you do not specify a security group, the default security group for your VPC is automatically associated with the endpoint network interface\. You must ensure that the rules for the security group allow communication between the endpoint network interface and the resources in your VPC that communicate with the service\.
 
 For a gateway endpoint, if your security group's outbound rules are restricted, you must add a rule that allows outbound traffic from your VPC to the service that's specified in your endpoint\. To do this, you can use the service's AWS prefix list ID as the destination in the outbound rule\. For more information, see [Modifying your security group](vpce-gateway.md#vpc-endpoints-security)\.
+
+Security groups do not apply to Gateway Load Balancer endpoints\.

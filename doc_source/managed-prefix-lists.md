@@ -30,6 +30,8 @@ The following rules apply to AWS\-managed prefix lists:
 + When you reference an AWS\-managed prefix list in a resource, it counts as a single rule or entry for the resource\.
 + You cannot view the version number of an AWS\-managed prefix list\.
 
+Before you work with prefix lists, review the [Customer\-managed prefix lists](amazon-vpc-limits.md#vpc-quotas-managed-prefix-lists) quotas\.
+
 ### Prefix list versions<a name="managed-prefix-lists-versions"></a>
 
 A prefix list can have multiple versions\. Each time you add or remove entries for a prefix list, we create a new version of the prefix list\. The resources that reference the prefix always use the current \(latest\) version\. You can restore the entries from a previous version of prefix list to a new version\. 
