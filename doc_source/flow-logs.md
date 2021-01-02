@@ -74,7 +74,7 @@ The aggregation interval is the period of time during which a particular flow is
 
 When a network interface is attached to a [Nitro\-based instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances), the aggregation interval is always 1 minute or less, regardless of the specified maximum aggregation interval\.
 
-After data is captured within an aggregation interval, it takes additional time to process and publish the data to CloudWatch Logs or Amazon S3\. This additional time could be around 5 minutes to publish to CloudWatch Logs, and around 10 minutes to publish to Amazon S3\. The flow logs service delivers within this additional time in a best effort manner\. In some cases, your logs might be delayed beyond the 5 to 10 minutes additional time mentioned previously\.
+After data is captured within an aggregation interval, it takes additional time to process and publish the data to CloudWatch Logs or Amazon S3\. This delay interval is typically around 5 minutes to publish to CloudWatch Logs, and around 10 minutes to publish to Amazon S3\. The flow logs service delivers within these delay intervals in a best effort manner\. In some cases, your logs will be published after a delay period that exceeds 5 or 10 minutes\.
 
 ### Default format<a name="flow-logs-default"></a>
 
