@@ -18,6 +18,6 @@ A [Gateway Load Balancer endpoint](vpce-gateway-load-balancer.md) is an elastic 
 
 ** Gateway endpoints**
 
-A [gateway endpoint](vpce-gateway.md) is for supported for AWS services only\. You specify a gateway endpoint as a route table target for traffic destined to the following AWS services:
+A [gateway endpoint](vpce-gateway.md) is supported for AWS services only\. You specify a gateway endpoint as a route table target for traffic destined to the following AWS services:
 + Amazon S3
 + DynamoDB
