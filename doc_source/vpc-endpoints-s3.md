@@ -8,14 +8,14 @@ If you've already set up access to your Amazon S3 resources from your VPC, you c
   + For bucket policies, you can restrict access to a specific endpoint or to a specific VPC\. For more information, see [Using Amazon S3 bucket policies](#vpc-endpoints-s3-bucket-policies)\. 
 + Endpoints currently do not support cross\-Region requests—ensure that you create your endpoint in the same Region as your bucket\. You can find the location of your bucket by using the Amazon S3 console, or by using the [get\-bucket\-location](https://docs.aws.amazon.com/cli/latest/reference/s3api/get-bucket-location.html) command\. Use a Region\-specific Amazon S3 endpoint to access your bucket; for example, `mybucket.s3.us-west-2.amazonaws.com`\. For more information about Region\-specific endpoints for Amazon S3, see [Amazon Simple Storage Service \(S3\)](https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region) in *Amazon Web Services General Reference*\. If you use the AWS CLI to make requests to Amazon S3, set your default Region to the same Region as your bucket, or use the `--region` parameter in your requests\.
 **Note**  
-Treat Amazon S3's US Standard Region as mapped to the `us-east-1` Region\.
+Treat the US Standard Region for Amazon S3 as mapped to the `us-east-1` Region\.
 + Endpoints are currently supported for IPv4 traffic only\.
 
 Before you use endpoints with Amazon S3, ensure that you have also read the following general limitations: [Gateway endpoint limitations](vpce-gateway.md#vpc-endpoints-limitations)\. For information about creating and viewing S3 buckets, see [How Do I Create an S3 Bucket](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/create-bucket.html) and [How Do I View the Properties for an S3 Bucket](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/view-bucket-properties.html) in the *Amazon Simple Storage Service Console User Guide*\.
 
-If you use other AWS services in your VPC, they may use S3 buckets for certain tasks\. Ensure that your endpoint policy allows full access to Amazon S3 \(the default policy\), or that it allows access to the specific buckets that are used by these services\. Alternatively, only create an endpoint in a subnet that is not used by any of these services, to allow the services to continue accessing S3 buckets using public IP addresses\.
+If you use other AWS services in your VPC, they might use S3 buckets for certain tasks\. Ensure that your endpoint policy allows full access to Amazon S3 \(the default policy\), or that it allows access to the specific buckets that are used by these services\. Alternatively, only create an endpoint in a subnet that is not used by any of these services, to allow the services to continue accessing S3 buckets using public IP addresses\.
 
-The following table lists AWS services that may be affected by an endpoint, and any specific information for each service\.
+The following table lists AWS services that might be affected by an endpoint, and any specific information for each service\.
 
 
 | AWS service | Note | 
@@ -35,7 +35,7 @@ Traffic between your VPC and S3 buckets does not leave the Amazon network\.
 
 ## Using endpoint policies for Amazon S3<a name="vpc-endpoints-policies-s3"></a>
 
-The following are example endpoint policies for accessing Amazon S3\. For more information, see [Using VPC endpoint policies](vpc-endpoints-access.md#vpc-endpoint-policies)\. It is up to the user to determine the policy restrictions that meet the business needs\. For example, you can specify the Region \("packages\.us\-west\-1\.amazonaws\.com"\) to avoid an ambiguous S3 bucket name\.
+The following are example endpoint policies for accessing Amazon S3\. For more information, see [Using VPC endpoint policies](vpc-endpoints-access.md#vpc-endpoint-policies)\. It is up to the user to determine the policy restrictions that meet their business needs\. For example, you can specify the Region \("packages\.us\-west\-1\.amazonaws\.com"\) to avoid an ambiguous S3 bucket name\.
 
 **Important**  
 All types of policies — IAM user policies, endpoint policies, S3 bucket policies, and Amazon S3 ACL policies \(if any\) — must grant the necessary permissions for access to Amazon S3 to succeed\. 
@@ -162,6 +162,31 @@ You can create a bucket policy that restricts access to a specific VPC by using 
       "Condition": {
         "StringNotEquals": {
           "aws:sourceVpc": "vpc-111bbb22"
+        }
+      }
+    }
+  ]
+}
+```
+
+**Example: Restricting access to buckets in a specific AWS Account**  
+You can create a policy that restricts access only to the S3 buckets in a specific AWS Account\. This is useful if you would like to restrict clients within your VPC from accessing buckets that you do not own\. The following is an example of a policy that restricts access to resources owned by a single AWS Account, with the account ID of `111122223333`\.  
+
+```
+{
+  "Statement": [
+    {
+      "Sid": "Access-to-bucket-in-specific-account-only",
+      "Principal": "*",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject"
+      ],
+      "Effect": "Deny",
+      "Resource": "arn:aws:s3:::*",
+      "Condition": {
+        "StringNotEquals": {
+          "s3:ResourceAccount": "111122223333"
         }
       }
     }

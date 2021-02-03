@@ -43,7 +43,7 @@ When you create or modify an endpoint, you specify the VPC route tables that are
 | 10\.0\.0\.0/16 | Local | 
 | pl\-1a2b3c4d | vpce\-11bb22cc | 
 
-The AWS prefix list ID logically represents the range of public IP addresses used by the service\. All instances in subnets associated with the specified route tables automatically use the endpoint to access the service\. Subnets that are not associated with the specified route tables do not use the endpoint\. This enables you to keep resources in other subnets separate from your endpoint\. 
+The AWS prefix list ID logically represents the range of public IP addresses used by the service\. All instances in subnets associated with the specified route tables automatically use the endpoint to access the service\. Subnets that are not associated with the specified route tables do not use the endpoint\. This allows you to keep resources in other subnets separate from your endpoint\. 
 
 To view the current public IP address range for a service, you can use the [describe\-prefix\-lists](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-prefix-lists.html) command\.
 
@@ -84,7 +84,7 @@ You create an endpoint to a supported AWS service, and associate your route tabl
 
 **Example: Adjusting your route tables for endpoints**
 
-In this scenario, `54.123.165.0/24` is in the Amazon S3 IP address range and you configured your route table to enable instances in your subnet to communicate with Amazon S3 buckets through an internet gateway\. You've added a route with `54.123.165.0/24` as a destination, and the internet gateway as the target\. You then create an endpoint, and associate this route table with the endpoint\. An endpoint route is automatically added to the route table\. You then use the [describe\-prefix\-lists](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-prefix-lists.html) command to view the IP address range for Amazon S3\. The range is `54.123.160.0/19`, which is less specific than the range that's pointing to your internet gateway\. This means that any traffic destined for the `54.123.165.0/24` IP address range continues to use the internet gateway, and does not use the endpoint \(for as long as this remains the public IP address range for Amazon S3\)\.
+In this scenario, `54.123.165.0/24` is in the Amazon S3 IP address range and you configured your route table to allow instances in your subnet to communicate with Amazon S3 buckets through an internet gateway\. You've added a route with `54.123.165.0/24` as a destination, and the internet gateway as the target\. You then create an endpoint, and associate this route table with the endpoint\. An endpoint route is automatically added to the route table\. You then use the [describe\-prefix\-lists](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-prefix-lists.html) command to view the IP address range for Amazon S3\. The range is `54.123.160.0/19`, which is less specific than the range that's pointing to your internet gateway\. This means that any traffic destined for the `54.123.165.0/24` IP address range continues to use the internet gateway, and does not use the endpoint \(for as long as this remains the public IP address range for Amazon S3\)\.
 
 
 ****  
@@ -114,7 +114,7 @@ To use gateway endpoints, you need to be aware of the current limitations:
 + You cannot transfer an endpoint from one VPC to another, or from one service to another\.
 + You have a quota on the number of endpoints you can create per VPC\. For more information, see [VPC endpoints](amazon-vpc-limits.md#vpc-limits-endpoints)\.
 + Endpoint connections cannot be extended out of a VPC\. Resources on the other side of a VPN connection, VPC peering connection, transit gateway, AWS Direct Connect connection, or ClassicLink connection in your VPC cannot use the endpoint to communicate with resources in the endpoint service\. 
-+ You must enable DNS resolution in your VPC, or if you're using your own DNS server, ensure that DNS requests to the required service \(such as Amazon S3\) are resolved correctly to the IP addresses maintained by AWS\. For more information, see [Using DNS with your VPC](vpc-dns.md) and [AWS IP Address Ranges](https://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html) in the *Amazon Web Services General Reference*\.
++ You must turn on DNS resolution in your VPC, or if you're using your own DNS server, ensure that DNS requests to the required service \(such as Amazon S3\) are resolved correctly to the IP addresses maintained by AWS\. For more information, see [Using DNS with your VPC](vpc-dns.md) and [AWS IP Address Ranges](https://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html) in the *Amazon Web Services General Reference*\.
 + Review the service\-specific limits for your endpoint service\.
 
 For more information about rules and limitations that are specific to Amazon S3, see [Endpoints for Amazon S3](vpc-endpoints-s3.md)\.
@@ -180,10 +180,12 @@ The **Policy** tab only displays the endpoint policy\. It does not display any i
                ...
    ```
 
-1. To create a gateway endpoint \(for example, to Amazon S3\), use the [create\-vpc\-endpoint](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-vpc-endpoint.html) command and specify the VPC ID, service name, and route tables that will use the endpoint\. You can optionally use the `--policy-document` parameter to specify a custom policy to control access to the service\. If the parameter is not used, we attach a default policy that allows full access to the service\.
+1. To create a gateway endpoint \(for example, to Amazon S3\), use the [create\-vpc\-endpoint](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-vpc-endpoint.html) command and specify the VPC ID, service name, and route tables that will use the endpoint\. You can optionally use the `--policy-document` parameter to specify a custom policy to control access to the service\. If the parameter is not used, we attach a default policy that allows full access to the service\. 
+
+   For Amazon S3, you must set the `--vpc-endpoint-type` parameter to `Gateway`\.
 
    ```
-   aws ec2 create-vpc-endpoint --vpc-id vpc-1a2b3c4d --service-name com.amazonaws.us-east-1.s3 --route-table-ids rtb-11aa22bb
+   aws ec2 create-vpc-endpoint --vpc-id vpc-1a2b3c4d --service-name com.amazonaws.us-east-1.s3 --route-table-ids rtb-11aa22bb --vpc-endpoint-type Gateway
    ```
 
 1. Describe your endpoint using the [describe\-vpc\-endpoints](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoints.html) command\.
@@ -232,6 +234,8 @@ If the VPC security group associated with your instance restricts outbound traff
 ## Modifying a gateway endpoint<a name="modify-gateway-endpoint"></a>
 
 You can modify a gateway endpoint by changing or removing its policy, and adding or removing the route tables that are used by the endpoint\. 
+
+If you want to migrate an existing Amazon S3 gateway endpoint to an interface endpoint, after you create the Amazon S3 interface endpoint, delete the Amazon S3 gateway endpoint\. For more information, see [Creating an interface endpoint](vpce-interface.md#create-interface-endpoint) and [Deleting a VPC endpoint](delete-vpc-endpoint.md)\.
 
 **To change the policy associated with a gateway endpoint**
 

@@ -32,8 +32,6 @@ For example endpoint policies for Amazon S3 and DynamoDB, see the following topi
 
 ## Security groups<a name="vpc-endpoints-security-groups"></a>
 
-By default, Amazon VPC security groups allow all outbound traffic, unless you've specifically restricted outbound access\. 
-
 When you create an interface endpoint, you can associate security groups with the endpoint network interface that is created in your VPC\. If you do not specify a security group, the default security group for your VPC is automatically associated with the endpoint network interface\. You must ensure that the rules for the security group allow communication between the endpoint network interface and the resources in your VPC that communicate with the service\.
 
 For a gateway endpoint, if your security group's outbound rules are restricted, you must add a rule that allows outbound traffic from your VPC to the service that's specified in your endpoint\. To do this, you can use the service's AWS prefix list ID as the destination in the outbound rule\. For more information, see [Modifying your security group](vpce-gateway.md#vpc-endpoints-security)\.

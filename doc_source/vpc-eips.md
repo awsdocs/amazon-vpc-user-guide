@@ -58,6 +58,14 @@ Before you use an Elastic IP, you must allocate one for use in your VPC\.
    + **My pool of public IPv4 addresses**—If you want to allocate an IPv4 address from an IP address pool that you have brought to your AWS account\. This option is disabled if you do not have any IP address pools\.
    + **Customer owned pool of IPv4 addresses**—If you want to allocate an IPv4 address from a pool created from your on\-premises network for use with an AWS Outpost\. This option is disabled if you do not have an AWS Outpost\.
 
+1. \(Optional\) Add or remove a tag\.
+
+   \[Add a tag\] Choose **Add new tag** and do the following:
+   + For **Key**, enter the key name\.
+   + For **Value**, enter the key value\.
+
+   \[Remove a tag\] Choose **Remove** to the right of the tag’s Key and Value\.
+
 1. Choose **Allocate**\.
 **Note**  
 If your account supports EC2\-Classic, first choose **VPC**\.

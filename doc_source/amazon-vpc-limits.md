@@ -46,6 +46,8 @@ Each EC2 instance limits the number of packets that can be sent to the Amazon Ro
 |  Versions per prefix list  |  1,000  |  \-  | 
 |  References to a prefix list per resource type  |  5,000  |  This quota applies per resource type that can reference a prefix list\. For example, you can have 5,000 references to a prefix list across all of your security groups plus 5,000 references to a prefix list across all of your subnet route tables\. If you share a prefix list with other AWS accounts, the other accounts' references to your prefix list count toward this quota\.  | 
 
+When you reference a prefix list in a resource, the maximum number of entries for the prefix lists counts as the same number of rules or entries for the resource\. For example, if you create a prefix list with a maximum of 20 entries and you reference that prefix list in a security group rule, this counts as 20 rules for the security group\.
+
 ## Network ACLs<a name="vpc-limits-nacls"></a>
 
 

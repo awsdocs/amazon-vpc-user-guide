@@ -1,6 +1,6 @@
 # Interface VPC endpoints \(AWS PrivateLink\)<a name="vpce-interface"></a>
 
-An interface VPC endpoint \(interface endpoint\) enables you to connect to services powered by AWS PrivateLink\. These services include some AWS services, services hosted by other AWS customers and Partners in their own VPCs \(referred to as *endpoint services*\), and supported AWS Marketplace Partner services\. The owner of the service is the *service provider*, and you, as the principal creating the interface endpoint, are the *service consumer*\.
+An interface VPC endpoint \(interface endpoint\) allows you to connect to services powered by AWS PrivateLink\. These services include some AWS services, services hosted by other AWS customers and Partners in their own VPCs \(referred to as *endpoint services*\), and supported AWS Marketplace Partner services\. The owner of the service is the *service provider*, and you, as the principal creating the interface endpoint, are the *service consumer*\.
 
 The following are the general steps for setting up an interface endpoint:
 
@@ -12,10 +12,10 @@ An endpoint network interface is a requester\-managed network interface\. You ca
 
 1. Specify the security groups to associate with the endpoint network interface\. The security group rules control the traffic to the endpoint network interface from resources in your VPC\. If you do not specify a security group, we associate the default security group for the VPC\.
 
-1. \(Optional, AWS services and AWS Marketplace Partner services only\) Enable [private DNS](#vpce-private-dns) for the endpoint to enable you to make requests to the service using its default DNS hostname\.
+1. \(Optional, AWS services and AWS Marketplace Partner services only\) Enable [private DNS](#vpce-private-dns) for the endpoint so you can make requests to the service using its default DNS hostname\.
 **Important**  
-Private DNS is enabled by default for endpoints created for AWS services and AWS Marketplace Partner services\.   
-Private DNS is enabled in the other subnets which are in the same VPC and Availability Zone or Local Zone\.
+Private DNS is turned on by default for endpoints created for AWS services and AWS Marketplace Partner services\.   
+Private DNS is turned on in the other subnets which are in the same VPC and Availability Zone or Local Zone\.
 
 1. When the service provider and the consumer are in different accounts, see [Interface endpoint Availability Zone considerations](#vpce-interface-availability-zones) for information about how to use Availability Zone IDs to identify the interface endpoint Availability Zone\.
 
@@ -29,7 +29,6 @@ Services cannot initiate requests to resources in your VPC through the endpoint\
 + [Connection to on\-premises data centers](#on-premises-connection)
 + [Interface endpoint lifecycle](#vpce-interface-lifecycle)
 + [Interface endpoint Availability Zone considerations](#vpce-interface-availability-zones)
-+ [Pricing for interface endpoints](#vpce-interface-pricing)
 + [Viewing available AWS service names](#vpce-view-services)
 + [Creating an interface endpoint](#create-interface-endpoint)
 + [Viewing your interface endpoint](#describe-interface-endpoint)
@@ -39,9 +38,12 @@ Services cannot initiate requests to resources in your VPC through the endpoint\
 
 ## Private DNS for interface endpoints<a name="vpce-private-dns"></a>
 
-When you create an interface endpoint, we generate endpoint\-specific DNS hostnames that you can use to communicate with the service\. For AWS services and AWS Marketplace Partner services, the private DNS option \(enabled by default\) associates a private hosted zone with your VPC\. The hosted zone contains a record set for the default DNS name for the service \(for example, `ec2.us-east-1.amazonaws.com`\) that resolves to the private IP addresses of the endpoint network interfaces in your VPC\. This enables you to make requests to the service using its default DNS hostname instead of the endpoint\-specific DNS hostnames\. For example, if your existing applications make requests to an AWS service, they can continue to make requests through the interface endpoint without requiring any configuration changes\. 
+**Important**  
+Private DNS is not supported for Amazon S3 interface endpoints\.
 
-In the example shown in the following diagram, there is an interface endpoint for Amazon Kinesis Data Streams and an endpoint network interface in subnet 2\. Private DNS for the interface endpoint is not enabled\. The route tables for the subnets have the following routes\.
+When you create an interface endpoint, we generate endpoint\-specific DNS hostnames that you can use to communicate with the service\. For AWS services and AWS Marketplace Partner services, the private DNS option \(turned on by default\) associates a private hosted zone with your VPC\. The hosted zone contains a record set for the default DNS name for the service \(for example, `ec2.us-east-1.amazonaws.com`\) that resolves to the private IP addresses of the endpoint network interfaces in your VPC\. This allows you to make requests to the service using its default DNS hostname instead of the endpoint\-specific DNS hostnames\. For example, if your existing applications make requests to an AWS service, they can continue to make requests through the interface endpoint without requiring any configuration changes\. 
+
+In the example shown in the following diagram, there is an interface endpoint for Amazon Kinesis Data Streams and an endpoint network interface in subnet 2\. Private DNS for the interface endpoint is turned off\. The route tables for the subnets have the following routes\.
 
 
 |  | 
@@ -58,7 +60,7 @@ Instances in either subnet can send requests to Amazon Kinesis Data Streams thro
 
 ![\[Using an interface endpoint and public internet to access Kinesis\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-kinesis-diagram.png)
 
-In the next diagram, private DNS for the endpoint has been enabled\. Instances in either subnet can send requests to Amazon Kinesis Data Streams through the interface endpoint using either the default DNS hostname or the endpoint\-specific DNS hostname\.
+In the next diagram, private DNS for the endpoint is turned on\. Instances in either subnet can send requests to Amazon Kinesis Data Streams through the interface endpoint using either the default DNS hostname or the endpoint\-specific DNS hostname\.
 
 ![\[Using an interface endpoint to access Kinesis\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-kinesis-private-dns-diagram.png)
 
@@ -109,10 +111,6 @@ Services might not be available in all Availability Zones through an interface e
 + [describe\-vpc\-endpoint\-services](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-services.html) \(AWS CLI\)
 + [DescribeVpcEndpointServices](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeVpcEndpointServices.html) \(API\)
 + The Amazon VPC console when you create an interface endpoint\. For more information, see [Creating an interface endpoint](#create-interface-endpoint)\.
-
-## Pricing for interface endpoints<a name="vpce-interface-pricing"></a>
-
-You are charged for creating and using an interface endpoint to a service\. Hourly usage rates and data processing rates apply\. For more information about interface endpoint pricing, see [AWS PrivateLink Pricing](https://aws.amazon.com/privatelink/pricing/)\. You can view the total number of interface endpoints using the Amazon VPC Console, or the AWS CLI\.
 
 ## Viewing available AWS service names<a name="vpce-view-services"></a>
 
@@ -195,10 +193,10 @@ When you use the AWS CLI to create an endpoint, you can use the [describe\-vpc\-
 
 To create an interface endpoint, you must specify the VPC in which to create the interface endpoint, and the service to which to establish the connection\. 
 
-For AWS services, or AWS Marketplace Partner services, you can optionally enable [private DNS](#vpce-private-dns) for the endpoint to enable you to make requests to the service using its default DNS hostname\.
+For AWS services, or AWS Marketplace Partner services, you can optionally turn on [private DNS](#vpce-private-dns) for the endpoint so that you can make requests to the service using its default DNS hostname\.
 
 **Important**  
-Private DNS is enabled by default for endpoints created for AWS services and AWS Marketplace Partner services\. 
+Private DNS is turned on by default for endpoints created for AWS services and AWS Marketplace Partner services\. 
 
 ------
 #### [ Console ]
@@ -218,9 +216,11 @@ Private DNS is enabled by default for endpoints created for AWS services and AWS
    + For **Subnets**, select the subnets \(Availability Zones\) in which to create the endpoint network interfaces\.
 
      Not all Availability Zones may be supported for all AWS services\.
-   + To enable private DNS for the interface endpoint, for **Enable DNS Name**, select the check box\.
+   + To turn on private DNS for the interface endpoint, for **Enable DNS Name**, select the check box\.
+**Important**  
+Private DNS is not supported for Amazon S3 interface endpoints\.
 
-     This option is enabled by default\. To use the private DNS option, the following attributes of your VPC must be set to `true`: `enableDnsHostnames` and `enableDnsSupport`\. For more information, see [Viewing and updating DNS support for your VPC](vpc-dns.md#vpc-dns-updating)\.
+     This option is tuned on by default\. To use the private DNS option, the following attributes of your VPC must be set to `true`: `enableDnsHostnames` and `enableDnsSupport`\. For more information, see [Viewing and updating DNS support for your VPC](vpc-dns.md#vpc-dns-updating)\.
    + For **Security group**, select the security groups to associate with the endpoint network interfaces\.
    + \(Optional\) Add or remove a tag\.
 
@@ -345,7 +345,7 @@ To create an interface endpoint to an endpoint service, you must have the name o
    aws ec2 create-vpc-endpoint --vpc-id vpc-ec43eb89 --vpc-endpoint-type Interface --service-name com.amazonaws.vpce.us-east-1.vpce-svc-0e123abc123198abc --subnet-id subnet-abababab --security-group-id sg-1a2b3c4d
    ```
 
-   In the output that's returned, take note of the `DnsName` fields\. You can use these DNS names to access the AWS service\.
+   In the output that's returned, take note of the `privateDnsNames` fields\. You can use these DNS names to access the AWS service\.
 
 **To describe available services and create a VPC endpoint using the AWS Tools for Windows PowerShell**
 + [Get\-EC2VpcEndpointService](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2VpcEndpointService.html) 
@@ -415,49 +415,6 @@ The Amazon SNS topic that you use for notifications must have a topic policy tha
 ```
 
 ------
-#### [ Console ]
-
-**To create a notification for an interface endpoint**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Endpoints** and select your interface endpoint\.
-
-1. In the **Notifications** tab, choose **Create notification**\.
-
-1. Choose the ARN for the SNS topic to associate with the notification\.
-
-1. For **Events**, select the endpoint events for which to receive notifications\.
-
-1. Choose **Create Notification**\.
-
-After you create a notification, you can change the SNS topic that's associated with the notification\. You can also specify different endpoint events for the notification\.
-
-**To modify a notification for an endpoint service**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Endpoints** and select your interface endpoint\.
-
-1. In the **Notifications** tab, select the notification and choose **Actions**, **Modify Notification**\.
-
-1. Specify the ARN for the SNS topic and change the endpoint events as required\.
-
-1. Choose **Modify Notification**\.
-
-If you no longer need a notification, you can delete it\. 
-
-**To delete a notification**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Endpoints** and select your interface endpoint\.
-
-1. In the **Notifications** tab, select the notification and choose **Actions**, **Delete notification**\.
-
-1. Choose **Yes, Delete**\.
-
-------
 #### [ Command line ]
 
 **To create and manage a notification using the AWS CLI**
@@ -491,7 +448,9 @@ If you no longer need a notification, you can delete it\.
 ## Accessing a service through an interface endpoint<a name="access-service-though-endpoint"></a>
 
 After you've created an interface endpoint, you can submit requests to the supported service via an endpoint URL\. You can use the following:
-+ If you have enabled private DNS for the endpoint \(a private hosted zone; applicable to AWS services and AWS Marketplace Partner services only\), the default DNS hostname for the AWS service for the Region\. For example, `ec2.us-east-1.amazonaws.com`\.
++ If you have turned on private DNS for the endpoint \(a private hosted zone; applicable to AWS services and AWS Marketplace Partner services only\), the default DNS hostname for the AWS service for the Region\. For example, `ec2.us-east-1.amazonaws.com`\.
+**Important**  
+Private DNS is not supported for Amazon S3 interface endpoints\.
 + The endpoint\-specific Regional DNS hostname that we generate for the interface endpoint\. The hostname includes a unique endpoint identifier, service identifier, the Region, and `vpce.amazonaws.com` in its name\. For example, `vpce-0fe5b17a0707d6abc-29p5708s.ec2.us-east-1.vpce.amazonaws.com`\.
 + The endpoint\-specific zonal DNS hostname that we generate for each Availability Zone in which the endpoint is available\. The hostname includes the Availability Zone in its name\. For example, `vpce-0fe5b17a0707d6abc-29p5708s-us-east-1a.ec2.us-east-1.vpce.amazonaws.com`\. You might use this option if your architecture isolates Availability Zones \(for example, for fault containment or to reduce Regional data transfer costs\)\.
 
@@ -500,13 +459,13 @@ After you've created an interface endpoint, you can submit requests to the suppo
 
 To get the Regional and zonal DNS names, see [Viewing your interface endpoint](#describe-interface-endpoint)\.
 
-For example, in a subnet in which you have an interface endpoint to Elastic Load Balancing and for which you have not enabled the private DNS option, use the following AWS CLI command from an instance to describe your load balancers\. The command uses the endpoint\-specific Regional DNS hostname to make the request using the interface endpoint\.
+For example, in a subnet in which you have an interface endpoint to Elastic Load Balancing and for which you have not turned on the private DNS option, use the following AWS CLI command from an instance to describe your load balancers\. The command uses the endpoint\-specific Regional DNS hostname to make the request using the interface endpoint\.
 
 ```
 aws elbv2 describe-load-balancers --endpoint-url https://vpce-0f89a33420c193abc-bluzidnv.elasticloadbalancing.us-east-1.vpce.amazonaws.com/
 ```
 
-If you enable the private DNS option, you do not have to specify the endpoint URL in the request\. The AWS CLI uses the default endpoint for the AWS service for the Region \(`elasticloadbalancing.us-east-1.amazonaws.com`\)\.
+If you turn on the private DNS option, you do not have to specify the endpoint URL in the request\. The AWS CLI uses the default endpoint for the AWS service for the Region \(`elasticloadbalancing.us-east-1.amazonaws.com`\)\.
 
 ## Modifying an interface endpoint<a name="modify-interface-endpoint"></a>
 
@@ -516,7 +475,7 @@ You can modify the following attributes of an interface endpoint:
 + The tags
 + The private DNS option
 **Note**  
-When you enable private DNS, it might take a few minutes for the private IP addresses to become available\.
+When you turn on private DNS, it might take a few minutes for the private IP addresses to become available\.
 + The endpoint policy \(if supported by the service\)
 
  If you remove a subnet for the interface endpoint, the corresponding endpoint network interface in the subnet is deleted\.
@@ -568,7 +527,7 @@ When you enable private DNS, it might take a few minutes for the private IP addr
 
 1. Choose **Actions**, **Modify Private DNS names**\.
 
-1. Enable or disable the option as required, and choose **Modify Private DNS names**\.
+1. Set the option as required, and choose **Modify Private DNS names**\.
 
 **To update the endpoint policy**
 

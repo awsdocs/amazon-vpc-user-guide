@@ -129,7 +129,7 @@ Your instance is now accessible from the internet\. You can connect to your inst
 
 You can choose to continue using your instance in your VPC, or if you do not need the instance, you can terminate it and release its Elastic IP address to avoid incurring charges for them\. You can also delete your VPC — note that you are not charged for the VPC and VPC components created in this exercise \(such as the subnets and route tables\)\.
 
-Before you can delete a VPC, you must terminate any instances that are running in the VPC\. You can then delete the VPC and it components using the VPC console\.
+Before you can delete a VPC, you must terminate any instances that are running in the VPC\. You can then delete the VPC and its components using the VPC console\.
 
 **To terminate your instance, release your Elastic IP address, and delete your VPC**
 

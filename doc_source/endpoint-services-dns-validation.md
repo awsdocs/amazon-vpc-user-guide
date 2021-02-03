@@ -9,11 +9,11 @@ When you initiate domain ownership verification using the Amazon VPC Console or 
 
 | Domain verification name | Type | Domain verification value | 
 | --- | --- | --- | 
-|  \_aksldja21i1  |  TXT  |  vpce:asjdakjshd78126eu21  | 
+|  \_vpce:aksldja21i1  |  TXT  |  vpce:asjdakjshd78126eu21  | 
 
 Add a TXT record to your domain's DNS server using the specified **Domain verification name** and **Domain verification value**\. The domain ownership verification is complete when we detect the existence of the TXT record in your domain's DNS settings\.
 
-If your DNS provider does not allow DNS record names to contain underscores, you can omit *\_aksldja21i1* from the **Domain verification name**\. In that case, for the preceding example, the TXT record name would be myexampleservice\.com instead of *\_aksldja21i1\.myexampleservice\.com*\.
+If your DNS provider does not allow DNS record names to contain underscores, you can omit *\_aksldja21i1* from the **Domain verification name**\. In that case, for the preceding example, the TXT record name would be myexampleservice\.com instead of *\_aksldja21i1\.myexampleservice\.com*\. 
 
 ## Adding a TXT record to your domain's DNS server<a name="add-dns-txt-record"></a>
 

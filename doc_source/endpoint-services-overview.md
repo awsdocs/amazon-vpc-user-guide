@@ -5,6 +5,7 @@ A VPC endpoint enables you to privately connect your VPC to supported AWS servic
 **Topics**
 + [VPC endpoints concepts](#concepts)
 + [Working with VPC endpoints](#working-with)
++ [Pricing for endpoints](#vpce-interface-pricing)
 + [VPC endpoints](vpc-endpoints.md)
 + [VPC endpoint services \(AWS PrivateLink\)](endpoint-service.md)
 + [Identity and access management for VPC endpoints and VPC endpoint services](vpc-endpoints-iam.md)
@@ -28,3 +29,7 @@ You can create, access, and manage VPC endpoints using any of the following:
 + **AWS Command Line Interface \(AWS CLI\)** — Provides commands for a broad set of AWS services, including Amazon VPC\. The AWS CLI is supported on Windows, macOS, and Linux\. For more information, see [AWS Command Line Interface](https://aws.amazon.com/cli/)\.
 + **AWS SDKs** — Provide language\-specific APIs\. The AWS SDKs take care of many of the connection details, such as calculating signatures, handling request retries, and handling errors\. For more information, see [AWS SDKs](https://aws.amazon.com/tools/#SDKs)\.
 + **Query API** — Provides low\-level API actions that you call using HTTPS requests\. Using the Query API is the most direct way to access Amazon VPC\. However, it requires that your application handle low\-level details such as generating the hash to sign the request and handling errors\. For more information, see the [Amazon EC2 API Reference](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/)\.
+
+## Pricing for endpoints<a name="vpce-interface-pricing"></a>
+
+For information about endpoint pricing, see [AWS PrivateLink Pricing](https://aws.amazon.com/privatelink/pricing/)\. You can view the total number of endpoints using the Amazon VPC Console, or the AWS CLI\.

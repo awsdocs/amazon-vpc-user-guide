@@ -1,6 +1,6 @@
 # Elastic network interfaces<a name="VPC_ElasticNetworkInterfaces"></a>
 
-An elastic network interface \(referred to as a *network interface* in this documentation\) is a virtual network interface that can include the following attributes:
+An *elastic network interface* \(referred to as a *network interface* in this documentation\)is a logical networking component in a VPC that represents a virtual network card\. It can include the following attributes: 
 + a primary private IPv4 address
 + one or more secondary private IPv4 addresses
 + one Elastic IP address per private IPv4 address

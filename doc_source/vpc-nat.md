@@ -7,7 +7,13 @@ NAT devices are not supported for IPv6 traffic—use an egress\-only Internet ga
 **Note**  
 We use the term *NAT* in this documentation to follow common IT practice, though the actual role of a NAT device is both address translation and port address translation \(PAT\)\. 
 
-AWS offers two kinds of NAT devices—a *NAT gateway* or a *NAT instance*\. We recommend NAT gateways, as they provide better availability and bandwidth over NAT instances\. The NAT Gateway service is also a managed service that does not require your administration efforts\. A NAT instance is launched from a NAT AMI\. You can choose to use a NAT instance for special purposes\.
+You can either use a managed NAT device offered by AWS called a NAT gateway, or you can create your own NAT device in an EC2 instance, referred to here as a NAT instance\. We recommend NAT gateways, because they provide better availability and bandwidth over NAT instances\. The NAT gateway service is also a managed service that does not require your administration efforts\. 
 + [NAT gateways](vpc-nat-gateway.md)
 + [NAT instances](VPC_NAT_Instance.md)
 + [Comparison of NAT instances and NAT gateways](vpc-nat-comparison.md)
+
+## NAT AMI \(end of support\)<a name="vpc-nat-ami"></a>
+
+**Important**  
+NAT AMI is built on the last version of Amazon Linux, 2018\.03 which reached the end of standard support on December 31, 2020\. For more information, see the following blog post: [Amazon Linux AMI end of life](http://aws.amazon.com/blogs/aws/update-on-amazon-linux-ami-end-of-life/)\. This feature will only receive critical security updates \(there will be no regular updates\)\.   
+If you use an existing NAT AMI, AWS recommends that you migrate to a NAT gateway or create your own NAT AMI on Amazon Linux 2 as soon as possible\. For information about how to migrate your instance, see [Migrating from a NAT instance](vpc-nat-gateway.md#nat-instance-migrate)\.
