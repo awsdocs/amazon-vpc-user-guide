@@ -220,7 +220,7 @@ Private DNS is turned on by default for endpoints created for AWS services and A
 **Important**  
 Private DNS is not supported for Amazon S3 interface endpoints\.
 
-     This option is tuned on by default\. To use the private DNS option, the following attributes of your VPC must be set to `true`: `enableDnsHostnames` and `enableDnsSupport`\. For more information, see [Viewing and updating DNS support for your VPC](vpc-dns.md#vpc-dns-updating)\.
+     This option is turned on by default\. To use the private DNS option, the following attributes of your VPC must be set to `true`: `enableDnsHostnames` and `enableDnsSupport`\. For more information, see [Viewing and updating DNS support for your VPC](vpc-dns.md#vpc-dns-updating)\.
    + For **Security group**, select the security groups to associate with the endpoint network interfaces\.
    + \(Optional\) Add or remove a tag\.
 
