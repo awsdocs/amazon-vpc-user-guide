@@ -102,63 +102,65 @@ Users must also have permissions to use the `iam:PassRole` action for the IAM ro
 
 You can create flow logs for your VPCs, subnets, or network interfaces\. If you perform these steps as an IAM user, ensure that you have permissions to use the `iam:PassRole` action\. For more information, see [Permissions for IAM users to pass a role](#flow-logs-iam-user)\.
 
+**Prerequisite**  
+Create the destination log group\. Open the [Log groups page](https://console.aws.amazon.com/cloudwatch/home#logsV2:log-groups) in the CloudWatch console and choose **Create log group**\. Enter a name for the log group and choose **Create**\.
+
 **To create a flow log for a network interface using the console**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
 1. In the navigation pane, choose **Network Interfaces**\.
 
-1. Select one or more network interfaces and choose **Actions**, **Create flow log**\.
+1. Select the checkboxes for one or more network interfaces and choose **Actions**, **Create flow log**\.
 
-1. For **Filter**, specify the type of IP traffic data to log\. Choose **All** to log accepted and rejected traffic, **Rejected** to record only rejected traffic, or **Accepted** to record only accepted traffic\.
+1. For **Filter**, specify the type of traffic to log\. Choose **All** to log accepted and rejected traffic, **Reject** to log only rejected traffic, or **Accept** to log only accepted traffic\.
 
 1. For **Maximum aggregation interval**, choose the maximum period of time during which a flow is captured and aggregated into one flow log record\.
 
 1. For **Destination**, choose **Send to CloudWatch Logs**\.
 
-1. For **Destination log group**, enter the name of a log group in CloudWatch Logs to which the flow logs are to be published\. If you specify the name of a log group that does not exist, we attempt to create the log group for you\.
+1. For **Destination log group**, chose the name of the destination log group that you created\.
 
 1. For **IAM role**, specify the name of the role that has permissions to publish logs to CloudWatch Logs\.
 
-1. For **Format**, specify the format for the flow log record\.
-   + To use the default flow log record format, choose **AWS default format**\.
-   + To create a custom format, choose **Custom format**\. For **Log format**, choose the fields to include in the flow log record\.
-**Tip**  
-To create a custom flow log that includes the default format fields, first choose **AWS default format**, copy the fields in **Format preview**, then choose **Custom format** and paste the fields in the text box\.
+1. For **Log record format**, select the format for the flow log record\.
+   + To use the default format, choose **AWS default format**\.
+   + To use a custom format, choose **Custom format** and then select fields from **Log format**\.
+   + To create a custom flow log that includes the default fields, choose **AWS default format**, copy the fields in **Format preview**, then choose **Custom format** and paste the fields in the text box\.
 
-1. \(Optional\) Choose **Add Tag** to apply tags to the flow log\.
+1. \(Optional\) Choose **Add new tag** to apply tags to the flow log\.
 
-1. Choose **Create**\.
+1. Choose **Create flow log**\.
 
 **To create a flow log for a VPC or a subnet using the console**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Your VPCs** or **Subnets**\.
+1. In the navigation pane, choose **Your VPCs** or choose **Subnets**\.
 
-1. Select one or more VPCs or subnets and then choose **Actions**, **Create flow log**\.
+1. Select the checkbox for one or more VPCs or subnets and then choose **Actions**, **Create flow log**\.
 
-1. For **Filter**, specify the type of IP traffic data to log\. Choose **All** to log accepted and rejected traffic, **Rejected** to record only rejected traffic, or **Accepted** to record only accepted traffic\.
+1. For **Filter**, specify the type of traffic to log\. Choose **All** to log accepted and rejected traffic, **Reject** to log only rejected traffic, or **Accept** to log only accepted traffic\.
 
 1. For **Maximum aggregation interval**, choose the maximum period of time during which a flow is captured and aggregated into one flow log record\.
 
 1. For **Destination**, choose **Send to CloudWatch Logs**\.
 
-1. For **Destination log group**, enter the name of a log group in CloudWatch Logs to which the flow logs are to be published\. If you specify the name of a log group that does not exist, we attempt to create the log group for you\.
+1. For **Destination log group**, chose the name of the destination log group that you created\.
 
-1. For **IAM role**, specify the name of the IAM role that has permissions to publish logs to CloudWatch Logs\.
+1. For **IAM role**, specify the name of the role that has permissions to publish logs to CloudWatch Logs\.
 
-1. For **Format**, specify the format for the flow log record\.
-   + To use the default flow log record format, choose **AWS default format**\.
-   + To create a custom format, choose **Custom format**\. For **Log format**, choose the fields to include in the flow log record\.
-**Tip**  
-To create a custom flow log that includes the default format fields, first choose **AWS default format**, copy the fields in **Format preview**, then choose **Custom format** and paste the fields in the text box\.
+1. For **Log record format**, select the format for the flow log record\.
+   + To use the default format, choose **AWS default format**\.
+   + To use a custom format, choose **Custom format** and then select fields from **Log format**\.
+   + To create a custom flow log that includes the default fields, choose **AWS default format**, copy the fields in **Format preview**, then choose **Custom format** and paste the fields in the text box\.
 
-1. \(Optional\) Choose **Add Tag** to apply tags to the flow log\.
+1. \(Optional\) Choose **Add new tag** to apply tags to the flow log\.
 
-1. Choose **Create**\.
+1. Choose **Create flow log**\.
 
-**To create a flow log that publishes to CloudWatch Logs using a command line tool**  
+**To create a flow log using the command line**
+
 Use one of the following commands\.
 + [create\-flow\-logs](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-flow-logs.html) \(AWS CLI\)
 + [New\-EC2FlowLogs](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2FlowLogs.html) \(AWS Tools for Windows PowerShell\)

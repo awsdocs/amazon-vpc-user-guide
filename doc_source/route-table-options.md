@@ -70,7 +70,6 @@ Subnets that are in VPCs associated with AWS Outposts can have an additional tar
 | Destination | Target | 
 | --- | --- | 
 | 192\.168\.10\.0/24 | lgw\-id | 
-| 2002:bc9:1234:1a00::/56 | igw\-id | 
 
 ## Routing to A Wavelength Zone carrier gateway<a name="route-tables-cgw"></a>
 
@@ -150,7 +149,7 @@ If you modify a VPC peering connection to enable communication between instances
 
 A gateway VPC endpoint enables you to create a private connection between your VPC and another AWS service\. When you create a gateway endpoint, you specify the subnet route tables in your VPC that are used by the gateway endpoint\. A route is automatically added to each of the route tables with a destination that specifies the prefix list ID of the service \(`pl-xxxxxxxx`\), and a target with the endpoint ID \(`vpce-xxxxxxxxxxxxxxxxx`\)\. You cannot explicitly delete or modify the endpoint route, but you can change the route tables that are used by the endpoint\.
 
-For more information about routing for endpoints, and the implications for routes to AWS services, see [Routing for gateway endpoints](vpce-gateway.md#vpc-endpoints-routing)\.
+For more information about routing for endpoints, and the implications for routes to AWS services, see [Routing for gateway endpoints](https://docs.aws.amazon.com/vpc/latest/privatelink/vpce-gateway.html#vpc-endpoints-routing)\.
 
 ## Routing to an egress\-only internet gateway<a name="route-tables-eigw"></a>
 
@@ -280,7 +279,7 @@ The maximum number of entries for the prefix lists equals the same number of ent
 
 ## Routing to a Gateway Load Balancer endpoint<a name="route-tables-gwlbe"></a>
 
-A Gateway Load Balancer enables you to distribute traffic to a fleet of virtual appliances, such as firewalls\. You can configure the load balancer as a service by creating a [VPC endpoint service configuration](vpc-endpoint-services-gwlbe.md)\. You then create a [Gateway Load Balancer endpoint](vpce-gateway-load-balancer.md) in your VPC to connect your VPC to the service\.
+A Gateway Load Balancer enables you to distribute traffic to a fleet of virtual appliances, such as firewalls\. You can configure the load balancer as a service by creating a [VPC endpoint service configuration](https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoint-services-gwlbe.html)\. You then create a [Gateway Load Balancer endpoint](https://docs.aws.amazon.com/vpc/latest/privatelink/vpce-gateway-load-balancer.html) in your VPC to connect your VPC to the service\.
 
 To route your traffic to the Gateway Load Balancer \(for example, for security inspection\), specify the Gateway Load Balancer endpoint as a target in your route tables\.
 

@@ -16,8 +16,8 @@ To allow resources that are in Consumer VPC 2 in Region B \(for example, eu\-wes
 
 1. Adjust the security groups that are associated with the service instances in Provider VPC 1 so that they allow traffic from Network Load Balancer 2\. For more information, see [Target security groups](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/target-group-register-targets.html#target-security-groups)\.
 
-1. Create a VPC endpoint service configuration in Provider VPC 2 and associate it with Network Load Balancer 2\. For more information, see [Creating a VPC endpoint service configuration for interface endpoints](create-endpoint-service.md)\.
+1. Create a VPC endpoint service configuration in Provider VPC 2 and associate it with Network Load Balancer 2\. For more information, see [Create a VPC endpoint service configuration](https://docs.aws.amazon.com/vpc/latest/privatelink/create-endpoint-service.html)\.
 
-1. The service consumer can then create an interface endpoint in Consumer VPC 2 to the service in Provider VPC 2\. For more information, see [Creating an interface endpoint](vpce-interface.md#create-interface-endpoint)\.
+1. The service consumer can then create an interface endpoint in Consumer VPC 2 to the service in Provider VPC 2\. For more information, see [Create an interface endpoint](https://docs.aws.amazon.com/vpc/latest/privatelink/vpce-interface.html#create-interface-endpoint)\.
 
 The account that owns Provider VPC 2 incurs the inter\-region peering data transfer charges, and Network Load Balancer charges\. The account that owns Provider VPC 1 incurs the service instances charges\.

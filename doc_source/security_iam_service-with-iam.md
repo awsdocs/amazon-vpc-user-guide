@@ -68,7 +68,7 @@ For example, to specify the `vpc-1234567890abcdef0` VPC in your statement, use t
 "Resource": "arn:aws:ec2:us-east-1:123456789012:vpc/vpc-1234567890abcdef0"
 ```
 
-To specify all VPCs that belong to a specific account, use the wildcard \(\*\)\.
+To specify all VPCs in a specific Region that belong to a specific account, use the wildcard \(\*\)\.
 
 ```
 "Resource": "arn:aws:ec2:us-east-1:123456789012:vpc/*"

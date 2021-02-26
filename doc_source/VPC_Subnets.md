@@ -8,6 +8,7 @@ To get started with Amazon Virtual Private Cloud \(Amazon VPC\), you create a VP
 + [Subnet routing](#SubnetRouting)
 + [Subnet security](#SubnetSecurity)
 + [Working with VPCs and subnets](working-with-vpcs.md)
++ [IP Addressing in your VPC](vpc-ip-addressing.md)
 + [Working with shared VPCs](vpc-sharing.md)
 + [Extending Your VPCs](Extend_VPCs.md)
 

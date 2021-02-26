@@ -52,7 +52,7 @@ If you change your routing from a NAT instance to a NAT gateway, or if you disas
 
 ### Best practice when sending traffic to Amazon S3 or DynamoDB in the same Region<a name="nat-gateway-s3-ddb"></a>
 
-To avoid data processing charges for NAT gateways when accessing Amazon S3 and DynamoDB that are in the same Region, set up a gateway endpoint and route the traffic through the gateway endpoint instead of the NAT gateway\. There are no charges for using a gateway endpoint\. For more information, see [Gateway VPC endpoints](vpce-gateway.md)\.
+To avoid data processing charges for NAT gateways when accessing Amazon S3 and DynamoDB that are in the same Region, set up a gateway endpoint and route the traffic through the gateway endpoint instead of the NAT gateway\. There are no charges for using a gateway endpoint\. For more information, see [Gateway VPC endpoints](https://docs.aws.amazon.com/vpc/latest/privatelink/vpce-gateway.html)\.
 
 ## Working with NAT gateways<a name="nat-gateway-working-with"></a>
 

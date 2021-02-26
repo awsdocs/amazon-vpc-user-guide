@@ -206,7 +206,7 @@ The second statement grants users permission to describe all security groups\. T
        "ec2:RevokeSecurityGroupEgress"],
      "Resource": "arn:aws:ec2:region:account:security-group/*",
       "Condition": {
-        "StringEquals": {
+        "ArnEquals": {
           "ec2:Vpc": "arn:aws:ec2:region:account:vpc/vpc-11223344556677889"
         }
       }
@@ -331,6 +331,6 @@ You can find additional example IAM policies related to Amazon VPC in the follow
 + [Traffic mirroring](https://docs.aws.amazon.com/vpc/latest/mirroring/traffic-mirroring-security.html)
 + [Transit gateways](https://docs.aws.amazon.com/vpc/latest/tgw/transit-gateway-authentication-access-control.html#tgw-example-iam-policies)
 + [VPC endpoints and VPC endpoint services](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints-iam.html)
-+ [VPC endpoint policies](vpc-endpoints-access.md)
-+ [VPC Peering](https://docs.aws.amazon.com/vpc/latest/peering/security-iam.html)
++ [VPC endpoint policies](https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-access.html)
++ [VPC peering](https://docs.aws.amazon.com/vpc/latest/peering/security-iam.html)
 + [AWS Wavelength](https://docs.aws.amazon.com/wavelength/latest/developerguide/wavelength-policy-examples.html)

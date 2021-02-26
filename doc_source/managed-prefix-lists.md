@@ -1,7 +1,7 @@
 # Prefix lists<a name="managed-prefix-lists"></a>
 
 A prefix list is a set of one or more CIDR blocks\. There are two types of prefix lists:
-+ **AWS\-managed prefix list** — Represents the IP address ranges for an AWS service\. You can reference an AWS\-managed prefix list in your VPC security group rules and in subnet route table entries\. For example, you can reference an AWS\-managed prefix list in an outbound VPC security group rule when connecting to an AWS service through a [gateway VPC endpoint](vpce-gateway.md)\. You cannot create, modify, share, or delete an AWS\-managed prefix list\.
++ **AWS\-managed prefix list** — Represents the IP address ranges for an AWS service\. You can reference an AWS\-managed prefix list in your VPC security group rules and in subnet route table entries\. For example, you can reference an AWS\-managed prefix list in an outbound VPC security group rule when connecting to an AWS service through a [gateway VPC endpoint](https://docs.aws.amazon.com/vpc/latest/privatelink/vpce-gateway.html)\. You cannot create, modify, share, or delete an AWS\-managed prefix list\.
 + **Customer\-managed prefix list** — A set of IPv4 or IPv6 CIDR blocks that you define and manage\. You can reference the prefix list in your VPC security group rules, subnet route table entries, and transit gateway route table entries\. This enables you to manage the IP addresses that you frequently use for these resources in a single group, instead of repeatedly referencing the same IP addresses in each resource\. You can share your prefix list with other AWS accounts, enabling those accounts to reference the prefix list in their own resources\.
 
 The following topics describe how to create and work with customer\-managed prefix lists\.

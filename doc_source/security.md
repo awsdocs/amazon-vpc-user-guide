@@ -18,5 +18,4 @@ This documentation helps you understand how to apply the shared responsibility m
 + [Configuration and Vulnerability Analysis in Amazon Virtual Private Cloud](ConfigAndVulnerability.md)
 + [Security groups for your VPC](VPC_SecurityGroups.md)
 + [Network ACLs](vpc-network-acls.md)
-+ [VPC Flow Logs](flow-logs.md)
 + [Security best practices for your VPC](vpc-security-best-practices.md)

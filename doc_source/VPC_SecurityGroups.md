@@ -263,7 +263,9 @@ This procedure changes the security groups that are associated with the primary 
 
 1. In the navigation pane, choose **Instances**\.
 
-1. Choose **Actions**, **Security**, **Change security groups**\. 
+1. Select the checkbox for the instance\. The **Security** tab lists the security groups that are currently associated with the instance\.
+
+1. To change the security groups that are associated with the instance, choose **Actions**, **Security**, **Change security groups**\.
 
 1. For **Associated security groups**, select a security group from the list, and then choose **Add security group**\.
 

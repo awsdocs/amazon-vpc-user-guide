@@ -113,6 +113,7 @@ Each network ACL includes a default rule whose rule number is an asterisk\. This
 |  Rule \#  | Type |  Protocol  |  Port range  | Destination |  Allow/Deny  |  Comments  | 
 |  100  | HTTP |  TCP  |  80  | 0\.0\.0\.0/0 |  ALLOW  |  Allows outbound IPv4 HTTP traffic from the subnet to the internet\.  | 
 |  110  | HTTPS |  TCP  |  443  | 0\.0\.0\.0/0 |  ALLOW  |  Allows outbound IPv4 HTTPS traffic from the subnet to the internet\.  | 
+| 120 | SSH |  TCP  |  22  | 192\.0\.2\.0/24 |  ALLOW  |  Allows outbound SSH traffic from your home network's public IPv4 address range \(over the internet gateway\)\.  | 
 |  140  | Custom TCP |  TCP  |  32768\-65535  | 0\.0\.0\.0/0 |  ALLOW  |  Allows outbound IPv4 responses to clients on the internet \(for example, serving webpages to people visiting the web servers in the subnet\)\. This range is an example only\. For more information about how to select the appropriate ephemeral port range, see [Ephemeral ports](#nacl-ephemeral-ports)\.  | 
 |  \*  | All traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  |  Denies all outbound IPv4 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
 

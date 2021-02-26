@@ -95,11 +95,7 @@ To use AWS PrivateLink, create a VPC endpoint for a service in your VPC\. You cr
 
 ![\[Using an interface endpoint to access an AWS service\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-privatelink-diagram.png)
 
- You can create your own AWS PrivateLink\-powered service \(endpoint service\) and enable other AWS customers to access your service\.
-
-**More information**
-+ [VPC endpoints](vpc-endpoints.md)
-+ [VPC endpoint services \(AWS PrivateLink\)](endpoint-service.md)
+ You can create your own AWS PrivateLink\-powered service \(endpoint service\) and enable other AWS customers to access your service\. For more information, see the [User Guide for AWS PrivateLink](https://docs.aws.amazon.com/vpc/latest/privatelink/)\.
 
 ## Connecting VPCs and networks<a name="vpc-other-networks"></a>
 

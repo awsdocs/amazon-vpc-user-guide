@@ -144,8 +144,8 @@ Flow logs do not capture all IP traffic\. The following types of traffic are not
 + Traffic to and from `169.254.169.254` for instance metadata\.
 + Traffic to and from `169.254.169.123` for the Amazon Time Sync Service\.
 + DHCP traffic\.
-+ Traffic to the reserved IP address for the default VPC router\. For more information, see [VPC and subnet sizing](VPC_Subnets.md#VPC_Sizing)\.
-+ Traffic between an endpoint network interface and a Network Load Balancer network interface\. For more information, see [VPC endpoint services \(AWS PrivateLink\)](endpoint-service.md)\.
++ Traffic to the reserved IP address for the default VPC router\.
++ Traffic between an endpoint network interface and a Network Load Balancer network interface\.
 
 ## Flow logs pricing<a name="flow-logs-pricing"></a>
 
