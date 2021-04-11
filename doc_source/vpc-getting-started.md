@@ -154,4 +154,4 @@ Before you can delete a VPC, you must terminate any instances that are running i
 After you create a nondefault VPC, you might want to do the following:
 + Add more subnets to your VPC\. For more information, see [Creating a subnet in your VPC](working-with-vpcs.md#AddaSubnet)\.
 + Enable IPv6 support for your VPC and subnets\. For more information, see [Associating an IPv6 CIDR block with your VPC](working-with-vpcs.md#vpc-associate-ipv6-cidr) and [Associating an IPv6 CIDR block with your subnet](working-with-vpcs.md#subnet-associate-ipv6-cidr)\.
-+ Enable instances in a private subnet to access the internet\. For more information, see [NAT](vpc-nat.md)\.
++ Enable instances in a private subnet to access the internet\. For more information, see [NAT devices for your VPC](vpc-nat.md)\.

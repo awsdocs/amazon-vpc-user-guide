@@ -88,7 +88,7 @@ Regardless of the subnet attribute, you can still override this setting for a sp
 
 You can bring part or all of your own public IPv4 address range or IPv6 address range to your AWS account\. You continue to own the address range, but AWS advertises it on the internet by default\. After you bring the address range to AWS, it appears in your account as an address pool\. You can create an Elastic IP address from your IPv4 address pool, and you can associate an IPv6 CIDR block from your IPv6 address pool with a VPC\.
 
-For more information, see [Bring your own IP addresses \(BYOIP\)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html) in the* Amazon EC2 User Guide for Linux Instances*\.
+For more information, see [Bring your own IP addresses \(BYOIP\)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 ## Working with IP addresses<a name="vpc-working-with-ip-addresses"></a>
 

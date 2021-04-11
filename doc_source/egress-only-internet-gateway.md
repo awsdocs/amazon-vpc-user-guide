@@ -86,7 +86,7 @@ To send traffic destined outside the VPC to the egress\-only internet gateway, y
 
 Alternatively, you can add a route to an existing route table that's associated with your subnet\. Select your existing route table, and follow steps 5 and 6 above to add a route for the egress\-only internet gateway\.
 
-For more information about route tables, see [Route tables](VPC_Route_Tables.md)\.
+For more information about route tables, see [Route tables for your VPC](VPC_Route_Tables.md)\.
 
 ### Deleting an egress\-only internet gateway<a name="egress-only-internet-gateway-delete"></a>
 

@@ -6,14 +6,14 @@ An *Elastic IP address* is a static, public IPv4 address designed for dynamic cl
 
 To use an Elastic IP address, you first allocate it for use in your account\. Then, you can associate it with an instance or network interface in your VPC\. Your Elastic IP address remains allocated to your AWS account until you explicitly release it\.
 
-An Elastic IP address is a property of a network interface\. You can associate an Elastic IP address with an instance by updating the network interface attached to the instance\. The advantage of associating the Elastic IP address with the network interface instead of directly with the instance is that you can move all the attributes of the network interface from one instance to another in a single step\. For more information, see [Elastic network interfaces\.](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html)
+An Elastic IP address is a property of a network interface\. You can associate an Elastic IP address with an instance by updating the network interface attached to the instance\. The advantage of associating the Elastic IP address with the network interface instead of directly with the instance is that you can move all the attributes of the network interface from one instance to another in a single step\. For more information, see [Elastic network interfaces](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 The following rules apply:
 + An Elastic IP address can be associated with a single instance or network interface at a time\. 
 + You can move an Elastic IP address from one instance or network interface to another\. 
 + If you associate an Elastic IP address with the eth0 network interface of your instance, its current public IPv4 address \(if it had one\) is released to the EC2\-VPC public IP address pool\. If you disassociate the Elastic IP address, the eth0 network interface is automatically assigned a new public IPv4 address within a few minutes\. This doesn't apply if you've attached a second network interface to your instance\. 
 + To ensure efficient use of Elastic IP addresses, we impose a small hourly charge when they aren't associated with a running instance, or when they are associated with a stopped instance or an unattached network interface\. While your instance is running, you aren't charged for one Elastic IP address associated with the instance, but you are charged for any additional Elastic IP addresses associated with the instance\. For more information, see [Amazon EC2 Pricing](https://aws.amazon.com/ec2/pricing/on-demand/#Elastic_IP_Addresses)\.
-+ You're limited to five Elastic IP addresses\. To help conserve them, you can use a NAT device\. For more information, see [NAT](vpc-nat.md)\.
++ You're limited to five Elastic IP addresses\. To help conserve them, you can use a NAT device\. For more information, see [NAT devices for your VPC](vpc-nat.md)\.
 + Elastic IP addresses for IPv6 are not supported\.
 + You can tag an Elastic IP address that's allocated for use in a VPC, however, cost allocation tags are not supported\. If you recover an Elastic IP address, tags are not recovered\. 
 + You can access an Elastic IP address from the internet when the security group and network ACL allow traffic from the source IP address\. The reply traffic from within the VPC back to the internet requires an internet gateway\. For more information, see [Security groups for your VPC](VPC_SecurityGroups.md) and [Network ACLs](vpc-network-acls.md)\.
@@ -213,11 +213,11 @@ If you no longer need an Elastic IP address, we recommend that you release it\. 
 
 If you release your Elastic IP address, you might be able to recover it\. You cannot recover the Elastic IP address if it has been allocated to another AWS account, or if it results in you exceeding your Elastic IP address quota\.
 
-Currently, you can recover an Elastic IP address using the Amazon EC2 API or a command line tool only\.
+You can recover an Elastic IP address using the Amazon EC2 API or a command line tool\.
 
-**To recover an Elastic IP address using the AWS CLI**
-+ Use the [allocate\-address](https://docs.aws.amazon.com/cli/latest/reference/ec2/allocate-address.html) command and specify the IP address using the `--address` parameter\.
+**To recover an Elastic IP address using the AWS CLI**  
+Use the [allocate\-address](https://docs.aws.amazon.com/cli/latest/reference/ec2/allocate-address.html) command and specify the IP address using the `--address` parameter\.
 
-  ```
-  aws ec2 allocate-address --domain vpc --address 203.0.113.3
-  ```
+```
+aws ec2 allocate-address --domain vpc --address 203.0.113.3
+```

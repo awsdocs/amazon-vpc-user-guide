@@ -6,14 +6,14 @@ If you use an existing NAT AMI, AWS recommends that you migrate to a NAT gateway
 
 You can create your own network address translation AMI and run it on an EC2 instance as NAT instance in a public subnet in your VPC to enable instances in the private subnet to initiate outbound IPv4 traffic to the internet or other AWS services, but prevent the instances from receiving inbound traffic initiated by someone on the internet\.
 
-For more information about public and private subnets, see [Subnet routing](VPC_Subnets.md#SubnetRouting)\. For more information about NAT, see [NAT](vpc-nat.md)\.
+For more information about public and private subnets, see [Subnet routing](VPC_Subnets.md#SubnetRouting)\. For more information about NAT, see [NAT devices for your VPC](vpc-nat.md)\.
 
 NAT is not supported for IPv6 traffic—use an egress\-only internet gateway instead\. For more information, see [Egress\-only internet gateways](egress-only-internet-gateway.md)\.
 
 Your NAT instance quota depends on your instance quota for the region\. For more information, see the [EC2 FAQs](http://aws.amazon.com/ec2/faqs/#EC2_On-Demand_Instance_limits)\. 
 
 **Note**  
-You can also use a NAT gateway, which is a managed NAT service that provides better availability, higher bandwidth, and requires less administrative effort\. For common use cases, we recommend that you use a NAT gateway rather than a NAT instance\. For more information, see [NAT gateways](vpc-nat-gateway.md) and [Comparison of NAT instances and NAT gateways](vpc-nat-comparison.md)\.
+You can also use a NAT gateway, which is a managed NAT service that provides better availability, higher bandwidth, and requires less administrative effort\. For common use cases, we recommend that you use a NAT gateway rather than a NAT instance\. For more information, see [NAT gateways](vpc-nat-gateway.md) and [Comparing NAT gateways and NAT instances](vpc-nat-comparison.md)\.
 
 **Topics**
 + [NAT instance basics](#basics)
@@ -171,11 +171,13 @@ You can disable the `SrcDestCheck` attribute for a NAT instance that's either ru
 
 1. In the navigation pane, choose **Instances**\.
 
-1. Select the NAT instance, choose **Actions**, **Networking**, **Change Source/Dest\. Check**\.
+1. Select the NAT instance, choose **Actions**, **Networking**, **Change source/destination check**\.
 
-1. For the NAT instance, verify that this attribute is disabled\. Otherwise, choose **Yes, Disable**\.
+1. Verify that source/destination checking is stopped\. Otherwise, choose **Stop**\.
 
-1. If the NAT instance has a secondary network interface, choose it from **Network interfaces** on the **Description** tab and choose the interface ID to go to the network interfaces page\. Choose **Actions**, **Change Source/Dest\. Check**, disable the setting, and choose **Save**\.
+1. Choose **Save**\.
+
+1. If the NAT instance has a secondary network interface, choose it from **Network interfaces** on the **Networking** tab\. Choose the interface ID to go to the network interfaces page\. Choose **Actions**, **Change source/dest\. check**, clear **Enable**, and choose **Save**\.
 
 **To disable source/destination checking using the command line**
 
@@ -199,7 +201,7 @@ The private subnet in your VPC is not associated with a custom route table, ther
 
 1. On the **Subnet Associations** tab, choose **Edit**, and then select the **Associate** check box for the private subnet\. Choose **Save**\.
 
-For more information, see [Route tables](VPC_Route_Tables.md)\.
+For more information, see [Route tables for your VPC](VPC_Route_Tables.md)\.
 
 ## Testing your NAT instance configuration<a name="nat-test-configuration"></a>
 
@@ -209,17 +211,19 @@ After you have launched a NAT instance and completed the configuration steps abo
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the navigation pane, choose **Security Groups**\. 
+1. In the navigation pane, choose **Security Groups**\.
 
-1. Find the security group associated with your NAT instance, and choose **Edit** in the **Inbound** tab\.
+1. Select the checkbox for the security group associated with your NAT instance\.
 
-1. Choose **Add Rule**, select **All ICMP \- IPv4** from the **Type** list, and select **Custom** from the **Source** list\. Enter the IP address range of your private subnet, for example, `10.0.1.0/24`\. Choose **Save**\.
+1. Choose **Edit inbound rules** on the **Inbound rules** tab\.
 
-1. In the **Outbound** tab, choose **Edit**\.
+1. Choose **Add rule**\. Choose **All ICMP \- IPv4** for **Type**\. Choose **Custom** for **Source** and enter the IP address range of your private subnet \(for example, `10.0.1.0/24`\)\. Choose **Save rules**\.
 
-1. Choose **Add Rule**, select **SSH** from the **Type** list, and select **Custom** from the **Destination** list\. Enter the IP address range of your private subnet, for example, `10.0.1.0/24`\. Choose **Save**\.
+1. Choose **Edit outbound rules** on the **Outbound rules** tab\.
 
-1. Choose **Add Rule**, select **All ICMP \- IPv4** from the **Type** list, and select **Custom** from the **Destination** list\. Enter `0.0.0.0/0`, and then choose **Save**\.
+1. Choose **Add rule**\. Choose **SSH** for **Type**\. Choose **Custom** for **Destination** and enter the IP address range of your private subnet \(for example, `10.0.1.0/24`\)\.
+
+1. Choose **Add rule**\. Choose **All ICMP \- IPv4** for **Type**\. Choose **Custom** for **Destination** and enter `0.0.0.0/0`\. Choose **Save rules**\.
 
 **To launch an instance into your private subnet**
 

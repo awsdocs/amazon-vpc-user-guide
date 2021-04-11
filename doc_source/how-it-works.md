@@ -48,7 +48,7 @@ A *route table* contains a set of rules, called routes , that are used to determ
 Each route in a route table specifies the range of IP addresses where you want the traffic to go \(the destination\) and the gateway, network interface, or connection through which to send the traffic \(the target\)\.
 
 **More information**
-+ [Route tables](VPC_Route_Tables.md)
++ [Route tables for your VPC](VPC_Route_Tables.md)
 
 ## Accessing the internet<a name="what-is-connectivity"></a>
 
@@ -73,7 +73,7 @@ If you associate an IPv6 CIDR block with your VPC and assign IPv6 addresses to y
 **More information**
 + [Internet gateways](VPC_Internet_Gateway.md)
 + [Egress\-only internet gateways](egress-only-internet-gateway.md)
-+ [NAT](vpc-nat.md)
++ [NAT devices for your VPC](vpc-nat.md)
 
 ## Accessing a corporate or home network<a name="what-is-vpn"></a>
 
@@ -81,7 +81,7 @@ You can optionally connect your VPC to your own corporate data center using an I
 
 A Site\-to\-Site VPN connection consists of two VPN tunnels between a virtual private gateway or transit gateway on the AWS side, and a customer gateway device located in your data center\. A customer gateway device is a physical device or software appliance that you configure on your side of the Site\-to\-Site VPN connection\.
 
-![\[Using a virtual private gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/virtual-private-gateway-diagram.png)
+![\[Using a virtual private gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/virtual-private-gateway.png)
 
 **More information**
 + [AWS Site\-to\-Site VPN User Guide](https://docs.aws.amazon.com/vpn/latest/s2svpn/)

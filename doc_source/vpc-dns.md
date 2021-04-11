@@ -55,6 +55,8 @@ By default, both attributes are set to `true` in a default VPC or a VPC created 
 
 Each EC2 instance limits the number of packets that can be sent to the Amazon Route 53 Resolver \(specifically the \.2 address, such as 10\.0\.0\.2\) to a maximum of 1024 packets per second per network interface\. This quota cannot be increased\. The number of DNS queries per second supported by the Amazon Route 53 Resolver varies by the type of query, the size of response, and the protocol in use\. For more information and recommendations for a scalable DNS architecture, see the [Hybrid Cloud DNS Solutions for Amazon VPC](https://d1.awsstatic.com/whitepapers/hybrid-cloud-dns-options-for-vpc.pdf) whitepaper\.
 
+If you reach the quota, the Amazon Route 53 Resolver rejects traffic\. Some of the causes for reaching the quota might be a DNS throttling issue, or instance metadata queries that use the Amazon Route 53 Resolver network interface\. For information about how to solve VPC DNS throttling issues, see [How can I determine whether my DNS queries to the Amazon provided DNS server are failing due to VPC DNS throttling](https://aws.amazon.com/premiumsupport/knowledge-center/vpc-find-cause-of-failed-dns-queries/)\. For instructions on instance metadata retrieval, see [Retrieve instance metadata](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+
 ## Viewing DNS hostnames for your EC2 instance<a name="vpc-dns-viewing"></a>
 
 You can view the DNS hostnames for a running instance or a network interface using the Amazon EC2 console or the command line\.
@@ -112,7 +114,7 @@ You can view and update the DNS support attributes for your VPC using the Amazon
 1. Review the information in the **Description** tab\. In this example, both settings are enabled\.  
 ![\[The DNS Settings tab\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/dns-settings-gwt.png)
 
-1. To update these settings, choose **Actions** and either **Edit DNS Resolution** or **Edit DNS Hostnames**\. In the dialog box that opens, choose **Yes** or **No**, and then choose **Save**\.
+1. To update these settings, choose **Actions** and either **Edit DNS Resolution** or **Edit DNS Hostnames**\. In the dialog box that opens, select or clear the check box to turn on or off the feature, and then choose **Save changes**\.
 
 **To describe DNS support for a VPC using the command line**
 

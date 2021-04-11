@@ -1,6 +1,6 @@
 # NAT gateways<a name="vpc-nat-gateway"></a>
 
-You can use a network address translation \(NAT\) gateway to enable instances in a private subnet to connect to the internet or other AWS services, but prevent the internet from initiating a connection with those instances\. For more information about NAT, see [NAT](vpc-nat.md)\.
+You can use a network address translation \(NAT\) gateway to enable instances in a private subnet to connect to the internet or other AWS services, but prevent the internet from initiating a connection with those instances\. For more information about NAT, see [NAT devices for your VPC](vpc-nat.md)\.
 
 You are charged for creating and using a NAT gateway in your account\. NAT gateway hourly usage and data processing rates apply\. Amazon EC2 charges for data transfer also apply\. For more information, see [Amazon VPC Pricing](http://aws.amazon.com/vpc/pricing/)\.
 

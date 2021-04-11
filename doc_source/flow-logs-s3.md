@@ -10,7 +10,7 @@ To create an Amazon S3 bucket for use with flow logs, see [Create a Bucket](http
 + [Flow log files](#flow-logs-s3-path)
 + [IAM policy for IAM principals that publish flow logs to Amazon S3](#flow-logs-s3-iam)
 + [Amazon S3 bucket permissions for flow logs](#flow-logs-s3-permissions)
-+ [Required CMK key policy for use with SSE\-KMS buckets](#flow-logs-s3-cmk-policy)
++ [Required CMK key policy for use with SSE\-KMS](#flow-logs-s3-cmk-policy)
 + [Amazon S3 log file permissions](#flow-logs-file-permissions)
 + [Creating a flow log that publishes to Amazon S3](#flow-logs-s3-create-flow-log)
 + [Processing flow log records in Amazon S3](#process-records-s3)
@@ -27,14 +27,11 @@ Log files are saved to the specified Amazon S3 bucket using a folder structure t
 bucket_ARN/optional_folder/AWSLogs/aws_account_id/vpcflowlogs/region/year/month/day/log_file_name.log.gz
 ```
 
-Similarly, the log file's file name is determined by the flow log's ID, Region, and the date and time that it was created by the flow logs service\. File names use the following format\.
+Similarly, the log file's file name is determined by the flow log's ID, Region, and the date and time that it was created by the flow logs service\. File names use the following format\. The timestamp uses the `YYYYMMDDTHHmmZ` format\.
 
 ```
 aws_account_id_vpcflowlogs_region_flow_log_id_timestamp_hash.log.gz
 ```
-
-**Note**  
-The timestamp uses the `YYYYMMDDTHHmmZ` format\.
 
 For example, the following shows the folder structure and file name of a log file for a flow log created by AWS account `123456789012`, for a resource in the `us-east-1` Region, on `June 20, 2018` at `16:20 UTC`\. It includes flow log records for `16:15:00` to `16:19:59`\. 
 
@@ -68,7 +65,7 @@ An IAM principal in your account, such as an IAM user, must have sufficient perm
 
 By default, Amazon S3 buckets and the objects they contain are private\. Only the bucket owner can access the bucket and the objects stored in it\. However, the bucket owner can grant access to other resources and users by writing an access policy\.
 
-The following bucket policy gives the flow log permission to publish logs to it\. If the bucket already has a policy with the following permissions, the policy is kept as is\.
+The following bucket policy gives the flow log permission to publish logs to it\. If the bucket already has a policy with the following permissions, the policy is kept as is\. We recommend that you grant these permissions to the log delivery service principal instead of individual AWS account ARNs\.
 
 ```
 {
@@ -123,15 +120,13 @@ If the user creating the flow log does not own the bucket, or does not have the 
 }
 ```
 
-**Note**  
-We recommend that you grant the `AWSLogDeliveryAclCheck` and `AWSLogDeliveryWrite` permissions to the *log delivery* service principal instead of individual AWS account ARNs\.
+## Required CMK key policy for use with SSE\-KMS<a name="flow-logs-s3-cmk-policy"></a>
 
-## Required CMK key policy for use with SSE\-KMS buckets<a name="flow-logs-s3-cmk-policy"></a>
+You can protect the data in your Amazon S3 bucket by enabling either Server\-Side Encryption with Amazon S3\-Managed Keys \(SSE\-S3\) or Server\-Side Encryption with Customer Master Keys \(CMKs\) Stored in AWS Key Management Service \(SSE\-KMS\)\. For more information, see [Protecting data using server\-side encryption](https://docs.aws.amazon.com/AmazonS3/latest/userguide/serv-side-encryption.html) in the *Amazon S3 User Guide*\.
 
-If you enabled server\-side encryption for your Amazon S3 bucket using AWS KMS\-managed keys \(SSE\-KMS\) with a customer managed Customer Master Key \(CMK\), you must add the following to the key policy for your CMK so that flow logs can write log files to the bucket\.
+With SSE\-KMS, you can use either an AWS managed CMK or a customer managed CMK\. With an AWS managed CMK, you can't use cross\-account delivery\. Flow logs are delivered from the log delivery account, so you must grant access for cross\-account delivery\. To grant cross\-account access to your S3 bucket, use a customer managed CMK and specify the Amazon Resource Name \(ARN\) of the customer managed CMK when you enable bucket encryption\. For more information, see [Specifying server\-side encryption with AWS KMS](https://docs.aws.amazon.com/AmazonS3/latest/userguide/specifying-kms-encryption.html) in the *Amazon S3 User Guide*\.
 
-**Note**  
-Add these elements to the policy for your CMK, not the policy for your bucket\.
+When you use SSE\-KMS with a customer managed CMK, you must add the following to the key policy for your CMK \(not the bucket policy for your S3 bucket\), so that VPC Flow Logs can write to your S3 bucket\.
 
 ```
 {

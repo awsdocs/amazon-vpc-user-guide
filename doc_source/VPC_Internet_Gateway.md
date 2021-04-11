@@ -28,7 +28,7 @@ In the following diagram, Subnet 1 in the VPC is a public subnet\. It's associat
 
 ![\[Using an internet gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/internet-gateway-overview-diagram.png)
 
-To provide your instances with internet access without assigning them public IP addresses, you can use a NAT device instead\. A NAT device enables instances in a private subnet to connect to the internet, but prevents hosts on the internet from initiating connections with the instances\. For more information, see [NAT](vpc-nat.md)\.
+To provide your instances with internet access without assigning them public IP addresses, you can use a NAT device instead\. A NAT device enables instances in a private subnet to connect to the internet, but prevents hosts on the internet from initiating connections with the instances\. For more information, see [NAT devices for your VPC](vpc-nat.md)\.
 
 **Internet access for default and nondefault VPCs**  
 The following table provides an overview of whether your VPC automatically comes with the components required for internet access over IPv4 or IPv6\. 
@@ -129,7 +129,7 @@ When you create a subnet, we automatically associate it with the main route tabl
 
 1. On the **Subnet Associations** tab, choose **Edit**, select the **Associate** check box for the subnet, and then choose **Save**\.
 
-For more information, see [Route tables](VPC_Route_Tables.md)\.
+For more information, see [Route tables for your VPC](VPC_Route_Tables.md)\.
 
 ### Creating a security group for internet access<a name="Add_IG_Security_Groups"></a>
 

@@ -84,7 +84,7 @@ The first entry is the default entry for local routing in the VPC; this entry en
 
 Alternatively, if you want instances in the private subnet to access the internet, you can create a network address translation \(NAT\) gateway or instance in the public subnet, and set up the routing so that the internet\-bound traffic for the subnet goes to the NAT device\. This enables the instances in the VPN\-only subnet to send requests over the internet gateway \(for example, for software updates\)\. 
 
-For more information about setting up a NAT device manually, see [NAT](vpc-nat.md)\. For information about using the VPC wizard to set up a NAT device, see [VPC with public and private subnets \(NAT\)](VPC_Scenario2.md)\.
+For more information about setting up a NAT device manually, see [NAT devices for your VPC](vpc-nat.md)\. For information about using the VPC wizard to set up a NAT device, see [VPC with public and private subnets \(NAT\)](VPC_Scenario2.md)\.
 
 To enable the private subnet's internet\-bound traffic to go to the NAT device, you must update the main route table as follows\. 
 

@@ -18,7 +18,8 @@ Flow log data is collected outside of the path of your network traffic, and ther
 + [Publishing flow logs to CloudWatch Logs](flow-logs-cwl.md)
 + [Publishing flow logs to Amazon S3](flow-logs-s3.md)
 + [Working with flow logs](working-with-flow-logs.md)
-+ [Troubleshooting](flow-logs-troubleshooting.md)
++ [Querying flow logs using Amazon Athena](flow-logs-athena.md)
++ [Troubleshooting VPC Flow Logs](flow-logs-troubleshooting.md)
 
 ## Flow logs basics<a name="flow-logs-basics"></a>
 
@@ -56,9 +57,9 @@ If you no longer require a flow log, you can delete it\. Deleting a flow log dis
 
 ## Flow log records<a name="flow-log-records"></a>
 
-A flow log record represents a network flow in your VPC\. By default, each record captures a network internet protocol \(IP\) traffic flow \(characterized by a 5\-tuple on a per network interface basis\) that occurs within an *aggregation interval*, also referred to as a *capture window*\. 
+A flow log record represents a network flow in your VPC\. By default, each record captures a network internet protocol \(IP\) traffic flow \(characterized by a 5\-tuple on a per network interface basis\) that occurs within an *aggregation interval*, also referred to as a *capture window*\.
 
-By default, the record includes values for the different components of the IP flow, including the source, destination, and protocol\. 
+Each record is a string with fields separated by spaces\. A record includes values for the different components of the IP flow, for example, the source, destination, and protocol\.
 
 When you create a flow log, you can use the default format for the flow log record, or you can specify a custom format\.
 
@@ -78,27 +79,23 @@ After data is captured within an aggregation interval, it takes additional time 
 
 ### Default format<a name="flow-logs-default"></a>
 
-By default, the log line format for a flow log record is a space\-separated string that has the following set of fields in the following order\.
-
-```
-<version> <account-id> <interface-id> <srcaddr> <dstaddr> <srcport> <dstport> <protocol> <packets> <bytes> <start> <end> <action> <log-status>
-```
-
-For more information about the fields, see [Available fields](#flow-logs-fields)\. The default format captures only a subset of all of the available fields for a flow log record\. To capture all available fields or a different subset of fields, specify a custom format\. You cannot customize or change the default format\.
+With the default format, the flow log records include the version 2 fields, in the order shown in the [available fields](#flow-logs-fields) table\. You cannot customize or change the default format\. To capture additional fields or a different subset of fields, specify a custom format instead\.
 
 ### Custom format<a name="flow-logs-custom"></a>
 
-You can optionally specify a custom format for the flow log record\. For a custom format, you specify which fields to return in the flow log record, and the order in which they should appear\. This enables you to create flow logs that are specific to your needs and to omit fields that are not relevant to you\. A custom format can also help to reduce the need for separate processes to extract specific information from published flow logs\. You can specify any number of the available flow log fields, but you must specify at least one\.
+With a custom format, you specify which fields are included in the flow log records and in which order\. This enables you to create flow logs that are specific to your needs and to omit fields that are not relevant\. Using a custom format can reduce the need for separate processes to extract specific information from the published flow logs\. You can specify any number of the available flow log fields, but you must specify at least one\.
 
 ### Available fields<a name="flow-logs-fields"></a>
 
-The following table describes all of the available fields for a flow log record\. The **Version** column indicates the VPC Flow Logs version in which the field was introduced\.
+The following table describes all of the available fields for a flow log record\. The **Version** column indicates the VPC Flow Logs version in which the field was introduced\. The default format includes all version 2 fields, in same the order that they appear in the table\.
+
+If a field is not applicable or could not be computed for a specific record, the record displays a '\-' symbol for that entry\. Metadata fields that do not come directly from the packet header are best effort approximations, and their values might be missing or inaccurate\.
 
 
 | Field | Description | Version | 
 | --- | --- | --- | 
-|  version  |  The VPC Flow Logs version\. If you use the default format, the version is `2`\. If you use a custom format, the version is the highest version among the specified fields\. For example, if you only specify fields from version 2, the version is `2`\. If you specify a mixture of fields from versions 2, 3, and 4, the version is `4`\.  | 2 | 
-|  account\-id  |  The AWS account ID of the owner of the source network interface for which traffic is recorded\. If the network interface is created by an AWS service, for example when creating a VPC endpoint or Network Load Balancer, the record may display `unknown` for this field\.  | 2 | 
+|  version  |  The VPC Flow Logs version\. If you use the default format, the version is 2\. If you use a custom format, the version is the highest version among the specified fields\. For example, if you specify only fields from version 2, the version is 2\. If you specify a mixture of fields from versions 2, 3, and 4, the version is 4\.  | 2 | 
+|  account\-id  |  The AWS account ID of the owner of the source network interface for which traffic is recorded\. If the network interface is created by an AWS service, for example when creating a VPC endpoint or Network Load Balancer, the record may display unknown for this field\.  | 2 | 
 |  interface\-id  |  The ID of the network interface for which the traffic is recorded\.  | 2 | 
 |  srcaddr  |  The source address for incoming traffic, or the IPv4 or IPv6 address of the network interface for outgoing traffic on the network interface\. The IPv4 address of the network interface is always its private IPv4 address\. See also pkt\-srcaddr\.  | 2 | 
 |  dstaddr  |  The destination address for outgoing traffic, or the IPv4 or IPv6 address of the network interface for incoming traffic on the network interface\. The IPv4 address of the network interface is always its private IPv4 address\. See also pkt\-dstaddr\.  | 2 | 
@@ -114,17 +111,18 @@ The following table describes all of the available fields for a flow log record\
 |  vpc\-id  |  The ID of the VPC that contains the network interface for which the traffic is recorded\.  | 3 | 
 |  subnet\-id  |  The ID of the subnet that contains the network interface for which the traffic is recorded\.  | 3 | 
 |  instance\-id  |  The ID of the instance that's associated with network interface for which the traffic is recorded, if the instance is owned by you\. Returns a '\-' symbol for a [requester\-managed network interface](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/requester-managed-eni.html); for example, the network interface for a NAT gateway\.  | 3 | 
-|  tcp\-flags  |  The bitmask value for the following TCP flags: [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) ACK is reported only when it's accompanied with SYN\.  TCP flags can be OR\-ed during the aggregation interval\. For short connections, the flags might be set on the same line in the flow log record, for example, `19` for SYN\-ACK and FIN, and `3` for SYN and FIN\. For an example, see [TCP flag sequence](flow-logs-records-examples.md#flow-log-example-tcp-flag)\.  | 3 | 
-|  type  |  The type of traffic: `IPv4`, `IPv6`, or `EFA`\. For more information about the Elastic Fabric Adapter \(EFA\), see [Elastic Fabric Adapter](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html)\.  | 3 | 
+|  tcp\-flags  |  The bitmask value for the following TCP flags: [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) ACK is reported only when it's accompanied with SYN\. TCP flags can be OR\-ed during the aggregation interval\. For short connections, the flags might be set on the same line in the flow log record, for example, 19 for SYN\-ACK and FIN, and 3 for SYN and FIN\. For an example, see [TCP flag sequence](flow-logs-records-examples.md#flow-log-example-tcp-flag)\.  | 3 | 
+|  type  |  The type of traffic\. The possible values are: IPv4, IPv6, and EFA\. For more information about the Elastic Fabric Adapter \(EFA\), see [Elastic Fabric Adapter](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html)\.  | 3 | 
 |  pkt\-srcaddr  |  The packet\-level \(original\) source IP address of the traffic\. Use this field with the srcaddr field to distinguish between the IP address of an intermediate layer through which traffic flows, and the original source IP address of the traffic\. For example, when traffic flows through [a network interface for a NAT gateway](flow-logs-records-examples.md#flow-log-example-nat), or where the IP address of a pod in Amazon EKS is different from the IP address of the network interface of the instance node on which the pod is running \(for communication within a VPC\)\.  | 3 | 
 |  pkt\-dstaddr  |  The packet\-level \(original\) destination IP address for the traffic\. Use this field with the dstaddr field to distinguish between the IP address of an intermediate layer through which traffic flows, and the final destination IP address of the traffic\. For example, when traffic flows through [a network interface for a NAT gateway](flow-logs-records-examples.md#flow-log-example-nat), or where the IP address of a pod in Amazon EKS is different from the IP address of the network interface of the instance node on which the pod is running \(for communication within a VPC\)\.  | 3 | 
 |  region  |  The Region that contains the network interface for which traffic is recorded\.  |  4  | 
 |  az\-id  |  The ID of the Availability Zone that contains the network interface for which traffic is recorded\. If the traffic is from a sublocation, the record displays a '\-' symbol for this field\.  |  4  | 
-| sublocation\-type |  The type of sublocation that's returned in the `sublocation-id` field: [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) If the traffic is not from a sublocation, the record displays a '\-' symbol for this field\.  |  4  | 
+| sublocation\-type |  The type of sublocation that's returned in the sublocation\-id field\. The possible values are: [wavelength](https://aws.amazon.com/wavelength/) \| [outpost](https://docs.aws.amazon.com/outposts/latest/userguide/) \| [localzone](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-local-zones)\. If the traffic is not from a sublocation, the record displays a '\-' symbol for this field\.  |  4  | 
 |  sublocation\-id  |  The ID of the sublocation that contains the network interface for which traffic is recorded\. If the traffic is not from a sublocation, the record displays a '\-' symbol for this field\.  |  4  | 
-
-**Note**  
-If a field is not applicable for a specific record, the record displays a '\-' symbol for that entry\.
+|  pkt\-src\-aws\-service  |  The name of the subset of [IP address ranges](https://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html) for the pkt\-srcaddr field, if the source IP address is for an AWS service\. The possible values are: AMAZON \| AMAZON\_APPFLOW \| AMAZON\_CONNECT \| API\_GATEWAY \| CHIME\_MEETINGS \| CHIME\_VOICECONNECTOR \| CLOUD9 \| CLOUDFRONT \| CODEBUILD \| DYNAMODB \| EC2 \| EC2\_INSTANCE\_CONNECT \| GLOBALACCELERATOR \| KINESIS\_VIDEO\_STREAMS \| ROUTE53 \| ROUTE53\_HEALTHCHECKS \| S3 \| WORKSPACES\_GATEWAYS\.  |  5  | 
+|  pkt\-dst\-aws\-service  |  The name of the subset of IP address ranges for the pkt\-dstaddr field, if the destination IP address is for an AWS service\. For a list of possible values, see the pkt\-src\-aws\-service field\.  |  5  | 
+|  flow\-direction  |  The direction of the flow with respect to the interface where traffic is captured\. The possible values are: ingress \| egress\.  |  5  | 
+|  traffic\-path  |  The path that egress traffic takes to the destination\. To determine whether the traffic is egress traffic, check the flow\-direction field\. The possible values are as follows\. If none of the values apply, the field is set to \-\. If the network interface is attached to an instance based on the Nitro System, the possible values include 7 and 8 but not 2\. With instances not based on the Nitro System \(for example, T2 and M4\), the possible values include 2 but not 7 or 8\. [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html)  |  5  | 
 
 ## Flow log limitations<a name="flow-logs-limitations"></a>
 

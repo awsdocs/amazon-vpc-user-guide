@@ -139,7 +139,7 @@ Some of your TCP connections from instances in a private subnet to a specific de
 
 **Causes**  
 The cause of this problem might be one of the following:
-+ The destination endpoint is responding with fragmented TCP packets\. A NAT gateway currently does not support IP fragmentation for TCP or ICMP\. For more information, see [Comparison of NAT instances and NAT gateways](vpc-nat-comparison.md)\.
++ The destination endpoint is responding with fragmented TCP packets\. A NAT gateway currently does not support IP fragmentation for TCP or ICMP\. For more information, see [Comparing NAT gateways and NAT instances](vpc-nat-comparison.md)\.
 + The `tcp_tw_recycle` option is enabled on the remote server, which is known to cause issues when there are multiple connections from behind a NAT device\.
 
 **Solutions**  

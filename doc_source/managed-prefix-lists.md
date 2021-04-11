@@ -24,6 +24,7 @@ The following rules apply to customer\-managed prefix lists:
 + There are quotas related to prefix lists\. For more information, see [Amazon VPC quotas](amazon-vpc-limits.md)\.
 + When you reference a prefix list in a route table, route priority rules apply\. For more information, see [Route priority for prefix lists](VPC_Route_Tables.md#route-priority-managed-prefix-list)\.
 + A prefix list only applies to the Region where you created it\. For example, if you create a list in `us-east-1`, it is not available in `eu-west-1`\.
++ You cannot reference the prefix list in your EC2 Classic security group rules\.
 
 The following rules apply to AWS\-managed prefix lists:
 + You cannot create, modify, share, or delete an AWS\-managed prefix list\.
@@ -196,7 +197,7 @@ You can reference a prefix list in the following AWS resources\.
 ------
 #### [ Subnet route tables ]
 
-You can specify a prefix list as the destination for route table entry\. You cannot reference a prefix list in a gateway route table\. For more information about route tables, see [Route tables](VPC_Route_Tables.md)\.
+You can specify a prefix list as the destination for route table entry\. You cannot reference a prefix list in a gateway route table\. For more information about route tables, see [Route tables for your VPC](VPC_Route_Tables.md)\.
 
 **To reference a prefix list in a route table using the console**
 
