@@ -98,7 +98,7 @@ After you create a subnet, you can do the following:
 
 ## Viewing your subnet<a name="view-subnet"></a>
 
-You van view the details about your subnet\.
+You can view the details about your subnet\.
 
 **To view subnet details using the console**
 
