@@ -43,7 +43,7 @@ Each EC2 instance limits the number of packets that can be sent to the Amazon Ro
 | Resource | Default | Comments | 
 | --- | --- | --- | 
 |  Prefix lists per Region  |  100  |  \-  | 
-|  Versions per prefix list  |  1,000  |  In the scenario where a prefix list has 1,000 stored versions and a new version is added, the oldest version will be removed to allow the new version to be added and remain within the per prefix list quota. | 
+|  Versions per prefix list  |  1,000  |  In the scenario where a prefix list has 1,000 stored versions and you add a new version, the oldest version is removed to allow the new version to be added and remain within the quota\.  | 
 |  Maximum number of entries per prefix list | 1,000 |  | 
 |  References to a prefix list per resource type  |  5,000  |  This quota applies per resource type that can reference a prefix list\. For example, you can have 5,000 references to a prefix list across all of your security groups plus 5,000 references to a prefix list across all of your subnet route tables\. If you share a prefix list with other AWS accounts, the other accounts' references to your prefix list count toward this quota\.  | 
 
