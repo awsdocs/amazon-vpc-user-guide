@@ -4,9 +4,6 @@ The configuration for this scenario includes a virtual private cloud \(VPC\) wit
 
 The instances in the public subnet can send outbound traffic directly to the Internet, whereas the instances in the private subnet can't\. Instead, the instances in the private subnet can access the Internet by using a network address translation \(NAT\) gateway that resides in the public subnet\. The database servers can connect to the Internet for software updates using the NAT gateway, but the Internet cannot establish connections to the database servers\.
 
-**Note**  
-You can also use the VPC wizard to configure a VPC with a NAT instance; however, we recommend that you use a NAT gateway\. For more information, see [NAT gateways](vpc-nat-gateway.md)\.
-
 This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnets with associated IPv6 CIDR blocks\. Instances launched into the subnets can receive IPv6 addresses, and communicate using IPv6\. Instances in the private subnet can use an egress\-only Internet gateway to connect to the Internet over IPv6, but the Internet cannot establish connections to the private instances over IPv6\. For more information about IPv4 and IPv6 addressing, see [IP Addressing in your VPC](vpc-ip-addressing.md)\.
 
 For information about managing your EC2 instance software, see [Managing software on your Linux instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-software.html) in the *Amazon EC2 User Guide for Linux Instances*\.
@@ -16,7 +13,6 @@ For information about managing your EC2 instance software, see [Managing softwar
 + [Routing](#VPC_Scenario2_Routing)
 + [Security](#VPC_Scenario2_Security)
 + [Implementing scenario 2](#VPC_Scenario2_Implementation)
-+ [Implementing scenario 2 with a NAT instance](#vpc-scenario-2-nat-instance)
 + [Recommended network ACL rules for a VPC with public and private subnets \(NAT\)](#nacl-rules-scenario-2)
 
 ## Overview<a name="Configuration-2"></a>
@@ -216,31 +212,6 @@ The following are the IPv6\-specific rules for the DBServerSG security group \(w
 ## Implementing scenario 2<a name="VPC_Scenario2_Implementation"></a>
 
 You can use the VPC wizard to create the VPC, subnets, NAT gateway, and optionally, an egress\-only Internet gateway\. You must specify an Elastic IP address for your NAT gateway; if you don't have one, you must first allocate one to your account\. If you want to use an existing Elastic IP address, ensure that it's not currently associated with another instance or network interface\. The NAT gateway is automatically created in the public subnet of your VPC\.
-
-## Implementing scenario 2 with a NAT instance<a name="vpc-scenario-2-nat-instance"></a>
-
-You can implement scenario 2 using a NAT instance instead of a NAT gateway\. For more information about NAT instances, see [NAT instances](VPC_NAT_Instance.md)\. 
-
-You can follow the same procedures as above; however, in the NAT section of the VPC wizard, choose **Use a NAT instance instead** and specify the details for your NAT instance\. You will also require a security group for your NAT instance \(`NATSG`\), which allows the NAT instance to receive Internet\-bound traffic from instances in the private subnet, as well as SSH traffic from your network\. The NAT instance can also send traffic to the Internet, so that instances in the private subnet can get software updates\. 
-
-After you've created the VPC with the NAT instance, you must change the security group associated with the NAT instance to the new `NATSG` security group \(by default, the NAT instance is launched using the default security group\)\.
-
-
-**NATSG: recommended rules**  
-
-| 
-| 
-| **Inbound** | 
-| --- |
-|  Source  |  Protocol  |  Port range  |  Comments  | 
-|  10\.0\.1\.0/24  |  TCP  |  80  |  Allow inbound HTTP traffic from database servers that are in the private subnet  | 
-|  10\.0\.1\.0/24  |  TCP  |  443  |  Allow inbound HTTPS traffic from database servers that are in the private subnet  | 
-|  Your network's public IP address range  |  TCP  |  22  |  Allow inbound SSH access to the NAT instance from your network \(over the Internet gateway\)  | 
-|   **Outbound**   | 
-| --- |
-|  Destination  |  Protocol  |  Port range  |  Comments  | 
-|  0\.0\.0\.0/0  |  TCP  |  80  |  Allow outbound HTTP access to the Internet \(over the Internet gateway\)  | 
-|  0\.0\.0\.0/0  |  TCP  |  443  |  Allow outbound HTTPS access to the Internet \(over the Internet gateway\)  | 
 
 ## Recommended network ACL rules for a VPC with public and private subnets \(NAT\)<a name="nacl-rules-scenario-2"></a>
 

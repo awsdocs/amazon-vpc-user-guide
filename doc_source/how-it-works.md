@@ -48,7 +48,7 @@ A *route table* contains a set of rules, called routes , that are used to determ
 Each route in a route table specifies the range of IP addresses where you want the traffic to go \(the destination\) and the gateway, network interface, or connection through which to send the traffic \(the target\)\.
 
 **More information**
-+ [Route tables](VPC_Route_Tables.md)
++ [Route tables for your VPC](VPC_Route_Tables.md)
 
 ## Accessing the internet<a name="what-is-connectivity"></a>
 
@@ -73,7 +73,7 @@ If you associate an IPv6 CIDR block with your VPC and assign IPv6 addresses to y
 **More information**
 + [Internet gateways](VPC_Internet_Gateway.md)
 + [Egress\-only internet gateways](egress-only-internet-gateway.md)
-+ [NAT](vpc-nat.md)
++ [NAT devices for your VPC](vpc-nat.md)
 
 ## Accessing a corporate or home network<a name="what-is-vpn"></a>
 
@@ -81,7 +81,7 @@ You can optionally connect your VPC to your own corporate data center using an I
 
 A Site\-to\-Site VPN connection consists of two VPN tunnels between a virtual private gateway or transit gateway on the AWS side, and a customer gateway device located in your data center\. A customer gateway device is a physical device or software appliance that you configure on your side of the Site\-to\-Site VPN connection\.
 
-![\[Using a virtual private gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/virtual-private-gateway-diagram.png)
+![\[Using a virtual private gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/virtual-private-gateway.png)
 
 **More information**
 + [AWS Site\-to\-Site VPN User Guide](https://docs.aws.amazon.com/vpn/latest/s2svpn/)
@@ -91,15 +91,11 @@ A Site\-to\-Site VPN connection consists of two VPN tunnels between a virtual pr
 
 AWS PrivateLink is a highly available, scalable technology that enables you to privately connect your VPC to supported AWS services, services hosted by other AWS accounts \(VPC endpoint services\), and supported AWS Marketplace partner services\. You do not require an internet gateway, NAT device, public IP address, AWS Direct Connect connection, or AWS Site\-to\-Site VPN connection to communicate with the service\. Traffic between your VPC and the service does not leave the Amazon network\.
 
-To use AWS PrivateLink, create an interface VPC endpoint for a service in your VPC\. This creates an elastic network interface in your subnet with a private IP address that serves as an entry point for traffic destined to the service\.
+To use AWS PrivateLink, create a VPC endpoint for a service in your VPC\. You create the type of VPC endpoint required by the supported service\. This creates an elastic network interface in your subnet with a private IP address that serves as an entry point for traffic destined to the service\.
 
 ![\[Using an interface endpoint to access an AWS service\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-privatelink-diagram.png)
 
- You can create your own AWS PrivateLink\-powered service \(endpoint service\) and enable other AWS customers to access your service\.
-
-**More information**
-+ [VPC endpoints](vpc-endpoints.md)
-+ [VPC endpoint services \(AWS PrivateLink\)](endpoint-service.md)
+ You can create your own AWS PrivateLink\-powered service \(endpoint service\) and enable other AWS customers to access your service\. For more information, see the [User Guide for AWS PrivateLink](https://docs.aws.amazon.com/vpc/latest/privatelink/)\.
 
 ## Connecting VPCs and networks<a name="vpc-other-networks"></a>
 
@@ -138,7 +134,7 @@ The following table lists additional resources that you might find helpful as yo
 |  [Transit Gateways](https://docs.aws.amazon.com/vpc/latest/tgw/what-is-transit-gateway.html)  | Describes transit gateways and helps network administrators configure them\. | 
 |  [Transit Gateway Network Manager Guide](https://docs.aws.amazon.com/vpc/latest/tgw/what-is-network-manager.html)  | Describes Transit Gateway Network Manager and helps you configure and monitor a global network\. | 
 |  [AWS Direct Connect User Guide](https://docs.aws.amazon.com/directconnect/latest/UserGuide/)  |  Describes how to use AWS Direct Connect to create a dedicated private connection from a remote network to your VPC\.   | 
-|  [AWS Client VPN Administrator Guide](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/)  |  Describes how to create and configure a Client VPN endpoint to enable remote users to access resources a VPC\.  | 
+|  [AWS Client VPN Administrator Guide](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/)  |  Describes how to create and configure a Client VPN endpoint to enable remote users to access resources in a VPC\.  | 
 |  [Amazon VPC forum](https://forums.aws.amazon.com/forum.jspa?forumID=58)  |  A community\-based forum for discussing technical questions related to Amazon VPC\.  | 
 |  [Getting Started Resource Center](https://aws.amazon.com/getting-started/)  |  Information to help you get started building on AWS\.  | 
 |  [AWS Support Center](https://console.aws.amazon.com/support/home#/)  |  The home page for AWS Support\.  | 

@@ -6,6 +6,8 @@ Alternatively, to get started launching an instance into your existing default V
 
 Before you can use Amazon VPC for the first time, you must sign up for Amazon Web Services \(AWS\)\. When you sign up, your AWS account is automatically signed up for all services in AWS, including Amazon VPC\. If you haven't created an AWS account already, go to [https://aws\.amazon\.com/](https://aws.amazon.com/), and then choose **Create a Free Account**\.
 
+If you want to use a Local Zone for your VPC, create a VPC, and then create a subnet in the Local Zone\. For more information, see [Creating a VPC](working-with-vpcs.md#Create-VPC) and [Creating a subnet in your VPC](working-with-vpcs.md#AddaSubnet)\.
+
 **Topics**
 + [Overview](#getting-started-overview)
 + [Step 1: Create the VPC](#getting-started-create-vpc)
@@ -22,6 +24,8 @@ To complete this exercise, do the following:
 + Create a nondefault VPC with a single public subnet\.
 + Launch an Amazon EC2 instance into your subnet\.
 + Associate an Elastic IP address with your instance\. This allows your instance to access the internet\.
+
+For more information about granting permissions to IAM users to work with Amazon VPC, see [Identity and access management for Amazon VPC](security-iam.md) and [Amazon VPC policy examples](vpc-policy-examples.md)\.
 
 ## Step 1: Create the VPC<a name="getting-started-create-vpc"></a>
 
@@ -125,7 +129,7 @@ Your instance is now accessible from the internet\. You can connect to your inst
 
 You can choose to continue using your instance in your VPC, or if you do not need the instance, you can terminate it and release its Elastic IP address to avoid incurring charges for them\. You can also delete your VPC — note that you are not charged for the VPC and VPC components created in this exercise \(such as the subnets and route tables\)\.
 
-Before you can delete a VPC, you must terminate any instances that are running in the VPC\. You can then delete the VPC and it components using the VPC console\.
+Before you can delete a VPC, you must terminate any instances that are running in the VPC\. You can then delete the VPC and its components using the VPC console\.
 
 **To terminate your instance, release your Elastic IP address, and delete your VPC**
 
@@ -150,4 +154,4 @@ Before you can delete a VPC, you must terminate any instances that are running i
 After you create a nondefault VPC, you might want to do the following:
 + Add more subnets to your VPC\. For more information, see [Creating a subnet in your VPC](working-with-vpcs.md#AddaSubnet)\.
 + Enable IPv6 support for your VPC and subnets\. For more information, see [Associating an IPv6 CIDR block with your VPC](working-with-vpcs.md#vpc-associate-ipv6-cidr) and [Associating an IPv6 CIDR block with your subnet](working-with-vpcs.md#subnet-associate-ipv6-cidr)\.
-+ Enable instances in a private subnet to access the internet\. For more information, see [NAT](vpc-nat.md)\.
++ Enable instances in a private subnet to access the internet\. For more information, see [NAT devices for your VPC](vpc-nat.md)\.

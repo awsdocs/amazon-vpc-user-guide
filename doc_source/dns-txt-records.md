@@ -15,7 +15,7 @@ Add a TXT record to your domain's DNS server using the specified **Domain verifi
 
 If your DNS provider does not allow DNS record names to contain underscores, you can use the domain name for the **Domain verification name**\. In that case, for the preceding example, the TXT record name would be myexampleservice\.com\. 
 
-You can find troubleshooting information and instructions on how to check your domain ownership verification settings in [Troubleshooting common private DNS domain verification problems](domain-verification-problems.md)\.
+You can find troubleshooting information and instructions on how to check your domain ownership verification settings in [Troubleshoot common private DNS domain verification problems](domain-verification-problems.md)\.
 
 ------
 #### [ Amazon Route 53 ]
@@ -32,27 +32,13 @@ The procedure for adding TXT records to your domain's DNS server depends on who 
 
 1. On the **Details** tab, note the values shown next to **Domain verification value** and **Domain verification name**\.
 
-1. Open the Route 53 console at [https://console\.aws\.amazon\.com/route53/](https://console.aws.amazon.com/route53/)\.
+1. In the Amazon Route 53 Console, create a record for your hosted zone\. For information about how to create a record, see [Creating records by using the Amazon Route 53 console ](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-creating.html)in the *Amazon Route 53 Developer Guide*\. Use the the following values:
+   + For **Record type**, choose **TXT**\.
+   + For **TTL \(Seconds\)**, enter **1800**\.
+   + For **Routing policy**, choose **Simple routing**\.
+   + For **Value/Route traffic to**, enter the **Domain verification value** from the Amazon VPC console\.
 
-1. In the navigation pane, choose **Hosted Zones**\.
-
-1. Select the domain that you want to add a TXT record to, and then choose **Go to Record Sets**\.
-
-1. Choose **Create Record Set**\.
-
-1. In the **Create Record Set** pane, make the following selections:
-
-   1. For **Name**, enter the endpoint service **Domain verification name** from the Amazon VPC console\.
-
-   1. For **Type**, choose **TXT – Text**\.
-
-   1. For **TTL \(Seconds\)**, enter **1800**\.
-
-   1. For **Value**, enter the **Domain verification value** from the Amazon VPC console\.
-
-   1. Choose **Create**\.
-
-1. On the **Details** tab of the **Endpoint Services** page in the Amazon VPC console, check the value in the **Domain verification status** column next for the endpoint\. If the status is "pending verification," wait a few minutes, and then choose **refresh**\. Repeat this process until the value in the status column is "verified"\. You can manually start the verification process\. For more information, see [Manually initiating the endpoint service private DNS name domain verification](verify-vpc-endpoint-service-dns-name.md)\.
+1. On the **Details** tab of the **Endpoint Services** page in the Amazon VPC console, check the value in the **Domain verification status** column next for the endpoint\. If the status is "pending verification," wait a few minutes, and then choose **refresh**\. Repeat this process until the value in the status column is "verified"\. You can manually start the verification process\. For more information, see [Manually initiate the endpoint service private DNS name domain verification](verify-vpc-endpoint-service-dns-name.md)\.
 
 ------
 #### [ Generic procedures for other DNS providers ]

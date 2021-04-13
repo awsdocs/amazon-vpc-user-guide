@@ -75,7 +75,9 @@ You can associate an IPv6 CIDR block with your VPC, and then associate a `/64` C
 
 1. Select your VPC, choose **Actions**, **Edit CIDRs**\.
 
-1. Choose **Add IPv6 CIDR**\. After the IPv6 CIDR block has been added, choose **Close**\. 
+1. Choose **Add IPv6 CIDR**, choose one of the following options, and then choose **Select CIDR**:
+   + **Amazon\-provided IPv6 CIDR block**: Requests an IPv6 CIDR block from Amazon's pool of IPv6 addresses\. For **Network Border Group**, select the group from which AWS advertises IP addresses\. 
+   + **IPv6 CIDR owned by me**: \([BYOIP](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html)\) Allocates an IPv6 CIDR block from your IPv6 address pool\. For **Pool,** choose the IPv6 address pool from which to allocate the IPv6 CIDR block\.
 
 **To associate an IPv6 CIDR block with a subnet**
 
@@ -208,11 +210,25 @@ You can connect to an instance using its IPv6 address\. If you're connecting fro
 
 ## Step 6: \(Optional\) Configure IPv6 on your instances<a name="vpc-migrate-ipv6-dhcpv6"></a>
 
-If you launched your instance using Amazon Linux 2016\.09\.0 or later, or Windows Server 2008 R2 or later, your instance is configured for IPv6 and no additional steps are required\. 
+If you launched your instance using Amazon Linux 2016\.09\.0 or later, Windows Server 2008 R2 or later, or Ubuntu Server 2018 or later, your instance is configured for IPv6 and no additional steps are required\. 
 
-If you launched your instance from a different AMI, it may not be configured for DHCPv6, which means that any IPv6 address that you assign to the instance is not automatically recognized on the primary network interface\. To verify if the IPv6 address is configured on your network interface, use the `ifconfig` command on Linux, or the `ipconfig` command on Windows\.
+If you launched your instance from a different AMI, it might not be configured for IPv6 and DHCPv6, which means that any IPv6 address that you assign to the instance is not automatically recognized on the primary network interface\.
 
-You can configure your instance using the following steps\. You'll need to connect to your instance using its public IPv4 address\. For more information, see [Connect to your Linux instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html) in the *Amazon EC2 User Guide for Linux Instances* and [Connecting to your Windows instance](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/connecting_to_windows_instance.html) in the *Amazon EC2 User Guide for Windows Instances*\.
+**To verify DHCPv6 on Linux**  
+Use the ping6 command as follows\.
+
+```
+$ ping6 ipv6.google.com
+```
+
+**To verify DHCPv6 on Windows**  
+Use the ping command as follows\.
+
+```
+C:\> ping -6 ipv6.google.com
+```
+
+If your instance is not configured already, you can configure it manually, as shown in the following procedures\.
 
 **Topics**
 + [Amazon Linux](#ipv6-dhcpv6-amazon-linux)
@@ -222,9 +238,9 @@ You can configure your instance using the following steps\. You'll need to conne
 
 ### Amazon Linux<a name="ipv6-dhcpv6-amazon-linux"></a>
 
-**To configure DHCPv6 on Amazon Linux**
+**To configure your Amazon Linux instance**
 
-1. Connect to your instance using the instance's public IPv4 address\. 
+1. Connect to your instance using the instance's public IPv4 address\.
 
 1. Get the latest software packages for your instance:
 
@@ -276,11 +292,16 @@ You can configure your instance using the following steps\. You'll need to conne
 
 You can configure your Ubuntu instance to dynamically recognize any IPv6 address assigned to the network interface\. If your instance does not have an IPv6 address, this configuration may cause the boot time of your instance to be extended by up to 5 minutes\.
 
-These steps must be performed as the root user\.
+**Topics**
++ [Ubuntu Server 16](#ipv6-dhcpv6-ubuntu-16)
++ [Ubuntu Server 14](#ipv6-dhcpv6-ubuntu-14)
++ [Starting the DHCPv6 client](#ipv6-dhcpv6-ubuntu-start-client)
 
 #### Ubuntu Server 16<a name="ipv6-dhcpv6-ubuntu-16"></a>
 
-**To configure IPv6 on a running Ubuntu Server 16 instance**
+These steps must be performed as the root user\.
+
+**To configure an Ubuntu Server 16 instance**
 
 1. Connect to your instance using the instance's public IPv4 address\.
 
@@ -338,7 +359,7 @@ If you're using Ubuntu Server 14, you must include a workaround for a [known iss
 
 These steps must be performed as the root user\.
 
-**To configure IPv6 on a running Ubuntu Server 14 instance**
+**To configure an Ubuntu Server 14 instance**
 
 1. Connect to your instance using the instance's public IPv4 address\.
 
@@ -383,7 +404,7 @@ RHEL 7\.4 and CentOS 7 and later use [cloud\-init](http://cloudinit.readthedocs.
 **Note**  
 Due to a known issue, if you're using RHEL/CentOS 7\.4 with the latest version of cloud\-init\-0\.7\.9, these steps might result in you losing connectivity to your instance after reboot\. As a workaround, you can manually edit the `/etc/sysconfig/network-scripts/ifcfg-eth0` file\.
 
-**To configure DHCPv6 on RHEL 7\.4 or CentOS 7**
+**To configure a RHEL/CentOS instance using cloud\-init**
 
 1. Connect to your instance using the instance's public IPv4 address\. 
 
@@ -420,11 +441,11 @@ Due to a known issue, if you're using RHEL/CentOS 7\.4 with the latest version o
 
 1. Reboot your instance\.
 
-1. Reconnect to your instance and use the `ifconfig` command to verify that the IPv6 address is configured on the network interface\.
+1. Reconnect to your instance and use the ifconfig command to verify that the IPv6 address is configured on the network interface\.
 
-For RHEL versions 7\.3 and earlier, you can use the following procedure to modify the `/etc/sysconfig/network-scripts/ifcfg-eth0` file directly\.
+Alternatively, you can use the following procedure to modify the `/etc/sysconfig/network-scripts/ifcfg-eth0` file directly\. You must use this method with earlier version of RHEL and CentOS that don't support cloud\-init\.
 
-**To configure DHCPv6 on RHEL 7\.3 and earlier**
+**To configure a RHEL/CentOS instance**
 
 1. Connect to your instance using the instance's public IPv4 address\. 
 
@@ -459,25 +480,20 @@ For RHEL versions 7\.3 and earlier, you can use the following procedure to modif
    sudo service network restart
    ```
 
-   You can use the `ifconfig` command to verify that the IPv6 address is recognized on the primary network interface\.
+   You can use the ifconfig command to verify that the IPv6 address is recognized on the primary network interface\.
 
-**To configure DHCPv6 on RHEL 6 or CentOS 6**
+**To troubleshoot RHEL 6 or CentOS 6**  
+If you restart networking and you get an error that an IPv6 address cannot be obtained, open `/etc/sysconfig/network-scripts/ifup-eth` and locate the following line \(by default, it's line 327\):
 
-1. Connect to your instance using the instance's public IPv4 address\. 
+```
+if /sbin/dhclient "$DHCLIENTARGS"; then
+```
 
-1. Follow steps 2 \- 4 in the procedure above for configuring RHEL 7/CentOS 7\.
+Remove the quotes that surround `$DHCLIENTARGS` and save your changes\. Restart networking on your instance:
 
-1. If you restart networking and you get an error that an IPv6 address cannot be obtained, open `/etc/sysconfig/network-scripts/ifup-eth` and locate the following line \(by default, it's line 327\):
-
-   ```
-   if /sbin/dhclient "$DHCLIENTARGS"; then
-   ```
-
-   Remove the quotes that surround `$DHCLIENTARGS` and save your changes\. Restart networking on your instance:
-
-   ```
-   sudo service network restart
-   ```
+```
+sudo service network restart
+```
 
 ### Windows<a name="ipv6-dhcpv6-windows"></a>
 

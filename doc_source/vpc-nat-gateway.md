@@ -1,6 +1,6 @@
 # NAT gateways<a name="vpc-nat-gateway"></a>
 
-You can use a network address translation \(NAT\) gateway to enable instances in a private subnet to connect to the internet or other AWS services, but prevent the internet from initiating a connection with those instances\. For more information about NAT, see [NAT](vpc-nat.md)\.
+You can use a network address translation \(NAT\) gateway to enable instances in a private subnet to connect to the internet or other AWS services, but prevent the internet from initiating a connection with those instances\. For more information about NAT, see [NAT devices for your VPC](vpc-nat.md)\.
 
 You are charged for creating and using a NAT gateway in your account\. NAT gateway hourly usage and data processing rates apply\. Amazon EC2 charges for data transfer also apply\. For more information, see [Amazon VPC Pricing](http://aws.amazon.com/vpc/pricing/)\.
 
@@ -52,7 +52,7 @@ If you change your routing from a NAT instance to a NAT gateway, or if you disas
 
 ### Best practice when sending traffic to Amazon S3 or DynamoDB in the same Region<a name="nat-gateway-s3-ddb"></a>
 
-To avoid data processing charges for NAT gateways when accessing Amazon S3 and DynamoDB that are in the same Region, set up a gateway endpoint and route the traffic through the gateway endpoint instead of the NAT gateway\. There are no charges for using a gateway endpoint\. For more information, see [Gateway VPC endpoints](vpce-gateway.md)\.
+To avoid data processing charges for NAT gateways when accessing Amazon S3 and DynamoDB that are in the same Region, set up a gateway endpoint and route the traffic through the gateway endpoint instead of the NAT gateway\. There are no charges for using a gateway endpoint\. For more information, see [Gateway VPC endpoints](https://docs.aws.amazon.com/vpc/latest/privatelink/vpce-gateway.html)\.
 
 ## Working with NAT gateways<a name="nat-gateway-working-with"></a>
 
@@ -88,7 +88,7 @@ To create a NAT gateway, you must specify a subnet and an Elastic IP address\. E
 
 1. The NAT gateway displays in the console\. After a few moments, its status changes to `Available`, after which it's ready for you to use\.
 
-If the NAT gateway goes to a status of `Failed`, there was an error during creation\. For more information, see [NAT gateway goes to a status of failed](nat-gateway-troubleshooting.md#nat-gateway-troubleshooting-failed)\.
+If the NAT gateway goes to a status of `Failed`, there was an error during creation\. For more information, see [NAT gateway creation fails](nat-gateway-troubleshooting.md#nat-gateway-troubleshooting-failed)\.
 
 ### Updating your route table<a name="nat-gateway-create-route"></a>
 
@@ -112,7 +112,7 @@ To ensure that your NAT gateway can access the internet, the route table associa
 
 ### Deleting a NAT gateway<a name="nat-gateway-deleting"></a>
 
-You can delete a NAT gateway using the Amazon VPC console\. After you've deleted a NAT gateway, its entry remains visible in the Amazon VPC console for a short time period \(usually an hour\), after which it's automatically removed\. You cannot remove this entry yourself\. 
+You can delete a NAT gateway using the Amazon VPC console\. After you delete a NAT gateway, its entry remains visible in the Amazon VPC console for a short time period \(usually an hour\), after which it's automatically removed\. You cannot remove this entry yourself\. 
 
 **To delete a NAT gateway**
 
@@ -123,6 +123,8 @@ You can delete a NAT gateway using the Amazon VPC console\. After you've deleted
 1. Select the NAT gateway, and choose **Actions**, **Delete NAT Gateway**\.
 
 1. In the confirmation dialog box, choose **Delete NAT Gateway**\.
+
+1. If you no longer need the Elastic IP address that was associated with the NAT gateway, we recommend that you release it\. For more information, see [Releasing an Elastic IP address](vpc-eips.md#release-eip)\.
 
 ### Testing a NAT gateway<a name="nat-gateway-testing"></a>
 

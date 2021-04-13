@@ -1,13 +1,13 @@
 # IP Addressing in your VPC<a name="vpc-ip-addressing"></a>
 
-IP addresses enable resources in your VPC to communicate with each other, and with resources over the Internet\. Amazon EC2 and Amazon VPC support the IPv4 and IPv6 addressing protocols\. 
+IP addresses enable resources in your VPC to communicate with each other, and with resources over the internet\. Amazon EC2 and Amazon VPC support the IPv4 and IPv6 addressing protocols\. 
 
-By default, Amazon EC2 and Amazon VPC use the IPv4 addressing protocol\. When you create a VPC, you must assign it an IPv4 CIDR block \(a range of private IPv4 addresses\)\. Private IPv4 addresses are not reachable over the Internet\. To connect to your instance over the Internet, or to enable communication between your instances and other AWS services that have public endpoints, you can assign a globally\-unique public IPv4 address to your instance\. 
+By default, Amazon EC2 and Amazon VPC use the IPv4 addressing protocol\. When you create a VPC, you must assign it an IPv4 CIDR block \(a range of private IPv4 addresses\)\. Private IPv4 addresses are not reachable over the internet\. To connect to your instance over the internet, or to enable communication between your instances and other AWS services that have public endpoints, you can assign a globally\-unique public IPv4 address to your instance\. 
 
-You can optionally associate an IPv6 CIDR block with your VPC and subnets, and assign IPv6 addresses from that block to the resources in your VPC\. IPv6 addresses are public and reachable over the Internet\. 
+You can optionally associate an IPv6 CIDR block with your VPC and subnets, and assign IPv6 addresses from that block to the resources in your VPC\. IPv6 addresses are public and reachable over the internet\. 
 
 **Note**  
-To ensure that your instances can communicate with the Internet, you must also attach an Internet gateway to your VPC\. For more information, see [Internet gateways](VPC_Internet_Gateway.md)\.
+To ensure that your instances can communicate with the internet, you must also attach an internet gateway to your VPC\. For more information, see [Internet gateways](VPC_Internet_Gateway.md)\.
 
 Your VPC can operate in dual\-stack mode: your resources can communicate over IPv4, or IPv6, or both\. IPv4 and IPv6 addresses are independent of each other; you must configure routing and security in your VPC separately for IPv4 and IPv6\.
 
@@ -23,24 +23,24 @@ The following table summarizes the differences between IPv4 and IPv6 in Amazon E
 | The VPC CIDR block size can be from /16 to /28\. | The VPC CIDR block size is fixed at /56\. | 
 | The subnet CIDR block size can be from /16 to /28\. | The subnet CIDR block size is fixed at /64\. | 
 | You can choose the private IPv4 CIDR block for your VPC\. | We choose the IPv6 CIDR block for your VPC from Amazon's pool of IPv6 addresses\. You cannot select your own range\. | 
-| There is a distinction between private and public IP addresses\. To enable communication with the Internet, a public IPv4 address is mapped to the primary private IPv4 address through network address translation \(NAT\)\.  | No distinction between public and private IP addresses\. IPv6 addresses are public\. | 
+| There is a distinction between private and public IP addresses\. To enable communication with the internet, a public IPv4 address is mapped to the primary private IPv4 address through network address translation \(NAT\)\.  | No distinction between public and private IP addresses\. IPv6 addresses are public\. | 
 | Supported on all instance types\. | Supported on all current generation instance types and the C3, R3, and I2 previous generation instance types\. For more information, see [Instance types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)\. | 
 | Supported in EC2\-Classic, and EC2\-Classic connections with a VPC via ClassicLink\. | Not supported in EC2\-Classic, and not supported for EC2\-Classic connections with a VPC via ClassicLink\. | 
 | Supported on all AMIs\. | Automatically supported on AMIs that are configured for DHCPv6\. Amazon Linux versions 2016\.09\.0 and later and Windows Server 2008 R2 and later are configured for DHCPv6\. For other AMIs, you must [manually configure your instance](vpc-migrate-ipv6.md#vpc-migrate-ipv6-dhcpv6) to recognize any assigned IPv6 addresses\. | 
 | An instance receives an Amazon\-provided private DNS hostname that corresponds to its private IPv4 address, and if applicable, a public DNS hostname that corresponds to its public IPv4 or Elastic IP address\. | Amazon\-provided DNS hostnames are not supported\. | 
 | Elastic IPv4 addresses are supported\. | Elastic IPv6 addresses are not supported\.  | 
-| Supported for AWS Site\-to\-Site VPN connections and customer gateways, NAT devices, and VPC endpoints\. | Not supported for AWS Site\-to\-Site VPN connections and customer gateways, NAT devices, and VPC endpoints\. | 
+| Supported for customer gateways, virtual private gateways, NAT devices, and VPC endpoints\. | Not supported for customer gateways, virtual private gateways, NAT devices, and VPC endpoints\. | 
 
 We support IPv6 traffic over a virtual private gateway to an AWS Direct Connect connection\. For more information, see the [AWS Direct Connect User Guide](https://docs.aws.amazon.com/directconnect/latest/UserGuide/)\.
 
 ## Private IPv4 addresses<a name="vpc-private-ipv4-addresses"></a>
 
-Private IPv4 addresses \(also referred to as *private IP addresses* in this topic\) are not reachable over the Internet, and can be used for communication between the instances in your VPC\. When you launch an instance into a VPC, a primary private IP address from the IPv4 address range of the subnet is assigned to the default network interface \(eth0\) of the instance\. Each instance is also given a private \(internal\) DNS hostname that resolves to the private IP address of the instance\. If you don't specify a primary private IP address, we select an available IP address in the subnet range for you\. For more information about network interfaces, see [Elastic Network Interfaces](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+Private IPv4 addresses \(also referred to as *private IP addresses* in this topic\) are not reachable over the internet, and can be used for communication between the instances in your VPC\. When you launch an instance into a VPC, a primary private IP address from the IPv4 address range of the subnet is assigned to the default network interface \(eth0\) of the instance\. Each instance is also given a private \(internal\) DNS hostname that resolves to the private IP address of the instance\. If you don't specify a primary private IP address, we select an available IP address in the subnet range for you\. For more information about network interfaces, see [Elastic Network Interfaces](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 You can assign additional private IP addresses, known as secondary private IP addresses, to instances that are running in a VPC\. Unlike a primary private IP address, you can reassign a secondary private IP address from one network interface to another\. A private IP address remains associated with the network interface when the instance is stopped and restarted, and is released when the instance is terminated\. For more information about primary and secondary IP addresses, see [Multiple IP Addresses](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **Note**  
-We refer to private IP addresses as the IP addresses that are within the IPv4 CIDR range of the VPC\. Most VPC IP address ranges fall within the private \(non\-publicly routable\) IP address ranges specified in RFC 1918; however, you can use publicly routable CIDR blocks for your VPC\. Regardless of the IP address range of your VPC, we do not support direct access to the Internet from your VPC's CIDR block, including a publicly\-routable CIDR block\. You must set up Internet access through a gateway; for example, an Internet gateway, virtual private gateway, a AWS Site\-to\-Site VPN connection, or AWS Direct Connect\.
+We refer to private IP addresses as the IP addresses that are within the IPv4 CIDR range of the VPC\. Most VPC IP address ranges fall within the private \(non\-publicly routable\) IP address ranges specified in RFC 1918; however, you can use publicly routable CIDR blocks for your VPC\. Regardless of the IP address range of your VPC, we do not support direct access to the internet from your VPC's CIDR block, including a publicly\-routable CIDR block\. You must set up internet access through a gateway; for example, an internet gateway, virtual private gateway, a AWS Site\-to\-Site VPN connection, or AWS Direct Connect\.
 
 ## Public IPv4 addresses<a name="vpc-public-ipv4-addresses"></a>
 
@@ -74,7 +74,7 @@ An IPv6 address persists when you stop and start your instance, and is released 
 
 You can assign additional IPv6 addresses to your instance by assigning them to a network interface attached to your instance\. The number of IPv6 addresses you can assign to a network interface, and the number of network interfaces you can attach to an instance varies per instance type\. For more information, see [IP Addresses Per Network Interface Per Instance Type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#AvailableIpPerENI) in the *Amazon EC2 User Guide*\.
 
-IPv6 addresses are globally unique, and therefore reachable over the Internet\. You can control whether instances are reachable via their IPv6 addresses by controlling the routing for your subnet, or by using security group and network ACL rules\. For more information, see [Internetwork traffic privacy in Amazon VPC](VPC_Security.md)\.
+IPv6 addresses are globally unique, and therefore reachable over the internet\. You can control whether instances are reachable via their IPv6 addresses by controlling the routing for your subnet, or by using security group and network ACL rules\. For more information, see [Internetwork traffic privacy in Amazon VPC](VPC_Security.md)\.
 
 For more information about reserved IPv6 address ranges, see [IANA IPv6 Special\-Purpose Address Registry](http://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml) and [RFC4291](https://tools.ietf.org/html/rfc4291)\.
 
@@ -83,6 +83,12 @@ For more information about reserved IPv6 address ranges, see [IANA IPv6 Special\
 All subnets have a modifiable attribute that determines whether a network interface created in that subnet is assigned a public IPv4 address and, if applicable, an IPv6 address\. This includes the primary network interface \(eth0\) that's created for an instance when you launch an instance in that subnet\.
 
 Regardless of the subnet attribute, you can still override this setting for a specific instance during launch\. For more information, see [Assigning a public IPv4 address during instance launch](#vpc-public-ip) and [Assigning an IPv6 address during instance launch](#vpc-ipv6-during-launch)\. 
+
+## Using your own IP addresses<a name="vpc-using-own-ip-address"></a>
+
+You can bring part or all of your own public IPv4 address range or IPv6 address range to your AWS account\. You continue to own the address range, but AWS advertises it on the internet by default\. After you bring the address range to AWS, it appears in your account as an address pool\. You can create an Elastic IP address from your IPv4 address pool, and you can associate an IPv6 CIDR block from your IPv6 address pool with a VPC\.
+
+For more information, see [Bring your own IP addresses \(BYOIP\)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 ## Working with IP addresses<a name="vpc-working-with-ip-addresses"></a>
 
@@ -143,15 +149,13 @@ You can't manually disassociate the public IPv4 address from your instance after
 
 1. Choose **Launch Instance**\.
 
-1. Choose an AMI and an instance type and choose **Next: Configure Instance Details**\.
+1. Select an AMI and an instance type, and then choose **Next: Configure Instance Details**\.
 
-1. On the **Configure Instance Details** page, select a VPC from the **Network** list\. The **Auto\-assign Public IP** list is displayed\. Select **Enable** or **Disable** to override the default setting for the subnet\.
-**Important**  
-A public IPv4 address cannot be assigned if you specify more than one network interface\. Additionally, you cannot override the subnet setting using the auto\-assign public IPv4 feature if you specify an existing network interface for eth0\.
+1. On the **Configure Instance Details** page, for **Network**, select a VPC\. The **Auto\-assign Public IP** list is displayed\. Choose **Enable** or **Disable** to override the default setting for the subnet\. 
 
-1. Follow the remaining steps in the wizard to launch your instance\.
+1. Follow the steps on the next pages of the wizard to complete your instance's setup\. On the final **Review Instance Launch** page, review your settings, and then choose **Launch** to choose a key pair and launch your instance\.
 
-1. On the **Instances** screen, select your instance\. On the **Description** tab, in the **IPv4 Public IP** field, you can view your instance's public IP address\. Alternatively, in the navigation pane, choose **Network Interfaces** and select the eth0 network interface for your instance\. You can view the public IP address in the **IPv4 Public IP** field\.
+1. On the **Instances** page, select your new instance and view its public IP address in **IPv4 Public IP** field in the details pane\.
 **Note**  
 The public IPv4 address is displayed as a property of the network interface in the console, but it's mapped to the primary private IPv4 address through NAT\. Therefore, if you inspect the properties of your network interface on your instance, for example, through `ipconfig` on a Windows instance, or `ifconfig` on a Linux instance, the public IP address is not displayed\. To determine your instance's public IP address from within the instance, you can use instance metadata\. For more information, see [Instance metadata and user data](https://docs.aws.amazon.com/AWSEC2/latest/DeveloperGuide/ec2-instance-metadata.html)\.
 

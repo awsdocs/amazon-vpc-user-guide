@@ -35,6 +35,7 @@ Each EC2 instance limits the number of packets that can be sent to the Amazon Ro
 |  Internet gateways per Region  |  5  |  This quota is directly correlated with the quota on VPCs per Region\. To increase this quota, increase the quota on VPCs per Region\. Only one internet gateway can be attached to a VPC at a time\.  | 
 | NAT gateways per Availability Zone | 5 | A NAT gateway in the pending, active, or deleting state counts against your quota\. | 
 |  Virtual private gateways per Region  |  \-  |  For more information, see [Site\-to\-Site VPN Quotas](https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-limits.html) in the *AWS Site\-to\-Site VPN User Guide*\.   | 
+| Carrier gateways per VPC | 1 |  | 
 
 ## Customer\-managed prefix lists<a name="vpc-quotas-managed-prefix-lists"></a>
 
@@ -42,8 +43,9 @@ Each EC2 instance limits the number of packets that can be sent to the Amazon Ro
 | Resource | Default | Comments | 
 | --- | --- | --- | 
 |  Prefix lists per Region  |  100  |  \-  | 
-|  Versions per prefix list  |  1,000  |  \-  | 
-|  References to prefix lists per resource type  |  5,000  |  This quota applies per resource type that can reference a prefix list\. For example, you can have 5,000 references to prefix lists across all of your security groups plus 5,000 references to prefix lists across all of your subnet route tables\.  | 
+|  Versions per prefix list  |  1,000  |  In the scenario where a prefix list has 1,000 stored versions and you add a new version, the oldest version is removed to allow the new version to be added and remain within the quota\.  | 
+|  Maximum number of entries per prefix list | 1,000 |  | 
+|  References to a prefix list per resource type  |  5,000  |  This quota applies per resource type that can reference a prefix list\. For example, you can have 5,000 references to a prefix list across all of your security groups plus 5,000 references to a prefix list across all of your subnet route tables\. If you share a prefix list with other AWS accounts, the other accounts' references to your prefix list count toward this quota\.  | 
 
 ## Network ACLs<a name="vpc-limits-nacls"></a>
 
@@ -94,8 +96,14 @@ Each EC2 instance limits the number of packets that can be sent to the Amazon Ro
 | Resource | Default | Comments | 
 | --- | --- | --- | 
 | Gateway VPC endpoints per Region | 20 | You cannot have more than 255 gateway endpoints per VPC\. | 
-| Interface VPC endpoints per VPC | 50 | This is the quota for the maximum number of endpoints in a VPC\. To increase this quota, contact AWS Support\.  | 
+| Interface and Gateway Load Balancer endpoints per VPC | 50 | This is the combined quota for the maximum number of interface endpoints and Gateway Load Balancer endpoints in a VPC\. To increase this quota, contact AWS Support\.  | 
 |  VPC endpoint policy size  | 20,480 characters \(including white space\) | This quota cannot be increased\. | 
+
+The following maximum transmission unit \(MTU\) rules apply to traffic that passes through a VPC endpoint\.
++ The maximum transmission unit \(MTU\) of a network connection is the size, in bytes, of the largest permissible packet that can be passed through the VPC endpoint\. The larger the MTU, the more data that can be passed in a single packet\. A VPC endpoint supports an MTU of 8500 bytes\.
++ Packets with a size larger than 8500 bytes that arrive at the VPC endpoint are dropped\.
++ The VPC endpoint does not generate the FRAG\_NEEDEDICMP packet, so Path MTU Discovery \(PMTUD\) is not supported\.
++ The VPC endpoint enforces Maximum Segment Size \(MSS\) clamping for all packets\. For more information, see [RFC879](https://tools.ietf.org/html/rfc879)\.
 
 ## AWS Site\-to\-Site VPN connections<a name="vpc-limits-vpn"></a>
 
@@ -110,3 +118,7 @@ All standard VPC quotas apply to a shared VPC\.
 | --- | --- | --- | 
 |  Participant accounts per VPC  |   100  | This is the quota for the number of distinct participant accounts that subnets in a VPC can be shared with\. This is a per VPC quota and applies across all the subnets shared in a VPC\. To increase this quota, contact AWS Support\. VPC owners can view the network interfaces and security groups that are attached to the participant resources\. Therefore, AWS recommends that you paginate your `DescribeSecurityGroups` and `DescribeNetworkInterfaces` API calls before requesting an increase for this quota\. | 
 | Subnets that can be shared with an account |  100 |  This is the quota for maximum number of subnets that can be shared with an AWS account\. To increase this quota contact AWS Support\. AWS recommends that you paginate your `DescribeSecurityGroups` and `DescribeSubnets` API calls before requesting an increase for this quota\.   | 
+
+## Amazon EC2 API throttling<a name="api-limits"></a>
+
+For information about Amazon EC2 throttling, see [API Request Throttling](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/throttling.html) in the *Amazon EC2 API Reference*\.

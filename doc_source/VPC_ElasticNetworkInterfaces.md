@@ -1,15 +1,15 @@
 # Elastic network interfaces<a name="VPC_ElasticNetworkInterfaces"></a>
 
-An elastic network interface \(referred to as a *network interface* in this documentation\) is a virtual network interface that can include the following attributes:
-+ a primary private IPv4 address
-+ one or more secondary private IPv4 addresses
-+ one Elastic IP address per private IPv4 address
-+ one public IPv4 address, which can be auto\-assigned to the network interface for eth0 when you launch an instance
-+ one or more IPv6 addresses
-+ one or more security groups
-+ a MAC address
-+ a source/destination check flag
-+ a description
+An *elastic network interface* \(referred to as a *network interface* in this documentation\) is a logical networking component in a VPC that represents a virtual network card\. It can include the following attributes:
++ Primary private IPv4 address
++ Secondary private IPv4 addresses
++ One Elastic IP address per private IPv4 address
++ One public IPv4 address, which can be auto\-assigned to the network interface for eth0 when you launch an instance
++ One or more IPv6 addresses
++ One or more security groups
++ MAC address
++ Source/destination check flag
++ Description
 
 You can create a network interface, attach it to an instance, detach it from an instance, and attach it to another instance\. A network interface's attributes follow it as it is attached or detached from an instance and reattached to another instance\. When you move a network interface from one instance to another, network traffic is redirected to the new instance\.
 

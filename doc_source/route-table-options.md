@@ -1,12 +1,13 @@
 # Example routing options<a name="route-table-options"></a>
 
-The following topics describe routing for specific gateways or connections in your VPC\. 
+The following topics describe routing for specific gateways or connections in your VPC\.
 
 **Topics**
 + [Routing to an internet gateway](#route-tables-internet-gateway)
 + [Routing to a NAT device](#route-tables-nat)
 + [Routing to a virtual private gateway](#route-tables-vgw)
 + [Routing to an AWS Outposts local gateway](#route-tables-lgw)
++ [Routing to A Wavelength Zone carrier gateway](#route-tables-cgw)
 + [Routing to a VPC peering connection](#route-tables-vpc-peering)
 + [Routing for ClassicLink](#route-tables-classiclink)
 + [Routing to a gateway VPC endpoint](#route-tables-vpce)
@@ -14,6 +15,7 @@ The following topics describe routing for specific gateways or connections in yo
 + [Routing for a transit gateway](#route-tables-tgw)
 + [Routing for a middlebox appliance in your VPC](#route-tables-appliance-routing)
 + [Routing using a prefix list](#route-tables-managed-prefix-list)
++ [Routing to a Gateway Load Balancer endpoint](#route-tables-gwlbe)
 
 ## Routing to an internet gateway<a name="route-tables-internet-gateway"></a>
 
@@ -58,7 +60,7 @@ You can use an AWS Site\-to\-Site VPN connection to enable instances in your VPC
 
 You can then create and configure your Site\-to\-Site VPN connection\. For more information, see [What is AWS Site\-to\-Site VPN?](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html) and [Route tables and VPN route priority](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html#vpn-route-priority) in the *AWS Site\-to\-Site VPN User Guide*\.
 
-We currently do not support IPv6 traffic over an AWS Site\-to\-Site VPN connection\. However, we support IPv6 traffic routed through a virtual private gateway to an AWS Direct Connect connection\. For more information, see the [AWS Direct Connect User Guide](https://docs.aws.amazon.com/directconnect/latest/UserGuide/)\.
+A Site\-to\-Site VPN connection on a virtual private gateway does not support IPv6 traffic\. However, we support IPv6 traffic routed through a virtual private gateway to an AWS Direct Connect connection\. For more information, see the [AWS Direct Connect User Guide](https://docs.aws.amazon.com/directconnect/latest/UserGuide/)\.
 
 ## Routing to an AWS Outposts local gateway<a name="route-tables-lgw"></a>
 
@@ -68,7 +70,16 @@ Subnets that are in VPCs associated with AWS Outposts can have an additional tar
 | Destination | Target | 
 | --- | --- | 
 | 192\.168\.10\.0/24 | lgw\-id | 
-| 2002:bc9:1234:1a00::/56 | igw\-id | 
+
+## Routing to A Wavelength Zone carrier gateway<a name="route-tables-cgw"></a>
+
+Subnets that are in Wavelength Zones can have an additional target type of a carrier gateway\. Consider the case where you want to have the carrier gateway route traffic to route all non\-VPC traffic to the carrier network\. To do this, create and attach a carrier gateway to your VPC, and then add the following routes:
+
+
+| Destination | Target | 
+| --- | --- | 
+| 0\.0\.0\.0/0 | cagw\-id | 
+| ::/0 | cagw\-id | 
 
 ## Routing to a VPC peering connection<a name="route-tables-vpc-peering"></a>
 
@@ -138,7 +149,7 @@ If you modify a VPC peering connection to enable communication between instances
 
 A gateway VPC endpoint enables you to create a private connection between your VPC and another AWS service\. When you create a gateway endpoint, you specify the subnet route tables in your VPC that are used by the gateway endpoint\. A route is automatically added to each of the route tables with a destination that specifies the prefix list ID of the service \(`pl-xxxxxxxx`\), and a target with the endpoint ID \(`vpce-xxxxxxxxxxxxxxxxx`\)\. You cannot explicitly delete or modify the endpoint route, but you can change the route tables that are used by the endpoint\.
 
-For more information about routing for endpoints, and the implications for routes to AWS services, see [Routing for gateway endpoints](vpce-gateway.md#vpc-endpoints-routing)\.
+For more information about routing for endpoints, and the implications for routes to AWS services, see [Routing for gateway endpoints](https://docs.aws.amazon.com/vpc/latest/privatelink/vpce-gateway.html#vpc-endpoints-routing)\.
 
 ## Routing to an egress\-only internet gateway<a name="route-tables-eigw"></a>
 
@@ -265,3 +276,41 @@ You create a prefix list with both entries\. In your subnet route tables, you cr
 | pl\-123abc123abc123ab | tgw\-id | 
 
 The maximum number of entries for the prefix lists equals the same number of entries in the route table\.
+
+## Routing to a Gateway Load Balancer endpoint<a name="route-tables-gwlbe"></a>
+
+A Gateway Load Balancer enables you to distribute traffic to a fleet of virtual appliances, such as firewalls\. You can configure the load balancer as a service by creating a [VPC endpoint service configuration](https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoint-services-gwlbe.html)\. You then create a [Gateway Load Balancer endpoint](https://docs.aws.amazon.com/vpc/latest/privatelink/vpce-gateway-load-balancer.html) in your VPC to connect your VPC to the service\.
+
+To route your traffic to the Gateway Load Balancer \(for example, for security inspection\), specify the Gateway Load Balancer endpoint as a target in your route tables\.
+
+In the following example, a fleet of security appliances is configured behind a Gateway Load Balancer in the security VPC\. An endpoint service is configured for the Gateway Load Balancer\. The owner of the service consumer VPC creates a Gateway Load Balancer endpoint in subnet 2 in their VPC \(represented by an endpoint network interface\)\. All traffic entering the VPC through the internet gateway is first routed to the Gateway Load Balancer endpoint for inspection in the security VPC before it's routed to the destination subnet\. Similarly, all traffic leaving the EC2 instance in subnet 1 is first routed to Gateway Load Balancer endpoint for inspection in the security VPC before it's routed to the internet\.
+
+![\[Using a Gateway Load Balancer endpoint to access an endpoint service\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-service-gwlbe.png)
+
+You configure the following route tables for the service consumer VPC\.
+
+Create a gateway route table and associate it with the internet gateway\. Add a route that points traffic destined for subnet 1 to the Gateway Load Balancer endpoint\. To specify the Gateway Load Balancer endpoint in the route table, use the ID of the VPC endpoint\.
+
+
+| Destination | Target | 
+| --- | --- | 
+| 10\.0\.0\.0/16 | Local | 
+| 10\.0\.1\.0/24 | vpc\-endpoint\-id | 
+
+For the route table for subnet 1, create a route that points all traffic \(`0.0.0.0/0`\) to the Gateway Load Balancer endpoint\. This ensures that all traffic leaving the subnet \(destined for the internet\) is first routed to the Gateway Load Balancer endpoint\.
+
+
+| Destination | Target | 
+| --- | --- | 
+| 10\.0\.0\.0/16 | Local | 
+| 0\.0\.0\.0/0 | vpc\-endpoint\-id | 
+
+For subnet 2, the route table routes the traffic that returns from inspection to its final destination\. For the traffic that originated from the internet, the local route ensures that it is routed to its destination in subnet 1\. For the traffic that originated from subnet 1, create a route that routes all traffic to the internet gateway\.
+
+
+| Destination | Target | 
+| --- | --- | 
+| 10\.0\.0\.0/16 | Local | 
+| 0\.0\.0\.0/0 | igw\-id | 
+
+For more information about Gateway Load Balancers, see [Gateway Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/introduction.html)\.

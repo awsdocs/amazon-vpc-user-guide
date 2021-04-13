@@ -3,7 +3,7 @@
 The following topics help you to troubleshoot common issues that you might encounter when creating or using a NAT gateway\.
 
 **Topics**
-+ [NAT gateway goes to a status of failed](#nat-gateway-troubleshooting-failed)
++ [NAT gateway creation fails](#nat-gateway-troubleshooting-failed)
 + [Elastic IP address and NAT gateway quotas](#nat-gateway-troubleshooting-limits)
 + [Availability Zone is unsupported](#nat-gateway-troubleshooting-unsupported-az)
 + [NAT gateway Is no longer visible](#nat-gateway-troubleshooting-gateway-removed)
@@ -15,16 +15,16 @@ The following topics help you to troubleshoot common issues that you might encou
 + [IPsec connection cannot be established](#nat-gateway-troubleshooting-ipsec)
 + [Cannot initiate more connections](#nat-gateway-troubleshooting-simultaneous-connections)
 
-## NAT gateway goes to a status of failed<a name="nat-gateway-troubleshooting-failed"></a>
+## NAT gateway creation fails<a name="nat-gateway-troubleshooting-failed"></a>
 
 **Problem**  
-You create a NAT gateway and it goes to a status of `Failed`\. 
+You create a NAT gateway and it goes to a state of `Failed`\. 
 
 **Cause**  
-There was an error when the NAT gateway was created\. The returned error message provides the reason for the error\.
+There was an error when the NAT gateway was created\. The returned state message provides the reason for the error\.
 
 **Solution**  
-To view the error message, go to the Amazon VPC console, and then choose **NAT Gateways**\. Select your NAT gateway, and then view the error message in the **Status** box in the details pane\. 
+To view the error message, go to the Amazon VPC console, and then choose **NAT Gateways**\. Select your NAT gateway, and then view the error message in the **Status message** field in the details pane\. 
 
 The following table lists the possible causes of the failure as indicated in the Amazon VPC console\. After you've applied any of the remedial steps indicated, you can try to create a NAT gateway again\.
 
@@ -90,7 +90,7 @@ You created a NAT gateway but it's no longer visible in the Amazon VPC console\.
 There may have been an error when your NAT gateway was being created, and it failed\. A NAT gateway with a status of `Failed` is visible in the Amazon VPC console for a short time \(usually an hour\)\. After an hour, it's automatically deleted\.
 
 **Solution**  
-Review the information in [NAT gateway goes to a status of failed](#nat-gateway-troubleshooting-failed), and try creating a new NAT gateway\.
+Review the information in [NAT gateway creation fails](#nat-gateway-troubleshooting-failed), and try creating a new NAT gateway\.
 
 ## NAT gateway doesn't respond to a ping command<a name="nat-gateway-troubleshooting-ping"></a>
 
@@ -117,7 +117,7 @@ The cause of this problem might be one of the following:
 
 **Solution**  
 Check the following information:
-+ Check that the NAT gateway is in the `Available` state\. In the Amazon VPC console, go to the **NAT Gateways** page and view the status information in the details pane\. If the NAT gateway is in a failed state, there may have been an error when it was created\. For more information, see [NAT gateway goes to a status of failed](#nat-gateway-troubleshooting-failed)\.
++ Check that the NAT gateway is in the `Available` state\. In the Amazon VPC console, go to the **NAT Gateways** page and view the status information in the details pane\. If the NAT gateway is in a failed state, there may have been an error when it was created\. For more information, see [NAT gateway creation fails](#nat-gateway-troubleshooting-failed)\.
 + Check that you've configured your route tables correctly:
   + The NAT gateway must be in a public subnet with a route table that routes internet traffic to an internet gateway\. For more information, see [Creating a custom route table](VPC_Internet_Gateway.md#Add_IGW_Routing)\.
   + Your instance must be in a private subnet with a route table that routes internet traffic to the NAT gateway\. For more information, see [Updating your route table](vpc-nat-gateway.md#nat-gateway-create-route)\.
@@ -139,7 +139,7 @@ Some of your TCP connections from instances in a private subnet to a specific de
 
 **Causes**  
 The cause of this problem might be one of the following:
-+ The destination endpoint is responding with fragmented TCP packets\. A NAT gateway currently does not support IP fragmentation for TCP or ICMP\. For more information, see [Comparison of NAT instances and NAT gateways](vpc-nat-comparison.md)\.
++ The destination endpoint is responding with fragmented TCP packets\. A NAT gateway currently does not support IP fragmentation for TCP or ICMP\. For more information, see [Comparing NAT gateways and NAT instances](vpc-nat-comparison.md)\.
 + The `tcp_tw_recycle` option is enabled on the remote server, which is known to cause issues when there are multiple connections from behind a NAT device\.
 
 **Solutions**  
@@ -189,6 +189,8 @@ Your instances can access the internet, but the connection drops after 350 secon
 
 **Cause**  
 If a connection that's using a NAT gateway is idle for 350 seconds or more, the connection times out\.
+
+When a connection times out, a NAT gateway returns an RST packet to any resources behind the NAT gateway that attempt to continue the connection \(it does not send a FIN packet\)\. 
 
 **Solution**  
 To prevent the connection from being dropped, you can initiate more traffic over the connection\. Alternatively, you can enable TCP keepalive on the instance with a value less than 350 seconds\.

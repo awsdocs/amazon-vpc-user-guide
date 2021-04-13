@@ -16,7 +16,7 @@ You can share Amazon VPCs to leverage the implicit routing within a VPC for appl
 
 ## Shared VPCs prerequisites<a name="vpc-share-prerequisites"></a>
 
-You must enable resource sharing from the master account for your organization\. For information about enabling resource sharing, see [Enable sharing with AWS Organizations](https://docs.aws.amazon.com/ram/latest/userguide/getting-started-sharing.html#getting-started-sharing-orgs) in the *AWS RAM User Guide*\.
+You must enable resource sharing from the management account for your organization\. For information about enabling resource sharing, see [Enable sharing with AWS Organizations](https://docs.aws.amazon.com/ram/latest/userguide/getting-started-sharing.html#getting-started-sharing-orgs) in the *AWS RAM User Guide*\.
 
 ## Sharing a subnet<a name="vpc-sharing-share-subnet"></a>
 
@@ -81,11 +81,13 @@ Use the [describe\-subnets](https://docs.aws.amazon.com/cli/latest/reference/ec2
 
 VPC owners are responsible for creating, managing and deleting all VPC\-level resources including subnets, route tables, network ACLs, peering connections, gateway endpoints, interface endpoints, Amazon Route 53 Resolver endpoints, internet gateways, NAT gateways, virtual private gateways, and transit gateway attachments\. 
 
-VPC owners cannot modify or delete participant resources including security groups that participants created\. VPC owners can view the details for all the network interfaces, and the security groups that are attached to the participant resources in order to facilitate troubleshooting, and auditing\. VPC owners can create flow log subscriptions at the VPC, subnet, or ENI level for traffic monitoring or troubleshooting\.
+VPC owners cannot modify or delete participant resources including security groups that participants created\. VPC owners can view the details for all the network interfaces, and the security groups that are attached to the participant resources in order to facilitate troubleshooting, and auditing\. VPC owners can create flow log subscriptions at the VPC, subnet, or network interface level for traffic monitoring or troubleshooting\.
 
 ### Participant permissions<a name="vpc-participant-permissions"></a>
 
-Participants that are in a shared VPC are responsible for the creation, management and deletion of their resources including Amazon EC2 instances, Amazon RDS databases, and load balancers\. Participants cannot view, or modify resources that belong to other participant accounts\. Participants can view the details of the route tables, and network ACLs that are attached to the subnets shared with them\. However, they cannot modify VPC\-level resources including route tables, network ACLs, or subnets\. Participants can reference security groups that belong to other participants or the owner using the security group ID\. Participants can only create flow log subscriptions for the interfaces that they own\.
+Participants that are in a shared VPC are responsible for the creation, management and deletion of their resources including Amazon EC2 instances, Amazon RDS databases, and load balancers\. Participants cannot view, or modify resources that belong to other participant accounts\. Participants can view the details of the route tables, and network ACLs that are attached to the subnets shared with them\. However, they cannot modify VPC\-level resources including route tables, network ACLs, or subnets\. Participants can reference security groups that belong to other participants or the owner using the security group ID\. Participants can only create flow log subscriptions for the interfaces that they own\. Participants cannot directly associate one of their private hosted zones with the shared VPC\. If the participant needs to control the behavior of a private hosted zone associated with the VPC, there are two options:
++ Participants can create and share a private hosted zone with the VPC owner\. For information about sharing a private hosted zone, see [Associating an Amazon VPC and a private hosted zone that you created with different AWS accounts](Route53/latest/DeveloperGuide/hosted-zone-private-associate-vpcs-different-accounts.html) in the *Amazon Route 53 Developer Guide*\.
++ The VPC owner can create a cross\-account IAM role that provides control over a private hosted zone the owner has already associated with the VPC\. The owner can then grant the participant account the necessary permissions to assume the role\. For more informataion, see [IAM Tutorial: Delegate access across AWS accounts using IAM roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_cross-account-with-roles.html) in the *AWS Identity and Access Management User Guide*\. The participate account can then assume the role, and exercise whatever control over the private hosted zone that the owner has delegated through the role’s permission\. 
 
 ## Billing and metering for the owner and participants<a name="vpc-share-billing"></a>
 
@@ -93,10 +95,13 @@ In a shared VPC, each participant pays for their application resources including
 
 ## Unsupported services for shared subnets<a name="vpc-share-unsupported-services"></a>
 
-Participants cannot create resources for the following services in a shared subnet::
+Participants cannot create resources for the following services in a shared subnet:
 + AWS CloudHSM Classic
-+ AWS Transit Gateways
++ Amazon MQ
++ Amazon Managed Workflows for Apache Airflow \(MWAA\) 
++ RDS Proxy
 + AWS Transfer (with VPC and VPC_ENDPOINT mode)
+A subnet owner can attach a transit gateway to the subnet\. The participants \(other accounts within owner's organization that share the subnet\) cannot attach the transit gateway to the subnet\.
 
 ## Limitations<a name="vpc-share-limitations"></a>
 
@@ -109,4 +114,4 @@ The following limitations apply to working with VPC sharing:
 + Service quotas apply per individual account\. For more information about service quotas, see [AWS service quotas](https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html) in the *Amazon Web Services General Reference*\.
 + VPC tags, and tags for the resources within the shared VPC are not shared with the participants\.
 + When participants launch resources in a shared subnet, they should make sure they attach their security group to the resource, and not rely on the default security group\. Participants cannot use the default security group because it belongs to the VPC owner\.
-+ AWS Firewall Manager security group policies are not supported for participants' resources in a shared VPC\.
+

@@ -2,7 +2,7 @@
 
 The Dynamic Host Configuration Protocol \(DHCP\) provides a standard for passing configuration information to hosts on a TCP/IP network\. The `options` field of a DHCP message contains configuration parameters, including the domain name, domain name server, and the netbios\-node\-type\.
 
-You can configure DHCP options sets for your virtual private clouds \(VPCs\)\.
+When you create a VPC, we automatically create a set of DHCP options and associate them with the VPC\. You can configure your own DHCP options set for your VPC\.
 
 **Topics**
 + [Overview of DHCP options sets](#DHCPOptionSets)
@@ -13,34 +13,46 @@ You can configure DHCP options sets for your virtual private clouds \(VPCs\)\.
 
 ## Overview of DHCP options sets<a name="DHCPOptionSets"></a>
 
-The Amazon EC2 instances that you launch into a nondefault VPC are private by default\. They are not assigned a public IPv4 address unless you specifically assign one during launch, or if you modify the subnet's public IPv4 address attribute\. By default, all instances in a nondefault VPC receive an unresolvable host name that AWS assigns \(for example, ip\-10\-0\-0\-202\)\. You can assign your own domain name to your instances, and use up to four of your own DNS servers\. To do that, you must specify a special set of DHCP options to use with the VPC\. 
+By default, all instances in a nondefault VPC receive an unresolvable host name that AWS assigns \(for example, ip\-10\-0\-0\-202\)\. You can assign your own domain name to your instances, and use up to four of your own DNS servers\. To do that, you must create a custom set of DHCP options to use with the VPC\. 
 
-The following table lists all of the supported options for a DHCP options set\. You can specify only the options that you need in your DHCP options set\. For more information about the options, see [RFC 2132](https://tools.ietf.org/html/rfc2132)\.
+The following are the supported options for a DHCP options set, and the value that is provided in the default DHCP options set for your VPC\. You can specify only the options that you need in your DHCP options set\. For more information about the options, see [RFC 2132](https://tools.ietf.org/html/rfc2132)\.
 
+**domain\-name\-servers**  
+The IP addresses of up to four domain name servers, or [AmazonProvidedDNS](#AmazonDNS)\. If specifying more than one domain name server, separate them with commas\. Although you can specify up to four domain name servers, some operating systems may impose lower limits\.  
+To use this option, set it to either AmazonProvidedDNS, or to custom domain name servers\. If you set this option to both, the result might cause unexpected behavior\.  
+Default DHCP options set: AmazonProvidedDNS
 
-| DHCP option name | Description | 
-| --- | --- | 
-|  domain\-name\-servers  | The IP addresses of up to four domain name servers, or AmazonProvidedDNS\. The default DHCP options set specifies AmazonProvidedDNS\. If specifying more than one domain name server, separate them with commas\. Although you can specify up to four domain name servers, note that some operating systems may impose lower limits\.If you want your instance to receive a custom DNS hostname as specified in `domain-name`, you must set `domain-name-servers` to a custom DNS server\.To use this option, set it to either AmazonProvidedDNS, or to custom domain name servers\. If you set this option to both, the result might cause unexpected behavior\. | 
-|  domain\-name  |  If you're using AmazonProvidedDNS in `us-east-1`, specify `ec2.internal`\. If you're using AmazonProvidedDNS in another region, specify *region*\.compute\.internal \(for example, `ap-northeast-1.compute.internal`\)\. Otherwise, specify a domain name \(for example, `example.com`\)\. This value is used to complete unqualified DNS hostnames\. For more information about DNS hostnames and DNS support in your VPC, see [Using DNS with your VPC](vpc-dns.md)\.  Some Linux operating systems accept multiple domain names separated by spaces\. However, other Linux operating systems and Windows treat the value as a single domain, which results in unexpected behavior\. If your DHCP options set is associated with a VPC that has instances with multiple operating systems, specify only one domain name\.  | 
-|  ntp\-servers  |  The IP addresses of up to four Network Time Protocol \(NTP\) servers\. For more information, see section 8\.3 of [RFC 2132](https://tools.ietf.org/html/rfc2132)\. The Amazon Time Sync Service is available at `169.254.169.123`\. For more information, see [Setting the time](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html) in the *Amazon EC2 User Guide for Linux Instances*\.  | 
-|  netbios\-name\-servers  |  The IP addresses of up to four NetBIOS name servers\.  | 
-|  netbios\-node\-type  |  The NetBIOS node type \(1, 2, 4, or 8\)\. We recommend that you specify 2 \(point\-to\-point, or P\-node\)\. Broadcast and multicast are not currently supported\. For more information about these node types, see section 8\.7 of [RFC 2132](https://tools.ietf.org/html/rfc2132) and section 10 of [RFC1001](https://tools.ietf.org/html/rfc1001)\.  | 
+**domain\-name**  
+The domain name for your instances\. You can specify a custom domain name \(for example, `example.com`\)\. This value is used to complete unqualified DNS hostnames\. For more information about DNS hostnames and DNS support in your VPC, see [Using DNS with your VPC](vpc-dns.md)\. If you specify a custom domain name, you must set `domain-name-servers` to a custom DNS server\.  
+Some Linux operating systems accept multiple domain names separated by spaces\. However, other Linux operating systems and Windows treat the value as a single domain, which results in unexpected behavior\. If your DHCP options set is associated with a VPC that has instances with multiple operating systems, specify only one domain name\.
+Default DHCP options set: For `us-east-1`, the value is `ec2.internal`\. For other Regions, the value is *region*\.compute\.internal \(for example, `ap-northeast-1.compute.internal`\)\. To use the default values, set `domain-name-servers` to AmazonProvidedDNS\.
+
+**ntp\-servers**  
+The IP addresses of up to four Network Time Protocol \(NTP\) servers\. For more information, see section 8\.3 of [RFC 2132](https://tools.ietf.org/html/rfc2132)\. You can specify the Amazon Time Sync Service at `169.254.169.123`\. For more information, see [Setting the time](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html) in the *Amazon EC2 User Guide for Linux Instances*\.  
+Default DHCP options set: None
+
+**netbios\-name\-servers**  
+The IP addresses of up to four NetBIOS name servers\.  
+Default DHCP options set: None
+
+**netbios\-node\-type**  
+The NetBIOS node type \(1, 2, 4, or 8\)\. We recommend that you specify 2 \(point\-to\-point, or P\-node\)\. Broadcast and multicast are not currently supported\. For more information about these node types, see section 8\.7 of [RFC 2132](https://tools.ietf.org/html/rfc2132) and section 10 of [RFC1001](https://tools.ietf.org/html/rfc1001)\.  
+Default DHCP options set: None
 
 ## Amazon DNS server<a name="AmazonDNS"></a>
 
-When you create a VPC, we automatically create a set of DHCP options and associate them with the VPC\. This set includes two options: `domain-name-servers=AmazonProvidedDNS`, and `domain-name=`*domain\-name\-for\-your\-region*\. AmazonProvidedDNS is an Amazon Route 53 Resolver server, and this option enables DNS for instances that need to communicate over the VPC's internet gateway\. The string `AmazonProvidedDNS` maps to a DNS server running on a reserved IP address at the base of the VPC IPv4 network range, plus two\. For example, the DNS Server on a 10\.0\.0\.0/16 network is located at 10\.0\.0\.2\. For VPCs with multiple IPv4 CIDR blocks, the DNS server IP address is located in the primary CIDR block\. The DNS server does not reside within a specific subnet or Availability Zone in a VPC\. 
-
-**Note**  
-You cannot filter traffic to or from a DNS server using network ACLs or security groups\.
+The default DHCP options set for your VPC includes two options: `domain-name-servers=AmazonProvidedDNS`, and `domain-name=`*domain\-name\-for\-your\-region*\. AmazonProvidedDNS is an Amazon Route 53 Resolver server, and this option enables DNS for instances that need to communicate over the VPC's internet gateway\. The string `AmazonProvidedDNS` maps to a DNS server running on a reserved IP address at the base of the VPC IPv4 network range, plus two\. For example, the DNS Server on a 10\.0\.0\.0/16 network is located at 10\.0\.0\.2\. For VPCs with multiple IPv4 CIDR blocks, the DNS server IP address is located in the primary CIDR block\. The DNS server does not reside within a specific subnet or Availability Zone in a VPC\. 
 
 When you launch an instance into a VPC, we provide the instance with a private DNS hostname, and a public DNS hostname if the instance receives a public IPv4 address\. If `domain-name-servers` in your DHCP options is set to AmazonProvidedDNS, the public DNS hostname takes the form `ec2-public-ipv4-address.compute-1.amazonaws.com` for the us\-east\-1 Region, and `ec2-public-ipv4-address.region.compute.amazonaws.com` for other Regions\. The private hostname takes the form `ip-private-ipv4-address.ec2.internal` for the us\-east\-1 Region, and `ip-private-ipv4-address.region.compute.internal` for other Regions\. To change these to custom DNS hostnames, you must set `domain-name-servers` to a custom DNS server\.
 
 The Amazon DNS server in your VPC is used to resolve the DNS domain names that you specify in a private hosted zone in Route 53\. For more information about private hosted zones, see [Working with private hosted zones](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-private.html) in the *Amazon Route 53 Developer Guide*\.
 
-Services that use the Hadoop framework, such as Amazon EMR, require instances to resolve their own fully qualified domain names \(FQDN\)\. In such cases, DNS resolution can fail if the `domain-name-servers` option is set to a custom value\. To ensure proper DNS resolution, consider adding a conditional forwarder on your DNS server to forward queries for the domain `region-name.compute.internal` to the Amazon DNS server\. For more information, see [Setting up a VPC to host clusters](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-vpc-host-job-flows.html) in the *Amazon EMR Management Guide*\.
+### Rules and considerations<a name="amazon-dns-rules"></a>
 
-**Note**  
- You can use the Amazon DNS server IP address 169\.254\.169\.253, though some servers don't allow its use\. Windows Server 2008, for example, disallows the use of a DNS server located in the 169\.254\.x\.x network range\. 
+When using the Amazon DNS server, the following rules and considerations apply\.
++ You cannot filter traffic to or from the Amazon DNS server using network ACLs or security groups\.
++ Services that use the Hadoop framework, such as Amazon EMR, require instances to resolve their own fully qualified domain names \(FQDN\)\. In such cases, DNS resolution can fail if the `domain-name-servers` option is set to a custom value\. To ensure proper DNS resolution, consider adding a conditional forwarder on your DNS server to forward queries for the domain `region-name.compute.internal` to the Amazon DNS server\. For more information, see [Setting up a VPC to host clusters](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-vpc-host-job-flows.html) in the *Amazon EMR Management Guide*\.
++ You can use the Amazon DNS server IP address 169\.254\.169\.253, though some servers don't allow its use\. Windows Server 2008, for example, disallows the use of a DNS server located in the 169\.254\.x\.x network range\. 
 
 ## Changing DHCP options<a name="DHCPOptions"></a>
 
@@ -69,11 +81,21 @@ You can create as many additional DHCP options sets as you want\. However, you c
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **DHCP Options Sets**, and then choose **Create DHCP options set**\.
+1. In the navigation pane, choose **DHCP Options Sets**\.
 
-1. In the dialog box, enter values for the options that you want to use, and then choose **Create DHCP options set**\.
+1. In the dialog box, enter values for the options that you want to use\.
 **Important**  
 If your VPC has an internet gateway, make sure to specify your own DNS server or Amazon's DNS server \(AmazonProvidedDNS\) for the **Domain name servers** value\. Otherwise, the instances that need to communicate with the internet won't have access to DNS\.
+
+1. Optionally add or remove a tag\.
+
+   \[Add a tag\] Choose **Add new tag** and do the following:
+   + For **Key**, enter the key name\.
+   + For **Value**, enter the key value\.
+
+   \[Remove a tag\] Choose **Remove** to the right of the tag’s Key and Value\.
+
+1. Choose **Create DHCP options set**\.
 
    The new set of DHCP options appears in your list of DHCP options\.
 
@@ -94,7 +116,7 @@ The following procedure assumes that you've already created the DHCP options set
 
 1. In the navigation pane, choose **Your VPCs**\.
 
-1. Select the VPC, and select **Actions , Edit DHCP options set**\.
+1. Select the VPC, and select **Actions, Edit DHCP options set**\.
 
 1. In the **DHCP options set** list, select a set of options from the list, and then choose **Save**\.
 

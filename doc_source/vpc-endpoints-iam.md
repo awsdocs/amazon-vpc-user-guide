@@ -2,7 +2,7 @@
 
 Use IAM to manage access to VPC endpoints and VPC endpoints services\.
 
-**Controlling the use of VPC endpoints**  
+**Control the use of VPC endpoints**  
 By default, IAM users do not have permission to work with endpoints\. You can create an IAM user policy that grants users the permissions to create, modify, describe, and delete endpoints\. The following is an example\.
 
 ```
@@ -17,9 +17,9 @@ By default, IAM users do not have permission to work with endpoints\. You can cr
 }
 ```
 
-For information about controlling access to services using VPC endpoints, see [Controlling access to services with VPC endpoints](vpc-endpoints-access.md)\.
+For information about controlling access to services using VPC endpoints, see [Control access to services with VPC endpoints](vpc-endpoints-access.md)\.
 
-**Controlling VPC endpoints creation based on the service owner**  
+**Control VPC endpoints creation based on the service owner**  
 You can use the `ec2:VpceServiceOwner` condition key to control what VPC endpoint can be created based on who owns the service \(`amazon`, `aws-marketplace`, or `aws-account-id`\)\. In the following example, you can only create VPC endpoints when the service owner is `amazon`\. To use this example, substitute the account ID, the service owner, and the Region \(unless you are in the `us-east-1` Region\)\.
 
 ```
@@ -45,7 +45,7 @@ You can use the `ec2:VpceServiceOwner` condition key to control what VPC endpoin
 ```
 
 **Control the private DNS names that can be specified for VPC endpoint services**  
-You can use the `ec2:VpceServicePrivateDnsName` condition key to control what VPC endpoint service can be modified or created based on the Private DNS name associated with the VPC endpoint service\. In the following example, you can only create or VPC endpoint service when the when the Private DNS name is `example.com`\. To use this example, substitute the account ID, the Private DNS name, and the Region \(unless you are in the `us-east-1` Region\)\.
+You can use the `ec2:VpceServicePrivateDnsName` condition key to control what VPC endpoint service can be modified or created based on the Private DNS name associated with the VPC endpoint service\. In the following example, you can only create or VPC endpoint service when the Private DNS name is `example.com`\. To use this example, substitute the account ID, the Private DNS name, and the Region \(unless you are in the `us-east-1` Region\)\.
 
 ```
 {

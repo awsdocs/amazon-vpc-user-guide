@@ -4,6 +4,11 @@ The following table describes the important changes in each release of the *Amaz
 
 | Change | Description | Date | 
 | --- |--- |--- |
+| [Amazon S3 interface endpoints](https://docs.aws.amazon.com/vpc/latest/userguide/vpce-interface.html) | You can create an Amazon S3 interface endpoint\. | February 2, 2021 | 
+| [Gateway Load Balancer endpoints](https://docs.aws.amazon.com/vpc/latest/userguide/vpce-gateway-load-balancer.html) | You can create a Gateway Load Balancer endpoint in your VPC to route traffic to a VPC endpoint service that you've configured using a Gateway Load Balancer\. | November 10, 2020 | 
+| [Carrier gateways](https://docs.aws.amazon.com/vpc/latest/userguide/Carrier_Gateway.html) | Create carrier gateways to allow inbound traffic from a carrier network in a specific location, and to allow outbound traffic to the carrier network and internet\. | August 6, 2020 | 
+| [Tag on create](#WhatsNew) | You can add tags when you create a VPC peering connection and route table\. | July 20, 2020 | 
+| [Tag on create](#WhatsNew) | You can add tags when you create a VPC, DHCP options, internet gateway, egress\-only gateway, network ACL, and security group\. | June 30, 2020 | 
 | [Managed prefix lists](https://docs.aws.amazon.com/vpc/latest/userguide/managed-prefix-lists.html) | You can create and manage a set of CIDR blocks in prefix list\. | June 29, 2020 | 
 | [Flow logs enhancements](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) | New flow log fields are available, and you can specify a custom format for flow logs that publish to CloudWatch Logs\. | May 4, 2020 | 
 | [Tagging support for flow logs](https://docs.aws.amazon.com/vpc/latest/userguide/working-with-flow-logs.html#modify-tags-flow-logs) | You can add tags to your flow logs\. | March 16, 2020 | 

@@ -151,7 +151,6 @@ You can search your flow log records that are published to CloudWatch Logs by us
 
 You can delete a flow log using the Amazon EC2 and Amazon VPC consoles\. 
 
-**Note**  
 These procedures disable the flow log service for a resource\. Deleting a flow log does not delete the existing log streams from CloudWatch Logs and log files from Amazon S3\. Existing flow log data must be deleted using the respective service's console\. In addition, deleting a flow log that publishes to Amazon S3 does not remove the bucket policies and log file access control lists \(ACLs\)\.
 
 **To delete a flow log for a network interface**

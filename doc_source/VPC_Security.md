@@ -8,14 +8,13 @@ Amazon Virtual Private Cloud provides features that you can use to increase and 
 
 You can use AWS Identity and Access Management \(IAM\) to control who in your organization has permission to create and manage security groups, network ACLs, and flow logs\. For example, you can give your network administrators that permission, but not give permission to personnel who only need to launch instances\. For more information, see [Identity and access management for Amazon VPC](security-iam.md)\.
 
-Amazon security groups and network ACLs don't filter traffic to or from link\-local addresses \(`169.254.0.0/16`\) or AWS reserved IPv4 addresses \(these are the first four IPv4 addresses of the subnet, including the Amazon DNS server address for the VPC\)\. Similarly, flow logs do not capture IP traffic to or from these addresses\. These addresses support the following:
-+ Domain Name Services \(DNS\)
-+ Dynamic Host Configuration Protocol \(DHCP\)
+Amazon security groups and network ACLs do not filter traffic destined to and from the following Amazon services:
++ Amazon Domain Name Services \(DNS\)
++ Amazon Dynamic Host Configuration Protocol \(DHCP\)
 + Amazon EC2 instance metadata
-+ Key Management Server \(KMS\) — license management for Windows instances
-+ Routing in the subnet
-
-You can implement additional firewall solutions in your instances to block network communication with link\-local addresses\.
++ Amazon Windows license activation 
++ Amazon Time Sync Service
++ Reserved IP address of the default VPC router
 
 ## Comparison of security groups and network ACLs<a name="VPC_Security_Comparison"></a>
 

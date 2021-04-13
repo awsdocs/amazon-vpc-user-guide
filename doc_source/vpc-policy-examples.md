@@ -18,10 +18,10 @@ To learn how to create an IAM identity\-based policy using these example JSON po
 ## Policy best practices<a name="security_iam_service-with-iam-policy-best-practices"></a>
 
 Identity\-based policies are very powerful\. They determine whether someone can create, access, or delete Amazon VPC resources in your account\. These actions can incur costs for your AWS account\. When you create or edit identity\-based policies, follow these guidelines and recommendations:
-+ **Get Started Using AWS Managed Policies** – To start using Amazon VPC quickly, use AWS managed policies to give your employees the permissions they need\. These policies are already available in your account and are maintained and updated by AWS\. For more information, see [Get Started Using Permissions With AWS Managed Policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#bp-use-aws-defined-policies) in the *IAM User Guide*\.
-+ **Grant Least Privilege** – When you create custom policies, grant only the permissions required to perform a task\. Start with a minimum set of permissions and grant additional permissions as necessary\. Doing so is more secure than starting with permissions that are too lenient and then trying to tighten them later\. For more information, see [Grant Least Privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege) in the *IAM User Guide*\.
-+ **Enable MFA for Sensitive Operations** – For extra security, require IAM users to use multi\-factor authentication \(MFA\) to access sensitive resources or API operations\. For more information, see [Using Multi\-Factor Authentication \(MFA\) in AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa.html) in the *IAM User Guide*\.
-+ **Use Policy Conditions for Extra Security** – To the extent that it's practical, define the conditions under which your identity\-based policies allow access to a resource\. For example, you can write conditions to specify a range of allowable IP addresses that a request must come from\. You can also write conditions to allow requests only within a specified date or time range, or to require the use of SSL or MFA\. For more information, see [IAM JSON Policy Elements: Condition](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition.html) in the *IAM User Guide*\.
++ **Get started using AWS managed policies** – To start using Amazon VPC quickly, use AWS managed policies to give your employees the permissions they need\. These policies are already available in your account and are maintained and updated by AWS\. For more information, see [Get started using permissions with AWS managed policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#bp-use-aws-defined-policies) in the *IAM User Guide*\.
++ **Grant least privilege** – When you create custom policies, grant only the permissions required to perform a task\. Start with a minimum set of permissions and grant additional permissions as necessary\. Doing so is more secure than starting with permissions that are too lenient and then trying to tighten them later\. For more information, see [Grant least privilege](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege) in the *IAM User Guide*\.
++ **Enable MFA for sensitive operations** – For extra security, require IAM users to use multi\-factor authentication \(MFA\) to access sensitive resources or API operations\. For more information, see [Using multi\-factor authentication \(MFA\) in AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa.html) in the *IAM User Guide*\.
++ **Use policy conditions for extra security** – To the extent that it's practical, define the conditions under which your identity\-based policies allow access to a resource\. For example, you can write conditions to specify a range of allowable IP addresses that a request must come from\. You can also write conditions to allow requests only within a specified date or time range, or to require the use of SSL or MFA\. For more information, see [IAM JSON policy elements: Condition](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition.html) in the *IAM User Guide*\.
 
 ## Viewing the Amazon VPC console<a name="security_iam_id-based-policy-examples-console"></a>
 
@@ -46,6 +46,7 @@ The following policy grants users permission to list resources in the VPC consol
                 "ec2:DescribeEgressOnlyInternetGateways",
                 "ec2:DescribeFlowLogs",
                 "ec2:DescribeInternetGateways",
+                "ec2:DescribeManagedPrefixLists",
                 "ec2:DescribeMovingAddresses",
                 "ec2:DescribeNatGateways",
                 "ec2:DescribeNetworkAcls",
@@ -77,7 +78,9 @@ The following policy grants users permission to list resources in the VPC consol
                 "ec2:DescribeVpcPeeringConnections",
                 "ec2:DescribeVpcs",
                 "ec2:DescribeVpnConnections",
-                "ec2:DescribeVpnGateways"
+                "ec2:DescribeVpnGateways",
+                "ec2:GetManagedPrefixListAssociations",
+                "ec2:GetManagedPrefixListEntries"
             ],
             "Resource": "*"
         }
@@ -101,7 +104,7 @@ This example shows how you might create a policy that allows IAM users to view t
             "Action": [
                 "iam:GetUserPolicy",
                 "iam:ListGroupsForUser",
-                  "iam:ListAttachedUserPolicies",
+                "iam:ListAttachedUserPolicies",
                 "iam:ListUserPolicies",
                 "iam:GetUser"
             ],
@@ -203,7 +206,7 @@ The second statement grants users permission to describe all security groups\. T
        "ec2:RevokeSecurityGroupEgress"],
      "Resource": "arn:aws:ec2:region:account:security-group/*",
       "Condition": {
-        "StringEquals": {
+        "ArnEquals": {
           "ec2:Vpc": "arn:aws:ec2:region:account:vpc/vpc-11223344556677889"
         }
       }
@@ -328,5 +331,6 @@ You can find additional example IAM policies related to Amazon VPC in the follow
 + [Traffic mirroring](https://docs.aws.amazon.com/vpc/latest/mirroring/traffic-mirroring-security.html)
 + [Transit gateways](https://docs.aws.amazon.com/vpc/latest/tgw/transit-gateway-authentication-access-control.html#tgw-example-iam-policies)
 + [VPC endpoints and VPC endpoint services](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-endpoints-iam.html)
-+ [VPC endpoint policies](vpc-endpoints-access.md)
-+ [VPC Peering](https://docs.aws.amazon.com/vpc/latest/peering/security-iam.html)
++ [VPC endpoint policies](https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-access.html)
++ [VPC peering](https://docs.aws.amazon.com/vpc/latest/peering/security-iam.html)
++ [AWS Wavelength](https://docs.aws.amazon.com/wavelength/latest/developerguide/wavelength-policy-examples.html)
