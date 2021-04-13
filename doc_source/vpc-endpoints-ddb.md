@@ -1,7 +1,7 @@
 # Endpoints for Amazon DynamoDB<a name="vpc-endpoints-ddb"></a>
 
 If you've already set up access to your DynamoDB tables from your VPC, you can continue to access the tables as you normally would after you set up a gateway endpoint\. However, take note of the following:
-+ Your endpoint has a policy that controls the use of the endpoint to access DynamoDB resources\. The default policy allows access by any user or service within the VPC, using credentials from any AWS account, to any DynamoDB resource\. For more information, see [Controlling access to services with VPC endpoints](vpc-endpoints-access.md)\.
++ Your endpoint has a policy that controls the use of the endpoint to access DynamoDB resources\. The default policy allows access by any user or service within the VPC, using credentials from any AWS account, to any DynamoDB resource\. For more information, see [Control access to services with VPC endpoints](vpc-endpoints-access.md)\.
 + DynamoDB does not support resource\-based policies \(for example, on tables\)\. Access to DynamoDB is controlled through the endpoint policy and IAM policies for individual IAM users and roles\.
 + Endpoints currently do not support cross\-region requests—ensure that you create your endpoint in the same Region as your DynamoDB tables\. 
 + If you use AWS CloudTrail to log DynamoDB operations, the log files contain the private IP address of the EC2 instance in the VPC and the endpoint ID for any actions performed through the endpoint\.
@@ -11,7 +11,7 @@ Before you use endpoints with DynamoDB, ensure that you have also read the follo
 
 For more information about creating a gateway VPC endpoint, see [Gateway VPC endpoints](vpce-gateway.md)\.
 
-## Using endpoint policies for DynamoDB<a name="vpc-endpoints-policies-ddb"></a>
+## Endpoint policies for DynamoDB<a name="vpc-endpoints-policies-ddb"></a>
 
 An endpoint policy is an IAM policy that you attach to an endpoint that allows access to some or all of the service to which you're connecting\. The following are example endpoint policies for accessing DynamoDB\.
 
@@ -62,7 +62,7 @@ You can create a policy that restricts access to a specific DynamoDB table\. In 
 }
 ```
 
-## Using IAM policies to control access to DynamoDB<a name="vpc-endpoints-policies-ddb-iam-user"></a>
+## Use IAM policies to control access to DynamoDB<a name="vpc-endpoints-policies-ddb-iam-user"></a>
 
 You can create an IAM policy for your IAM users, groups, or roles to restrict access to DynamoDB tables from a specific VPC endpoint only\. To do this, you can use the `aws:sourceVpce` condition key for the table resource in your IAM policy\.
 
@@ -83,5 +83,41 @@ In this example, users are denied permission to work with DynamoDB tables, excep
          "Condition": { "StringNotEquals" : { "aws:sourceVpce": "vpce-11aa22bb" } }
       }
    ]
+}
+```
+
+**Example: Restricting use of this VPC endpoint to a specific IAM role in an account**  
+You can create a policy that restricts use of the VPC endpoint to a specific IAM role\. The following is an example that restricts the access to `SomeRole` in account `111122223333`\.  
+
+```
+{
+  "Sid": "Restrict-acess-to-specific-IAM-role",
+  "Effect": "Allow",
+  "Principal": "*",
+  "Action": "*",
+  "Resource": "*",
+  "Condition": {
+    "ArnEquals": {
+      "aws:PrincipalArn": "arn:aws:iam::111122223333:role/SomeRole"
+    }
+  }
+}
+```
+
+**Example: Restricting use of this VPC endpoint to a users in a specific account**  
+You can create a policy that restricts use of the VPC endpoint to a specific account\. The following is an example that restricts the access to users in account `111122223333`\.  
+
+```
+{
+  "Sid": "AllowCallersFromAccount111122223333",
+  "Effect": "Allow",
+  "Principal": "*",
+  "Action": "*",
+  "Resource": "*",
+  "Condition": {
+    "StringEquals": {
+      "aws:PrincpalAccount": "111122223333"
+    }
+  }
 }
 ```

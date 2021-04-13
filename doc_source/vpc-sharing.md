@@ -97,6 +97,9 @@ In a shared VPC, each participant pays for their application resources including
 
 Participants cannot create resources for the following services in a shared subnet:
 + AWS CloudHSM Classic
++ Amazon MQ
++ Amazon Managed Workflows for Apache Airflow \(MWAA\) 
++ RDS Proxy
 
 A subnet owner can attach a transit gateway to the subnet\. The participants \(other accounts within owner's organization that share the subnet\) cannot attach the transit gateway to the subnet\.
 

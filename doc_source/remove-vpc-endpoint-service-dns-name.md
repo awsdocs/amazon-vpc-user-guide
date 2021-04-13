@@ -1,4 +1,4 @@
-# Removing an endpoint service private DNS name<a name="remove-vpc-endpoint-service-dns-name"></a>
+# Remove an endpoint service private DNS name<a name="remove-vpc-endpoint-service-dns-name"></a>
 
 You can remove the endpoint service private DNS name only after there are no connections to the service\.
 

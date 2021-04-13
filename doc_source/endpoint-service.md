@@ -5,4 +5,11 @@ You can create your own application in your VPC and configure it as an AWS Priva
 **Topics**
 + [VPC endpoint services for interface endpoints](endpoint-service-overview.md)
 + [VPC endpoint services for Gateway Load Balancer endpoints](vpc-endpoint-services-gwlbe.md)
-+ [Working with VPC endpoint services](working-with-endpoint-services.md)
++ [Create a VPC endpoint service configuration for interface endpoints](create-endpoint-service.md)
++ [Create a VPC endpoint service configuration for Gateway Load Balancer endpoints](create-endpoint-service-gwlbe.md)
++ [Add and remove permissions for your endpoint service](add-endpoint-service-permissions.md)
++ [Change the load balancers and acceptance settings](modify-endpoint-service.md)
++ [Accept and reject endpoint connection requests](accept-reject-endpoint-requests.md)
++ [Create and manage a notification for an endpoint service](create-notification-endpoint-service.md)
++ [Add or remove VPC endpoint service tags](modify-tags-vpc-endpoint-service-tags.md)
++ [Delete an endpoint service configuration](delete-endpoint-service.md)

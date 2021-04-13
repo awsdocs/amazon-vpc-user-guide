@@ -1,8 +1,8 @@
-# Accepting and rejecting endpoint connection requests<a name="accept-reject-endpoint-requests"></a>
+# Accept and reject endpoint connection requests<a name="accept-reject-endpoint-requests"></a>
 
 After you create an endpoint service, service consumers for which you've added permission can create an interface endpoint or Gateway Load Balancer endpoint to connect to your service\. For more information, see [Interface VPC endpoints \(AWS PrivateLink\)](vpce-interface.md) and [Gateway Load Balancer endpoints \(AWS PrivateLink\)](vpce-gateway-load-balancer.md)\. 
 
-If you specified that acceptance is required for connection requests, you must manually accept or reject endpoint connection requests to your endpoint service\. After an endpoint is accepted, it becomes `available`\. 
+If you specified that acceptance is required for connection requests, you must manually accept or reject endpoint connection requests to your endpoint service\. After an endpoint is accepted, it becomes `available`\. Be aware that it can take time for a validation status change to be completed and the state to be `available`\.
 
 You can reject an endpoint connection after it's in the `available` state\.
 

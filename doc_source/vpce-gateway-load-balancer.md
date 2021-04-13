@@ -1,6 +1,6 @@
 # Gateway Load Balancer endpoints \(AWS PrivateLink\)<a name="vpce-gateway-load-balancer"></a>
 
-A Gateway Load Balancer endpoint enables you to intercept traffic and route it to a service that you've configured using [Gateway Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/introduction.html), for example, for security inspection\. The owner of the service is the *service provider*, and you, as the principal creating the Gateway Load Balancer endpoint, are the *service consumer*\.
+A Gateway Load Balancer endpoint enables you to intercept traffic and route it to a service that you've configured using [Gateway Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/), for example, for security inspection\. The owner of the service is the *service provider*, and you, as the principal creating the Gateway Load Balancer endpoint, are the *service consumer*\.
 
 The following are the general steps for setting up a Gateway Load Balancer endpoint:
 
@@ -15,15 +15,15 @@ You can specify only one subnet for the Gateway Load Balancer endpoint\. You can
 
 1. After you create the Gateway Load Balancer endpoint, it's available to use when it's accepted by the service provider\. The service provider can configure the service to accept requests automatically or manually\.
 
-1. Configure your subnet route table and gateway route table to point traffic to the Gateway Load Balancer endpoint\. For more information, see [Routing to a Gateway Load Balancer endpoint](route-table-options.md#route-tables-gwlbe)\.
+1. Configure your subnet route table and gateway route table to point traffic to the Gateway Load Balancer endpoint\. For more information, see [Routing to a Gateway Load Balancer endpoint](https://docs.aws.amazon.com/vpc/latest/userguide/route-table-options.html#route-tables-gwlbe) in the *Amazon VPC User Guide*\.
 
 **Topics**
 + [Gateway Load Balancer endpoint properties and limitations](#gwlbe-limitations)
 + [Gateway Load Balancer endpoint lifecycle](#gwlbe-lifecycle)
 + [Pricing for Gateway Load Balancer endpoints](#gwlbe-interface-pricing)
-+ [Creating a Gateway Load Balancer endpoint](#create-gwlbe)
-+ [Viewing your Gateway Load Balancer endpoint](#describe-gwlbe)
-+ [Adding or removing tags for a Gateway Load Balancer endpoint](#update-gwlbe-tags)
++ [Create a Gateway Load Balancer endpoint](#create-gwlbe)
++ [View your Gateway Load Balancer endpoint](#describe-gwlbe)
++ [Add or remove tags for a Gateway Load Balancer endpoint](#update-gwlbe-tags)
 
 ## Gateway Load Balancer endpoint properties and limitations<a name="gwlbe-limitations"></a>
 
@@ -33,19 +33,19 @@ To use a Gateway Load Balancer endpoint, be aware of the following:
 + If the network ACL for your subnet restricts traffic, you might not be able to send traffic through the Gateway Load Balancer endpoint\. Ensure that you add appropriate rules that allow traffic to and from the CIDR block of the subnet\.
 + Security groups are not supported\.
 + Endpoint policies are not supported\.
-+ A service might not be available in all Availability Zones through a Gateway Load Balancer endpoint\. To find out which Availability Zones are supported, use the [describe\-vpc\-endpoint\-services](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-services.html) command or use the Amazon VPC console\. For more information, see [Creating a Gateway Load Balancer endpoint](#create-gwlbe)\.
++ A service might not be available in all Availability Zones through a Gateway Load Balancer endpoint\. To find out which Availability Zones are supported, use the [describe\-vpc\-endpoint\-services](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoint-services.html) command or use the Amazon VPC console\. For more information, see [Create a Gateway Load Balancer endpoint](#create-gwlbe)\.
 + When you create a Gateway Load Balancer endpoint, the endpoint is created in the Availability Zone that is mapped to your account and that is independent from other accounts\. When the service provider and the consumer are in different accounts, use the Availability Zone ID to uniquely and consistently identify the endpoint Availability Zone\. For example, `use1-az1` is an Availability Zone ID for the `us-east-1` Region and maps to the same location in every AWS account\. For information about Availability Zone IDs, see [AZ IDs for Your Resources](https://docs.aws.amazon.com/ram/latest/userguide/working-with-az-ids.html) in the *AWS RAM User Guide* or use [describe\-availability\-zones](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-availability-zones.html)\. 
 + To keep traffic within the same Availability Zone, we recommend that you create a Gateway Load Balancer endpoint in each Availability Zone that you will send traffic to\.
 + Endpoints are supported within the same Region only\. You cannot create an endpoint between a VPC and a service in a different Region\.
 + Endpoints support IPv4 traffic only\.
 + You cannot transfer an endpoint from one VPC to another, or from one service to another\.
-+ You have a quota on the number of endpoints you can create per VPC\. For more information, see [VPC endpoints](amazon-vpc-limits.md#vpc-limits-endpoints)\.
++ You have a quota on the number of endpoints you can create per VPC\. For more information, see [AWS PrivateLink quotas](vpc-limits-endpoints.md)\.
 
 ## Gateway Load Balancer endpoint lifecycle<a name="gwlbe-lifecycle"></a>
 
 A Gateway Load Balancer endpoint goes through various stages, starting from when you create it \(the endpoint connection request\)\. At each stage, there might be actions that the service consumer and service provider can take\.
 
-![\[Gateway Load Balancer endpoint lifecycle\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/interface-endpoint-lifecycle-diagram.png)
+![\[Gateway Load Balancer endpoint lifecycle\]](http://docs.aws.amazon.com/vpc/latest/privatelink/images/interface-endpoint-lifecycle-diagram.png)
 
 The following rules apply:
 + A service provider can configure their service to accept Gateway Load Balancer endpoint requests automatically or manually\.
@@ -56,7 +56,7 @@ The following rules apply:
 
 You are charged for creating and using a Gateway Load Balancer endpoint to a service\. Hourly usage rates and data processing rates apply\. For more information, see [AWS PrivateLink Pricing](https://aws.amazon.com/privatelink/pricing/)\. You can view the total number of Gateway Load Balancer endpoints using the Amazon VPC Console, or the AWS CLI\.
 
-## Creating a Gateway Load Balancer endpoint<a name="create-gwlbe"></a>
+## Create a Gateway Load Balancer endpoint<a name="create-gwlbe"></a>
 
 To create a Gateway Load Balancer endpoint, you must specify the VPC in which to create the endpoint, and the service to which to establish the connection\. 
 
@@ -94,7 +94,7 @@ aws ec2 create-vpc-endpoint --vpc-endpoint-type GatewayLoadBalancer --vpc-id vpc
 
 ------
 
-## Viewing your Gateway Load Balancer endpoint<a name="describe-gwlbe"></a>
+## View your Gateway Load Balancer endpoint<a name="describe-gwlbe"></a>
 
 After you've created a Gateway Load Balancer endpoint, you can view information about it\.
 
@@ -121,7 +121,7 @@ After you've created a Gateway Load Balancer endpoint, you can view information 
 
 ------
 
-## Adding or removing tags for a Gateway Load Balancer endpoint<a name="update-gwlbe-tags"></a>
+## Add or remove tags for a Gateway Load Balancer endpoint<a name="update-gwlbe-tags"></a>
 
 You can add or remove the tags for your Gateway Load Balancer endpoint\. 
 

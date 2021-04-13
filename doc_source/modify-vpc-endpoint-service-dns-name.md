@@ -1,4 +1,4 @@
-# Modifying an existing endpoint service private DNS name<a name="modify-vpc-endpoint-service-dns-name"></a>
+# Modify an existing endpoint service private DNS name<a name="modify-vpc-endpoint-service-dns-name"></a>
 
 You can modify the endpoint service private DNS name for a new or existing endpoint service\.
 

@@ -1,4 +1,4 @@
-# Creating and managing a notification for an endpoint service<a name="create-notification-endpoint-service"></a>
+# Create and manage a notification for an endpoint service<a name="create-notification-endpoint-service"></a>
 
 You can create a notification to receive alerts for specific events that occur on the endpoints that are attached to your endpoint service\. For example, you can receive an email when an endpoint request is accepted or rejected for your endpoint service\. To create a notification, you must associate an Amazon SNS topic with the notification\. You can subscribe to the SNS topic to receive an email notification when an endpoint event occurs\. For more information, see the [Amazon Simple Notification Service Developer Guide](https://docs.aws.amazon.com/sns/latest/dg/)\.
 

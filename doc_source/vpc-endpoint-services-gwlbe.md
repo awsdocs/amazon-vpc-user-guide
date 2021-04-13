@@ -20,9 +20,9 @@ The following are the general steps to enable service consumers to connect to yo
 
 In the following example, a fleet of security appliances is configured behind a Gateway Load Balancer in the security VPC\. An endpoint service is configured for the Gateway Load Balancer\. The owner of the service consumer VPC creates a Gateway Load Balancer endpoint in subnet 2 in their VPC \(represented by an endpoint network interface\)\. All traffic entering the VPC through the internet gateway is first routed to the Gateway Load Balancer endpoint for inspection in the security VPC before it's routed to the destination subnet\. Similarly, all traffic leaving the EC2 instance in subnet 1 is first routed to Gateway Load Balancer endpoint for inspection in the security VPC before it's routed to the internet\.
 
-![\[Using a Gateway Load Balancer endpoint to access an endpoint service\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-service-gwlbe.png)
+![\[Using a Gateway Load Balancer endpoint to access an endpoint service\]](http://docs.aws.amazon.com/vpc/latest/privatelink/images/vpc-endpoint-service-gwlbe.png)
 
-For more information about the routing configuration for this scenario, see [Routing to a Gateway Load Balancer endpoint](route-table-options.md#route-tables-gwlbe)\.
+For more information about the routing configuration for this scenario, see [Routing to a Gateway Load Balancer endpoint](https://docs.aws.amazon.com/vpc/latest/userguide/route-table-options.html#route-tables-gwlbe) in the *Amazon VPC User Guide*\.
 
 ## Availability Zone considerations<a name="vpce-endpoint-service-availability-zones-gwlbe"></a>
 

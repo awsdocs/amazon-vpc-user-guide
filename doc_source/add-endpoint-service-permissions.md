@@ -1,4 +1,4 @@
-# Adding and removing permissions for your endpoint service<a name="add-endpoint-service-permissions"></a>
+# Add and remove permissions for your endpoint service<a name="add-endpoint-service-permissions"></a>
 
 After you create your endpoint service configuration, you can control which service consumers can create an interface endpoint or Gateway Load Balancer endpoint to connect to your service\. Service consumers are [IAM principals](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html)—IAM users, IAM roles, and AWS accounts\. To add or remove permissions for a principal, you need its Amazon Resource Name \(ARN\)\.
 + For an AWS account \(and therefore all principals in the account\), the ARN is in the form `arn:aws:iam::aws-account-id:root`\.
@@ -17,13 +17,13 @@ If you set permission to "anyone can access" and you set the acceptance model to
 
 1. In the navigation pane, choose **Endpoint Services** and select your endpoint service\.
 
-1. Choose **Actions**, **Add principals to whitelist**\.
+1. Choose **Actions**, **Add principals to allow list**\.
 
 1. Specify the ARN for the principal for which to add permissions\. To add more principals, choose **Add principal**\. To remove a principal, choose the cross icon next to the entry\.
 **Note**  
 Specify `*` to add permissions for all principals\. This enables all principals in all AWS accounts to create an endpoint to your endpoint service\.
 
-1. Choose **Add to Whitelisted principals**\.
+1. Choose **Add to principals that are on the allow list**\.
 
 1. To remove a principal, select it in the list and choose **Delete**\.
 

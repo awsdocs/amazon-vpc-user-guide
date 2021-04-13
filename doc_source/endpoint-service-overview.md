@@ -20,15 +20,15 @@ The combination of permissions and acceptance settings can help you control whic
 
 In the following diagram, the account owner of VPC B is a service provider, and has a service running on instances in subnet B\. The owner of VPC B has a service endpoint \(vpce\-svc\-1234\) with an associated Network Load Balancer that points to the instances in subnet B as targets\. Instances in subnet A of VPC A use an interface endpoint to access the services in subnet B\.
 
-![\[Using an interface endpoint to access an endpoint service\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-service.png)
+![\[Using an interface endpoint to access an endpoint service\]](http://docs.aws.amazon.com/vpc/latest/privatelink/images/vpc-endpoint-service.png)
 
 For low latency and fault tolerance, we recommend using a Network Load Balancer with targets in every Availability Zone of the AWS Region\. To help achieve high availability for service consumers that use [zonal DNS hostnames](vpce-interface.md#access-service-though-endpoint) to access the service, you can enable cross\-zone load balancing\. Cross\-zone load balancing enables the load balancer to distribute traffic across the registered targets in all enabled Availability Zones\. For more information, see [Cross\-Zone Load Balancing](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancers.html#cross-zone-load-balancing) in the *User Guide for Network Load Balancers*\. Regional data transfer charges may apply to your account when you enable cross\-zone load balancing\.
 
 In the following diagram, the owner of VPC B is the service provider, and it has configured a Network Load Balancer with targets in two different Availability Zones\. The service consumer \(VPC A\) has created interface endpoints in the same two Availability Zones in their VPC\. Requests to the service from instances in VPC A can use either interface endpoint\.
 
-![\[Using interface endpoints to access an endpoint service\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-service-multi-az.png)
+![\[Using interface endpoints to access an endpoint service\]](http://docs.aws.amazon.com/vpc/latest/privatelink/images/vpc-endpoint-service-multi-az.png)
 
-For examples of configuring a service and enabling service consumers to access it over a VPC peering connection, see [Examples: Services using AWS PrivateLink and VPC peering](vpc-peer-region-example.md)\.
+For examples of configuring a service and enabling service consumers to access it over a VPC peering connection, see [Examples: Services using AWS PrivateLink and VPC peering](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-peer-region-example.html) in the *Amazon VPC User Guide*\.
 
 ## Endpoint service Availability Zone considerations<a name="vpce-endpoint-service-availability-zones"></a>
 
@@ -48,17 +48,17 @@ Service providers can use the **ec2:VpceServicePrivateDnsName** condition contex
 
 Service providers can specify a private DNS name for a new endpoint service, or an existing endpoint service\. To use a private DNS name, enable the feature, and then specify a private DNS name\. Before consumers can use the private DNS name, you must verify that you have control of the domain/subdomain\. You can initiate domain ownership verification using the Amazon VPC Console or API\. After the domain ownership verification completes, consumers access the endpoint by using the private DNS name\.
 
-## Connection to on\-premises data centers<a name="on-premises-connection"></a>
+## Connect to on\-premises data centers<a name="on-premises-connection"></a>
 
 You can use the following types of connections for a connection between an interface endpoint and your on\-premises data center:
 + AWS Direct Connect
 + AWS Site\-to\-Site VPN
 
-## Accessing services through a VPC peering connection<a name="endpoints-peering-connections"></a>
+## Access services through a VPC peering connection<a name="endpoints-peering-connections"></a>
 
-You can use a VPC peering connection with a VPC endpoint to allow private access to consumers across the VPC peering connection\. For more information, see [Examples: Services using AWS PrivateLink and VPC peering](vpc-peer-region-example.md)\.
+You can use a VPC peering connection with a VPC endpoint to allow private access to consumers across the VPC peering connection\. For more information, see [Examples: Services using AWS PrivateLink and VPC peering](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-peer-region-example.html) in the *Amazon VPC User Guide*\.
 
-## Using proxy protocol for connection information<a name="endpoint-service-proxy-protocol"></a>
+## Use proxy protocol for connection information<a name="endpoint-service-proxy-protocol"></a>
 
 A Network Load Balancer provides source IP addresses to your application \(your service\)\. When service consumers send traffic to your service through an interface endpoint, the source IP addresses provided to your application are the private IP addresses of the Network Load Balancer nodes, and not the IP addresses of the service consumers\.
 
@@ -72,5 +72,6 @@ To use endpoint services, you need to be aware of the current rules and limitati
 + If an endpoint service is associated with multiple Network Load Balancers, then for a specific Availability Zone, an interface endpoint establishes a connection with one load balancer only\.
 + For the endpoint service, the associated Network Load Balancer can support 55,000 simultaneous connections or about 55,000 connections per minute to each unique target \(IP address and port\)\. If you exceed these connections, there is an increased chance of port allocation errors\. To fix the port allocation errors, add more targets to the target group\. For information about Network Load Balancer target groups, see [Target groups for your Network Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-target-groups.html) and [Register targets with your Target Group](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/target-group-register-targets.html) in the *User Guide for Network Load Balancers*\.
 + Availability Zones in your account might not map to the same locations as Availability Zones in another account\. For example, your Availability Zone `us-east-1a` might not be the same location as `us-east-1a` for another account\. For more information, see [Regions and Zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-regions-availability-zones)\. When you configure an endpoint service, it's configured in the Availability Zones as mapped to your account\.
++ An endpoint service is only available in the Region where you created it\.
 + Review the service\-specific limits for your endpoint service\.
-+ Review the security best practices and examples for endpoint services\. For more information, see [Policy best practices](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-policy-examples.html#security_iam_service-with-iam-policy-best-practices) and [Controlling access to services with VPC endpoints](vpc-endpoints-access.md)\.
++ Review the security best practices and examples for endpoint services\. For more information, see [Policy best practices](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-policy-examples.html#security_iam_service-with-iam-policy-best-practices) and [Control access to services with VPC endpoints](vpc-endpoints-access.md)\.

@@ -10,7 +10,7 @@ The following are the different types of VPC endpoints\. You create the type of 
 
 An [interface endpoint](vpce-interface.md) is an elastic network interface with a private IP address from the IP address range of your subnet\. It serves as an entry point for traffic destined to a supported AWS service or a VPC endpoint service\. Interface endpoints are powered by AWS PrivateLink\.
 
-For information about the AWS services that integrate with AWS PrivateLink, see [AWS services that you can use with AWS PrivateLink](integrated-services-vpce-list.md)\. You can also view all of the available AWS service names\. For more information, see [Viewing available AWS service names](vpce-interface.md#vpce-view-services)\.
+For information about the AWS services that integrate with AWS PrivateLink, see [AWS services that integrate with AWS PrivateLink](integrated-services-vpce-list.md)\. You can also view all of the available AWS service names\. For more information, see [View available AWS service names](vpce-interface.md#vpce-view-services)\.
 
  **Gateway Load Balancer endpoints**
 
@@ -18,6 +18,8 @@ A [Gateway Load Balancer endpoint](vpce-gateway-load-balancer.md) is an elastic 
 
 ** Gateway endpoints**
 
-A [gateway endpoint](vpce-gateway.md) is for supported AWS services only\. You specify a gateway endpoint as a route table target for traffic destined to the following AWS services:
+A [gateway endpoint](vpce-gateway.md) is for the following supported AWS services:
 + Amazon S3
 + DynamoDB
+
+You specify a gateway endpoint as a route table target for traffic that is destined for the supported AWS services\.
