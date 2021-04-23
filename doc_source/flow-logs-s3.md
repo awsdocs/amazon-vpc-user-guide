@@ -80,10 +80,10 @@ The following bucket policy gives the flow log permission to publish logs to it\
             "Condition": {"StringEquals": {"s3:x-amz-acl": "bucket-owner-full-control"}}
         },
         {
-            "Sid": "AWSLogDeliveryAclCheck",
+            "Sid": "AWSLogDeliveryCheck",
             "Effect": "Allow",
             "Principal": {"Service": "delivery.logs.amazonaws.com"},
-            "Action": "s3:GetBucketAcl",
+            "Action": ["s3:GetBucketAcl", "s3:ListBucket"],
             "Resource": "arn:aws:s3:::bucket_name"
         }
     ]
@@ -110,10 +110,10 @@ If the user creating the flow log does not own the bucket, or does not have the 
             "Condition": {"StringEquals": {"s3:x-amz-acl": "bucket-owner-full-control"}}
         },
         {
-            "Sid": "AWSLogDeliveryAclCheck",
+            "Sid": "AWSLogDeliveryCheck",
             "Effect": "Allow",
             "Principal": {"Service": "delivery.logs.amazonaws.com"},
-            "Action": "s3:GetBucketAcl",
+            "Action": ["s3:GetBucketAcl", "s3:ListBucket"],
             "Resource": "arn:aws:s3:::log-bucket"
         }
     ]
