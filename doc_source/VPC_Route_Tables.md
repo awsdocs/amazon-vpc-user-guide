@@ -176,7 +176,7 @@ In addition, the following rules and considerations apply:
 + You cannot route traffic from a virtual private gateway to a Gateway Load Balancer endpoint\. If you associate your route table with a virtual private gateway and you add a route with a Gateway Load Balancer endpoint as the target, traffic that's destined for the endpoint is dropped\.
 + You cannot specify a prefix list as a destination\.
 + You cannot use a gateway route table to control or intercept traffic outside of your VPC, for example, traffic through an attached transit gateway\. You can intercept traffic that enters your VPC and redirect it to another target in the same VPC only\.
-+ To ensure that traffic reaches your middlebox appliance, the target network interface must be attached to a running instance\. For a traffic that flows through an internet gateway, the target network interface must also have a public IP address\.
++ To ensure that traffic reaches your middlebox appliance, the target network interface must be attached to a running instance\. For traffic that flows through an internet gateway, the target network interface must also have a public IP address\.
 + When configuring your middlebox appliance, take note of the[ appliance considerations](route-table-options.md#appliance-considerations)\.
 + When you route traffic through a middlebox appliance, the return traffic from the destination subnet must be routed through the same appliance\. Asymmetric routing is not supported\.
 
