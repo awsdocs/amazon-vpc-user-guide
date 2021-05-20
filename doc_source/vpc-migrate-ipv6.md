@@ -139,7 +139,7 @@ For example, in the example above, you can update the web server security group 
 
 1. For each rule, choose **Add another rule**, and choose **Save** when you're done\. For example, to add a rule that allows all HTTP traffic over IPv6, for **Type**, select **HTTP** and for **Source**, enter `::/0`\.
 
-By default, an outbound rule that allows all IPv6 traffic is automatically added your security groups when you associate an IPv6 CIDR block with your VPC\. However, if you modified the original outbound rules for your security group, this rule is not automatically added, and you must add equivalent outbound rules for IPv6 traffic\. For more information, see [Security groups for your VPC](VPC_SecurityGroups.md)\.
+By default, an outbound rule that allows all IPv6 traffic is automatically added to your security groups when you associate an IPv6 CIDR block with your VPC\. However, if you modified the original outbound rules for your security group, this rule is not automatically added, and you must add equivalent outbound rules for IPv6 traffic\. For more information, see [Security groups for your VPC](VPC_SecurityGroups.md)\.
 
 ### Update your network ACL rules<a name="vpc-migrate-ipv6-nacl-rules"></a>
 
