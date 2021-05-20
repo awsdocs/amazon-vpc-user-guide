@@ -6,7 +6,7 @@ To complete this exercise, do the following:
 + Create a nondefault VPC with an IPv6 CIDR block and a single public subnet\. Subnets enable you to group instances based on your security and operational needs\. A public subnet is a subnet that has access to the internet through an internet gateway\.
 + Create a security group for your instance that allows traffic only through specific ports\.
 + Launch an Amazon EC2 instance into your subnet, and associate an IPv6 address with your instance during launch\. An IPv6 address is globally unique, and allows your instance to communicate with the internet\.
-+ You can request an IPv6 CIDR block for the VPC\. When you select this option, you can set the network border group, which is the location from which we advertise the IPV6 CIDR block\. Setting the network border group limits the CiDR block to this group\. 
++ You can request an IPv6 CIDR block for the VPC\. When you select this option, you can set the network border group, which is the location from which we advertise the IPv6 CIDR block\. Setting the network border group limits the CiDR block to this group\. 
 
 For more information about IPv4 and IPv6 addressing, see [IP addressing in your VPC](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-ip-addressing.html)\.
 
