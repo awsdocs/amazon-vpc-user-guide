@@ -1,8 +1,8 @@
 # Publishing flow logs to CloudWatch Logs<a name="flow-logs-cwl"></a>
 
-Flow logs can publish flow log data directly to Amazon CloudWatch\.
+Flow logs can publish flow log data directly to Amazon CloudWatch\. Data ingestion and archival charges for vended logs apply when you publish flow logs to CloudWatch Logs\. For more information, see [Amazon CloudWatch Pricing](https://aws.amazon.com/cloudwatch/pricing)\.
 
-When publishing to CloudWatch Logs, flow log data is published to a log group, and each network interface has a unique log stream in the log group\. Log streams contain flow log records\. You can create multiple flow logs that publish data to the same log group\. If the same network interface is present in one or more flow logs in the same log group, it has one combined log stream\. If you've specified that one flow log should capture rejected traffic, and the other flow log should capture accepted traffic, then the combined log stream captures all traffic\. For more information, see [Flow log records](flow-logs.md#flow-log-records)\.
+When publishing to CloudWatch Logs, flow log data is published to a log group, and each network interface has a unique log stream in the log group\. Log streams contain flow log records\. You can create multiple flow logs that publish data to the same log group\. If the same network interface is present in one or more flow logs in the same log group, it has one combined log stream\. If you've specified that one flow log should capture rejected traffic, and the other flow log should capture accepted traffic, then the combined log stream captures all traffic\.
 
 In CloudWatch Logs, the **timestamp** field corresponds to the start time that's captured in the flow log record\. The **ingestionTime** field indicates the date and time when the flow log record was received by CloudWatch Logs\. This timestamp is later than the end time that's captured in the flow log record\.
 
@@ -14,7 +14,7 @@ In CloudWatch Logs, the **timestamp** field corresponds to the start time that's
 
 ## IAM roles for publishing flow logs to CloudWatch Logs<a name="flow-logs-iam"></a>
 
-The IAM role that's associated with your flow log must have sufficient permissions to publish flow logs to the specified log group in CloudWatch Logs\. The IAM role must belong to your AWS account\.
+The IAM role that's associated with your flow log must have sufficient permissions to publish flow logs to the specified log group in CloudWatch Logs\. The IAM role must belong to your AWSaccount\.
 
 The IAM policy that's attached to your IAM role must include at least the following permissions\.
 
@@ -65,11 +65,11 @@ You can update an existing role or use the following procedure to create a new r
 
 1. In the navigation pane, choose **Roles**, **Create role**\.
 
-1. Choose **EC2** as the service to use this role\. For **Use case**, choose **EC2**\. Choose **Next: Permissions**\.
+1. For **Select type of trusted entity**, choose **AWS service**\. For **Use case**, choose **EC2**\. Choose **Next: Permissions**\.
 
 1. On the **Attach permissions policies** page, choose **Next: Tags** and optionally add tags\. Choose **Next: Review**\.
 
-1. Enter a name for your role \(for example, `Flow-Logs-Role`\) and optionally provide a description\. Choose **Create role**\.
+1. Enter a name for your role and optionally provide a description\. Choose **Create role**\.
 
 1. Select the name of your role\. For **Permissions**, choose **Add inline policy**, **JSON**\.
 

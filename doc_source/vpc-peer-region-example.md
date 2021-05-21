@@ -2,18 +2,17 @@
 
 An AWS PrivateLink service provider configures instances running services in their VPC, with a Network Load Balancer as the front end\. Use intra\-region VPC peering \(VPCs are in the same Region\) and inter\-region VPC peering \(VPCs are in different Regions\) with AWS PrivateLink to allow private access to consumers across VPC peering connections\.
 
-Consumers in remote VPCs cannot use Private DNS names across peering connections\. They can however create their own private hosted zone on Route 53, and attach it to their VPCs to use the same Private DNS name\. For information about using transit gateway with Amazon Route 53 Resolver, to share PrivateLink interface endpoints between multiple connected VPCs and an on\-premises environment, see [Integrating AWS Transit Gateway with AWS PrivateLink and Amazon Route 53 Resolver](https://aws.amazon.com/blogs/networking-and-content-delivery/integrating-aws-transit-gateway-with-aws-privatelink-and-amazon-route-53-resolver/)\.
+Consumers in remote VPCs cannot use Private DNS names across peering connections\. They can however create their own private hosted zone on Route 53, and attach it to their VPCs to use the same Private DNS name\. For information about using transit gateway with Amazon Route 53 Resolver, to share PrivateLink interface endpoints between multiple connected VPCs and an on\-premises environment, see [Integrating AWS Transit Gateway with AWS PrivateLink and Amazon Route 53 Resolver](http://aws.amazon.com/blogs/networking-and-content-delivery/integrating-aws-transit-gateway-with-aws-privatelink-and-amazon-route-53-resolver/)\.
 
-The following are example configurations using AWS PrivateLink and VPC peering\.
-
-**Topics**
-+ [Example: Service provider configures the service](vpc--region-peering-provider-side.md)
-+ [Example: Service consumer configures access](vpc-region-peering-consumer-side.md)
-+ [Example: Service provider configures a service to span Regions](vpc-inter-region-peering-provider-side.md)
-+ [Example: Service consumer configures access across Regions](vpc-inter-region-peering-consumer-side.md)
+For information about the following use\-cases, see [Securely Access Services Over AWS PrivateLink](https://d1.awsstatic.com/whitepapers/aws-privatelink.pdf):
++ Private Access to SaaS Applications
++ Shared Services
++ Hybrid Services
++ Inter\-Region Endpoint Services
++ Inter\-Region Access to Endpoint Services
 
 **Additional resources**  
-The following topics can help you configure the components needed for the examples:
+The following topics can help you configure the components needed for the use\-cases:
 + [VPC endpoint services](https://docs.aws.amazon.com/vpc/latest/privatelink/endpoint-service.html)
 + [Getting Started with Network Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancer-getting-started.html)
 + [Working with VPC peering connections](https://docs.aws.amazon.com/vpc/latest/peering/working-with-vpc-peering.html)

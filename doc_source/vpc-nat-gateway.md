@@ -30,6 +30,22 @@ The following diagram illustrates the architecture of a VPC with a NAT gateway\.
 
 ![\[A VPC with public and private subnets and a NAT gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/nat-gateway-diagram.png)
 
+A customroute table is associated with the subnet in Availability Zone A\. The first entry is the default entry for local routing in the VPC; this entry enables the instances in the VPC to communicate with each other\. The second entry sends all other subnet traffic to the internet gateway\.
+
+
+| Destination | Target | 
+| --- | --- | 
+|  `10.0.0.0/16`  |  local  | 
+|  `0.0.0.0/0`  |  *internet\-gateway\-id*  | 
+
+The main route table is associated with the subnet in Availability Zone B\. The first entry is the default entry for local routing in the VPC; this entry enables the instances in the VPC to communicate with each other\. The second entry sends all other subnet traffic to the NAT gateway\.
+
+
+| Destination | Target | 
+| --- | --- | 
+|  `10.0.0.0/16`  |  local  | 
+|  `0.0.0.0/0`  |  *nat\-gateway\-id*  | 
+
 ### NAT gateway rules and limitations<a name="nat-gateway-limits"></a>
 
 A NAT gateway has the following characteristics and limitations:

@@ -1,7 +1,7 @@
 # Amazon Virtual Private Cloud User Guide
 
 -----
-*****Copyright &copy; 2021 Amazon Web Services, Inc. and/or its affiliates. All rights reserved.*****
+*****Copyright &copy; Amazon Web Services, Inc. and/or its affiliates. All rights reserved.*****
 
 -----
 Amazon's trademarks and trade dress may not be used in 
@@ -26,10 +26,6 @@ Amazon's trademarks and trade dress may not be used in
 + [Examples for VPC](VPC_Scenarios.md)
    + [Example: Sharing public subnets and private subnets](example-vpc-share.md)
    + [Examples: Services using AWS PrivateLink and VPC peering](vpc-peer-region-example.md)
-      + [Example: Service provider configures the service](vpc--region-peering-provider-side.md)
-      + [Example: Service consumer configures access](vpc-region-peering-consumer-side.md)
-      + [Example: Service provider configures a service to span Regions](vpc-inter-region-peering-provider-side.md)
-      + [Example: Service consumer configures access across Regions](vpc-inter-region-peering-consumer-side.md)
    + [Example: Create an IPv4 VPC and subnets using the AWS CLI](vpc-subnets-commands-example.md)
    + [Example: Create an IPv6 VPC and subnets using the AWS CLI](vpc-subnets-commands-example-ipv6.md)
 + [VPCs and subnets](VPC_Subnets.md)
@@ -50,7 +46,7 @@ Amazon's trademarks and trade dress may not be used in
    + [Logging and monitoring for Amazon VPC](logging-monitoring.md)
    + [Resilience in Amazon Virtual Private Cloud](disaster-recovery-resiliency.md)
    + [Compliance validation for Amazon Virtual Private Cloud](VPC-compliance.md)
-   + [Configuration and Vulnerability Analysis in Amazon Virtual Private Cloud](ConfigAndVulnerability.md)
+   + [Configuration and vulnerability analysis in Amazon Virtual Private Cloud](ConfigAndVulnerability.md)
    + [Security groups for your VPC](VPC_SecurityGroups.md)
    + [Network ACLs](vpc-network-acls.md)
    + [Security best practices for your VPC](vpc-security-best-practices.md)

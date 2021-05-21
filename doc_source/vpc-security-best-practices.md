@@ -11,4 +11,4 @@ The following are general best practices:
 
 ## Additional resources<a name="seccurity-best-practices-additional-resources"></a>
 + Manage access to AWS resources and APIs using identity federation, IAM users, and IAM roles\. Establish credential management policies and procedures for creating, distributing, rotating, and revoking AWS access credentials\. For more information, see [IAM best practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html) in the *IAM User Guide*\.
-+ For answers to frequently asked questions for VPC security, see [Amazon VPC FAQs](https://aws.amazon.com/vpc/faqs/)\.
++ For answers to frequently asked questions for VPC security, see [Amazon VPC FAQs](http://aws.amazon.com/vpc/faqs/)\.

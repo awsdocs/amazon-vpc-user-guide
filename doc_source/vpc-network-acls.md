@@ -369,51 +369,49 @@ You can perform the tasks described on this page using the command line or an AP
 
 ## Example: Controlling access to instances in a subnet<a name="nacl-examples"></a>
 
-In this example, instances in your subnet can communicate with each other, and are accessible from a trusted remote computer\. The remote computer might be a computer in your local network or an instance in a different subnet or VPC\. You use it to connect to your instances to perform administrative tasks\. Your security group rules and network ACL rules allow access from the IP address of your remote computer \(172\.31\.1\.2/32\)\. All other traffic from the internet or other networks is denied\.
+In this example, instances in your subnet can communicate with each other, and are accessible from a trusted remote computer\. The remote computer might be a computer in your local network or an instance in a different subnet or VPC\. You use it to connect to your instances to perform administrative tasks\. Your security group rules and network ACL rules allow access from the IP address of your remote computer \(172\.31\.1\.2/32\)\. All other traffic from the internet or other networks is denied\. This scenario gives you the flexibility to change the security groups or security group rules for your instances, and have the network ACL as the backup layer of defense\.
 
 ![\[Using a security group and an NACL\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/nacl-example-diagram.png)
 
-All instances use the same security group \(sg\-1a2b3c4d\), with the following rules\.
+The following is an example security group to associate with the instances\. Security groups are stateful\. Therefore you don't need a rule that allows responses to inbound traffic\.
 
 
 |  | 
 | --- |
 | Inbound rules | 
 | Protocol Type | Protocol | Port range | Source | Comments | 
-| All traffic | All | All | sg\-1a2b3c4d | Enables instances that are associated with the same security group to communicate with each other\. | 
-| SSH | TCP | 22 | 172\.31\.1\.2/32 | Allows inbound SSH access from the remote computer\. If the instance is a Windows computer, this rule must use the RDP protocol for port 3389 instead\. | 
+| All traffic | All | All | sg\-1234567890abcdef0 | All instances associated with this security group can communicate with each other\. | 
+| SSH | TCP | 22 | 172\.31\.1\.2/32 | Allows inbound SSH access from the remote computer\. | 
 | Outbound rules | 
 | Protocol Type | Protocol | Port range | Destination | Comments | 
-| All traffic | All | All | sg\-1a2b3c4d | Enables instances that are associated with the same security group to communicate with each other\. Security groups are stateful\. Therefore you don't need a rule that allows response traffic for inbound requests\. | 
+| All traffic | All | All | sg\-1234567890abcdef0 | All instances associated with this security group can communicate with each other\. | 
 
-The subnet is associated with a network ACL that has the following rules\.
+The following is an example network ACL to associate with the subnets for the instances\. The network ACL rules apply to all instances in the subnet\. Network ACLs are stateless\. Therefore, you need a rule that allows responses to inbound traffic\.
 
 
 |  | 
 | --- |
 | Inbound rules | 
 | Rule \# | Type | Protocol | Port range | Source | Allow/Deny | Comments | 
-| 100 | SSH | TCP | 22 | 172\.31\.1\.2/32 | ALLOW | Allows inbound traffic from the remote computer\. If the instance is a Windows computer, this rule must use the RDP protocol for port 3389 instead\. | 
-| \* | All traffic | All | All | 0\.0\.0\.0/0 | DENY | Denies all other inbound traffic that does not match the previous rule\. | 
+| 100 | SSH | TCP | 22 | 172\.31\.1\.2/32 | ALLOW | Allows inbound traffic from the remote computer\. | 
+| \* | All traffic | All | All | 0\.0\.0\.0/0 | DENY | Denies all other inbound traffic\. | 
 | Outbound rules | 
 | Rule \# | Type | Protocol | Port range | Destination | Allow/Deny | Comments | 
-| 100 | Custom TCP | TCP | 1024\-65535 | 172\.31\.1\.2/32 | ALLOW | Allows outbound responses to the remote computer\. Network ACLs are stateless\. Therefore this rule is required to allow response traffic for inbound requests\. | 
-| \* | All traffic | All | All | 0\.0\.0\.0/0 | DENY | Denies all other outbound traffic that does not match the previous rule\. | 
+| 100 | Custom TCP | TCP | 1024\-65535 | 172\.31\.1\.2/32 | ALLOW | Allows outbound responses to the remote computer\. | 
+| \* | All traffic | All | All | 0\.0\.0\.0/0 | DENY | Denies all other outbound traffic\. | 
 
-This scenario gives you the flexibility to change the security groups or security group rules for your instances, and have the network ACL as the backup layer of defense\. The network ACL rules apply to all instances in the subnet\. If you accidentally make your security group rules too permissive, the network ACL rules continue to permit access only from the single IP address\. For example, the following rules are more permissive than the earlier rules: they allow inbound SSH access from any IP address\. 
+If you accidentally make your security group rules too permissive, the network ACL in this example continues to permit access only from the specified IP address\. For example, the following security group contains a rule that allow inbound SSH access from any IP address\. However, if you associate this security group with an instance in a subnet that uses the network ACL, only other instances within the subnet and your remote computer can access the instance, because the network ACL rules deny other inbound traffic to the subnet\.
 
 
 |  | 
 | --- |
 | Inbound rules | 
 | Type | Protocol | Port range | Source | Comments | 
-| All traffic | All | All | sg\-1a2b3c4d | Enables instances that are associated with the same security group to communicate with each other\. | 
+| All traffic | All | All | sg\-1234567890abcdef0 | All instances associated with this security group can communicate with each other\. | 
 | SSH | TCP | 22 | 0\.0\.0\.0/0 | Allows SSH access from any IP address\. | 
 | Outbound rules | 
 | Type | Protocol | Port range | Destination | Comments | 
 | All traffic | All | All | 0\.0\.0\.0/0 | Allows all outbound traffic\. | 
-
-However, only other instances within the subnet and your remote computer are able to access this instance\. The network ACL rules still prevent all inbound traffic to the subnet except from your remote computer\.
 
 ## Recommended rules for VPC wizard scenarios<a name="vpc-recommended-nacl-rules"></a>
 

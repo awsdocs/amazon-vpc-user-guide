@@ -30,7 +30,7 @@ The following figure illustrates the NAT instance basics\. The main route table 
 
 Internet traffic from the instances in the private subnet is routed to the NAT instance, which then communicates with the internet\. Therefore, the NAT instance must have internet access\. It must be in a public subnet \(a subnet that has a route table with a route to the internet gateway\), and it must have a public IP address or an Elastic IP address\.
 
-![\[NAT instance setup\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/nat-instance-diagram.png)
+![\[NAT instance setup\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/nat-instance.png)
 
 ## NAT instance AMI<a name="nat-instance-ami"></a>
 

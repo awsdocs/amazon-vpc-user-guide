@@ -114,7 +114,7 @@ You cannot associate a subnet with a route table if any of the following applies
 
 The following diagram shows the routing for a VPC with an internet gateway, a virtual private gateway, a public subnet, and a VPN\-only subnet\. The main route table has a route to the virtual private gateway\. A custom route table is explicitly associated with the public subnet\. The custom route table has a route to the internet \(`0.0.0.0/0`\) through the internet gateway\.
 
-![\[Main route table and custom table\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/custom-route-table-diagram.png)
+![\[Main route table and custom table\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/case-3.png)
 
 If you create a new subnet in this VPC, it's automatically implicitly associated with the main route table, which routes traffic to the virtual private gateway\. If you set up the reverse configuration \(where the main route table has the route to the internet gateway, and the custom route table has the route to the virtual private gateway\), then a new subnet automatically has a route to the internet gateway\. 
 
@@ -225,4 +225,4 @@ If your route table references a prefix list, the following rules apply:
 + If your route table contains a static route that overlaps with another route that references a prefix list, the static route with the destination CIDR block takes priority\.
 + If your route table contains a propagated route that overlaps with a route that references a prefix list, the route that references the prefix list takes priority\.
 + If your route table references multiple prefix lists that have overlapping CIDR blocks to different targets, we randomly choose which route takes priority\. Thereafter, the same route always takes priority\.
-+ If the CIDR block in a prefix list entry is not valid for the route table, that CIDR block is ignored\. For example, in a subnet route table, if the prefix list contains an entry with a more specific CIDR than the VPC CIDR, that entry is ignored\.
++ If the CIDR block in a prefix list entry is not valid for the route table, the entry is ignored\. For example, in a subnet route table, if the prefix list contains an entry with a more specific CIDR than the VPC CIDR, that entry is ignored\.

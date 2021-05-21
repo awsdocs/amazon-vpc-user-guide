@@ -47,6 +47,24 @@ You can optionally enable IPv6 for this scenario\. In addition to the components
 
 ![\[IPv6-enabled VPC with a public and VPN-only subnet\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/scenario-3-ipv6-diagram.png)
 
+The web servers in the public subnet have the following addresses\.
+
+
+| Server | IPv4 address | Elastic IP address | IPv6 address | 
+| --- | --- | --- | --- | 
+|  1  |  10\.0\.0\.5  | 198\.51\.100\.1 | 2001:db8:1234:1a00::1a | 
+|  2  |  10\.0\.0\.6  | 198\.51\.100\.2 | 2001:db8:1234:1a00::2b | 
+| 3 | 10\.0\.0\.7 | 198\.51\.100\.3 | 2001:db8:1234:1a00::3c | 
+
+The database servers in the private subnet have the following addresses\.
+
+
+| Server | IPv4 address | IPv6 address | 
+| --- | --- | --- | 
+|  1  |  10\.0\.1\.5  | 2001:db8:1234:1a01::1a | 
+|  2  |  10\.0\.1\.6  | 2001:db8:1234:1a01::2b | 
+| 3 | 10\.0\.1\.7 | 2001:db8:1234:1a01::3c | 
+
 ## Routing<a name="VPC_Scenario3_Routing"></a>
 
 Your VPC has an implied router \(shown in the configuration diagram for this scenario\)\. In this scenario, the VPC wizard updates the main route table used with the VPN\-only subnet, and creates a custom route table and associates it with the public subnet\. 

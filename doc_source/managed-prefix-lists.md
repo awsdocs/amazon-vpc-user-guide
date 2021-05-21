@@ -18,7 +18,7 @@ A prefix list consists of *entries*\. Each entry consists of a CIDR block and, o
 
 The following rules apply to customer\-managed prefix lists:
 + When you create a prefix list, you must specify the maximum number of entries that the prefix list can support\. You cannot modify the maximum number of entries later\.
-+ When you reference a prefix list in a resource, the maximum number of entries for the prefix lists counts as the same number of rules or entries for the resource\. For example, if you create a prefix list with a maximum of 20 entries and you reference that prefix list in a security group rule, this counts as 20 rules for the security group\. 
++ When you reference a prefix list in a resource, the number of entries for the prefix lists counts as the same number of entries for the resource\. For example, if you create a prefix list with 20 entries and you reference that prefix list in a security group rule, this counts as 20 rules for the security group\. 
 + You can modify a prefix list by adding or removing entries, or by changing its name\.
 + A prefix list supports a single type of IP addressing only \(IPv4 or IPv6\)\. You cannot combine IPv4 and IPv6 CIDR blocks in a single prefix list\.
 + There are quotas related to prefix lists\. For more information, see [Amazon VPC quotas](amazon-vpc-limits.md)\.

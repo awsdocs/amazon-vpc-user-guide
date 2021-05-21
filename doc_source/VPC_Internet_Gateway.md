@@ -26,7 +26,7 @@ To enable communication over the internet for IPv6, your VPC and subnet must hav
 
 In the following diagram, Subnet 1 in the VPC is a public subnet\. It's associated with a custom route table that points all internet\-bound IPv4 traffic to an internet gateway\. The instance has an Elastic IP address, which enables communication with the internet\.
 
-![\[Using an internet gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/internet-gateway-overview-diagram.png)
+![\[Using an internet gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/case-1.png)
 
 To provide your instances with internet access without assigning them public IP addresses, you can use a NAT device instead\. A NAT device enables instances in a private subnet to connect to the internet, but prevents hosts on the internet from initiating connections with the instances\. For more information, see [NAT devices for your VPC](vpc-nat.md)\.
 

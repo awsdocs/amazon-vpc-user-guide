@@ -28,4 +28,4 @@ Consider the following options for controlling network traffic to your EC2 insta
 
 In addition to restricting network access to each Amazon EC2 instance, Amazon VPC supports implementing additional network security controls like in\-line gateways, proxy servers, and various network monitoring options\.
 
-For more information, see the [Best Practices for Security, Identity, & Compliance](https://aws.amazon.com/architecture/security-identity-compliance)\.
+For more information, see the [AWS Security Best Practices](https://aws.amazon.com/architecture/security-identity-compliance) whitepaper\.

@@ -34,7 +34,7 @@ Before you migrate to using IPv6, ensure that you have read the features of IPv6
 
 In this example, your VPC has a public and a private subnet\. You have a database instance in your private subnet that has outbound communication with the internet through a NAT gateway in your VPC\. You have a public\-facing web server in your public subnet that has internet access through the internet gateway\. The following diagram represents the architecture of your VPC\.
 
-![\[VPC with public and private subnets\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-migrate-ipv6-example-diagram.png)
+![\[VPC with public and private subnets\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-migrate-ipv6.png)
 
 The security group for your web server \(`sg-11aa22bb11aa22bb1`\) has the following inbound rules:
 
@@ -61,7 +61,7 @@ You want your VPC and resources to be enabled for IPv6, and you want them to ope
 
 After you've completed the steps, your VPC will have the following configuration\.
 
-![\[VPC with public and private subnets\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-migrate-ipv6-example-2-diagram.png)
+![\[VPC with public and private subnets\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-migrate-ipv6-2.png)
 
 ## Step 1: Associate an IPv6 CIDR block with your VPC and subnets<a name="vpc-migrate-ipv6-cidr"></a>
 

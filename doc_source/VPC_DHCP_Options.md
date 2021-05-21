@@ -23,7 +23,7 @@ To use this option, set it to either AmazonProvidedDNS, or to custom domain name
 Default DHCP options set: AmazonProvidedDNS
 
 **domain\-name**  
-The domain name for your instances\. You can specify a custom domain name \(for example, `example.com`\)\. This value is used to complete unqualified DNS hostnames\. For more information about DNS hostnames and DNS support in your VPC, see [Using DNS with your VPC](vpc-dns.md)\. If you specify a custom domain name, you must set `domain-name-servers` to a custom DNS server\.  
+The domain name for your instances\. You can specify a custom domain name \(for example, `example.com`\)\. This value is used to complete unqualified DNS hostnames\. For more information about DNS hostnames and DNS support in your VPC, see [Using DNS with your VPC](vpc-dns.md)\. When you use a custom domain name, you only need to specify a custom domain\-name server if the custom domain is hosted on customer\-managed DNS servers\. you use Amazon Route 53 private hosted zone associated with the same VPC, then you can use [AmazonProvidedDNS](#AmazonDNS)\.  
 Some Linux operating systems accept multiple domain names separated by spaces\. However, other Linux operating systems and Windows treat the value as a single domain, which results in unexpected behavior\. If your DHCP options set is associated with a VPC that has instances with multiple operating systems, specify only one domain name\.
 Default DHCP options set: For `us-east-1`, the value is `ec2.internal`\. For other Regions, the value is *region*\.compute\.internal \(for example, `ap-northeast-1.compute.internal`\)\. To use the default values, set `domain-name-servers` to AmazonProvidedDNS\.
 
@@ -53,6 +53,7 @@ When using the Amazon DNS server, the following rules and considerations apply\.
 + You cannot filter traffic to or from the Amazon DNS server using network ACLs or security groups\.
 + Services that use the Hadoop framework, such as Amazon EMR, require instances to resolve their own fully qualified domain names \(FQDN\)\. In such cases, DNS resolution can fail if the `domain-name-servers` option is set to a custom value\. To ensure proper DNS resolution, consider adding a conditional forwarder on your DNS server to forward queries for the domain `region-name.compute.internal` to the Amazon DNS server\. For more information, see [Setting up a VPC to host clusters](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-vpc-host-job-flows.html) in the *Amazon EMR Management Guide*\.
 + You can use the Amazon DNS server IP address 169\.254\.169\.253, though some servers don't allow its use\. Windows Server 2008, for example, disallows the use of a DNS server located in the 169\.254\.x\.x network range\. 
++ The Amazon Route 53 Resolver only supports recursive DNS queries\.
 
 ## Changing DHCP options<a name="DHCPOptions"></a>
 

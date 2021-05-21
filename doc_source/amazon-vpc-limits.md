@@ -16,7 +16,7 @@ If you request a quota increase that applies per resource, we increase the quota
 
 ## DNS<a name="vpc-limits-dns"></a>
 
-Each EC2 instance limits the number of packets that can be sent to the Amazon Route 53 Resolver \(specifically the \.2 address, such as 10\.0\.0\.2\) to a maximum of 1024 packets per second per network interface\. This quota cannot be increased\. The number of DNS queries per second supported by the Amazon Route 53 Resolver varies by the type of query, the size of response, and the protocol in use\. For more information and recommendations for a scalable DNS architecture, see the [Hybrid Cloud DNS Solutions for Amazon VPC](https://d1.awsstatic.com/whitepapers/hybrid-cloud-dns-options-for-vpc.pdf) whitepaper\.
+Each EC2 instance limits the number of packets that can be sent to the Amazon Route 53 Resolver \(specifically the \.2 address, such as 10\.0\.0\.2, and 169\.254\.169\.253\) to a maximum of 1024 packets per second per network interface\. This quota cannot be increased\. The number of DNS queries per second supported by the Amazon Route 53 Resolver varies by the type of query, the size of response, and the protocol in use\. For more information and recommendations for a scalable DNS architecture, see the [Hybrid Cloud DNS Solutions for Amazon VPC](https://d1.awsstatic.com/whitepapers/hybrid-cloud-dns-options-for-vpc.pdf) whitepaper\.
 
 ## Elastic IP addresses \(IPv4\)<a name="vpc-limits-eips"></a>
 

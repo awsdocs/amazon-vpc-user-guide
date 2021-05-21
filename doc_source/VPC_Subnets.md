@@ -83,7 +83,7 @@ The CIDR block of a subnet can be the same as the CIDR block for the VPC \(for a
 
 For example, if you create a VPC with CIDR block `10.0.0.0/24`, it supports 256 IP addresses\. You can break this CIDR block into two subnets, each supporting 128 IP addresses\. One subnet uses CIDR block `10.0.0.0/25` \(for addresses `10.0.0.0` \- `10.0.0.127`\) and the other uses CIDR block `10.0.0.128/25` \(for addresses `10.0.0.128` \- `10.0.0.255`\)\.
 
-There are tools available on the internet to help you calculate and create IPv4 subnet CIDR blocks\. You can find other tools that suit your needs by searching for terms such as 'subnet calculator' or 'CIDR calculator'\. Your network engineering group can also help you determine the CIDR blocks to specify for your subnets\.
+There are tools available on the internet to help you calculate and create IPv4 subnet CIDR blocks\. You can find tools that suit your needs by searching for terms such as 'subnet calculator' or 'CIDR calculator'\. Your network engineering group can also help you determine the CIDR blocks to specify for your subnets\.
 
 The first four IP addresses and the last IP address in each subnet CIDR block are not available for you to use, and cannot be assigned to an instance\. For example, in a subnet with CIDR block `10.0.0.0/24`, the following five IP addresses are reserved: 
 + `10.0.0.0`: Network address\.
@@ -185,7 +185,7 @@ If you've associated an IPv6 CIDR block with your VPC, you can associate an IPv6
 
 For example, you create a VPC and specify that you want to associate an Amazon\-provided IPv6 CIDR block with the VPC\. Amazon assigns the following IPv6 CIDR block to your VPC: `2001:db8:1234:1a00::/56`\. You cannot choose the range of IP addresses yourself\. You can create a subnet and associate an IPv6 CIDR block from this range; for example, `2001:db8:1234:1a00::/64`\.
 
-There are tools available on the internet to help you calculate and create IPv6 subnet CIDR blocks\. You can find other tools that suit your needs by searching for terms such as 'IPv6 subnet calculator' or 'IPv6 CIDR calculator'\. Your network engineering group can also help you determine the IPv6 CIDR blocks to specify for your subnets\.
+There are tools available on the internet to help you calculate and create IPv6 subnet CIDR blocks; for example, [IPv6 Address Planner](https://network00.com/NetworkTools/IPv6VisualSubnetCalculatorCreator)\. You can find other tools that suit your needs by searching for terms such as 'IPv6 subnet calculator' or 'IPv6 CIDR calculator'\. Your network engineering group can also help you determine the IPv6 CIDR blocks to specify for your subnets\.
 
 You can disassociate an IPv6 CIDR block from a subnet, and you can disassociate an IPv6 CIDR block from a VPC\. After you've disassociated an IPv6 CIDR block from a VPC, you cannot expect to receive the same CIDR if you associate an IPv6 CIDR block with your VPC again later\.
 

@@ -118,6 +118,8 @@ You can add another IPv4 CIDR block to your VPC\. Ensure that you have read the 
 
 After you've associated a CIDR block, the status goes to `associating`\. The CIDR block is ready to use when it's in the `associated` state\.
 
+The Amazon VPC Console provides the status of the request at the top of the page\.
+
 **To add a CIDR block to your VPC using the console**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.

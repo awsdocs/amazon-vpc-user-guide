@@ -37,8 +37,6 @@ You can optionally enable IPv6 for this scenario\. In addition to the components
 + IPv6 addresses assigned to the instances from the subnet range \(example: 2001:db8:1234:1a00::1a\)\.
 + A route table entry in the main route table that enables instances in the private subnet to use IPv6 to communicate with each other\.
 
-![\[IPv6-enabled VPC with a VPN-only subnet\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/scenario-4-ipv6-diagram.png)
-
 ## Routing<a name="VPC_Scenario4_Routing"></a>
 
 Your VPC has an implied router \(shown in the configuration diagram for this scenario\)\. In this scenario, the VPC wizard creates a route table that routes all traffic destined for an address outside the VPC to the AWS Site\-to\-Site VPN connection, and associates the route table with the subnet\. 

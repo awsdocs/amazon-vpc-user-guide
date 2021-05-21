@@ -1,10 +1,14 @@
 # Publishing flow logs to Amazon S3<a name="flow-logs-s3"></a>
 
-Flow logs can publish flow log data to Amazon S3\.
+Flow logs can publish flow log data to Amazon S3\. Data ingestion and archival charges for vended logs apply when you publish flow logs to Amazon S3\. For more information, see [Amazon CloudWatch Pricing](https://aws.amazon.com/cloudwatch/pricing)\.
 
-When publishing to Amazon S3, flow log data is published to an existing Amazon S3 bucket that you specify\. Flow log records for all of the monitored network interfaces are published to a series of log file objects that are stored in the bucket\. If the flow log captures data for a VPC, the flow log publishes flow log records for all of the network interfaces in the selected VPC\. For more information, see [Flow log records](flow-logs.md#flow-log-records)\.
+To create an Amazon S3 bucket for use with flow logs, see [Create a bucket](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html) in the *Amazon Simple Storage Service Getting Started Guide*\.
 
-To create an Amazon S3 bucket for use with flow logs, see [Create a Bucket](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html) in the *Amazon Simple Storage Service Getting Started Guide*\.
+When publishing to Amazon S3, flow log data is published to an existing Amazon S3 bucket that you specify\. Flow log records for all of the monitored network interfaces are published to a series of log file objects that are stored in the bucket\. If the flow log captures data for a VPC, the flow log publishes flow log records for all of the network interfaces in the selected VPC\.
+
+
+
+For more information about multiple account logging, see [Central Logging](http://aws.amazon.com/solutions/implementations/centralized-logging/) in the AWS Solutions Library\.
 
 **Topics**
 + [Flow log files](#flow-logs-s3-path)
@@ -33,7 +37,7 @@ Similarly, the log file's file name is determined by the flow log's ID, Region, 
 aws_account_id_vpcflowlogs_region_flow_log_id_timestamp_hash.log.gz
 ```
 
-For example, the following shows the folder structure and file name of a log file for a flow log created by AWS account `123456789012`, for a resource in the `us-east-1` Region, on `June 20, 2018` at `16:20 UTC`\. It includes flow log records for `16:15:00` to `16:19:59`\. 
+For example, the following shows the folder structure and file name of a log file for a flow log created by AWS account `123456789012`, for a resource in the `us-east-1` Region, on `June 20, 2018` at `16:20 UTC`\. It includes the flow log records with an end time between `16:20:00` and `16:24:59`\.
 
 ```
 arn:aws:s3:::my-flow-log-bucket/AWSLogs/123456789012/vpcflowlogs/us-east-1/2018/06/20/123456789012_vpcflowlogs_us-east-1_fl-1234abcd_20180620T1620Z_fe123456.log.gz
@@ -92,7 +96,7 @@ The following bucket policy gives the flow log permission to publish logs to it\
 
 If the user creating the flow log owns the bucket, has `PutBucketPolicy` permissions for the bucket, and the bucket does not have a policy with sufficient log delivery permissions, we automatically attach the preceding policy to the bucket\. This policy overwrites any existing policy attached to the bucket\.
 
-If the user creating the flow log does not own the bucket, or does not have the `GetBucketPolicy` and `PutBucketPolicy` permissions for the bucket, the flow log creation fails\. In this case, the bucket owner must manually add the above policy to the bucket and specify the flow log creator's AWS account ID\. For more information, see [How Do I Add an S3 Bucket Policy?](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/add-bucket-policy.html) in the *Amazon Simple Storage Service Console User Guide*\. If the bucket receives flow logs from multiple accounts, add a `Resource` element entry to the `AWSLogDeliveryWrite` policy statement for each account\. For example, the following bucket policy allows AWS accounts `123123123123` and `456456456456` to publish flow logs to a folder named `flow-logs` in a bucket named `log-bucket`\.
+If the user creating the flow log does not own the bucket, or does not have the `GetBucketPolicy` and `PutBucketPolicy` permissions for the bucket, the flow log creation fails\. In this case, the bucket owner must manually add the above policy to the bucket and specify the flow log creator's AWS account ID\. For more information, see [How Do I Add an S3 Bucket Policy?](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/add-bucket-policy.html) in the *Amazon Simple Storage Service Console User Guide*\. If the bucket receives flow logs from multiple accounts, add a `Resource` element entry to the `AWSLogDeliveryWrite` policy statement for each account\. For example, the following bucket policy allows AWSaccounts `123123123123` and `456456456456` to publish flow logs to a folder named `flow-logs` in a bucket named `log-bucket`\.
 
 ```
 {

@@ -77,9 +77,9 @@ If you associate an IPv6 CIDR block with your VPC and assign IPv6 addresses to y
 
 ## Accessing a corporate or home network<a name="what-is-vpn"></a>
 
-You can optionally connect your VPC to your own corporate data center using an IPsec AWS Site\-to\-Site VPN connection, making the AWS Cloud an extension of your data center\.
+You can optionally connect your VPC to your own corporate data center using an IPsec AWS Site\-to\-Site VPN connection, making the AWSCloud an extension of your data center\.
 
-A Site\-to\-Site VPN connection consists of two VPN tunnels between a virtual private gateway or transit gateway on the AWS side, and a customer gateway device located in your data center\. A customer gateway device is a physical device or software appliance that you configure on your side of the Site\-to\-Site VPN connection\.
+A Site\-to\-Site VPN connection consists of two VPN tunnels between a virtual private gateway or transit gateway on the AWSside, and a customer gateway device located in your data center\. A customer gateway device is a physical device or software appliance that you configure on your side of the Site\-to\-Site VPN connection\.
 
 ![\[Using a virtual private gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/virtual-private-gateway.png)
 

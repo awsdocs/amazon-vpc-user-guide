@@ -24,7 +24,7 @@ An egress\-only internet gateway has the following characteristics:
 
 In the following diagram, a VPC has an IPv6 CIDR block, and a subnet in the VPC has an IPv6 CIDR block\. A custom route table is associated with Subnet 1 and points all internet\-bound IPv6 traffic \(`::/0`\) to an egress\-only internet gateway in the VPC\.
 
-![\[Using an egress-only internet gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/egress-only-igw-diagram.png)
+![\[Using an egress-only internet gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/egress-only-igw.png)
 
 ## Working with egress\-only internet gateways<a name="egress-only-internet-gateway-working-with"></a>
 

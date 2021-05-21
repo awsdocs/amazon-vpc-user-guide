@@ -341,4 +341,4 @@ To learn more about using Firewall Manager to manage your security groups, see t
 + [AWS Firewall Manager prerequisites](https://docs.aws.amazon.com/waf/latest/developerguide/fms-prereq.html)
 + [Getting started with AWS Firewall Manager Amazon VPC security group policies](https://docs.aws.amazon.com/waf/latest/developerguide/getting-started-fms-security-group.html)
 + [How security group policies work in AWS Firewall Manager](https://docs.aws.amazon.com/waf/latest/developerguide/security-group-policies.html)
-+ [Security group policy use cases](https://docs.aws.amazon.com/waf/latest/developerguide/security-group-policies-use-cases.html)
++ [Security group policy use cases](https://docs.aws.amazon.com/waf/latest/developerguide/security-group-policies.html#security-group-policies-use-cases)
