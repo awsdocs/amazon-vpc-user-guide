@@ -87,7 +87,7 @@ With a custom format, you specify which fields are included in the flow log reco
 
 ### Available fields<a name="flow-logs-fields"></a>
 
-The following table describes all of the available fields for a flow log record\. The **Version** column indicates the VPC Flow Logs version in which the field was introduced\. The default format includes all version 2 fields, in same the order that they appear in the table\.
+The following table describes all of the available fields for a flow log record\. The **Version** column indicates the VPC Flow Logs version in which the field was introduced\. The default format includes all version 2 fields, in the same order that they appear in the table\.
 
 If a field is not applicable or could not be computed for a specific record, the record displays a '\-' symbol for that entry\. Metadata fields that do not come directly from the packet header are best effort approximations, and their values might be missing or inaccurate\.
 
