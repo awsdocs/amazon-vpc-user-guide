@@ -1,6 +1,6 @@
 # Network ACLs<a name="vpc-network-acls"></a>
 
-A *network access control list \(ACL\)* is an optional layer of security for your VPC that acts as a firewall for controlling traffic in and out of one or more subnets\. You might set up network ACLs with rules similar to your security groups in order to add an additional layer of security to your VPC\. For more information about the differences between security groups and network ACLs, see [Comparison of security groups and network ACLs](VPC_Security.md#VPC_Security_Comparison)\.
+A *network access control list \(ACL\)* is an optional layer of security for your VPC that acts as a firewall for controlling traffic in and out of one or more subnets\. You might set up network ACLs with rules similar to your security groups in order to add an additional layer of security to your VPC\. For more information about the differences between security groups and network ACLs, see [Compare security groups and network ACLs](VPC_Security.md#VPC_Security_Comparison)\.
 
 **Topics**
 + [Network ACL basics](#nacl-basics)
@@ -10,8 +10,8 @@ A *network access control list \(ACL\)* is an optional layer of security for you
 + [Custom network ACLs and other AWS services](#nacl-other-services)
 + [Ephemeral ports](#nacl-ephemeral-ports)
 + [Path MTU Discovery](#path_mtu_discovery)
-+ [Working with network ACLs](#nacl-tasks)
-+ [Example: Controlling access to instances in a subnet](#nacl-examples)
++ [Work with network ACLs](#nacl-tasks)
++ [Example: Control access to instances in a subnet](#nacl-examples)
 + [Recommended rules for VPC wizard scenarios](#vpc-recommended-nacl-rules)
 
 ## Network ACL basics<a name="nacl-basics"></a>
@@ -189,21 +189,21 @@ The IPv6 protocol does not support fragmentation in the network\. When a host se
 
 If the maximum transmission unit \(MTU\) between hosts in your subnets is different, or your instances communicate with peers over the internet, you must add the following network ACL rule, both inbound and outbound\. This ensures that Path MTU Discovery can function correctly and prevent packet loss\. Select **Custom ICMP Rule** for the type and **Destination Unreachable**, **fragmentation required, and DF flag set** for the port range \(type 3, code 4\)\. If you use traceroute, also add the following rule: select **Custom ICMP Rule** for the type and **Time Exceeded**, **TTL expired transit** for the port range \(type 11, code 0\)\. For more information, see [Network maximum transmission unit \(MTU\) for your EC2 instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-## Working with network ACLs<a name="nacl-tasks"></a>
+## Work with network ACLs<a name="nacl-tasks"></a>
 
 The following tasks show you how to work with network ACLs using the Amazon VPC console\.
 
 **Topics**
-+ [Determining network ACL associations](#ACLSubnet)
-+ [Creating a network ACL](#CreateACL)
-+ [Adding and deleting rules](#Rules)
-+ [Associating a subnet with a network ACL](#NetworkACL)
-+ [Disassociating a network ACL from a subnet](#DisassociateNetworkACL)
-+ [Changing a subnet's network ACL](#ChangeNetworkACL)
-+ [Deleting a network ACL](#DeleteNetworkACL)
++ [Determine network ACL associations](#ACLSubnet)
++ [Create a network ACL](#CreateACL)
++ [Add and delete rules](#Rules)
++ [Associate a subnet with a network ACL](#NetworkACL)
++ [Disassociate a network ACL from a subnet](#DisassociateNetworkACL)
++ [Change a subnet's network ACL](#ChangeNetworkACL)
++ [Delete a network ACL](#DeleteNetworkACL)
 + [API and command overview](#nacl-api-cli)
 
-### Determining network ACL associations<a name="ACLSubnet"></a>
+### Determine network ACL associations<a name="ACLSubnet"></a>
 
 You can use the Amazon VPC console to determine the network ACL that's associated with a subnet\. Network ACLs can be associated with more than one subnet, so you can also determine which subnets are associated with a network ACL\.
 
@@ -225,7 +225,7 @@ You can use the Amazon VPC console to determine the network ACL that's associate
 
 1. In the details pane, choose **Subnet Associations** to display the subnets that are associated with the network ACL\.
 
-### Creating a network ACL<a name="CreateACL"></a>
+### Create a network ACL<a name="CreateACL"></a>
 
 You can create a custom network ACL for your VPC\. By default, a network ACL that you create blocks all inbound and outbound traffic until you add rules, and is not associated with a subnet until you explicitly associate it with one\.
 
@@ -239,7 +239,7 @@ You can create a custom network ACL for your VPC\. By default, a network ACL tha
 
 1. In the **Create Network ACL** dialog box, optionally name your network ACL, and select the ID of your VPC from the **VPC** list\. Then choose **Yes, Create**\.
 
-### Adding and deleting rules<a name="Rules"></a>
+### Add and delete rules<a name="Rules"></a>
 
 When you add or delete a rule from an ACL, any subnets that are associated with the ACL are subject to the change\. You don't have to terminate and relaunch the instances in the subnet\. The changes take effect after a short period\. 
 
@@ -279,7 +279,7 @@ If you're using the Amazon EC2 API or a command line tool, you can't modify rule
 
 1. In the details pane, select either the **Inbound Rules** or **Outbound Rules** tab, and then choose **Edit**\. Choose **Remove** for the rule you want to delete, and then choose **Save**\.
 
-### Associating a subnet with a network ACL<a name="NetworkACL"></a>
+### Associate a subnet with a network ACL<a name="NetworkACL"></a>
 
 To apply the rules of a network ACL to a particular subnet, you must associate the subnet with the network ACL\. You can associate a network ACL with multiple subnets\. However, a subnet can be associated with only one network ACL\. Any subnet that is not associated with a particular ACL is associated with the default network ACL by default\.
 
@@ -291,7 +291,7 @@ To apply the rules of a network ACL to a particular subnet, you must associate t
 
 1. In the details pane, on the **Subnet Associations** tab, choose **Edit**\. Select the **Associate** check box for the subnet to associate with the network ACL, and then choose **Save**\.
 
-### Disassociating a network ACL from a subnet<a name="DisassociateNetworkACL"></a>
+### Disassociate a network ACL from a subnet<a name="DisassociateNetworkACL"></a>
 
 You can disassociate a custom network ACL from a subnet\. When the subnet has been disassociated from the custom network ACL, it is then automatically associated with the default network ACL\.
 
@@ -305,7 +305,7 @@ You can disassociate a custom network ACL from a subnet\. When the subnet has be
 
 1. Choose **Edit**, and then deselect the **Associate** check box for the subnet\. Choose **Save**\.
 
-### Changing a subnet's network ACL<a name="ChangeNetworkACL"></a>
+### Change a subnet's network ACL<a name="ChangeNetworkACL"></a>
 
 You can change the network ACL that's associated with a subnet\. For example, when you create a subnet, it is initially associated with the default network ACL\. You might want to instead associate it with a custom network ACL that you've created\.
 
@@ -321,7 +321,7 @@ After changing a subnet's network ACL, you don't have to terminate and relaunch 
 
 1. From the **Change to** list, select the network ACL to associate the subnet with, and then choose **Save**\.
 
-### Deleting a network ACL<a name="DeleteNetworkACL"></a>
+### Delete a network ACL<a name="DeleteNetworkACL"></a>
 
 You can delete a network ACL only if there are no subnets associated with it\. You can't delete the default network ACL\.
 
@@ -337,7 +337,7 @@ You can delete a network ACL only if there are no subnets associated with it\. Y
 
 ### API and command overview<a name="nacl-api-cli"></a>
 
-You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Access Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 
 **Create a network ACL for your VPC**
 + [create\-network\-acl](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-network-acl.html) \(AWS CLI\)
@@ -367,7 +367,7 @@ You can perform the tasks described on this page using the command line or an AP
 + [delete\-network\-acl](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-network-acl.html) \(AWS CLI\)
 + [Remove\-EC2NetworkAcl](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2NetworkAcl.html) \(AWS Tools for Windows PowerShell\)
 
-## Example: Controlling access to instances in a subnet<a name="nacl-examples"></a>
+## Example: Control access to instances in a subnet<a name="nacl-examples"></a>
 
 In this example, instances in your subnet can communicate with each other, and are accessible from a trusted remote computer\. The remote computer might be a computer in your local network or an instance in a different subnet or VPC\. You use it to connect to your instances to perform administrative tasks\. Your security group rules and network ACL rules allow access from the IP address of your remote computer \(172\.31\.1\.2/32\)\. All other traffic from the internet or other networks is denied\. This scenario gives you the flexibility to change the security groups or security group rules for your instances, and have the network ACL as the backup layer of defense\.
 

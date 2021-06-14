@@ -1,4 +1,4 @@
-# Getting started with Amazon VPC<a name="vpc-getting-started"></a>
+# Get started with Amazon VPC<a name="vpc-getting-started"></a>
 
 To get started using Amazon VPC, you can create a nondefault VPC\. The following steps describe how to use the Amazon VPC wizard to create a nondefault VPC with a public subnet, which is a subnet that has access to the internet through an internet gateway\. You can then launch an instance into the subnet and connect to it\.
 
@@ -6,7 +6,7 @@ Alternatively, to get started launching an instance into your existing default V
 
 Before you can use Amazon VPC for the first time, you must sign up for Amazon Web Services \(AWS\)\. When you sign up, your AWS account is automatically signed up for all services in AWS, including Amazon VPC\. If you haven't created an AWS account already, go to [https://aws\.amazon\.com/](https://aws.amazon.com/), and then choose **Create a Free Account**\.
 
-If you want to use a Local Zone for your VPC, create a VPC, and then create a subnet in the Local Zone\. For more information, see [Creating a VPC](working-with-vpcs.md#Create-VPC) and [Creating a subnet in your VPC](working-with-vpcs.md#AddaSubnet)\.
+If you want to use a Local Zone for your VPC, create a VPC, and then create a subnet in the Local Zone\. For more information, see [Create a VPC](working-with-vpcs.md#Create-VPC) and [Create a subnet in your VPC](working-with-vpcs.md#AddaSubnet)\.
 
 **Topics**
 + [Overview](#getting-started-overview)
@@ -15,7 +15,7 @@ If you want to use a Local Zone for your VPC, create a VPC, and then create a su
 + [Step 3: Assign an Elastic IP address to your instance](#getting-started-assign-eip)
 + [Step 4: Clean up](#getting-started-delete-vpc)
 + [Next steps](#getting-started-next-steps)
-+ [Getting started with IPv6 for Amazon VPC](get-started-ipv6.md)
++ [Get started with IPv6 for Amazon VPC](get-started-ipv6.md)
 + [Amazon VPC console wizard configurations](VPC_wizard.md)
 
 ## Overview<a name="getting-started-overview"></a>
@@ -152,6 +152,6 @@ Before you can delete a VPC, you must terminate any instances that are running i
 ## Next steps<a name="getting-started-next-steps"></a>
 
 After you create a nondefault VPC, you might want to do the following:
-+ Add more subnets to your VPC\. For more information, see [Creating a subnet in your VPC](working-with-vpcs.md#AddaSubnet)\.
-+ Enable IPv6 support for your VPC and subnets\. For more information, see [Associating an IPv6 CIDR block with your VPC](working-with-vpcs.md#vpc-associate-ipv6-cidr) and [Associating an IPv6 CIDR block with your subnet](working-with-vpcs.md#subnet-associate-ipv6-cidr)\.
++ Add more subnets to your VPC\. For more information, see [Create a subnet in your VPC](working-with-vpcs.md#AddaSubnet)\.
++ Enable IPv6 support for your VPC and subnets\. For more information, see [Associate an IPv6 CIDR block with your VPC](working-with-vpcs.md#vpc-associate-ipv6-cidr) and [Associate an IPv6 CIDR block with your subnet](working-with-vpcs.md#subnet-associate-ipv6-cidr)\.
 + Enable instances in a private subnet to access the internet\. For more information, see [NAT devices for your VPC](vpc-nat.md)\.

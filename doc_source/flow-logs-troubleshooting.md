@@ -1,4 +1,4 @@
-# Troubleshooting VPC Flow Logs<a name="flow-logs-troubleshooting"></a>
+# Troubleshoot VPC Flow Logs<a name="flow-logs-troubleshooting"></a>
 
 The following are possible issues you might have when working with flow logs\.
 
@@ -17,7 +17,7 @@ Your flow log records are incomplete, or are no longer being published\.
 There may be a problem delivering the flow logs to the CloudWatch Logs log group\.
 
 **Solution**  
-In either the Amazon EC2 console or the Amazon VPC console, choose the **Flow Logs** tab for the relevant resource\. For more information, see [Viewing flow logs](working-with-flow-logs.md#view-flow-logs)\. The flow logs table displays any errors in the **Status** column\. Alternatively, use the [describe\-flow\-logs](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-flow-logs.html) command, and check the value that's returned in the `DeliverLogsErrorMessage` field\. One of the following errors may be displayed:
+In either the Amazon EC2 console or the Amazon VPC console, choose the **Flow Logs** tab for the relevant resource\. For more information, see [View flow logs](working-with-flow-logs.md#view-flow-logs)\. The flow logs table displays any errors in the **Status** column\. Alternatively, use the [describe\-flow\-logs](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-flow-logs.html) command, and check the value that's returned in the `DeliverLogsErrorMessage` field\. One of the following errors may be displayed:
 + `Rate limited`: This error can occur if CloudWatch Logs throttling has been applied — when the number of flow log records for a network interface is higher than the maximum number of records that can be published within a specific timeframe\. This error can also occur if you've reached the quota for the number of CloudWatch Logs log groups that you can create\. For more information, see [CloudWatch Service Quotas](https://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide/cloudwatch_limits.html) in the *Amazon CloudWatch User Guide*\.
 + `Access error`: This error can occur for one of the following reasons:
   + The IAM role for your flow log does not have sufficient permissions to publish flow log records to the CloudWatch log group

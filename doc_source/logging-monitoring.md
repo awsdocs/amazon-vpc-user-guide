@@ -1,5 +1,5 @@
-# Logging and monitoring for Amazon VPC<a name="logging-monitoring"></a>
+# Log and monitor your VPC<a name="logging-monitoring"></a>
 
-You can use the following automated monitoring tools to watch components in your VPC and report when something is wrong: 
+You can use the following automated monitoring tools to watch components in your VPC and report when something is wrong:
 + **Flow logs**: Flow logs capture information about the IP traffic going to and from network interfaces in your VPC\. You can create a flow log for a VPC, subnet, or individual network interface\. Flow log data is published to CloudWatch Logs or Amazon S3, and can help you diagnose overly restrictive or overly permissive security group and network ACL rules\. For more information, see [VPC Flow Logs](flow-logs.md)\.
-+ **Monitoring NAT gateways**: You can monitor your NAT gateway using CloudWatch, which collects information from your NAT gateway and creates readable, near real\-time metrics\. For more information, see [Monitoring NAT gateways using Amazon CloudWatch](vpc-nat-gateway-cloudwatch.md)\.
++ **Monitoring NAT gateways**: You can monitor your NAT gateway using CloudWatch, which collects information from your NAT gateway and creates readable, near real\-time metrics\. For more information, see [Monitor NAT gateways using Amazon CloudWatch](vpc-nat-gateway-cloudwatch.md)\.

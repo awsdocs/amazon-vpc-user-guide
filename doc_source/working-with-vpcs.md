@@ -1,21 +1,21 @@
-# Working with VPCs and subnets<a name="working-with-vpcs"></a>
+# Work with VPCs and subnets<a name="working-with-vpcs"></a>
 
 The following procedures are for manually creating a VPC and subnets\. You also have to manually add gateways and routing tables\. Alternatively, you can use the Amazon VPC wizard to create a VPC plus its subnets, gateways, and routing tables in one step\. For more information, see [Examples for VPC](VPC_Scenarios.md)\.
 
 **Topics**
-+ [Creating a VPC](#Create-VPC)
-+ [Creating a subnet in your VPC](#AddaSubnet)
-+ [Viewing your subnet](#view-subnet)
-+ [Associating a secondary IPv4 CIDR block with your VPC](#add-ipv4-cidr)
-+ [Associating an IPv6 CIDR block with your VPC](#vpc-associate-ipv6-cidr)
-+ [Associating an IPv6 CIDR block with your subnet](#subnet-associate-ipv6-cidr)
-+ [Launching an instance into your subnet](#VPC_Launch_Instance)
-+ [Deleting your subnet](#subnet-deleting)
-+ [Disassociating an IPv4 CIDR block from your VPC](#remove-ipv4-cidr)
-+ [Disassociating an IPv6 CIDR block from your VPC or subnet](#vpc-subnet-disassociate-ipv6)
-+ [Deleting your VPC](#VPC_Deleting)
++ [Create a VPC](#Create-VPC)
++ [Create a subnet in your VPC](#AddaSubnet)
++ [View your subnet](#view-subnet)
++ [Associate a secondary IPv4 CIDR block with your VPC](#add-ipv4-cidr)
++ [Associate an IPv6 CIDR block with your VPC](#vpc-associate-ipv6-cidr)
++ [Associate an IPv6 CIDR block with your subnet](#subnet-associate-ipv6-cidr)
++ [Launch an instance into your subnet](#VPC_Launch_Instance)
++ [Delete your subnet](#subnet-deleting)
++ [Disassociate an IPv4 CIDR block from your VPC](#remove-ipv4-cidr)
++ [Disassociate an IPv6 CIDR block from your VPC or subnet](#vpc-subnet-disassociate-ipv6)
++ [Delete your VPC](#VPC_Deleting)
 
-## Creating a VPC<a name="Create-VPC"></a>
+## Create a VPC<a name="Create-VPC"></a>
 
 You can create an empty VPC using the Amazon VPC console\.
 
@@ -56,9 +56,9 @@ Alternatively, you can use a command line tool\.
 
 For more information about IP addresses, see [IP Addressing in your VPC](vpc-ip-addressing.md)\.
 
-After you've created a VPC, you can create subnets\. For more information, see [Creating a subnet in your VPC](#AddaSubnet)\.
+After you've created a VPC, you can create subnets\. For more information, see [Create a subnet in your VPC](#AddaSubnet)\.
 
-## Creating a subnet in your VPC<a name="AddaSubnet"></a>
+## Create a subnet in your VPC<a name="AddaSubnet"></a>
 
 To add a new subnet to your VPC, you must specify an IPv4 CIDR block for the subnet from the range of your VPC\. You can specify the Availability Zone in which you want the subnet to reside\. You can have multiple subnets in the same Availability Zone\. 
 
@@ -90,13 +90,13 @@ Alternatively, you can use a command line tool\.
 + [New\-EC2Subnet](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Subnet.html) \(AWS Tools for Windows PowerShell\)
 
 After you create a subnet, you can do the following:
-+ Configure your routing\. To make your subnet a public subnet, you must attach an internet gateway to your VPC\. For more information, see [Creating and attaching an internet gateway](VPC_Internet_Gateway.md#Add_IGW_Attach_Gateway)\. You can then create a custom route table, and add route to the internet gateway\. For more information, see [Creating a custom route table](VPC_Internet_Gateway.md#Add_IGW_Routing)\. For other routing options, see [Route tables for your VPC](VPC_Route_Tables.md)\.
++ Configure your routing\. To make your subnet a public subnet, you must attach an internet gateway to your VPC\. For more information, see [Create and attach an internet gateway](VPC_Internet_Gateway.md#Add_IGW_Attach_Gateway)\. You can then create a custom route table, and add route to the internet gateway\. For more information, see [Create a custom route table](VPC_Internet_Gateway.md#Add_IGW_Routing)\. For other routing options, see [Route tables for your VPC](VPC_Route_Tables.md)\.
 + Modify the subnet settings to specify that all instances launched in that subnet receive a public IPv4 address, or an IPv6 address, or both\. For more information, see [IP addressing behavior for your subnet](vpc-ip-addressing.md#vpc-ip-addressing-subnet)\.
 + Create or modify your security groups as needed\. For more information, see [Security groups for your VPC](VPC_SecurityGroups.md)\.
 + Create or modify your network ACLs as needed\. For more information, see [Network ACLs](vpc-network-acls.md)\.
-+ Share the subnet with other accounts\. For more information, see [Sharing a subnet](vpc-sharing.md#vpc-sharing-share-subnet)\.
++ Share the subnet with other accounts\. For more information, see [Share a subnet](vpc-sharing.md#vpc-sharing-share-subnet)\.
 
-## Viewing your subnet<a name="view-subnet"></a>
+## View your subnet<a name="view-subnet"></a>
 
 You can view the details about your subnet\.
 
@@ -112,13 +112,13 @@ You can view the details about your subnet\.
 + [describe\-subnets](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-subnets.html) \(AWS CLI\)
 + [Get\-EC2Subnet](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2Subnet.html) \(AWS Tools for Windows PowerShell\)
 
-## Associating a secondary IPv4 CIDR block with your VPC<a name="add-ipv4-cidr"></a>
+## Associate a secondary IPv4 CIDR block with your VPC<a name="add-ipv4-cidr"></a>
 
 You can add another IPv4 CIDR block to your VPC\. Ensure that you have read the applicable [restrictions](VPC_Subnets.md#vpc-resize)\.
 
 After you've associated a CIDR block, the status goes to `associating`\. The CIDR block is ready to use when it's in the `associated` state\.
 
-The Amazon VPC Console provides the status of the request at the top of the page\.
+The Amazon Virtual Private Cloud Console provides the status of the request at the top of the page\.
 
 **To add a CIDR block to your VPC using the console**
 
@@ -138,9 +138,9 @@ Alternatively, you can use a command line tool\.
 + [associate\-vpc\-cidr\-block](https://docs.aws.amazon.com/cli/latest/reference/ec2/associate-vpc-cidr-block.html) \(AWS CLI\)
 + [Register\-EC2VpcCidrBlock](https://docs.aws.amazon.com/powershell/latest/reference/items/Register-EC2VpcCidrBlock.html) \(AWS Tools for Windows PowerShell\)
 
-After you've added the IPv4 CIDR blocks that you need, you can create subnets\. For more information, see [Creating a subnet in your VPC](#AddaSubnet)\.
+After you've added the IPv4 CIDR blocks that you need, you can create subnets\. For more information, see [Create a subnet in your VPC](#AddaSubnet)\.
 
-## Associating an IPv6 CIDR block with your VPC<a name="vpc-associate-ipv6-cidr"></a>
+## Associate an IPv6 CIDR block with your VPC<a name="vpc-associate-ipv6-cidr"></a>
 
 You can associate an IPv6 CIDR block with any existing VPC\. The VPC must not have an existing IPv6 CIDR block associated with it\. 
 
@@ -172,7 +172,7 @@ Alternatively, you can use a command line tool\.
 + [associate\-vpc\-cidr\-block](https://docs.aws.amazon.com/cli/latest/reference/ec2/associate-vpc-cidr-block.html) \(AWS CLI\)
 + [Register\-EC2VpcCidrBlock](https://docs.aws.amazon.com/powershell/latest/reference/items/Register-EC2VpcCidrBlock.html) \(AWS Tools for Windows PowerShell\)
 
-## Associating an IPv6 CIDR block with your subnet<a name="subnet-associate-ipv6-cidr"></a>
+## Associate an IPv6 CIDR block with your subnet<a name="subnet-associate-ipv6-cidr"></a>
 
 You can associate an IPv6 CIDR block with an existing subnet in your VPC\. The subnet must not have an existing IPv6 CIDR block associated with it\. 
 
@@ -190,11 +190,11 @@ You can associate an IPv6 CIDR block with an existing subnet in your VPC\. The s
 
 Alternatively, you can use a command line tool\.
 
-**To associate an IPv6 CIDR block with a subnet using a command line tool**
+**To associate an IPv6 CIDR block with a subnet using the command line**
 + [associate\-subnet\-cidr\-block](https://docs.aws.amazon.com/cli/latest/reference/ec2/associate-subnet-cidr-block.html) \(AWS CLI\)
 + [Register\-EC2SubnetCidrBlock](https://docs.aws.amazon.com/powershell/latest/reference/items/Register-EC2SubnetCidrBlock.html) \(AWS Tools for Windows PowerShell\)
 
-## Launching an instance into your subnet<a name="VPC_Launch_Instance"></a>
+## Launch an instance into your subnet<a name="VPC_Launch_Instance"></a>
 
 After you've created your subnet and configured your routing, you can launch an instance into your subnet using the Amazon EC2 console\.
 
@@ -222,7 +222,7 @@ Alternatively, you can use a command line tool\.
 + [run\-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html) \(AWS CLI\)
 + [New\-EC2Instance](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Instance.html) \(AWS Tools for Windows PowerShell\)
 
-## Deleting your subnet<a name="subnet-deleting"></a>
+## Delete your subnet<a name="subnet-deleting"></a>
 
 If you no longer need your subnet, you can delete it\. You must terminate any instances in the subnet first\.
 
@@ -246,7 +246,7 @@ Alternatively, you can use a command line tool\.
 + [delete\-subnet](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-subnet.html) \(AWS CLI\)
 + [Remove\-EC2Subnet](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2Subnet.html) \(AWS Tools for Windows PowerShell\)
 
-## Disassociating an IPv4 CIDR block from your VPC<a name="remove-ipv4-cidr"></a>
+## Disassociate an IPv4 CIDR block from your VPC<a name="remove-ipv4-cidr"></a>
 
 If your VPC has more than one IPv4 CIDR block associated with it, you can disassociate an IPv4 CIDR block from the VPC\. You cannot disassociate the primary IPv4 CIDR block\. You can only disassociate an entire CIDR block; you cannot disassociate a subset of a CIDR block or a merged range of CIDR blocks\. You must first delete all subnets in the CIDR block\.
 
@@ -268,11 +268,11 @@ Alternatively, you can use a command line tool\.
 + [disassociate\-vpc\-cidr\-block](https://docs.aws.amazon.com/cli/latest/reference/ec2/disassociate-vpc-cidr-block.html) \(AWS CLI\)
 + [Unregister\-EC2VpcCidrBlock](https://docs.aws.amazon.com/powershell/latest/reference/items/Unregister-EC2VpcCidrBlock.html) \(AWS Tools for Windows PowerShell\)
 
-## Disassociating an IPv6 CIDR block from your VPC or subnet<a name="vpc-subnet-disassociate-ipv6"></a>
+## Disassociate an IPv6 CIDR block from your VPC or subnet<a name="vpc-subnet-disassociate-ipv6"></a>
 
 If you no longer want IPv6 support in your VPC or subnet, but you want to continue using your VPC or subnet for creating and communicating with IPv4 resources, you can disassociate the IPv6 CIDR block\.
 
-To disassociate an IPv6 CIDR block, you must first unassign any IPv6 addresses that are assigned to any instances in your subnet\. For more information, see [Unassigning an IPv6 address from an instance](vpc-ip-addressing.md#vpc-unassign-ipv6-instance)\.
+To disassociate an IPv6 CIDR block, you must first unassign any IPv6 addresses that are assigned to any instances in your subnet\. For more information, see [Unassign an IPv6 address from an instance](vpc-ip-addressing.md#vpc-unassign-ipv6-instance)\.
 
 **To disassociate an IPv6 CIDR block from a subnet using the console**
 
@@ -311,7 +311,7 @@ Alternatively, you can use a command line tool\.
 + [disassociate\-vpc\-cidr\-block](https://docs.aws.amazon.com/cli/latest/reference/ec2/disassociate-vpc-cidr-block.html) \(AWS CLI\)
 + [Unregister\-EC2VpcCidrBlock](https://docs.aws.amazon.com/powershell/latest/reference/items/Unregister-EC2VpcCidrBlock.html) \(AWS Tools for Windows PowerShell\)
 
-## Deleting your VPC<a name="VPC_Deleting"></a>
+## Delete your VPC<a name="VPC_Deleting"></a>
 
 To delete a VPC using the VPC console, you must first terminate or delete the following components:
 + All instances in the VPC \- For information about how to terminate an instance, see [Terminate your instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html) in the *Amazon EC2 User Guide for Linux Instances*\.
@@ -347,6 +347,6 @@ If you have a AWS Site\-to\-Site VPN connection, you don't have to delete it or 
 
 Alternatively, you can use a command line tool\. When you delete a VPC using the command line, you must first terminate all instances, and delete or detach all associated resources, including subnets, custom security groups, custom network ACLs, custom route tables, VPC peering connections, endpoints, the NAT gateway, the internet gateway, and the egress\-only internet gateway\.
 
-**To delete a VPC using a command line tool**
+**To delete a VPC using the command line**
 + [delete\-vpc](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-vpc.html) \(AWS CLI\)
 + [Remove\-EC2Vpc](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2Vpc.html) \(AWS Tools for Windows PowerShell\)

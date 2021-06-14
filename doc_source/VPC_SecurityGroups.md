@@ -6,14 +6,13 @@ If you launch an instance using the Amazon EC2 API or a command line tool and yo
 
 For each security group, you add *rules* that control the inbound traffic to instances, and a separate set of rules that control the outbound traffic\. This section describes the basic things that you need to know about security groups for your VPC and their rules\.
 
-You might set up network ACLs with rules similar to your security groups in order to add an additional layer of security to your VPC\. For more information about the differences between security groups and network ACLs, see [Comparison of security groups and network ACLs](VPC_Security.md#VPC_Security_Comparison)\.
+You might set up network ACLs with rules similar to your security groups in order to add an additional layer of security to your VPC\. For more information about the differences between security groups and network ACLs, see [Compare security groups and network ACLs](VPC_Security.md#VPC_Security_Comparison)\.
 
 **Topics**
 + [Security group basics](#VPCSecurityGroups)
 + [Default security group for your VPC](#DefaultSecurityGroup)
 + [Security group rules](#SecurityGroupRules)
-+ [Differences between security groups for EC2\-Classic and EC2\-VPC](#VPC_Security_Group_Differences)
-+ [Working with security groups](#WorkingWithSecurityGroups)
++ [Work with security groups](#WorkingWithSecurityGroups)
 + [Centrally manage VPC security groups using AWS Firewall Manager](#aws-firewall-manager)
 
 ## Security group basics<a name="VPCSecurityGroups"></a>
@@ -120,29 +119,24 @@ If the owner of the peer VPC deletes the referenced security group, or if you or
 
 For more information, see [Working with stale security groups](https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-security-groups.html#vpc-peering-stale-groups) in the *Amazon VPC Peering Guide*\.
 
-## Differences between security groups for EC2\-Classic and EC2\-VPC<a name="VPC_Security_Group_Differences"></a>
-
-You can't use the security groups that you've created for use with EC2\-Classic with instances in your VPC\. You must create security groups specifically for use with instances in your VPC\. The rules that you create for use with a security group for a VPC can't reference a security group for EC2\-Classic, and vice versa\. For more information about the differences between security groups for use with EC2\-Classic and those for use with a VPC, see [Differences between EC2\-Classic and a VPC](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-classic-platform.html#differences-ec2-classic-vpc) in the *Amazon EC2 User Guide for Linux Instances*\.
-
-## Working with security groups<a name="WorkingWithSecurityGroups"></a>
+## Work with security groups<a name="WorkingWithSecurityGroups"></a>
 
 The following tasks show you how to work with security groups using the Amazon VPC console\.
 
-For example IAM policies for working with security groups, see [Managing security groups](vpc-policy-examples.md#vpc-security-groups-iam)\.
+For example IAM policies for working with security groups, see [Manage security groups](vpc-policy-examples.md#vpc-security-groups-iam)\.
 
 **Topics**
-+ [Modifying the default security group](#ModifyingSecurityGroups)
-+ [Creating a security group](#CreatingSecurityGroups)
-+ [Adding, removing, and updating rules](#AddRemoveRules)
-+ [Changing an instance's security groups](#SG_Changing_Group_Membership)
-+ [Deleting a security group](#DeleteSecurityGroup)
-+ [Deleting the 2009\-07\-15\-default security group](#DeleteSecurityGroup-2009)
++ [Modify the default security group](#ModifyingSecurityGroups)
++ [Create a security group](#CreatingSecurityGroups)
++ [Add, remove, or update rules](#AddRemoveRules)
++ [Change the security groups for an instance](#SG_Changing_Group_Membership)
++ [Delete a security group](#DeleteSecurityGroup)
 
-### Modifying the default security group<a name="ModifyingSecurityGroups"></a>
+### Modify the default security group<a name="ModifyingSecurityGroups"></a>
 
-Your VPC includes a [default security group](#DefaultSecurityGroup)\. You can't delete this group; however, you can change the group's rules\. The procedure is the same as modifying any other security group\. For more information, see [Adding, removing, and updating rules](#AddRemoveRules)\.
+Your VPC includes a [default security group](#DefaultSecurityGroup)\. You can't delete this group; however, you can change the group's rules\. The procedure is the same as modifying any other security group\. For more information, see [Add, remove, or update rules](#AddRemoveRules)\.
 
-### Creating a security group<a name="CreatingSecurityGroups"></a>
+### Create a security group<a name="CreatingSecurityGroups"></a>
 
 Although you can use the default security group for your instances, you might want to create your own groups to reflect the different roles that instances play in your system\.
 
@@ -180,7 +174,7 @@ The following procedure creates a security group with no inbound rules, and the 
 
 By default, new security groups start with only an outbound rule that allows all traffic to leave the instances\. You must add rules to enable any inbound traffic or to restrict the outbound traffic\.
 
-### Adding, removing, and updating rules<a name="AddRemoveRules"></a>
+### Add, remove, or update rules<a name="AddRemoveRules"></a>
 
 When you add or remove a rule, any instances already assigned to the security group are subject to the change\. 
 
@@ -250,7 +244,7 @@ If you are updating the protocol, port range, or source or destination of an exi
 + [update\-security\-group\-rule\-descriptions\-ingress](https://docs.aws.amazon.com/cli/latest/reference/ec2/update-security-group-rule-descriptions-ingress.html) and [update\-security\-group\-rule\-descriptions\-egress](https://docs.aws.amazon.com/cli/latest/reference/ec2/update-security-group-rule-descriptions-egress.html) \(AWS CLI\)
 + [Update\-EC2SecurityGroupRuleIngressDescription](https://docs.aws.amazon.com/powershell/latest/reference/items/Update-EC2SecurityGroupRuleIngressDescription.html) and [Update\-EC2SecurityGroupRuleEgressDescription](https://docs.aws.amazon.com/powershell/latest/reference/items/Update-EC2SecurityGroupRuleEgressDescription.html) \(AWS Tools for Windows PowerShell\)
 
-### Changing an instance's security groups<a name="SG_Changing_Group_Membership"></a>
+### Change the security groups for an instance<a name="SG_Changing_Group_Membership"></a>
 
 After you launch an instance into a VPC, you can change the security groups that are associated with the instance\. You can change the security groups for an instance when the instance is in the `running` or `stopped` state\.
 
@@ -277,9 +271,9 @@ This procedure changes the security groups that are associated with the primary 
 + [modify\-instance\-attribute](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-instance-attribute.html) \(AWS CLI\)
 + [Edit\-EC2InstanceAttribute](https://docs.aws.amazon.com/powershell/latest/reference/items/Edit-EC2InstanceAttribute.html) \(AWS Tools for Windows PowerShell\)
 
-### Deleting a security group<a name="DeleteSecurityGroup"></a>
+### Delete a security group<a name="DeleteSecurityGroup"></a>
 
-You can delete a security group only if there are no instances assigned to it \(either running or stopped\)\. You can assign the instances to another security group before you delete the security group \(see [Changing an instance's security groups](#SG_Changing_Group_Membership)\)\. You can't delete a default security group\.
+You can delete a security group only if there are no instances assigned to it \(either running or stopped\)\. You can assign the instances to another security group before you delete the security group \(see [Change the security groups for an instance](#SG_Changing_Group_Membership)\)\. You can't delete a default security group\.
 
 If you're using the console, you can delete more than one security group at a time\. If you're using the command line or the API, you can only delete one security group at a time\.
 
@@ -296,37 +290,6 @@ If you're using the console, you can delete more than one security group at a ti
 **To delete a security group using the command line**
 + [delete\-security\-group](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-security-group.html) \(AWS CLI\)
 + [Remove\-EC2SecurityGroup](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2SecurityGroup.html) \(AWS Tools for Windows PowerShell\)
-
-### Deleting the 2009\-07\-15\-default security group<a name="DeleteSecurityGroup-2009"></a>
-
-Any VPC created using an API version older than 2011\-01\-01 has the `2009-07-15-default` security group\. This security group exists in addition to the regular `default` security group that comes with every VPC\. You can't attach an internet gateway to a VPC that has the `2009-07-15-default` security group\. Therefore, you must delete this security group before you can attach an internet gateway to the VPC\.
-
-**Note**  
-If you assigned this security group to any instances, you must assign these instances a different security group before you can delete the security group\.
-
-**To delete the `2009-07-15-default` security group**
-
-1. Ensure that this security group is not assigned to any instances\.
-
-   1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-   1. In the navigation pane, choose **Network Interfaces**\.
-
-   1. Select the network interface for the instance from the list, and choose **Change Security Groups**, **Actions**\. 
-
-   1. In the **Change Security Groups** dialog box, select a new security group from the list, and choose **Save**\.
-
-      When changing an instance's security group, you can select multiple groups from the list\. The security groups that you select replace the current security groups for the instance\.
-
-   1. Repeat the preceding steps for each instance\.
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Security Groups**\.
-
-1. Choose the `2009-07-15-default` security group, and then choose **Security Group Actions**, **Delete Security Group**\.
-
-1. In the **Delete Security Group** dialog box, choose **Yes, Delete**\.
 
 ## Centrally manage VPC security groups using AWS Firewall Manager<a name="aws-firewall-manager"></a>
 

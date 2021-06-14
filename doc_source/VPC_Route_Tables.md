@@ -7,7 +7,7 @@ A *route table* contains a set of rules, called *routes*, that are used to deter
 + [How route tables work](#how-route-tables-work)
 + [Route priority](#route-tables-priority)
 + [Example routing options](route-table-options.md)
-+ [Working with route tables](WorkWithRouteTables.md)
++ [Work with route tables](WorkWithRouteTables.md)
 
 ## Route table concepts<a name="RouteTables"></a>
 
@@ -92,7 +92,7 @@ The following rules apply to the main route table:
 + You cannot create a route that is more specific than the local route\.
 + You can explicitly associate a subnet with the main route table, even if it's already implicitly associated\. 
 
-  You might want to do that if you change which table is the main route table\. When you change which table is the main route table, it also changes the default for additional new subnets, or for any subnets that are not explicitly associated with any other route table\. For more information, see [Replacing the main route table](WorkWithRouteTables.md#Route_Replacing_Main_Table)\.
+  You might want to do that if you change which table is the main route table\. When you change which table is the main route table, it also changes the default for additional new subnets, or for any subnets that are not explicitly associated with any other route table\. For more information, see [Replace the main route table](WorkWithRouteTables.md#Route_Replacing_Main_Table)\.
 
 ### Custom route tables<a name="CustomRouteTables"></a>
 
@@ -102,7 +102,7 @@ You can add, remove, and modify routes in a custom route table\. You can delete 
 
 ### Subnet route table association<a name="route-table-assocation"></a>
 
-Each subnet in your VPC must be associated with a route table\. A subnet can be explicitly associated with custom route table, or implicitly or explicitly associated with the main route table\. For more information about viewing your subnet and route table associations, see [Determining which subnets and or gateways are explicitly associated with a table](WorkWithRouteTables.md#Route_Which_Associations)\.
+Each subnet in your VPC must be associated with a route table\. A subnet can be explicitly associated with custom route table, or implicitly or explicitly associated with the main route table\. For more information about viewing your subnet and route table associations, see [Determine which subnets and or gateways are explicitly associated with a table](WorkWithRouteTables.md#Route_Which_Associations)\.
 
 Subnets that are in VPCs associated with Outposts can have an additional target type of a local gateway\. This is the only routing difference from non\-Outposts subnets\.
 
@@ -146,7 +146,7 @@ A gateway route table supports routes where the target is `local` \(the default 
 + The entire IPv4 or IPv6 CIDR block of your VPC\. In this case, you replace the target of the default local route\.
 + The entire IPv4 or IPv6 CIDR block of a subnet in your VPC\. This is a more specific route than the default local route\.
 
-If you change the target of the local route in a gateway route table to a network interface in your VPC, you can later restore it to the default `local` target\. For more information, see [Replacing and restoring the target for a local route](WorkWithRouteTables.md#replace-local-route-target)\. 
+If you change the target of the local route in a gateway route table to a network interface in your VPC, you can later restore it to the default `local` target\. For more information, see [Replace or restore the target for a local route](WorkWithRouteTables.md#replace-local-route-target)\. 
 
 In the following gateway route table, traffic destined for a subnet with the `172.31.0.0/20` CIDR block is routed to a specific network interface\. Traffic destined for all other subnets in the VPC uses the local route\.
 
@@ -180,7 +180,7 @@ In addition, the following rules and considerations apply:
 + When configuring your middlebox appliance, take note of the[ appliance considerations](route-table-options.md#appliance-considerations)\.
 + When you route traffic through a middlebox appliance, the return traffic from the destination subnet must be routed through the same appliance\. Asymmetric routing is not supported\.
 
-For an example of routing for a security appliance, see [Routing for a middlebox appliance in your VPC](route-table-options.md#route-tables-appliance-routing)\.
+For an example of routing for a security appliance, see [Routing for a middlebox appliance](route-table-options.md#route-tables-appliance-routing)\.
 
 ## Route priority<a name="route-tables-priority"></a>
 

@@ -10,7 +10,7 @@ For information about managing your EC2 instance software, see [Managing softwar
 + [Overview](#Configuration-3)
 + [Routing](#VPC_Scenario3_Routing)
 + [Security](#VPC_Scenario3_Security)
-+ [Implementing scenario 3](#VPC_Scenario3_Implementation)
++ [Implement scenario 3](#VPC_Scenario3_Implementation)
 + [Recommended network ACL rules for a VPC with public and private subnets and AWS Site\-to\-Site VPN access](#nacl-rules-scenario-3)
 
 ## Overview<a name="Configuration-3"></a>
@@ -234,7 +234,7 @@ The following are the IPv6\-specific rules for the WebServerSG security group \(
 | ::/0 | TCP | HTTP | Allow outbound HTTP access to any IPv6 address\. | 
 | ::/0 | TCP | HTTPS | Allow outbound HTTPS access to any IPv6 address\. | 
 
-## Implementing scenario 3<a name="VPC_Scenario3_Implementation"></a>
+## Implement scenario 3<a name="VPC_Scenario3_Implementation"></a>
 
 To implement scenario 3, get information about your customer gateway, and create the VPC using the VPC wizard\. The VPC wizard creates a Site\-to\-Site VPN connection for you with a customer gateway and virtual private gateway\.
 
@@ -248,9 +248,9 @@ These procedures include optional steps for enabling and configuring IPv6 commun
 
 1. If you want to create a statically\-routed Site\-to\-Site VPN connection, get the list of internal IP ranges \(in CIDR notation\) that should be advertised across the Site\-to\-Site VPN connection to the virtual private gateway\. For more information, see [Route tables and VPN route priority](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html#vpn-route-priority) in the *AWS Site\-to\-Site VPN User Guide*\.
 
-For information about how to use the VPC wizard with IPv4, see [Getting started with Amazon VPC](vpc-getting-started.md)\.
+For information about how to use the VPC wizard with IPv4, see [Get started with Amazon VPC](vpc-getting-started.md)\.
 
-For information about how to use the VPC wizard with IPv6, see [Getting started with IPv6 for Amazon VPC](get-started-ipv6.md)\.
+For information about how to use the VPC wizard with IPv6, see [Get started with IPv6 for Amazon VPC](get-started-ipv6.md)\.
 
 ## Recommended network ACL rules for a VPC with public and private subnets and AWS Site\-to\-Site VPN access<a name="nacl-rules-scenario-3"></a>
 

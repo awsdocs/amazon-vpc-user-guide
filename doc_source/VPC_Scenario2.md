@@ -12,7 +12,7 @@ For information about managing your EC2 instance software, see [Managing softwar
 + [Overview](#Configuration-2)
 + [Routing](#VPC_Scenario2_Routing)
 + [Security](#VPC_Scenario2_Security)
-+ [Implementing scenario 2](#VPC_Scenario2_Implementation)
++ [Implement scenario 2](#VPC_Scenario2_Implementation)
 + [Recommended network ACL rules for a VPC with public and private subnets \(NAT\)](#nacl-rules-scenario-2)
 
 ## Overview<a name="Configuration-2"></a>
@@ -227,7 +227,7 @@ The following are the IPv6\-specific rules for the DBServerSG security group \(w
 |  ::/0  |  TCP  |  80  |  Allow outbound HTTP access to any IPv6 address\.  | 
 |  ::/0  |  TCP  |  443  |  Allow outbound HTTPS access to any IPv6 address\.  | 
 
-## Implementing scenario 2<a name="VPC_Scenario2_Implementation"></a>
+## Implement scenario 2<a name="VPC_Scenario2_Implementation"></a>
 
 You can use the VPC wizard to create the VPC, subnets, NAT gateway, and optionally, an egress\-only internet gateway\. You must specify an Elastic IP address for your NAT gateway; if you don't have one, you must first allocate one to your account\. If you want to use an existing Elastic IP address, ensure that it's not currently associated with another instance or network interface\. The NAT gateway is automatically created in the public subnet of your VPC\.
 

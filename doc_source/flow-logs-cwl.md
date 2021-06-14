@@ -1,4 +1,4 @@
-# Publishing flow logs to CloudWatch Logs<a name="flow-logs-cwl"></a>
+# Publish flow logs to CloudWatch Logs<a name="flow-logs-cwl"></a>
 
 Flow logs can publish flow log data directly to Amazon CloudWatch\. Data ingestion and archival charges for vended logs apply when you publish flow logs to CloudWatch Logs\. For more information, see [Amazon CloudWatch Pricing](https://aws.amazon.com/cloudwatch/pricing)\.
 
@@ -9,12 +9,12 @@ In CloudWatch Logs, the **timestamp** field corresponds to the start time that's
 **Topics**
 + [IAM roles for publishing flow logs to CloudWatch Logs](#flow-logs-iam)
 + [Permissions for IAM users to pass a role](#flow-logs-iam-user)
-+ [Creating a flow log that publishes to CloudWatch Logs](#flow-logs-cwl-create-flow-log)
-+ [Processing flow log records in CloudWatch Logs](#process-records-cwl)
++ [Create a flow log that publishes to CloudWatch Logs](#flow-logs-cwl-create-flow-log)
++ [Process flow log records in CloudWatch Logs](#process-records-cwl)
 
 ## IAM roles for publishing flow logs to CloudWatch Logs<a name="flow-logs-iam"></a>
 
-The IAM role that's associated with your flow log must have sufficient permissions to publish flow logs to the specified log group in CloudWatch Logs\. The IAM role must belong to your AWSaccount\.
+The IAM role that's associated with your flow log must have sufficient permissions to publish flow logs to the specified log group in CloudWatch Logs\. The IAM role must belong to your AWS account\.
 
 The IAM policy that's attached to your IAM role must include at least the following permissions\.
 
@@ -57,7 +57,7 @@ Also ensure that your role has a trust relationship that allows the flow logs se
 
 You can update an existing role or use the following procedure to create a new role for use with flow logs\.
 
-### Creating a flow logs role<a name="create-flow-logs-role"></a>
+### Create a flow logs role<a name="create-flow-logs-role"></a>
 
 **To create an IAM role for flow logs**
 
@@ -98,7 +98,7 @@ Users must also have permissions to use the `iam:PassRole` action for the IAM ro
 }
 ```
 
-## Creating a flow log that publishes to CloudWatch Logs<a name="flow-logs-cwl-create-flow-log"></a>
+## Create a flow log that publishes to CloudWatch Logs<a name="flow-logs-cwl-create-flow-log"></a>
 
 You can create flow logs for your VPCs, subnets, or network interfaces\. If you perform these steps as an IAM user, ensure that you have permissions to use the `iam:PassRole` action\. For more information, see [Permissions for IAM users to pass a role](#flow-logs-iam-user)\.
 
@@ -172,11 +172,11 @@ The following AWS CLI example creates a flow log that captures all accepted traf
 aws ec2 create-flow-logs --resource-type Subnet --resource-ids subnet-1a2b3c4d --traffic-type ACCEPT --log-group-name my-flow-logs --deliver-logs-permission-arn arn:aws:iam::123456789101:role/publishFlowLogs
 ```
 
-## Processing flow log records in CloudWatch Logs<a name="process-records-cwl"></a>
+## Process flow log records in CloudWatch Logs<a name="process-records-cwl"></a>
 
 You can work with flow log records as you would with any other log events collected by CloudWatch Logs\. For more information about monitoring log data and metric filters, see [Searching and Filtering Log Data](https://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide/MonitoringLogData.html) in the *Amazon CloudWatch User Guide*\.
 
-### Example: Creating a CloudWatch metric filter and alarm for a flow log<a name="flow-logs-cw-alarm-example"></a>
+### Example: Create a CloudWatch metric filter and alarm for a flow log<a name="flow-logs-cw-alarm-example"></a>
 
 In this example, you have a flow log for `eni-1a2b3c4d`\. You want to create an alarm that alerts you if there have been 10 or more rejected attempts to connect to your instance over TCP port 22 \(SSH\) within a 1\-hour time period\. First, you must create a metric filter that matches the pattern of the traffic for which to create the alarm\. Then, you can create an alarm for the metric filter\.
 

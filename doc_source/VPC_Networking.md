@@ -7,6 +7,6 @@ You can use the following components to configure networking in your VPC\.
 + [Egress\-only internet gateways](egress-only-internet-gateway.md)
 + [Carrier gateways](Carrier_Gateway.md)
 + [NAT devices for your VPC](vpc-nat.md)
-+ [DHCP options sets](VPC_DHCP_Options.md)
-+ [Using DNS with your VPC](vpc-dns.md)
++ [DHCP options sets for your VPC](VPC_DHCP_Options.md)
++ [DNS support for your VPC](vpc-dns.md)
 + [Prefix lists](managed-prefix-lists.md)

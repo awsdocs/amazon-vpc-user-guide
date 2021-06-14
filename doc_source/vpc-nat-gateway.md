@@ -1,134 +1,97 @@
 # NAT gateways<a name="vpc-nat-gateway"></a>
 
-You can use a network address translation \(NAT\) gateway to enable instances in a private subnet to connect to the internet or other AWS services, but prevent the internet from initiating a connection with those instances\. For more information about NAT, see [NAT devices for your VPC](vpc-nat.md)\.
+A NAT gateway is a Network Address Translation \(NAT\) service\. You can use a NAT gateway so that instances in a private subnet can connect to services outside your VPC but external services cannot initiate a connection with those instances\.
 
-You are charged for creating and using a NAT gateway in your account\. NAT gateway hourly usage and data processing rates apply\. Amazon EC2 charges for data transfer also apply\. For more information, see [Amazon VPC Pricing](http://aws.amazon.com/vpc/pricing/)\.
+The NAT gateway replaces the source IPv4 address of the instances with the private IP address of the NAT gateway\. When sending response traffic to the instances, the NAT device translates the addresses back to the original source IPv4 addresses\.
 
-NAT gateways are not supported for IPv6 traffic—use an outbound\-only \(egress\-only\) internet gateway instead\. For more information, see [Egress\-only internet gateways](egress-only-internet-gateway.md)\.
+When you create a NAT gateway, you specify one of the following connectivity types:
++ **Public** – \(Default\) Instances in private subnets can connect to the internet through a public NAT gateway, but cannot receive unsolicited inbound connections from the internet\. You create a public NAT gateway in a public subnet and must associate an elastic IP address with the NAT gateway at creation\. You route traffic from the NAT gateway to the internet gateway for the VPC\. Alternatively, you can use a public NAT gateway to connect to other VPCs or your on\-premises network\. In this case, you route traffic from the NAT gateway through a transit gateway or a virtual private gateway\.
++ **Private** – Instances in private subnets can connect to other VPCs or your on\-premises network through a private NAT gateway\. You can route traffic from the NAT gateway through a transit gateway or a virtual private gateway\. You cannot associate an elastic IP address with a private NAT gateway\. You can attach an internet gateway to a VPC with a private NAT gateway, but if you route traffic from the private NAT gateway to the internet gateway, the internet gateway drops the traffic\.
+
+**Pricing**  
+NAT gateway hourly usage and data processing rates apply\. Amazon EC2 charges for data transfer also apply\. For more information, see [Amazon VPC Pricing](http://aws.amazon.com/vpc/pricing/)\.
 
 **Topics**
 + [NAT gateway basics](#nat-gateway-basics)
-+ [Working with NAT gateways](#nat-gateway-working-with)
-+ [Controlling the use of NAT gateways](#nat-gateway-iam)
-+ [Tagging a NAT gateway](#nat-gateway-tagging)
++ [Control the use of NAT gateways](#nat-gateway-iam)
++ [Work with NAT gateways](#nat-gateway-working-with)
++ [NAT gateway scenarios](#nat-gateway-scenarios)
++ [Migrate from a NAT instance](#nat-instance-migrate)
 + [API and CLI overview](#nat-gateway-api-cli)
-+ [Monitoring NAT gateways using Amazon CloudWatch](vpc-nat-gateway-cloudwatch.md)
-+ [Troubleshooting NAT gateways](nat-gateway-troubleshooting.md)
++ [Monitor using CloudWatch](vpc-nat-gateway-cloudwatch.md)
++ [Troubleshoot](nat-gateway-troubleshooting.md)
 
 ## NAT gateway basics<a name="nat-gateway-basics"></a>
 
-To create a NAT gateway, you must specify the public subnet in which the NAT gateway should reside\. For more information about public and private subnets, see [Subnet routing](VPC_Subnets.md#SubnetRouting)\. You must also specify an [Elastic IP address](vpc-eips.md) to associate with the NAT gateway when you create it\. The Elastic IP address cannot be changed after you associate it with the NAT Gateway\. After you've created a NAT gateway, you must update the route table associated with one or more of your private subnets to point internet\-bound traffic to the NAT gateway\. This enables instances in your private subnets to communicate with the internet\.
+Each NAT gateway is created in a specific Availability Zone and implemented with redundancy in that zone\. There is a quota on the number of NAT gateways that you can create in each Availability Zone\. For more information, see [Amazon VPC quotas](amazon-vpc-limits.md)\.
 
-Each NAT gateway is created in a specific Availability Zone and implemented with redundancy in that zone\. You have a quota on the number of NAT gateways you can create in an Availability Zone\. For more information, see [Amazon VPC quotas](amazon-vpc-limits.md)\.
-
-**Note**  
 If you have resources in multiple Availability Zones and they share one NAT gateway, and if the NAT gateway’s Availability Zone is down, resources in the other Availability Zones lose internet access\. To create an Availability Zone\-independent architecture, create a NAT gateway in each Availability Zone and configure your routing to ensure that resources use the NAT gateway in the same Availability Zone\.
 
-If you no longer need a NAT gateway, you can delete it\. Deleting a NAT gateway disassociates its Elastic IP address, but does not release the address from your account\. 
-
-The following diagram illustrates the architecture of a VPC with a NAT gateway\. The main route table sends internet traffic from the instances in the private subnet to the NAT gateway\. The NAT gateway sends the traffic to the internet gateway using the NAT gateway’s Elastic IP address as the source IP address\. 
-
-![\[A VPC with public and private subnets and a NAT gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/nat-gateway-diagram.png)
-
-A customroute table is associated with the subnet in Availability Zone A\. The first entry is the default entry for local routing in the VPC; this entry enables the instances in the VPC to communicate with each other\. The second entry sends all other subnet traffic to the internet gateway\.
-
-
-| Destination | Target | 
-| --- | --- | 
-|  `10.0.0.0/16`  |  local  | 
-|  `0.0.0.0/0`  |  *internet\-gateway\-id*  | 
-
-The main route table is associated with the subnet in Availability Zone B\. The first entry is the default entry for local routing in the VPC; this entry enables the instances in the VPC to communicate with each other\. The second entry sends all other subnet traffic to the NAT gateway\.
-
-
-| Destination | Target | 
-| --- | --- | 
-|  `10.0.0.0/16`  |  local  | 
-|  `0.0.0.0/0`  |  *nat\-gateway\-id*  | 
-
-### NAT gateway rules and limitations<a name="nat-gateway-limits"></a>
-
-A NAT gateway has the following characteristics and limitations:
-+ A NAT gateway supports 5 Gbps of bandwidth and automatically scales up to 45 Gbps\. If you require more, you can distribute the workload by splitting your resources into multiple subnets, and creating a NAT gateway in each subnet\.
-+ You can associate exactly one Elastic IP address with a NAT gateway\. You cannot disassociate an Elastic IP address from a NAT gateway after it's created\. To use a different Elastic IP address for your NAT gateway, you must create a new NAT gateway with the required address, update your route tables, and then delete the existing NAT gateway if it's no longer required\.
+The following characteristics and rules apply to NAT gateways:
 + A NAT gateway supports the following protocols: TCP, UDP, and ICMP\.
-+ You cannot associate a security group with a NAT gateway\. You can use security groups for your instances in the private subnets to control the traffic to and from those instances\.
-+ You can use a network ACL to control the traffic to and from the subnet in which the NAT gateway is located\. The network ACL applies to the NAT gateway's traffic\. A NAT gateway uses ports 1024–65535\. For more information, see [Network ACLs](vpc-network-acls.md)\.
-+ When a NAT gateway is created, it receives a network interface that's automatically assigned a private IP address from the IP address range of your subnet\. You can view the NAT gateway's network interface in the Amazon EC2 console\. For more information, see [Viewing details about a network interface](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#view_eni_details)\. You cannot modify the attributes of this network interface\.
-+ A NAT gateway cannot be accessed by a ClassicLink connection that is associated with your VPC\.
++ NAT gateways are not supported for IPv6 traffic—use an outbound\-only \(egress\-only\) internet gateway instead\. For more information, see [Egress\-only internet gateways](egress-only-internet-gateway.md)\.
++ A NAT gateway supports 5 Gbps of bandwidth and automatically scales up to 45 Gbps\. If you require more bandwidth, you can split your resources into multiple subnets and create a NAT gateway in each subnet\.
++ A NAT gateway can support up to 55,000 simultaneous connections to each unique destination\. This limit also applies if you create approximately 900 connections per second to a single destination \(about 55,000 connections per minute\)\. If the destination IP address, the destination port, or the protocol \(TCP/UDP/ICMP\) changes, you can create an additional 55,000 connections\. For more than 55,000 connections, there is an increased chance of connection errors due to port allocation errors\. These errors can be monitored by viewing the `ErrorPortAllocation` CloudWatch metric for your NAT gateway\. For more information, see [Monitor NAT gateways using Amazon CloudWatch](vpc-nat-gateway-cloudwatch.md)\.
++ You can associate exactly one Elastic IP address with a public NAT gateway\. You cannot disassociate an Elastic IP address from a NAT gateway after it's created\. To use a different Elastic IP address for your NAT gateway, you must create a new NAT gateway with the required address, update your route tables, and then delete the existing NAT gateway if it's no longer required\.
++ A private NAT gateway receives an available private IP address from the subnet in which it is configured\. You cannot detach this private IP address and you cannot attach additional private IP addresses\.
++ You cannot associate a security group with a NAT gateway\. You can associate security groups with your instances to control inbound and outbound traffic\.
++ You can use a network ACL to control the traffic to and from the subnet for your NAT gateway\. NAT gateways use ports 1024–65535\. For more information, see [Network ACLs](vpc-network-acls.md)\.
++ A NAT gateway receives a network interface that's automatically assigned a private IP address from the IP address range of the subnet\. You can view the network interface for the NAT gateway using the Amazon EC2 console\. For more information, see [Viewing details about a network interface](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#view_eni_details)\. You cannot modify the attributes of this network interface\.
++ A NAT gateway cannot be accessed through a ClassicLink connection that is associated with your VPC\.
 + You cannot route traffic to a NAT gateway through a VPC peering connection, a Site\-to\-Site VPN connection, or AWS Direct Connect\. A NAT gateway cannot be used by resources on the other side of these connections\.
-+ A NAT gateway can support up to 55,000 simultaneous connections to each unique destination\. This limit also applies if you create approximately 900 connections per second to a single destination \(about 55,000 connections per minute\)\. If the destination IP address, the destination port, or the protocol \(TCP/UDP/ICMP\) changes, you can create an additional 55,000 connections\. For more than 55,000 connections, there is an increased chance of connection errors due to port allocation errors\. These errors can be monitored by viewing the `ErrorPortAllocation` CloudWatch metric for your NAT gateway\. For more information, see [Monitoring NAT gateways using Amazon CloudWatch](vpc-nat-gateway-cloudwatch.md)\. 
 
-### Migrating from a NAT instance<a name="nat-instance-migrate"></a>
+## Control the use of NAT gateways<a name="nat-gateway-iam"></a>
 
-If you're already using a NAT instance, you can replace it with a NAT gateway\. To do this, you can create a NAT gateway in the same subnet as your NAT instance, and then replace the existing route in your route table that points to the NAT instance with a route that points to the NAT gateway\. To use the same Elastic IP address for the NAT gateway that you currently use for your NAT instance, you must first also disassociate the Elastic IP address from your NAT instance and then associate it with your NAT gateway when you create the gateway\.
+By default, IAM users do not have permission to work with NAT gateways\. You can create an IAM user policy that grants users permissions to create, describe, and delete NAT gateways\. For more information, see [Identity and access management for Amazon VPC](security-iam.md)\.
 
-**Note**  
-If you change your routing from a NAT instance to a NAT gateway, or if you disassociate the Elastic IP address from your NAT instance, any current connections are dropped and have to be re\-established\. Ensure that you do not have any critical tasks \(or any other tasks that operate through the NAT instance\) running\.
+## Work with NAT gateways<a name="nat-gateway-working-with"></a>
 
-### Best practice when sending traffic to Amazon S3 or DynamoDB in the same Region<a name="nat-gateway-s3-ddb"></a>
-
-To avoid data processing charges for NAT gateways when accessing Amazon S3 and DynamoDB that are in the same Region, set up a gateway endpoint and route the traffic through the gateway endpoint instead of the NAT gateway\. There are no charges for using a gateway endpoint\. For more information, see [Gateway VPC endpoints](https://docs.aws.amazon.com/vpc/latest/privatelink/vpce-gateway.html)\.
-
-## Working with NAT gateways<a name="nat-gateway-working-with"></a>
-
-You can use the Amazon VPC console to create, view, and delete a NAT gateway\. You can also use the Amazon VPC wizard to create a VPC with a public subnet, a private subnet, and a NAT gateway\. For more information, see [VPC with public and private subnets \(NAT\)](VPC_Scenario2.md)\.
+You can use the Amazon VPC console to create and manage your NAT gateways\. You can also use the Amazon VPC wizard to create a VPC with a public subnet, a private subnet, and a NAT gateway\. For more information, see [VPC with public and private subnets \(NAT\)](VPC_Scenario2.md)\.
 
 **Topics**
-+ [Creating a NAT gateway](#nat-gateway-creating)
-+ [Updating your route table](#nat-gateway-create-route)
-+ [Deleting a NAT gateway](#nat-gateway-deleting)
-+ [Testing a NAT gateway](#nat-gateway-testing)
++ [Create a NAT gateway](#nat-gateway-creating)
++ [Tag a NAT gateway](#nat-gateway-tagging)
++ [Delete a NAT gateway](#nat-gateway-deleting)
 
-### Creating a NAT gateway<a name="nat-gateway-creating"></a>
+### Create a NAT gateway<a name="nat-gateway-creating"></a>
 
-To create a NAT gateway, you must specify a subnet and an Elastic IP address\. Ensure that the Elastic IP address is currently not associated with an instance or a network interface\. If you are migrating from a NAT instance to a NAT gateway and you want to reuse the NAT instance's Elastic IP address, you must first disassociate the address from your NAT instance\. 
+To create a NAT gateway, enter an optional name, a subnet, and an optional connectivity type\. With a public NAT gateway, you must specify an available elastic IP address\. A private NAT gateway receives a primary private IP address selected at random from its subnet\. You cannot detach the primary private IP address or add secondary private IP addresses\.
 
 **To create a NAT gateway**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **NAT Gateways**, **Create NAT Gateway**\.
+1. In the navigation pane, choose **NAT Gateways**\.
 
-1. Specify the subnet in which to create the NAT gateway, and select the allocation ID of an Elastic IP address to associate with the NAT gateway\. 
+1. Choose **Create NAT Gateway** and do the following:
 
-1. \(Optional\) Add or remove a tag\.
+   1. \(Optional\) Specify a name for the NAT gateway\. This creates a tag where the key is **Name** and the value is the name that you specify\.
 
-   \[Add a tag\] Choose **Add tag** and do the following:
-   + For **Key**, enter the key name\.
-   + For **Value**, enter the key value\.
+   1. Select the subnet in which to create the NAT gateway\.
 
-   \[Remove a tag\] Choose the delete button \(“x”\) to the right of the tag’s Key and Value\.
+   1. For **Connectivity type**, select **Private** to create a private NAT gateway or **Public** \(the default\) to create a public NAT gateway\.
 
-1. Choose **Create a NAT Gateway**\. 
+   1. \(Public NAT gateway only\) For **Elastic IP allocation ID**, select an Elastic IP address to associate with the NAT gateway\.
 
-1. The NAT gateway displays in the console\. After a few moments, its status changes to `Available`, after which it's ready for you to use\.
+   1. \(Optional\) For each tag, choose **Add new tag** and enter the key name and value\.
 
-If the NAT gateway goes to a status of `Failed`, there was an error during creation\. For more information, see [NAT gateway creation fails](nat-gateway-troubleshooting.md#nat-gateway-troubleshooting-failed)\.
+   1. Choose **Create a NAT Gateway**\.
 
-### Updating your route table<a name="nat-gateway-create-route"></a>
+1. The initial status of the NAT gateway is `Pending`\. After the status changes to `Available`, the NAT gateway is ready for you to use\. Add a route to the NAT gateway to the route tables for the private subnets and add routes to the route table for the NAT gateway\.
 
-After you've created your NAT gateway, you must update your route tables for your private subnets to point internet traffic to the NAT gateway\. We use the most specific route that matches the traffic to determine how to route the traffic \(longest prefix match\)\. For more information, see [Route priority](VPC_Route_Tables.md#route-tables-priority)\. 
+   If the status of the NAT gateway changes to `Failed`, there was an error during creation\. For more information, see [NAT gateway creation fails](nat-gateway-troubleshooting.md#nat-gateway-troubleshooting-failed)\.
 
-**To create a route for a NAT gateway**
+### Tag a NAT gateway<a name="nat-gateway-tagging"></a>
 
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
+You can tag your NAT gateway to help you identify it or categorize it according to your organization's needs\. For information about working with tags, see [Tagging your Amazon EC2 resources](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-1. In the navigation pane, choose **Route Tables**\.
+Cost allocation tags are supported for NAT gateways\. Therefore, you can also use tags to organize your AWS bill and reflect your own cost structure\. For more information, see [Using cost allocation tags](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html) in the *AWS Billing and Cost Management User Guide*\. For more information about setting up a cost allocation report with tags, see [Monthly cost allocation report](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/configurecostallocreport.html) in *About AWS Account Billing*\. 
 
-1. Select the route table associated with your private subnet and choose **Routes**, **Edit**\.
+### Delete a NAT gateway<a name="nat-gateway-deleting"></a>
 
-1. Choose **Add another route**\. For **Destination**, enter `0.0.0.0/0`\. For **Target**, select the ID of your NAT gateway\.
-**Note**  
-If you're migrating from using a NAT instance, you can replace the current route that points to the NAT instance with a route to the NAT gateway\.
+If you no longer need a NAT gateway, you can delete it\. After you delete a NAT gateway, its entry remains visible in the Amazon VPC console for about an hour, after which it's automatically removed\. You cannot remove this entry yourself\.
 
-1. Choose **Save**\.
-
-To ensure that your NAT gateway can access the internet, the route table associated with the subnet in which your NAT gateway resides must include a route that points internet traffic to an internet gateway\. For more information, see [Creating a custom route table](VPC_Internet_Gateway.md#Add_IGW_Routing)\. If you delete a NAT gateway, the NAT gateway routes remain in a `blackhole` status until you delete or update the routes\. For more information, see [Adding and removing routes from a route table](WorkWithRouteTables.md#AddRemoveRoutes)\.
-
-### Deleting a NAT gateway<a name="nat-gateway-deleting"></a>
-
-You can delete a NAT gateway using the Amazon VPC console\. After you delete a NAT gateway, its entry remains visible in the Amazon VPC console for a short time period \(usually an hour\), after which it's automatically removed\. You cannot remove this entry yourself\. 
+Deleting a NAT gateway disassociates its Elastic IP address, but does not release the address from your account\. If you delete a NAT gateway, the NAT gateway routes remain in a `blackhole` status until you delete or update the routes\.
 
 **To delete a NAT gateway**
 
@@ -136,29 +99,61 @@ You can delete a NAT gateway using the Amazon VPC console\. After you delete a N
 
 1. In the navigation pane, choose **NAT Gateways**\.
 
-1. Select the NAT gateway, and choose **Actions**, **Delete NAT Gateway**\.
+1. Select the radio button for the NAT gateway, and then choose **Actions**, **Delete NAT gateway**\.
 
-1. In the confirmation dialog box, choose **Delete NAT Gateway**\.
+1. When prompted for confirmation, enter **delete** and then choose **Delete**\.
 
-1. If you no longer need the Elastic IP address that was associated with the NAT gateway, we recommend that you release it\. For more information, see [Releasing an Elastic IP address](vpc-eips.md#release-eip)\.
+1. If you no longer need the Elastic IP address that was associated with a public NAT gateway, we recommend that you release it\. For more information, see [Release an Elastic IP address](vpc-eips.md#release-eip)\.
 
-### Testing a NAT gateway<a name="nat-gateway-testing"></a>
+## NAT gateway scenarios<a name="nat-gateway-scenarios"></a>
 
-After you've created your NAT gateway and updated your route tables, you can ping a few remote addresses on the internet from an instance in your private subnet to test that it can connect to the internet\. For an example of how to do this, see [Testing the internet connection](#nat-gateway-testing-example)\.
+The following are example use cases for public and private NAT gateways\.
 
-If you're able to connect to the internet, you can also perform the following tests to determine if the internet traffic is being routed through the NAT gateway:
-+ You can trace the route of traffic from an instance in your private subnet\. To do this, run the `traceroute` command from a Linux instance in your private subnet\. In the output, you should see the private IP address of the NAT gateway in one of the hops \(it's usually the first hop\)\.
-+ Use a third\-party website or tool that displays the source IP address when you connect to it from an instance in your private subnet\. The source IP address should be the Elastic IP address of your NAT gateway\. You can get the Elastic IP address and private IP address of your NAT gateway by viewing its information on the **NAT Gateways** page in the Amazon VPC console\. 
+**Topics**
++ [Access the internet from a private subnet](#public-nat-internet-access)
++ [Allow access to your network from allow\-listed IP addresses](#private-nat-allowed-range)
 
-If the preceding tests fail, see [Troubleshooting NAT gateways](nat-gateway-troubleshooting.md)\. 
+### Scenario: Access the internet from a private subnet<a name="public-nat-internet-access"></a>
 
-#### Testing the internet connection<a name="nat-gateway-testing-example"></a>
+You can use a public NAT gateway to enable instances in a private subnet to send outbound traffic to the internet, but the internet cannot establish connections to the instances\.
 
-The following example demonstrates how to test whether your instance in a private subnet can connect to the internet\.
+The following diagram illustrates the architecture for this use case\. The public subnet in Availability Zone A contains the NAT gateway\. The private subnet in Availability Zone B contains instances\. The router sends internet bound traffic from the instances in the private subnet to the NAT gateway\. The NAT gateway sends the traffic to the internet gateway, using the elastic IP address for the NAT gateway as the source IP address\.
 
-1. Launch an instance in your public subnet \(you use this as a bastion host\)\. For more information, see [Launching an instance into your subnet](working-with-vpcs.md#VPC_Launch_Instance)\. In the launch wizard, ensure that you select an Amazon Linux AMI, and assign a public IP address to your instance\. Ensure that your security group rules allow inbound SSH traffic from the range of IP addresses for your local network, and outbound SSH traffic to the IP address range of your private subnet \(you can also use `0.0.0.0/0` for both inbound and outbound SSH traffic for this test\)\.
+![\[A VPC with public and private subnets and a NAT gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/nat-gateway-diagram.png)
 
-1. Launch an instance in your private subnet\. In the launch wizard, ensure that you select an Amazon Linux AMI\. Do not assign a public IP address to your instance\. Ensure that your security group rules allow inbound SSH traffic from the private IP address of your instance that you launched in the public subnet, and all outbound ICMP traffic\. You must choose the same key pair that you used to launch your instance in the public subnet\. 
+The following is the route table associated with the public subnet in Availability Zone A\. The first entry is the default entry for local routing in the VPC; it enables the instances in the VPC to communicate with each other\. The second entry sends all other subnet traffic to the internet gateway; this enables the NAT gateway to access the internet\.
+
+
+| Destination | Target | 
+| --- | --- | 
+| 10\.0\.0\.0/16 | local | 
+| 0\.0\.0\.0/0 | internet\-gateway\-id | 
+
+The following is the route table associated with the private subnet in Availability Zone B\. The first entry is the default entry for local routing in the VPC; it enables the instances in the VPC to communicate with each other\. The second entry sends all other subnet traffic, such as internet bound traffic, to the NAT gateway\.
+
+
+| Destination | Target | 
+| --- | --- | 
+| 10\.0\.0\.0/16 | local | 
+| 0\.0\.0\.0/0 | nat\-gateway\-id | 
+
+#### Test the public NAT gateway<a name="nat-gateway-testing"></a>
+
+After you've created your NAT gateway and updated your route tables, you can ping remote addresses on the internet from an instance in your private subnet to test whether it can connect to the internet\. For an example of how to do this, see [Test the internet connection](#nat-gateway-testing-example)\.
+
+If you can connect to the internet, you can also test whether internet traffic is routed through the NAT gateway:
++ Trace the route of traffic from an instance in your private subnet\. To do this, run the `traceroute` command from a Linux instance in your private subnet\. In the output, you should see the private IP address of the NAT gateway in one of the hops \(usually the first hop\)\.
++ Use a third\-party website or tool that displays the source IP address when you connect to it from an instance in your private subnet\. The source IP address should be the elastic IP address of the NAT gateway\. 
+
+If these tests fail, see [Troubleshoot NAT gateways](nat-gateway-troubleshooting.md)\.
+
+##### Test the internet connection<a name="nat-gateway-testing-example"></a>
+
+The following example demonstrates how to test whether an instance in a private subnet can connect to the internet\.
+
+1. Launch an instance in your public subnet \(use this as a bastion host\)\. For more information, see [Launch an instance into your subnet](working-with-vpcs.md#VPC_Launch_Instance)\. In the launch wizard, ensure that you select an Amazon Linux AMI, and assign a public IP address to your instance\. Ensure that your security group rules allow inbound SSH traffic from the range of IP addresses for your local network, and outbound SSH traffic to the IP address range of your private subnet \(you can also use `0.0.0.0/0` for both inbound and outbound SSH traffic for this test\)\.
+
+1. Launch an instance in your private subnet\. In the launch wizard, ensure that you select an Amazon Linux AMI\. Do not assign a public IP address to your instance\. Ensure that your security group rules allow inbound SSH traffic from the private IP address of your instance that you launched in the public subnet, and all outbound ICMP traffic\. You must choose the same key pair that you used to launch your instance in the public subnet\.
 
 1. Configure SSH agent forwarding on your local computer, and connect to your bastion host in the public subnet\. For more information, see [To configure SSH agent forwarding for Linux or macOS](#ssh-forwarding-linux) or [To configure SSH agent forwarding for Windows \(PuTTY\)](#ssh-forwarding-windows)\.
 
@@ -221,34 +216,34 @@ The following example demonstrates how to test whether your instance in a privat
 
 1. \(Optional\) If you no longer require your instances, terminate them\. For more information, see [Terminate your instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-## Controlling the use of NAT gateways<a name="nat-gateway-iam"></a>
+### Scenario: Allow access to your network from allow\-listed IP addresses<a name="private-nat-allowed-range"></a>
 
-By default, IAM users do not have permission to work with NAT gateways\. You can create an IAM user policy that grants users permissions to create, describe, and delete NAT gateways\. We currently do not support resource\-level permissions for any of the `ec2:*NatGateway*` API operations\. For more information about IAM policies for Amazon VPC, see [Identity and access management for Amazon VPC](security-iam.md)\.
+Instead of assigning each instance a separate IP address from the IP address range that is allowed to access your on\-premises network, you can create a subnet in your VPC with the allowed IP address range, create a private NAT gateway in the subnet, and route the traffic from your VPC destined for your on\-premises network through the NAT gateway\.
 
-## Tagging a NAT gateway<a name="nat-gateway-tagging"></a>
+## Migrate from a NAT instance<a name="nat-instance-migrate"></a>
 
-You can tag your NAT gateway to help you identify it or categorize it according to your organization's needs\. For information about working with tags, see [Tagging your Amazon EC2 resources](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+If you're already using a NAT instance, you can replace it with a NAT gateway\. To do this, you can create a NAT gateway in the same subnet as your NAT instance, and then replace the existing route in your route table that points to the NAT instance with a route that points to the NAT gateway\. To use the same Elastic IP address for the NAT gateway that you currently use for your NAT instance, you must first also disassociate the Elastic IP address from your NAT instance and then associate it with your NAT gateway when you create the gateway\.
 
-Cost allocation tags are supported for NAT gateways\. Therefore, you can also use tags to organize your AWS bill and reflect your own cost structure\. For more information, see [Using cost allocation tags](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html) in the *AWS Billing and Cost Management User Guide*\. For more information about setting up a cost allocation report with tags, see [Monthly cost allocation report](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/configurecostallocreport.html) in *About AWS Account Billing*\. 
+If you change your routing from a NAT instance to a NAT gateway, or if you disassociate the Elastic IP address from your NAT instance, any current connections are dropped and have to be re\-established\. Ensure that you do not have any critical tasks \(or any other tasks that operate through the NAT instance\) running\.
 
 ## API and CLI overview<a name="nat-gateway-api-cli"></a>
 
-You can perform the tasks described on this page using the command line or API\. For more information about the command line interfaces and a list of available API operations, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+You can perform the tasks described on this page using the command line or API\. For more information about the command line interfaces and a list of available API operations, see [Access Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 
 **Create a NAT gateway**
 + [create\-nat\-gateway](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-nat-gateway.html) \(AWS CLI\)
 + [New\-EC2NatGateway](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2NatGateway.html) \(AWS Tools for Windows PowerShell\)
 + [CreateNatGateway](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateNatGateway.html) \(Amazon EC2 Query API\)
 
-**Tag a NAT gateway**
-+ [create\-tags](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-tags.html) \(AWS CLI\)
-+ [New\-EC2Tag](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Tag.html) \(AWS Tools for Windows PowerShell\)
-+ [CreateTags](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateTags.html) \(Amazon EC2 Query API\)
-
 **Describe a NAT gateway**
 + [describe\-nat\-gateways](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-nat-gateways.html) \(AWS CLI\)
 + [Get\-EC2NatGateway](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2NatGateway.html) \(AWS Tools for Windows PowerShell\)
 + [DescribeNatGateways](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeNatGateways.html) \(Amazon EC2 Query API\)
+
+**Tag a NAT gateway**
++ [create\-tags](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-tags.html) \(AWS CLI\)
++ [New\-EC2Tag](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Tag.html) \(AWS Tools for Windows PowerShell\)
++ [CreateTags](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateTags.html) \(Amazon EC2 Query API\)
 
 **Delete a NAT gateway**
 + [delete\-nat\-gateway](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-nat-gateway.html) \(AWS CLI\)

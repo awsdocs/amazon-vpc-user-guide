@@ -7,13 +7,13 @@ The following topics describe routing for specific gateways or connections in yo
 + [Routing to a NAT device](#route-tables-nat)
 + [Routing to a virtual private gateway](#route-tables-vgw)
 + [Routing to an AWS Outposts local gateway](#route-tables-lgw)
-+ [Routing to A Wavelength Zone carrier gateway](#route-tables-cgw)
++ [Routing to a Wavelength Zone carrier gateway](#route-tables-cgw)
 + [Routing to a VPC peering connection](#route-tables-vpc-peering)
 + [Routing for ClassicLink](#route-tables-classiclink)
 + [Routing to a gateway VPC endpoint](#route-tables-vpce)
 + [Routing to an egress\-only internet gateway](#route-tables-eigw)
 + [Routing for a transit gateway](#route-tables-tgw)
-+ [Routing for a middlebox appliance in your VPC](#route-tables-appliance-routing)
++ [Routing for a middlebox appliance](#route-tables-appliance-routing)
 + [Routing using a prefix list](#route-tables-managed-prefix-list)
 + [Routing to a Gateway Load Balancer endpoint](#route-tables-gwlbe)
 
@@ -71,7 +71,7 @@ Subnets that are in VPCs associated with AWS Outposts can have an additional tar
 | --- | --- | 
 | 192\.168\.10\.0/24 | lgw\-id | 
 
-## Routing to A Wavelength Zone carrier gateway<a name="route-tables-cgw"></a>
+## Routing to a Wavelength Zone carrier gateway<a name="route-tables-cgw"></a>
 
 Subnets that are in Wavelength Zones can have an additional target type of a carrier gateway\. Consider the case where you want to have the carrier gateway route traffic to route all non\-VPC traffic to the carrier network\. To do this, create and attach a carrier gateway to your VPC, and then add the following routes:
 
@@ -190,7 +190,7 @@ The following is an example of the transit gateway route table entries for the V
 
 For more information about transit gateway route tables, see [Routing](https://docs.aws.amazon.com/vpc/latest/tgw/how-transit-gateways-work.html#tgw-routing-overview) in *Amazon VPC Transit Gateways*\.
 
-## Routing for a middlebox appliance in your VPC<a name="route-tables-appliance-routing"></a>
+## Routing for a middlebox appliance<a name="route-tables-appliance-routing"></a>
 
 You can intercept traffic that enters your VPC through an internet gateway or a virtual private gateway by directing it to a middlebox appliance in your VPC\. You can configure the appliance to suit your needs\. For example, you can configure a security appliance that screens all traffic, or a WAN acceleration appliance\. The appliance is deployed as an Amazon EC2 instance in a subnet in your VPC, and is represented by an elastic network interface \(network interface\) in your subnet\.
 
@@ -208,7 +208,7 @@ You can choose a third\-party appliance from [AWS Marketplace](https://aws.amazo
 + You cannot route traffic between hosts in the same subnet through an appliance\.
 + You cannot route traffic between subnets through an appliance\.
 + The appliance does not have to perform network address translation \(NAT\)\.
-+ To intercept IPv6 traffic, ensure that you configure your VPC, subnet, and appliance for IPv6\. For more information, see [Working with VPCs and subnets](working-with-vpcs.md)\. Virtual private gateways do not support IPv6 traffic\.
++ To intercept IPv6 traffic, ensure that you configure your VPC, subnet, and appliance for IPv6\. For more information, see [Work with VPCs and subnets](working-with-vpcs.md)\. Virtual private gateways do not support IPv6 traffic\.
 
 ### Appliance routing configuration<a name="appliance-routing-configuration"></a>
 

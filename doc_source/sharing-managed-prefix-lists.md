@@ -1,4 +1,4 @@
-# Working with shared prefix lists<a name="sharing-managed-prefix-lists"></a>
+# Work with shared prefix lists<a name="sharing-managed-prefix-lists"></a>
 
 Customer\-managed prefix lists integrate with AWS Resource Access Manager \(AWS RAM\)\. With AWS RAM, you share resources that you own across AWS accounts by creating a *resource share*\. It specifies the resources to share, and the consumers with whom to share them\. Consumers can be individual AWS accounts, or organizational units or an entire organization in AWS Organizations\.
 
@@ -13,10 +13,10 @@ Consumers with whom a prefix list has been shared can view the prefix list and i
 
 **Topics**
 + [Prerequisites for sharing prefix lists](#sharing-prereqs)
-+ [Sharing a prefix list](#sharing-share)
-+ [Identifying a shared prefix list](#sharing-identify)
-+ [Identifying references to a shared prefix list](#sharing-identify-references)
-+ [Unsharing a shared prefix list](#sharing-unshare)
++ [Share a prefix list](#sharing-share)
++ [Identify a shared prefix list](#sharing-identify)
++ [Identify references to a shared prefix list](#sharing-identify-references)
++ [Unshare a shared prefix list](#sharing-unshare)
 + [Shared prefix list permissions](#sharing-perms)
 + [Billing and metering](#sharing-billing)
 + [Quotas](#sharing-limits)
@@ -25,7 +25,7 @@ Consumers with whom a prefix list has been shared can view the prefix list and i
 + To share a prefix list, you must own it in your AWS account\. You cannot share a prefix list that has been shared with you\. You cannot share an AWS\-managed prefix list\.
 + To share a prefix list with your organization or an organizational unit in AWS Organizations, you must enable sharing with AWS Organizations\. For more information, see [ Enable sharing with AWS Organizations](https://docs.aws.amazon.com/ram/latest/userguide/getting-started-sharing.html#getting-started-sharing-orgs) in the *AWS RAM User Guide*\.
 
-## Sharing a prefix list<a name="sharing-share"></a>
+## Share a prefix list<a name="sharing-share"></a>
 
 To share a prefix list, you must add it to a resource share\. If you do not have a resource share, you must first create one using the [AWS RAM console](https://console.aws.amazon.com/ram)\.
 
@@ -45,7 +45,7 @@ Use the following commands to create and update a resource share:
 + [associate\-resource\-share](https://docs.aws.amazon.com/cli/latest/reference/ram/associate-resource-share.html) 
 + [update\-resource\-share](https://docs.aws.amazon.com/cli/latest/reference/ram/update-resource-share.html) 
 
-## Identifying a shared prefix list<a name="sharing-identify"></a>
+## Identify a shared prefix list<a name="sharing-identify"></a>
 
 Owners and consumers can identify shared prefix lists using the Amazon VPC console and AWS CLI\.
 
@@ -62,7 +62,7 @@ Owners and consumers can identify shared prefix lists using the Amazon VPC conso
 **To identify a shared prefix list using the AWS CLI**  
 Use the [describe\-managed\-prefix\-lists](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-managed-prefix-lists.html) command\. The command returns the prefix lists that you own and the prefix lists that are shared with you\. `OwnerId` shows the AWS account ID of the prefix list owner\.
 
-## Identifying references to a shared prefix list<a name="sharing-identify-references"></a>
+## Identify references to a shared prefix list<a name="sharing-identify-references"></a>
 
 Owners can identify the consumer\-owned resources that are referencing a shared prefix list by using the Amazon VPC console and AWS CLI\.
 
@@ -79,7 +79,7 @@ Owners can identify the consumer\-owned resources that are referencing a shared 
 **To identify references to a shared prefix list using the AWS CLI**  
 Use the [get\-managed\-prefix\-list\-associations](https://docs.aws.amazon.com/cli/latest/reference/ec2/get-managed-prefix-list-associations.html) command\.
 
-## Unsharing a shared prefix list<a name="sharing-unshare"></a>
+## Unshare a shared prefix list<a name="sharing-unshare"></a>
 
 When you unshare a prefix list, consumers can no longer view the prefix list or its entries in their account, and they cannot reference the prefix list in their resources\. If the prefix list is already referenced in the consumer's resources, those references continue to function as normal, and you can continue to [view those references](#sharing-identify-references)\. If you update the prefix list to a new version, the references use the latest version\.
 

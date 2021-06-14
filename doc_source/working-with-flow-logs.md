@@ -1,18 +1,18 @@
-# Working with flow logs<a name="working-with-flow-logs"></a>
+# Work with flow logs<a name="working-with-flow-logs"></a>
 
 You can work with flow logs using the Amazon EC2, Amazon VPC, CloudWatch, and Amazon S3 consoles\.
 
 **Topics**
-+ [Controlling the use of flow logs](#controlling-use-of-flow-logs)
-+ [Creating a flow log](#create-flow-log)
-+ [Viewing flow logs](#view-flow-logs)
-+ [Adding or removing tags for flow logs](#modify-tags-flow-logs)
-+ [Viewing flow log records](#view-flow-log-records)
-+ [Searching flow log records](#search-flow-log-records)
-+ [Deleting a flow log](#delete-flow-log)
++ [Control the use of flow logs](#controlling-use-of-flow-logs)
++ [Create a flow log](#create-flow-log)
++ [View flow logs](#view-flow-logs)
++ [Add or remove tags for flow logs](#modify-tags-flow-logs)
++ [View flow log records](#view-flow-log-records)
++ [Search flow log records](#search-flow-log-records)
++ [Delete a flow log](#delete-flow-log)
 + [API and CLI overview](#flow-logs-api-cli)
 
-## Controlling the use of flow logs<a name="controlling-use-of-flow-logs"></a>
+## Control the use of flow logs<a name="controlling-use-of-flow-logs"></a>
 
 By default, IAM users do not have permission to work with flow logs\. You can create an IAM user policy that grants users the permissions to create, describe, and delete flow logs\. For more information, see [Granting IAM Users Required Permissions for Amazon EC2 Resources](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/ec2-api-permissions.html) in the *Amazon EC2 API Reference*\.
 
@@ -35,15 +35,15 @@ The following is an example policy that grants users full permissions to create,
 }
 ```
 
-Some additional IAM role and permission configuration is required, depending on whether you're publishing to CloudWatch Logs or Amazon S3\. For more information, see [Publishing flow logs to CloudWatch Logs](flow-logs-cwl.md) and [Publishing flow logs to Amazon S3](flow-logs-s3.md)\.
+Some additional IAM role and permission configuration is required, depending on whether you're publishing to CloudWatch Logs or Amazon S3\. For more information, see [Publish flow logs to CloudWatch Logs](flow-logs-cwl.md) and [Publish flow logs to Amazon S3](flow-logs-s3.md)\.
 
-## Creating a flow log<a name="create-flow-log"></a>
+## Create a flow log<a name="create-flow-log"></a>
 
 You can create flow logs for your VPCs, subnets, or network interfaces\. Flow logs can publish data to CloudWatch Logs or Amazon S3\.
 
-For more information, see [Creating a flow log that publishes to CloudWatch Logs](flow-logs-cwl.md#flow-logs-cwl-create-flow-log) and [Creating a flow log that publishes to Amazon S3](flow-logs-s3.md#flow-logs-s3-create-flow-log)\.
+For more information, see [Create a flow log that publishes to CloudWatch Logs](flow-logs-cwl.md#flow-logs-cwl-create-flow-log) and [Create a flow log that publishes to Amazon S3](flow-logs-s3.md#flow-logs-s3-create-flow-log)\.
 
-## Viewing flow logs<a name="view-flow-logs"></a>
+## View flow logs<a name="view-flow-logs"></a>
 
 You can view information about your flow logs in the Amazon EC2 and Amazon VPC consoles by viewing the **Flow Logs** tab for a specific resource\. When you select the resource, all the flow logs for that resource are listed\. The information displayed includes the ID of the flow log, the flow log configuration, and information about the status of the flow log\.
 
@@ -63,7 +63,7 @@ You can view information about your flow logs in the Amazon EC2 and Amazon VPC c
 
 1. Select your VPC or subnet, and choose **Flow Logs**\. Information about the flow logs is displayed on the tab\. The **Destination type** column indicates the destination to which the flow logs are published\.
 
-## Adding or removing tags for flow logs<a name="modify-tags-flow-logs"></a>
+## Add or remove tags for flow logs<a name="modify-tags-flow-logs"></a>
 
 You can add or remove tags for a flow log in the Amazon EC2 and Amazon VPC consoles\.
 
@@ -95,7 +95,7 @@ You can add or remove tags for a flow log in the Amazon EC2 and Amazon VPC conso
 
 1. Choose **Save**\.
 
-## Viewing flow log records<a name="view-flow-log-records"></a>
+## View flow log records<a name="view-flow-log-records"></a>
 
 You can view your flow log records using the CloudWatch Logs console or Amazon S3 console, depending on the chosen destination type\. It may take a few minutes after you've created your flow log for it to be visible in the console\.
 
@@ -115,7 +115,7 @@ You can view your flow log records using the CloudWatch Logs console or Amazon S
 
 1. For **Name**, select the check box next to the log file\. On the object overview panel, choose **Download**\.
 
-## Searching flow log records<a name="search-flow-log-records"></a>
+## Search flow log records<a name="search-flow-log-records"></a>
 
 You can search your flow log records that are published to CloudWatch Logs by using the CloudWatch Logs console\. You can use [metric filters](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html) to filter flow log records\. Flow log records are space delimited\.
 
@@ -147,7 +147,7 @@ You can search your flow log records that are published to CloudWatch Logs by us
    [version, accountid, interfaceid, srcaddr, dstaddr, srcport, dstport = 80 || dstport = 8080, protocol, packets, bytes >= 400, start, end, action = REJECT, logstatus]
    ```
 
-## Deleting a flow log<a name="delete-flow-log"></a>
+## Delete a flow log<a name="delete-flow-log"></a>
 
 You can delete a flow log using the Amazon EC2 and Amazon VPC consoles\. 
 
@@ -175,7 +175,7 @@ These procedures disable the flow log service for a resource\. Deleting a flow l
 
 ## API and CLI overview<a name="flow-logs-api-cli"></a>
 
-You can perform the tasks described on this page using the command line or API\. For more information about the command line interfaces and a list of available API actions, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+You can perform the tasks described on this page using the command line or API\. For more information about the command line interfaces and a list of available API actions, see [Access Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 
 **Create a flow log**
 + [create\-flow\-logs](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-flow-logs.html) \(AWS CLI\)

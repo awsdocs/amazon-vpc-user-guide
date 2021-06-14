@@ -1,4 +1,4 @@
-# DHCP options sets<a name="VPC_DHCP_Options"></a>
+# DHCP options sets for your VPC<a name="VPC_DHCP_Options"></a>
 
 The Dynamic Host Configuration Protocol \(DHCP\) provides a standard for passing configuration information to hosts on a TCP/IP network\. The `options` field of a DHCP message contains configuration parameters, including the domain name, domain name server, and the netbios\-node\-type\.
 
@@ -7,8 +7,8 @@ When you create a VPC, we automatically create a set of DHCP options and associa
 **Topics**
 + [Overview of DHCP options sets](#DHCPOptionSets)
 + [Amazon DNS server](#AmazonDNS)
-+ [Changing DHCP options](#DHCPOptions)
-+ [Working with DHCP options sets](#DHCPOptionSet)
++ [Change DHCP options](#DHCPOptions)
++ [Work with DHCP options sets](#DHCPOptionSet)
 + [API and command overview](#APIOverview)
 
 ## Overview of DHCP options sets<a name="DHCPOptionSets"></a>
@@ -18,13 +18,13 @@ By default, all instances in a nondefault VPC receive an unresolvable host name 
 The following are the supported options for a DHCP options set, and the value that is provided in the default DHCP options set for your VPC\. You can specify only the options that you need in your DHCP options set\. For more information about the options, see [RFC 2132](https://tools.ietf.org/html/rfc2132)\.
 
 **domain\-name\-servers**  
-The IP addresses of up to four domain name servers, or [AmazonProvidedDNS](#AmazonDNS)\. If specifying more than one domain name server, separate them with commas\. Although you can specify up to four domain name servers, some operating systems may impose lower limits\.  
-To use this option, set it to either AmazonProvidedDNS, or to custom domain name servers\. If you set this option to both, the result might cause unexpected behavior\.  
+The IP addresses of up to four domain name servers, or [AmazonProvidedDNS](#AmazonDNS)\. To specify more than one domain name server, separate them with commas\. Although you can specify up to four domain name servers, some operating systems might impose lower limits\.  
+To use this option, set it to either AmazonProvidedDNS or custom domain name servers\. Using both might cause unexpected behavior\.  
 Default DHCP options set: AmazonProvidedDNS
 
 **domain\-name**  
-The domain name for your instances\. You can specify a custom domain name \(for example, `example.com`\)\. This value is used to complete unqualified DNS hostnames\. For more information about DNS hostnames and DNS support in your VPC, see [Using DNS with your VPC](vpc-dns.md)\. When you use a custom domain name, you only need to specify a custom domain\-name server if the custom domain is hosted on customer\-managed DNS servers\. you use Amazon Route 53 private hosted zone associated with the same VPC, then you can use [AmazonProvidedDNS](#AmazonDNS)\.  
-Some Linux operating systems accept multiple domain names separated by spaces\. However, other Linux operating systems and Windows treat the value as a single domain, which results in unexpected behavior\. If your DHCP options set is associated with a VPC that has instances with multiple operating systems, specify only one domain name\.
+The custom domain name for your instances\. If you are not using AmazonProvidedDNS, your custom domain name servers must resolve the hostname as appropriate\. If you use a Amazon Route 53 private hosted zone, you can use AmazonProvidedDNS\. For more information, see [DNS support for your VPC](vpc-dns.md)\.  
+Some Linux operating systems accept multiple domain names separated by spaces\. However, other Linux operating systems and Windows treat the value as a single domain, which results in unexpected behavior\. If your DHCP options set is associated with a VPC that contains instances that are not all running the same operating systems, specify only one domain name\.  
 Default DHCP options set: For `us-east-1`, the value is `ec2.internal`\. For other Regions, the value is *region*\.compute\.internal \(for example, `ap-northeast-1.compute.internal`\)\. To use the default values, set `domain-name-servers` to AmazonProvidedDNS\.
 
 **ntp\-servers**  
@@ -41,11 +41,11 @@ Default DHCP options set: None
 
 ## Amazon DNS server<a name="AmazonDNS"></a>
 
-The default DHCP options set for your VPC includes two options: `domain-name-servers=AmazonProvidedDNS`, and `domain-name=`*domain\-name\-for\-your\-region*\. AmazonProvidedDNS is an Amazon Route 53 Resolver server, and this option enables DNS for instances that need to communicate over the VPC's internet gateway\. The string `AmazonProvidedDNS` maps to a DNS server running on a reserved IP address at the base of the VPC IPv4 network range, plus two\. For example, the DNS Server on a 10\.0\.0\.0/16 network is located at 10\.0\.0\.2\. For VPCs with multiple IPv4 CIDR blocks, the DNS server IP address is located in the primary CIDR block\. The DNS server does not reside within a specific subnet or Availability Zone in a VPC\. 
+The default DHCP options set for your VPC includes two options: `domain-name-servers=AmazonProvidedDNS`, and `domain-name=`*domain\-name\-for\-your\-region*\. AmazonProvidedDNS is an Amazon Route 53 Resolver server, and this option enables DNS for instances that need to communicate over the VPC's internet gateway\. The string `AmazonProvidedDNS` maps to a DNS server running on a reserved IP address at the base of the VPC IPv4 network range, plus two\. For example, the DNS Server on a 10\.0\.0\.0/16 network is located at 10\.0\.0\.2\. For VPCs with multiple IPv4 CIDR blocks, the DNS server IP address is located in the primary CIDR block\. The DNS server does not reside within a specific subnet or Availability Zone in a VPC\. 
 
 When you launch an instance into a VPC, we provide the instance with a private DNS hostname, and a public DNS hostname if the instance receives a public IPv4 address\. If `domain-name-servers` in your DHCP options is set to AmazonProvidedDNS, the public DNS hostname takes the form `ec2-public-ipv4-address.compute-1.amazonaws.com` for the us\-east\-1 Region, and `ec2-public-ipv4-address.region.compute.amazonaws.com` for other Regions\. The private hostname takes the form `ip-private-ipv4-address.ec2.internal` for the us\-east\-1 Region, and `ip-private-ipv4-address.region.compute.internal` for other Regions\. To change these to custom DNS hostnames, you must set `domain-name-servers` to a custom DNS server\.
 
-The Amazon DNS server in your VPC is used to resolve the DNS domain names that you specify in a private hosted zone in Route 53\. For more information about private hosted zones, see [Working with private hosted zones](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-private.html) in the *Amazon Route 53 Developer Guide*\.
+The Amazon DNS server in your VPC is used to resolve the DNS domain names that you specify in a private hosted zone in Route 53\. For more information about private hosted zones, see [Working with private hosted zones](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-private.html) in the *Amazon Route 53 Developer Guide*\.
 
 ### Rules and considerations<a name="amazon-dns-rules"></a>
 
@@ -53,9 +53,9 @@ When using the Amazon DNS server, the following rules and considerations apply\.
 + You cannot filter traffic to or from the Amazon DNS server using network ACLs or security groups\.
 + Services that use the Hadoop framework, such as Amazon EMR, require instances to resolve their own fully qualified domain names \(FQDN\)\. In such cases, DNS resolution can fail if the `domain-name-servers` option is set to a custom value\. To ensure proper DNS resolution, consider adding a conditional forwarder on your DNS server to forward queries for the domain `region-name.compute.internal` to the Amazon DNS server\. For more information, see [Setting up a VPC to host clusters](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-vpc-host-job-flows.html) in the *Amazon EMR Management Guide*\.
 + You can use the Amazon DNS server IP address 169\.254\.169\.253, though some servers don't allow its use\. Windows Server 2008, for example, disallows the use of a DNS server located in the 169\.254\.x\.x network range\. 
-+ The Amazon Route 53 Resolver only supports recursive DNS queries\.
++ The Amazon Route 53 Resolver only supports recursive DNS queries\.
 
-## Changing DHCP options<a name="DHCPOptions"></a>
+## Change DHCP options<a name="DHCPOptions"></a>
 
 After you create a set of DHCP options, you can't modify them\. If you want your VPC to use a different set of DHCP options, you must create a new set and associate them with your VPC\. You can also set up your VPC to use no DHCP options at all\.
 
@@ -63,20 +63,20 @@ You can have multiple sets of DHCP options, but you can associate only one set o
 
 After you associate a new set of DHCP options with a VPC, any existing instances and all new instances that you launch in the VPC use the new options\. You don't need to restart or relaunch the instances\. They automatically pick up the changes within a few hours, depending on how frequently the instance renews its DHCP lease\. If you want, you can explicitly renew the lease using the operating system on the instance\. 
 
-## Working with DHCP options sets<a name="DHCPOptionSet"></a>
+## Work with DHCP options sets<a name="DHCPOptionSet"></a>
 
 This section shows you how to work with DHCP options sets\.
 
 **Topics**
-+ [Creating a DHCP options set](#CreatingaDHCPOptionSet)
-+ [Changing the set of DHCP options that a VPC uses](#ChangingDHCPOptionsofaVPC)
-+ [Changing a VPC to use no DHCP options](#DHCP_Use_No_Options)
-+ [Modifying the tags of a DHCP options set](#TaggingaDHCPOptionSet)
-+ [Deleting a DHCP options set](#DeletingaDHCPOptionSet)
++ [Create a DHCP options set](#CreatingaDHCPOptionSet)
++ [Change the set of DHCP options that a VPC uses](#ChangingDHCPOptionsofaVPC)
++ [Change a VPC to use no DHCP options](#DHCP_Use_No_Options)
++ [Modify the tags of a DHCP options set](#TaggingaDHCPOptionSet)
++ [Delete a DHCP options set](#DeletingaDHCPOptionSet)
 
-### Creating a DHCP options set<a name="CreatingaDHCPOptionSet"></a>
+### Create a DHCP options set<a name="CreatingaDHCPOptionSet"></a>
 
-You can create as many additional DHCP options sets as you want\. However, you can only associate a VPC with one set of DHCP options at a time\. After you create a set of DHCP options, you must configure your VPC to use it\. For more information, see [Changing the set of DHCP options that a VPC uses](#ChangingDHCPOptionsofaVPC)\.
+You can create as many additional DHCP options sets as you want\. However, you can only associate a VPC with one set of DHCP options at a time\. After you create a set of DHCP options, you must configure your VPC to use it\. For more information, see [Change the set of DHCP options that a VPC uses](#ChangingDHCPOptionsofaVPC)\.
 
 **To create a DHCP options set**
 
@@ -104,12 +104,12 @@ If your VPC has an internet gateway, make sure to specify your own DNS server or
 
 Now that you've created a set of DHCP options, you must associate it with your VPC for the options to take effect\. You can create multiple sets of DHCP options, but you can associate only one set of DHCP options with your VPC at a time\.
 
-### Changing the set of DHCP options that a VPC uses<a name="ChangingDHCPOptionsofaVPC"></a>
+### Change the set of DHCP options that a VPC uses<a name="ChangingDHCPOptionsofaVPC"></a>
 
-You can change which set of DHCP options your VPC uses\. If you want the VPC settings to not use DHCP options, see [Changing a VPC to use no DHCP options](#DHCP_Use_No_Options)\.
+You can change which set of DHCP options your VPC uses\. If you want the VPC settings to not use DHCP options, see [Change a VPC to use no DHCP options](#DHCP_Use_No_Options)\.
 
 **Note**  
-The following procedure assumes that you've already created the DHCP options set that you want to change to\. If you haven't, create the options set now\. For more information, see [Creating a DHCP options set](#CreatingaDHCPOptionSet)\.
+The following procedure assumes that you've already created the DHCP options set that you want to change to\. If you haven't, create the options set now\. For more information, see [Create a DHCP options set](#CreatingaDHCPOptionSet)\.
 
 **To change the DHCP options set associated with a VPC**
 
@@ -123,7 +123,7 @@ The following procedure assumes that you've already created the DHCP options set
 
 After you associate a new set of DHCP options with the VPC, any existing instances and all new instances that you launch in that VPC use the new options\. You don't need to restart or relaunch the instances\. They automatically pick up the changes within a few hours, depending on how frequently the instance renews its DHCP lease\. If you want, you can explicitly renew the lease using the operating system on the instance\. 
 
-### Changing a VPC to use no DHCP options<a name="DHCP_Use_No_Options"></a>
+### Change a VPC to use no DHCP options<a name="DHCP_Use_No_Options"></a>
 
 You can set up your VPC so that it does not use a set of DHCP options\. 
 
@@ -137,7 +137,7 @@ You can set up your VPC so that it does not use a set of DHCP options\.
 
  You don't need to restart or relaunch the instances\. They automatically pick up the changes within a few hours, depending on how frequently the instance renews its DHCP lease\. If you want, you can explicitly renew the lease using the operating system on the instance\. 
 
-### Modifying the tags of a DHCP options set<a name="TaggingaDHCPOptionSet"></a>
+### Modify the tags of a DHCP options set<a name="TaggingaDHCPOptionSet"></a>
 
 You can add tags to easily identify your options set\. Add a tag to the DHCP options set, or remove a tag from the DHCP options set\.
 
@@ -159,9 +159,9 @@ You can add tags to easily identify your options set\. Add a tag to the DHCP opt
 
 1. Choose **Save**\.
 
-### Deleting a DHCP options set<a name="DeletingaDHCPOptionSet"></a>
+### Delete a DHCP options set<a name="DeletingaDHCPOptionSet"></a>
 
-When you no longer need a DHCP options set, use the following procedure to delete it\. Make sure that you change the VPCs that use these options to another option set, or no options, For more information, see [Changing the set of DHCP options that a VPC uses](#ChangingDHCPOptionsofaVPC) and [Changing a VPC to use no DHCP options](#DHCP_Use_No_Options) \.
+When you no longer need a DHCP options set, use the following procedure to delete it\. Make sure that you change the VPCs that use these options to another option set, or no options, For more information, see [Change the set of DHCP options that a VPC uses](#ChangingDHCPOptionsofaVPC) and [Change a VPC to use no DHCP options](#DHCP_Use_No_Options) \.
 
 **To delete a DHCP options set**
 
@@ -175,7 +175,7 @@ When you no longer need a DHCP options set, use the following procedure to delet
 
 ## API and command overview<a name="APIOverview"></a>
 
-You can perform the tasks described in this topic using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+You can perform the tasks described in this topic using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Access Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 
 **Create a set of DHCP options for your VPC**
 + [create\-dhcp\-options](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-dhcp-options.html) \(AWS CLI\)

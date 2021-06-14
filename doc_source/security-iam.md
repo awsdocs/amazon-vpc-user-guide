@@ -4,23 +4,23 @@ AWS Identity and Access Management \(IAM\) is an AWS service that helps an admin
 
 **Topics**
 + [Audience](#security_iam_audience)
-+ [Authenticating with identities](#security_iam_authentication)
-+ [Managing access using policies](#security_iam_access-manage)
++ [Authenticate with identities](#security_iam_authentication)
++ [Manage access using policies](#security_iam_access-manage)
 + [How Amazon VPC works with IAM](security_iam_service-with-iam.md)
 + [Amazon VPC policy examples](vpc-policy-examples.md)
-+ [Troubleshooting Amazon VPC identity and access](security_iam_troubleshoot.md)
++ [Troubleshoot Amazon VPC identity and access](security_iam_troubleshoot.md)
 
 ## Audience<a name="security_iam_audience"></a>
 
 How you use AWS Identity and Access Management \(IAM\) differs, depending on the work you do in Amazon VPC\.
 
-**Service user** – If you use the Amazon VPC service to do your job, your administrator provides you with the credentials and permissions that you need\. As you use more Amazon VPC features to do your work, you might need additional permissions\. Understanding how access is managed can help you request the right permissions from your administrator\. If you cannot access a feature in Amazon VPC, see [Troubleshooting Amazon VPC identity and access](security_iam_troubleshoot.md)\.
+**Service user** – If you use the Amazon VPC service to do your job, your administrator provides you with the credentials and permissions that you need\. As you use more Amazon VPC features to do your work, you might need additional permissions\. Understanding how access is managed can help you request the right permissions from your administrator\. If you cannot access a feature in Amazon VPC, see [Troubleshoot Amazon VPC identity and access](security_iam_troubleshoot.md)\.
 
 **Service administrator** – If you're in charge of Amazon VPC resources at your company, you probably have full access to Amazon VPC\. It's your job to determine which Amazon VPC features and resources your employees should access\. You submit requests to your IAM administrator to change the permissions of your service users\. Review the information on this page to understand the basic concepts of IAM\. To learn more about how your company can use IAM with Amazon VPC, see [How Amazon VPC works with IAM](security_iam_service-with-iam.md)\.
 
 **IAM administrator** – If you're an IAM administrator, you might want to learn details about how you can write policies to manage access to Amazon VPC\. To view example policies, see [Amazon VPC policy examples](vpc-policy-examples.md)\.
 
-## Authenticating with identities<a name="security_iam_authentication"></a>
+## Authenticate with identities<a name="security_iam_authentication"></a>
 
 Authentication is how you sign in to AWS using your identity credentials\. For more information about signing in using the AWS Management Console, see [Signing in to the AWS Management Console as an IAM user or root user](https://docs.aws.amazon.com/IAM/latest/UserGuide/console.html) in the *IAM User Guide*\.
 
@@ -58,7 +58,7 @@ IAM roles with temporary credentials are useful in the following situations:
 
 To learn whether to use IAM roles or IAM users, see [When to create an IAM role \(instead of a user\)](https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html#id_which-to-choose_role) in the *IAM User Guide*\.
 
-## Managing access using policies<a name="security_iam_access-manage"></a>
+## Manage access using policies<a name="security_iam_access-manage"></a>
 
 You control access in AWS by creating policies and attaching them to IAM identities or AWS resources\. A policy is an object in AWS that, when associated with an identity or resource, defines their permissions\. You can sign in as the root user or an IAM user, or you can assume an IAM role\. When you then make a request, AWS evaluates the related identity\-based or resource\-based policies\. Permissions in the policies determine whether the request is allowed or denied\. Most policies are stored in AWS as JSON documents\. For more information about the structure and contents of JSON policy documents, see [Overview of JSON policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html#access_policies-json) in the *IAM User Guide*\.
 

@@ -1,6 +1,6 @@
 # Example: Create an IPv6 VPC and subnets using the AWS CLI<a name="vpc-subnets-commands-example-ipv6"></a>
 
-The following example uses AWS CLI commands to create a nondefault VPC with an IPv6 CIDR block, a public subnet, and a private subnet with outbound Internet access only\. After you've created the VPC and subnets, you can launch an instance in the public subnet and connect to it\. You can launch an instance in your private subnet and verify that it can connect to the Internet\. To begin, you must first install and configure the AWS CLI\. For more information, see [Installing the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html)\.
+The following example uses AWS CLI commands to create a nondefault VPC with an IPv6 CIDR block, a public subnet, and a private subnet with outbound internet access only\. After you've created the VPC and subnets, you can launch an instance in the public subnet and connect to it\. You can launch an instance in your private subnet and verify that it can connect to the internet\. To begin, you must first install and configure the AWS CLI\. For more information, see [Installing the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html)\.
 
 You will create the following AWS resources:
 + A VPC
@@ -78,17 +78,17 @@ The first step is to create a VPC and two subnets\. This example uses the IPv4 C
 
 ## Step 2: Configure a public subnet<a name="vpc-subnets-commands-example-public-subnet-ipv6"></a>
 
-After you've created the VPC and subnets, you can make one of the subnets a public subnet by attaching an Internet gateway to your VPC, creating a custom route table, and configuring routing for the subnet to the Internet gateway\. In this example, a route table is created that routes all IPv4 traffic and IPv6 traffic to an Internet gateway\. 
+After you've created the VPC and subnets, you can make one of the subnets a public subnet by attaching an internet gateway to your VPC, creating a custom route table, and configuring routing for the subnet to the internet gateway\. In this example, a route table is created that routes all IPv4 traffic and IPv6 traffic to an internet gateway\. 
 
 **To make your subnet a public subnet**
 
-1. Create an Internet gateway\.
+1. Create an internet gateway\.
 
    ```
    aws ec2 create-internet-gateway
    ```
 
-   In the output that's returned, take note of the Internet gateway ID\.
+   In the output that's returned, take note of the internet gateway ID\.
 
    ```
    {
@@ -100,7 +100,7 @@ After you've created the VPC and subnets, you can make one of the subnets a publ
    }
    ```
 
-1. Using the ID from the previous step, attach the Internet gateway to your VPC\.
+1. Using the ID from the previous step, attach the internet gateway to your VPC\.
 
    ```
    aws ec2 attach-internet-gateway --vpc-id vpc-2f09a348 --internet-gateway-id igw-1ff7a07b
@@ -124,13 +124,13 @@ After you've created the VPC and subnets, you can make one of the subnets a publ
    }
    ```
 
-1. Create a route in the route table that points all IPv6 traffic \(`::/0`\) to the Internet gateway\.
+1. Create a route in the route table that points all IPv6 traffic \(`::/0`\) to the internet gateway\.
 
    ```
    aws ec2 create-route --route-table-id rtb-c1c8faa6 --destination-ipv6-cidr-block ::/0 --gateway-id igw-1ff7a07b
    ```
 **Note**  
-If you intend to use your public subnet for IPv4 traffic too, you need to add another route for `0.0.0.0/0` traffic that points to the Internet gateway\.
+If you intend to use your public subnet for IPv4 traffic too, you need to add another route for `0.0.0.0/0` traffic that points to the internet gateway\.
 
 1. To confirm that your route has been created and is active, you can describe the route table and view the results\.
 
@@ -172,7 +172,7 @@ If you intend to use your public subnet for IPv4 traffic too, you need to add an
    }
    ```
 
-1. The route table is not currently associated with any subnet\. Associate it with a subnet in your VPC so that traffic from that subnet is routed to the Internet gateway\. First, describe your subnets to get their IDs\. You can use the `--filter` option to return the subnets for your new VPC only, and the `--query` option to return only the subnet IDs and their IPv4 and IPv6 CIDR blocks\.
+1. The route table is not currently associated with any subnet\. Associate it with a subnet in your VPC so that traffic from that subnet is routed to the internet gateway\. First, describe your subnets to get their IDs\. You can use the `--filter` option to return the subnets for your new VPC only, and the `--query` option to return only the subnet IDs and their IPv4 and IPv6 CIDR blocks\.
 
    ```
    aws ec2 describe-subnets --filters "Name=vpc-id,Values=vpc-2f09a348" --query 'Subnets[*].{ID:SubnetId,IPv4CIDR:CidrBlock,IPv6CIDR:Ipv6CidrBlockAssociationSet[*].Ipv6CidrBlock}'
@@ -205,11 +205,11 @@ If you intend to use your public subnet for IPv4 traffic too, you need to add an
 
 ## Step 3: Configure an egress\-only private subnet<a name="vpc-subnets-commands-example-private-subnet-ipv6"></a>
 
-You can configure the second subnet in your VPC to be an IPv6 egress\-only private subnet\. Instances that are launched in this subnet are able to access the Internet over IPv6 \(for example, to get software updates\) through an egress\-only Internet gateway, but hosts on the Internet cannot reach your instances\. 
+You can configure the second subnet in your VPC to be an IPv6 egress\-only private subnet\. Instances that are launched in this subnet are able to access the internet over IPv6 \(for example, to get software updates\) through an egress\-only internet gateway, but hosts on the internet cannot reach your instances\. 
 
 **To make your subnet an egress\-only private subnet**
 
-1. Create an egress\-only Internet gateway for your VPC\. In the output that's returned, take note of the gateway ID\.
+1. Create an egress\-only internet gateway for your VPC\. In the output that's returned, take note of the gateway ID\.
 
    ```
    aws ec2 create-egress-only-internet-gateway --vpc-id vpc-2f09a348
@@ -241,7 +241,7 @@ You can configure the second subnet in your VPC to be an IPv6 egress\-only priva
    aws ec2 create-route --route-table-id rtb-abc123ab --destination-ipv6-cidr-block ::/0 --egress-only-internet-gateway-id eigw-015e0e244e24dfe8a
    ```
 
-1. Associate the route table with the second subnet in your VPC \(you described the subnets in the previous section\)\. This subnet will be your private subnet with egress\-only IPv6 Internet access\.
+1. Associate the route table with the second subnet in your VPC \(you described the subnets in the previous section\)\. This subnet will be your private subnet with egress\-only IPv6 internet access\.
 
    ```
    aws ec2 associate-route-table --subnet-id subnet-a46032fc --route-table-id rtb-abc123ab
@@ -261,7 +261,7 @@ aws ec2 modify-subnet-attribute --subnet-id subnet-a46032fc --assign-ipv6-addres
 
 ## Step 5: Launch an instance into your public subnet<a name="vpc-subnets-commands-example-launch-instance-ipv6"></a>
 
-To test that your public subnet is public and that instances in the subnet are accessible from the Internet, launch an instance into your public subnet and connect to it\. First, you must create a security group to associate with your instance, and a key pair with which you'll connect to your instance\. For more information about security groups, see [Security groups for your VPC](VPC_SecurityGroups.md)\. For more information about key pairs, see [Amazon EC2 key pairs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+To test that your public subnet is public and that instances in the subnet are accessible from the internet, launch an instance into your public subnet and connect to it\. First, you must create a security group to associate with your instance, and a key pair with which you'll connect to your instance\. For more information about security groups, see [Security groups for your VPC](VPC_SecurityGroups.md)\. For more information about key pairs, see [Amazon EC2 key pairs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **To launch and connect to an instance in your public subnet**
 
@@ -301,7 +301,7 @@ If you use `::/0`, you enable all IPv6 addresses to access your instance using S
    aws ec2 run-instances --image-id ami-0de53d8956e8dcf80 --count 1 --instance-type t2.micro --key-name MyKeyPair --security-group-ids sg-e1fb8c9a --subnet-id subnet-b46032ec
    ```
 **Note**  
-In this example, the AMI is an Amazon Linux AMI in the US East \(N\. Virginia\) region\. If you're in a different region, you need the AMI ID for a suitable AMI in your region\. For more information, see [Finding a Linux AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+In this example, the AMI is an Amazon Linux AMI in the US East \(N\. Virginia\) Region\. If you're in a different Region, you need the AMI ID for a suitable AMI in your Region\. For more information, see [Find a Linux AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 1. Your instance must be in the `running` state in order to connect to it\. Describe your instance and confirm its state, and take note of its IPv6 address\.
 
@@ -344,7 +344,7 @@ In this example, the AMI is an Amazon Linux AMI in the US East \(N\. Virginia\) 
 
 ## Step 6: Launch an instance into your private subnet<a name="vpc-subnets-commands-example-launch-instance-ipv6-private"></a>
 
-To test that instances in your egress\-only private subnet can access the Internet, launch an instance in your private subnet and connect to it using a bastion instance in your public subnet \(you can use the instance you launched in the previous section\)\. First, you must create a security group for the instance\. The security group must have a rule that allows your bastion instance to connect using SSH, and a rule that allows the `ping6` command \(ICMPv6 traffic\) to verify that the instance is not accessible from the Internet\.
+To test that instances in your egress\-only private subnet can access the internet, launch an instance in your private subnet and connect to it using a bastion instance in your public subnet \(you can use the instance you launched in the previous section\)\. First, you must create a security group for the instance\. The security group must have a rule that allows your bastion instance to connect using SSH, and a rule that allows the `ping6` command \(ICMPv6 traffic\) to verify that the instance is not accessible from the internet\.
 
 1. Create a security group in your VPC, and add a rule that allows inbound SSH access from the IPv6 address of the instance in your public subnet, and a rule that allows all ICMPv6 traffic:
 
@@ -402,7 +402,7 @@ To test that instances in your egress\-only private subnet can access the Intern
    ssh ec2-user@2001:db8:1234:1a01::456
    ```
 
-1. From your private instance, test that you can connect to the Internet by running the `ping6` command for a website that has ICMP enabled, for example:
+1. From your private instance, test that you can connect to the internet by running the `ping6` command for a website that has ICMP enabled, for example:
 
    ```
    ping6 -n ietf.org
@@ -416,7 +416,7 @@ To test that instances in your egress\-only private subnet can access the Intern
    ...
    ```
 
-1. To test that hosts on the Internet cannot reach your instance in the private subnet, use the `ping6` command from a computer that's enabled for IPv6\. You should get a timeout response\. If you get a valid response, then your instance is accessible from the Internet—check the route table that's associated with your private subnet and verify that it does not have a route for IPv6 traffic to an Internet gateway\.
+1. To test that hosts on the internet cannot reach your instance in the private subnet, use the `ping6` command from a computer that's enabled for IPv6\. You should get a timeout response\. If you get a valid response, then your instance is accessible from the internet—check the route table that's associated with your private subnet and verify that it does not have a route for IPv6 traffic to an internet gateway\.
 
    ```
    ping6 2001:db8:1234:1a01::456
@@ -424,7 +424,7 @@ To test that instances in your egress\-only private subnet can access the Intern
 
 ## Step 7: Clean up<a name="vpc-subnets-commands-example-clean-up-ipv6"></a>
 
-After you've verified that you can connect to your instance in the public subnet and that your instance in the private subnet can access the Internet, you can terminate the instances if you no longer need them\. To do this, use the [terminate\-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/terminate-instances.html) command\. To delete the other resources you've created in this example, use the following commands in their listed order:
+After you've verified that you can connect to your instance in the public subnet and that your instance in the private subnet can access the internet, you can terminate the instances if you no longer need them\. To do this, use the [terminate\-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/terminate-instances.html) command\. To delete the other resources you've created in this example, use the following commands in their listed order:
 
 1. Delete your security groups:
 
@@ -456,25 +456,25 @@ After you've verified that you can connect to your instance in the public subnet
    aws ec2 delete-route-table --route-table-id rtb-abc123ab
    ```
 
-1. Detach your Internet gateway from your VPC: 
+1. Detach your internet gateway from your VPC:
 
    ```
    aws ec2 detach-internet-gateway --internet-gateway-id igw-1ff7a07b --vpc-id vpc-2f09a348
    ```
 
-1. Delete your Internet gateway: 
+1. Delete your internet gateway:
 
    ```
    aws ec2 delete-internet-gateway --internet-gateway-id igw-1ff7a07b
    ```
 
-1. Delete your egress\-only Internet gateway:
+1. Delete your egress\-only internet gateway:
 
    ```
    aws ec2 delete-egress-only-internet-gateway  --egress-only-internet-gateway-id eigw-015e0e244e24dfe8a
    ```
 
-1. Delete your VPC: 
+1. Delete your VPC:
 
    ```
    aws ec2 delete-vpc --vpc-id vpc-2f09a348

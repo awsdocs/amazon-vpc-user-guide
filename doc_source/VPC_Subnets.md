@@ -7,10 +7,10 @@ To get started with Amazon Virtual Private Cloud \(Amazon VPC\), you create a VP
 + [VPC and subnet sizing](#VPC_Sizing)
 + [Subnet routing](#SubnetRouting)
 + [Subnet security](#SubnetSecurity)
-+ [Working with VPCs and subnets](working-with-vpcs.md)
++ [Work with VPCs and subnets](working-with-vpcs.md)
 + [IP Addressing in your VPC](vpc-ip-addressing.md)
-+ [Working with shared VPCs](vpc-sharing.md)
-+ [Extending Your VPCs](Extend_VPCs.md)
++ [Work with shared VPCs](vpc-sharing.md)
++ [Extend your VPCs](Extend_VPCs.md)
 
 ## VPC and subnet basics<a name="vpc-subnet-basics"></a>
 
@@ -58,12 +58,12 @@ For more information about IP addressing, see [IP Addressing in your VPC](vpc-ip
 
 **Topics**
 + [VPC and subnet sizing for IPv4](#vpc-sizing-ipv4)
-+ [Adding IPv4 CIDR blocks to a VPC](#vpc-resize)
++ [Add IPv4 CIDR blocks to a VPC](#vpc-resize)
 + [VPC and subnet sizing for IPv6](#vpc-sizing-ipv6)
 
 ### VPC and subnet sizing for IPv4<a name="vpc-sizing-ipv4"></a>
 
-When you create a VPC, you must specify an IPv4 CIDR block for the VPC\. The allowed block size is between a `/16` netmask \(65,536 IP addresses\) and `/28` netmask \(16 IP addresses\)\. After you've created your VPC, you can associate secondary CIDR blocks with the VPC\. For more information, see [Adding IPv4 CIDR blocks to a VPC](#vpc-resize)\. 
+When you create a VPC, you must specify an IPv4 CIDR block for the VPC\. The allowed block size is between a `/16` netmask \(65,536 IP addresses\) and `/28` netmask \(16 IP addresses\)\. After you've created your VPC, you can associate secondary CIDR blocks with the VPC\. For more information, see [Add IPv4 CIDR blocks to a VPC](#vpc-resize)\. 
 
 When you create a VPC, we recommend that you specify a CIDR block from the private IPv4 address ranges as specified in [RFC 1918](http://www.faqs.org/rfcs/rfc1918.html):
 
@@ -94,7 +94,7 @@ The first four IP addresses and the last IP address in each subnet CIDR block ar
 
 If you create a VPC or subnet using a command line tool or the Amazon EC2 API, the CIDR block is automatically modified to its canonical form\. For example, if you specify `100.68.0.18/18` for the CIDR block, we create a CIDR block of `100.68.0.0/18`\.
 
-### Adding IPv4 CIDR blocks to a VPC<a name="vpc-resize"></a>
+### Add IPv4 CIDR blocks to a VPC<a name="vpc-resize"></a>
 
 You can associate secondary IPv4 CIDR blocks with your VPC\. When you associate a CIDR block with your VPC, a route is automatically added to your VPC route tables to enable routing within the VPC \(the destination is the CIDR block and the target is `local`\)\. 
 

@@ -16,7 +16,7 @@ Amazon security groups and network ACLs do not filter traffic destined to and fr
 + Amazon Time Sync Service
 + Reserved IP address of the default VPC router
 
-## Comparison of security groups and network ACLs<a name="VPC_Security_Comparison"></a>
+## Compare security groups and network ACLs<a name="VPC_Security_Comparison"></a>
 
 The following table summarizes the basic differences between security groups and network ACLs\.
 
@@ -33,4 +33,4 @@ The following diagram illustrates the layers of security provided by security gr
 
 ![\[Traffic is controlled using security groups and network ACLs\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/security-diagram.png)
 
-You can secure your instances using only security groups\. However, you can add network ACLs as an additional layer of defense\. For an example, see [Example: Controlling access to instances in a subnet](vpc-network-acls.md#nacl-examples)\.
+You can secure your instances using only security groups\. However, you can add network ACLs as an additional layer of defense\. For an example, see [Example: Control access to instances in a subnet](vpc-network-acls.md#nacl-examples)\.

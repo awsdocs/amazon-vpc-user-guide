@@ -6,7 +6,7 @@ A carrier gateway supports IPv4 traffic\.
 
 Carrier gateways are only available for VPCs that contain subnets in a Wavelength Zone\. The carrier gateway provides connectivity between your Wavelength Zone and the telecommunication carrier, and devices on the telecommunication carrier network\. The carrier gateway performs NAT of the Wavelength instances' IP addresses to the Carrier IP addresses from a pool that is assigned to the network border group\. The carrier gateway NAT function is similar to how an internet gateway functions in a Region\.
 
-## Enabling access to the telecommunication carrier network<a name="enabling-telecom-routing"></a>
+## Enable access to the telecommunication carrier network<a name="enabling-telecom-routing"></a>
 
 To enable access to or from the telecommunication carrier network for instances in a Wavelength subnet, you must do the following:
 + Create a VPC\.
@@ -16,7 +16,7 @@ To enable access to or from the telecommunication carrier network for instances 
   + Ensure that instances in your subnet have a globally unique Carrier IP address\.
   + Ensure that your network access control lists and security group rules allow the relevant traffic to flow to and from your instance\.
 
-## Working with carrier gateways<a name="working-with-cgw"></a>
+## Work with carrier gateways<a name="working-with-cgw"></a>
 
 The following sections describe how to manually create a carrier gateway for your VPC to support inbound traffic from the carrier network \(for example, mobile phones\), and to support outbound traffic to the carrier network and the internet\.
 
@@ -31,34 +31,27 @@ The following sections describe how to manually create a carrier gateway for you
 
 ### Create a VPC<a name="Add_CGW_Create_VPC"></a>
 
-You can create an empty Wavelength VPC using the Amazon VPC console, or the AWS CLI\.
+You can create an empty Wavelength VPC as follows\.
 
-------
-#### [ Amazon VPC console ]
+**Limitation**  
+You can specify a range of publicly routable IPv4 addresses\. However, we do not support direct access to the internet from publicly routable CIDR blocks in a VPC\. Windows instances cannot boot correctly if launched into a VPC with ranges from `224.0.0.0` to `255.255.255.255` \(Class D and Class E IP address ranges\)\.
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
 1. In the navigation pane, choose **Your VPCs**, **Create VPC**\.
 
-1. Specify the following VPC details as necessary and then choose **Create**\. 
+1. Do the following and then choose **Create**\.
    + **Name tag**: Optionally provide a name for your VPC\. Doing so creates a tag with a key of `Name` and the value that you specify\.
    + **IPv4 CIDR block**: Specify an IPv4 CIDR block for the VPC\. We recommend that you specify a CIDR block from the private \(non\-publicly routable\) IP address ranges as specified in [RFC 1918](http://www.faqs.org/rfcs/rfc1918.html); for example, `10.0.0.0/16`, or `192.168.0.0/16`\. 
-**Note**  
-You can specify a range of publicly routable IPv4 addresses\. However, we currently do not support direct access to the internet from publicly routable CIDR blocks in a VPC\. Windows instances cannot boot correctly if launched into a VPC with ranges from `224.0.0.0` to `255.255.255.255` \(Class D and Class E IP address ranges\)\. 
 
-------
-#### [ AWS CLI ]
-
-**To create a VPC**
-+ Use `create-vpc`\. For more information, see [create\-vpc](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-vpc.html) in the* AWS CLI Command Reference*\.
-
-------
+**To create a VPC using the AWS CLI**  
+Use the [create\-vpc](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-vpc.html) command\.
 
 ### Create a carrier gateway<a name="Add_CGW_create_Gateway"></a>
 
 After you create a VPC, create a carrier gateway and then select the subnets that route traffic to the carrier gateway\.
 
-If you have not opted in to a Wavelength Zone, the Amazon VPC Console prompts you to opt in\. For more information, see [Manage Zones](#manage-zones)\.
+If you have not opted in to a Wavelength Zone, the Amazon Virtual Private Cloud Console prompts you to opt in\. For more information, see [Manage Zones](#manage-zones)\.
 
 When you choose to automatically route traffic from subnets to the carrier gateway, we create the following resources:
 + A carrier gateway
@@ -70,9 +63,6 @@ When you choose to automatically route traffic from subnets to the carrier gatew
   + A route for all local traffic
   + A route that routes all non\-local traffic to the carrier gateway
   + An association with the subnet
-
-------
-#### [ Amazon VPC console ]
 
 **To create a carrier gateway**
 
@@ -101,27 +91,20 @@ When you choose to automatically route traffic from subnets to the carrier gatew
 
 1. Choose **Create carrier gateway**\.
 
-------
-#### [ AWS CLI ]
+**To create a carrier gateway using the AWS CLI**
 
-**To create a carrier gateway**
-+ Use `create-carrier-gateway`\. For more information, see [create\-carrier\-gateway](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-carrier-gateway.html) in the* AWS CLI Command Reference*\.
+1. Use the [create\-carrier\-gateway](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-carrier-gateway.html) command\.
 
-  After you create the carrier gateway, add a VPC route table with the following resources:
-  + A route for all VPC local traffic
-  + A route that routes all non\-local traffic to the carrier gateway
-  + An association with the subnets in the Wavelength Zone
+1. Add a VPC route table with the following resources:
+   + A route for all VPC local traffic
+   + A route that routes all non\-local traffic to the carrier gateway
+   + An association with the subnets in the Wavelength Zone
 
-  For more information, see [Routing to A Wavelength Zone carrier gateway](route-table-options.md#route-tables-cgw) and [Working with route tables](WorkWithRouteTables.md)\.
-
-------
+   For more information, see [Routing to a Wavelength Zone carrier gateway](route-table-options.md#route-tables-cgw)\.
 
 ### Create a security group to access the telecommunication carrier network<a name="Add_CGW_Security_Groups"></a>
 
 By default, a VPC security group allows all outbound traffic\. You can create a new security group and add rules that allow inbound traffic from the telecommunication carrier\. Then, you associate the security group with instances in the subnet\.
-
-------
-#### [ Amazon VPC console ]
 
 **To create a new security group and associate it with your instances**
 
@@ -146,29 +129,22 @@ By default, a VPC security group allows all outbound traffic\. You can create a 
 
 1. Clear the check box for the currently selected security group, and then select the new one\. Choose **Assign Security Groups**\.
 
-------
-#### [ AWS CLI ]
-
-**To create a security group**
-+ Use `create-security-group`\. For more information, see [create\-security\-group](https://docs.aws.amazon.com/cli/latest/reference/ec2/dcreate-security-group.html) in the* AWS CLI Command Reference*\.
-
-------
+**To create a security group**  
+Use the [create\-security\-group](https://docs.aws.amazon.com/cli/latest/reference/ec2/dcreate-security-group.html) command\.
 
 ### Allocate and associate a Carrier IP address with the instance in the Wavelength Zone subnet<a name="wavelength-allocate-carrier-ip"></a>
 
 If you used the Amazon EC2 console to launch the instance, or you did not use the `associate-carrier-ip-address` option in the AWS CLI, then you must allocate a Carrier IP address and assign it to the instance: 
 
-**To allocate and associate a Carrier IP address**
+**To allocate and associate a Carrier IP address using the AWS CLI**
 
-1. Use `allocate-address` to allocate a Carrier IP address\. For more information, see [allocate\-address](https://docs.aws.amazon.com/cli/latest/reference/ec2/allocate-address.html) in the *AWS CLI Command Reference*\.
-
-   Example
+1. Use the [allocate\-address](https://docs.aws.amazon.com/cli/latest/reference/ec2/allocate-address.html) command as follows\.
 
    ```
    aws ec2 allocate-address --region us-east-1 --domain vpc --network-border-group us-east-1-wl1-bos-wlz-1
    ```
 
-   Output
+   The following is example output:
 
    ```
    {
@@ -181,15 +157,13 @@ If you used the Amazon EC2 console to launch the instance, or you did not use th
    }
    ```
 
-1. Use `associate-address` to associate the Carrier IP address with the EC2 instance\. For more information, see [associate\-address](https://docs.aws.amazon.com/cli/latest/reference/ec2/associate-address.html) in the *AWS CLI Command Reference*\.
-
-   Example
+1. Use the [associate\-address](https://docs.aws.amazon.com/cli/latest/reference/ec2/associate-address.html) command to associate the Carrier IP address with the EC2 instance as follows\.
 
    ```
    aws ec2 associate-address --allocation-id eipalloc-05807b62acEXAMPLE --network-interface-id eni-1a2b3c4d
    ```
 
-   Output
+   The following is example output:
 
    ```
    {
@@ -201,9 +175,6 @@ If you used the Amazon EC2 console to launch the instance, or you did not use th
 
 You can view information about your carrier gateway, including the state and the tags\.
 
-------
-#### [ Amazon VPC console ]
-
 **To view the carrier gateway details**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
@@ -212,20 +183,12 @@ You can view information about your carrier gateway, including the state and the
 
 1. Select the carrier gateway and choose **Actions**, **View details**\.
 
-------
-#### [ AWS CLI ]
-
-**To view the carrier gateway details**
-+ Use `describe-carrier-gateways`\. For more information, see [describe\-carrier\-gateways](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-carrier-gateways.html) in the* AWS CLI Command Reference*\.
-
-------
+**To view the carrier gateway details using the AWS CLI**
++ Use the [describe\-carrier\-gateways](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-carrier-gateways.html) command\.
 
 ### Manage carrier gateway tags<a name="manage-cgw-tags"></a>
 
 Tags help you to identify your carrier gateways\. You can add or remove tags\.
-
-------
-#### [ Amazon VPC console ]
 
 **To manage the carrier gateway tags**
 
@@ -243,15 +206,9 @@ Tags help you to identify your carrier gateways\. You can add or remove tags\.
 
 1. Choose **Save**\.
 
-------
-#### [ AWS CLI ]
-
 **To manage the carrier gateway tags**
-+ To create a tag, use `create-tag`\. For more information, see [create\-tag](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-tag.html) in the* AWS CLI Command Reference*\.
-
-  To delete tags, use `delete-tags`\. For more information, see [delete\-tags](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-tags.html) in the* AWS CLI Command Reference*\.
-
-------
++ To add tags, use the [create\-tag](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-tag.html) command\.
++ To delete tags, use the [delete\-tags](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-tags.html) command\.
 
 ### Delete a carrier gateway<a name="delete-cgw"></a>
 
@@ -259,9 +216,6 @@ If you no longer need a carrier gateway, you can delete it\.
 
 **Important**  
 If you do not delete the route that has the carrier gateway as the **Target**, the route is a blackhole route\.
-
-------
-#### [ Amazon VPC console ]
 
 **To delete a carrier gateway**
 
@@ -273,16 +227,11 @@ If you do not delete the route that has the carrier gateway as the **Target**, t
 
 1. In the **Delete carrier gateway** dialog box, enter **Delete**, and then choose **Delete**\.
 
-------
-#### [ AWS CLI ]
-
 **To delete a carrier gateway**
-+ Use `delete-carrier-gateway`\. For more information, see [delete\-carrier\-gateway](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-carrier-gateway.html) in the* AWS CLI Command Reference*\.
-
-------
++ Use the [delete\-carrier\-gateway](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-carrier-gateway.html) command\.
 
 ## Manage Zones<a name="manage-zones"></a>
 
 Before you specify a Wavelength Zone for a resource or service, you must opt in to the zone\.
 
-You need to request access in order to use Wavelength Zones, before you opt in\. For information about how to request Wavelength Zone access, see [AWS Wavelength](https://pages.awscloud.com/wavelength-signup-form.html)\.
+You must request access before you can opt in to use Wavelength Zones\. For more information, see [AWS Wavelength](https://pages.awscloud.com/wavelength-signup-form.html)\.

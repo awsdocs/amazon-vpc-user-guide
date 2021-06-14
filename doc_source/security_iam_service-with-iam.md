@@ -119,13 +119,13 @@ To enable cross\-account access, you can specify an entire account or IAM entiti
 
 You can attach tags to Amazon VPC resources or pass tags in a request\. To control access based on tags, you provide tag information in the [condition element](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition.html) of a policy using the `ec2:ResourceTag/key-name`, `aws:RequestTag/key-name`, or `aws:TagKeys` condition keys\. For more information, see [Resource\-Level Permissions for Tagging](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-supported-iam-actions-resources.html#supported-iam-actions-tagging) in the *Amazon EC2 User Guide*\.
 
-To view an example identity\-based policy for limiting access to a resource based on the tags on that resource, see [Launching instances into a specific VPC](vpc-policy-examples.md#subnet-ami-example-iam)\.
+To view an example identity\-based policy for limiting access to a resource based on the tags on that resource, see [Launch instances into a specific VPC](vpc-policy-examples.md#subnet-ami-example-iam)\.
 
 ## IAM roles<a name="security_iam_service-with-iam-roles"></a>
 
 An [IAM role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html) is an entity within your AWS account that has specific permissions\.
 
-### Using temporary credentials<a name="security_iam_service-with-iam-roles-tempcreds"></a>
+### Use temporary credentials<a name="security_iam_service-with-iam-roles-tempcreds"></a>
 
 You can use temporary credentials to sign in with federation, assume an IAM role, or to assume a cross\-account role\. You obtain temporary security credentials by calling AWS STS API operations such as [AssumeRole](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html) or [GetFederationToken](https://docs.aws.amazon.com/STS/latest/APIReference/API_GetFederationToken.html)\. 
 

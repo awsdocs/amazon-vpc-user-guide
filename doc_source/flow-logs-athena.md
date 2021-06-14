@@ -1,4 +1,4 @@
-# Querying flow logs using Amazon Athena<a name="flow-logs-athena"></a>
+# Query flow logs using Amazon Athena<a name="flow-logs-athena"></a>
 
 Amazon Athena is an interactive query service that enables you to analyze data in Amazon S3, such as your flow logs, using standard SQL\. You can use Athena with VPC Flow Logs to quickly get actionable insights about the traffic flowing through your VPC\. For example, you can identify which resources in your virtual private clouds \(VPCs\) are the top talkers or identify the IP addresses with the most rejected TCP connections\.
 
@@ -20,11 +20,11 @@ The CloudFormation template creates the following resources:
 You incur standard [Amazon Athena charges](http://aws.amazon.com/athena/pricing) for running queries\. You incur standard [AWS Lambda charges](http://aws.amazon.com/lambda/pricing) for the Lambda function that loads new partitions on a recurring schedule \(when you specify a partition load frequency but do not specify a start and end date\.\)
 
 **Topics**
-+ [Generating the CloudFormation template using the console](#flow-logs-generate-template-console)
-+ [Generating the CloudFormation template using the AWS CLI](#flow-logs-generate-template-cli)
-+ [Running a predefined query](#flow-logs-run-athena-query)
++ [Generate the CloudFormation template using the console](#flow-logs-generate-template-console)
++ [Generate the CloudFormation template using the AWS CLI](#flow-logs-generate-template-cli)
++ [Run a predefined query](#flow-logs-run-athena-query)
 
-## Generating the CloudFormation template using the console<a name="flow-logs-generate-template-console"></a>
+## Generate the CloudFormation template using the console<a name="flow-logs-generate-template-console"></a>
 
 After the first flow logs are delivered to your S3 bucket, you can integrate with Athena by generating a CloudFormation template and using the template to create a stack\.
 
@@ -47,7 +47,7 @@ After the first flow logs are delivered to your S3 bucket, you can integrate wit
 
 1. In the success message, choose **Create CloudFormation stack** to open the **Create Stack** wizard in the AWS CloudFormation console\. The URL for the generated CloudFormation template is specified in the **Template** section\. Complete the wizard to create the resources that are specified in the template\.
 
-## Generating the CloudFormation template using the AWS CLI<a name="flow-logs-generate-template-cli"></a>
+## Generate the CloudFormation template using the AWS CLI<a name="flow-logs-generate-template-cli"></a>
 
 After the first flow logs are delivered to your S3 bucket, you can generate and use a CloudFormation template to integrate with Athena\.
 
@@ -82,7 +82,7 @@ Use the following [create\-stack](https://docs.aws.amazon.com/cli/latest/referen
 aws cloudformation create-stack --stack-name my-vpc-flow-logs --template-body file://my-cloudformation-template.json
 ```
 
-## Running a predefined query<a name="flow-logs-run-athena-query"></a>
+## Run a predefined query<a name="flow-logs-run-athena-query"></a>
 
 The generated CloudFormation template provides a set of predefined queries that you can run to quickly get meaningful insights about the traffic in your AWS network\. After you create the stack and verify that all resources were created correctly, you can run one of the predefined queries\.
 

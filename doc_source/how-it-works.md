@@ -8,13 +8,12 @@ Amazon VPC is the networking layer for Amazon EC2\. If you're new to Amazon EC2,
 + [VPCs and subnets](#how-it-works-subnet)
 + [Default and nondefault VPCs](#what-is-default-nondefault)
 + [Route tables](#what-is-route-tables)
-+ [Accessing the internet](#what-is-connectivity)
-+ [Accessing a corporate or home network](#what-is-vpn)
-+ [Accessing services through AWS PrivateLink](#what-is-privatelink)
-+ [Connecting VPCs and networks](#vpc-other-networks)
++ [Access the internet](#what-is-connectivity)
++ [Access a corporate or home network](#what-is-vpn)
++ [Connect VPCs and networks](#vpc-other-networks)
 + [AWS private global network considerations](#what-is-aws-global-network)
 + [Supported platforms](#vpc-supported-platforms)
-+ [Amazon VPC resources](#vpc-resources)
++ [Amazon VPC documentation](#vpc-resources)
 
 ## VPCs and subnets<a name="how-it-works-subnet"></a>
 
@@ -26,7 +25,7 @@ To protect the AWS resources in each subnet, you can use multiple layers of secu
 
 You can optionally associate an IPv6 CIDR block with your VPC, and assign IPv6 addresses to the instances in your VPC\.
 
-**More information**
+**Learn more**
 + [VPC and subnet basics](VPC_Subnets.md#vpc-subnet-basics)
 + [Internetwork traffic privacy in Amazon VPC](VPC_Security.md)
 + [IP Addressing in your VPC](vpc-ip-addressing.md)
@@ -37,20 +36,20 @@ If your account was created after 2013\-12\-04, it comes with a *default VPC* th
 
 You can also create your own VPC, and configure it as you need\. This is known as a *nondefault VPC*\. Subnets that you create in your nondefault VPC and additional subnets that you create in your default VPC are called *nondefault subnets*\.
 
-**More information**
+**Learn more**
 + [Default VPC and default subnets](default-vpc.md)
-+ [Getting started with Amazon VPC](vpc-getting-started.md)
++ [Get started with Amazon VPC](vpc-getting-started.md)
 
 ## Route tables<a name="what-is-route-tables"></a>
 
-A *route table* contains a set of rules, called routes , that are used to determine where network traffic from your VPC is directed\. You can explicitly associate a subnet with a particular route table\. Otherwise, the subnet is implicitly associated with the main route table\.
+A *route table* contains a set of rules, called routes, that are used to determine where network traffic from your VPC is directed\. You can explicitly associate a subnet with a particular route table\. Otherwise, the subnet is implicitly associated with the main route table\.
 
 Each route in a route table specifies the range of IP addresses where you want the traffic to go \(the destination\) and the gateway, network interface, or connection through which to send the traffic \(the target\)\.
 
-**More information**
+**Learn more**
 + [Route tables for your VPC](VPC_Route_Tables.md)
 
-## Accessing the internet<a name="what-is-connectivity"></a>
+## Access the internet<a name="what-is-connectivity"></a>
 
 You control how the instances that you launch into a VPC access resources outside the VPC\.
 
@@ -66,16 +65,18 @@ You can enable internet access for an instance launched into a nondefault subnet
 
 ![\[Using an internet gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/internet-gateway-diagram.png)
 
-Alternatively, to allow an instance in your VPC to initiate outbound connections to the internet but prevent unsolicited inbound connections from the internet, you can use a network address translation \(NAT\) device for IPv4 traffic\. NAT maps multiple private IPv4 addresses to a single public IPv4 address\. A NAT device has an Elastic IP address and is connected to the internet through an internet gateway\. You can connect an instance in a private subnet to the internet through the NAT device, which routes traffic from the instance to the internet gateway, and routes any responses to the instance\.
+Alternatively, to allow an instance in your VPC to initiate outbound connections to the internet but prevent unsolicited inbound connections from the internet, you can use a network address translation \(NAT\) device\. NAT maps multiple private IPv4 addresses to a single public IPv4 address\. You can configure the NAT device with an Elastic IP address and connect it to the internet through an internet gateway\. This makes it possible for an instance in a private subnet to connect to the internet through the NAT device, routing traffic from the instance to the internet gateway and any responses to the instance\.
+
+![\[A VPC with public and private subnets and a NAT gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/nat-gateway-diagram.png)
 
 If you associate an IPv6 CIDR block with your VPC and assign IPv6 addresses to your instances, instances can connect to the internet over IPv6 through an internet gateway\. Alternatively, instances can initiate outbound connections to the internet over IPv6 using an egress\-only internet gateway\. IPv6 traffic is separate from IPv4 traffic; your route tables must include separate routes for IPv6 traffic\.
 
-**More information**
+**Learn more**
 + [Internet gateways](VPC_Internet_Gateway.md)
 + [Egress\-only internet gateways](egress-only-internet-gateway.md)
 + [NAT devices for your VPC](vpc-nat.md)
 
-## Accessing a corporate or home network<a name="what-is-vpn"></a>
+## Access a corporate or home network<a name="what-is-vpn"></a>
 
 You can optionally connect your VPC to your own corporate data center using an IPsec AWS Site\-to\-Site VPN connection, making the AWSCloud an extension of your data center\.
 
@@ -83,27 +84,17 @@ A Site\-to\-Site VPN connection consists of two VPN tunnels between a virtual pr
 
 ![\[Using a virtual private gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/virtual-private-gateway.png)
 
-**More information**
+**Learn more**
 + [AWS Site\-to\-Site VPN User Guide](https://docs.aws.amazon.com/vpn/latest/s2svpn/)
 + [Transit Gateways](https://docs.aws.amazon.com/vpc/latest/tgw/what-is-transit-gateway.html)
 
-## Accessing services through AWS PrivateLink<a name="what-is-privatelink"></a>
-
-AWS PrivateLink is a highly available, scalable technology that enables you to privately connect your VPC to supported AWS services, services hosted by other AWS accounts \(VPC endpoint services\), and supported AWS Marketplace partner services\. You do not require an internet gateway, NAT device, public IP address, AWS Direct Connect connection, or AWS Site\-to\-Site VPN connection to communicate with the service\. Traffic between your VPC and the service does not leave the Amazon network\.
-
-To use AWS PrivateLink, create a VPC endpoint for a service in your VPC\. You create the type of VPC endpoint required by the supported service\. This creates an elastic network interface in your subnet with a private IP address that serves as an entry point for traffic destined to the service\.
-
-![\[Using an interface endpoint to access an AWS service\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-privatelink-diagram.png)
-
- You can create your own AWS PrivateLink\-powered service \(endpoint service\) and enable other AWS customers to access your service\. For more information, see the [User Guide for AWS PrivateLink](https://docs.aws.amazon.com/vpc/latest/privatelink/)\.
-
-## Connecting VPCs and networks<a name="vpc-other-networks"></a>
+## Connect VPCs and networks<a name="vpc-other-networks"></a>
 
 You can create a *VPC peering connection* between two VPCs that enables you to route traffic between them privately\. Instances in either VPC can communicate with each other as if they are within the same network\.
 
 You can also create a *transit gateway* and use it to interconnect your VPCs and on\-premises networks\. The transit gateway acts as a Regional virtual router for traffic flowing between its attachments, which can include VPCs, VPN connections, AWS Direct Connect gateways, and transit gateway peering connections\.
 
-**More information**
+**Learn more**
 + [VPC Peering Guide](https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html)
 + [Transit Gateways](https://docs.aws.amazon.com/vpc/latest/tgw/what-is-transit-gateway.html)
 
@@ -121,21 +112,18 @@ Network packet loss can be caused by a number of factors, including network flow
 
 The original release of Amazon EC2 supported a single, flat network that's shared with other customers called the *EC2\-Classic* platform\. Earlier AWS accounts still support this platform, and can launch instances into either EC2\-Classic or a VPC\. Accounts created after 2013\-12\-04 support EC2\-VPC only\. For more information, see [EC2\-Classic](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-classic-platform.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-## Amazon VPC resources<a name="vpc-resources"></a>
+## Amazon VPC documentation<a name="vpc-resources"></a>
 
-The following table lists additional resources that you might find helpful as you work with Amazon VPC\.
+The following table lists additional documentation that you might find helpful as you work with Amazon VPC\.
 
 
-|  Resource  |  Description  | 
+| Guide | Description | 
 | --- | --- | 
 | [Amazon Virtual Private Cloud Connectivity Options](https://docs.aws.amazon.com/aws-technical-content/latest/aws-vpc-connectivity-options/introduction.html) | Provides an overview of the options for network connectivity\. | 
-|  [VPC Peering Guide](https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html)  | Describes VPC peering connection scenarios and supported peering configurations\. | 
-|  [Traffic Mirroring](https://docs.aws.amazon.com/vpc/latest/mirroring/what-is-traffic-mirroring.html)  | Describes traffic mirroring targets, filters, and sessions, and helps administrators configure them\. | 
-|  [Transit Gateways](https://docs.aws.amazon.com/vpc/latest/tgw/what-is-transit-gateway.html)  | Describes transit gateways and helps network administrators configure them\. | 
-|  [Transit Gateway Network Manager Guide](https://docs.aws.amazon.com/vpc/latest/tgw/what-is-network-manager.html)  | Describes Transit Gateway Network Manager and helps you configure and monitor a global network\. | 
-|  [AWS Direct Connect User Guide](https://docs.aws.amazon.com/directconnect/latest/UserGuide/)  |  Describes how to use AWS Direct Connect to create a dedicated private connection from a remote network to your VPC\.   | 
-|  [AWS Client VPN Administrator Guide](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/)  |  Describes how to create and configure a Client VPN endpoint to enable remote users to access resources in a VPC\.  | 
-|  [Amazon VPC forum](https://forums.aws.amazon.com/forum.jspa?forumID=58)  |  A community\-based forum for discussing technical questions related to Amazon VPC\.  | 
-|  [Getting Started Resource Center](https://aws.amazon.com/getting-started/)  |  Information to help you get started building on AWS\.  | 
-|  [AWS Support Center](https://console.aws.amazon.com/support/home#/)  |  The home page for AWS Support\.  | 
-|  [Contact Us](https://aws.amazon.com/contact-us/)  |  A central contact point for inquiries concerning AWS billing, accounts, and events\.  | 
+|  [VPC Peering](https://docs.aws.amazon.com/vpc/latest/peering/)  | Describes VPC peering connection scenarios and supported peering configurations\. | 
+|  [Transit Gateways](https://docs.aws.amazon.com/vpc/latest/tgw/)  | Describes transit gateways and helps network administrators configure them\. | 
+|  [Transit Gateway Network Manager](https://docs.aws.amazon.com/vpc/latest/tgw/what-is-network-manager.html)  | Describes Transit Gateway Network Manager and helps you configure and monitor a global network\. | 
+|  [Traffic Mirroring](https://docs.aws.amazon.com/vpc/latest/mirroring/)  | Describes traffic mirroring targets, filters, and sessions, and helps administrators configure them\. | 
+|  [AWS Direct Connect](https://docs.aws.amazon.com/directconnect/latest/UserGuide/)  |  Describes how to use AWS Direct Connect to create a dedicated private connection from a remote network to your VPC\.   | 
+|  [AWS Client VPN](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/)  |  Describes how to create and configure a Client VPN endpoint to enable remote users to access resources in a VPC\.  | 
+|  [VPC Reachability Analyzer](https://docs.aws.amazon.com/vpc/latest/reachability/)  |  Describes how to analyze and debug network reachability between resources in your VPCs\.  | 

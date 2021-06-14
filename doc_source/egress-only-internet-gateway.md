@@ -7,7 +7,7 @@ An egress\-only internet gateway is for use with IPv6 traffic only\. To enable o
 
 **Topics**
 + [Egress\-only internet gateway basics](#egress-only-internet-gateway-basics)
-+ [Working with egress\-only internet gateways](#egress-only-internet-gateway-working-with)
++ [Work with egress\-only internet gateways](#egress-only-internet-gateway-working-with)
 + [API and CLI overview](#egress-only-internet-gateway-api-cli)
 
 ## Egress\-only internet gateway basics<a name="egress-only-internet-gateway-basics"></a>
@@ -26,11 +26,17 @@ In the following diagram, a VPC has an IPv6 CIDR block, and a subnet in the VPC 
 
 ![\[Using an egress-only internet gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/egress-only-igw.png)
 
-## Working with egress\-only internet gateways<a name="egress-only-internet-gateway-working-with"></a>
+## Work with egress\-only internet gateways<a name="egress-only-internet-gateway-working-with"></a>
 
-The following sections describe how to create an egress\-only \(outbound\) internet gateway for your private subnet, and to configure routing for the subnet\. 
+The following tasks describe how to create an egress\-only \(outbound\) internet gateway for your private subnet, and to configure routing for the subnet\.
 
-### Creating an egress\-only internet gateway<a name="egress-only-internet-gateway-create"></a>
+**Topics**
++ [Create an egress\-only internet gateway](#egress-only-internet-gateway-create)
++ [View your egress\-only internet gateway](#egress-only-internet-gateway-describe)
++ [Create a custom route table](#egress-only-internet-gateway-routing)
++ [Delete an egress\-only internet gateway](#egress-only-internet-gateway-delete)
+
+### Create an egress\-only internet gateway<a name="egress-only-internet-gateway-create"></a>
 
 You can create an egress\-only internet gateway for your VPC using the Amazon VPC console\.
 
@@ -54,7 +60,7 @@ You can create an egress\-only internet gateway for your VPC using the Amazon VP
 
 1. Choose **Create**\.
 
-### Viewing your egress\-only internet gateway<a name="egress-only-internet-gateway-describe"></a>
+### View your egress\-only internet gateway<a name="egress-only-internet-gateway-describe"></a>
 
 You can view information about your egress\-only internet gateway in the Amazon VPC console\.
 
@@ -66,7 +72,7 @@ You can view information about your egress\-only internet gateway in the Amazon 
 
 1. Select the egress\-only internet gateway to view its information in the details pane\.
 
-### Creating a custom route table<a name="egress-only-internet-gateway-routing"></a>
+### Create a custom route table<a name="egress-only-internet-gateway-routing"></a>
 
 To send traffic destined outside the VPC to the egress\-only internet gateway, you must create a custom route table, add a route that sends traffic to the gateway, and then associate it with your subnet\. 
 
@@ -88,7 +94,7 @@ Alternatively, you can add a route to an existing route table that's associated 
 
 For more information about route tables, see [Route tables for your VPC](VPC_Route_Tables.md)\.
 
-### Deleting an egress\-only internet gateway<a name="egress-only-internet-gateway-delete"></a>
+### Delete an egress\-only internet gateway<a name="egress-only-internet-gateway-delete"></a>
 
 If you no longer need an egress\-only internet gateway, you can delete it\. Any route in a route table that points to the deleted egress\-only internet gateway remains in a `blackhole` status until you manually delete or update the route\.
 
@@ -104,7 +110,7 @@ If you no longer need an egress\-only internet gateway, you can delete it\. Any 
 
 ## API and CLI overview<a name="egress-only-internet-gateway-api-cli"></a>
 
-You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available API actions, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available API actions, see [Access Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 
 **Create an egress\-only internet gateway**
 + [create\-egress\-only\-internet\-gateway](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-egress-only-internet-gateway.html) \(AWS CLI\)

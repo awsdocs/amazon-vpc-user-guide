@@ -2,11 +2,11 @@
 
 An internet gateway is a horizontally scaled, redundant, and highly available VPC component that allows communication between your VPC and the internet\. 
 
-An internet gateway serves two purposes: to provide a target in your VPC route tables for internet\-routable traffic, and to perform network address translation \(NAT\) for instances that have been assigned public IPv4 addresses\. For more information, see [Enabling internet access](#vpc-igw-internet-access)\.
+An internet gateway serves two purposes: to provide a target in your VPC route tables for internet\-routable traffic, and to perform network address translation \(NAT\) for instances that have been assigned public IPv4 addresses\. For more information, see [Enable internet access](#vpc-igw-internet-access)\.
 
 An internet gateway supports IPv4 and IPv6 traffic\. It does not cause availability risks or bandwidth constraints on your network traffic\. There's no additional charge for having an internet gateway in your account\.
 
-## Enabling internet access<a name="vpc-igw-internet-access"></a>
+## Enable internet access<a name="vpc-igw-internet-access"></a>
 
 To enable access to or from the internet for instances in a subnet in a VPC, you must do the following\.
 + Create an internet gateway and attach it to your VPC\.
@@ -48,21 +48,21 @@ For more information about IP addressing in your VPC, and controlling how instan
 
 When you add a new subnet to your VPC, you must set up the routing and security that you want for the subnet\.
 
-## Adding an internet gateway to your VPC<a name="working-with-igw"></a>
+## Add an internet gateway to your VPC<a name="working-with-igw"></a>
 
 The following describes how to manually create a public subnet and attach an internet gateway to your VPC to support internet access\.
 
 **Topics**
-+ [Creating a subnet](#Add_IGW_Create_Subnet)
-+ [Creating and attaching an internet gateway](#Add_IGW_Attach_Gateway)
-+ [Creating a custom route table](#Add_IGW_Routing)
-+ [Creating a security group for internet access](#Add_IG_Security_Groups)
-+ [Adding Elastic IP addresses](#Add_IG_EIPs)
-+ [Detaching an internet gateway from your VPC](#detach-igw)
-+ [Deleting an internet gateway](#delete-igw)
++ [Create a subnet](#Add_IGW_Create_Subnet)
++ [Create and attach an internet gateway](#Add_IGW_Attach_Gateway)
++ [Create a custom route table](#Add_IGW_Routing)
++ [Create a security group for internet access](#Add_IG_Security_Groups)
++ [Assign an Elastic IP address to an instance](#Add_IG_EIPs)
++ [Detach an internet gateway from your VPC](#detach-igw)
++ [Delete an internet gateway](#delete-igw)
 + [API and command overview](#api_cli_overview)
 
-### Creating a subnet<a name="Add_IGW_Create_Subnet"></a>
+### Create a subnet<a name="Add_IGW_Create_Subnet"></a>
 
 **To add a subnet to your VPC**
 
@@ -83,7 +83,7 @@ The following describes how to manually create a public subnet and attach an int
 
 For more information about subnets, see [VPCs and subnets](VPC_Subnets.md)\.
 
-### Creating and attaching an internet gateway<a name="Add_IGW_Attach_Gateway"></a>
+### Create and attach an internet gateway<a name="Add_IGW_Attach_Gateway"></a>
 
 After you create an internet gateway, attach it to your VPC\.
 
@@ -109,7 +109,7 @@ After you create an internet gateway, attach it to your VPC\.
 
 1. Select your VPC from the list, and then choose **Attach internet gateway**\.
 
-### Creating a custom route table<a name="Add_IGW_Routing"></a>
+### Create a custom route table<a name="Add_IGW_Routing"></a>
 
 When you create a subnet, we automatically associate it with the main route table for the VPC\. By default, the main route table doesn't contain a route to an internet gateway\. The following procedure creates a custom route table with a route that sends traffic destined outside the VPC to the internet gateway, and then associates it with your subnet\.
 
@@ -131,11 +131,11 @@ When you create a subnet, we automatically associate it with the main route tabl
 
 For more information, see [Route tables for your VPC](VPC_Route_Tables.md)\.
 
-### Creating a security group for internet access<a name="Add_IG_Security_Groups"></a>
+### Create a security group for internet access<a name="Add_IG_Security_Groups"></a>
 
 By default, a VPC security group allows all outbound traffic\. You can create a new security group and add rules that allow inbound traffic from the internet\. You can then associate the security group with instances in the public subnet\.
 
-**To create a new security group and associate it with your instances**
+**To create a security group and associate it with your instances**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
@@ -157,7 +157,7 @@ By default, a VPC security group allows all outbound traffic\. You can create a 
 
 For more information, see [Security groups for your VPC](VPC_SecurityGroups.md)\.
 
-### Adding Elastic IP addresses<a name="Add_IG_EIPs"></a>
+### Assign an Elastic IP address to an instance<a name="Add_IG_EIPs"></a>
 
 After you've launched an instance into the subnet, you must assign it an Elastic IP address if you want it to be reachable from the internet over IPv4\.
 
@@ -182,7 +182,7 @@ If your account supports EC2\-Classic, first choose **VPC**\.
 
 For more information, see [Elastic IP addresses](vpc-eips.md)\.
 
-### Detaching an internet gateway from your VPC<a name="detach-igw"></a>
+### Detach an internet gateway from your VPC<a name="detach-igw"></a>
 
 If you no longer need internet access for instances that you launch into a nondefault VPC, you can detach an internet gateway from a VPC\. You can't detach an internet gateway if the VPC has resources with associated public IP addresses or Elastic IP addresses\.
 
@@ -200,7 +200,7 @@ If you no longer need internet access for instances that you launch into a nonde
 
 1. In the **Detach from VPC** dialog box, choose **Detach internet gateway**\.
 
-### Deleting an internet gateway<a name="delete-igw"></a>
+### Delete an internet gateway<a name="delete-igw"></a>
 
 If you no longer need an internet gateway, you can delete it\. You can't delete an internet gateway if it's still attached to a VPC\.
 
@@ -216,7 +216,7 @@ If you no longer need an internet gateway, you can delete it\. You can't delete 
 
 ### API and command overview<a name="api_cli_overview"></a>
 
-You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available API actions, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available API actions, see [Access Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 
 **Create an internet gateway**
 + [create\-internet\-gateway](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-internet-gateway.html) \(AWS CLI\)

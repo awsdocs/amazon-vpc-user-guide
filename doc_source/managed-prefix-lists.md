@@ -1,59 +1,62 @@
 # Prefix lists<a name="managed-prefix-lists"></a>
 
-A prefix list is a set of one or more CIDR blocks\. There are two types of prefix lists:
-+ **AWS\-managed prefix list** — Represents the IP address ranges for an AWS service\. You can reference an AWS\-managed prefix list in your VPC security group rules and in subnet route table entries\. For example, you can reference an AWS\-managed prefix list in an outbound VPC security group rule when connecting to an AWS service through a [gateway VPC endpoint](https://docs.aws.amazon.com/vpc/latest/privatelink/vpce-gateway.html)\. You cannot create, modify, share, or delete an AWS\-managed prefix list\.
-+ **Customer\-managed prefix list** — A set of IPv4 or IPv6 CIDR blocks that you define and manage\. You can reference the prefix list in your VPC security group rules, subnet route table entries, and transit gateway route table entries\. This enables you to manage the IP addresses that you frequently use for these resources in a single group, instead of repeatedly referencing the same IP addresses in each resource\. You can share your prefix list with other AWS accounts, enabling those accounts to reference the prefix list in their own resources\.
+A prefix list is a set of one or more CIDR blocks\. You can use prefix lists to make it easier to configure and maintain your security groups and route tables\. You can create a prefix list from the IP addresses that you frequently use, and reference them as a set in security group rules and routes instead of referencing them individually\. For example, you can consolidate security group rules with different CIDR blocks but the same port and protocol into a single rule that uses a prefix list\. If you scale your network and need to allow traffic from another CIDR block, you can update the relevant prefix list and all security groups that use the prefix list are updated\.
 
-The following topics describe how to create and work with customer\-managed prefix lists\.
+There are two types of prefix lists:
++ **Customer\-managed prefix lists** — Sets of IP address ranges that you define and manage\. You can share your prefix list with other AWS accounts, enabling those accounts to reference the prefix list in their own resources\.
++ **AWS\-managed prefix lists** — Sets of IP address ranges for AWS services\. You cannot create, modify, share, or delete an AWS\-managed prefix list\.
 
 **Topics**
 + [Prefix lists concepts and rules](#managed-prefix-lists-concepts)
-+ [Working with prefix lists](#working-with-managed-prefix-lists)
++ [Work with customer\-managed prefix lists](#working-with-managed-prefix-lists)
 + [Identity and access management for prefix lists](#managed-prefix-lists-iam)
-+ [Working with shared prefix lists](sharing-managed-prefix-lists.md)
++ [Work with shared prefix lists](sharing-managed-prefix-lists.md)
 
 ## Prefix lists concepts and rules<a name="managed-prefix-lists-concepts"></a>
 
 A prefix list consists of *entries*\. Each entry consists of a CIDR block and, optionally, a description for the CIDR block\. 
 
+**Customer\-managed prefix lists**
+
 The following rules apply to customer\-managed prefix lists:
-+ When you create a prefix list, you must specify the maximum number of entries that the prefix list can support\. You cannot modify the maximum number of entries later\.
-+ When you reference a prefix list in a resource, the number of entries for the prefix lists counts as the same number of entries for the resource\. For example, if you create a prefix list with 20 entries and you reference that prefix list in a security group rule, this counts as 20 rules for the security group\. 
-+ You can modify a prefix list by adding or removing entries, or by changing its name\.
 + A prefix list supports a single type of IP addressing only \(IPv4 or IPv6\)\. You cannot combine IPv4 and IPv6 CIDR blocks in a single prefix list\.
-+ There are quotas related to prefix lists\. For more information, see [Amazon VPC quotas](amazon-vpc-limits.md)\.
++ When you create a prefix list, you must specify the maximum number of entries that the prefix list can support\. You cannot modify the maximum number of entries later\.
++ You can modify a prefix list by adding or removing entries, or by changing its name\.
++ When you reference a prefix list in a resource, the maximum number of entries for the prefix lists counts against the quota for the number of entries for the resource\. For example, if you create a prefix list with 20 maximum entries and you reference that prefix list in a security group rule, this counts as 20 security group rules\.
 + When you reference a prefix list in a route table, route priority rules apply\. For more information, see [Route priority for prefix lists](VPC_Route_Tables.md#route-priority-managed-prefix-list)\.
-+ A prefix list only applies to the Region where you created it\. For example, if you create a list in `us-east-1`, it is not available in `eu-west-1`\.
-+ You cannot reference the prefix list in your EC2 Classic security group rules\.
++ A prefix list applies only to the Region where you created it\.
++ There are quotas related to prefix lists\. For more information, see [Customer\-managed prefix lists](amazon-vpc-limits.md#vpc-quotas-managed-prefix-lists)\.
+
+**AWS\-managed prefix lists**
 
 The following rules apply to AWS\-managed prefix lists:
 + You cannot create, modify, share, or delete an AWS\-managed prefix list\.
 + When you reference an AWS\-managed prefix list in a resource, it counts as a single rule or entry for the resource\.
 + You cannot view the version number of an AWS\-managed prefix list\.
+<a name="managed-prefix-lists-versions"></a>
+**Prefix list versions**  
+A prefix list can have multiple versions\. Each time you add or remove entries for a prefix list, we create a new version of the prefix list\. The resources that reference the prefix always use the current \(latest\) version\. You can restore the entries from a previous version of prefix list to a new version\.
 
-Before you work with prefix lists, review the [Customer\-managed prefix lists](amazon-vpc-limits.md#vpc-quotas-managed-prefix-lists) quotas\.
+## Work with customer\-managed prefix lists<a name="working-with-managed-prefix-lists"></a>
 
-### Prefix list versions<a name="managed-prefix-lists-versions"></a>
-
-A prefix list can have multiple versions\. Each time you add or remove entries for a prefix list, we create a new version of the prefix list\. The resources that reference the prefix always use the current \(latest\) version\. You can restore the entries from a previous version of prefix list to a new version\. 
-
-## Working with prefix lists<a name="working-with-managed-prefix-lists"></a>
-
-The following topics describe how to create and work with customer\-managed prefix lists\. You can work with prefix lists using the Amazon VPC console or the AWS CLI\.
+The following topics describe how to create and manage customer\-managed prefix lists\.
 
 **Topics**
-+ [Creating a prefix list](#create-managed-prefix-list)
-+ [Viewing prefix lists](#view-managed-prefix-lists)
-+ [Viewing the entries for a prefix list](#view-managed-prefix-list-entries)
-+ [Viewing associations \(references\) for your prefix list](#view-managed-prefix-list-associations)
-+ [Modifying a prefix list \(adding and removing entries\)](#modify-managed-prefix-list)
-+ [Restoring a previous version of a prefix list](#restore-managed-prefix-list)
-+ [Deleting a prefix list](#delete-managed-prefix-list)
-+ [Referencing prefix lists in your AWS resources](#managed-prefix-lists-referencing)
++ [Create a prefix list](#create-managed-prefix-list)
++ [View prefix lists](#view-managed-prefix-lists)
++ [View the entries for a prefix list](#view-managed-prefix-list-entries)
++ [View associations \(references\) for your prefix list](#view-managed-prefix-list-associations)
++ [Modify a prefix list \(add and remove entries\)](#modify-managed-prefix-list)
++ [Restore a previous version of a prefix list](#restore-managed-prefix-list)
++ [Delete a prefix list](#delete-managed-prefix-list)
++ [Reference prefix lists in your AWS resources](#managed-prefix-lists-referencing)
 
-### Creating a prefix list<a name="create-managed-prefix-list"></a>
+### Create a prefix list<a name="create-managed-prefix-list"></a>
 
-When you create a new prefix list, you must specify the maximum number of entries that the prefix list can support\. Ensure that you specify a maximum number of entries that will meet your needs, because you cannot change this number later\.
+When you create a new prefix list, you must specify the maximum number of entries that the prefix list can support\. Ensure that you specify a maximum number of entries that meets your needs, because you cannot change this number later\.
+
+**Limitation**  
+You can't add a prefix list to a security group rule if the number of rules plus the max entries for the prefix list exceeds the quota for rules per security group for your account\.
 
 **To create a prefix list using the console**
 
@@ -78,7 +81,7 @@ When you create a new prefix list, you must specify the maximum number of entrie
 **To create a prefix list using the AWS CLI**  
 Use the [create\-managed\-prefix\-list](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-managed-prefix-list.html) command\.
 
-### Viewing prefix lists<a name="view-managed-prefix-lists"></a>
+### View prefix lists<a name="view-managed-prefix-lists"></a>
 
 You can view your prefix lists, prefix lists that are shared with you, and AWS\-managed prefix lists using the Amazon VPC console or the AWS CLI\.
 
@@ -93,7 +96,7 @@ You can view your prefix lists, prefix lists that are shared with you, and AWS\-
 **To view prefix lists using the AWS CLI**  
 Use the [describe\-managed\-prefix\-lists](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-managed-prefix-lists.html) command\.
 
-### Viewing the entries for a prefix list<a name="view-managed-prefix-list-entries"></a>
+### View the entries for a prefix list<a name="view-managed-prefix-list-entries"></a>
 
 You can view the entries for a prefix list using the Amazon VPC console or the AWS CLI\.
 
@@ -110,7 +113,7 @@ You can view the entries for a prefix list using the Amazon VPC console or the A
 **To view the entries for a prefix list using the AWS CLI**  
 Use the [get\-managed\-prefix\-list\-entries](https://docs.aws.amazon.com/cli/latest/reference/ec2/get-managed-prefix-list-entries.html) command\.
 
-### Viewing associations \(references\) for your prefix list<a name="view-managed-prefix-list-associations"></a>
+### View associations \(references\) for your prefix list<a name="view-managed-prefix-list-associations"></a>
 
 You can view the IDs and owners of the resources that are associated with your prefix list\. Associated resources are resources that reference your prefix list in their entries or rules\.
 
@@ -129,7 +132,7 @@ You cannot view associated resources for an AWS\-managed prefix list\.
 **To view prefix list associations using the AWS CLI**  
 Use the [get\-managed\-prefix\-list\-associations](https://docs.aws.amazon.com/cli/latest/reference/ec2/get-managed-prefix-list-associations.html) command\.
 
-### Modifying a prefix list \(adding and removing entries\)<a name="modify-managed-prefix-list"></a>
+### Modify a prefix list \(add and remove entries\)<a name="modify-managed-prefix-list"></a>
 
 You can modify the name of your prefix list, and you can add or remove entries\.
 
@@ -152,7 +155,7 @@ You cannot modify an AWS\-managed prefix list\.
 **To modify a prefix list using the AWS CLI**  
 Use the [modify\-managed\-prefix\-list](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-managed-prefix-list.html) command\.
 
-### Restoring a previous version of a prefix list<a name="restore-managed-prefix-list"></a>
+### Restore a previous version of a prefix list<a name="restore-managed-prefix-list"></a>
 
 You can restore the entries from a previous version of your prefix list to a new version\.
 
@@ -171,9 +174,9 @@ You can restore the entries from a previous version of your prefix list to a new
 **To restore a previous version of a prefix list using the AWS CLI**  
 Use the [restore\-managed\-prefix\-list\-version](https://docs.aws.amazon.com/cli/latest/reference/ec2/restore-managed-prefix-list-version.html) command\.
 
-### Deleting a prefix list<a name="delete-managed-prefix-list"></a>
+### Delete a prefix list<a name="delete-managed-prefix-list"></a>
 
-To delete a prefix list, you must first remove any references to it in your resources \(such as in your route tables\)\. If you've shared the prefix list using AWS RAM, any references in consumer\-owned resources must first be removed\. To view the references to your prefix list, see [Viewing associations \(references\) for your prefix list](#view-managed-prefix-list-associations)\.
+To delete a prefix list, you must first remove any references to it in your resources \(such as in your route tables\)\. If you've shared the prefix list using AWS RAM, any references in consumer\-owned resources must first be removed\. To view the references to your prefix list, see [View associations \(references\) for your prefix list](#view-managed-prefix-list-associations)\.
 
 You cannot delete an AWS\-managed prefix list\.
 
@@ -190,34 +193,16 @@ You cannot delete an AWS\-managed prefix list\.
 **To delete a prefix list using the AWS CLI**  
 Use the [delete\-managed\-prefix\-list](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-managed-prefix-list.html) command\.
 
-### Referencing prefix lists in your AWS resources<a name="managed-prefix-lists-referencing"></a>
+### Reference prefix lists in your AWS resources<a name="managed-prefix-lists-referencing"></a>
 
 You can reference a prefix list in the following AWS resources\.
 
-------
-#### [ Subnet route tables ]
+**Topics**
++ [VPC security groups](#prefix-list-vpc-security-group)
++ [Subnet route tables](#prefix-list-subnet-route-table)
++ [Transit gateway route tables](#prefix-list-tgw-route-table)
 
-You can specify a prefix list as the destination for route table entry\. You cannot reference a prefix list in a gateway route table\. For more information about route tables, see [Route tables for your VPC](VPC_Route_Tables.md)\.
-
-**To reference a prefix list in a route table using the console**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Route Tables**, and select the route table\.
-
-1. Choose **Actions**, **Edit routes**\.
-
-1. To add a route, choose **Add route**\. For **Destination** enter the ID of a prefix list\. 
-
-1. For **Target**, choose a target\.
-
-1. Choose **Save routes**\.
-
-**To reference a prefix list in a route table using the AWS CLI**  
-Use the [create\-route](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-route.html) \(AWS CLI\) command\. Use the `--destination-prefix-list-id` parameter to specify the ID of a prefix list\.
-
-------
-#### [ VPC security groups ]
+#### VPC security groups<a name="prefix-list-vpc-security-group"></a>
 
 You can specify a prefix list as the source for an inbound rule, or as the destination for an outbound rule\. For more information about security groups, see [Security groups for your VPC](VPC_SecurityGroups.md)\.
 
@@ -238,12 +223,30 @@ You can specify a prefix list as the source for an inbound rule, or as the desti
 **To reference a prefix list in a security group rule using the AWS CLI**  
 Use the [authorize\-security\-group\-ingress](https://docs.aws.amazon.com/cli/latest/reference/ec2/authorize-security-group-ingress.html) and [authorize\-security\-group\-egress](https://docs.aws.amazon.com/cli/latest/reference/ec2/authorize-security-group-egress.html) commands\. For the `--ip-permissions` parameter, specify the ID of the prefix list using `PrefixListIds`\.
 
-------
-#### [ Transit gateway route tables ]
+#### Subnet route tables<a name="prefix-list-subnet-route-table"></a>
+
+You can specify a prefix list as the destination for route table entry\. You cannot reference a prefix list in a gateway route table\. For more information about route tables, see [Route tables for your VPC](VPC_Route_Tables.md)\.
+
+**To reference a prefix list in a route table using the console**
+
+1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
+
+1. In the navigation pane, choose **Route Tables**, and select the route table\.
+
+1. Choose **Actions**, **Edit routes**\.
+
+1. To add a route, choose **Add route**\. For **Destination** enter the ID of a prefix list\. 
+
+1. For **Target**, choose a target\.
+
+1. Choose **Save routes**\.
+
+**To reference a prefix list in a route table using the AWS CLI**  
+Use the [create\-route](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-route.html) \(AWS CLI\) command\. Use the `--destination-prefix-list-id` parameter to specify the ID of a prefix list\.
+
+#### Transit gateway route tables<a name="prefix-list-tgw-route-table"></a>
 
 You can specify a prefix list as the destination for a route\. For more information, see [Prefix list references](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-prefix-lists.html) in *Amazon VPC Transit Gateways*\.
-
-------
 
 ## Identity and access management for prefix lists<a name="managed-prefix-lists-iam"></a>
 

@@ -6,13 +6,13 @@ To learn how to create an IAM identity\-based policy using these example JSON po
 
 **Topics**
 + [Policy best practices](#security_iam_service-with-iam-policy-best-practices)
-+ [Viewing the Amazon VPC console](#security_iam_id-based-policy-examples-console)
++ [Use the Amazon VPC console](#security_iam_id-based-policy-examples-console)
 + [Allow users to view their own permissions](#security_iam_id-based-policy-examples-view-own-permissions)
 + [Create a VPC with a public subnet](#vpc-public-subnet-iam)
 + [Modify and delete VPC resources](#modify-vpc-resources-iam)
-+ [Managing security groups](#vpc-security-groups-iam)
-+ [Launching instances into a specific subnet](#subnet-sg-example-iam)
-+ [Launching instances into a specific VPC](#subnet-ami-example-iam)
++ [Manage security groups](#vpc-security-groups-iam)
++ [Launch instances into a specific subnet](#subnet-sg-example-iam)
++ [Launch instances into a specific VPC](#subnet-ami-example-iam)
 + [Additional Amazon VPC policy examples](#security-iam-additional-examples)
 
 ## Policy best practices<a name="security_iam_service-with-iam-policy-best-practices"></a>
@@ -23,7 +23,7 @@ Identity\-based policies are very powerful\. They determine whether someone can 
 + **Enable MFA for sensitive operations** – For extra security, require IAM users to use multi\-factor authentication \(MFA\) to access sensitive resources or API operations\. For more information, see [Using multi\-factor authentication \(MFA\) in AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa.html) in the *IAM User Guide*\.
 + **Use policy conditions for extra security** – To the extent that it's practical, define the conditions under which your identity\-based policies allow access to a resource\. For example, you can write conditions to specify a range of allowable IP addresses that a request must come from\. You can also write conditions to allow requests only within a specified date or time range, or to require the use of SSL or MFA\. For more information, see [IAM JSON policy elements: Condition](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition.html) in the *IAM User Guide*\.
 
-## Viewing the Amazon VPC console<a name="security_iam_id-based-policy-examples-console"></a>
+## Use the Amazon VPC console<a name="security_iam_id-based-policy-examples-console"></a>
 
 To access the Amazon VPC console, you must have a minimum set of permissions\. These permissions must allow you to list and view details about the Amazon VPC resources in your AWS account\. If you create an identity\-based policy that is more restrictive than the minimum required permissions, the console won't function as intended for entities \(IAM users or roles\) with that policy\.
 
@@ -188,7 +188,7 @@ You might want to control which VPC resources users can modify or delete\. For e
 }
 ```
 
-## Managing security groups<a name="vpc-security-groups-iam"></a>
+## Manage security groups<a name="vpc-security-groups-iam"></a>
 
 The following policy grants users permission to create and delete inbound and outbound rules for any security group within a specific VPC\. The policy does this by applying a condition key \(`ec2:Vpc`\) to the security group resource for the `Authorize` and `Revoke` actions\. 
 
@@ -253,7 +253,7 @@ The following policy allows users to view and create security groups\. It also a
 
 To allow users to change the security group that's associated with an instance, add the `ec2:ModifyInstanceAttribute` action to your policy\. Alternatively, to enable users to change security groups for a network interface, add the `ec2:ModifyNetworkInterfaceAttribute` action to your policy\. 
 
-## Launching instances into a specific subnet<a name="subnet-sg-example-iam"></a>
+## Launch instances into a specific subnet<a name="subnet-sg-example-iam"></a>
 
 The following policy grants users permission to launch instances into a specific subnet, and to use a specific security group in the request\. The policy does this by specifying the ARN for `subnet-11223344556677889`, and the ARN for `sg-11223344551122334`\. If users attempt to launch an instance into a different subnet or using a different security group, the request will fail \(unless another policy or statement grants users permission to do so\)\.
 
@@ -279,7 +279,7 @@ The policy also grants permission to use the network interface resource\. When l
 }
 ```
 
-## Launching instances into a specific VPC<a name="subnet-ami-example-iam"></a>
+## Launch instances into a specific VPC<a name="subnet-ami-example-iam"></a>
 
 The following policy grants users permission to launch instances into any subnet within a specific VPC\. The policy does this by applying a condition key \(`ec2:Vpc`\) to the subnet resource\. 
 

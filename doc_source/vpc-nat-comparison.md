@@ -1,19 +1,19 @@
-# Comparing NAT gateways and NAT instances<a name="vpc-nat-comparison"></a>
+# Compare NAT gateways and NAT instances<a name="vpc-nat-comparison"></a>
 
-The following is a high\-level summary of the differences between NAT instances and NAT gateways\.
+The following is a high\-level summary of the differences between NAT gateways and NAT instances\. We recommend that you use NAT gateways because they provide better availability and bandwidth and require less effort on your part to administer\.
 
 
 | Attribute | NAT gateway | NAT instance | 
 | --- | --- | --- | 
 | Availability | Highly available\. NAT gateways in each Availability Zone are implemented with redundancy\. Create a NAT gateway in each Availability Zone to ensure zone\-independent architecture\. | Use a script to manage failover between instances\. | 
-| Bandwidth | Can scale up to 45 Gbps\. | Depends on the bandwidth of the instance type\. | 
+| Bandwidth | Scale up to 45 Gbps\. | Depends on the bandwidth of the instance type\. | 
 | Maintenance | Managed by AWS\. You do not need to perform any maintenance\. | Managed by you, for example, by installing software updates or operating system patches on the instance\. | 
-| Performance | Software is optimized for handling NAT traffic\. | A generic Amazon Linux AMI that's configured to perform NAT\. | 
+| Performance | Software is optimized for handling NAT traffic\. | A generic AMI that's configured to perform NAT\. | 
 | Cost | Charged depending on the number of NAT gateways you use, duration of usage, and amount of data that you send through the NAT gateways\. | Charged depending on the number of NAT instances that you use, duration of usage, and instance type and size\. | 
 | Type and size | Uniform offering; you don’t need to decide on the type or size\.  | Choose a suitable instance type and size, according to your predicted workload\. | 
-| Public IP addresses | Choose the Elastic IP address to associate with a NAT gateway at creation\. | Use an Elastic IP address or a public IP address with a NAT instance\. You can change the public IP address at any time by associating a new Elastic IP address with the instance\. | 
+| Public IP addresses | Choose the Elastic IP address to associate with a public NAT gateway at creation\. | Use an Elastic IP address or a public IP address with a NAT instance\. You can change the public IP address at any time by associating a new Elastic IP address with the instance\. | 
 | Private IP addresses | Automatically selected from the subnet's IP address range when you create the gateway\. | Assign a specific private IP address from the subnet's IP address range when you launch the instance\. | 
-| Security groups | Cannot be associated with a NAT gateway\. You can associate security groups with your resources behind the NAT gateway to control inbound and outbound traffic\. | Associate with your NAT instance and the resources behind your NAT instance to control inbound and outbound traffic\. | 
+| Security groups | You cannot associate security groups with NAT gateways\. You can associate them with the resources behind the NAT gateway to control inbound and outbound traffic\. | Associate with your NAT instance and the resources behind your NAT instance to control inbound and outbound traffic\. | 
 | Network ACLs | Use a network ACL to control the traffic to and from the subnet in which your NAT gateway resides\. | Use a network ACL to control the traffic to and from the subnet in which your NAT instance resides\. | 
 | Flow logs | Use flow logs to capture the traffic\. | Use flow logs to capture the traffic\. | 
 | Port forwarding | Not supported\. | Manually customize the configuration to support port forwarding\. | 

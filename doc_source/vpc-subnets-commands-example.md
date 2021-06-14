@@ -52,17 +52,17 @@ The first step is to create a VPC and two subnets\. This example uses the CIDR b
 
 ## Step 2: Make your subnet public<a name="vpc-subnets-commands-example-public-subnet"></a>
 
-After you've created the VPC and subnets, you can make one of the subnets a public subnet by attaching an Internet gateway to your VPC, creating a custom route table, and configuring routing for the subnet to the Internet gateway\.
+After you've created the VPC and subnets, you can make one of the subnets a public subnet by attaching an internet gateway to your VPC, creating a custom route table, and configuring routing for the subnet to the internet gateway\.
 
 **To make your subnet a public subnet**
 
-1. Create an Internet gateway\.
+1. Create an internet gateway\.
 
    ```
    aws ec2 create-internet-gateway
    ```
 
-   In the output that's returned, take note of the Internet gateway ID\.
+   In the output that's returned, take note of the internet gateway ID\.
 
    ```
    {
@@ -74,7 +74,7 @@ After you've created the VPC and subnets, you can make one of the subnets a publ
    }
    ```
 
-1. Using the ID from the previous step, attach the Internet gateway to your VPC\.
+1. Using the ID from the previous step, attach the internet gateway to your VPC\.
 
    ```
    aws ec2 attach-internet-gateway --vpc-id vpc-2f09a348 --internet-gateway-id igw-1ff7a07b
@@ -138,7 +138,7 @@ After you've created the VPC and subnets, you can make one of the subnets a publ
    }
    ```
 
-1. The route table is currently not associated with any subnet\. You need to associate it with a subnet in your VPC so that traffic from that subnet is routed to the Internet gateway\. First, use the `describe-subnets` command to get your subnet IDs\. You can use the `--filter` option to return the subnets for your new VPC only, and the `--query` option to return only the subnet IDs and their CIDR blocks\.
+1. The route table is currently not associated with any subnet\. You need to associate it with a subnet in your VPC so that traffic from that subnet is routed to the internet gateway\. First, use the `describe-subnets` command to get your subnet IDs\. You can use the `--filter` option to return the subnets for your new VPC only, and the `--query` option to return only the subnet IDs and their CIDR blocks\.
 
    ```
    aws ec2 describe-subnets --filters "Name=vpc-id,Values=vpc-2f09a348" --query 'Subnets[*].{ID:SubnetId,CIDR:CidrBlock}'
@@ -163,7 +163,7 @@ After you've created the VPC and subnets, you can make one of the subnets a publ
    aws ec2 associate-route-table  --subnet-id subnet-b46032ec --route-table-id rtb-c1c8faa6
    ```
 
-1. You can optionally modify the public IP addressing behavior of your subnet so that an instance launched into the subnet automatically receives a public IP address\. Otherwise, you should associate an Elastic IP address with your instance after launch so that it's reachable from the Internet\.
+1. You can optionally modify the public IP addressing behavior of your subnet so that an instance launched into the subnet automatically receives a public IP address\. Otherwise, you should associate an Elastic IP address with your instance after launch so that it's reachable from the internet\.
 
    ```
    aws ec2 modify-subnet-attribute --subnet-id subnet-b46032ec --map-public-ip-on-launch
@@ -171,7 +171,7 @@ After you've created the VPC and subnets, you can make one of the subnets a publ
 
 ## Step 3: Launch an instance into your subnet<a name="vpc-subnets-commands-example-launch-instance"></a>
 
-To test that your subnet is public and that instances in the subnet are accessible via the Internet, launch an instance into your public subnet and connect to it\. First, you must create a security group to associate with your instance, and a key pair with which you'll connect to your instance\. For more information about security groups, see [Security groups for your VPC](VPC_SecurityGroups.md)\. For more information about key pairs, see [Amazon EC2 Key Pairs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+To test that your subnet is public and that instances in the subnet are accessible over the internet, launch an instance into your public subnet and connect to it\. First, you must create a security group to associate with your instance, and a key pair with which you'll connect to your instance\. For more information about security groups, see [Security groups for your VPC](VPC_SecurityGroups.md)\. For more information about key pairs, see [Amazon EC2 Key Pairs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **To launch and connect to an instance in your public subnet**
 
@@ -211,7 +211,7 @@ If you use `0.0.0.0/0`, you enable all IPv4 addresses to access your instance us
    aws ec2 run-instances --image-id ami-a4827dc9 --count 1 --instance-type t2.micro --key-name MyKeyPair --security-group-ids sg-e1fb8c9a --subnet-id subnet-b46032ec
    ```
 **Note**  
-In this example, the AMI is an Amazon Linux AMI in the US East \(N\. Virginia\) region\. If you're in a different region, you'll need the AMI ID for a suitable AMI in your region\. For more information, see [Finding a Linux AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+In this example, the AMI is an Amazon Linux AMI in the US East \(N\. Virginia\) Region\. If you're in a different Region, you'll need the AMI ID for a suitable AMI in your Region\. For more information, see [Finding a Linux AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 1. Your instance must be in the `running` state in order to connect to it\. Describe your instance and confirm its state, and take note of its public IP address\.
 
@@ -259,7 +259,7 @@ After you've verified that you can connect to your instance, you can terminate i
    aws ec2 delete-security-group --group-id sg-e1fb8c9a
    ```
 
-1. Delete your subnets: 
+1. Delete your subnets:
 
    ```
    aws ec2 delete-subnet --subnet-id subnet-b46032ec
@@ -275,19 +275,19 @@ After you've verified that you can connect to your instance, you can terminate i
    aws ec2 delete-route-table --route-table-id rtb-c1c8faa6
    ```
 
-1. Detach your Internet gateway from your VPC: 
+1. Detach your internet gateway from your VPC:
 
    ```
    aws ec2 detach-internet-gateway --internet-gateway-id igw-1ff7a07b --vpc-id vpc-2f09a348
    ```
 
-1. Delete your Internet gateway: 
+1. Delete your internet gateway:
 
    ```
    aws ec2 delete-internet-gateway --internet-gateway-id igw-1ff7a07b
    ```
 
-1. Delete your VPC: 
+1. Delete your VPC:
 
    ```
    aws ec2 delete-vpc --vpc-id vpc-2f09a348

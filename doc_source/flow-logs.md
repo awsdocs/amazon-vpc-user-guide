@@ -15,11 +15,11 @@ Flow log data is collected outside of the path of your network traffic, and ther
 + [Flow log record examples](flow-logs-records-examples.md)
 + [Flow log limitations](#flow-logs-limitations)
 + [Flow logs pricing](#flow-logs-pricing)
-+ [Publishing flow logs to CloudWatch Logs](flow-logs-cwl.md)
-+ [Publishing flow logs to Amazon S3](flow-logs-s3.md)
-+ [Working with flow logs](working-with-flow-logs.md)
-+ [Querying flow logs using Amazon Athena](flow-logs-athena.md)
-+ [Troubleshooting VPC Flow Logs](flow-logs-troubleshooting.md)
++ [Publish flow logs to CloudWatch Logs](flow-logs-cwl.md)
++ [Publish flow logs to Amazon S3](flow-logs-s3.md)
++ [Work with flow logs](working-with-flow-logs.md)
++ [Query flow logs using Amazon Athena](flow-logs-athena.md)
++ [Troubleshoot VPC Flow Logs](flow-logs-troubleshooting.md)
 
 ## Flow logs basics<a name="flow-logs-basics"></a>
 
@@ -36,7 +36,7 @@ In the following example, you create a flow log \(`fl-aaa`\) that captures accep
 
 ![\[Flow logs for a subnet and an instance\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/flow-logs-diagram.png)
 
-After you've created a flow log, it can take several minutes to begin collecting and publishing data to the chosen destinations\. Flow logs do not capture real\-time log streams for your network interfaces\. For more information, see [Creating a flow log](working-with-flow-logs.md#create-flow-log)\. 
+After you've created a flow log, it can take several minutes to begin collecting and publishing data to the chosen destinations\. Flow logs do not capture real\-time log streams for your network interfaces\. For more information, see [Create a flow log](working-with-flow-logs.md#create-flow-log)\. 
 
 If you launch more instances into your subnet after you've created a flow log for your subnet or VPC, a new log stream \(for CloudWatch Logs\) or log file object \(for Amazon S3\) is created for each new network interface\. This occurs as soon as any network traffic is recorded for that network interface\.
 
@@ -45,7 +45,7 @@ You can create flow logs for network interfaces that are created by other AWS se
 + Amazon RDS
 + Amazon ElastiCache
 + Amazon Redshift
-+ Amazon WorkSpaces
++ Amazon Workspaces
 + NAT gateways
 + Transit gateways
 
@@ -53,7 +53,7 @@ Regardless of the type of network interface, you must use the Amazon EC2 console
 
 You can apply tags to your flow logs\. Each tag consists of a key and an optional value, both of which you define\. Tags can help you organize your flow logs, for example by purpose or owner\.
 
-If you no longer require a flow log, you can delete it\. Deleting a flow log disables the flow log service for the resource, and no new flow log records are created or published to CloudWatch Logs or Amazon S3\. Deleting the flow log does not delete any existing flow log records or log streams \(for CloudWatch Logs\) or log file objects \(for Amazon S3\) for a network interface\. To delete an existing log stream, use the CloudWatch Logs console\. To delete existing log file objects, use the Amazon S3 console\. After you've deleted a flow log, it can take several minutes to stop collecting data\. For more information, see [Deleting a flow log](working-with-flow-logs.md#delete-flow-log)\.
+If you no longer require a flow log, you can delete it\. Deleting a flow log disables the flow log service for the resource, and no new flow log records are created or published to CloudWatch Logs or Amazon S3\. Deleting the flow log does not delete any existing flow log records or log streams \(for CloudWatch Logs\) or log file objects \(for Amazon S3\) for a network interface\. To delete an existing log stream, use the CloudWatch Logs console\. To delete existing log file objects, use the Amazon S3 console\. After you've deleted a flow log, it can take several minutes to stop collecting data\. For more information, see [Delete a flow log](working-with-flow-logs.md#delete-flow-log)\.
 
 ## Flow log records<a name="flow-log-records"></a>
 
@@ -133,7 +133,7 @@ To use flow logs, you need to be aware of the following limitations:
 + If your network interface has multiple IPv4 addresses and traffic is sent to a secondary private IPv4 address, the flow log displays the primary private IPv4 address in the `dstaddr` field\. To capture the original destination IP address, create a flow log with the `pkt-dstaddr` field\.
 + If traffic is sent to a network interface and the destination is not any of the network interface's IP addresses, the flow log displays the primary private IPv4 address in the `dstaddr` field\. To capture the original destination IP address, create a flow log with the `pkt-dstaddr` field\.
 + If traffic is sent from a network interface and the source is not any of the network interface's IP addresses, the flow log displays the primary private IPv4 address in the `srcaddr` field\. To capture the original source IP address, create a flow log with the `pkt-srcaddr` field\.
-+ If traffic is sent to or sent by a network interface, the `srcaddr` and `dstaddr` fields in the flow log always display the primary private IPv4 address, regardless of the packet source or destination\. To capture the packet source or destination, create a flow log with the `pkt-srcaddr` and `pkt-dstaddr` fields\.
++ If traffic is sent to or sent from a network interface, the `srcaddr` and `dstaddr` fields in the flow log always display the primary private IPv4 address, regardless of the packet source or destination\. To capture the packet source or destination, create a flow log with the `pkt-srcaddr` and `pkt-dstaddr` fields\.
 + When your network interface is attached to a [Nitro\-based instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances), the aggregation interval is always 1 minute or less, regardless of the specified maximum aggregation interval\.
 
 Flow logs do not capture all IP traffic\. The following types of traffic are not logged:

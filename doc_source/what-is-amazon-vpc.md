@@ -14,7 +14,7 @@ The following are the key concepts for VPCs:
 + **VPC endpoint** — Enables you to privately connect your VPC to supported AWS services and VPC endpoint services powered by PrivateLink without requiring an internet gateway, NAT device, VPN connection, or AWS Direct Connect connection\. Instances in your VPC do not require public IP addresses to communicate with resources in the service\. Traffic between your VPC and the other service does not leave the Amazon network\. For more information, see [AWS PrivateLink and VPC endpoints](endpoint-services-overview.md)\.
 + **CIDR block** —Classless Inter\-Domain Routing\. An internet protocol address allocation and route aggregation methodology\. For more information, see [Classless Inter\-Domain Routing](http://en.wikipedia.org/wiki/CIDR_notation) in Wikipedia\.
 
-## Accessing Amazon VPC<a name="VPCInterfaces"></a>
+## Access Amazon VPC<a name="VPCInterfaces"></a>
 
 You can create, access, and manage your VPCs using any of the following interfaces:
 + **AWS Management Console** — Provides a web interface that you can use to access your VPCs\.
@@ -24,7 +24,7 @@ You can create, access, and manage your VPCs using any of the following interfac
 
 ## Pricing for Amazon VPC<a name="Paying"></a>
 
-There's no additional charge for using a VPC\. There are charges for the following VPC components: Site\-to\-Site VPN connection, PrivateLink, Traffic Mirroring, and a NAT gateway\. For more information, see [Amazon VPC Pricing](https://aws.amazon.com/vpc/pricing/)\.
+There's no additional charge for using a VPC\. There are charges for some VPC components, such as NAT gateways, Reachability Analyzer, and traffic mirroring\. For more information, see [Amazon VPC Pricing](http://aws.amazon.com/vpc/pricing/)\.
 
 ## Amazon VPC quotas<a name="vpc-quotas"></a>
 

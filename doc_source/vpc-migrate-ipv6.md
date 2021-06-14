@@ -1,4 +1,4 @@
-# Migrating to IPv6<a name="vpc-migrate-ipv6"></a>
+# Migrate to IPv6<a name="vpc-migrate-ipv6"></a>
 
 If you have an existing VPC that supports IPv4 only, and resources in your subnet that are configured to use IPv4 only, you can enable IPv6 support for your VPC and resources\. Your VPC can operate in dual\-stack mode — your resources can communicate over IPv4, or IPv6, or both\. IPv4 and IPv6 communication are independent of each other\.
 
@@ -22,7 +22,7 @@ The following table provides an overview of the steps to enable your VPC and sub
 Before you migrate to using IPv6, ensure that you have read the features of IPv6 addressing for Amazon VPC: [IPv4 and IPv6 characteristics and restrictions](vpc-ip-addressing.md#vpc-ipv4-ipv6-comparison)\.
 
 **Topics**
-+ [Example: Enabling IPv6 in a VPC with a public and private subnet](#vpc-migrate-ipv6-example)
++ [Example: Enable IPv6 in a VPC with a public and private subnet](#vpc-migrate-ipv6-example)
 + [Step 1: Associate an IPv6 CIDR block with your VPC and subnets](#vpc-migrate-ipv6-cidr)
 + [Step 2: Update your route tables](#vpc-migrate-ipv6-routes)
 + [Step 3: Update your security group rules](#vpc-migrate-ipv6-sg-rules)
@@ -30,7 +30,7 @@ Before you migrate to using IPv6, ensure that you have read the features of IPv6
 + [Step 5: Assign IPv6 addresses to your instances](#vpc-migrate-assign-ipv6-address)
 + [Step 6: \(Optional\) Configure IPv6 on your instances](#vpc-migrate-ipv6-dhcpv6)
 
-## Example: Enabling IPv6 in a VPC with a public and private subnet<a name="vpc-migrate-ipv6-example"></a>
+## Example: Enable IPv6 in a VPC with a public and private subnet<a name="vpc-migrate-ipv6-example"></a>
 
 In this example, your VPC has a public and a private subnet\. You have a database instance in your private subnet that has outbound communication with the internet through a NAT gateway in your VPC\. You have a public\-facing web server in your public subnet that has internet access through the internet gateway\. The following diagram represents the architecture of your VPC\.
 
@@ -295,7 +295,7 @@ You can configure your Ubuntu instance to dynamically recognize any IPv6 address
 **Topics**
 + [Ubuntu Server 16](#ipv6-dhcpv6-ubuntu-16)
 + [Ubuntu Server 14](#ipv6-dhcpv6-ubuntu-14)
-+ [Starting the DHCPv6 client](#ipv6-dhcpv6-ubuntu-start-client)
++ [Start the DHCPv6 client](#ipv6-dhcpv6-ubuntu-start-client)
 
 #### Ubuntu Server 16<a name="ipv6-dhcpv6-ubuntu-16"></a>
 
@@ -381,7 +381,7 @@ These steps must be performed as the root user\.
 
 1. Reconnect to your instance and use the `ifconfig` command to verify that the IPv6 address is configured on the network interface\.
 
-#### Starting the DHCPv6 client<a name="ipv6-dhcpv6-ubuntu-start-client"></a>
+#### Start the DHCPv6 client<a name="ipv6-dhcpv6-ubuntu-start-client"></a>
 
 Alternatively, to bring up the IPv6 address for the network interface immediately without performing any additional configuration, you can start the DHCPv6 client for the instance\. However, the IPv6 address does not persist on the network interface after reboot\.
 

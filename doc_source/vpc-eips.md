@@ -25,27 +25,24 @@ There are differences between an Elastic IP address that you use in a VPC and on
 
 Elastic IP addresses are regional\. For more information about using Global Accelerator to provision global IP addresses, see [Using global static IP addresses instead of regional static IP addresses](https://docs.aws.amazon.com/global-accelerator/latest/dg/about-accelerators.eip-accelerator.html) in the *AWS Global Accelerator Developer Guide*\.
 
-## Working with Elastic IP addresses<a name="WorkWithEIPs"></a>
+## Work with Elastic IP addresses<a name="WorkWithEIPs"></a>
 
 The following sections describe how you can work with Elastic IP addresses\.
 
 **Topics**
-+ [Allocating an Elastic IP address](#allocate-eip)
-+ [Associating an Elastic IP address](#associate-eip)
-+ [Viewing your Elastic IP addresses](#view-eip)
-+ [Tagging an Elastic IP address](#tag-eip)
-+ [Disassociating an Elastic IP address](#disassociate-eip)
-+ [Releasing an Elastic IP address](#release-eip)
-+ [Recovering an Elastic IP address](#recover-eip)
++ [Allocate an Elastic IP address](#allocate-eip)
++ [Associate an Elastic IP address](#associate-eip)
++ [View your Elastic IP addresses](#view-eip)
++ [Tag an Elastic IP address](#tag-eip)
++ [Disassociate an Elastic IP address](#disassociate-eip)
++ [Release an Elastic IP address](#release-eip)
++ [Recover an Elastic IP address](#recover-eip)
 
-### Allocating an Elastic IP address<a name="allocate-eip"></a>
+### Allocate an Elastic IP address<a name="allocate-eip"></a>
 
 Before you use an Elastic IP, you must allocate one for use in your VPC\.
 
-------
-#### [ Console ]
-
-**To allocate an Elastic IP address for use in a VPC**
+**To allocate an Elastic IP address using the console**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
@@ -70,25 +67,17 @@ Before you use an Elastic IP, you must allocate one for use in your VPC\.
 **Note**  
 If your account supports EC2\-Classic, first choose **VPC**\.
 
-------
-#### [ CLI and API ]
-
-**To allocate an Elastic IP address**
+**To allocate an Elastic IP address using the command line**
 + [allocate\-address](https://docs.aws.amazon.com/cli/latest/reference/ec2/allocate-address.html) \(AWS CLI\)
 + [New\-EC2Address](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Address.html) \(AWS Tools for Windows PowerShell\)
 
-------
-
-### Associating an Elastic IP address<a name="associate-eip"></a>
+### Associate an Elastic IP address<a name="associate-eip"></a>
 
 You can associate an Elastic IP with a running instance or network interface in your VPC\.
 
-After you associate the Elastic IP address with your instance, the instance receives a public DNS hostname if DNS hostnames are enabled\. For more information, see [Using DNS with your VPC](vpc-dns.md)\.
+After you associate the Elastic IP address with your instance, the instance receives a public DNS hostname if DNS hostnames are enabled\. For more information, see [DNS support for your VPC](vpc-dns.md)\.
 
-------
-#### [ Console ]
-
-**To associate an Elastic IP address with an instance or network interface in a VPC**
+**To associate an Elastic IP address with an instance or network interface**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
@@ -98,21 +87,13 @@ After you associate the Elastic IP address with your instance, the instance rece
 
 1. Choose **Instance** or **Network interface**, and then select either the instance or network interface ID\. Select the private IP address with which to associate the Elastic IP address\. Choose **Associate**\.
 
-------
-#### [ CLI and API ]
-
-**To associate an Elastic IP address with an instance or network interface**
+**To associate an Elastic IP address with an instance or network interface using the command line**
 + [associate\-address](https://docs.aws.amazon.com/cli/latest/reference/ec2/associate-address.html) \(AWS CLI\)
 + [Register\-EC2Address](https://docs.aws.amazon.com/powershell/latest/reference/items/Register-EC2Address.html) \(AWS Tools for Windows PowerShell\)
 
-------
-
-### Viewing your Elastic IP addresses<a name="view-eip"></a>
+### View your Elastic IP addresses<a name="view-eip"></a>
 
 You can view the Elastic IP addresses that are allocated to your account\.
-
-------
-#### [ Console ]
 
 **To view your Elastic IP addresses**
 
@@ -122,23 +103,15 @@ You can view the Elastic IP addresses that are allocated to your account\.
 
 1. To filter the displayed list, start typing part of the Elastic IP address or one of its attributes in the search box\.
 
-------
-#### [ CLI and API ]
-
-**To view one or more Elastic IP addresses**
+**To view your Elastic IP addresses using the command line**
 + [describe\-addresses](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-addresses.html) \(AWS CLI\)
 + [Get\-EC2Address](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2Address.html) \(AWS Tools for Windows PowerShell\)
 
-------
-
-### Tagging an Elastic IP address<a name="tag-eip"></a>
+### Tag an Elastic IP address<a name="tag-eip"></a>
 
 You can apply tags to your Elastic IP address to help you identify it or categorize it according to your organization's needs\.
 
-------
-#### [ Console ]
-
-**To tag an Elastic IP address**
+**To tag an Elastic IP address using the console**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
@@ -148,21 +121,13 @@ You can apply tags to your Elastic IP address to help you identify it or categor
 
 1. Choose **Manage tags**, enter the tag keys and values as required, and choose **Save**\.
 
-------
-#### [ CLI and API ]
-
-**To tag an Elastic IP address**
+**To tag an Elastic IP address using the command line**
 + [create\-tags](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-tags.html) \(AWS CLI\)
 + [New\-EC2Tag](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Tag.html) \(AWS Tools for Windows PowerShell\)
 
-------
-
-### Disassociating an Elastic IP address<a name="disassociate-eip"></a>
+### Disassociate an Elastic IP address<a name="disassociate-eip"></a>
 
 To change the resource that the Elastic IP address is associated with, you must first disassociate it from the currently associated resource\.
-
-------
-#### [ Console ]
 
 **To disassociate an Elastic IP address**
 
@@ -174,21 +139,13 @@ To change the resource that the Elastic IP address is associated with, you must 
 
 1. When prompted, choose **Disassociate**\.
 
-------
-#### [ CLI and API ]
-
-**To disassociate an Elastic IP address**
+**To disassociate an Elastic IP address using the command line**
 + [disassociate\-address](https://docs.aws.amazon.com/cli/latest/reference/ec2/disassociate-address.html) \(AWS CLI\)
 + [Unregister\-EC2Address](https://docs.aws.amazon.com/powershell/latest/reference/items/Unregister-EC2Address.html) \(AWS Tools for Windows PowerShell\)
 
-------
-
-### Releasing an Elastic IP address<a name="release-eip"></a>
+### Release an Elastic IP address<a name="release-eip"></a>
 
 If you no longer need an Elastic IP address, we recommend that you release it\. You incur charges for any Elastic IP address that's allocated for use with a VPC but not associated with an instance\. The Elastic IP address must not be associated with an instance or network interface\.
-
-------
-#### [ Console ]
 
 **To release an Elastic IP address**
 
@@ -200,16 +157,11 @@ If you no longer need an Elastic IP address, we recommend that you release it\. 
 
 1. When prompted, choose **Release**\.
 
-------
-#### [ CLI and API ]
-
-**To release an Elastic IP address**
+**To release an Elastic IP address using the command line**
 + [release\-address](https://docs.aws.amazon.com/cli/latest/reference/ec2/release-address.html) \(AWS CLI\)
 + [Remove\-EC2Address](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2Address.html) \(AWS Tools for Windows PowerShell\)
 
-------
-
-### Recovering an Elastic IP address<a name="recover-eip"></a>
+### Recover an Elastic IP address<a name="recover-eip"></a>
 
 If you release your Elastic IP address, you might be able to recover it\. You cannot recover the Elastic IP address if it has been allocated to another AWS account, or if it results in you exceeding your Elastic IP address quota\.
 

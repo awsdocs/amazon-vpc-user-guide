@@ -1,6 +1,6 @@
 # IP Addressing in your VPC<a name="vpc-ip-addressing"></a>
 
-IP addresses enable resources in your VPC to communicate with each other, and with resources over the internet\. Amazon EC2 and Amazon VPC support the IPv4 and IPv6 addressing protocols\. 
+IP addresses enable resources in your VPC to communicate with each other, and with resources over the internet\. Amazon EC2 and Amazon VPC support the IPv4 and IPv6 addressing protocols\. For more information, see [Amazon EC2 instance IP addressing](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html)\.
 
 By default, Amazon EC2 and Amazon VPC use the IPv4 addressing protocol\. When you create a VPC, you must assign it an IPv4 CIDR block \(a range of private IPv4 addresses\)\. Private IPv4 addresses are not reachable over the internet\. To connect to your instance over the internet, or to enable communication between your instances and other AWS services that have public endpoints, you can assign a globally\-unique public IPv4 address to your instance\. 
 
@@ -47,20 +47,20 @@ We refer to private IP addresses as the IP addresses that are within the IPv4 CI
 All subnets have an attribute that determines whether a network interface created in the subnet automatically receives a public IPv4 address \(also referred to as a *public IP address* in this topic\)\. Therefore, when you launch an instance into a subnet that has this attribute enabled, a public IP address is assigned to the primary network interface \(eth0\) that's created for the instance\. A public IP address is mapped to the primary private IP address through network address translation \(NAT\)\. 
 
 You can control whether your instance receives a public IP address by doing the following: 
-+ Modifying the public IP addressing attribute of your subnet\. For more information, see [Modifying the public IPv4 addressing attribute for your subnet](#subnet-public-ip)\.
-+ Enabling or disabling the public IP addressing feature during instance launch, which overrides the subnet's public IP addressing attribute\. For more information, see [Assigning a public IPv4 address during instance launch](#vpc-public-ip)\.
++ Modifying the public IP addressing attribute of your subnet\. For more information, see [Modify the public IPv4 addressing attribute for your subnet](#subnet-public-ip)\.
++ Enabling or disabling the public IP addressing feature during instance launch, which overrides the subnet's public IP addressing attribute\. For more information, see [Assign a public IPv4 address during instance launch](#vpc-public-ip)\.
 
 A public IP address is assigned from Amazon's pool of public IP addresses; it's not associated with your account\. When a public IP address is disassociated from your instance, it's released back into the pool, and is no longer available for you to use\. You cannot manually associate or disassociate a public IP address\. Instead, in certain cases, we release the public IP address from your instance, or assign it a new one\. For more information, see [Public IP addresses](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#concepts-public-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 If you require a persistent public IP address allocated to your account that can be assigned to and removed from instances as you require, use an Elastic IP address instead\. For more information, see [Elastic IP addresses](vpc-eips.md)\.
 
-If your VPC is enabled to support DNS hostnames, each instance that receives a public IP address or an Elastic IP address is also given a public DNS hostname\. We resolve a public DNS hostname to the public IP address of the instance outside the instance network, and to the private IP address of the instance from within the instance network\. For more information, see [Using DNS with your VPC](vpc-dns.md)\.
+If your VPC is enabled to support DNS hostnames, each instance that receives a public IP address or an Elastic IP address is also given a public DNS hostname\. We resolve a public DNS hostname to the public IP address of the instance outside the instance network, and to the private IP address of the instance from within the instance network\. For more information, see [DNS support for your VPC](vpc-dns.md)\.
 
 ## IPv6 addresses<a name="vpc-ipv6-addresses"></a>
 
 You can optionally associate an IPv6 CIDR block with your VPC and subnets\. For more information, see the following topics:
-+ [Associating an IPv6 CIDR block with your VPC](working-with-vpcs.md#vpc-associate-ipv6-cidr)
-+ [Associating an IPv6 CIDR block with your subnet](working-with-vpcs.md#subnet-associate-ipv6-cidr)
++ [Associate an IPv6 CIDR block with your VPC](working-with-vpcs.md#vpc-associate-ipv6-cidr)
++ [Associate an IPv6 CIDR block with your subnet](working-with-vpcs.md#subnet-associate-ipv6-cidr)
 
 Your instance in a VPC receives an IPv6 address if an IPv6 CIDR block is associated with your VPC and your subnet, and if one of the following is true:
 + Your subnet is configured to automatically assign an IPv6 address to the primary network interface of an instance during launch\.
@@ -82,28 +82,28 @@ For more information about reserved IPv6 address ranges, see [IANA IPv6 Special\
 
 All subnets have a modifiable attribute that determines whether a network interface created in that subnet is assigned a public IPv4 address and, if applicable, an IPv6 address\. This includes the primary network interface \(eth0\) that's created for an instance when you launch an instance in that subnet\.
 
-Regardless of the subnet attribute, you can still override this setting for a specific instance during launch\. For more information, see [Assigning a public IPv4 address during instance launch](#vpc-public-ip) and [Assigning an IPv6 address during instance launch](#vpc-ipv6-during-launch)\. 
+Regardless of the subnet attribute, you can still override this setting for a specific instance during launch\. For more information, see [Assign a public IPv4 address during instance launch](#vpc-public-ip) and [Assign an IPv6 address during instance launch](#vpc-ipv6-during-launch)\. 
 
-## Using your own IP addresses<a name="vpc-using-own-ip-address"></a>
+## Use your own IP addresses<a name="vpc-using-own-ip-address"></a>
 
 You can bring part or all of your own public IPv4 address range or IPv6 address range to your AWS account\. You continue to own the address range, but AWS advertises it on the internet by default\. After you bring the address range to AWS, it appears in your account as an address pool\. You can create an Elastic IP address from your IPv4 address pool, and you can associate an IPv6 CIDR block from your IPv6 address pool with a VPC\.
 
 For more information, see [Bring your own IP addresses \(BYOIP\)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-## Working with IP addresses<a name="vpc-working-with-ip-addresses"></a>
+## Work with IP addresses<a name="vpc-working-with-ip-addresses"></a>
 
 You can modify the IP addressing behavior of your subnet, assign a public IPv4 address to your instance during launch, and assign or unassign IPv6 addresses to and from your instance\.
 
 **Topics**
-+ [Modifying the public IPv4 addressing attribute for your subnet](#subnet-public-ip)
-+ [Modifying the IPv6 addressing attribute for your subnet](#subnet-ipv6)
-+ [Assigning a public IPv4 address during instance launch](#vpc-public-ip)
-+ [Assigning an IPv6 address during instance launch](#vpc-ipv6-during-launch)
-+ [Assigning an IPv6 address to an instance](#vpc-assign-ipv6-instance)
-+ [Unassigning an IPv6 address from an instance](#vpc-unassign-ipv6-instance)
++ [Modify the public IPv4 addressing attribute for your subnet](#subnet-public-ip)
++ [Modify the IPv6 addressing attribute for your subnet](#subnet-ipv6)
++ [Assign a public IPv4 address during instance launch](#vpc-public-ip)
++ [Assign an IPv6 address during instance launch](#vpc-ipv6-during-launch)
++ [Assign an IPv6 address to an instance](#vpc-assign-ipv6-instance)
++ [Unassign an IPv6 address from an instance](#vpc-unassign-ipv6-instance)
 + [API and Command overview](#ip-addressing-api-cli)
 
-### Modifying the public IPv4 addressing attribute for your subnet<a name="subnet-public-ip"></a>
+### Modify the public IPv4 addressing attribute for your subnet<a name="subnet-public-ip"></a>
 
 By default, nondefault subnets have the IPv4 public addressing attribute set to `false`, and default subnets have this attribute set to `true`\. An exception is a nondefault subnet created by the Amazon EC2 launch instance wizard — the wizard sets the attribute to `true`\. You can modify this attribute using the Amazon VPC console\.
 
@@ -117,7 +117,7 @@ By default, nondefault subnets have the IPv4 public addressing attribute set to 
 
 1. The **Enable auto\-assign public IPv4 address** check box, if selected, requests a public IPv4 address for all instances launched into the selected subnet\. Select or clear the check box as required, and then choose **Save**\.
 
-### Modifying the IPv6 addressing attribute for your subnet<a name="subnet-ipv6"></a>
+### Modify the IPv6 addressing attribute for your subnet<a name="subnet-ipv6"></a>
 
 By default, all subnets have the IPv6 addressing attribute set to `false`\. You can modify this attribute using the Amazon VPC console\. If you enable the IPv6 addressing attribute for your subnet, network interfaces created in the subnet receive an IPv6 address from the range of the subnet\. Instances launched into the subnet receive an IPv6 address on the primary network interface\. 
 
@@ -136,7 +136,7 @@ If you enable the IPv6 addressing feature for your subnet, your network interfac
 
 1. The **Enable auto\-assign IPv6 address** check box, if selected, requests an IPv6 address for all network interfaces created in the selected subnet\. Select or clear the check box as required, and then choose **Save**\.
 
-### Assigning a public IPv4 address during instance launch<a name="vpc-public-ip"></a>
+### Assign a public IPv4 address during instance launch<a name="vpc-public-ip"></a>
 
 You can control whether your instance in a default or nondefault subnet is assigned a public IPv4 address during launch\.
 
@@ -161,7 +161,7 @@ The public IPv4 address is displayed as a property of the network interface in t
 
 This feature is only available during launch\. However, whether or not you assign a public IPv4 address to your instance during launch, you can associate an Elastic IP address with your instance after it's launched\. For more information, see [Elastic IP addresses](vpc-eips.md)\.
 
-### Assigning an IPv6 address during instance launch<a name="vpc-ipv6-during-launch"></a>
+### Assign an IPv6 address during instance launch<a name="vpc-ipv6-during-launch"></a>
 
 You can auto\-assign an IPv6 address to your instance during launch\. To do this, you must launch your instance into a VPC and subnet that has an [associated IPv6 CIDR block](working-with-vpcs.md#vpc-associate-ipv6-cidr)\. The IPv6 address is assigned from the range of the subnet, and is assigned to the primary network interface \(eth0\)\. 
 
@@ -201,7 +201,7 @@ Select an instance type that supports IPv6 addresses\.
 
 For more information about assigning multiple IPv6 addresses to your instance during launch, see [Working with Multiple IPv6 Addresses](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/MultipleIP.html#working-with-multiple-ipv6) in the *Amazon EC2 User Guide for Linux Instances*
 
-### Assigning an IPv6 address to an instance<a name="vpc-assign-ipv6-instance"></a>
+### Assign an IPv6 address to an instance<a name="vpc-assign-ipv6-instance"></a>
 
 If your instance is in a VPC and subnet with an [associated IPv6 CIDR block](working-with-vpcs.md#vpc-associate-ipv6-cidr), you can use the Amazon EC2 console to assign an IPv6 address to your instance from the range of the subnet\. 
 
@@ -219,7 +219,7 @@ If your instance is in a VPC and subnet with an [associated IPv6 CIDR block](wor
 
 Alternatively, you can assign an IPv6 address to a network interface\. For more information, see [Assigning an IPv6 Address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#eni-assign-ipv6) in the *Elastic Network Interfaces* topic in the *Amazon EC2 User Guide for Linux Instances*\. 
 
-### Unassigning an IPv6 address from an instance<a name="vpc-unassign-ipv6-instance"></a>
+### Unassign an IPv6 address from an instance<a name="vpc-unassign-ipv6-instance"></a>
 
 If you no longer need an IPv6 address for your instance, you can disassociate it from the instance using the Amazon EC2 console\.
 
@@ -239,7 +239,7 @@ Alternatively, you can disassociate an IPv6 address from a network interface\. F
 
 ### API and Command overview<a name="ip-addressing-api-cli"></a>
 
-You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Accessing Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Access Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 
 **Assign a public IPv4 address during launch**
 + Use the `--associate-public-ip-address` or the `--no-associate-public-ip-address` option with the [run\-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html) command\. \(AWS CLI\)
