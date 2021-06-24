@@ -9,6 +9,7 @@ AWS Identity and Access Management \(IAM\) is an AWS service that helps an admin
 + [How Amazon VPC works with IAM](security_iam_service-with-iam.md)
 + [Amazon VPC policy examples](vpc-policy-examples.md)
 + [Troubleshoot Amazon VPC identity and access](security_iam_troubleshoot.md)
++ [AWS managed policies for Amazon Virtual Private Cloud](security-iam-awsmanpol.md)
 
 ## Audience<a name="security_iam_audience"></a>
 

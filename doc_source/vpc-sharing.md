@@ -110,6 +110,7 @@ The following limitations apply to working with VPC sharing:
 + Participants cannot launch resources using the default security group for the VPC because it belongs to the owner\.
 + Owners cannot launch resources using security groups that are owned by other participants\.
 + When participants launch resources in a shared subnet, they should make sure they attach their security group to the resource, and not rely on the default security group\. Participants cannot use the default security group because it belongs to the VPC owner\.
++ Participants cannot create Amazon Route53 Resolver endpoints in a VPC that they do not own\. Only the VPC owner can create VPC\-level resources such as inbound endpoints\.
 + VPC tags, and tags for the resources within the shared VPC are not shared with the participants\.
 + A subnet owner can attach a transit gateway to the subnet\. Participants cannot attach a transit gateway to the subnet\.
 + Service quotas apply per individual account\.

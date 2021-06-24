@@ -235,11 +235,13 @@ You can specify a prefix list as the destination for route table entry\. You can
 
 1. Choose **Actions**, **Edit routes**\.
 
-1. To add a route, choose **Add route**\. For **Destination** enter the ID of a prefix list\. 
+1. To add a route, choose **Add route**\.
+
+1. For **Destination** enter the ID of a prefix list\. 
 
 1. For **Target**, choose a target\.
 
-1. Choose **Save routes**\.
+1. Choose **Save changes**\.
 
 **To reference a prefix list in a route table using the AWS CLI**  
 Use the [create\-route](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-route.html) \(AWS CLI\) command\. Use the `--destination-prefix-list-id` parameter to specify the ID of a prefix list\.

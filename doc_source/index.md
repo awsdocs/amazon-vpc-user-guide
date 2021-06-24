@@ -43,6 +43,7 @@ Amazon's trademarks and trade dress may not be used in
       + [How Amazon VPC works with IAM](security_iam_service-with-iam.md)
       + [Amazon VPC policy examples](vpc-policy-examples.md)
       + [Troubleshoot Amazon VPC identity and access](security_iam_troubleshoot.md)
+      + [AWS managed policies for Amazon Virtual Private Cloud](security-iam-awsmanpol.md)
    + [Log and monitor your VPC](logging-monitoring.md)
    + [Resilience in Amazon Virtual Private Cloud](disaster-recovery-resiliency.md)
    + [Compliance validation for Amazon Virtual Private Cloud](VPC-compliance.md)

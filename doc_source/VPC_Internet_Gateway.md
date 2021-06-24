@@ -117,17 +117,17 @@ When you create a subnet, we automatically associate it with the main route tabl
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Route Tables**, and then choose **Create Route Table**\.
+1. In the navigation pane, choose **Route Tables**, and then choose **Create route table**\.
 
-1. In the **Create Route Table** dialog box, optionally name your route table, then select your VPC, and then choose **Yes, Create**\.
+1. In the **Create route table** dialog box, optionally name your route table, then select your VPC, and then choose **Create route table**\.
 
 1. Select the custom route table that you just created\. The details pane displays tabs for working with its routes, associations, and route propagation\.
 
-1. On the **Routes** tab, choose **Edit**, **Add another route**, and add the following routes as necessary\. Choose **Save** when you're done\.
+1. On the **Routes** tab, choose **Edit routes**, **Add route**, and add the following routes as necessary\. Choose **Save changes** when you're done\.
    + For IPv4 traffic, specify `0.0.0.0/0` in the **Destination** box, and select the internet gateway ID in the **Target** list\.
    + For IPv6 traffic, specify `::/0` in the **Destination** box, and select the internet gateway ID in the **Target** list\.
 
-1. On the **Subnet Associations** tab, choose **Edit**, select the **Associate** check box for the subnet, and then choose **Save**\.
+1. On the **Subnet associations** tab, choose **Edit subnet associations**, select the check box for the subnet, and then choose **Save associations**\.
 
 For more information, see [Route tables for your VPC](VPC_Route_Tables.md)\.
 

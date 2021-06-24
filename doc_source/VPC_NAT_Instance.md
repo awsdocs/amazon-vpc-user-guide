@@ -195,11 +195,11 @@ The private subnet in your VPC is not associated with a custom route table, ther
 
 1. In the navigation pane, choose **Route Tables**\.
 
-1. Select the main route table for your VPC \(the **Main** column displays **Yes**\) \. The details pane displays tabs for working with its routes, associations, and route propagation\.
+1. Select the main route table for your VPC \(the **Main** column displays **Yes**\)\. The details pane displays tabs for working with its routes, associations, and route propagation\.
 
-1. On the **Routes** tab, choose **Edit**, specify `0.0.0.0/0` in the **Destination** box, select the instance ID of the NAT instance from the **Target** list, and then choose **Save**\. 
+1. On the **Routes** tab, choose **Edit routes**, specify `0.0.0.0/0` in the **Destination** box, select the instance ID of the NAT instance from the **Target** list, and then choose **Save changes**\. 
 
-1. On the **Subnet Associations** tab, choose **Edit**, and then select the **Associate** check box for the private subnet\. Choose **Save**\.
+1. On the **Subnet associations** tab, choose **Edit subnet associations**, and then select the check box for the private subnet\. Choose **Save associations**\.
 
 For more information, see [Route tables for your VPC](VPC_Route_Tables.md)\.
 

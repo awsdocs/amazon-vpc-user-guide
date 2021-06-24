@@ -105,9 +105,9 @@ For a private subnet, you must update the route table to enable instances \(such
 
 1. In the navigation pane, choose **Route Tables** and select the route table that's associated with the public subnet\.
 
-1. On the **Routes** tab, choose **Edit**\.
+1. On the **Routes** tab, choose **Edit routes**\.
 
-1. Choose **Add another route**\. Specify `::/0` for **Destination**, select the ID of the internet gateway for **Target**, and then choose **Save**\. 
+1. Choose **Add route**\. Specify `::/0` for **Destination**, select the ID of the internet gateway for **Target**, and then choose **Save changes**\. 
 
 **To update your route table for a private subnet**
 
@@ -117,9 +117,9 @@ For a private subnet, you must update the route table to enable instances \(such
 
 1. In the navigation pane, choose **Route Tables** and select the route table that's associated with the private subnet\.
 
-1. On the **Routes** tab, choose **Edit**\.
+1. On the **Routes** tab, choose **Edit routes**\.
 
-1. Choose **Add another route**\. For **Destination**, specify `::/0`\. For **Target**, select the ID of the egress\-only internet gateway, and then choose **Save**\.
+1. Choose **Add route**\. For **Destination**, specify `::/0`\. For **Target**, select the ID of the egress\-only internet gateway, and then choose **Save changes**\.
 
 For more information, see [Example routing options](route-table-options.md)\.
 

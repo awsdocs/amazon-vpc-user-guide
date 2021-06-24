@@ -149,6 +149,8 @@ If you add a route using a command line tool or the API, the destination CIDR bl
 
 Route propagation allows a virtual private gateway to automatically propagate routes to the route tables\. This means that you don't need to manually enter VPN routes to your route tables\. You can enable or disable route propagation\.
 
+To complete this process, you must have a virtual private gateway\.
+
 For more information about VPN routing options, see [Site\-to\-Site VPN routing options](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html) in the *Site\-to\-Site VPN User Guide*\.
 
 **To enable route propagation using the console**
@@ -159,7 +161,7 @@ For more information about VPN routing options, see [Site\-to\-Site VPN routing 
 
 1. Choose **Actions**, **Edit route propagation**\.
 
-1. Select the **Propagate** check box next to the virtual private gateway, and then choose **Save**\.
+1. Select the **Enable** check box next to the virtual private gateway, and then choose **Save**\.
 
 **To enable route propagation using the command line**
 + [enable\-vgw\-route\-propagation](https://docs.aws.amazon.com/cli/latest/reference/ec2/enable-vgw-route-propagation.html) \(AWS CLI\)
@@ -189,9 +191,9 @@ To apply route table routes to a particular subnet, you must associate the route
 
 1. In the navigation pane, choose **Route Tables**, and then select the route table\.
 
-1. On the **Subnet Associations** tab, choose **Edit subnet associations**\.
+1. On the **Subnet associations** tab, choose **Edit subnet associations**\.
 
-1. Select the **Associate** check box for the subnet to associate with the route table, and then choose **Save**\.
+1. Select the check box for the subnet to associate with the route table, and then choose **Save associations**\.
 
 **To associate a subnet with a route table using the command line**
 + [associate\-route\-table](https://docs.aws.amazon.com/cli/latest/reference/ec2/associate-route-table.html) \(AWS CLI\)
@@ -227,9 +229,9 @@ You can disassociate a subnet from a route table\. Until you associate the subne
 
 1. In the navigation pane, choose **Route Tables**, and then select the route table\.
 
-1. In the **Subnet Associations** tab, choose **Edit subnet associations**\.
+1. In the **Subnet associations** tab, choose **Edit subnet associations**\.
 
-1. Clear the **Associate** check box for the subnet, and then choose **Save**\.
+1. Clear the check box for the subnet, and then choose **Save associations**\.
 
 **To disassociate a subnet from a route table using the command line**
 + [disassociate\-route\-table](https://docs.aws.amazon.com/cli/latest/reference/ec2/disassociate-route-table.html) \(AWS CLI\)
@@ -245,7 +247,7 @@ You can change which route table is the main route table in your VPC\.
 
 1. In the navigation pane, choose **Route Tables**\.
 
-1. Select the subnet route table that should be the new main route table, and then choose **Actions**, **Set Main Route Table**\.
+1. Select the subnet route table that should be the new main route table, and then choose **Actions**, **Set main route table**\.
 
 1. In the confirmation dialog box, choose **Ok**\.
 
@@ -261,9 +263,9 @@ The following procedure describes how to remove an explicit association between 
 
 1. In the navigation pane, choose **Route Tables**, and then select the route table\.
 
-1. In the **Subnet Associations** tab, choose **Edit subnet associations**\.
+1. In the **Subnet associations** tab, choose **Edit subnet associations**\.
 
-1. Clear the check box for the subnet, and then choose **Save**\.
+1. Choose the subnet, and then choose **Save**\.
 
 ## Associate a gateway with a route table<a name="associate-route-table-gateway"></a>
 
@@ -276,8 +278,6 @@ You can associate an internet gateway or a virtual private gateway with a route 
 1. In the navigation pane, choose **Route Tables**, and then select the route table\.
 
 1. Choose **Actions**, **Edit edge associations**\.
-
-1. Choose **Internet gateways** or **Virtual private gateways** to display the list of gateways\. 
 
 1. Choose the gateway, and then choose **Save**\.
 
@@ -300,7 +300,7 @@ You can disassociate an internet gateway or a virtual private gateway from a rou
 
 1. Choose **Actions**, **Edit edge associations**\.
 
-1. For **Associated gateways**, choose the delete button \(x\) for the gateway you want to disassociate\. 
+1. Choose the gateway you want to disassociate\. 
 
 1. Choose **Save**\.
 

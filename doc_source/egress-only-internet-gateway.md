@@ -80,15 +80,15 @@ To send traffic destined outside the VPC to the egress\-only internet gateway, y
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Route Tables**, **Create Route Table**\.
+1. In the navigation pane, choose **Route Tables**, **Create route table**\.
 
-1. In the **Create Route Table** dialog box, optionally name your route table, then select your VPC and choose **Yes, Create**\.
+1. In the **Create route table** dialog box, optionally name your route table, then select your VPC and choose **Create route table**\.
 
 1. Select the custom route table that you just created\. The details pane displays tabs for working with its routes, associations, and route propagation\.
 
-1. On the **Routes** tab, choose **Edit**, specify `::/0` in the **Destination** box, select the egress\-only internet gateway ID in the **Target** list, and then choose **Save**\. 
+1. On the **Routes** tab, choose **Edit routes**, specify `::/0` in the **Destination** box, select the egress\-only internet gateway ID in the **Target** list, and then choose **Save changes**\. 
 
-1. On the **Subnet Associations** tab, choose **Edit**, and select the **Associate** check box for the subnet\. Choose **Save**\.
+1. On the **Subnet associations** tab, choose **Edit subnet associations**, and select the check box for the subnet\. Choose **Save**\.
 
 Alternatively, you can add a route to an existing route table that's associated with your subnet\. Select your existing route table, and follow steps 5 and 6 above to add a route for the egress\-only internet gateway\.
 
