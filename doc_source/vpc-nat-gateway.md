@@ -117,7 +117,7 @@ The following are example use cases for public and private NAT gateways\.
 
 You can use a public NAT gateway to enable instances in a private subnet to send outbound traffic to the internet, but the internet cannot establish connections to the instances\.
 
-The following diagram illustrates the architecture for this use case\. The public subnet in Availability Zone A contains the NAT gateway\. The private subnet in Availability Zone B contains instances\. The router sends internet bound traffic from the instances in the private subnet to the NAT gateway\. The NAT gateway sends the traffic to the internet gateway, using the elastic IP address for the NAT gateway as the source IP address\.
+The following diagram illustrates the architecture for this use case\. The public subnet in Availability Zone A contains the NAT gateway\. The private subnet in Availability Zone B contains instances\. The router sends internet bound traffic from the instances in the private subnet to the NAT gateway\. The NAT gateway sends the traffic to the internet gateway, using the private IP address for the NAT gateway as the source IP address\.
 
 ![\[A VPC with public and private subnets and a NAT gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/nat-gateway-diagram.png)
 
