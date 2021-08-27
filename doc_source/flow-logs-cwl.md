@@ -119,7 +119,7 @@ Create the destination log group\. Open the [Log groups page](https://console.aw
 
 1. For **Destination**, choose **Send to CloudWatch Logs**\.
 
-1. For **Destination log group**, chose the name of the destination log group that you created\.
+1. For **Destination log group**, choose the name of the destination log group that you created\.
 
 1. For **IAM role**, specify the name of the role that has permissions to publish logs to CloudWatch Logs\.
 
@@ -146,7 +146,7 @@ Create the destination log group\. Open the [Log groups page](https://console.aw
 
 1. For **Destination**, choose **Send to CloudWatch Logs**\.
 
-1. For **Destination log group**, chose the name of the destination log group that you created\.
+1. For **Destination log group**, choose the name of the destination log group that you created\.
 
 1. For **IAM role**, specify the name of the role that has permissions to publish logs to CloudWatch Logs\.
 
