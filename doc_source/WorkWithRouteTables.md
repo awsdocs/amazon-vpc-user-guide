@@ -310,9 +310,7 @@ You can disassociate an internet gateway or a virtual private gateway from a rou
 
 ## Replace or restore the target for a local route<a name="replace-local-route-target"></a>
 
-You can change the target of the default local route in a [gateway route table](VPC_Route_Tables.md#gateway-route-table) and specify a network interface or instance in the same VPC as the target instead\. If you replace the target of a local route, you can later restore it to the default `local` target\. If your VPC has [multiple CIDR blocks](VPC_Subnets.md#vpc-resize), your route tables have multiple local routes—one per CIDR block\. You can replace or restore the target of each of the local routes as needed\.
-
-You cannot replace the target for a local route in a subnet route table\.
+You can change the target of the default local route\. If you replace the target of a local route, you can later restore it to the default `local` target\. If your VPC has [multiple CIDR blocks](VPC_Subnets.md#vpc-resize), your route tables have multiple local routes—one per CIDR block\. You can replace or restore the target of each of the local routes as needed\.
 
 **To replace the target for a local route using the console**
 
@@ -322,9 +320,7 @@ You cannot replace the target for a local route in a subnet route table\.
 
 1. Choose **Actions**, **Edit routes**\.
 
-1. For **Target**, choose **Network Interface** to display the list of network interfaces, and choose the network interface\.
-
-   Alternatively, choose **Instance** to display the list of instances, and choose the instance\.
+1. For **Target**, choose a target\.
 
 1. Choose **Save routes**\.
 

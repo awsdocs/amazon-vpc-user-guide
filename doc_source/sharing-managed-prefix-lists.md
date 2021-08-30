@@ -64,7 +64,7 @@ Use the [describe\-managed\-prefix\-lists](https://docs.aws.amazon.com/cli/lates
 
 ## Identify references to a shared prefix list<a name="sharing-identify-references"></a>
 
-Owners can identify the consumer\-owned resources that are referencing a shared prefix list by using the Amazon VPC console and AWS CLI\.
+Owners can identify the consumer\-owned resources that are referencing a shared prefix list\.
 
 **To identify references to a shared prefix list using the Amazon VPC console**
 
@@ -83,7 +83,7 @@ Use the [get\-managed\-prefix\-list\-associations](https://docs.aws.amazon.com/c
 
 When you unshare a prefix list, consumers can no longer view the prefix list or its entries in their account, and they cannot reference the prefix list in their resources\. If the prefix list is already referenced in the consumer's resources, those references continue to function as normal, and you can continue to [view those references](#sharing-identify-references)\. If you update the prefix list to a new version, the references use the latest version\.
 
-To unshare a shared prefix list that you own, you must remove it from the resource share\. You can do this using the AWS RAM console, or the AWS CLI\.
+To unshare a shared prefix list that you own, you must remove it from the resource share using AWS RAM\.
 
 **To unshare a shared prefix list that you own using the AWS RAM console**  
 See [Updating a resource share](https://docs.aws.amazon.com/ram/latest/userguide/working-with-sharing.html#working-with-sharing-update) in the *AWS RAM User Guide*\.

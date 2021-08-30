@@ -4,10 +4,12 @@ The following table describes the important changes in each release of the *Amaz
 
 | Change | Description | Date | 
 | --- |--- |--- |
+| [More specific routes](#WhatsNew) | You can add a route to your route tables that is more specific than the local route\. You can use more specific routes to redirect traffic between subnets within a VPC \(East\-West traffic\) to a middlebox appliance\. You can set the destination of a route to match an entire IPv4 or IPv6 CIDR block of a subnet in your VPC\. | August 30, 2021 | 
+| [Resource IDs and tagging support for security group rules](#WhatsNew) | You can refer to security group rules by resource ID\. You can also add tags to your security group rules\. | July 7, 2021 | 
 | [Private NAT gateways](#WhatsNew) | You can use a private NAT gateway for outbound\-only private communication between VPCs or between a VPC and your on\-premises network\. | June 10, 2021 | 
 | [Amazon S3 interface endpoints](https://docs.aws.amazon.com/vpc/latest/userguide/vpce-interface.html) | You can create an Amazon S3 interface endpoint\. | February 2, 2021 | 
 | [Gateway Load Balancer endpoints](https://docs.aws.amazon.com/vpc/latest/userguide/vpce-gateway-load-balancer.html) | You can create a Gateway Load Balancer endpoint in your VPC to route traffic to a VPC endpoint service that you've configured using a Gateway Load Balancer\. | November 10, 2020 | 
-| [Carrier gateways](https://docs.aws.amazon.com/vpc/latest/userguide/Carrier_Gateway.html) | Create carrier gateways to allow inbound traffic from a carrier network in a specific location, and to allow outbound traffic to the carrier network and internet\. | August 6, 2020 | 
+| [Carrier gateways](https://docs.aws.amazon.com/vpc/latest/userguide/Carrier_Gateway.html) | You can create carrier gateways to allow inbound traffic from a carrier network in a specific location, and to allow outbound traffic to the carrier network and internet\. | August 6, 2020 | 
 | [Tag on create](#WhatsNew) | You can add tags when you create a VPC peering connection and route table\. | July 20, 2020 | 
 | [Tag on create](#WhatsNew) | You can add tags when you create a VPC, DHCP options, internet gateway, egress\-only gateway, network ACL, and security group\. | June 30, 2020 | 
 | [Managed prefix lists](https://docs.aws.amazon.com/vpc/latest/userguide/managed-prefix-lists.html) | You can create and manage a set of CIDR blocks in prefix list\. | June 29, 2020 | 
@@ -18,7 +20,7 @@ The following table describes the important changes in each release of the *Amaz
 | [Tag on VPC endpoint and VPC endpoint service creation](https://docs.aws.amazon.com/vpc/latest/userguide/endpoint-services-overview.html) | You can add a tag when you create a VPC endpoint or a VPC endpoint service\. | February 5, 2020 | 
 | [Maximum aggregation interval for flow logs](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html#flow-logs-aggregration-interval) | You can specify the maximum period of time during which a flow is captured and aggregated into a flow log record\.  | February 4, 2020 | 
 | [Network border group configuration](https://docs.aws.amazon.com/vpc/latest/userguide/working-with-vpcs.html#vpc-associate-ipv6-cidr) | You can configure network border groups for your VPCs from the Amazon Virtual Private Cloud Console\. | January 22, 2020 | 
-| [Private DNS name](https://docs.aws.amazon.com/vpc/latest/userguide/verify-domains.html) | You can now access AWS PrivateLink based services privately from within your VPC using Private DNS names\. | January 6, 2020 | 
+| [Private DNS name](https://docs.aws.amazon.com/vpc/latest/userguide/verify-domains.html) | You can access AWS PrivateLink based services privately from within your VPC using Private DNS names\. | January 6, 2020 | 
 | [Gateway route tables](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html#gateway-route-table) | You can associate a route table with a gateway and route inbound VPC traffic to a specific network interface in your VPC\. | December 3, 2019 | 
 | [Flow logs enhancements](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) | You can specify a custom format for your flow log and choose which fields to return in the flow log records\. | September 11, 2019 | 
 | [Inter\-region peering](https://docs.aws.amazon.com/vpc/latest/peering/) | DNS hostname resolution is supported for inter\-region VPC peering connections in the Asia Pacific \(Hong Kong\) Region\. | August 26, 2019 | 

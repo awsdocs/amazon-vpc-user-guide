@@ -243,6 +243,9 @@ You can create a custom network ACL for your VPC\. By default, a network ACL tha
 
 When you add or delete a rule from an ACL, any subnets that are associated with the ACL are subject to the change\. You don't have to terminate and relaunch the instances in the subnet\. The changes take effect after a short period\. 
 
+**Important**  
+Be very careful if you are adding and deleting rules at the same time\. Network ACL rules define which types of network traffic can enter or exit your VPCs\. If you delete inbound or outbound rules and then add more new entries than are allowed in [Amazon VPC quotas](amazon-vpc-limits.md), the entries selected for deletion will be removed and new entries *will not* be added\. This could cause unexpected connectivity issues and unintentionally prevent access to and from your VPCs\.
+
 If you're using the Amazon EC2 API or a command line tool, you can't modify rules\. You can only add and delete rules\. If you're using the Amazon VPC console, you can modify the entries for existing rules\. The console removes the existing rule and adds a new rule for you\. If you need to change the order of a rule in the ACL, you must add a new rule with the new rule number, and then delete the original rule\.
 
 **To add rules to a network ACL**

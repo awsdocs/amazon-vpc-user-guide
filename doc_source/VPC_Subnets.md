@@ -43,7 +43,7 @@ If a subnet doesn't have a route to the internet gateway, the subnet is known as
 
 If a subnet doesn't have a route to the internet gateway, but has its traffic routed to a virtual private gateway for a Site\-to\-Site VPN connection, the subnet is known as a *VPN\-only subnet*\. In this diagram, subnet 3 is a VPN\-only subnet\. Currently, we do not support IPv6 traffic over a Site\-to\-Site VPN connection\.
 
-For more information, see [Examples for VPC](VPC_Scenarios.md), [Internet gateways](VPC_Internet_Gateway.md), and [What is AWS Site\-to\-Site VPN?](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html) in the *AWS Site\-to\-Site VPN User Guide*\.
+For more information, see [Example VPC configurations](VPC_Scenarios.md), [Internet gateways](VPC_Internet_Gateway.md), and [What is AWS Site\-to\-Site VPN?](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html) in the *AWS Site\-to\-Site VPN User Guide*\.
 
 **Note**  
 Regardless of the type of subnet, the internal IPv4 address range of the subnet is always private—we do not announce the address block to the internet\.
@@ -138,7 +138,7 @@ You can disassociate a CIDR block that you've associated with your VPC; however,
 aws ec2 describe-vpcs --vpc-id vpc-1a2b3c4d
 ```
 
-In the output that's returned, the primary CIDR is returned in the top\-level `CidrBlock` element \(the second\-last element in the example output below\)\.
+The primary CIDR is returned in the top\-level `CidrBlock` element\.
 
 ```
 {

@@ -141,7 +141,7 @@ After you've created the VPC and subnets, you can make one of the subnets a publ
 1. The route table is currently not associated with any subnet\. You need to associate it with a subnet in your VPC so that traffic from that subnet is routed to the internet gateway\. First, use the `describe-subnets` command to get your subnet IDs\. You can use the `--filter` option to return the subnets for your new VPC only, and the `--query` option to return only the subnet IDs and their CIDR blocks\.
 
    ```
-   aws ec2 describe-subnets --filters "Name=vpc-id,Values=vpc-2f09a348" --query 'Subnets[*].{ID:SubnetId,CIDR:CidrBlock}'
+   aws ec2 describe-subnets --filters "Name=vpc-id,Values=vpc-2f09a348" --query "Subnets[*].{ID:SubnetId,CIDR:CidrBlock}"
    ```
 
    ```
@@ -178,7 +178,7 @@ To test that your subnet is public and that instances in the subnet are accessib
 1. Create a key pair and use the `--query` option and the `--output` text option to pipe your private key directly into a file with the `.pem` extension\. 
 
    ```
-   aws ec2 create-key-pair --key-name MyKeyPair --query 'KeyMaterial' --output text > MyKeyPair.pem
+   aws ec2 create-key-pair --key-name MyKeyPair --query "KeyMaterial" --output text > MyKeyPair.pem
    ```
 
    In this example, you launch an Amazon Linux instance\. If you use an SSH client on a Linux or Mac OS X operating system to connect to your instance, use the following command to set the permissions of your private key file so that only you can read it\.
@@ -187,7 +187,7 @@ To test that your subnet is public and that instances in the subnet are accessib
    chmod 400 MyKeyPair.pem
    ```
 
-1. Create a security group in your VPC, and add a rule that allows SSH access from anywhere\. 
+1. Create a security group in your VPC using the [create\-security\-group](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-security-group.html) command\.
 
    ```
    aws ec2 create-security-group --group-name SSHAccess --description "Security group for SSH access" --vpc-id vpc-2f09a348
@@ -198,6 +198,8 @@ To test that your subnet is public and that instances in the subnet are accessib
        "GroupId": "sg-e1fb8c9a"
    }
    ```
+
+   Add a rule that allows SSH access from anywhere using the [authorize\-security\-group\-ingress](https://docs.aws.amazon.com/cli/latest/reference/ec2/authorize-security-group-ingress.html) command\.
 
    ```
    aws ec2 authorize-security-group-ingress --group-id sg-e1fb8c9a --protocol tcp --port 22 --cidr 0.0.0.0/0

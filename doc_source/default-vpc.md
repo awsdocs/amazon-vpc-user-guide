@@ -152,7 +152,7 @@ You can delete a default subnet or default VPC just as you can delete any other 
 
 If you delete your default VPC, you can create a new one\. For more information, see [Create a default VPC](#create-default-vpc)\. 
 
-If you delete a default subnet, you can create a new one\. For more information, see [Create a default subnet](#create-default-subnet)\. Alternatively, you can create a nondefault subnet in your default VPC and contact AWS Support to mark the subnet as a default subnet\. You must provide the following details: your AWS account ID, the Region, and the subnet ID\. To ensure that your new default subnet behaves as expected, modify the subnet attribute to assign public IP addresses to instances that are launched in that subnet\. For more information, see [Modify the public IPv4 addressing attribute for your subnet](vpc-ip-addressing.md#subnet-public-ip)\. You can only have one default subnet per Availability Zone\. You cannot create a default subnet in a nondefault VPC\. 
+If you delete a default subnet, you can create a new one\. For more information, see [Create a default subnet](#create-default-subnet)\. To ensure that your new default subnet behaves as expected, modify the subnet attribute to assign public IP addresses to instances that are launched in that subnet\. For more information, see [Modify the public IPv4 addressing attribute for your subnet](vpc-ip-addressing.md#subnet-public-ip)\. You can only have one default subnet per Availability Zone\. You cannot create a default subnet in a nondefault VPC\. 
 
 ## Create a default VPC<a name="create-default-vpc"></a>
 
@@ -172,27 +172,29 @@ If you already have a default VPC in the Region, you cannot create another one\.
 
 1. Choose **Create**\. Close the confirmation screen\.
 
-**To create a default VPC using the command line**
-+ You can use the [create\-default\-vpc](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-default-vpc.html) AWS CLI command\. This command does not have any input parameters\.
+**To create a default VPC using the command line**  
+You can use the [create\-default\-vpc](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-default-vpc.html) AWS CLI command\. This command does not have any input parameters\.
 
-  ```
-  aws ec2 create-default-vpc
-  ```
+```
+aws ec2 create-default-vpc
+```
 
-  ```
-  {
-      "Vpc": {
-          "VpcId": "vpc-3f139646", 
-          "InstanceTenancy": "default", 
-          "Tags": [], 
-          "Ipv6CidrBlockAssociationSet": [], 
-          "State": "pending", 
-          "DhcpOptionsId": "dopt-61079b07", 
-          "CidrBlock": "172.31.0.0/16", 
-          "IsDefault": true
-      }
-  }
-  ```
+The following is example output\.
+
+```
+{
+    "Vpc": {
+        "VpcId": "vpc-3f139646", 
+        "InstanceTenancy": "default", 
+        "Tags": [], 
+        "Ipv6CidrBlockAssociationSet": [], 
+        "State": "pending", 
+        "DhcpOptionsId": "dopt-61079b07", 
+        "CidrBlock": "172.31.0.0/16", 
+        "IsDefault": true
+    }
+}
+```
 
 Alternatively, you can use the [New\-EC2DefaultVpc](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2DefaultVpc.html) Tools for Windows PowerShell command or the [CreateDefaultVpc](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateDefaultVpc.html) Amazon EC2 API action\.
 
@@ -210,33 +212,35 @@ If there is not enough address space in your default VPC to create a size `/20` 
 
 If you've associated an IPv6 CIDR block with your default VPC, the new default subnet does not automatically receive an IPv6 CIDR block\. Instead, you can associate an IPv6 CIDR block with the default subnet after you create it\. For more information, see [Associate an IPv6 CIDR block with your subnet](working-with-vpcs.md#subnet-associate-ipv6-cidr)\.
 
-Currently, you can create a default subnet using the AWS CLI, an AWS SDK, or the Amazon EC2 API only\.
+You cannot create a default subnet using the AWS Management Console\.
 
-**To create a default subnet using the AWS CLI**
-+ Use the [create\-default\-subnet](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-default-subnet.html) AWS CLI command and specify the Availability Zone in which to create the subnet\.
+**To create a default subnet using the AWS CLI**  
+Use the [create\-default\-subnet](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-default-subnet.html) AWS CLI command and specify the Availability Zone in which to create the subnet\.
 
-  ```
-  aws ec2 create-default-subnet --availability-zone us-east-2a
-  ```
+```
+aws ec2 create-default-subnet --availability-zone us-east-2a
+```
 
-  ```
-  {
-      "Subnet": {
-          "AvailabilityZone": "us-east-2a", 
-          "Tags": [], 
-          "AvailableIpAddressCount": 4091, 
-          "DefaultForAz": true, 
-          "Ipv6CidrBlockAssociationSet": [], 
-          "VpcId": "vpc-1a2b3c4d", 
-          "State": "available", 
-          "MapPublicIpOnLaunch": true, 
-          "SubnetId": "subnet-1122aabb", 
-          "CidrBlock": "172.31.32.0/20", 
-          "AssignIpv6AddressOnCreation": false
-      }
-  }
-  ```
+The following is example output\.
 
-  For more information about setting up the AWS CLI, see the [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\.
+```
+{
+    "Subnet": {
+        "AvailabilityZone": "us-east-2a", 
+        "Tags": [], 
+        "AvailableIpAddressCount": 4091, 
+        "DefaultForAz": true, 
+        "Ipv6CidrBlockAssociationSet": [], 
+        "VpcId": "vpc-1a2b3c4d", 
+        "State": "available", 
+        "MapPublicIpOnLaunch": true, 
+        "SubnetId": "subnet-1122aabb", 
+        "CidrBlock": "172.31.32.0/20", 
+        "AssignIpv6AddressOnCreation": false
+    }
+}
+```
 
-  Alternatively, you can use the [New\-EC2DefaultSubnet](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2DefaultSubnet.html) Tools for Windows PowerShell command or the [CreateDefaultSubnet](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateDefaultSubnet.html) Amazon EC2 API action\.
+For more information about setting up the AWS CLI, see the [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\.
+
+Alternatively, you can use the [New\-EC2DefaultSubnet](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2DefaultSubnet.html) Tools for Windows PowerShell command or the [CreateDefaultSubnet](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateDefaultSubnet.html) Amazon EC2 API action\.

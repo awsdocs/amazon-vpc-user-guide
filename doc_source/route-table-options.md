@@ -177,87 +177,117 @@ To enable traffic between the VPCs and allow access to the transit gateway, the 
 
 | Destination | Target | 
 | --- | --- | 
-|  10\.1\.0\.0/16  |  local  | 
-|  10\.0\.0\.0/8  |  *tgw\-id*  | 
+| 10\.1\.0\.0/16 | local | 
+| 10\.0\.0\.0/8 | tgw\-id | 
 
 The following is an example of the transit gateway route table entries for the VPC attachments\.
 
 
 | Destination | Target | 
 | --- | --- | 
-|  10\.1\.0\.0/16  | tgw\-attach\-11111111111111111 | 
-|  10\.2\.0\.0/16  |  tgw\-attach\-22222222222222222  | 
+| 10\.1\.0\.0/16 | tgw\-attach\-11111111111111111 | 
+| 10\.2\.0\.0/16 | tgw\-attach\-22222222222222222 | 
 
 For more information about transit gateway route tables, see [Routing](https://docs.aws.amazon.com/vpc/latest/tgw/how-transit-gateways-work.html#tgw-routing-overview) in *Amazon VPC Transit Gateways*\.
 
 ## Routing for a middlebox appliance<a name="route-tables-appliance-routing"></a>
 
-You can intercept traffic that enters your VPC through an internet gateway or a virtual private gateway by directing it to a middlebox appliance in your VPC\. You can configure the appliance to suit your needs\. For example, you can configure a security appliance that screens all traffic, or a WAN acceleration appliance\. The appliance is deployed as an Amazon EC2 instance in a subnet in your VPC, and is represented by an elastic network interface \(network interface\) in your subnet\.
+You can add middlebox appliances into the routing paths for your VPC\. The following are possible use cases:
++ Intercept traffic that enters your VPC through an internet gateway or a virtual private gateway by directing it to a middlebox appliance in your VPC\. You can use the middlebox routing wizard to have AWS automatically configure the appropriate route tables for your gateway, middlebox, and destination subnet\. For more information, see [Work with the middlebox routing wizard](middlebox-routing-console.md)\.
++ Direct traffic between two subnets to a middlebox appliance\. You can do so by creating a route for one subnet route table that matches the subnet CIDR of the other subnet and specifies a Gateway Load Balancer endpoint, NAT gateway, Network Firewall endpoint, or the network interface for an appliance as a target\. Alternatively, to redirect all traffic from the subnet to any other subnet, replace the target of the local route with a Gateway Load Balancer endpoint, NAT gateway, or network interface\.
+
+You can configure the appliance to suit your needs\. For example, you can configure a security appliance that screens all traffic, or a WAN acceleration appliance\. The appliance is deployed as an Amazon EC2 instance in a subnet in your VPC, and is represented by an elastic network interface \(network interface\) in your subnet\.
+
+If you enable route propagation for the destination subnet route table, be aware of route priority\. We prioritize the most specific route, and if the routes match, we prioritize static routes over propagated routes\. Review your routes to ensure that traffic is routed correctly and that there are no unintended consequences if you enable or disable route propagation \(for example, route propagation is required for an AWS Direct Connect connection that supports jumbo frames\)\.
 
 To route inbound VPC traffic to an appliance, you associate a route table with the internet gateway or virtual private gateway, and specify the network interface of your appliance as the target for VPC traffic\. For more information, see [Gateway route tables](VPC_Route_Tables.md#gateway-route-table)\. You can also route outbound traffic from your subnet to a middlebox appliance in another subnet\.
 
-**Note**  
-If you've enabled route propagation for the destination subnet route table, be aware of route priority\. We prioritize the most specific route, and if the routes match, we prioritize static routes over propagated routes\. Review your routes to ensure that traffic is routed correctly and that there are no unintended consequences if you enable or disable route propagation \(for example, route propagation is required for an AWS Direct Connect connection that supports jumbo frames\)\.
+For middlebox routing examples, see [Middlebox routing](middlebox-routing-examples.md)\.
+
+**Topics**
++ [Appliance considerations](#appliance-considerations)
++ [Routing traffic between a gateway and an appliance](#appliance-routing-configuration)
++ [Routing inter\-subnet traffic to an appliance](#appliance-routing-configuration-inter-subnet)
 
 ### Appliance considerations<a name="appliance-considerations"></a>
 
 You can choose a third\-party appliance from [AWS Marketplace](https://aws.amazon.com/marketplace), or you can configure your own appliance\. When you create or configure an appliance, take note of the following:
 + The appliance must be configured in a separate subnet to the source or destination traffic\.
 + You must disable source/destination checking on the appliance\. For more information, see [Changing the Source or Destination Checking](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#change_source_dest_check) in the *Amazon EC2 User Guide for Linux Instances*\.
-+ Service chaining is not supported\.
 + You cannot route traffic between hosts in the same subnet through an appliance\.
-+ You cannot route traffic between subnets through an appliance\.
 + The appliance does not have to perform network address translation \(NAT\)\.
++ You can add a route to your route tables that is more specific than the local route\. You can use more specific routes to redirect traffic between subnets within a VPC \(East\-West traffic\) to a middlebox appliance\. The destination of the route must match the entire IPv4 or IPv6 CIDR block of a subnet in your VPC\.
 + To intercept IPv6 traffic, ensure that you configure your VPC, subnet, and appliance for IPv6\. For more information, see [Work with VPCs and subnets](working-with-vpcs.md)\. Virtual private gateways do not support IPv6 traffic\.
 
-### Appliance routing configuration<a name="appliance-routing-configuration"></a>
+### Routing traffic between a gateway and an appliance<a name="appliance-routing-configuration"></a>
 
-To route inbound traffic to an appliance, create a route table and add a route that points the traffic destined for a subnet to the appliance's network interface\. This route is more specific than the local route for the route table\. Associate this route table with your internet gateway or virtual private gateway\. The following route table routes IPv4 traffic destined for a subnet to the appliance's network interface\.
+To route inbound VPC traffic to an appliance, you associate a route table with the internet gateway or virtual private gateway, and specify the network interface of your appliance as the target for VPC traffic\. In the following example, the VPC has an internet gateway, an appliance, and a subnet with instances\. Traffic from the internet is routed through an appliance\.
 
+![\[Routing inbound traffic through an appliance\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/gateway-appliance-routing.png)
 
-| Destination | Target | 
-| --- | --- | 
-| 10\.0\.0\.0/16 | Local | 
-| 10\.0\.1\.0/24 | eni\-id | 
-
-Alternatively, you can replace the target for the local route with the appliance's network interface\. You might do this to ensure that all traffic is automatically routed to the appliance, including traffic destined for subnets that you add to your VPC later\.
+Associate this route table with your internet gateway or virtual private gateway\. The first entry is the local route\. The second entry sends IPv4 traffic destined for the subnet to the network interface for the appliance\. This route is more specific than the local route\.
 
 
 | Destination | Target | 
 | --- | --- | 
-| 10\.0\.0\.0/16 | eni\-id | 
+| VPC CIDR | Local | 
+| Subnet CIDR | Appliance network interface ID | 
+
+Alternatively, you can replace the target for the local route with the network interface of the appliance\. You can do this to ensure that all traffic is automatically routed to the appliance, including traffic destined for subnets that you add to the VPC in the future\.
+
+
+| Destination | Target | 
+| --- | --- | 
+| VPC CIDR | Appliance network interface ID | 
 
 To route traffic from your subnet to an appliance in another subnet, add a route to your subnet route table that routes traffic to the appliance's network interface\. The destination must be less specific than the destination for the local route\. For example, for traffic destined for the internet, specify `0.0.0.0/0` \(all IPv4 addresses\) for the destination\.
 
 
 | Destination | Target | 
 | --- | --- | 
-| 10\.0\.0\.0/16 | Local | 
-| 0\.0\.0\.0/0 | eni\-id | 
+| VPC CIDR | Local | 
+| 0\.0\.0\.0/0 | Appliance network interface ID | 
 
-Then, in the route table associated with the appliance's subnet, add a route that routes the traffic back to the internet gateway or virtual private gateway\.
+Then, in the route table associated with the appliance's subnet, add a route that sends the traffic back to the internet gateway or virtual private gateway\.
 
 
 | Destination | Target | 
 | --- | --- | 
-| 10\.0\.0\.0/16 | Local | 
+| VPC CIDR | Local | 
 | 0\.0\.0\.0/0 | igw\-id | 
 
-You can apply the same routing configuration for IPv6 traffic\. For example, in your gateway route table, you can replace the target for both the IPv4 and IPv6 local routes with the appliance's network interface\.
+### Routing inter\-subnet traffic to an appliance<a name="appliance-routing-configuration-inter-subnet"></a>
+
+You can route traffic destined for a specific subnet to the network interface of an appliance\. In the following example, the VPC contains two subnets and an appliance\. Traffic between the subnets is routed through an appliance\.
+
+![\[Routing traffic between subnets through an appliance\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/inter-subnet-appliance-routing.png)
+
+**Security groups**  
+When you route traffic between instances in different subnets through a middlebox appliance, the security groups for both instances must allow traffic to flow between the instances\. The security group for each instance must reference the private IP address of the other instance, or the CIDR range of the subnet that contains the other instance, as the source\. If you reference the security group of the other instance as the source, this does not allow traffic to flow between the instances\.
+
+**Routing**  
+The following is an example route table for subnet A\. The first entry enables instances in the VPC to communicate with each other\. The second entry routes all traffic from subnet A to subnet B to the network interface of the appliance\.
 
 
 | Destination | Target | 
 | --- | --- | 
-| 10\.0\.0\.0/16 | eni\-id | 
-| 2001:db8:1234:1a00::/56 | eni\-id | 
+| VPC CIDR | Local | 
+| Subnet B CIDR | Appliance network interface ID | 
 
-In the following diagram, a firewall appliance is installed and configured on an Amazon EC2 instance in subnet A in your VPC\. The appliance inspects all traffic that enters and leaves the VPC through the internet gateway\. Route table A is associated with the internet gateway\. Traffic destined for subnet B that enters the VPC through the internet gateway is routed to the appliance's network interface \(`eni-11223344556677889`\)\. All traffic that leaves subnet B is also routed to the appliance's network interface\.
+The following is an example route table for subnet B\. The first entry enables instances in the VPC to communicate with each other\. The second entry routes all traffic from subnet B to subnet A to the network interface of the appliance\.
 
-![\[Inbound IPv4 routing to a VPC\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/ingress-routing-firewall.png)
 
-The following example has the same setup as the preceding example, but includes IPv6 traffic\. IPv6 traffic that's destined for subnet B that enters the VPC through the internet gateway is routed to the appliance's network interface \(`eni-11223344556677889`\)\. All traffic \(IPv4 and IPv6\) that leaves subnet B is also routed to the appliance's network interface\.
+| Destination | Target | 
+| --- | --- | 
+| VPC CIDR | Local | 
+| Subnet A CIDR | Appliance network interface ID | 
 
-![\[Inbound IPv4 and IPv6 routing to a VPC\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/ingress-routing-firewall-ipv6.png)
+Alternatively, you can replace the target for the local route with the network interface of the appliance\. You can do this to ensure that all traffic is automatically routed to the appliance, including traffic destined for subnets that you add to the VPC in the future\.
+
+
+| Destination | Target | 
+| --- | --- | 
+| VPC CIDR | Appliance network interface ID | 
 
 ## Routing using a prefix list<a name="route-tables-managed-prefix-list"></a>
 
@@ -283,34 +313,13 @@ A Gateway Load Balancer enables you to distribute traffic to a fleet of virtual 
 
 To route your traffic to the Gateway Load Balancer \(for example, for security inspection\), specify the Gateway Load Balancer endpoint as a target in your route tables\.
 
-In the following example, a fleet of security appliances is configured behind a Gateway Load Balancer in the security VPC\. An endpoint service is configured for the Gateway Load Balancer\. The owner of the service consumer VPC creates a Gateway Load Balancer endpoint in subnet 2 in their VPC \(represented by an endpoint network interface\)\. All traffic entering the VPC through the internet gateway is first routed to the Gateway Load Balancer endpoint for inspection in the security VPC before it's routed to the destination subnet\. Similarly, all traffic leaving the EC2 instance in subnet 1 is first routed to Gateway Load Balancer endpoint for inspection in the security VPC before it's routed to the internet\.
+For an example of a security appliances behind a Gateway Load Balancer, see [Security appliances behind a Gateway Load Balancer in the security VPC ](gwlb-route.md)\.
 
-![\[Using a Gateway Load Balancer endpoint to access an endpoint service\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-service-gwlbe.png)
-
-You configure the following route tables for the service consumer VPC\.
-
-Create a gateway route table and associate it with the internet gateway\. Add a route that points traffic destined for subnet 1 to the Gateway Load Balancer endpoint\. To specify the Gateway Load Balancer endpoint in the route table, use the ID of the VPC endpoint\.
+To specify the Gateway Load Balancer endpoint in the route table, use the ID of the VPC endpoint\. For example to route traffic for 10\.0\.1\.0/24 to a Gateway Load Balancer endpoint, add the following route\.
 
 
 | Destination | Target | 
 | --- | --- | 
-| 10\.0\.0\.0/16 | Local | 
 | 10\.0\.1\.0/24 | vpc\-endpoint\-id | 
 
-For the route table for subnet 1, create a route that points all traffic \(`0.0.0.0/0`\) to the Gateway Load Balancer endpoint\. This ensures that all traffic leaving the subnet \(destined for the internet\) is first routed to the Gateway Load Balancer endpoint\.
-
-
-| Destination | Target | 
-| --- | --- | 
-| 10\.0\.0\.0/16 | Local | 
-| 0\.0\.0\.0/0 | vpc\-endpoint\-id | 
-
-For subnet 2, the route table routes the traffic that returns from inspection to its final destination\. For the traffic that originated from the internet, the local route ensures that it is routed to its destination in subnet 1\. For the traffic that originated from subnet 1, create a route that routes all traffic to the internet gateway\.
-
-
-| Destination | Target | 
-| --- | --- | 
-| 10\.0\.0\.0/16 | Local | 
-| 0\.0\.0\.0/0 | igw\-id | 
-
-For more information about Gateway Load Balancers, see [Gateway Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/introduction.html)\.
+For more information, see [Gateway Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/introduction.html)\.

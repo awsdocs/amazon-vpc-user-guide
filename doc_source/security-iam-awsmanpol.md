@@ -25,5 +25,7 @@ View details about updates to AWS managed policies for Amazon VPC since this ser
 
 | Change | Description | Date | 
 | --- | --- | --- | 
+| [AWS managed policy: AmazonVPCReadOnlyAccess](#security-iam-awsmanpol-AmazonVPCReadOnlyAccess) \- Update to an existing policy | Added the DescribeSecurityGroupRules action, which enables an IAM user or role to view [security group rules](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules.html)\. | August 2, 2021 | 
+| [AWS managed policy: AmazonVPCFullAccess](#security-iam-awsmanpol-AmazonVPCFullAccess) \- Update to an existing policy | Added the DescribeSecurityGroupRules and the ModifySecurityGroupRules actions, which enable an IAM user or role to view and modify [security group rules](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules.html)\. | August 2, 2021 | 
 | [AWS managed policy: AmazonVPCFullAccess](#security-iam-awsmanpol-AmazonVPCFullAccess) \- Update to an existing policy | Added actions for carrier gateways, IPv6 pools, local gateways, and local gateway route tables\. | June 23, 2021 | 
 | [AWS managed policy: AmazonVPCReadOnlyAccess](#security-iam-awsmanpol-AmazonVPCReadOnlyAccess) \- Update to an existing policy | Added actions for carrier gateways, IPv6 pools, local gateways, and local gateway route tables\. | June 23, 2021 | 

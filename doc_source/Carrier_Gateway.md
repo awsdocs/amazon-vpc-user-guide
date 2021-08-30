@@ -129,7 +129,7 @@ By default, a VPC security group allows all outbound traffic\. You can create a 
 
 1. Clear the check box for the currently selected security group, and then select the new one\. Choose **Assign Security Groups**\.
 
-**To create a security group**  
+**To create a security group using the AWS CLI**  
 Use the [create\-security\-group](https://docs.aws.amazon.com/cli/latest/reference/ec2/dcreate-security-group.html) command\.
 
 ### Allocate and associate a Carrier IP address with the instance in the Wavelength Zone subnet<a name="wavelength-allocate-carrier-ip"></a>
@@ -183,8 +183,8 @@ You can view information about your carrier gateway, including the state and the
 
 1. Select the carrier gateway and choose **Actions**, **View details**\.
 
-**To view the carrier gateway details using the AWS CLI**
-+ Use the [describe\-carrier\-gateways](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-carrier-gateways.html) command\.
+**To view the carrier gateway details using the AWS CLI**  
+Use the [describe\-carrier\-gateways](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-carrier-gateways.html) command\.
 
 ### Manage carrier gateway tags<a name="manage-cgw-tags"></a>
 
@@ -206,7 +206,7 @@ Tags help you to identify your carrier gateways\. You can add or remove tags\.
 
 1. Choose **Save**\.
 
-**To manage the carrier gateway tags**
+**To manage the carrier gateway tags using the AWS CLI**
 + To add tags, use the [create\-tag](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-tag.html) command\.
 + To delete tags, use the [delete\-tags](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-tags.html) command\.
 
@@ -227,8 +227,8 @@ If you do not delete the route that has the carrier gateway as the **Target**, t
 
 1. In the **Delete carrier gateway** dialog box, enter **Delete**, and then choose **Delete**\.
 
-**To delete a carrier gateway**
-+ Use the [delete\-carrier\-gateway](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-carrier-gateway.html) command\.
+**To delete a carrier gateway using the AWS CLI**  
+Use the [delete\-carrier\-gateway](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-carrier-gateway.html) command\.
 
 ## Manage Zones<a name="manage-zones"></a>
 

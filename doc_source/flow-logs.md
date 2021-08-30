@@ -45,7 +45,7 @@ You can create flow logs for network interfaces that are created by other AWS se
 + Amazon RDS
 + Amazon ElastiCache
 + Amazon Redshift
-+ Amazon Workspaces
++ Amazon WorkSpaces
 + NAT gateways
 + Transit gateways
 

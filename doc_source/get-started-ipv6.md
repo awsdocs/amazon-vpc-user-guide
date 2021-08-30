@@ -43,7 +43,7 @@ Do not choose **Your VPCs** in the navigation pane; you cannot access the VPC wi
 
 1. On the configuration page, enter a name for your VPC for **VPC name**; for example, `my-vpc`, and enter a name for your subnet for **Subnet name**\. This helps you to identify the VPC and subnet in the Amazon VPC console after you've created them\. 
 
-1. \(For **IPv4 CIDR block**, you can leave the default setting \(`10.0.0.0/16`\), or specify your own\. For more information, see [VPC Sizing](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html#VPC_Sizing)\. 
+1. For **IPv4 CIDR block**, you can leave the default setting \(`10.0.0.0/16`\), or specify your own\. For more information, see [VPC Sizing](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html#VPC_Sizing)\. 
 
    For **IPv6 CIDR block**, choose **Amazon\-provided IPv6 CIDR block**\.
 

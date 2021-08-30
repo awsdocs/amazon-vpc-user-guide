@@ -36,7 +36,7 @@ Your VPC has attributes that determine whether instances launched in the VPC rec
 | Attribute | Description | 
 | --- | --- | 
 | enableDnsHostnames |  Indicates whether instances with public IP addresses get corresponding public DNS hostnames\. If this attribute is `true`, instances in the VPC get public DNS hostnames, but only if the `enableDnsSupport` attribute is also set to `true`\.  | 
-| enableDnsSupport |  Indicates whether the DNS resolution is supported\. If this attribute is `false`, the Amazon Route 53 Resolver server that resolves public DNS hostnames to IP addresses is not enabled\. If this attribute is `true`, queries to the Amazon provided DNS server at the 169\.254\.169\.253 IP address, or the reserved IP address at the base of the VPC IPv4 network range plus two will succeed\. For more information, see [Amazon DNS server](VPC_DHCP_Options.md#AmazonDNS)\.  | 
+| enableDnsSupport |  Indicates whether the DNS resolution is supported\. If this attribute is `false`, the Amazon Route 53 Resolver server that resolves public DNS hostnames to IP addresses is not enabled\. If this attribute is `true`, queries to the Amazon provided DNS server at the 169\.254\.169\.253 IPv4 address \(or the reserved IP address at the base of the VPC IPv4 network range plus two\) and the fd00:ec2::253 IPv6 address will succeed\. The IPv6 address is only accessible on [EC2 instances built on the Nitro System](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances)\. For more information, see [Amazon DNS server](VPC_DHCP_Options.md#AmazonDNS)\.  | 
 
 The following rules apply:
 + If both attributes are set to `true`, the following occurs:
@@ -46,7 +46,7 @@ The following rules apply:
   + Instances with a public IP address do not receive corresponding public DNS hostnames\.
   + The Amazon Route 53 Resolver cannot resolve Amazon\-provided private DNS hostnames\.
   + Instances receive custom private DNS hostnames if there is a custom domain name in the [DHCP options set](VPC_DHCP_Options.md)\. If you are not using the Amazon Route 53 Resolver server, your custom domain name servers must resolve the hostname as appropriate\.
-+ If you use custom DNS domain names defined in a private hosted zone in Amazon Route 53, or use private DNS with interface VPC endpoints \(AWS PrivateLink\), you must set both the `enableDnsHostnames` and `enableDnsSupport` attributes to `true`\.
++ If you use custom DNS domain names defined in a private hosted zone in Amazon Route 53 , or use private DNS with interface VPC endpoints \(AWS PrivateLink\), you must set both the `enableDnsHostnames` and `enableDnsSupport` attributes to `true`\.
 + The Amazon Route 53 Resolver can resolve private DNS hostnames to private IPv4 addresses for all address spaces, including where the IPv4 address range of your VPC falls outside of the private IPv4 addresses ranges specified by [RFC 1918](https://tools.ietf.org/html/rfc1918)\. However, if you created your VPC before October 2016, the Amazon Route 53 Resolver does not resolve private DNS hostnames if your VPC's IPv4 address range falls outside of these ranges\. To enable support for this, contact [AWS Support](https://aws.amazon.com/contact-us/)\.
 
 By default, both attributes are set to `true` in a default VPC or a VPC created by the VPC wizard\. By default, only the `enableDnsSupport` attribute is set to `true` in a VPC created any other way\. To check if your VPC is enabled for these attributes, see [View and update DNS attributes for your VPC](#vpc-dns-updating)\. If you enable DNS hostnames and DNS support in a VPC that didn't previously support them, an instance that you already launched into that VPC gets a public DNS hostname if it has a public IPv4 address or an Elastic IP address\.
@@ -109,12 +109,12 @@ You can view and update the DNS support attributes for your VPC using the Amazon
 
 1. In the navigation pane, choose **Your VPCs**\.
 
-1. Select the VPC from the list\.
+1. Select the checkbox for the VPC\.
 
-1. Review the information in the **Description** tab\. In this example, both settings are enabled\.  
-![\[The DNS Settings tab\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/dns-settings-gwt.png)
+1. Review the information in **Details**\. In this example, both **DNS hostnames** and **DNS resolution** are enabled\.  
+![\[The DNS Settings tab\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/dns-settings.png)
 
-1. To update these settings, choose **Actions** and either **Edit DNS Resolution** or **Edit DNS Hostnames**\. In the dialog box that opens, select or clear the check box to turn on or off the feature, and then choose **Save changes**\.
+1. To update these settings, choose **Actions** and then choose either **Edit DNS hostnames** or **Edit DNS resolution**\. When prompted, select or clear **Enable**, and then choose **Save changes**\.
 
 **To describe DNS support for a VPC using the command line**
 
@@ -137,4 +137,4 @@ To access resources using custom DNS domain names, you must be connected to an i
 You can access a private hosted zone from an EC2\-Classic instance that is linked to your VPC using ClassicLink, provided your VPC is enabled for ClassicLink DNS support\. For more information, see [Enabling ClassicLink DNS support](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html#classiclink-enable-dns-support) in the *Amazon EC2 User Guide for Linux Instances*\. Otherwise, private hosted zones do not support transitive relationships outside of the VPC; for example, you cannot access your resources using their custom private DNS names from the other side of a VPN connection\. For more information, see [ClassicLink limitations](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html#classiclink-limitations) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **Important**  
-If you use custom DNS domain names defined in a private hosted zone in Amazon Route 53, the `enableDnsHostnames` and `enableDnsSupport` attributes must be set to `true`\.
+If you use custom DNS domain names defined in a private hosted zone in Amazon Route 53 , the `enableDnsHostnames` and `enableDnsSupport` attributes must be set to `true`\.

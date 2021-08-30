@@ -175,7 +175,7 @@ If you intend to use your public subnet for IPv4 traffic too, you need to add an
 1. The route table is not currently associated with any subnet\. Associate it with a subnet in your VPC so that traffic from that subnet is routed to the internet gateway\. First, describe your subnets to get their IDs\. You can use the `--filter` option to return the subnets for your new VPC only, and the `--query` option to return only the subnet IDs and their IPv4 and IPv6 CIDR blocks\.
 
    ```
-   aws ec2 describe-subnets --filters "Name=vpc-id,Values=vpc-2f09a348" --query 'Subnets[*].{ID:SubnetId,IPv4CIDR:CidrBlock,IPv6CIDR:Ipv6CidrBlockAssociationSet[*].Ipv6CidrBlock}'
+   aws ec2 describe-subnets --filters "Name=vpc-id,Values=vpc-2f09a348" --query "Subnets[*].{ID:SubnetId,IPv4CIDR:CidrBlock,IPv6CIDR:Ipv6CidrBlockAssociationSet[*].Ipv6CidrBlock}"
    ```
 
    ```
@@ -268,7 +268,7 @@ To test that your public subnet is public and that instances in the subnet are a
 1. Create a key pair and use the `--query` option and the `--output` text option to pipe your private key directly into a file with the `.pem` extension\. 
 
    ```
-   aws ec2 create-key-pair --key-name MyKeyPair --query 'KeyMaterial' --output text > MyKeyPair.pem
+   aws ec2 create-key-pair --key-name MyKeyPair --query "KeyMaterial" --output text > MyKeyPair.pem
    ```
 
    In this example, launch an Amazon Linux instance\. If you use an SSH client on a Linux or OS X operating system to connect to your instance, use the following command to set the permissions of your private key file so that only you can read it\.
@@ -277,7 +277,7 @@ To test that your public subnet is public and that instances in the subnet are a
    chmod 400 MyKeyPair.pem
    ```
 
-1. Create a security group for your VPC, and add a rule that allows SSH access from any IPv6 address\. 
+1. Create a security group for your VPC using the [create\-security\-group](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-security-group.html) command\.
 
    ```
    aws ec2 create-security-group --group-name SSHAccess --description "Security group for SSH access" --vpc-id vpc-2f09a348
@@ -288,6 +288,8 @@ To test that your public subnet is public and that instances in the subnet are a
        "GroupId": "sg-e1fb8c9a"
    }
    ```
+
+   Add a rule that allows SSH access from any IPv6 address using the [authorize\-security\-group\-ingress](https://docs.aws.amazon.com/cli/latest/reference/ec2/authorize-security-group-ingress.html) command\. Note that the following syntax works only on Linux and macOS\. For syntax that works on Windows, see the [examples](https://docs.aws.amazon.com/cli/latest/reference/ec2/authorize-security-group-ingress.html#examples) section in the *AWS CLI Command Reference*\.
 
    ```
    aws ec2 authorize-security-group-ingress --group-id sg-e1fb8c9a --ip-permissions '[{"IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "Ipv6Ranges": [{"CidrIpv6": "::/0"}]}]'
@@ -308,6 +310,8 @@ In this example, the AMI is an Amazon Linux AMI in the US East \(N\. Virginia\) 
    ```
    aws ec2 describe-instances --instance-id i-0146854b7443af453
    ```
+
+   The following is example output\.
 
    ```
    {
@@ -346,11 +350,13 @@ In this example, the AMI is an Amazon Linux AMI in the US East \(N\. Virginia\) 
 
 To test that instances in your egress\-only private subnet can access the internet, launch an instance in your private subnet and connect to it using a bastion instance in your public subnet \(you can use the instance you launched in the previous section\)\. First, you must create a security group for the instance\. The security group must have a rule that allows your bastion instance to connect using SSH, and a rule that allows the `ping6` command \(ICMPv6 traffic\) to verify that the instance is not accessible from the internet\.
 
-1. Create a security group in your VPC, and add a rule that allows inbound SSH access from the IPv6 address of the instance in your public subnet, and a rule that allows all ICMPv6 traffic:
+1. Create a security group in your VPC using the [create\-security\-group](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-security-group.html) command\.
 
    ```
    aws ec2 create-security-group --group-name SSHAccessRestricted --description "Security group for SSH access from bastion" --vpc-id vpc-2f09a348
    ```
+
+   Add a rule that allows inbound SSH access from the IPv6 address of the instance in your public subnet, and a rule that allows all ICMPv6 traffic using the [authorize\-security\-group\-ingress](https://docs.aws.amazon.com/cli/latest/reference/ec2/authorize-security-group-ingress.html) command\. Note that the following syntax works only on Linux and macOS\. For syntax that works on Windows, see the [examples](https://docs.aws.amazon.com/cli/latest/reference/ec2/authorize-security-group-ingress.html#examples) section in the *AWS CLI Command Reference*\.
 
    ```
    {
@@ -374,23 +380,19 @@ To test that instances in your egress\-only private subnet can access the intern
 
    Use the `describe-instances` command to verify that your instance is running, and to get its IPv6 address\.
 
-1. Configure SSH agent forwarding on your local machine, and then connect to your instance in the public subnet\. For Linux, use the following commands:
+1. Configure SSH agent forwarding on your local machine, and then connect to your instance in the public subnet\.
+
+   For Linux, use the following commands:
 
    ```
    ssh-add MyKeyPair.pem
-   ```
-
-   ```
    ssh -A ec2-user@2001:db8:1234:1a00::123
    ```
 
-   For OS X, use the following commands: 
+   For OS X, use the following commands:
 
    ```
    ssh-add -K MyKeyPair.pem
-   ```
-
-   ```
    ssh -A ec2-user@2001:db8:1234:1a00::123
    ```
 
@@ -436,7 +438,7 @@ After you've verified that you can connect to your instance in the public subnet
    aws ec2 delete-security-group --group-id sg-aabb1122
    ```
 
-1. Delete your subnets: 
+1. Delete your subnets:
 
    ```
    aws ec2 delete-subnet --subnet-id subnet-b46032ec

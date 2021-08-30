@@ -1,6 +1,6 @@
 # Work with VPCs and subnets<a name="working-with-vpcs"></a>
 
-The following procedures are for manually creating a VPC and subnets\. You also have to manually add gateways and routing tables\. Alternatively, you can use the Amazon VPC wizard to create a VPC plus its subnets, gateways, and routing tables in one step\. For more information, see [Examples for VPC](VPC_Scenarios.md)\.
+The following procedures are for manually creating a VPC and subnets\. You also have to manually add gateways and routing tables\. Alternatively, you can use the Amazon VPC wizard to create a VPC plus its subnets, gateways, and routing tables in one step\. For more information, see [Example VPC configurations](VPC_Scenarios.md)\.
 
 **Topics**
 + [Create a VPC](#Create-VPC)

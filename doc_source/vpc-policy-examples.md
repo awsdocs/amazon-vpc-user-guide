@@ -7,10 +7,10 @@ To learn how to create an IAM identity\-based policy using these example JSON po
 **Topics**
 + [Policy best practices](#security_iam_service-with-iam-policy-best-practices)
 + [Use the Amazon VPC console](#security_iam_id-based-policy-examples-console)
-+ [Allow users to view their own permissions](#security_iam_id-based-policy-examples-view-own-permissions)
 + [Create a VPC with a public subnet](#vpc-public-subnet-iam)
 + [Modify and delete VPC resources](#modify-vpc-resources-iam)
 + [Manage security groups](#vpc-security-groups-iam)
++ [Manage security group rules](#vpc-security-group-rules-iam)
 + [Launch instances into a specific subnet](#subnet-sg-example-iam)
 + [Launch instances into a specific VPC](#subnet-ami-example-iam)
 + [Additional Amazon VPC policy examples](#security-iam-additional-examples)
@@ -57,6 +57,7 @@ The following policy grants users permission to list resources in the VPC consol
                 "ec2:DescribeRouteTables",
                 "ec2:DescribeSecurityGroupReferences",
                 "ec2:DescribeSecurityGroups",
+                "ec2:DescribeSecurityGroupRules",
                 "ec2:DescribeStaleSecurityGroups",
                 "ec2:DescribeSubnets",
                 "ec2:DescribeTags",
@@ -90,45 +91,6 @@ The following policy grants users permission to list resources in the VPC consol
 
 You don't need to allow minimum console permissions for users that are making calls only to the AWS CLI or the AWS API\. Instead, for those users, allow access only to actions that match the API operation that they need to perform\.
 
-## Allow users to view their own permissions<a name="security_iam_id-based-policy-examples-view-own-permissions"></a>
-
-This example shows how you might create a policy that allows IAM users to view the inline and managed policies that are attached to their user identity\. This policy includes permissions to complete this action on the console or programmatically using the AWS CLI or AWS API\.
-
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "ViewOwnUserInfo",
-            "Effect": "Allow",
-            "Action": [
-                "iam:GetUserPolicy",
-                "iam:ListGroupsForUser",
-                "iam:ListAttachedUserPolicies",
-                "iam:ListUserPolicies",
-                "iam:GetUser"
-            ],
-            "Resource": ["arn:aws:iam::*:user/${aws:username}"]
-        },
-        {
-            "Sid": "NavigateInConsole",
-            "Effect": "Allow",
-            "Action": [
-                "iam:GetGroupPolicy",
-                "iam:GetPolicyVersion",
-                "iam:GetPolicy",
-                "iam:ListAttachedGroupPolicies",
-                "iam:ListGroupPolicies",
-                "iam:ListPolicyVersions",
-                "iam:ListPolicies",
-                "iam:ListUsers"
-            ],
-            "Resource": "*"
-        }
-    ]
-}
-```
-
 ## Create a VPC with a public subnet<a name="vpc-public-subnet-iam"></a>
 
 The following example enables users to create VPCs, subnets, route tables, and internet gateways\. Users can also attach an internet gateway to a VPC and create routes in route tables\. The `ec2:ModifyVpcAttribute` action enables users to enable DNS hostnames for the VPC, so that each instance launched into a VPC receives a DNS hostname\.
@@ -139,9 +101,15 @@ The following example enables users to create VPCs, subnets, route tables, and i
    "Statement": [{
       "Effect": "Allow",
       "Action": [
-        "ec2:CreateVpc", "ec2:CreateSubnet", "ec2:DescribeAvailabilityZones",
-        "ec2:CreateRouteTable", "ec2:CreateRoute", "ec2:CreateInternetGateway", 
-        "ec2:AttachInternetGateway", "ec2:AssociateRouteTable", "ec2:ModifyVpcAttribute"
+        "ec2:CreateVpc", 
+        "ec2:CreateSubnet", 
+        "ec2:DescribeAvailabilityZones",
+        "ec2:CreateRouteTable", 
+        "ec2:CreateRoute", 
+        "ec2:CreateInternetGateway", 
+        "ec2:AttachInternetGateway", 
+        "ec2:AssociateRouteTable", 
+        "ec2:ModifyVpcAttribute"
       ],
       "Resource": "*"
     }
@@ -190,20 +158,94 @@ You might want to control which VPC resources users can modify or delete\. For e
 
 ## Manage security groups<a name="vpc-security-groups-iam"></a>
 
-The following policy grants users permission to create and delete inbound and outbound rules for any security group within a specific VPC\. The policy does this by applying a condition key \(`ec2:Vpc`\) to the security group resource for the `Authorize` and `Revoke` actions\. 
-
-The second statement grants users permission to describe all security groups\. This enables users to view security group rules in order to modify them\.
+The following policy allows to view any security group and security group rule\. The second statement allows users to delete any security group with the tag `Stack=test` and to manage the inbound and outbound rules for any security group with the tag `Stack=test`\. The third statement requires users to tag any security groups that they create with the tag `Stack=Test`\. The fourth statement allows users to create tags when creating a security group\.
 
 ```
 {
-"Version": "2012-10-17",
+   "Version": "2012-10-17",
+   "Statement": [{
+      "Effect": "Allow",
+      "Action": [
+         "ec2:DescribeSecurityGroups", 
+         "ec2:DescribeSecurityGroupRules", 
+         "ec2:DescribeVpcs"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+         "ec2:AuthorizeSecurityGroupIngress",
+         "ec2:RevokeSecurityGroupIngress",
+         "ec2:UpdateSecurityGroupRuleDescriptionsIngress",
+         "ec2:AuthorizeSecurityGroupEgress",
+         "ec2:RevokeSecurityGroupEgress",
+         "ec2:UpdateSecurityGroupRuleDescriptionsEgress",
+         "ec2:ModifySecurityGroupRules",
+         "ec2:DeleteSecurityGroup" 
+      ],
+      "Resource": "arn:aws:ec2:*:*:security-group/*",
+      "Condition":{
+         "StringEquals": {
+            "ec2:ResourceTag/Stack": "test"
+         }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+         "ec2:CreateSecurityGroup"
+      ],
+      "Resource": "arn:aws:ec2:*:*:security-group/*",
+      "Condition": {
+         "StringEquals": {
+           "aws:RequestTag/Stack": "test"
+         },
+         "ForAllValues:StringEquals": {
+           "aws:TagKeys": ["Stack"]
+         }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+         "ec2:CreateTags"
+      ],
+      "Resource": "arn:aws:ec2:*:*:security-group/*",
+      "Condition": {
+        "StringEquals": {
+           "ec2:CreateAction" : "CreateSecurityGroup"
+        }
+      }
+    }
+  ]
+}
+```
+
+To allow users to change the security group that's associated with an instance, add the `ec2:ModifyInstanceAttribute` action to your policy\.
+
+To allow users to change security groups for a network interface, add the `ec2:ModifyNetworkInterfaceAttribute` action to your policy\.
+
+## Manage security group rules<a name="vpc-security-group-rules-iam"></a>
+
+The following policy grants users permission to view all security groups and security group rules, add and remove inbound and outbound rules for the security groups for a specific VPC, and modify rule descriptions for the specified VPC\. The first statement uses the `ec2:Vpc` condition key to scope permissions to a specific VPC\. 
+
+The second statement grants users permission to describe all security groups, security group rules, and tags\. This enables users to view security group rules in order to modify them\.
+
+```
+{
+  "Version": "2012-10-17",
   "Statement":[{
     "Effect":"Allow",
     "Action": [
        "ec2:AuthorizeSecurityGroupIngress",
-       "ec2:AuthorizeSecurityGroupEgress",
        "ec2:RevokeSecurityGroupIngress",
-       "ec2:RevokeSecurityGroupEgress"],
+       "ec2:UpdateSecurityGroupRuleDescriptionsIngress",
+       "ec2:AuthorizeSecurityGroupEgress",
+       "ec2:RevokeSecurityGroupEgress",
+       "ec2:UpdateSecurityGroupRuleDescriptionsEgress",
+       "ec2:ModifySecurityGroupRules"
+    ],
      "Resource": "arn:aws:ec2:region:account:security-group/*",
       "Condition": {
         "ArnEquals": {
@@ -213,45 +255,16 @@ The second statement grants users permission to describe all security groups\. T
     },
     {
       "Effect": "Allow",
-      "Action": "ec2:DescribeSecurityGroups",
+      "Action": [
+          "ec2:DescribeSecurityGroups",
+          "ec2:DescribeSecurityGroupRules",
+          "ec2:DescribeTags"
+      ],
       "Resource": "*"
     }
   ]
 }
 ```
-
-To view security groups on the **Security Groups** page in the Amazon VPC console, users must have permission to use the `ec2:DescribeSecurityGroups` action\. To use the **Create security group** page, users must have permission to use the `ec2:DescribeVpcs` and `ec2:CreateSecurityGroup` actions\.
-
-The following policy allows users to view and create security groups\. It also allows them to add and remove inbound and outbound rules to any security group that's associated with `vpc-11223344556677889`\.
-
-```
-{
-   "Version": "2012-10-17",
-   "Statement": [{
-      "Effect": "Allow",
-      "Action": [
-         "ec2:DescribeSecurityGroups", "ec2:DescribeVpcs", "ec2:CreateSecurityGroup"
-      ],
-      "Resource": "*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "ec2:DeleteSecurityGroup", "ec2:AuthorizeSecurityGroupIngress", "ec2:AuthorizeSecurityGroupEgress",
-        "ec2:RevokeSecurityGroupIngress", "ec2:RevokeSecurityGroupEgress"
-      ],
-      "Resource": "arn:aws:ec2:*:*:security-group/*",
-      "Condition":{
-         "ArnEquals": {
-            "ec2:Vpc": "arn:aws:ec2:*:*:vpc/vpc-11223344556677889"
-         }
-      }
-    }
-   ]
-}
-```
-
-To allow users to change the security group that's associated with an instance, add the `ec2:ModifyInstanceAttribute` action to your policy\. Alternatively, to enable users to change security groups for a network interface, add the `ec2:ModifyNetworkInterfaceAttribute` action to your policy\. 
 
 ## Launch instances into a specific subnet<a name="subnet-sg-example-iam"></a>
 
@@ -325,7 +338,7 @@ The policy also grants users permission to launch instances using only AMIs that
 
 ## Additional Amazon VPC policy examples<a name="security-iam-additional-examples"></a>
 
-You can find additional example IAM policies related to Amazon VPC in the following topics:
+You can find additional example IAM policies related to Amazon VPC in the following documentation:
 + [ClassicLink](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html#iam-example-classiclink)
 + [Managed prefix lists](managed-prefix-lists.md#managed-prefix-lists-iam)
 + [Traffic mirroring](https://docs.aws.amazon.com/vpc/latest/mirroring/traffic-mirroring-security.html)

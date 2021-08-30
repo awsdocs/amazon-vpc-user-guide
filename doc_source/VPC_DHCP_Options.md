@@ -28,7 +28,7 @@ Some Linux operating systems accept multiple domain names separated by spaces\. 
 Default DHCP options set: For `us-east-1`, the value is `ec2.internal`\. For other Regions, the value is *region*\.compute\.internal \(for example, `ap-northeast-1.compute.internal`\)\. To use the default values, set `domain-name-servers` to AmazonProvidedDNS\.
 
 **ntp\-servers**  
-The IP addresses of up to four Network Time Protocol \(NTP\) servers\. For more information, see section 8\.3 of [RFC 2132](https://tools.ietf.org/html/rfc2132)\. You can specify the Amazon Time Sync Service at `169.254.169.123`\. For more information, see [Setting the time](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html) in the *Amazon EC2 User Guide for Linux Instances*\.  
+The IP addresses of up to four Network Time Protocol \(NTP\) servers\. For more information, see section 8\.3 of [RFC 2132](https://tools.ietf.org/html/rfc2132)\. You can specify the Amazon Time Sync Service at IPv4 address `169.254.169.123` or IPv6 address `fd00:ec2::123`\. The IPv6 address is only accessible on [EC2 instances built on the Nitro System](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances)\. For more information, see [Set the time for your instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html) in the *Amazon EC2 User Guide for Linux Instances*\.  
 Default DHCP options set: None
 
 **netbios\-name\-servers**  
@@ -52,16 +52,16 @@ The Amazon DNS server in your VPC is used to resolve the DNS domain names that y
 When using the Amazon DNS server, the following rules and considerations apply\.
 + You cannot filter traffic to or from the Amazon DNS server using network ACLs or security groups\.
 + Services that use the Hadoop framework, such as Amazon EMR, require instances to resolve their own fully qualified domain names \(FQDN\)\. In such cases, DNS resolution can fail if the `domain-name-servers` option is set to a custom value\. To ensure proper DNS resolution, consider adding a conditional forwarder on your DNS server to forward queries for the domain `region-name.compute.internal` to the Amazon DNS server\. For more information, see [Setting up a VPC to host clusters](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-vpc-host-job-flows.html) in the *Amazon EMR Management Guide*\.
-+ You can use the Amazon DNS server IP address 169\.254\.169\.253, though some servers don't allow its use\. Windows Server 2008, for example, disallows the use of a DNS server located in the 169\.254\.x\.x network range\. 
++ Windows Server 2008 disallows the use of a DNS server located in the link\-local address range \(169\.254\.0\.0/16\)\.
 + The Amazon Route 53 Resolver only supports recursive DNS queries\.
 
 ## Change DHCP options<a name="DHCPOptions"></a>
 
-After you create a set of DHCP options, you can't modify them\. If you want your VPC to use a different set of DHCP options, you must create a new set and associate them with your VPC\. You can also set up your VPC to use no DHCP options at all\.
+After you create a set of DHCP options, you can't modify them\. If you need your VPC to use a different set of DHCP options, you must create it and then associate it with your VPC\. Alternatively, you can specify that your VPC should use no DHCP options\.
 
 You can have multiple sets of DHCP options, but you can associate only one set of DHCP options with a VPC at a time\. If you delete a VPC, the DHCP options set that is associated with the VPC is disassociated from the VPC\.
 
-After you associate a new set of DHCP options with a VPC, any existing instances and all new instances that you launch in the VPC use the new options\. You don't need to restart or relaunch the instances\. They automatically pick up the changes within a few hours, depending on how frequently the instance renews its DHCP lease\. If you want, you can explicitly renew the lease using the operating system on the instance\. 
+After you associate a new set of DHCP options with a VPC, any existing instances and all new instances that you launch in the VPC use the new options\. You don't need to restart or relaunch your instances\. Instances automatically pick up the changes within a few hours, depending on how frequently they renew their DHCP leases\. If you prefer, you can explicitly renew the lease using the operating system on the instance\. 
 
 ## Work with DHCP options sets<a name="DHCPOptionSet"></a>
 
@@ -84,21 +84,19 @@ You can create as many additional DHCP options sets as you want\. However, you c
 
 1. In the navigation pane, choose **DHCP Options Sets**\.
 
-1. In the dialog box, enter values for the options that you want to use\.
+1. Choose **Create DHCP options set**\.
+
+1. For **Tag settings**, optionally enter a name for the DHCP options set\. This creates a Name tag for the DHCP options set\.
+
+1. For **DHCP options**, provide the configuration parameters that you need\.
 **Important**  
 If your VPC has an internet gateway, make sure to specify your own DNS server or Amazon's DNS server \(AmazonProvidedDNS\) for the **Domain name servers** value\. Otherwise, the instances that need to communicate with the internet won't have access to DNS\.
 
-1. Optionally add or remove a tag\.
-
-   \[Add a tag\] Choose **Add new tag** and do the following:
-   + For **Key**, enter the key name\.
-   + For **Value**, enter the key value\.
-
-   \[Remove a tag\] Choose **Remove** to the right of the tag’s Key and Value\.
+1. For **Tags**, optionally add or remove a tag\.
+   + \[Add a tag\] Choose **Add new tag** and enter the key name and key value\.
+   + \[Remove a tag\] Choose **Remove** next to the tag\.
 
 1. Choose **Create DHCP options set**\.
-
-   The new set of DHCP options appears in your list of DHCP options\.
 
 1. Make a note of the ID of the new set of DHCP options \(dopt\-*xxxxxxxx*\)\. You will need this ID to associate the new set of options with your VPC\.
 
@@ -106,10 +104,12 @@ Now that you've created a set of DHCP options, you must associate it with your V
 
 ### Change the set of DHCP options that a VPC uses<a name="ChangingDHCPOptionsofaVPC"></a>
 
-You can change which set of DHCP options your VPC uses\. If you want the VPC settings to not use DHCP options, see [Change a VPC to use no DHCP options](#DHCP_Use_No_Options)\.
+You can change which set of DHCP options your VPC uses\. After you associate a new set of DHCP options with the VPC, any existing instances and all new instances that you launch in that VPC use the new options\. You don't need to restart or relaunch your instances\. Instances automatically pick up the changes within a few hours, depending on how frequently they renew their DHCP leases\. If you prefer, you can explicitly renew the lease using the operating system on the instance\. 
+
+If you do not want your VPC to use DHCP options, see [Change a VPC to use no DHCP options](#DHCP_Use_No_Options)\.
 
 **Note**  
-The following procedure assumes that you've already created the DHCP options set that you want to change to\. If you haven't, create the options set now\. For more information, see [Create a DHCP options set](#CreatingaDHCPOptionSet)\.
+The following procedure assumes that you've already created the DHCP options set\. Otherwise, create the options set as described in the previous section\.
 
 **To change the DHCP options set associated with a VPC**
 
@@ -117,29 +117,29 @@ The following procedure assumes that you've already created the DHCP options set
 
 1. In the navigation pane, choose **Your VPCs**\.
 
-1. Select the VPC, and select **Actions, Edit DHCP options set**\.
+1. Select the checkbox for the VPC, and then choose **Actions**, **Edit DHCP options set**\.
 
-1. In the **DHCP options set** list, select a set of options from the list, and then choose **Save**\.
+1. For **DHCP options set**, choose the DHCP options set\.
 
-After you associate a new set of DHCP options with the VPC, any existing instances and all new instances that you launch in that VPC use the new options\. You don't need to restart or relaunch the instances\. They automatically pick up the changes within a few hours, depending on how frequently the instance renews its DHCP lease\. If you want, you can explicitly renew the lease using the operating system on the instance\. 
+1. Choose **Save changes**\.
 
 ### Change a VPC to use no DHCP options<a name="DHCP_Use_No_Options"></a>
 
-You can set up your VPC so that it does not use a set of DHCP options\. 
+You can set up your VPC so that it does not use a set of DHCP options\. You don't need to restart or relaunch your instances\. Instances automatically pick up the changes within a few hours, depending on how frequently they renew their DHCP leases\. If you prefer, you can explicitly renew the lease using the operating system on the instance\. 
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
 1. In the navigation pane, choose **Your VPCs**\.
 
-1. Select the VPC, and select **Actions, Edit DHCP options set**\.
+1. Select the checkbox for the VPC, and then choose **Actions**, **Edit DHCP options set**\.
 
-1. In the **DHCP options set** list, select **No DHCP options set** from the list, and then choose **Save**\.
+1. For **DHCP options set**, choose **No DHCP options set**\.
 
- You don't need to restart or relaunch the instances\. They automatically pick up the changes within a few hours, depending on how frequently the instance renews its DHCP lease\. If you want, you can explicitly renew the lease using the operating system on the instance\. 
+1. Choose **Save changes**\.
 
 ### Modify the tags of a DHCP options set<a name="TaggingaDHCPOptionSet"></a>
 
-You can add tags to easily identify your options set\. Add a tag to the DHCP options set, or remove a tag from the DHCP options set\.
+You can use tags to easily identify your options set\.
 
 **To modify the tags of a DHCP options set**
 
@@ -147,15 +147,11 @@ You can add tags to easily identify your options set\. Add a tag to the DHCP opt
 
 1. In the navigation pane, choose **DHCP options sets**\.
 
-1. Select the DHCP options set, and then select **Actions, Manage tags**\.
+1. Select the radio button for the DHCP options set, and then choose **Actions**, **Manage tags**\.
 
-1. Add or remove a tag\.
-
-   \[Add a tag\] Choose **Add new tag**, and then do the following:
-   + For **Key**, enter the key name\.
-   + For **Value**, enter the key value\.
-
-   \[Remove a tag\] Next to the tag, choose **Remove**\.
+1. For **Tags**, add or remove tags as needed\.
+   + \[Add a tag\] Choose **Add new tag** and enter the key name and key value\.
+   + \[Remove a tag\] Choose **Remove** next to the tag\.
 
 1. Choose **Save**\.
 
@@ -169,9 +165,9 @@ When you no longer need a DHCP options set, use the following procedure to delet
 
 1. In the navigation pane, choose **DHCP Options Sets**\.
 
-1. Select the DHCP options set to delete, and then choose **Actions, Delete DHCP options set**\.
+1. Select the radio button for the DHCP options set, and then choose **Actions**, **Delete DHCP options set**\.
 
-1. In the confirmation dialog box, enter **delete**, and then choose **Delete DHCP options set**\.
+1. When prompted for confirmation, enter **delete**, and then choose **Delete DHCP options set**\.
 
 ## API and command overview<a name="APIOverview"></a>
 
