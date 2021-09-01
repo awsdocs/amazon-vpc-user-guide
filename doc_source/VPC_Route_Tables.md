@@ -138,7 +138,16 @@ If you disassociate Subnet 2 from Route Table B, there's still an implicit assoc
 
 You can associate a route table with an internet gateway or a virtual private gateway\. When a route table is associated with a gateway, it's referred to as a *gateway route table*\. You can create a gateway route table for fine\-grain control over the routing path of traffic entering your VPC\. For example, you can intercept the traffic that enters your VPC through an internet gateway by redirecting that traffic to a middlebox appliance \(such as a security appliance\) in your VPC\.
 
-A gateway route table supports routes where the target is `local` \(the default local route\), a [Gateway Load Balancer endpoint](https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/introduction.html), or an elastic network interface \(network interface\) in your VPC that's attached to your middlebox appliance\. When the target is a Gateway Load Balancer endpoint or a network interface, the following destinations are allowed:
+A gateway route table associated with an internet gateway supports routes with the following targets:
++ The default local route
++ A [Gateway Load Balancer endpoint](https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/)
++ A network interface for a middlebox appliance
+
+A gateway route table associated with a virtual private gateway supports routes with the following targets:
++ The default local route
++ A network interface for a middlebox appliance
+
+When the target is a Gateway Load Balancer endpoint or a network interface, the following destinations are allowed:
 + The entire IPv4 or IPv6 CIDR block of your VPC\. In this case, you replace the target of the default local route\.
 + The entire IPv4 or IPv6 CIDR block of a subnet in your VPC\. This is a more specific route than the default local route\.
 

@@ -218,6 +218,11 @@ For information about the permissions required to view security groups, see [Man
 + [describe\-security\-groups](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-security-groups.html) and [describe\-security\-group\-rules](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-security-group-rules.html) \(AWS CLI\)
 + [Get\-EC2SecurityGroup](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2SecurityGroup.html) and [Get\-EC2SecurityGroupRules](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2SecurityGroupRules.html) \(AWS Tools for Windows PowerShell\)
 
+**To view all of your security groups across Regions**  
+Open the Amazon EC2 Global View console at [ https://console\.aws\.amazon\.com/ec2globalview/home](https://console.aws.amazon.com/ec2globalview/home)\.
+
+For more information about using Amazon EC2 Global View, see [List and filter resources using the Amazon EC2 Global View](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Filtering.html#global-view) in the Amazon EC2 User Guide for Linux Instances\.
+
 ### Tag your security groups<a name="tagging-security-groups"></a>
 
 Add tags to your resources to help organize and identify them, such as by purpose, owner, or environment\. You can add tags to your security groups\. Tag keys must be unique for each security group\. If you add a tag with a key that is already associated with the rule, it updates the value of that tag\.

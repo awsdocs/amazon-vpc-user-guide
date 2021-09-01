@@ -100,8 +100,9 @@ You can modify the name of your prefix list, and you can add or remove entries\.
 
 Updating the entries of a prefix list creates a new version of the prefix list\. Updating the name or maximum number of entries for a prefix list does not create a new version of the prefix list\.
 
-**Limitation**  
-You cannot modify an AWS\-managed prefix list\.
+**Considerations**
++ You cannot modify an AWS\-managed prefix list\.
++ When you increase the maximum number of entries in a prefix list, the increased maximum size is applied to the quota of entries for the resources that reference the prefix list\. If any of these resources can't support the increased maximum size, the modify operation fails and the previous maximum size is restored\.
 
 **To modify a prefix list using the console**
 

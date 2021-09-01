@@ -4,6 +4,7 @@ The following procedures are for manually creating a VPC and subnets\. You also 
 
 **Topics**
 + [Create a VPC](#Create-VPC)
++ [View your VPC](#view-vpc)
 + [Create a subnet in your VPC](#AddaSubnet)
 + [View your subnet](#view-subnet)
 + [Associate a secondary IPv4 CIDR block with your VPC](#add-ipv4-cidr)
@@ -58,6 +59,27 @@ For more information about IP addresses, see [IP Addressing in your VPC](vpc-ip-
 
 After you've created a VPC, you can create subnets\. For more information, see [Create a subnet in your VPC](#AddaSubnet)\.
 
+## View your VPC<a name="view-vpc"></a>
+
+You can view the details about your VPC\.
+
+**To view VPC details using the console**
+
+1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
+
+1. In the navigation pane, choose **VPCs**\.
+
+1. Select the VPC, and then choose **View Details**\.
+
+**To describe a VPC using a command line tool**
++ [describe\-vpcs](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpcs.html) \(AWS CLI\)
++ [Get\-EC2Vpc](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2Vpc.html) \(AWS Tools for Windows PowerShell\)
+
+**To view all of your VPCs across Regions**  
+Open the Amazon EC2 Global View console at [ https://console\.aws\.amazon\.com/ec2globalview/home](https://console.aws.amazon.com/ec2globalview/home)\.
+
+For more information about using Amazon EC2 Global View, see [List and filter resources using the Amazon EC2 Global View](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Filtering.html#global-view) in the Amazon EC2 User Guide for Linux Instances\.
+
 ## Create a subnet in your VPC<a name="AddaSubnet"></a>
 
 To add a new subnet to your VPC, you must specify an IPv4 CIDR block for the subnet from the range of your VPC\. You can specify the Availability Zone in which you want the subnet to reside\. You can have multiple subnets in the same Availability Zone\. 
@@ -111,6 +133,11 @@ You can view the details about your subnet\.
 **To describe a subnet using a command line tool**
 + [describe\-subnets](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-subnets.html) \(AWS CLI\)
 + [Get\-EC2Subnet](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2Subnet.html) \(AWS Tools for Windows PowerShell\)
+
+**To view all of your subnets across Regions**  
+Open the Amazon EC2 Global View console at [ https://console\.aws\.amazon\.com/ec2globalview/home](https://console.aws.amazon.com/ec2globalview/home)\.
+
+For more information about using Amazon EC2 Global View, see [List and filter resources using the Amazon EC2 Global View](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Filtering.html#global-view) in the Amazon EC2 User Guide for Linux Instances\.
 
 ## Associate a secondary IPv4 CIDR block with your VPC<a name="add-ipv4-cidr"></a>
 
