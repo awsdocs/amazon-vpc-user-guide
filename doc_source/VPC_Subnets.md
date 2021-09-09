@@ -18,18 +18,13 @@ A virtual private cloud \(VPC\) is a virtual network dedicated to your AWS accou
 
 When you create a VPC, you must specify a range of IPv4 addresses for the VPC in the form of a Classless Inter\-Domain Routing \(CIDR\) block; for example, `10.0.0.0/16`\. This is the primary CIDR block for your VPC\. For more information about CIDR notation, see [RFC 4632](https://tools.ietf.org/html/rfc4632)\.
 
-The following diagram shows a new VPC with an IPv4 CIDR block\.
+A VPC spans all of the Availability Zones in the Region\. The following diagram shows a new VPC with an IPv4 CIDR block\.
 
-![\[VPC with the main route table\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-diagram.png)
+![\[A VPC that spans the Availability Zones for its Region.\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-diagram.png)
 
-The main route table has the following routes\.
+After you create a VPC, you can add one or more subnets in each Availability Zone\. A *subnet* is a range of IP addresses in your VPC\. You can launch AWS resources, such as EC2 instances, into a specific subnet\. When you create a subnet, you specify the IPv4 CIDR block for the subnet, which is a subset of the VPC CIDR block\. Each subnet must reside entirely within one Availability Zone and cannot span zones\. By launching instances in separate Availability Zones, you can protect your applications from the failure of a single zone\.
 
-
-| Destination | Target | 
-| --- | --- | 
-| 10\.0\.0\.0/16 | local | 
-
-A VPC spans all of the Availability Zones in the Region\. After creating a VPC, you can add one or more subnets in each Availability Zone\. You can optionally add subnets in a Local Zone, which is an AWS infrastructure deployment that places compute, storage, database, and other select services closer to your end users\. A Local Zone enables your end users to run applications that require single\-digit millisecond latencies\. For information about the Regions that support Local Zones, see [Available Regions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions) in the *Amazon EC2 User Guide for Linux Instances*\. When you create a subnet, you specify the CIDR block for the subnet, which is a subset of the VPC CIDR block\. Each subnet must reside entirely within one Availability Zone and cannot span zones\. Availability Zones are distinct locations that are engineered to be isolated from failures in other Availability Zones\. By launching instances in separate Availability Zones, you can protect your applications from the failure of a single location\. We assign a unique ID to each subnet\.
+You can optionally add subnets in a Local Zone, which is an AWS infrastructure deployment that places compute, storage, database, and other select services closer to your end users\. A Local Zone enables your end users to run applications that require single\-digit millisecond latencies\. For more information, see [Available Regions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 You can also optionally assign an IPv6 CIDR block to your VPC, and assign IPv6 CIDR blocks to your subnets\.
 

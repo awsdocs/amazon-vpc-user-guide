@@ -48,13 +48,17 @@ The following example policy allows users to view and work with prefix list `pl-
    "Statement": [{
       "Effect": "Allow",
       "Action": [
-        "ec2:DescribeManagedPrefixLists",
-        "ec2:ModifyManagedPrefixList",
+        "ec2:GetManagedPrefixListAssociations",
         "ec2:GetManagedPrefixListEntries",
-        "ec2:RestoreManagedPrefixListVersion",
-        "ec2:GetManagedPrefixListAssociations"
+        "ec2:ModifyManagedPrefixList",
+        "ec2:RestoreManagedPrefixListVersion"
       ],
       "Resource": "arn:aws:ec2:region:account:prefix-list/pl-123456abcde123456"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "ec2:DescribeManagedPrefixLists",
+      "Resource": "*"
     }
    ]
 }

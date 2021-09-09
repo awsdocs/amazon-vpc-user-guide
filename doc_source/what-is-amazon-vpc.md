@@ -29,7 +29,3 @@ There's no additional charge for using a VPC\. There are charges for some VPC co
 ## Amazon VPC quotas<a name="vpc-quotas"></a>
 
 There are quotas on the number of Amazon VPC components that you can provision\. You can request an increase for some of these quotas\. For more information, see [Amazon VPC quotas](amazon-vpc-limits.md)\.
-
-## PCI DSS compliance<a name="pci-compliance"></a>
-
-Amazon VPC supports the processing, storage, and transmission of credit card data by a merchant or service provider, and has been validated as being compliant with Payment Card Industry \(PCI\) Data Security Standard \(DSS\)\. For more information about PCI DSS, including how to request a copy of the AWS PCI Compliance Package, see [PCI DSS Level 1](https://aws.amazon.com/compliance/pci-dss-level-1-faqs/)\. 

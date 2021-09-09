@@ -32,7 +32,7 @@ Some types of traffic are tracked differently from other types\. For more inform
 + When you create a security group, you must provide it with a name and a description\. The following rules apply:
   + Names and descriptions can be up to 255 characters in length\.
   + Names and descriptions are limited to the following characters: a\-z, A\-Z, 0\-9, spaces, and \.\_\-:/\(\)\#,@\[\]\+=&;\{\}\!$\*\.
-  + When the name contains trailing spaces, we trim the spaces when we save the name\. For example, if you enter "Test Security Group " for the name, we store it as "Test Security Group"\.
+  + When the name contains trailing spaces, we trim the space at the end of the name\. For example, if you enter "Test Security Group " for the name, we store it as "Test Security Group"\.
   + A security group name cannot start with `sg-` as these indicate a default security group\.
   + A security group name must be unique within the VPC\.
 + A security group can only be used in the VPC that you specify when you create the security group\.
