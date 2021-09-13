@@ -42,7 +42,7 @@ Each EC2 instance limits the number of packets that can be sent to the Amazon Ro
 | --- | --- | --- | 
 | Prefix lists per Region | 100 |  | 
 | Versions per prefix list | 1,000 | If a prefix list has 1,000 stored versions and you add a new version, the oldest version is removed so that the new version can be added\. | 
-| Maximum number of entries per prefix list | 1,000 |  | 
+| Maximum number of entries per prefix list | 1,000 | When you reference a prefix list in a resource, the maximum number of entries for the prefix lists counts against the quota for the number of entries for the resource\. For example, if you create a prefix list with 20 maximum entries and you reference that prefix list in a security group rule, this counts as 20 security group rules\. | 
 | References to a prefix list per resource type | 5,000 | This quota applies per resource type that can reference a prefix list\. For example, you can have 5,000 references to a prefix list across all of your security groups plus 5,000 references to a prefix list across all of your subnet route tables\. If you share a prefix list with other AWS accounts, the other accounts' references to your prefix list count toward this quota\. | 
 
 ## Network ACLs<a name="vpc-limits-nacls"></a>
@@ -67,7 +67,7 @@ Each EC2 instance limits the number of packets that can be sent to the Amazon Ro
 | Name | Default | Adjustable | Comments | 
 | --- | --- | --- | --- | 
 | Route tables per VPC | 200 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-589F43AA) | The main route table counts toward this quota\. | 
-| Routes per route table \(non\-propagated routes\) | 50 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-93826ACB) | You can increase this quota up to a maximum of 1,000; however, network performance might be impacted\. This quota is enforced separately for IPv4 routes and IPv6 routes\. If you have more than 125 routes, we recommend that you paginate calls to describe your route tables for better performance\.  If you reference a customer\-managed prefix list in a route, the maximum number of entries for the prefix lists equals the same number of routes\.  | 
+| Routes per route table \(non\-propagated routes\) | 50 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-93826ACB) | You can increase this quota up to a maximum of 1,000; however, network performance might be impacted\. This quota is enforced separately for IPv4 routes and IPv6 routes\. If you have more than 125 routes, we recommend that you paginate calls to describe your route tables for better performance\. | 
 | BGP advertised routes per route table \(propagated routes\) | 100 | No | If you require additional prefixes, advertise a default route\. | 
 
 ## Security groups<a name="vpc-limits-security-groups"></a>
@@ -76,7 +76,7 @@ Each EC2 instance limits the number of packets that can be sent to the Amazon Ro
 | Name | Default | Adjustable | Comments | 
 | --- | --- | --- | --- | 
 | VPC security groups per Region | 2,500 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-E79EC296) | This quota applies to individual AWS account VPCs and shared VPCs\. If you increase this quota to more than 5,000 security groups in a Region, we recommend that you paginate calls to describe your security groups for better performance\. | 
-| Inbound or outbound rules per security group  | 60 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-0EA8095F) | You can have 60 inbound and 60 outbound rules per security group \(making a total of 120 rules\)\. This quota is enforced separately for IPv4 rules and IPv6 rules; for example, a security group can have 60 inbound rules for IPv4 traffic and 60 inbound rules for IPv6 traffic\. A rule that references a security group or AWS\-managed prefix list ID counts as one rule for IPv4 and one rule for IPv6\. A quota change applies to both inbound and outbound rules\. This quota multiplied by the quota for security groups per network interface cannot exceed 1,000\. For example, if you increase this quota to 100, we decrease the quota for your number of security groups per network interface to 10\. If you reference a customer\-managed prefix list in a security group rule, the maximum number of entries for the prefix lists equals the same number of security group rules\. | 
+| Inbound or outbound rules per security group  | 60 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-0EA8095F) | You can have 60 inbound and 60 outbound rules per security group \(making a total of 120 rules\)\. This quota is enforced separately for IPv4 rules and IPv6 rules; for example, a security group can have 60 inbound rules for IPv4 traffic and 60 inbound rules for IPv6 traffic\. A rule that references a security group or AWS\-managed prefix list ID counts as one rule for IPv4 and one rule for IPv6\. A quota change applies to both inbound and outbound rules\. This quota multiplied by the quota for security groups per network interface cannot exceed 1,000\. For example, if you increase this quota to 100, we decrease the quota for your number of security groups per network interface to 10\. | 
 | Security groups per network interface | 5 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-2AFB9258) \(up to 16\) | This quota is enforced separately for IPv4 rules and IPv6 rules\. The quota for security groups per network interface multiplied by the quota for rules per security group cannot exceed 1,000\. For example, if you increase this quota to 10, we decrease the quota for your number of rules per security group to 100\. | 
 
 ## VPC peering connections<a name="vpc-limits-peering"></a>
@@ -122,7 +122,7 @@ For information about Amazon EC2 throttling, see [API Request Throttling](https:
 ## Additional quota resources<a name="additional-quotas"></a>
 
 For more information, see the following:
-+ [Transit gateway quotas](https://docs.aws.amazon.com/vpc/latest/tgw/transit-gateway-quotas.html) in *Amazon VPC Transit Gateways*\.
++ [Transit gateway quotas](https://docs.aws.amazon.com/vpc/latest/tgw/transit-gateway-quotas.html) in *Amazon VPC Transit Gateways*
 + [AWS Client VPN quotas](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/limits.html) in the *AWS Client VPN Administrator Guide*
 + [Site\-to\-Site VPN quotas](https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-limits.html) in the *AWS Site\-to\-Site VPN User Guide*
 + [AWS Direct Connect quotas](https://docs.aws.amazon.com/directconnect/latest/UserGuide/limits.html) in the *AWS Direct Connect User Guide*

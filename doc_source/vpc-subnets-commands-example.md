@@ -21,24 +21,19 @@ The first step is to create a VPC and two subnets\. This example uses the CIDR b
 
 **To create a VPC and subnets using the AWS CLI**
 
-1. Create a VPC with a `10.0.0.0/16` CIDR block\. 
+1. Create a VPC with a `10.0.0.0/16` CIDR block using the following [create\-vpc](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-vpc.html) command\.
 
    ```
-   aws ec2 create-vpc --cidr-block 10.0.0.0/16
+   aws ec2 create-vpc --cidr-block 10.0.0.0/16 --query Vpc.VpcId --output text
    ```
 
-   In the output that's returned, take note of the VPC ID\.
+   The command returns the ID of the new VPC\. The following is an example\.
 
    ```
-   {
-       "Vpc": {
-           "VpcId": "vpc-2f09a348", 
-           ...
-       }
-   }
+   vpc-2f09a348
    ```
 
-1. Using the VPC ID from the previous step, create a subnet with a `10.0.1.0/24` CIDR block\.
+1. Using the VPC ID from the previous step, create a subnet with a `10.0.1.0/24` CIDR block using the following [create\-subnet](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-subnet.html) command\.
 
    ```
    aws ec2 create-subnet --vpc-id vpc-2f09a348 --cidr-block 10.0.1.0/24
@@ -56,55 +51,43 @@ After you've created the VPC and subnets, you can make one of the subnets a publ
 
 **To make your subnet a public subnet**
 
-1. Create an internet gateway\.
+1. Create an internet gateway using the following [create\-internet\-gateway](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-internet-gateway.html) command\.
 
    ```
-   aws ec2 create-internet-gateway
+   aws ec2 create-internet-gateway --query InternetGateway.InternetGatewayId --output text
    ```
 
-   In the output that's returned, take note of the internet gateway ID\.
+   The command returns the ID of the new internet gateway\. The following is an example\.
 
    ```
-   {
-       "InternetGateway": {
-           ...
-           "InternetGatewayId": "igw-1ff7a07b", 
-           ...
-       }
-   }
+   igw-1ff7a07b
    ```
 
-1. Using the ID from the previous step, attach the internet gateway to your VPC\.
+1. Using the ID from the previous step, attach the internet gateway to your VPC using the following [attach\-internet\-gateway](https://docs.aws.amazon.com/cli/latest/reference/ec2/attach-internet-gateway.html) command\.
 
    ```
    aws ec2 attach-internet-gateway --vpc-id vpc-2f09a348 --internet-gateway-id igw-1ff7a07b
    ```
 
-1. Create a custom route table for your VPC\.
+1. Create a custom route table for your VPC using the following [create\-route\-table](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-route-table.html) command\.
 
    ```
-   aws ec2 create-route-table --vpc-id vpc-2f09a348
+   aws ec2 create-route-table --vpc-id vpc-2f09a348 --query RouteTable.RouteTableId --output text
    ```
 
-   In the output that's returned, take note of the route table ID\.
+   The command returns the ID of the new route table\. The following is an example\.
 
    ```
-   {
-       "RouteTable": {
-           ... 
-           "RouteTableId": "rtb-c1c8faa6", 
-           ...
-       }
-   }
+   rtb-c1c8faa6
    ```
 
-1. Create a route in the route table that points all traffic \(`0.0.0.0/0`\) to the Internet gateway\.
+1. Create a route in the route table that points all traffic \(`0.0.0.0/0`\) to the internet gateway using the following [create\-route](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-route.html) command\.
 
    ```
    aws ec2 create-route --route-table-id rtb-c1c8faa6 --destination-cidr-block 0.0.0.0/0 --gateway-id igw-1ff7a07b
    ```
 
-1. To confirm that your route has been created and is active, you can describe the route table and view the results\.
+1. \(Optional\) To confirm that your route has been created and is active, you can describe the route table using the following [describe\-route\-tables](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-route-tables.html) command\.
 
    ```
    aws ec2 describe-route-tables --route-table-id rtb-c1c8faa6
@@ -138,7 +121,7 @@ After you've created the VPC and subnets, you can make one of the subnets a publ
    }
    ```
 
-1. The route table is currently not associated with any subnet\. You need to associate it with a subnet in your VPC so that traffic from that subnet is routed to the internet gateway\. First, use the `describe-subnets` command to get your subnet IDs\. You can use the `--filter` option to return the subnets for your new VPC only, and the `--query` option to return only the subnet IDs and their CIDR blocks\.
+1. The route table is currently not associated with any subnet\. You need to associate it with a subnet in your VPC so that traffic from that subnet is routed to the internet gateway\. Use the following [describe\-subnets](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-subnets.html) command to get the subnet IDs\. The `--filter` option restricts the subnets to your new VPC only, and the `--query` option returns only the subnet IDs and their CIDR blocks\.
 
    ```
    aws ec2 describe-subnets --filters "Name=vpc-id,Values=vpc-2f09a348" --query "Subnets[*].{ID:SubnetId,CIDR:CidrBlock}"
@@ -157,13 +140,13 @@ After you've created the VPC and subnets, you can make one of the subnets a publ
    ]
    ```
 
-1. You can choose which subnet to associate with the custom route table, for example, `subnet-b46032ec`\. This subnet will be your public subnet\.
+1. You can choose which subnet to associate with the custom route table, for example, `subnet-b46032ec`, and associate it using the [associate\-route\-table](https://docs.aws.amazon.com/cli/latest/reference/ec2/associate-route-table.html) command\. This subnet is your public subnet\.
 
    ```
    aws ec2 associate-route-table  --subnet-id subnet-b46032ec --route-table-id rtb-c1c8faa6
    ```
 
-1. You can optionally modify the public IP addressing behavior of your subnet so that an instance launched into the subnet automatically receives a public IP address\. Otherwise, you should associate an Elastic IP address with your instance after launch so that it's reachable from the internet\.
+1. \(Optional\) You can modify the public IP addressing behavior of your subnet so that an instance launched into the subnet automatically receives a public IP address using the following [modify\-subnet\-attribute](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-subnet-attribute.html) command\. Otherwise, associate an Elastic IP address with your instance after launch so that the instance is reachable from the internet\.
 
    ```
    aws ec2 modify-subnet-attribute --subnet-id subnet-b46032ec --map-public-ip-on-launch
@@ -215,32 +198,23 @@ If you use `0.0.0.0/0`, you enable all IPv4 addresses to access your instance us
 **Note**  
 In this example, the AMI is an Amazon Linux AMI in the US East \(N\. Virginia\) Region\. If you're in a different Region, you'll need the AMI ID for a suitable AMI in your Region\. For more information, see [Finding a Linux AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-1. Your instance must be in the `running` state in order to connect to it\. Describe your instance and confirm its state, and take note of its public IP address\.
+1. Your instance must be in the `running` state in order to connect to it\. Use the following command to describe the state and IP address of your instance\.
 
    ```
-   aws ec2 describe-instances --instance-id i-0146854b7443af453
+   aws ec2 describe-instances --instance-id i-0146854b7443af453 --query "Reservations[*].Instances[*].{State:State.Name,Address:PublicIpAddress}"
    ```
 
+   The following is example output\.
+
    ```
-   {
-       "Reservations": [
+   [
+       [
            {
-               ... 
-               "Instances": [
-                   {
-                       ...
-                       "State": {
-                           "Code": 16, 
-                           "Name": "running"
-                       }, 
-                       ...
-                       "PublicIpAddress": "52.87.168.235", 
-                       ...
-                   }
-               ]
+               "State": "running",
+               "Address": "52.87.168.235" 
            }
        ]
-   }
+   ]
    ```
 
 1. When your instance is in the running state, you can connect to it using an SSH client on a Linux or Mac OS X computer by using the following command:
