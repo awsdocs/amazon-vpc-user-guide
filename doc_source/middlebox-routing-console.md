@@ -123,7 +123,7 @@ If you decide that you no longer want the middlebox routing wizard configuration
 
 Take the following into consideration when you use the middlebox routing wizard:
 + If you want to inspect traffic, you can use an internet gateway or a virtual private gateway for the source\.
-+ If you use the same middlebox in a multiple middlebox configuration within the same VPC, make sure that the middlebox is in the same hop poistion for both subnets\.
++ If you use the same middlebox in a multiple middlebox configuration within the same VPC, make sure that the middlebox is in the same hop position for both subnets\.
 + The appliance must be configured in a separate subnet from the source or destination subnet\. 
 + You must disable source/destination checking on the appliance\. For more information, see [Changing the Source or Destination Checking](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#change_source_dest_check) in the *Amazon EC2 User Guide for Linux Instances*\.
 + The route tables and routes that the middlebox routing wizard creates count toward your quotas\. For more information, see [Route tables](amazon-vpc-limits.md#vpc-limits-route-tables)\.

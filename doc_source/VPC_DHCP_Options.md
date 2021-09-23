@@ -23,7 +23,7 @@ To use this option, set it to either AmazonProvidedDNS or custom domain name ser
 Default DHCP options set: AmazonProvidedDNS
 
 **domain\-name**  
-The custom domain name for your instances\. If you are not using AmazonProvidedDNS, your custom domain name servers must resolve the hostname as appropriate\. If you use a Amazon Route 53 private hosted zone, you can use AmazonProvidedDNS\. For more information, see [DNS support for your VPC](vpc-dns.md)\.  
+The custom domain name for your instances\. If you are not using AmazonProvidedDNS, your custom domain name servers must resolve the hostname as appropriate\. If you use a Amazon Route 53 private hosted zone, you can use AmazonProvidedDNS\. For more information, see [DNS support for your VPC](vpc-dns.md)\.  
 Some Linux operating systems accept multiple domain names separated by spaces\. However, other Linux operating systems and Windows treat the value as a single domain, which results in unexpected behavior\. If your DHCP options set is associated with a VPC that contains instances that are not all running the same operating systems, specify only one domain name\.  
 Default DHCP options set: For `us-east-1`, the value is `ec2.internal`\. For other Regions, the value is *region*\.compute\.internal \(for example, `ap-northeast-1.compute.internal`\)\. To use the default values, set `domain-name-servers` to AmazonProvidedDNS\.
 
@@ -41,11 +41,11 @@ Default DHCP options set: None
 
 ## Amazon DNS server<a name="AmazonDNS"></a>
 
-The default DHCP options set for your VPC includes two options: `domain-name-servers=AmazonProvidedDNS`, and `domain-name=`*domain\-name\-for\-your\-region*\. AmazonProvidedDNS is an Amazon Route 53 Resolver server, and this option enables DNS for instances that need to communicate over the VPC's internet gateway\. The string `AmazonProvidedDNS` maps to a DNS server running on a reserved IP address at the base of the VPC IPv4 network range, plus two\. For example, the DNS Server on a 10\.0\.0\.0/16 network is located at 10\.0\.0\.2\. For VPCs with multiple IPv4 CIDR blocks, the DNS server IP address is located in the primary CIDR block\. The DNS server does not reside within a specific subnet or Availability Zone in a VPC\. 
+The default DHCP options set for your VPC includes two options: `domain-name-servers=AmazonProvidedDNS`, and `domain-name=`*domain\-name\-for\-your\-region*\. AmazonProvidedDNS is an Amazon Route 53 Resolver server, and this option enables DNS for instances that need to communicate over the VPC's internet gateway\. The string `AmazonProvidedDNS` maps to a DNS server running on a reserved IP address at the base of the VPC IPv4 network range, plus two\. For example, the DNS Server on a 10\.0\.0\.0/16 network is located at 10\.0\.0\.2\. For VPCs with multiple IPv4 CIDR blocks, the DNS server IP address is located in the primary CIDR block\. The DNS server does not reside within a specific subnet or Availability Zone in a VPC\. 
 
 When you launch an instance into a VPC, we provide the instance with a private DNS hostname, and a public DNS hostname if the instance receives a public IPv4 address\. If `domain-name-servers` in your DHCP options is set to AmazonProvidedDNS, the public DNS hostname takes the form `ec2-public-ipv4-address.compute-1.amazonaws.com` for the us\-east\-1 Region, and `ec2-public-ipv4-address.region.compute.amazonaws.com` for other Regions\. The private hostname takes the form `ip-private-ipv4-address.ec2.internal` for the us\-east\-1 Region, and `ip-private-ipv4-address.region.compute.internal` for other Regions\. To change these to custom DNS hostnames, you must set `domain-name-servers` to a custom DNS server\.
 
-The Amazon DNS server in your VPC is used to resolve the DNS domain names that you specify in a private hosted zone in Route 53\. For more information about private hosted zones, see [Working with private hosted zones](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-private.html) in the *Amazon Route 53 Developer Guide*\.
+The Amazon DNS server in your VPC is used to resolve the DNS domain names that you specify in a private hosted zone in Route 53\. For more information about private hosted zones, see [Working with private hosted zones](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-private.html) in the *Amazon Route 53 Developer Guide*\.
 
 ### Rules and considerations<a name="amazon-dns-rules"></a>
 
@@ -53,7 +53,7 @@ When using the Amazon DNS server, the following rules and considerations apply\.
 + You cannot filter traffic to or from the Amazon DNS server using network ACLs or security groups\.
 + Services that use the Hadoop framework, such as Amazon EMR, require instances to resolve their own fully qualified domain names \(FQDN\)\. In such cases, DNS resolution can fail if the `domain-name-servers` option is set to a custom value\. To ensure proper DNS resolution, consider adding a conditional forwarder on your DNS server to forward queries for the domain `region-name.compute.internal` to the Amazon DNS server\. For more information, see [Setting up a VPC to host clusters](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-vpc-host-job-flows.html) in the *Amazon EMR Management Guide*\.
 + Windows Server 2008 disallows the use of a DNS server located in the link\-local address range \(169\.254\.0\.0/16\)\.
-+ The Amazon Route 53 Resolver only supports recursive DNS queries\.
++ The Amazon Route 53 Resolver only supports recursive DNS queries\.
 
 ## Change DHCP options<a name="DHCPOptions"></a>
 

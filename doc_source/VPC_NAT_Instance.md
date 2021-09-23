@@ -1,23 +1,17 @@
 # NAT instances<a name="VPC_NAT_Instance"></a>
 
 **Important**  
-NAT AMI is built on the last version of Amazon Linux, 2018\.03 which reached the end of standard support on December 31, 2020\. For more information, see the following blog post: [Amazon Linux AMI end of life](http://aws.amazon.com/blogs/aws/update-on-amazon-linux-ami-end-of-life/)\. This feature will only receive critical security updates \(there will be no regular updates\)\.   
-If you use an existing NAT AMI, AWS recommends that you migrate to a NAT gateway or create your own NAT AMI on Amazon Linux 2 as soon as possible\. For information about how to migrate your instance, see [Migrate from a NAT instance](vpc-nat-gateway.md#nat-instance-migrate)\.
+NAT AMI is built on the last version of Amazon Linux, 2018\.03, which reached the end of standard support on December 31, 2020\. For more information, see the following blog post: [Amazon Linux AMI end of life](http://aws.amazon.com/blogs/aws/update-on-amazon-linux-ami-end-of-life/)\. This AMI will receive only critical security updates \(there will be no regular updates\)\.  
+If you use an existing NAT AMI, AWS recommends that you [migrate to a NAT gateway](vpc-nat-gateway.md#nat-instance-migrate)\. NAT gateways provide better availability, higher bandwidth, and requires less administrative effort\. If NAT instances are a better match for your use case, you can create your own NAT AMI\. For more information, see [Compare NAT gateways and NAT instances](vpc-nat-comparison.md)\.
 
-You can create your own network address translation AMI and run it on an EC2 instance as NAT instance in a public subnet in your VPC to enable instances in the private subnet to initiate outbound IPv4 traffic to the internet or other AWS services, but prevent the instances from receiving inbound traffic initiated by someone on the internet\.
+You can create your own AMI that provides network address translation and use your AMI to launch an EC2 instance as a NAT instance\. You launch a NAT instance in a public subnet to enable instances in the private subnet to initiate outbound IPv4 traffic to the internet or other AWS services, but prevent the instances from receiving inbound traffic initiated on the internet\.
 
-For more information about public and private subnets, see [Subnet routing](VPC_Subnets.md#SubnetRouting)\. For more information about NAT, see [NAT devices for your VPC](vpc-nat.md)\.
-
-NAT is not supported for IPv6 traffic—use an egress\-only internet gateway instead\. For more information, see [Egress\-only internet gateways](egress-only-internet-gateway.md)\.
-
-Your NAT instance quota depends on your instance quota for the Region\. For more information, see the [EC2 FAQs](http://aws.amazon.com/ec2/faqs/#EC2_On-Demand_Instance_limits)\. 
-
-**Note**  
-You can also use a NAT gateway, which is a managed NAT service that provides better availability, higher bandwidth, and requires less administrative effort\. For common use cases, we recommend that you use a NAT gateway rather than a NAT instance\. For more information, see [NAT gateways](vpc-nat-gateway.md) and [Compare NAT gateways and NAT instances](vpc-nat-comparison.md)\.
+**Limitations**
++ Your NAT instance quota depends on your instance quota for the Region\. For more information, see [Amazon EC2 service quotas](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-resource-limits.html) in the *Amazon EC2 User Guide for Linux Instances*\.
++ NAT is not supported for IPv6 traffic—use an egress\-only internet gateway instead\. For more information, see [Egress\-only internet gateways](egress-only-internet-gateway.md)\.
 
 **Topics**
 + [NAT instance basics](#basics)
-+ [NAT instance AMI](#nat-instance-ami)
 + [Set up the NAT instance](#NATInstance)
 + [Create the NATSG security group](#NATSG)
 + [Disable source/destination checks](#EIP_Disable_SrcDestCheck)
@@ -32,33 +26,30 @@ Internet traffic from the instances in the private subnet is routed to the NAT i
 
 ![\[NAT instance setup\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/nat-instance.png)
 
-## NAT instance AMI<a name="nat-instance-ami"></a>
-
-Even though Amazon provides Amazon Linux AMIs that are configured to run as NAT instances, they are built on last version of Amazon Linux, 2018\.03 which reached the end of standard support on December 31, 2020 and will only receive critical security updates \(there will be no regular updates\)\. If you use an existing NAT AMI \(these AMIs include the string `amzn-ami-vpc-nat` in their names\), AWS recommends that you migrate to a NAT gateway or create your own NAT AMI on Amazon Linux 2 as soon as possible\.
-
-### Create your NAT AMI<a name="create-nat-ami"></a>
-
-You can start with an existing Amazon AMI and make appropriate customizations to create your own AMI to run as a NAT instance\. You can use this AMI the next time that you need to launch a NAT instance\. We recommend that you use the latest Amazon Linux 2 AMI to build your own NAT AMI\. For information about how to create the AMI, see [Creating Amazon EBS\-backed AMIs ](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html)in the* Amazon EC2 User Guide for Linux Instances*\.
-
-### Update your existing NAT instance<a name="update-nat-instance"></a>
-
-If you already use a NAT AMI, we recommend you migrate to NAT Gateway or create your own NAT AMI on Amazon Linux 2\.
-
 ## Set up the NAT instance<a name="NATInstance"></a>
 
-Before you begin, create an AMI that's configured to run as a NAT instance\. For more information, see [Create your NAT AMI](#create-nat-ami)\. This AMI is displayed in the Amazon Elastic Compute Cloud Console navigation pane, under **Images** when you filter to **Owned by me**\. 
+Use the following procedure to set up a VPC and a NAT instance\.
 
-To set up the VPC and NAT instance using the console, follow these steps:
+**Requirement**  
+Before you begin, create an AMI that's configured to run NAT on your instance\. The specific commands to configure NAT depend on the operating system that you use\. For example, for Amazon Linux 2, use the following commands:
+
+```
+sudo sysctl -w net.ipv4.ip_forward=1
+sudo /sbin/iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+sudo service iptables save
+```
+
+**To set up a NAT instance**
 
 1. Create a VPC with two subnets\.
 
-   1. Create a VPC \(see [Create a VPC](working-with-vpcs.md#Create-VPC)\)
+   1. Create a VPC \(see [Create a VPC](working-with-vpcs.md#Create-VPC)\)\.
 
-   1. Create two subnets \(see [Create a subnet](VPC_Internet_Gateway.md#Add_IGW_Create_Subnet)\)
+   1. Create two subnets \(see [Create a subnet](VPC_Internet_Gateway.md#Add_IGW_Create_Subnet)\)\.
 
-   1. Attach an internet gateway to the VPC \(see [Create and attach an internet gateway](VPC_Internet_Gateway.md#Add_IGW_Attach_Gateway)\)
+   1. Attach an internet gateway to the VPC \(see [Create and attach an internet gateway](VPC_Internet_Gateway.md#Add_IGW_Attach_Gateway)\)\.
 
-   1. Create a custom route table that sends traffic destined outside the VPC to the internet gateway, and then associate it with one subnet, making it a public subnet \(see [Create a custom route table](VPC_Internet_Gateway.md#Add_IGW_Routing)\)
+   1. Create a custom route table that sends traffic destined outside the VPC to the internet gateway, and then associate it with one subnet, making it a public subnet \(see [Create a custom route table](VPC_Internet_Gateway.md#Add_IGW_Routing)\)\.
 
 1. Create the NATSG security group \(see [Create the NATSG security group](#NATSG)\)\. You'll specify this security group when you launch the NAT instance\.
 
@@ -108,22 +99,22 @@ To launch a NAT instance into your subnet, use one of the following commands\. F
 
 Define the NATSG security group as described in the following table to enable your NAT instance to receive internet\-bound traffic from instances in a private subnet, as well as SSH traffic from your network\. The NAT instance can also send traffic to the internet, which enables the instances in the private subnet to get software updates\. 
 
+The following are the recommended rules\.
 
-**NATSG: recommended rules**  
 
 | 
 | 
-| `Inbound` | 
+| **Inbound** | 
 | --- |
-|  Source  |  Protocol  |  Port range  |  Comments  | 
-|  `10.0.1.0/24`  |  TCP  |  80  |  Allow inbound HTTP traffic from servers in the private subnet  | 
-|  `10.0.1.0/24`  |  TCP  |  443  |  Allow inbound HTTPS traffic from servers in the private subnet  | 
-|  Public IP address range of your home network   |  TCP  |  22  |  Allow inbound SSH access to the NAT instance from your home network \(over the internet gateway\)  | 
-|   `Outbound`   | 
+| Source | Protocol | Port range | Comments | 
+| Private subnet CIDR | TCP | 80 | Allow inbound HTTP traffic from servers in the private subnet | 
+| Private subnet CIDR | TCP | 443 | Allow inbound HTTPS traffic from servers in the private subnet | 
+| Public IP address range of your network | TCP | 22 | Allow inbound SSH access to the NAT instance from your network \(over the internet gateway\) | 
+| **Outbound** | 
 | --- |
-|  Destination  |  Protocol  |  Port range  |  Comments  | 
-|  `0.0.0.0/0`  |  TCP  |  80  |  Allow outbound HTTP access to the internet  | 
-|  `0.0.0.0/0`  |  TCP  |  443  |  Allow outbound HTTPS access to the internet  | 
+| Destination | Protocol | Port range | Comments | 
+| 0\.0\.0\.0/0 | TCP | 80 | Allow outbound HTTP access to the internet | 
+| 0\.0\.0\.0/0 | TCP | 443 | Allow outbound HTTPS access to the internet | 
 
 **To create the NATSG security group**
 
@@ -197,15 +188,21 @@ The private subnet in your VPC is not associated with a custom route table, ther
 
 1. Select the main route table for your VPC \(the **Main** column displays **Yes**\)\. The details pane displays tabs for working with its routes, associations, and route propagation\.
 
-1. On the **Routes** tab, choose **Edit routes**, specify `0.0.0.0/0` in the **Destination** box, select the instance ID of the NAT instance from the **Target** list, and then choose **Save changes**\. 
+1. On the **Routes** tab, do the following:
 
-1. On the **Subnet associations** tab, choose **Edit subnet associations**, and then select the check box for the private subnet\. Choose **Save associations**\.
+   1. Choose **Edit routes** and then choose **Add route**\.
+
+   1. Specify `0.0.0.0/0` for **Destination** and the instance ID of the NAT instance for **Target**\.
+
+   1. Choose **Save changes**\.
+
+1. On the **Subnet associations** tab, choose **Edit subnet associations**\. Select the check box for the private subnet, and then choose **Save associations**\.
 
 For more information, see [Route tables for your VPC](VPC_Route_Tables.md)\.
 
 ## Test your NAT instance configuration<a name="nat-test-configuration"></a>
 
-After you have launched a NAT instance and completed the configuration steps above, you can perform a test to check if an instance in your private subnet can access the internet through the NAT instance by using the NAT instance as a bastion server\. To do this, update your NAT instance's security group rules to allow inbound and outbound ICMP traffic and allow outbound SSH traffic, launch an instance into your private subnet, configure SSH agent forwarding to access instances in your private subnet, connect to your instance, and then test the internet connectivity\.
+After you have launched a NAT instance and completed the configuration steps above, you can perform a test to check if an instance in your private subnet can access the internet through the NAT instance by using the NAT instance as a bastion server\. To do this, update the NATSG security group rules to allow inbound and outbound ICMP traffic and allow outbound SSH traffic, launch an instance into your private subnet, configure SSH agent forwarding to access instances in your private subnet, connect to your instance, and then test the internet connectivity\.
 
 **To update your NAT instance's security group**
 
@@ -213,7 +210,7 @@ After you have launched a NAT instance and completed the configuration steps abo
 
 1. In the navigation pane, choose **Security Groups**\.
 
-1. Select the checkbox for the security group associated with your NAT instance\.
+1. Select the checkbox for the NATSG security group associated with your NAT instance\.
 
 1. Choose **Edit inbound rules** on the **Inbound rules** tab\.
 
@@ -223,7 +220,7 @@ After you have launched a NAT instance and completed the configuration steps abo
 
 1. Choose **Add rule**\. Choose **SSH** for **Type**\. Choose **Custom** for **Destination** and enter the IP address range of your private subnet \(for example, `10.0.1.0/24`\)\.
 
-1. Choose **Add rule**\. Choose **All ICMP \- IPv4** for **Type**\. Choose **Custom** for **Destination** and enter `0.0.0.0/0`\. Choose **Save rules**\.
+1. Choose **Add rule**\. Choose **All ICMP \- IPv4** for **Type**\. Choose **Anywhere \- IPv4** for **Destination**\. Choose **Save rules**\.
 
 **To launch an instance into your private subnet**
 

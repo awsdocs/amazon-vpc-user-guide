@@ -20,7 +20,7 @@ The following strategies can help you reduce the data transfer charges for your 
 + [Control the use of NAT gateways](#nat-gateway-iam)
 + [Work with NAT gateways](#nat-gateway-working-with)
 + [NAT gateway scenarios](#nat-gateway-scenarios)
-+ [Migrate from a NAT instance](#nat-instance-migrate)
++ [Migrate from a NAT instance to a NAT gateway](#nat-instance-migrate)
 + [API and CLI overview](#nat-gateway-api-cli)
 + [Monitor using CloudWatch](vpc-nat-gateway-cloudwatch.md)
 + [Troubleshoot](nat-gateway-troubleshooting.md)
@@ -225,9 +225,9 @@ The following example demonstrates how to test whether an instance in a private 
 
 Instead of assigning each instance a separate IP address from the IP address range that is allowed to access your on\-premises network, you can create a subnet in your VPC with the allowed IP address range, create a private NAT gateway in the subnet, and route the traffic from your VPC destined for your on\-premises network through the NAT gateway\.
 
-## Migrate from a NAT instance<a name="nat-instance-migrate"></a>
+## Migrate from a NAT instance to a NAT gateway<a name="nat-instance-migrate"></a>
 
-If you're already using a NAT instance, you can replace it with a NAT gateway\. To do this, you can create a NAT gateway in the same subnet as your NAT instance, and then replace the existing route in your route table that points to the NAT instance with a route that points to the NAT gateway\. To use the same Elastic IP address for the NAT gateway that you currently use for your NAT instance, you must first also disassociate the Elastic IP address from your NAT instance and then associate it with your NAT gateway when you create the gateway\.
+If you're already using a NAT instance, we recommend that you replace it with a NAT gateway\. You can create a NAT gateway in the same subnet as your NAT instance, and then replace the existing route in your route table that points to the NAT instance with a route that points to the NAT gateway\. To use the same Elastic IP address for the NAT gateway that you currently use for your NAT instance, you must first disassociate the Elastic IP address from your NAT instance and then associate it with your NAT gateway when you create the gateway\.
 
 If you change your routing from a NAT instance to a NAT gateway, or if you disassociate the Elastic IP address from your NAT instance, any current connections are dropped and have to be re\-established\. Ensure that you do not have any critical tasks \(or any other tasks that operate through the NAT instance\) running\.
 
