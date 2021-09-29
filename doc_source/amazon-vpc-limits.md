@@ -84,7 +84,7 @@ Each EC2 instance limits the number of packets that can be sent to the Amazon Ro
 
 | Name | Default | Adjustable | Comments | 
 | --- | --- | --- | --- | 
-| Active VPC peering connections per VPC | 50 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-7E9ECCDB) \(up to 125\)  |  If you increase this quotas, you should increase the number of entries per route table should be increased accordingly\.  | 
+| Active VPC peering connections per VPC | 50 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-7E9ECCDB) \(up to 125\)  |  If you increase this quota, you should increase the number of entries per route table accordingly\.  | 
 | Outstanding VPC peering connection requests | 25 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-DC9F7029) | This is the quota for the number of outstanding VPC peering connection requests that you've requested from your account\. | 
 | Expiry time for an unaccepted VPC peering connection request | 1 week \(168 hours\) | No |  | 
 
