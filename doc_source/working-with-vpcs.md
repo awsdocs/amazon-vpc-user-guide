@@ -155,7 +155,7 @@ The Amazon Virtual Private Cloud Console provides the status of the request at t
 
 1. Select the VPC, and choose **Actions**, **Edit CIDRs**\.
 
-1. Choose **Add IPv4 CIDR**, and enter the CIDR block to add; for example, `10.2.0.0/16`\. Choose the tick icon\.
+1. Choose **Add new IPv4 CIDR**, and enter the CIDR block to add; for example, `10.2.0.0/16`\. Choose the tick icon\.
 
 1. Choose **Close**\.
 
@@ -179,9 +179,7 @@ You can associate an IPv6 CIDR block with any existing VPC\. The VPC must not ha
 
 1. Select your VPC, choose **Actions**, **Edit CIDRs**\.
 
-1. Choose **Add IPv6 CIDR**\. 
-
-1. Choose **Add IPv6 CIDR**\. 
+1. Choose **Add new IPv6 CIDR**\.
 
 1. For **IPv6 CIDR block**, choose one of the following, and then choose **Select CIDR**:
    + **Amazon\-provided IPv6 CIDR block**: Requests an IPv6 CIDR block from Amazon's pool of IPv6 addresses\.
