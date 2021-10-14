@@ -58,7 +58,7 @@ The main route table for the VPC and subnet C has the following route\.
 
 | Destination | Target | Purpose | 
 | --- | --- | --- | 
-| 10\.0\.0\.0/16 | Local | Local route  | 
+| 10\.0\.0\.0/16 | Local | Local route | 
 
 There is a subnet association with subnet C\. 
 

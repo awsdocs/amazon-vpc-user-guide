@@ -10,7 +10,24 @@ The following rules apply to subnet CIDR reservations:
 + When you reserve more than one range in a subnet for Prefix Delegation, and Prefix Delegation is configured for automatic assignment, we randomly choose an IP address to assign to the network interface\.
 + When you remove a reservation, the IP addresses that are assigned to resources are not changed\. Only the IP addresses that are not in use become available\.
 
-## Work with subnet CIDR reservations<a name="work-with-subnet-cidr-reservations"></a>
+## Work with subnet CIDR reservations using the console<a name="edit-subnet-cidr-reservations"></a>
+
+You can create and manage subnet CIDR reservations as follows\.
+
+**To edit subnet CIDR reservations**
+
+1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
+
+1. In the navigation pane, choose **Subnets**\.
+
+1. Select the subnet\.
+
+1. Choose **Actions**, **Edit CIDR reservations** and do the following:
+   + To add an IPv4 CIDR reservation, choose **IPv4**, **Add IPv4 CIDR reservation**\. Choose the reservation type, enter the CIDR range, and choose **Add**\.
+   + To add an IPv6 CIDR reservation, choose **IPv6**, **Add IPv6 CIDR reservation**\. Choose the reservation type, enter the CIDR range, and choose **Add**\.
+   + To remove a CIDR reservation, choose **Remove** at the end of the entry\.
+
+## Work with subnet CIDR reservations using the AWS CLI<a name="work-with-subnet-cidr-reservations"></a>
 
 You can use the AWS CLI to create and manage subnet CIDR reservations\.
 

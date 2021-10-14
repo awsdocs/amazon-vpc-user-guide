@@ -40,7 +40,7 @@ In this example, no data was recorded during the aggregation interval\.
 2 123456789010 eni-1235b8ca123456789 - - - - - - - 1431280876 1431280934 - NODATA
 ```
 
-In this example, records were skipped during the aggregation interval\.
+In this example, records were skipped during the aggregation interval\. VPC Flog Logs skips records when it can't capture flow log data during an aggregation interval because it exceeds internal capacity\. A single skipped record can represent multiple flows that were not captured for the network interface during the aggregation interval\.
 
 ```
 2 123456789010 eni-11111111aaaaaaaaa - - - - - - - 1431280876 1431280934 - SKIPDATA

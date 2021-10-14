@@ -51,9 +51,7 @@ When you use the middlebox routing wizard, the following tags are associated wit
 + A tag with a Key set to "Origin" and a Value set to "Middlebox wizard"\.
 + A tag with a Key set to "date\_created" and a Value set to the creation time, for example, "2021\-02\-18T22:25:49\.137Z "\.
 
-## Internet gateway route table<a name="internet-gateway-subnet-route-table"></a>
-
-**Subnet route table**
+## Subnet route table<a name="internet-gateway-subnet-route-table"></a>
 
 The route table for the middlebox subnet \(Subnet C\) contains the following routes:
 

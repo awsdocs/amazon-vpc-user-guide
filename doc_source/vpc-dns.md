@@ -2,9 +2,9 @@
 
 Domain Name System \(DNS\) is a standard by which names used on the internet are resolved to their corresponding IP addresses\. A DNS hostname is a name that uniquely and absolutely names a computer; it's composed of a host name and a domain name\. DNS servers resolve DNS hostnames to their corresponding IP addresses\. 
 
-Public IPv4 addresses enable communication over the internet, while private IPv4 addresses enable communication within the network of the instance \(either EC2\-Classic or a VPC\)\. For more information, see [IP Addressing in your VPC](vpc-ip-addressing.md)\.
+Public IPv4 addresses enable communication over the internet, while private IPv4 addresses enable communication within the network of the instance\. For more information, see [IP Addressing in your VPC](vpc-ip-addressing.md)\.
 
-We provide a DNS server \([the Amazon Route 53 Resolver](VPC_DHCP_Options.md#AmazonDNS)\) for your VPC\. To use your own DNS server, create a new set of DHCP options for your VPC\. For more information, see [DHCP options sets for your VPC](VPC_DHCP_Options.md)\.
+Amazon provides a DNS server \([the Amazon Route 53 Resolver](VPC_DHCP_Options.md#AmazonDNS)\) for your VPC\. To use your own DNS server instead, create a new set of DHCP options for your VPC\. For more information, see [DHCP options sets for your VPC](VPC_DHCP_Options.md)\.
 
 **Topics**
 + [DNS hostnames](#vpc-dns-hostnames)
@@ -16,40 +16,40 @@ We provide a DNS server \([the Amazon Route 53 Resolver](VPC_DHCP_Options.md#Am
 
 ## DNS hostnames<a name="vpc-dns-hostnames"></a>
 
-We provide your instance in a VPC with public and private DNS hostnames that correspond to the public IPv4 and private IPv4 addresses for the instance\. We do not provide DNS hostnames for IPv6 addresses\.
+When you launch an instance, it always receives a private IPv4 address and a private DNS hostname that corresponds to its private IPv4 address\. If your instance has a public IPv4 address, the DNS attributes for its VPC determines whether it receives a public DNS hostname that corresponds to the public IPv4 address\. For more information, see [DNS attributes in your VPC](#vpc-dns-support)\.
+
+With the Amazon provided DNS server enabled, DNS hostnames are assigned and resolved as follows\.
 
 **Private DNS hostnames**  
-A private \(internal\) DNS hostname resolves to the private IPv4 address of the instance\. The private DNS hostname takes the form `ip-private-ipv4-address.ec2.internal` for the `us-east-1` Region, and `ip-private-ipv4-address.region.compute.internal` for other Regions \(where `private-ipv4-address` is the reverse lookup IP address\)\. You can use the private DNS hostname for communication between instances in the same network, but we can't resolve the DNS hostname outside the network that the instance is in\.
-
-When you launch an instance into a VPC, it always receives a private DNS hostname\.
+A private \(internal\) DNS hostname for an instance resolves to the private IPv4 address of the instance\. Private DNS hostnames take the form `ip-private-ipv4-address.ec2.internal` for the `us-east-1` Region, and `ip-private-ipv4-address.region.compute.internal` for other Regions \(where *private\-ipv4\-address* is the reverse lookup IP address\)\. You can use private DNS hostnames for communication between instances\. For more information, see [Private IPv4 addresses and internal DNS hostnames](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#concepts-public-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **Public DNS hostnames**  
-A public \(external\) DNS hostname takes the form `ec2-public-ipv4-address.compute-1.amazonaws.com` for the `us-east-1` Region, and `ec2-public-ipv4-address.region.compute.amazonaws.com` for other Regions\. The Amazon DNS server resolves a public DNS hostname to the public IPv4 address of the instance outside the network of the instance, and to the private IPv4 address of the instance from within the network of the instance\. For more information, see [Public IPv4 addresses and external DNS hostnames](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#concepts-public-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.
-
-When you launch an instance into a VPC, it receives a public DNS hostname if it has a public IPv4 address, and if both the DNS hostnames and DNS support attributes for your VPC are set to `true`\. For more information, see [DNS attributes in your VPC](#vpc-dns-support)\.
+A public \(external\) DNS hostname for an instance resolves to the public IPv4 address of the instance outside the network of the instance, and to the private IPv4 address of the instance from within the network of the instance\. Public DNS hostnames takes the form `ec2-public-ipv4-address.compute-1.amazonaws.com` for the `us-east-1` Region, and `ec2-public-ipv4-address.region.compute.amazonaws.com` for other Regions\. For more information, see [Public IPv4 addresses and external DNS hostnames](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#concepts-public-addresses) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 ## DNS attributes in your VPC<a name="vpc-dns-support"></a>
 
-Your VPC has attributes that determine whether instances launched in the VPC receive public DNS hostnames that correspond to their public IP addresses, and whether DNS resolution through the Amazon DNS server is supported for the VPC\. 
+The following VPC attributes determine the DNS support provided for your VPC\. If both attributes are enabled, an instance launched into the VPC receives a public DNS hostname if it is assigned a public IPv4 address or an Elastic IP address at creation\. If you enable both attributes for a VPC that didn't previously have them both enabled, instances that were already launched into that VPC receive public DNS hostnames if they have a public IPv4 address or an Elastic IP address\.
+
+To check whether these attributes are enabled for your VPC, see [View and update DNS attributes for your VPC](#vpc-dns-updating)\.
 
 
 | Attribute | Description | 
 | --- | --- | 
-| enableDnsHostnames |  Indicates whether instances with public IP addresses get corresponding public DNS hostnames\. If this attribute is `true`, instances in the VPC get public DNS hostnames, but only if the `enableDnsSupport` attribute is also set to `true`\.  | 
-| enableDnsSupport |  Indicates whether the DNS resolution is supported\. If this attribute is `false`, the Amazon Route 53 Resolver server that resolves public DNS hostnames to IP addresses is not enabled\. If this attribute is `true`, queries to the Amazon provided DNS server at the 169\.254\.169\.253 IPv4 address \(or the reserved IP address at the base of the VPC IPv4 network range plus two\) and the fd00:ec2::253 IPv6 address will succeed\. The IPv6 address is only accessible on [EC2 instances built on the Nitro System](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances)\. For more information, see [Amazon DNS server](VPC_DHCP_Options.md#AmazonDNS)\.  | 
+| enableDnsHostnames |  Determines whether the VPC supports assigning public DNS hostnames to instances with public IP addresses\. If both DNS attributes are `true`, instances in the VPC get public DNS hostnames\. The default for this attribute is `false` unless the VPC is a default VPC or the VPC was created using the VPC console wizard\.  | 
+| enableDnsSupport |  Determines whether the VPC supports DNS resolution through the Amazon provided DNS server\. If this attribute is `true`, queries to the Amazon provided DNS server succeed\. For more information, see [Amazon DNS server](VPC_DHCP_Options.md#AmazonDNS)\. The default for this attribute is `true`, no matter how the VPC is created\.  | 
 
-The following rules apply:
+**Rules and considerations**
+
+The following rules apply\.
 + If both attributes are set to `true`, the following occurs:
-  + Instances with a public IP address receive corresponding public DNS hostnames\.
+  + Instances with public IP addresses receive corresponding public DNS hostnames\.
   + The Amazon Route 53 Resolver server can resolve Amazon\-provided private DNS hostnames\.
-+ If either or both of the attributes is set to `false`, the following occurs:
-  + Instances with a public IP address do not receive corresponding public DNS hostnames\.
++ If at least one of the attributes is set to `false`, the following occurs:
+  + Instances with public IP addresses do not receive corresponding public DNS hostnames\.
   + The Amazon Route 53 Resolver cannot resolve Amazon\-provided private DNS hostnames\.
   + Instances receive custom private DNS hostnames if there is a custom domain name in the [DHCP options set](VPC_DHCP_Options.md)\. If you are not using the Amazon Route 53 Resolver server, your custom domain name servers must resolve the hostname as appropriate\.
-+ If you use custom DNS domain names defined in a private hosted zone in Amazon Route 53 , or use private DNS with interface VPC endpoints \(AWS PrivateLink\), you must set both the `enableDnsHostnames` and `enableDnsSupport` attributes to `true`\.
++ If you use custom DNS domain names defined in a private hosted zone in Amazon Route 53, or use private DNS with interface VPC endpoints \(AWS PrivateLink\), you must set both the `enableDnsHostnames` and `enableDnsSupport` attributes to `true`\.
 + The Amazon Route 53 Resolver can resolve private DNS hostnames to private IPv4 addresses for all address spaces, including where the IPv4 address range of your VPC falls outside of the private IPv4 addresses ranges specified by [RFC 1918](https://tools.ietf.org/html/rfc1918)\. However, if you created your VPC before October 2016, the Amazon Route 53 Resolver does not resolve private DNS hostnames if your VPC's IPv4 address range falls outside of these ranges\. To enable support for this, contact [AWS Support](https://aws.amazon.com/contact-us/)\.
-
-By default, both attributes are set to `true` in a default VPC or a VPC created by the VPC wizard\. By default, only the `enableDnsSupport` attribute is set to `true` in a VPC created any other way\. To check if your VPC is enabled for these attributes, see [View and update DNS attributes for your VPC](#vpc-dns-updating)\. If you enable DNS hostnames and DNS support in a VPC that didn't previously support them, an instance that you already launched into that VPC gets a public DNS hostname if it has a public IPv4 address or an Elastic IP address\.
 
 ## DNS quotas<a name="vpc-dns-limits"></a>
 
@@ -137,4 +137,4 @@ To access resources using custom DNS domain names, you must be connected to an i
 You can access a private hosted zone from an EC2\-Classic instance that is linked to your VPC using ClassicLink, provided your VPC is enabled for ClassicLink DNS support\. For more information, see [Enabling ClassicLink DNS support](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html#classiclink-enable-dns-support) in the *Amazon EC2 User Guide for Linux Instances*\. Otherwise, private hosted zones do not support transitive relationships outside of the VPC; for example, you cannot access your resources using their custom private DNS names from the other side of a VPN connection\. For more information, see [ClassicLink limitations](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html#classiclink-limitations) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **Important**  
-If you use custom DNS domain names defined in a private hosted zone in Amazon Route 53 , the `enableDnsHostnames` and `enableDnsSupport` attributes must be set to `true`\.
+If you use custom DNS domain names defined in a private hosted zone in Amazon Route 53, the `enableDnsHostnames` and `enableDnsSupport` attributes must be set to `true`\.

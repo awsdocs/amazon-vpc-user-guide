@@ -4,6 +4,7 @@ The following table describes the important changes in each release of the *Amaz
 
 | Change | Description | Date | 
 | --- |--- |--- |
+| [VPC Flow Logs delivery options to Amazon S3](#WhatsNew) | You can specify the Apache Parquet log file format, hourly partitions, and Hive\-compatible S3 prefixes\. | October 13, 2021 | 
 | [Amazon EC2 Global View](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Filtering.html#global-view) | Amazon EC2 Global View enables you to view VPCs, subnets, instances, security groups, and volumes across multiple AWS Regions in a single console\. | September 1, 2021 | 
 | [More specific routes](#WhatsNew) | You can add a route to your route tables that is more specific than the local route\. You can use more specific routes to redirect traffic between subnets within a VPC \(East\-West traffic\) to a middlebox appliance\. You can set the destination of a route to match an entire IPv4 or IPv6 CIDR block of a subnet in your VPC\. | August 30, 2021 | 
 | [Resource IDs and tagging support for security group rules](#WhatsNew) | You can refer to security group rules by resource ID\. You can also add tags to your security group rules\. | July 7, 2021 | 

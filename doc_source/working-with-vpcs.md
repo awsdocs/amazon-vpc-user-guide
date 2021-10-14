@@ -153,13 +153,11 @@ The Amazon Virtual Private Cloud Console provides the status of the request at t
 
 1. In the navigation pane, choose **Your VPCs**\.
 
-1. Select the VPC, and choose **Actions**, **Edit CIDRs**\.
+1. Select the VPC, and then choose **Actions**, **Edit CIDRs**\.
 
-1. Choose **Add new IPv4 CIDR**, and enter the CIDR block to add; for example, `10.2.0.0/16`\. Choose the tick icon\.
+1. Choose **Add new IPv4 CIDR**\. Enter the CIDR block; for example, `10.2.0.0/16`\. Choose **Save**\.
 
 1. Choose **Close**\.
-
-Alternatively, you can use a command line tool\.
 
 **To add a CIDR block using a command line tool**
 + [associate\-vpc\-cidr\-block](https://docs.aws.amazon.com/cli/latest/reference/ec2/associate-vpc-cidr-block.html) \(AWS CLI\)
@@ -177,21 +175,17 @@ You can associate an IPv6 CIDR block with any existing VPC\. The VPC must not ha
 
 1. In the navigation pane, choose **Your VPCs**\.
 
-1. Select your VPC, choose **Actions**, **Edit CIDRs**\.
+1. Select the VPC, and then choose **Actions**, **Edit CIDRs**\.
 
 1. Choose **Add new IPv6 CIDR**\.
 
-1. For **IPv6 CIDR block**, choose one of the following, and then choose **Select CIDR**:
-   + **Amazon\-provided IPv6 CIDR block**: Requests an IPv6 CIDR block from Amazon's pool of IPv6 addresses\.
-   + **IPv6 CIDR owned by me**: \(BYOIP\) Allocates an IPv6 CIDR block from your IPv6 address pool\. For **Pool,** choose the IPv6 address pool from which to allocate the IPv6 CIDR block\.
+1. For **IPv6 CIDR block**, do one of the following:
+   + Choose **Amazon\-provided IPv6 CIDR block** to request an IPv6 CIDR block from Amazon's pool of IPv6 addresses\. For **Network border group**, select the group from where AWS advertises the IP addresses\.
+   + Choose **IPv6 CIDR owned by me** to allocate an IPv6 CIDR block from your IPv6 address pool\. For **Pool**, choose the IPv6 address pool from which to allocate the IPv6 CIDR block\.
 
-1. If you selected **Amazon\-provided IPv6 CIDR block**, from **Network Border Group**, select the group from where AWS advertises the IP addresses\.
-
-1. Choose **Select CIDR**\. 
+1. Choose **Select CIDR**\.
 
 1. Choose **Close**\.
-
-Alternatively, you can use a command line tool\.
 
 **To associate an IPv6 CIDR block with a VPC using a command line tool**
 + [associate\-vpc\-cidr\-block](https://docs.aws.amazon.com/cli/latest/reference/ec2/associate-vpc-cidr-block.html) \(AWS CLI\)

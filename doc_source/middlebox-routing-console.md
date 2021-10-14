@@ -4,7 +4,7 @@ If you want to configure fine\-grain control over the routing path of traffic en
 
 The middlebox routing wizard can help you configure routing for the following scenarios:
 + Routing traffic to a middlebox appliance, for example, an Amazon EC2 instance that's configured as a security appliance\.
-+ Routing traffic to a Gateway Load Balancer\. For more information, see [Gateway Load Balancers](https://docs.aws.amazon.com/lasticloadbalancing/latest/gateway/introduction.html) in *Elastic Load Balancing Gateway Load Balancers\.*
++ Routing traffic to a Gateway Load Balancer\. For more information, see the [User Guide for Gateway Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/)\.
 
 For more information, see [Examples: Middlebox routing](middlebox-routing-examples.md)\.
 
@@ -17,7 +17,7 @@ For more information, see [Examples: Middlebox routing](middlebox-routing-exampl
 ## Middlebox routing wizard prerequisites<a name="routing-console-rules"></a>
 
 Review the [Middlebox routing wizard considerations](#console-routes-considerations)\. Then, make sure that you have the following information before you use the middlebox routing wizard\.
-+ The VPC
++ The VPC\.
 + The resource where traffic originates from or enters the VPC, for example, an internet gateway, virtual private gateway, or network interface\.
 + The middlebox network interface or Gateway Load Balancer endpoint\.
 + The destination subnet for the traffic\.
