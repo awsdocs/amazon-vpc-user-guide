@@ -53,12 +53,12 @@ For more information about IP addressing, see [IP Addressing in your VPC](vpc-ip
 
 **Topics**
 + [VPC and subnet sizing for IPv4](#vpc-sizing-ipv4)
-+ [Add IPv4 CIDR blocks to a VPC](#vpc-resize)
++ [Manage IPv4 CIDR blocks for a VPC](#vpc-resize)
 + [VPC and subnet sizing for IPv6](#vpc-sizing-ipv6)
 
 ### VPC and subnet sizing for IPv4<a name="vpc-sizing-ipv4"></a>
 
-When you create a VPC, you must specify an IPv4 CIDR block for the VPC\. The allowed block size is between a `/16` netmask \(65,536 IP addresses\) and `/28` netmask \(16 IP addresses\)\. After you've created your VPC, you can associate secondary CIDR blocks with the VPC\. For more information, see [Add IPv4 CIDR blocks to a VPC](#vpc-resize)\. 
+When you create a VPC, you must specify an IPv4 CIDR block for the VPC\. The allowed block size is between a `/16` netmask \(65,536 IP addresses\) and `/28` netmask \(16 IP addresses\)\. After you've created your VPC, you can associate secondary CIDR blocks with the VPC\. For more information, see [Manage IPv4 CIDR blocks for a VPC](#vpc-resize)\. 
 
 When you create a VPC, we recommend that you specify a CIDR block from the private IPv4 address ranges as specified in [RFC 1918](http://www.faqs.org/rfcs/rfc1918.html):
 
@@ -81,15 +81,15 @@ For example, if you create a VPC with CIDR block `10.0.0.0/24`, it supports 256 
 There are tools available on the internet to help you calculate and create IPv4 subnet CIDR blocks\. You can find tools that suit your needs by searching for terms such as 'subnet calculator' or 'CIDR calculator'\. Your network engineering group can also help you determine the CIDR blocks to specify for your subnets\.
 
 The first four IP addresses and the last IP address in each subnet CIDR block are not available for you to use, and cannot be assigned to an instance\. For example, in a subnet with CIDR block `10.0.0.0/24`, the following five IP addresses are reserved: 
-+ `10.0.0.0`: Network address\.
-+ `10.0.0.1`: Reserved by AWS for the VPC router\.
-+ `10.0.0.2`: Reserved by AWS\. The IP address of the DNS server is the base of the VPC network range plus two\. For VPCs with multiple CIDR blocks, the IP address of the DNS server is located in the primary CIDR\. We also reserve the base of each subnet range plus two for all CIDR blocks in the VPC\. For more information, see [Amazon DNS server](VPC_DHCP_Options.md#AmazonDNS)\.
-+ `10.0.0.3`: Reserved by AWS for future use\.
-+ `10.0.0.255`: Network broadcast address\. We do not support broadcast in a VPC, therefore we reserve this address\. 
++ 10\.0\.0\.0: Network address\.
++ 10\.0\.0\.1: Reserved by AWS for the VPC router\.
++ 10\.0\.0\.2: Reserved by AWS\. The IP address of the DNS server is the base of the VPC network range plus two\. For VPCs with multiple CIDR blocks, the IP address of the DNS server is located in the primary CIDR\. We also reserve the base of each subnet range plus two for all CIDR blocks in the VPC\. For more information, see [Amazon DNS server](VPC_DHCP_Options.md#AmazonDNS)\.
++ 10\.0\.0\.3: Reserved by AWS for future use\.
++ 10\.0\.0\.255: Network broadcast address\. We do not support broadcast in a VPC, therefore we reserve this address\. 
 
 If you create a VPC or subnet using a command line tool or the Amazon EC2 API, the CIDR block is automatically modified to its canonical form\. For example, if you specify `100.68.0.18/18` for the CIDR block, we create a CIDR block of `100.68.0.0/18`\.
 
-### Add IPv4 CIDR blocks to a VPC<a name="vpc-resize"></a>
+### Manage IPv4 CIDR blocks for a VPC<a name="vpc-resize"></a>
 
 You can associate secondary IPv4 CIDR blocks with your VPC\. When you associate a CIDR block with your VPC, a route is automatically added to your VPC route tables to enable routing within the VPC \(the destination is the CIDR block and the target is `local`\)\. 
 
@@ -112,65 +112,34 @@ To add a CIDR block to your VPC, the following rules apply:
 + If you're using AWS Direct Connect to connect to multiple VPCs through a Direct Connect gateway, the VPCs that are associated with the Direct Connect gateway must not have overlapping CIDR blocks\. If you add a CIDR block to one of the VPCs that's associated with the Direct Connect gateway, ensure that the new CIDR block does not overlap with an existing CIDR block of any other associated VPC\. For more information, see [Direct Connect gateways](https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-gateways.html) in the *AWS Direct Connect User Guide*\.
 + When you add or remove a CIDR block, it can go through various states: `associating` \| `associated` \| `disassociating` \| `disassociated` \| `failing` \| `failed`\. The CIDR block is ready for you to use when it's in the `associated` state\.
 
+You can disassociate a CIDR block that you've associated with your VPC; however, you cannot disassociate the CIDR block with which you originally created the VPC \(the primary CIDR block\)\. To view the primary CIDR for your VPC in the Amazon VPC console, choose **Your VPCs**, select the checkbox for your VPC, and choose the **CIDRs** tab\. To view the primary CIDR using the AWS CLI, use the [describe\-vpcs](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpcs.html) command as follows\. The primary CIDR is returned in the top\-level `CidrBlock element`\.
+
+```
+aws ec2 describe-vpcs --vpc-id vpc-1a2b3c4d --query Vpcs[*].CidrBlock
+```
+
+The following is example output\.
+
+```
+[
+    "10.0.0.0/16", 
+]
+```
+
+#### IPv4 CIDR block association restrictions<a name="add-cidr-block-restrictions"></a>
+
 The following table provides an overview of permitted and restricted CIDR block associations, which depend on the IPv4 address range in which your VPC's primary CIDR block resides\.
 
 
-**IPv4 CIDR block association restrictions**  
-
-| IP address range in which your primary VPC CIDR block resides | Restricted CIDR block associations | Permitted CIDR block associations | 
+| IP address range of the primary CIDR block | Restricted associations | Permitted associations | 
 | --- | --- | --- | 
-|  10\.0\.0\.0/8  |  CIDR blocks from other RFC 1918**\*** ranges \(172\.16\.0\.0/12 and 192\.168\.0\.0/16\)\. If your primary CIDR falls within the 10\.0\.0\.0/15 range, you cannot add a CIDR block from the 10\.0\.0\.0/16 range\. A CIDR block from the 198\.19\.0\.0/16 range\.  |  Any other CIDR from the 10\.0\.0\.0/8 range that's not restricted\. Any publicly routable IPv4 CIDR block \(non\-RFC 1918\), or a CIDR block from the 100\.64\.0\.0/10 range\.  | 
-|  172\.16\.0\.0/12  |  CIDR blocks from other RFC 1918**\*** ranges \(10\.0\.0\.0/8 and 192\.168\.0\.0/16\)\. A CIDR block from the 172\.31\.0\.0/16 range\. A CIDR block from the 198\.19\.0\.0/16 range\.  |  Any other CIDR from the 172\.16\.0\.0/12 range that's not restricted\. Any publicly routable IPv4 CIDR block \(non\-RFC 1918\), or a CIDR block from the 100\.64\.0\.0/10 range\.  | 
-|  192\.168\.0\.0/16  |  CIDR blocks from other RFC 1918**\*** ranges \(172\.16\.0\.0/12 and 10\.0\.0\.0/8\)\. A CIDR block from the 198\.19\.0\.0/16 range\.  |  Any other CIDR from the 192\.168\.0\.0/16 range\. Any publicly routable IPv4 CIDR block \(non\-RFC 1918\), or a CIDR block from the 100\.64\.0\.0/10 range\.  | 
-|  198\.19\.0\.0/16  |  CIDR blocks from RFC 1918**\*** ranges\.  |  Any publicly routable IPv4 CIDR block \(non\-RFC 1918\), or a CIDR block from the 100\.64\.0\.0/10 range\.  | 
-|  Publicly routable CIDR block \(non\-RFC 1918\), or a CIDR block from the 100\.64\.0\.0/10 range\.  |  CIDR blocks from the RFC 1918**\*** ranges\. A CIDR block from the 198\.19\.0\.0/16 range\.  |  Any other publicly routable IPv4 CIDR block \(non\-RFC 1918\), or a CIDR block from the 100\.64\.0\.0/10 range\.  | 
+|  10\.0\.0\.0/8  |  CIDR blocks from other RFC 1918\* ranges \(172\.16\.0\.0/12 and 192\.168\.0\.0/16\)\. If your primary CIDR block is from the 10\.0\.0\.0/15 range \(10\.0\.0\.0 to 10\.1\.255\.255\), you cannot add a CIDR block from the 10\.0\.0\.0/16 range \(10\.0\.0\.0 to 10\.0\.255\.255\)\. CIDR blocks from the 198\.19\.0\.0/16 range\.  |  Any other CIDR block from the 10\.0\.0\.0/8 range that's not restricted\. Any publicly routable IPv4 CIDR block \(non\-RFC 1918\), or a CIDR block from the 100\.64\.0\.0/10 range\.  | 
+|  172\.16\.0\.0/12  |  CIDR blocks from other RFC 1918\* ranges \(10\.0\.0\.0/8 and 192\.168\.0\.0/16\)\. CIDR blocks from the 172\.31\.0\.0/16 range\. CIDR blocks from the 198\.19\.0\.0/16 range\.  |  Any other CIDR block from the 172\.16\.0\.0/12 range that's not restricted\. Any publicly routable IPv4 CIDR block \(non\-RFC 1918\), or a CIDR block from the 100\.64\.0\.0/10 range\.  | 
+|  192\.168\.0\.0/16  |  CIDR blocks from other RFC 1918\* ranges \(10\.0\.0\.0/8 and 172\.16\.0\.0/12\)\. CIDR blocks from the 198\.19\.0\.0/16 range\.  |  Any other CIDR block from the 192\.168\.0\.0/16 range\. Any publicly routable IPv4 CIDR block \(non\-RFC 1918\), or a CIDR block from the 100\.64\.0\.0/10 range\.  | 
+|  198\.19\.0\.0/16  |  CIDR blocks from the RFC 1918\* ranges\.  |  Any publicly routable IPv4 CIDR block \(non\-RFC 1918\), or a CIDR block from the 100\.64\.0\.0/10 range\.  | 
+|  Publicly routable CIDR block \(non\-RFC 1918\), or a CIDR block from the 100\.64\.0\.0/10 range  |  CIDR blocks from the RFC 1918\* ranges\. CIDR blocks from the 198\.19\.0\.0/16 range\.  |  Any other publicly routable IPv4 CIDR block \(non\-RFC 1918\), or a CIDR block from the 100\.64\.0\.0/10 range\.  | 
 
-**\***RFC 1918 ranges are the private IPv4 address ranges specified in [RFC 1918](http://www.faqs.org/rfcs/rfc1918.html)\.
-
-You can disassociate a CIDR block that you've associated with your VPC; however, you cannot disassociate the CIDR block with which you originally created the VPC \(the primary CIDR block\)\. To view the primary CIDR for your VPC in the Amazon VPC console, choose **Your VPCs**, select your VPC, and take note of the first entry under **CIDR blocks**\. Alternatively, you can use the [describe\-vpcs](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpcs.html) command:
-
-```
-aws ec2 describe-vpcs --vpc-id vpc-1a2b3c4d
-```
-
-The primary CIDR is returned in the top\-level `CidrBlock` element\.
-
-```
-{
-    "Vpcs": [
-        {
-            "VpcId": "vpc-1a2b3c4d", 
-            "InstanceTenancy": "default", 
-            "Tags": [
-                {
-                    "Value": "MyVPC", 
-                    "Key": "Name"
-                }
-            ], 
-            "CidrBlockAssociations": [
-                {
-                    "AssociationId": "vpc-cidr-assoc-3781aa5e", 
-                    "CidrBlock": "10.0.0.0/16", 
-                    "CidrBlockState": {
-                        "State": "associated"
-                    }
-                }, 
-                {
-                    "AssociationId": "vpc-cidr-assoc-0280ab6b", 
-                    "CidrBlock": "10.2.0.0/16", 
-                    "CidrBlockState": {
-                        "State": "associated"
-                    }
-                }
-            ], 
-            "State": "available", 
-            "DhcpOptionsId": "dopt-e0fe0e88", 
-            "CidrBlock": "10.0.0.0/16", 
-            "IsDefault": false
-        }
-    ]
-}
-```
+\* RFC 1918 ranges are the private IPv4 address ranges specified in [RFC 1918](http://www.faqs.org/rfcs/rfc1918.html)\.
 
 ### VPC and subnet sizing for IPv6<a name="vpc-sizing-ipv6"></a>
 

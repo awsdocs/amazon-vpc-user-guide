@@ -142,6 +142,7 @@ Flow logs do not capture all IP traffic\. The following types of traffic are not
 + Traffic to and from `169.254.169.254` for instance metadata\.
 + Traffic to and from `169.254.169.123` for the Amazon Time Sync Service\.
 + DHCP traffic\.
++ Mirrored traffic\.
 + Traffic to the reserved IP address for the default VPC router\.
 + Traffic between an endpoint network interface and a Network Load Balancer network interface\.
 

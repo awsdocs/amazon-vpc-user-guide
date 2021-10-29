@@ -12,7 +12,7 @@ For more information about multiple account logging, see [Central Logging](http:
 + [Flow log files](#flow-logs-s3-path)
 + [IAM policy for IAM principals that publish flow logs to Amazon S3](#flow-logs-s3-iam)
 + [Amazon S3 bucket permissions for flow logs](#flow-logs-s3-permissions)
-+ [Required CMK key policy for use with SSE\-KMS](#flow-logs-s3-cmk-policy)
++ [Required key policy for use with SSE\-KMS](#flow-logs-s3-cmk-policy)
 + [Amazon S3 log file permissions](#flow-logs-file-permissions)
 + [Create a flow log that publishes to Amazon S3](#flow-logs-s3-create-flow-log)
 + [Process flow log records in Amazon S3](#process-records-s3)
@@ -156,13 +156,13 @@ If the user creating the flow log does not own the bucket, or does not have the 
 }
 ```
 
-## Required CMK key policy for use with SSE\-KMS<a name="flow-logs-s3-cmk-policy"></a>
+## Required key policy for use with SSE\-KMS<a name="flow-logs-s3-cmk-policy"></a>
 
-You can protect the data in your Amazon S3 bucket by enabling either Server\-Side Encryption with Amazon S3\-Managed Keys \(SSE\-S3\) or Server\-Side Encryption with Customer Master Keys \(CMKs\) Stored in AWS Key Management Service \(SSE\-KMS\)\. For more information, see [Protecting data using server\-side encryption](https://docs.aws.amazon.com/AmazonS3/latest/userguide/serv-side-encryption.html) in the *Amazon S3 User Guide*\.
+You can protect the data in your Amazon S3 bucket by enabling either Server\-Side Encryption with Amazon S3\-Managed Keys \(SSE\-S3\) or Server\-Side Encryption with KMS Keys \(SSE\-KMS\)\. For more information, see [Protecting data using server\-side encryption](https://docs.aws.amazon.com/AmazonS3/latest/userguide/serv-side-encryption.html) in the *Amazon S3 User Guide*\.
 
-With SSE\-KMS, you can use either an AWS managed CMK or a customer managed CMK\. With an AWS managed CMK, you can't use cross\-account delivery\. Flow logs are delivered from the log delivery account, so you must grant access for cross\-account delivery\. To grant cross\-account access to your S3 bucket, use a customer managed CMK and specify the Amazon Resource Name \(ARN\) of the customer managed CMK when you enable bucket encryption\. For more information, see [Specifying server\-side encryption with AWS KMS](https://docs.aws.amazon.com/AmazonS3/latest/userguide/specifying-kms-encryption.html) in the *Amazon S3 User Guide*\.
+With SSE\-KMS, you can use either an AWS managed key or a customer managed key\. With an AWS managed key, you can't use cross\-account delivery\. Flow logs are delivered from the log delivery account, so you must grant access for cross\-account delivery\. To grant cross\-account access to your S3 bucket, use a customer managed key and specify the Amazon Resource Name \(ARN\) of the customer managed key when you enable bucket encryption\. For more information, see [Specifying server\-side encryption with AWS KMS](https://docs.aws.amazon.com/AmazonS3/latest/userguide/specifying-kms-encryption.html) in the *Amazon S3 User Guide*\.
 
-When you use SSE\-KMS with a customer managed CMK, you must add the following to the key policy for your CMK \(not the bucket policy for your S3 bucket\), so that VPC Flow Logs can write to your S3 bucket\.
+When you use SSE\-KMS with a customer managed key, you must add the following to the key policy for your key \(not the bucket policy for your S3 bucket\), so that VPC Flow Logs can write to your S3 bucket\.
 
 ```
 {

@@ -23,7 +23,7 @@ The following rules apply to customer\-managed prefix lists:
 + A prefix list applies only to the Region where you created it\.
 + When you create a prefix list, you must specify the maximum number of entries that the prefix list can support\.
 + When you reference a prefix list in a resource, the maximum number of entries for the prefix lists counts against the quota for the number of entries for the resource\. For example, if you create a prefix list with 20 maximum entries and you reference that prefix list in a security group rule, this counts as 20 security group rules\.
-+ When you reference a prefix list in a route table, route priority rules apply\. For more information, see [Route priority for prefix lists](VPC_Route_Tables.md#route-priority-managed-prefix-list)\.
++ When you reference a prefix list in a route table, route priority rules apply\. For more information, see [Route priority and prefix lists](VPC_Route_Tables.md#route-priority-managed-prefix-list)\.
 + You can modify a prefix list\. When you add or remove entries, we create a new version of the prefix list\. Resources that reference the prefix always use the current \(latest\) version\. You can restore the entries from a previous version of the prefix list, which also creates a new version\.
 + There are quotas related to prefix lists\. For more information, see [Customer\-managed prefix lists](amazon-vpc-limits.md#vpc-quotas-managed-prefix-lists)\.
 

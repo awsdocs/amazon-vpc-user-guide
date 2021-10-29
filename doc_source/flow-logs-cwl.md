@@ -184,9 +184,9 @@ In this example, you have a flow log for `eni-1a2b3c4d`\. You want to create an 
 
 1. Open the CloudWatch console at [https://console\.aws\.amazon\.com/cloudwatch/](https://console.aws.amazon.com/cloudwatch/)\.
 
-1. In the navigation pane, choose **Logs**\.
+1. In the navigation pane, choose **Logs**, **Log groups**\.
 
-1. Choose the associated **Metric Filters** value for the log group for your flow log, and then choose **Add Metric Filter**\.
+1. Select the check box for the log group, and then choose **Actions**, **Create metric filter**\.
 
 1. For **Filter Pattern**, enter the following\.
 
@@ -194,20 +194,28 @@ In this example, you have a flow log for `eni-1a2b3c4d`\. You want to create an 
    [version, account, eni, source, destination, srcport, destport="22", protocol="6", packets, bytes, windowstart, windowend, action="REJECT", flowlogstatus]
    ```
 
-1. For **Select Log Data to Test**, select the log stream for your network interface\. \(Optional\) To view the lines of log data that match the filter pattern, choose **Test Pattern**\. When you're ready, choose **Assign Metric**\.
+1. For **Select log data to test**, select the log stream for your network interface\. \(Optional\) To view the lines of log data that match the filter pattern, choose **Test pattern**\. When you're ready, choose **Next**\.
 
-1. Provide a metric namespace and name, and ensure that the metric value is set to **1**\. When you're done, choose **Create Filter**\.
+1. Enter a filter name, metric namespace, and metric name\. Set the metric value to 1\. When you're done, choose **Next** and then choose **Create metric filter**\.
 
-1. In the navigation pane, choose **Alarms**, **Create Alarm**\.
+1. In the navigation pane, choose **Alarms**, **All alarms**\.
 
-1. In the **Custom Metrics** section, choose the namespace for the metric filter that you created\.
+1. Choose **Create alarm**\.
+
+1. Choose the namespace for the metric filter that you created\.
 
    It can take a few minutes for a new metric to display in the console\.
 
-1. Select the metric name that you created, and choose **Next**\.
+1. Select the metric name that you created, and then choose **Select metric**\.
 
-1. Enter a name and description for the alarm\. For the **is** fields, choose **>=** and enter **10**\. For the **for** field, leave the default **1** for the consecutive periods\.
+1. Configure the alarm as follows, and then choose **Next**:
+   + For **Statistic**, choose **Sum**\. This ensure that you capture the total number of data points for the specified time period\.
+   + For **Period**, choose **1 hour**\.
+   + For **Whenever**, choose **Greater/Equal** and enter 10 for the threshold\.
+   + For **Additional configuration**, **Datapoints to alarm**, leave the default of 1\.
 
-1. For **Period**, choose **1 Hour**\. For **Statistic**, choose **Sum**\. The `Sum` statistic ensures that you are capturing the total number of data points for the specified time period\. 
+1. For **Notification**, select an existing SNS topic or choose **Create new topic** to create a new one\. Choose **Next**\.
 
-1. In the **Actions** section, you can choose to send a notification to an existing list\. Or, you can create a new list and enter the email addresses that should receive a notification when the alarm is triggered\. When you are done, choose **Create Alarm**\.
+1. Enter a name and description for the alarm and choose **Next**\.
+
+1. When you are done configuring the alarm, choose **Create alarm**\.

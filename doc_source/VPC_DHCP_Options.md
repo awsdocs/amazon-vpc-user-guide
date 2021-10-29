@@ -18,7 +18,7 @@ By default, all instances in a nondefault VPC receive an unresolvable host name 
 The following are the supported options for a DHCP options set, and the value that is provided in the default DHCP options set for your VPC\. You can specify only the options that you need in your DHCP options set\. For more information about the options, see [RFC 2132](https://tools.ietf.org/html/rfc2132)\.
 
 **domain\-name\-servers**  
-The IP addresses of up to four domain name servers, or [AmazonProvidedDNS](#AmazonDNS)\. The IPv4 address of the Amazon provided DNS server is 169\.254\.169\.253 \(or the reserved IP address at the base of the VPC IPv6 network range plus two\) and the IPv6 address is fd00:ec2::253\.  
+The IP addresses of up to four domain name servers, or [AmazonProvidedDNS](#AmazonDNS)\. The IPv4 address of the Amazon provided DNS server is 169\.254\.169\.253 \(or the reserved IP address at the base of the VPC IPv4 network range plus two\) and the IPv6 address is fd00:ec2::253\.  
 To specify more than one domain name server, separate them with commas\. Although you can specify up to four domain name servers, some operating systems might impose lower limits\.  
 To use this option, set it to either AmazonProvidedDNS or custom domain name servers\. Using both might cause unexpected behavior\.  
 Default DHCP options set: AmazonProvidedDNS
