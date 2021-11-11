@@ -36,9 +36,9 @@ In the following example, you create a flow log \(`fl-aaa`\) that captures accep
 
 ![\[Flow logs for a subnet and an instance\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/flow-logs-diagram.png)
 
-After you've created a flow log, it can take several minutes to begin collecting and publishing data to the chosen destinations\. Flow logs do not capture real\-time log streams for your network interfaces\. For more information, see [Create a flow log](working-with-flow-logs.md#create-flow-log)\. 
+After you create a flow log, it can take several minutes to begin collecting and publishing data to the chosen destinations\. Flow logs do not capture real\-time log streams for your network interfaces\. For more information, see [Create a flow log](working-with-flow-logs.md#create-flow-log)\. 
 
-If you launch more instances into your subnet after you've created a flow log for your subnet or VPC, a new log stream \(for CloudWatch Logs\) or log file object \(for Amazon S3\) is created for each new network interface\. This occurs as soon as any network traffic is recorded for that network interface\.
+If you launch a new instance into your subnet after you've created a flow log for your subnet or VPC, a new log stream \(for CloudWatch Logs\) or log file object \(for Amazon S3\) is created as soon as any network traffic is recorded for that network interface\.
 
 You can create flow logs for network interfaces that are created by other AWS services, such as:
 + Elastic Load Balancing
