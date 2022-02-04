@@ -77,7 +77,7 @@ The following is an example of a default flow log record\. In the example, SSH t
 The following is an example of a custom flow log that captures the following fields in the following order\.
 
 ```
-version vpc-id subnet-id instance-id interface-id account-id type srcaddr dstaddr srcport dstport pkt-srcaddr pkt-dstaddr protocol bytes packets start end action tcp-flags log-status
+${version} ${vpc-id} ${subnet-id} ${instance-id} ${interface-id} ${account-id} ${type} ${srcaddr} ${dstaddr} ${srcport} ${dstport} ${pkt-srcaddr} ${pkt-dstaddr} ${protocol} ${bytes} ${packets} ${start} ${end} ${action} ${tcp-flags} ${log-status}
 ```
 
 The tcp\-flags field can help you identify the direction of the traffic, for example, which server initiated the connection\. In the following records \(starting at 7:47:55 PM and ending at 7:48:53 PM\), two connections were started by a client to a server running on port 5001\. Two SYN flags \(2\) were received by server from the client from different source ports on the client \(43416 and 43418\)\. For each SYN, a SYN\-ACK was sent from the server to the client \(18\) on the corresponding port\.
@@ -112,7 +112,7 @@ In this example, an instance in a private subnet accesses the internet through a
 The following custom flow log for the NAT gateway network interface captures the following fields in the following order\.
 
 ```
-instance-id interface-id srcaddr dstaddr pkt-srcaddr pkt-dstaddr
+${instance-id} ${interface-id} ${srcaddr} ${dstaddr} ${pkt-srcaddr} ${pkt-dstaddr}
 ```
 
 The flow log shows the flow of traffic from the instance IP address \(10\.0\.1\.5\) through the NAT gateway network interface to a host on the internet \(203\.0\.113\.5\)\. The NAT gateway network interface is a requester\-managed network interface, therefore the flow log record displays a '\-' symbol for the instance\-id field\. The following line shows traffic from the source instance to the NAT gateway network interface\. The values for the dstaddr and pkt\-dstaddr fields are different\. The dstaddr field displays the private IP address of the NAT gateway network interface, and the pkt\-dstaddr field displays the final destination IP address of the host on the internet\. 
@@ -150,7 +150,7 @@ In this example, a client in VPC A connects to a web server in VPC B through a t
 You create a custom flow log for VPC B with the following format\.
 
 ```
-version interface-id account-id vpc-id subnet-id instance-id srcaddr dstaddr srcport dstport protocol tcp-flags type pkt-srcaddr pkt-dstaddr action log-status
+${version} ${interface-id} ${account-id} ${vpc-id} ${subnet-id} ${instance-id} ${srcaddr} ${dstaddr} ${srcport} ${dstport} ${protocol} ${tcp-flags} ${type} ${pkt-srcaddr} ${pkt-dstaddr} ${action} ${log-status}
 ```
 
 The following lines from the flow log records demonstrate the flow of traffic on the network interface for the web server\. The first line is the request traffic from the client, and the last line is the response traffic from the web server\.
@@ -178,7 +178,7 @@ The following line is the response traffic on eni\-22222222222222222, a requeste
 The following is an example of the fields for a custom flow log record\.
 
 ```
-version srcaddr dstaddr srcport dstport protocol start end type packets bytes account-id vpc-id subnet-id instance-id interface-id region az-id sublocation-type sublocation-id action tcp-flags pkt-srcaddr pkt-dstaddr pkt-src-aws-service pkt-dst-aws-service traffic-path flow-direction log-status
+${version} ${srcaddr} ${dstaddr} ${srcport} ${dstport} ${protocol} ${start} ${end} ${type} ${packets} ${bytes} ${account-id} ${vpc-id} ${subnet-id} ${instance-id} ${interface-id} ${region} ${az-id} ${sublocation-type} ${sublocation-id} ${action} ${tcp-flags} ${pkt-srcaddr} ${pkt-dstaddr} ${pkt-src-aws-service} ${pkt-dst-aws-service} ${traffic-path} ${flow-direction} ${log-status}
 ```
 
 In the following example, the version is 5 because the records include version 5 fields\. An EC2 instance calls the Amazon S3 service\. Flow logs are captured on the network interface for the instance\. The first record has a flow direction of ingress and the second record has a flow direction of egress\. For the egress record, traffic\-path is 8, indicating that the traffic goes through an internet gateway\. The traffic\-path field is not supported for ingress traffic\. When pkt\-srcaddr or pkt\-dstaddr is a public IP address, the service name is shown\.

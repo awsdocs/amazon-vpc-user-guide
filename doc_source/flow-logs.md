@@ -59,7 +59,7 @@ If you no longer require a flow log, you can delete it\. Deleting a flow log dis
 
 A flow log record represents a network flow in your VPC\. By default, each record captures a network internet protocol \(IP\) traffic flow \(characterized by a 5\-tuple on a per network interface basis\) that occurs within an *aggregation interval*, also referred to as a *capture window*\.
 
-Each record is a string with fields separated by spaces\. A record includes values for the different components of the IP flow, for example, the source, destination, and protocol\.
+Each record is a string with fields separated by spaces and enclosed in `${<field>}` (dollar sign then wrapped in curly brackets)\. A record includes values for the different components of the IP flow, for example, the source, destination, and protocol\.
 
 When you create a flow log, you can use the default format for the flow log record, or you can specify a custom format\.
 
