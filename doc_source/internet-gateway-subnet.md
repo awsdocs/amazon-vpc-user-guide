@@ -53,7 +53,7 @@ When you use the middlebox routing wizard, the following tags are associated wit
 
 ## Subnet route table<a name="internet-gateway-subnet-route-table"></a>
 
-The route table for the middlebox subnet \(Subnet C\) contains the following routes:
+The route table for the destination subnet \(Subnet B\) contains the following routes:
 
 
 | Destination | Target | Purpose | 
