@@ -1,15 +1,13 @@
 # Work with shared prefix lists<a name="sharing-managed-prefix-lists"></a>
 
-Customer\-managed prefix lists integrate with AWS Resource Access Manager \(AWS RAM\)\. With AWS RAM, you share resources that you own across AWS accounts by creating a *resource share*\. It specifies the resources to share, and the consumers with whom to share them\. Consumers can be individual AWS accounts, or organizational units or an entire organization in AWS Organizations\.
-
-For more information about AWS RAM, see the *[AWS RAM User Guide](https://docs.aws.amazon.com/ram/latest/userguide/)*\.
-
-The owner of a prefix list can share a prefix list with the following:
+With AWS Resource Access Manager \(AWS RAM\), the owner of a prefix list can share a prefix list with the following:
 + Specific AWS accounts inside or outside of its organization in AWS Organizations
 + An organizational unit inside its organization in AWS Organizations
-+ Its entire organization in AWS Organizations
++ An entire organization in AWS Organizations
 
 Consumers with whom a prefix list has been shared can view the prefix list and its entries, and they can reference the prefix list in their AWS resources\.
+
+For more information about AWS RAM, see the [AWS RAM User Guide](https://docs.aws.amazon.com/ram/latest/userguide/)\.
 
 **Topics**
 + [Prerequisites for sharing prefix lists](#sharing-prereqs)
@@ -19,10 +17,10 @@ Consumers with whom a prefix list has been shared can view the prefix list and i
 + [Unshare a shared prefix list](#sharing-unshare)
 + [Shared prefix list permissions](#sharing-perms)
 + [Billing and metering](#sharing-billing)
-+ [Quotas](#sharing-limits)
++ [Quotas for AWS RAM](#sharing-limits)
 
 ## Prerequisites for sharing prefix lists<a name="sharing-prereqs"></a>
-+ To share a prefix list, you must own it in your AWS account\. You cannot share a prefix list that has been shared with you\. You cannot share an AWS\-managed prefix list\.
++ To share a prefix list, you must own it\. You cannot share a prefix list that has been shared with you\. You cannot share an AWS\-managed prefix list\.
 + To share a prefix list with your organization or an organizational unit in AWS Organizations, you must enable sharing with AWS Organizations\. For more information, see [ Enable sharing with AWS Organizations](https://docs.aws.amazon.com/ram/latest/userguide/getting-started-sharing.html#getting-started-sharing-orgs) in the *AWS RAM User Guide*\.
 
 ## Share a prefix list<a name="sharing-share"></a>
@@ -107,6 +105,6 @@ Consumers can view the entries in a shared prefix list, and they can reference a
 
 There are no additional charges for sharing prefix lists\. 
 
-## Quotas<a name="sharing-limits"></a>
+## Quotas for AWS RAM<a name="sharing-limits"></a>
 
-For more information about quotas \(limits\) related to AWS RAM, see [Service limits](https://docs.aws.amazon.com/ram/latest/userguide/what-is.html#what-is-limits) in the *AWS RAM User Guide*\.
+For more information, see [Service quotas](https://docs.aws.amazon.com/general/latest/gr/ram.html#limits_ram)\.

@@ -107,7 +107,7 @@ When you try to ping a NAT gateway's Elastic IP address or private IP address fr
 A NAT gateway only passes traffic from an instance in a private subnet to the internet\.
 
 **Solution**  
-To test that your NAT gateway is working, see [Test the public NAT gateway](vpc-nat-gateway.md#nat-gateway-testing)\.
+To test that your NAT gateway is working, see [Test the public NAT gateway](nat-gateway-scenarios.md#public-nat-gateway-testing)\.
 
 ## Instances cannot access the internet<a name="nat-gateway-troubleshooting-no-internet-connection"></a>
 
@@ -133,7 +133,7 @@ Check the following information:
    The NAT gateway itself allows all outbound traffic and traffic received in response to an outbound request \(it is therefore stateful\)\.
 + Ensure that the network ACLs that are associated with the private subnet and public subnets do not have rules that block inbound or outbound internet traffic\. For the `ping` command to work, the rules must also allow inbound and outbound ICMP traffic\.
 
-  You can enable flow logs to help you diagnose dropped connections because of network ACL or security group rules\. For more information, see [VPC Flow Logs](flow-logs.md)\.
+  You can enable flow logs to help you diagnose dropped connections because of network ACL or security group rules\. For more information, see [Logging IP traffic using VPC Flow Logs](flow-logs.md)\.
 + If you are using the `ping` command, ensure that you are pinging a host that has ICMP enabled\. If ICMP is not enabled, you will not receive reply packets\. To test this, perform the same `ping` command from the command line terminal on your own computer\. 
 + Check that your instance is able to ping other resources, for example, other instances in the private subnet \(assuming that security group rules allow this\)\.
 + Ensure that your connection is using a TCP, UDP, or ICMP protocol only\.

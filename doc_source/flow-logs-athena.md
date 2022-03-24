@@ -2,19 +2,9 @@
 
 Amazon Athena is an interactive query service that enables you to analyze data in Amazon S3, such as your flow logs, using standard SQL\. You can use Athena with VPC Flow Logs to quickly get actionable insights about the traffic flowing through your VPC\. For example, you can identify which resources in your virtual private clouds \(VPCs\) are the top talkers or identify the IP addresses with the most rejected TCP connections\.
 
-You can streamline and automate the integration of your VPC flow logs with Athena by generating a CloudFormation template that creates the required AWS resources and predefined queries that you can run to obtain insights about the traffic flowing through your VPC\.
-
-The CloudFormation template creates the following resources:
-+ An Athena database\. The database name is vpcflowlogsathenadatabase<*flow\-logs\-subscription\-id*>\.
-+ An Athena workgroup\. The workgroup name is <*flow\-log\-subscription\-id*><*partition\-load\-frequency*><*start\-date*><*end\-date*>workgroup
-+ A partitioned Athena table that corresponds to your flow log records\. The table name is <*flow\-log\-subscription\-id*><*partition\-load\-frequency*><*start\-date*><*end\-date*>\.
-+ A set of Athena named queries\. For more information, see [Predefined queries](#predefined-queries)\.
-+ A Lambda function that loads new partitions to the table on the specified schedule \(daily, weekly, or monthly\)\.
-+ An IAM role that grants permission to run the Lambda functions\.
-
-**Requirements**
-+ You must select a Region that supports AWS Lambda and Amazon Athena\.
-+ The Amazon S3 buckets must be in the selected Region\.
+**Options**
++ You can streamline and automate the integration of your VPC flow logs with Athena by generating a CloudFormation template that creates the required AWS resources and predefined queries that you can run to obtain insights about the traffic flowing through your VPC\.
++ You can create your own queries using Athena\. For more information, see [Query flow logs using Amazon Athena](https://docs.aws.amazon.com/athena/latest/ug/vpc-flow-logs.html) in the *Amazon Athena User Guide*\.
 
 **Pricing**  
 You incur standard [Amazon Athena charges](http://aws.amazon.com/athena/pricing) for running queries\. You incur standard [AWS Lambda charges](http://aws.amazon.com/lambda/pricing) for the Lambda function that loads new partitions on a recurring schedule \(when you specify a partition load frequency but do not specify a start and end date\.\)
@@ -27,6 +17,10 @@ You incur standard [Amazon Athena charges](http://aws.amazon.com/athena/pricing)
 ## Generate the CloudFormation template using the console<a name="flow-logs-generate-template-console"></a>
 
 After the first flow logs are delivered to your S3 bucket, you can integrate with Athena by generating a CloudFormation template and using the template to create a stack\.
+
+**Requirements**
++ You must select a Region that supports AWS Lambda and Amazon Athena\.
++ The Amazon S3 buckets must be in the selected Region\.
 
 **To generate the template using the console**
 
@@ -46,6 +40,14 @@ After the first flow logs are delivered to your S3 bucket, you can integrate wit
 1. \(Optional\) In the success message, choose the link to navigate to the bucket that you specified for the CloudFormation template, and customize the template\.
 
 1. In the success message, choose **Create CloudFormation stack** to open the **Create Stack** wizard in the AWS CloudFormation console\. The URL for the generated CloudFormation template is specified in the **Template** section\. Complete the wizard to create the resources that are specified in the template\.
+
+**Resources created by the CloudFormation template**
++ An Athena database\. The database name is vpcflowlogsathenadatabase<*flow\-logs\-subscription\-id*>\.
++ An Athena workgroup\. The workgroup name is <*flow\-log\-subscription\-id*><*partition\-load\-frequency*><*start\-date*><*end\-date*>workgroup
++ A partitioned Athena table that corresponds to your flow log records\. The table name is <*flow\-log\-subscription\-id*><*partition\-load\-frequency*><*start\-date*><*end\-date*>\.
++ A set of Athena named queries\. For more information, see [Predefined queries](#predefined-queries)\.
++ A Lambda function that loads new partitions to the table on the specified schedule \(daily, weekly, or monthly\)\.
++ An IAM role that grants permission to run the Lambda functions\.
 
 ## Generate the CloudFormation template using the AWS CLI<a name="flow-logs-generate-template-cli"></a>
 
@@ -98,7 +100,7 @@ The generated CloudFormation template provides a set of predefined queries that 
 
 The following are the Athena named queries provided by the generated CloudFormation template:
 + **VpcFlowLogsAcceptedTraffic** – The TCP connections that were allowed based on your security groups and network ACLs\.
-+ **VpcFlowLogsAdminPortTraffic** – The traffic recorded on administrative web app ports\.
++ **VpcFlowLogsAdminPortTraffic** – The top 10 IP addresses with the most traffic, as recorded by applications serving requests on administrative ports\.
 + **VpcFlowLogsIPv4Traffic** – The total bytes of IPv4 traffic recorded\.
 + **VpcFlowLogsIPv6Traffic** – The total bytes of IPv6 traffic recorded\.
 + **VpcFlowLogsRejectedTCPTraffic** – The TCP connections that were rejected based on your security groups or network ACLs\.

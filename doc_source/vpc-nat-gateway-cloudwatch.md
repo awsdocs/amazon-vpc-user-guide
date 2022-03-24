@@ -1,4 +1,4 @@
-# Monitor NAT gateways using Amazon CloudWatch<a name="vpc-nat-gateway-cloudwatch"></a>
+# Monitor NAT gateways with Amazon CloudWatch<a name="vpc-nat-gateway-cloudwatch"></a>
 
 You can monitor your NAT gateway using CloudWatch, which collects information from your NAT gateway and creates readable, near real\-time metrics\. You can use this information to monitor and troubleshoot your NAT gateway\. NAT gateway metric data is provided at 1\-minute intervals, and statistics are recorded for a period of 15 months\.
 

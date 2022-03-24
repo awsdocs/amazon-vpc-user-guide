@@ -37,13 +37,16 @@ Each EC2 instance can send 1024 packets per second per network interface to Rout
 
 ## Customer\-managed prefix lists<a name="vpc-quotas-managed-prefix-lists"></a>
 
+**Note**  
+While the default quotas for customer\-managed prefix lists are adjustable, you cannot adjust the quotas using the Service Quotas console\. You must contact the AWS Support Center as described in [AWS service quotas](https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html) in the *AWS General Reference*\.
 
-| Name | Default | Comments | 
-| --- | --- | --- | 
-| Prefix lists per Region | 100 |  | 
-| Versions per prefix list | 1,000 | If a prefix list has 1,000 stored versions and you add a new version, the oldest version is removed so that the new version can be added\. | 
-| Maximum number of entries per prefix list | 1,000 | When you reference a prefix list in a resource, the maximum number of entries for the prefix lists counts against the quota for the number of entries for the resource\. For example, if you create a prefix list with 20 maximum entries and you reference that prefix list in a security group rule, this counts as 20 security group rules\. | 
-| References to a prefix list per resource type | 5,000 | This quota applies per resource type that can reference a prefix list\. For example, you can have 5,000 references to a prefix list across all of your security groups plus 5,000 references to a prefix list across all of your subnet route tables\. If you share a prefix list with other AWS accounts, the other accounts' references to your prefix list count toward this quota\. | 
+
+| Name | Default | Adjustable | Comments | 
+| --- | --- | --- | --- | 
+| Prefix lists per Region | 100 | Yes |  | 
+| Versions per prefix list | 1,000 | Yes | If a prefix list has 1,000 stored versions and you add a new version, the oldest version is removed so that the new version can be added\. | 
+| Maximum number of entries per prefix list | 1,000 | Yes |  The default quota for customer\-managed prefix lists is 10 unless you resize the prefix list\. You can resize it up to 1000\. For more information, see [Resize a prefix list](working-with-managed-prefix-lists.md#resize-managed-prefix-list)\. When you reference a prefix list in a resource, the maximum number of entries for the prefix lists counts against the quota for the number of entries for the resource\. For example, if you create a prefix list with 20 maximum entries and you reference that prefix list in a security group rule, this counts as 20 security group rules\.  | 
+| References to a prefix list per resource type | 5,000 | Yes | This quota applies per resource type that can reference a prefix list\. For example, you can have 5,000 references to a prefix list across all of your security groups plus 5,000 references to a prefix list across all of your subnet route tables\. If you share a prefix list with other AWS accounts, the other accounts' references to your prefix list count toward this quota\. | 
 
 ## Network ACLs<a name="vpc-limits-nacls"></a>
 
@@ -76,8 +79,8 @@ Each EC2 instance can send 1024 packets per second per network interface to Rout
 | Name | Default | Adjustable | Comments | 
 | --- | --- | --- | --- | 
 | VPC security groups per Region | 2,500 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-E79EC296) | This quota applies to individual AWS account VPCs and shared VPCs\. If you increase this quota to more than 5,000 security groups in a Region, we recommend that you paginate calls to describe your security groups for better performance\. | 
-| Inbound or outbound rules per security group  | 60 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-0EA8095F) | You can have 60 inbound and 60 outbound rules per security group \(making a total of 120 rules\)\. This quota is enforced separately for IPv4 rules and IPv6 rules; for example, a security group can have 60 inbound rules for IPv4 traffic and 60 inbound rules for IPv6 traffic\. A quota change applies to both inbound and outbound rules\. This quota multiplied by the quota for security groups per network interface cannot exceed 1,000\. For example, if you increase this quota to 100, we decrease the quota for your number of security groups per network interface to 10\.  | 
-| Security groups per network interface | 5 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-2AFB9258) \(up to 16\) | This quota is enforced separately for IPv4 rules and IPv6 rules\. The quota for security groups per network interface multiplied by the quota for rules per security group cannot exceed 1,000\. For example, if you increase this quota to 10, we decrease the quota for your number of rules per security group to 100\. | 
+| Inbound or outbound rules per security group  | 60 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-0EA8095F) | You can have 60 inbound and 60 outbound rules per security group \(making a total of 120 rules\)\. This quota is enforced separately for IPv4 rules and IPv6 rules; for example, a security group can have 60 inbound rules for IPv4 traffic and 60 inbound rules for IPv6 traffic\. A quota change applies to both inbound and outbound rules\. This quota multiplied by the quota for security groups per network interface cannot exceed 1,000\.  | 
+| Security groups per network interface | 5 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-2AFB9258) \(up to 16\) | This quota multiplied by the quota for rules per security group cannot exceed 1,000\. | 
 
 ## VPC peering connections<a name="vpc-limits-peering"></a>
 

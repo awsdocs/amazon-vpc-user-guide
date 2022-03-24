@@ -2,7 +2,7 @@
 
 The configuration for this scenario includes a virtual private cloud \(VPC\) with a public subnet and a private subnet, and a virtual private gateway to enable communication with your own network over an IPsec VPN tunnel\. We recommend this scenario if you want to extend your network into the cloud and also directly access the internet from your VPC\. This scenario enables you to run a multi\-tiered application with a scalable web front end in a public subnet, and to house your data in a private subnet that is connected to your network by an IPsec AWS Site\-to\-Site VPN connection\.
 
-This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnets with associated IPv6 CIDR blocks\. Instances launched into the subnets can receive IPv6 addresses\. We do not support IPv6 communication over a Site\-to\-Site VPN connection on a virtual private gateway; however, instances in the VPC can communicate with each other via IPv6, and instances in the public subnet can communicate over the internet via IPv6\. For more information about IPv4 and IPv6 addressing, see [IP Addressing in your VPC](vpc-ip-addressing.md)\.
+This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnets with associated IPv6 CIDR blocks\. Instances launched into the subnets can receive IPv6 addresses\. We do not support IPv6 communication over a Site\-to\-Site VPN connection on a virtual private gateway; however, instances in the VPC can communicate with each other via IPv6, and instances in the public subnet can communicate over the internet via IPv6\. For more information about IPv4 and IPv6 addressing, see [IP addressing](how-it-works.md#vpc-ip-addressing)\.
 
 For information about managing your EC2 instance software, see [Managing software on your Linux instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-software.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
@@ -33,7 +33,7 @@ The configuration for this scenario includes the following:
 + A custom route table associated with the public subnet\. This route table contains an entry that enables instances in the subnet to communicate with other instances in the VPC, and an entry that enables instances in the subnet to communicate directly with the internet\.
 + The main route table associated with the VPN\-only subnet\. The route table contains an entry that enables instances in the subnet to communicate with other instances in the VPC, and an entry that enables instances in the subnet to communicate directly with your network\.
 
-For more information about subnets, see [VPCs and subnets](VPC_Subnets.md) and [IP Addressing in your VPC](vpc-ip-addressing.md)\. For more information about internet gateways, see [Internet gateways](VPC_Internet_Gateway.md)\. For more information about your AWS Site\-to\-Site VPN connection, see [What is AWS Site\-to\-Site VPN?](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPC_VPN.html) in the *AWS Site\-to\-Site VPN User Guide*\. 
+For more information, see [Subnets](configure-subnets.md)\. For more information about internet gateways, see [Connect to the internet using an internet gateway](VPC_Internet_Gateway.md)\. For more information about your AWS Site\-to\-Site VPN connection, see the [AWS Site\-to\-Site VPN User Guide](https://docs.aws.amazon.com/vpn/latest/s2svpn/)\.
 
 ### Overview for IPv6<a name="vpc-scenario-3-overview-ipv6"></a>
 
@@ -102,7 +102,7 @@ The first entry is the default entry for local routing in the VPC; this entry en
 
 Alternatively, if you want instances in the private subnet to access the internet, you can create a network address translation \(NAT\) gateway or instance in the public subnet, and set up the routing so that the internet\-bound traffic for the subnet goes to the NAT device\. This enables the instances in the VPN\-only subnet to send requests over the internet gateway \(for example, for software updates\)\. 
 
-For more information about setting up a NAT device manually, see [NAT devices for your VPC](vpc-nat.md)\. For information about using the VPC wizard to set up a NAT device, see [VPC with public and private subnets \(NAT\)](VPC_Scenario2.md)\.
+For more information about setting up a NAT device manually, see [Connect to the internet or other networks using NAT devices](vpc-nat.md)\. For information about using the VPC wizard to set up a NAT device, see [VPC with public and private subnets \(NAT\)](VPC_Scenario2.md)\.
 
 To enable the private subnet's internet\-bound traffic to go to the NAT device, you must update the main route table as follows\. 
 
@@ -250,7 +250,7 @@ These procedures include optional steps for enabling and configuring IPv6 commun
 
 For information about how to use the VPC wizard with IPv4, see [Get started with Amazon VPC](vpc-getting-started.md)\.
 
-For information about how to use the VPC wizard with IPv6, see [Get started with IPv6 for Amazon VPC](get-started-ipv6.md)\.
+For information about how to use the VPC wizard with IPv6, see [VPC that supports IPv6 addressing](get-started-ipv6.md)\.
 
 ## Recommended network ACL rules for a VPC with public and private subnets and AWS Site\-to\-Site VPN access<a name="nacl-rules-scenario-3"></a>
 

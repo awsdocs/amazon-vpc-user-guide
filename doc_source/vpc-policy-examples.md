@@ -246,10 +246,10 @@ The second statement grants users permission to describe all security groups, se
        "ec2:UpdateSecurityGroupRuleDescriptionsEgress",
        "ec2:ModifySecurityGroupRules"
     ],
-     "Resource": "arn:aws:ec2:region:account:security-group/*",
+     "Resource": "arn:aws:ec2:region:account-id:security-group/*",
       "Condition": {
         "ArnEquals": {
-          "ec2:Vpc": "arn:aws:ec2:region:account:vpc/vpc-11223344556677889"
+          "ec2:Vpc": "arn:aws:ec2:region:account-id:vpc/vpc-id"
         }
       }
     },
@@ -268,7 +268,7 @@ The second statement grants users permission to describe all security groups, se
 
 ## Launch instances into a specific subnet<a name="subnet-sg-example-iam"></a>
 
-The following policy grants users permission to launch instances into a specific subnet, and to use a specific security group in the request\. The policy does this by specifying the ARN for `subnet-11223344556677889`, and the ARN for `sg-11223344551122334`\. If users attempt to launch an instance into a different subnet or using a different security group, the request will fail \(unless another policy or statement grants users permission to do so\)\.
+The following policy grants users permission to launch instances into a specific subnet, and to use a specific security group in the request\. The policy does this by specifying the ARN for the subnet and the ARN for the security group\. If users attempt to launch an instance into a different subnet or using a different security group, the request will fail \(unless another policy or statement grants users permission to do so\)\.
 
 The policy also grants permission to use the network interface resource\. When launching into a subnet, the `RunInstances` request creates a primary network interface by default, so the user needs permission to create this resource when launching the instance\.
 
@@ -281,11 +281,11 @@ The policy also grants permission to use the network interface resource\. When l
       "Resource": [
         "arn:aws:ec2:region::image/ami-*",
         "arn:aws:ec2:region:account:instance/*",
-        "arn:aws:ec2:region:account:subnet/subnet-11223344556677889",
+        "arn:aws:ec2:region:account:subnet/subnet-id",
         "arn:aws:ec2:region:account:network-interface/*",
         "arn:aws:ec2:region:account:volume/*",
         "arn:aws:ec2:region:account:key-pair/*",
-        "arn:aws:ec2:region:account:security-group/sg-11223344551122334"
+        "arn:aws:ec2:region:account:security-group/sg-id"
       ]
     }
    ]
@@ -304,11 +304,11 @@ The policy also grants users permission to launch instances using only AMIs that
    "Statement": [{
       "Effect": "Allow",
       "Action": "ec2:RunInstances",
-      "Resource": "arn:aws:ec2:region:account:subnet/*",
+      "Resource": "arn:aws:ec2:region:account-id:subnet/*",
         "Condition": {
-         "StringEquals": {
-            "ec2:Vpc": "arn:aws:ec2:region:account:vpc/vpc-11223344556677889"
-            }
+         "ArnEquals": {
+            "ec2:Vpc": "arn:aws:ec2:region:account-id:vpc/vpc-id"
+         }
       }
    },
    {

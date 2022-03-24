@@ -1,4 +1,4 @@
-# Extend your VPCs<a name="Extend_VPCs"></a>
+# Extend a VPC to a Local Zone, Wavelength Zone, or Outpost<a name="Extend_VPCs"></a>
 
 You can host VPC resources, such as subnets, in multiple locations world\-wide\. These locations are composed of Regions, Availability Zones, Local Zones, and Wavelength Zones\. Each *Region* is a separate geographic area\. 
 + Availability Zones are multiple, isolated locations within each Region\.
@@ -37,7 +37,7 @@ For information about working with Local Zones in Linux, see [Local Zones](https
 ### Considerations for internet gateways<a name="internet-gateway-local-zone-considerations"></a>
 
 Take the following information into account when you use internet gateways \(in the parent Region\) in Local Zones:
-+ You can use internet gateways in Local Zones with Elastic IP addresses or Amazon auto\-assigned public IP addresses\. The Elastic IP addresses that you associate must include the network border group of the Local Zone\. For more information, see [Elastic IP addresses](vpc-eips.md)\.
++ You can use internet gateways in Local Zones with Elastic IP addresses or Amazon auto\-assigned public IP addresses\. The Elastic IP addresses that you associate must include the network border group of the Local Zone\. For more information, see [Associate Elastic IP addresses with resources in your VPC](vpc-eips.md)\.
 
   You cannot associate an Elastic IP address that is set for the Region\.
 + Elastic IP addresses that are used in Local Zones have the same quotas as Elastic IP addresses in a Region\. For more information, see [Elastic IP addresses \(IPv4\)](amazon-vpc-limits.md#vpc-limits-eips)\.
@@ -70,7 +70,7 @@ You can't create a transit gateway attachment for a subnet in a Local Zone\. The
 ![\[Local Zone to transit gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/lz-tgw.png)
 
 Create the following resources for this scenario:
-+ A subnet in each parent Availability Zone\. For more information, see [Create a subnet in your VPC](working-with-vpcs.md#AddaSubnet)\.
++ A subnet in each parent Availability Zone\. For more information, see [Create a subnet in your VPC](working-with-subnets.md#create-subnets)\.
 + A transit gateway\. For more information, see [Create a transit gateway](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-transit-gateways.html#create-tgw) in *Amazon VPC Transit Gateways*\.
 + A transit gateway attachment for each VPC using the parent Availability Zone\. For more information, see [Create a transit gateway attachment to a VPC](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-vpc-attachments.html#create-vpc-attachment) in *Amazon VPC Transit Gateways*\.
 + A transit gateway route table associated with the transit gateway attachment\. For more information, see [Transit gateway route tables](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-route-tables.html) in *Amazon VPC Transit Gateways*\.
@@ -121,7 +121,7 @@ EC2 instances that are in different Wavelength Zones in the same VPC are not all
 Wavelength Zone to Wavelength Zone traffic routes through the AWS Region\. For more information, see [AWS Transit Gateway](http://aws.amazon.com/transit-gateway/)\.
 
 The following diagram shows how to configure your network so that instances in two different Wavelength Zones can communicate\. You have two Wavelength Zones \(Wavelength Zone A and Wavelength Zone B\)\. You need to create the following resources to enable communication:
-+ For each Wavelength Zone, a subnet in an Availability Zone that is the parent Availability Zone for the Wavelength Zone\. In the example, you create subnet 1 and subnet 2\. For information about creating subnets, see [Create a subnet in your VPC](working-with-vpcs.md#AddaSubnet)\. Use [describe\-availability\-zones](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-availability-zones.html) to find the parent zone\.
++ For each Wavelength Zone, a subnet in an Availability Zone that is the parent Availability Zone for the Wavelength Zone\. In the example, you create subnet 1 and subnet 2\. For information about creating subnets, see [Create a subnet in your VPC](working-with-subnets.md#create-subnets)\. Use [describe\-availability\-zones](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-availability-zones.html) to find the parent zone\.
 + A transit gateway\. The transit gateway connects the VPCs\. For information about creating a transit gateway, see [Create a transit gateway](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-transit-gateways.html#create-tgw) in the *Amazon VPC Transit Gateways Guide*\.
 + For each VPC, a VPC attachment to the transit gateway in the parent Availability Zone of the Wavelength Zone\. For more information, see [Transit gateway attachments to a VPC](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-vpc-attachments.html) in the *Amazon VPC Transit Gateways Guide*\.
 + Entries for each VPC in the transit gateway route table\. For information about creating transit gateway routes, see [Transit gateway route tables](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-route-tables.html) in the *Amazon VPC Transit Gateways Guide*\.
@@ -137,7 +137,7 @@ The following diagram shows how to configure your network so that instances in t
 
 ## Subnets in AWS Outposts<a name="outposts"></a>
 
-AWS Outposts offers you the same AWS hardware infrastructure, services, APIs, and tools to build and run your applications on premises and in the cloud\. AWS Outposts is ideal for workloads that need low latency access to on\-premises applications or systems, and for workloads that need to store and process data locally\. For more information about AWS Outposts see [AWS Outposts](http://aws.amazon.com/outposts)\.
+AWS Outposts offers you the same AWS hardware infrastructure, services, APIs, and tools to build and run your applications on premises and in the cloud\. AWS Outposts is ideal for workloads that need low latency access to on\-premises applications or systems, and for workloads that need to store and process data locally\. For more information about AWS Outposts, see [AWS Outposts](http://aws.amazon.com/outposts)\.
 
 Amazon VPC spans across all of the Availability Zones in an AWS Region\. When you connect Outposts to the parent Region, all existing and newly created VPCs in your account span across all Availability Zones and any associated Outpost locations in the Region\.
 

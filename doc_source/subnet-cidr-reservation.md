@@ -1,4 +1,4 @@
-# Subnet CIDR reservations<a name="subnet-cidr-reservation"></a>
+# Use subnet CIDR reservations<a name="subnet-cidr-reservation"></a>
 
 A *subnet CIDR reservation* is a range of IPv4 or IPv6 addresses in a subnet\. When you create the reservation, you specify how you will use the reserved range\. The following options are available:
 + **Prefix** — You can assign IP addresses to network interfaces that are associated with an instance\. For more information, see [Assigning prefixes to Amazon EC2 network interfaces](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-prefix-eni.html) in the *Amazon EC2 User Guide for Linux Instances*\.

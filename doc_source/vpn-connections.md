@@ -1,4 +1,4 @@
-# VPN connections<a name="vpn-connections"></a>
+# Connect your VPC to remote networks using AWS Virtual Private Network<a name="vpn-connections"></a>
 
 You can connect your Amazon VPC to remote networks and users using the following VPN connectivity options\.
 

@@ -2,13 +2,13 @@
 
 **Important**  
 NAT AMI is built on the last version of Amazon Linux, 2018\.03, which reached the end of standard support on December 31, 2020\. For more information, see the following blog post: [Amazon Linux AMI end of life](http://aws.amazon.com/blogs/aws/update-on-amazon-linux-ami-end-of-life/)\. This AMI will receive only critical security updates \(there will be no regular updates\)\.  
-If you use an existing NAT AMI, AWS recommends that you [migrate to a NAT gateway](vpc-nat-gateway.md#nat-instance-migrate)\. NAT gateways provide better availability, higher bandwidth, and requires less administrative effort\. If NAT instances are a better match for your use case, you can create your own NAT AMI\. For more information, see [Compare NAT gateways and NAT instances](vpc-nat-comparison.md)\.
+If you use an existing NAT AMI, AWS recommends that you [migrate to a NAT gateway](vpc-nat-comparison.md#nat-instance-migrate)\. NAT gateways provide better availability, higher bandwidth, and requires less administrative effort\. If NAT instances are a better match for your use case, you can create your own NAT AMI\. For more information, see [Compare NAT gateways and NAT instances](vpc-nat-comparison.md)\.
 
 You can create your own AMI that provides network address translation and use your AMI to launch an EC2 instance as a NAT instance\. You launch a NAT instance in a public subnet to enable instances in the private subnet to initiate outbound IPv4 traffic to the internet or other AWS services, but prevent the instances from receiving inbound traffic initiated on the internet\.
 
 **Limitations**
 + Your NAT instance quota depends on your instance quota for the Region\. For more information, see [Amazon EC2 service quotas](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-resource-limits.html) in the *Amazon EC2 User Guide for Linux Instances*\.
-+ NAT is not supported for IPv6 traffic—use an egress\-only internet gateway instead\. For more information, see [Egress\-only internet gateways](egress-only-internet-gateway.md)\.
++ NAT is not supported for IPv6 traffic—use an egress\-only internet gateway instead\. For more information, see [Enable outbound IPv6 traffic using an egress\-only internet gateway](egress-only-internet-gateway.md)\.
 
 **Topics**
 + [NAT instance basics](#basics)
@@ -36,6 +36,7 @@ Before you begin, create an AMI that's configured to run NAT on your instance\. 
 ```
 sudo sysctl -w net.ipv4.ip_forward=1
 sudo /sbin/iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+sudo yum install iptables-services
 sudo service iptables save
 ```
 
@@ -65,7 +66,7 @@ sudo service iptables save
 
       1. On the **Configure Instance Details** page, select the VPC you created from the **Network** list, and select your public subnet from the **Subnet** list\. 
 
-      1. \(Optional\) Select the **Public IP** check box to request that your NAT instance receives a public IP address\. If you choose not to assign a public IP address now, you can allocate an Elastic IP address and assign it to your instance after it's launched\. For more information about assigning a public IP at launch, see [Assign a public IPv4 address during instance launch](vpc-ip-addressing.md#vpc-public-ip)\. Choose **Next: Add Storage**\.
+      1. \(Optional\) Select the **Public IP** check box to request that your NAT instance receives a public IP address\. If you choose not to assign a public IP address now, you can allocate an Elastic IP address and assign it to your instance after it's launched\. Choose **Next: Add Storage**\.
 
       1. You can choose to add storage to your instance, and on the next page, you can add tags\. Choose **Next: Configure Security Group** when you are done\. 
 
@@ -148,7 +149,7 @@ The following are the recommended rules\.
 
    1. Choose **Save**\.
 
-For more information, see [Security groups for your VPC](VPC_SecurityGroups.md)\.
+For more information, see [Control traffic to resources using security groups](VPC_SecurityGroups.md)\.
 
 ## Disable source/destination checks<a name="EIP_Disable_SrcDestCheck"></a>
 
@@ -198,7 +199,7 @@ The private subnet in your VPC is not associated with a custom route table, ther
 
 1. On the **Subnet associations** tab, choose **Edit subnet associations**\. Select the check box for the private subnet, and then choose **Save associations**\.
 
-For more information, see [Route tables for your VPC](VPC_Route_Tables.md)\.
+For more information, see [Configure route tables](VPC_Route_Tables.md)\.
 
 ## Test your NAT instance configuration<a name="nat-test-configuration"></a>
 
@@ -228,7 +229,7 @@ After you have launched a NAT instance and completed the configuration steps abo
 
 1. In the navigation pane, choose **Instances**\.
 
-1. Launch an instance into your private subnet\. For more information, see [Launch an instance into your subnet](working-with-vpcs.md#VPC_Launch_Instance)\. Ensure that you configure the following options in the launch wizard, and then choose **Launch**:
+1. Launch an instance into your private subnet\. Ensure that you configure the following options in the launch wizard, and then choose **Launch**:
    + On the **Choose an Amazon Machine Image \(AMI\)** page, select an Amazon Linux AMI from the **Quick Start** category\.
    + On the **Configure Instance Details** page, select your private subnet from the **Subnet** list, and do not assign a public IP address to your instance\.
    + On the **Configure Security Group** page, ensure that your security group includes an inbound rule that allows SSH access from your NAT instance's private IP address, or from the IP address range of your public subnet, and ensure that you have an outbound rule that allows outbound ICMP traffic\.

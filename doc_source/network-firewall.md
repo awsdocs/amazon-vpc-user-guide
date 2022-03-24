@@ -1,4 +1,4 @@
-# AWS Network Firewall<a name="network-firewall"></a>
+# Filter network traffic using AWS Network Firewall<a name="network-firewall"></a>
 
 You can filter network traffic at the perimeter of your VPC using AWS Network Firewall\. Network Firewall is a stateful, managed, network firewall and intrusion detection and prevention service\. For more information, see the [AWS Network Firewall Developer Guide](https://docs.aws.amazon.com/network-firewall/latest/developerguide/firewalls.html)\.
 

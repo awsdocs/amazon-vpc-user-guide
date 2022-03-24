@@ -1,10 +1,14 @@
 # Publish flow logs to CloudWatch Logs<a name="flow-logs-cwl"></a>
 
-Flow logs can publish flow log data directly to Amazon CloudWatch\. When publishing to CloudWatch Logs, flow log data is published to a log group, and each network interface has a unique log stream in the log group\. Log streams contain flow log records\. You can create multiple flow logs that publish data to the same log group\. If the same network interface is present in one or more flow logs in the same log group, it has one combined log stream\. If you've specified that one flow log should capture rejected traffic, and the other flow log should capture accepted traffic, then the combined log stream captures all traffic\.
+Flow logs can publish flow log data directly to Amazon CloudWatch\.
+
+When publishing to CloudWatch Logs, flow log data is published to a log group, and each network interface has a unique log stream in the log group\. Log streams contain flow log records\. You can create multiple flow logs that publish data to the same log group\. If the same network interface is present in one or more flow logs in the same log group, it has one combined log stream\. If you've specified that one flow log should capture rejected traffic, and the other flow log should capture accepted traffic, then the combined log stream captures all traffic\.
 
 Data ingestion and archival charges for vended logs apply when you publish flow logs to CloudWatch Logs\. For more information, see [Amazon CloudWatch Pricing](http://aws.amazon.com/cloudwatch/pricing)\.
 
 In CloudWatch Logs, the **timestamp** field corresponds to the start time that's captured in the flow log record\. The **ingestionTime** field indicates the date and time when the flow log record was received by CloudWatch Logs\. This timestamp is later than the end time that's captured in the flow log record\.
+
+For more information about CloudWatch Logs, see [Logs sent to CloudWatch Logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html#AWS-logs-infrastructure-CWL) in the *Amazon CloudWatch Logs User Guide*\.
 
 **Topics**
 + [IAM roles for publishing flow logs to CloudWatch Logs](#flow-logs-iam)
@@ -23,6 +27,7 @@ The IAM policy that's attached to your IAM role must include at least the follow
   "Version": "2012-10-17",
   "Statement": [
     {
+      "Effect": "Allow",
       "Action": [
         "logs:CreateLogGroup",
         "logs:CreateLogStream",
@@ -30,7 +35,6 @@ The IAM policy that's attached to your IAM role must include at least the follow
         "logs:DescribeLogGroups",
         "logs:DescribeLogStreams"
       ],
-      "Effect": "Allow",
       "Resource": "*"
     }
   ]
@@ -44,7 +48,6 @@ Also ensure that your role has a trust relationship that allows the flow logs se
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Sid": "",
       "Effect": "Allow",
       "Principal": {
         "Service": "vpc-flow-logs.amazonaws.com"
@@ -55,9 +58,22 @@ Also ensure that your role has a trust relationship that allows the flow logs se
 }
 ```
 
-You can update an existing role or use the following procedure to create a new role for use with flow logs\.
+We recommend that you use the `aws:SourceAccount` and `aws:SourceArn` condition keys to protect yourself against [the confused deputy problem](https://docs.aws.amazon.com/IAM/latest/UserGuide/confused-deputy.html)\. For example, you could add the following condition block to the previous trust policy\. The source account is the owner of the flow log and the source ARN is the flow log ARN\. If you don't know the flow log ID, you can replace that portion of the ARN with a wildcard \(\*\) and then update the policy after you create the flow log\.
 
-### Create a flow logs role<a name="create-flow-logs-role"></a>
+```
+"Condition": {
+    "StringEquals": {
+        "aws:SourceAccount": "account_id"
+    },
+    "ArnLike": {
+        "aws:SourceArn": "arn:aws:ec2:region:account_id:vpc-flow-log/flow-log-id"
+    }
+}
+```
+
+### Create or update an IAM role for flow logs<a name="create-flow-logs-role"></a>
+
+You can update an existing role or use the following procedure to create a new role for use with flow logs\.
 
 **To create an IAM role for flow logs**
 
@@ -126,7 +142,6 @@ Create the destination log group\. Open the [Log groups page](https://console.aw
 1. For **Log record format**, select the format for the flow log record\.
    + To use the default format, choose **AWS default format**\.
    + To use a custom format, choose **Custom format** and then select fields from **Log format**\.
-   + To create a custom flow log that includes the default fields, choose **AWS default format**, copy the fields in **Format preview**, then choose **Custom format** and paste the fields in the text box\.
 
 1. \(Optional\) Choose **Add new tag** to apply tags to the flow log\.
 
@@ -153,7 +168,6 @@ Create the destination log group\. Open the [Log groups page](https://console.aw
 1. For **Log record format**, select the format for the flow log record\.
    + To use the default format, choose **AWS default format**\.
    + To use a custom format, choose **Custom format** and then select fields from **Log format**\.
-   + To create a custom flow log that includes the default fields, choose **AWS default format**, copy the fields in **Format preview**, then choose **Custom format** and paste the fields in the text box\.
 
 1. \(Optional\) Choose **Add new tag** to apply tags to the flow log\.
 

@@ -1,4 +1,4 @@
-# Example: Create an IPv4 VPC and subnets using the AWS CLI<a name="vpc-subnets-commands-example"></a>
+# Create an IPv4\-enabled VPC and subnets using the AWS CLI<a name="vpc-subnets-commands-example"></a>
 
 The following example uses AWS CLI commands to create a nondefault VPC with an IPv4 CIDR block, and a public and private subnet in the VPC\. After you've created the VPC and subnets, you can launch an instance in the public subnet and connect to it\. To begin, you must first install and configure the AWS CLI\. For more information, see [Installing the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html)\.
 
@@ -17,7 +17,7 @@ You will create the following AWS resources:
 
 ## Step 1: Create a VPC and subnets<a name="vpc-subnets-commands-example-create-vpc"></a>
 
-The first step is to create a VPC and two subnets\. This example uses the CIDR block `10.0.0.0/16` for the VPC, but you can choose a different CIDR block\. For more information, see [VPC and subnet sizing](VPC_Subnets.md#VPC_Sizing)\.
+The first step is to create a VPC and two subnets\. This example uses the CIDR block `10.0.0.0/16` for the VPC, but you can choose a different CIDR block\. For more information, see [VPC sizing](configure-your-vpc.md#vpc-sizing)\.
 
 **To create a VPC and subnets using the AWS CLI**
 
@@ -154,7 +154,7 @@ After you've created the VPC and subnets, you can make one of the subnets a publ
 
 ## Step 3: Launch an instance into your subnet<a name="vpc-subnets-commands-example-launch-instance"></a>
 
-To test that your subnet is public and that instances in the subnet are accessible over the internet, launch an instance into your public subnet and connect to it\. First, you must create a security group to associate with your instance, and a key pair with which you'll connect to your instance\. For more information about security groups, see [Security groups for your VPC](VPC_SecurityGroups.md)\. For more information about key pairs, see [Amazon EC2 Key Pairs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+To test that your subnet is public and that instances in the subnet are accessible over the internet, launch an instance into your public subnet and connect to it\. First, you must create a security group to associate with your instance, and a key pair with which you'll connect to your instance\. For more information about security groups, see [Control traffic to resources using security groups](VPC_SecurityGroups.md)\. For more information about key pairs, see [Amazon EC2 Key Pairs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **To launch and connect to an instance in your public subnet**
 

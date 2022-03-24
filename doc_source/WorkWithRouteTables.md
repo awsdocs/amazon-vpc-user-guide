@@ -269,7 +269,7 @@ The following procedure describes how to remove an explicit association between 
 
 ## Associate a gateway with a route table<a name="associate-route-table-gateway"></a>
 
-You can associate an internet gateway or a virtual private gateway with a route table\. For more information, see [Gateway route tables](VPC_Route_Tables.md#gateway-route-table)\.
+You can associate an internet gateway or a virtual private gateway with a route table\. For more information, see [Gateway route tables](VPC_Route_Tables.md#gateway-route-tables)\.
 
 **To associate a gateway with a route table using the console**
 
@@ -310,7 +310,7 @@ You can disassociate an internet gateway or a virtual private gateway from a rou
 
 ## Replace or restore the target for a local route<a name="replace-local-route-target"></a>
 
-You can change the target of the default local route\. If you replace the target of a local route, you can later restore it to the default `local` target\. If your VPC has [multiple CIDR blocks](VPC_Subnets.md#vpc-resize), your route tables have multiple local routes—one per CIDR block\. You can replace or restore the target of each of the local routes as needed\.
+You can change the target of the default local route\. If you replace the target of a local route, you can later restore it to the default `local` target\. If your VPC has [multiple CIDR blocks](configure-your-vpc.md#vpc-resize), your route tables have multiple local routes—one per CIDR block\. You can replace or restore the target of each of the local routes as needed\.
 
 **To replace the target for a local route using the console**
 

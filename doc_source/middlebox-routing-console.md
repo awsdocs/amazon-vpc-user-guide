@@ -6,7 +6,7 @@ The middlebox routing wizard can help you configure routing for the following sc
 + Routing traffic to a middlebox appliance, for example, an Amazon EC2 instance that's configured as a security appliance\.
 + Routing traffic to a Gateway Load Balancer\. For more information, see the [User Guide for Gateway Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/)\.
 
-For more information, see [Examples: Middlebox routing](middlebox-routing-examples.md)\.
+For more information, see [Middlebox routing scenarios](middlebox-routing-examples.md)\.
 
 **Topics**
 + [Middlebox routing wizard prerequisites](#routing-console-rules)
@@ -135,8 +135,7 @@ We recommend that you use the middlebox routing wizard to modify or delete any r
 ## Related information<a name="additional-information"></a>
 
 For additional information about how to create the resources that you use with the middlebox routing wizard, see the following:
-+ [VPCs and subnets](VPC_Subnets.md)
-+ [Internet gateways](VPC_Internet_Gateway.md)
-+ [Elastic network interfaces](VPC_ElasticNetworkInterfaces.md)
++ [Connect to the internet using an internet gateway](VPC_Internet_Gateway.md)
++  [Associate Elastic IP addresses with resources in your VPC](vpc-eips.md) 
 + [Gateway Load Balancer endpoints \(AWS PrivateLink\)](https://docs.aws.amazon.com/vpc/latest/privatelink/vpce-gateway-load-balancer.html)
 + [Elastic Load Balancing Gateway Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/introduction.html)

@@ -1,4 +1,4 @@
-# Network ACLs<a name="vpc-network-acls"></a>
+# Control traffic to subnets using Network ACLs<a name="vpc-network-acls"></a>
 
 A *network access control list \(ACL\)* is an optional layer of security for your VPC that acts as a firewall for controlling traffic in and out of one or more subnets\. You might set up network ACLs with rules similar to your security groups in order to add an additional layer of security to your VPC\. For more information about the differences between security groups and network ACLs, see [Compare security groups and network ACLs](VPC_Security.md#VPC_Security_Comparison)\.
 
@@ -51,14 +51,14 @@ The following is an example default network ACL for a VPC that supports IPv4 onl
 
 | 
 | 
-| **Inbound ** | 
+| **Inbound** | 
 | --- |
-| Rule \# | Type |  Protocol |  Port range  | Source |  Allow/Deny | 
+| Rule \# | Type | Protocol | Port range  | Source | Allow/Deny | 
 |  100  | All IPv4 traffic |  All  |  All  | 0\.0\.0\.0/0 |  ALLOW  | 
 |  \*  | All IPv4 traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  | 
-|  **Outbound**  | 
+| **Outbound** | 
 | --- |
-| Rule \# | Type |  Protocol  |  Port range | Destination |  Allow/Deny | 
+| Rule \# | Type | Protocol | Port range | Destination | Allow/Deny | 
 |  100  | All IPv4 traffic |  All  |  All  | 0\.0\.0\.0/0 |  ALLOW  | 
 |  \*  | All IPv4 traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  | 
 
@@ -70,16 +70,16 @@ If you've modified your default network ACL's inbound rules, we do not automatic
 
 | 
 | 
-| **Inbound ** | 
+| **Inbound** | 
 | --- |
 | Rule \# | Type |  Protocol |  Port range  | Source |  Allow/Deny | 
 |  100  | All IPv4 traffic |  All  |  All  | 0\.0\.0\.0/0 |  ALLOW  | 
 |  101  |  All IPv6 traffic  |  All  |  All  |  ::/0  |  ALLOW  | 
 |  \*  | All traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  | 
 |  \*  |  All IPv6 traffic  |  All  |  All  |  ::/0  |  DENY  | 
-|  **Outbound**  | 
+| **Outbound** | 
 | --- |
-| Rule \# | Type |  Protocol  |  Port range | Destination |  Allow/Deny | 
+| Rule \# | Type | Protocol | Port range | Destination | Allow/Deny | 
 |  100  | All traffic |  All  |  All  | 0\.0\.0\.0/0 |  ALLOW  | 
 |  101  |  All IPv6 traffic  |  All  |  All  |  ::/0  |  ALLOW  | 
 |  \*  | All traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  | 
@@ -99,21 +99,21 @@ Each network ACL includes a default rule whose rule number is an asterisk\. This
 
 | 
 | 
-|  **Inbound**  | 
+| **Inbound** | 
 | --- |
-|  Rule \#  | Type |  Protocol  |  Port range  | Source  |  Allow/Deny  |  Comments  | 
+| Rule \# | Type | Protocol | Port range | Source | Allow/Deny | Comments | 
 |  100  | HTTP |  TCP  |  80  | 0\.0\.0\.0/0 |  ALLOW  |  Allows inbound HTTP traffic from any IPv4 address\.  | 
 |  110  | HTTPS |  TCP  |  443  | 0\.0\.0\.0/0 |  ALLOW  |  Allows inbound HTTPS traffic from any IPv4 address\.  | 
 |  120  | SSH |  TCP  |  22  | 192\.0\.2\.0/24 |  ALLOW  |  Allows inbound SSH traffic from your home network's public IPv4 address range \(over the internet gateway\)\.  | 
 |  130  | RDP |  TCP  |  3389  | 192\.0\.2\.0/24 |  ALLOW  |  Allows inbound RDP traffic to the web servers from your home network's public IPv4 address range \(over the internet gateway\)\.   | 
 |  140  | Custom TCP |  TCP  |  32768\-65535  | 0\.0\.0\.0/0 |  ALLOW  |  Allows inbound return IPv4 traffic from the internet \(that is, for requests that originate in the subnet\)\. This range is an example only\. For more information about how to select the appropriate ephemeral port range, see [Ephemeral ports](#nacl-ephemeral-ports)\.  | 
 |  \*  | All traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  |  Denies all inbound IPv4 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
-|  **Outbound**  | 
+| **Outbound** | 
 | --- |
-|  Rule \#  | Type |  Protocol  |  Port range  | Destination |  Allow/Deny  |  Comments  | 
+| Rule \# | Type | Protocol | Port range | Destination | Allow/Deny | Comments | 
 |  100  | HTTP |  TCP  |  80  | 0\.0\.0\.0/0 |  ALLOW  |  Allows outbound IPv4 HTTP traffic from the subnet to the internet\.  | 
 |  110  | HTTPS |  TCP  |  443  | 0\.0\.0\.0/0 |  ALLOW  |  Allows outbound IPv4 HTTPS traffic from the subnet to the internet\.  | 
-| 120 | SSH |  TCP  |  22  | 192\.0\.2\.0/24 |  ALLOW  |  Allows outbound SSH traffic from your home network's public IPv4 address range \(over the internet gateway\)\.  | 
+| 120 | SSH |  TCP  |  1024\-65535  | 192\.0\.2\.0/24 |  ALLOW  |  Allows outbound SSH traffic from your home network's public IPv4 address range \(over the internet gateway\)\.  | 
 |  140  | Custom TCP |  TCP  |  32768\-65535  | 0\.0\.0\.0/0 |  ALLOW  |  Allows outbound IPv4 responses to clients on the internet \(for example, serving webpages to people visiting the web servers in the subnet\)\. This range is an example only\. For more information about how to select the appropriate ephemeral port range, see [Ephemeral ports](#nacl-ephemeral-ports)\.  | 
 |  \*  | All traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  |  Denies all outbound IPv4 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
 
@@ -128,9 +128,9 @@ The following table shows the same example of a custom network ACL for a VPC tha
 
 | 
 | 
-|  **Inbound**  | 
+| **Inbound** | 
 | --- |
-|  Rule \#  | Type |  Protocol  |  Port range  | Source  |  Allow/Deny  |  Comments  | 
+| Rule \# | Type | Protocol | Port range | Source | Allow/Deny | Comments | 
 |  100  | HTTP |  TCP  |  80  | 0\.0\.0\.0/0 |  ALLOW  |  Allows inbound HTTP traffic from any IPv4 address\.  | 
 |  105  |  HTTP  |  TCP  |  80  |  ::/0  |  ALLOW  |  Allows inbound HTTP traffic from any IPv6 address\.  | 
 |  110  | HTTPS |  TCP  |  443  | 0\.0\.0\.0/0 |  ALLOW  |  Allows inbound HTTPS traffic from any IPv4 address\.  | 
@@ -141,9 +141,9 @@ The following table shows the same example of a custom network ACL for a VPC tha
 |  145  | Custom TCP | TCP | 32768\-65535 | ::/0 | ALLOW |  Allows inbound return IPv6 traffic from the internet \(that is, for requests that originate in the subnet\)\. This range is an example only\. For more information about how to select the appropriate ephemeral port range, see [Ephemeral ports](#nacl-ephemeral-ports)\.  | 
 |  \*  | All traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  |  Denies all inbound IPv4 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
 |  \*  |  All traffic  |  All  |  All  |  ::/0  |  DENY  |  Denies all inbound IPv6 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
-|  **Outbound**  | 
+| **Outbound** | 
 | --- |
-|  Rule \#  | Type |  Protocol  |  Port range  | Destination |  Allow/Deny  |  Comments  | 
+| Rule \# | Type | Protocol | Port range | Destination | Allow/Deny | Comments | 
 |  100  | HTTP |  TCP  |  80  | 0\.0\.0\.0/0 |  ALLOW  |  Allows outbound IPv4 HTTP traffic from the subnet to the internet\.  | 
 |  105  |  HTTP  |  TCP  |  80  |  ::/0  |  ALLOW  |  Allows outbound IPv6 HTTP traffic from the subnet to the internet\.  | 
 |  110  | HTTPS |  TCP  |  443  | 0\.0\.0\.0/0 |  ALLOW  |  Allows outbound IPv4 HTTPS traffic from the subnet to the internet\.  | 
@@ -379,26 +379,30 @@ In this example, instances in your subnet can communicate with each other, and a
 The following is an example security group to associate with the instances\. Security groups are stateful\. Therefore you don't need a rule that allows responses to inbound traffic\.
 
 
-|  | 
+| 
+| 
+| **Inbound** | 
 | --- |
-| Inbound rules | 
 | Protocol Type | Protocol | Port range | Source | Comments | 
 | All traffic | All | All | sg\-1234567890abcdef0 | All instances associated with this security group can communicate with each other\. | 
 | SSH | TCP | 22 | 172\.31\.1\.2/32 | Allows inbound SSH access from the remote computer\. | 
-| Outbound rules | 
+| **Outbound** | 
+| --- |
 | Protocol Type | Protocol | Port range | Destination | Comments | 
 | All traffic | All | All | sg\-1234567890abcdef0 | All instances associated with this security group can communicate with each other\. | 
 
 The following is an example network ACL to associate with the subnets for the instances\. The network ACL rules apply to all instances in the subnet\. Network ACLs are stateless\. Therefore, you need a rule that allows responses to inbound traffic\.
 
 
-|  | 
+| 
+| 
+| **Inbound** | 
 | --- |
-| Inbound rules | 
 | Rule \# | Type | Protocol | Port range | Source | Allow/Deny | Comments | 
 | 100 | SSH | TCP | 22 | 172\.31\.1\.2/32 | ALLOW | Allows inbound traffic from the remote computer\. | 
 | \* | All traffic | All | All | 0\.0\.0\.0/0 | DENY | Denies all other inbound traffic\. | 
-| Outbound rules | 
+| **Outbound** | 
+| --- |
 | Rule \# | Type | Protocol | Port range | Destination | Allow/Deny | Comments | 
 | 100 | Custom TCP | TCP | 1024\-65535 | 172\.31\.1\.2/32 | ALLOW | Allows outbound responses to the remote computer\. | 
 | \* | All traffic | All | All | 0\.0\.0\.0/0 | DENY | Denies all other outbound traffic\. | 
@@ -406,13 +410,15 @@ The following is an example network ACL to associate with the subnets for the in
 If you accidentally make your security group rules too permissive, the network ACL in this example continues to permit access only from the specified IP address\. For example, the following security group contains a rule that allow inbound SSH access from any IP address\. However, if you associate this security group with an instance in a subnet that uses the network ACL, only other instances within the subnet and your remote computer can access the instance, because the network ACL rules deny other inbound traffic to the subnet\.
 
 
-|  | 
+| 
+| 
+| **Inbound** | 
 | --- |
-| Inbound rules | 
 | Type | Protocol | Port range | Source | Comments | 
 | All traffic | All | All | sg\-1234567890abcdef0 | All instances associated with this security group can communicate with each other\. | 
 | SSH | TCP | 22 | 0\.0\.0\.0/0 | Allows SSH access from any IP address\. | 
-| Outbound rules | 
+| **Outbound** | 
+| --- |
 | Type | Protocol | Port range | Destination | Comments | 
 | All traffic | All | All | 0\.0\.0\.0/0 | Allows all outbound traffic\. | 
 

@@ -8,6 +8,7 @@ You can create and manage customer\-managed prefix lists\. You can view AWS\-man
 + [View the entries for a prefix list](#view-managed-prefix-list-entries)
 + [View associations \(references\) for your prefix list](#view-managed-prefix-list-associations)
 + [Modify a prefix list](#modify-managed-prefix-list)
++ [Resize a prefix list](#resize-managed-prefix-list)
 + [Restore a previous version of a prefix list](#restore-managed-prefix-list)
 + [Delete a prefix list](#delete-managed-prefix-list)
 + [Reference prefix lists in your AWS resources](#managed-prefix-lists-referencing)
@@ -96,7 +97,7 @@ Use the [get\-managed\-prefix\-list\-associations](https://docs.aws.amazon.com/c
 
 ## Modify a prefix list<a name="modify-managed-prefix-list"></a>
 
-You can modify the name of your prefix list, and you can add or remove entries\. You cannot modify the maximum number of entries using the AWS Management Console\. To update the maximum number of entries, use the AWS CLI or an AWS SDK\.
+You can modify the name of your prefix list, and you can add or remove entries\. To modify the maximum number of entries, see [Resize a prefix list](#resize-managed-prefix-list)\.
 
 Updating the entries of a prefix list creates a new version of the prefix list\. Updating the name or maximum number of entries for a prefix list does not create a new version of the prefix list\.
 
@@ -119,6 +120,25 @@ Updating the entries of a prefix list creates a new version of the prefix list\.
 1. Choose **Save prefix list**\.
 
 **To modify a prefix list using the AWS CLI**  
+Use the [modify\-managed\-prefix\-list](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-managed-prefix-list.html) command\.
+
+## Resize a prefix list<a name="resize-managed-prefix-list"></a>
+
+You can resize a prefix list and modify the maximum number of entries for the prefix list\. The value must be greater than or equal to the number of prefix list entries\. The new value must be different than the current value\.
+
+**To resize a prefix list using the console**
+
+1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
+
+1. In the navigation pane, choose **Managed Prefix Lists**\.
+
+1. Select the checkbox for the prefix list, and choose **Actions**, **Resize prefix list**\.
+
+1. For **New max entries**, enter a value\.
+
+1. Choose **Resize**\.
+
+**To resize a prefix list using the AWS CLI**  
 Use the [modify\-managed\-prefix\-list](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-managed-prefix-list.html) command\.
 
 ## Restore a previous version of a prefix list<a name="restore-managed-prefix-list"></a>
@@ -173,7 +193,7 @@ You can reference a prefix list in the following AWS resources\.
 
 ### VPC security groups<a name="prefix-list-vpc-security-group"></a>
 
-You can specify a prefix list as the source for an inbound rule, or as the destination for an outbound rule\. For more information about security groups, see [Security groups for your VPC](VPC_SecurityGroups.md)\.
+You can specify a prefix list as the source for an inbound rule, or as the destination for an outbound rule\. For more information about security groups, see [Control traffic to resources using security groups](VPC_SecurityGroups.md)\.
 
 **To reference a prefix list in a security group rule using the console**
 
@@ -194,7 +214,7 @@ Use the [authorize\-security\-group\-ingress](https://docs.aws.amazon.com/cli/la
 
 ### Subnet route tables<a name="prefix-list-subnet-route-table"></a>
 
-You can specify a prefix list as the destination for route table entry\. You cannot reference a prefix list in a gateway route table\. For more information about route tables, see [Route tables for your VPC](VPC_Route_Tables.md)\.
+You can specify a prefix list as the destination for route table entry\. You cannot reference a prefix list in a gateway route table\. For more information about route tables, see [Configure route tables](VPC_Route_Tables.md)\.
 
 **To reference a prefix list in a route table using the console**
 

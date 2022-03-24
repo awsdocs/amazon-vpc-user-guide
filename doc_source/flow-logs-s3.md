@@ -1,12 +1,16 @@
 # Publish flow logs to Amazon S3<a name="flow-logs-s3"></a>
 
-Flow logs can publish flow log data to Amazon S3\. When publishing to Amazon S3, flow log data is published to an existing Amazon S3 bucket that you specify\. Flow log records for all of the monitored network interfaces are published to a series of log file objects that are stored in the bucket\. If the flow log captures data for a VPC, the flow log publishes flow log records for all of the network interfaces in the selected VPC\.
+Flow logs can publish flow log data to Amazon S3\.
+
+When publishing to Amazon S3, flow log data is published to an existing Amazon S3 bucket that you specify\. Flow log records for all of the monitored network interfaces are published to a series of log file objects that are stored in the bucket\. If the flow log captures data for a VPC, the flow log publishes flow log records for all of the network interfaces in the selected VPC\.
 
 Data ingestion and archival charges for vended logs apply when you publish flow logs to Amazon S3\. For more information, see [Amazon CloudWatch Pricing](http://aws.amazon.com/https://aws.amazon.com/cloudwatch/pricing)\.
 
 To create an Amazon S3 bucket for use with flow logs, see [Create a bucket](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html) in the *Amazon Simple Storage Service User Guide*\.
 
 For more information about multiple account logging, see [Central Logging](http://aws.amazon.com/solutions/implementations/centralized-logging/) in the AWS Solutions Library\.
+
+For more information about CloudWatch Logs, see [Logs sent to Amazon S3](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html#AWS-logs-infrastructure-S3) in the *Amazon CloudWatch Logs User Guide*\.
 
 **Topics**
 + [Flow log files](#flow-logs-s3-path)
@@ -101,7 +105,9 @@ An IAM principal in your account, such as an IAM user, must have sufficient perm
 
 By default, Amazon S3 buckets and the objects they contain are private\. Only the bucket owner can access the bucket and the objects stored in it\. However, the bucket owner can grant access to other resources and users by writing an access policy\.
 
-The following bucket policy gives the flow log permission to publish logs to it\. If the bucket already has a policy with the following permissions, the policy is kept as is\. We recommend that you grant these permissions to the log delivery service principal instead of individual AWS account ARNs\.
+If the user creating the flow log owns the bucket and has `PutBucketPolicy` and `GetBucketPolicy` permissions for the bucket, we automatically attach the following policy to the bucket\. This policy overwrites any existing policy attached to the bucket\.
+
+Otherwise, the bucket owner must add this policy to the bucket, specifying the AWS account ID of the flow log creator, or flow log creation fails\. For more information, see [Using bucket policies](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/bucket-policies.html) in the *Amazon Simple Storage Service User Guide*\.
 
 ```
 {
@@ -112,49 +118,49 @@ The following bucket policy gives the flow log permission to publish logs to it\
             "Effect": "Allow",
             "Principal": {"Service": "delivery.logs.amazonaws.com"},
             "Action": "s3:PutObject",
-            "Resource": "arn:aws:s3:::bucket_name/optional_folder/AWSLogs/account_id/*",
-            "Condition": {"StringEquals": {"s3:x-amz-acl": "bucket-owner-full-control"}}
+            "Resource": "my-s3-arn",
+            "Condition": {
+                "StringEquals": {
+                    "s3:x-amz-acl": "bucket-owner-full-control",
+                    "aws:SourceAccount": account_id
+                },
+                "ArnLike": {
+                    "aws:SourceArn": "arn:aws:logs:region:account_id:*"
+                }
+            }
         },
         {
             "Sid": "AWSLogDeliveryCheck",
             "Effect": "Allow",
             "Principal": {"Service": "delivery.logs.amazonaws.com"},
             "Action": ["s3:GetBucketAcl", "s3:ListBucket"],
-            "Resource": "arn:aws:s3:::bucket_name"
+            "Resource": "arn:aws:s3:::bucket_name",
+            "Condition": {
+                "StringEquals": {
+                    "aws:SourceAccount": account_id
+                },
+                "ArnLike": {
+                    "aws:SourceArn": "arn:aws:logs:region:account_id:*"
+                }
+            }
         }
     ]
 }
 ```
 
-If the user creating the flow log owns the bucket, has `PutBucketPolicy` permissions for the bucket, and the bucket does not have a policy with sufficient log delivery permissions, we automatically attach the preceding policy to the bucket\. This policy overwrites any existing policy attached to the bucket\.
+The ARN that you specify for *my\-s3\-arn* depends on whether you use Hive\-compatible S3 prefixes\.
++ Default prefixes
 
-If the user creating the flow log does not own the bucket, or does not have the `GetBucketPolicy` and `PutBucketPolicy` permissions for the bucket, the flow log creation fails\. In this case, the bucket owner must manually add the above policy to the bucket and specify the flow log creator's AWS account ID\. For more information, see [How Do I Add an S3 Bucket Policy?](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/add-bucket-policy.html) in the *Amazon Simple Storage Service User Guide*\. If the bucket receives flow logs from multiple accounts, add a `Resource` element entry to the `AWSLogDeliveryWrite` policy statement for each account\. For example, the following bucket policy allows AWS accounts `123123123123` and `456456456456` to publish flow logs to a folder named `flow-logs` in a bucket named `log-bucket`\.
+  ```
+  arn:aws:s3:::bucket_name/optional_folder/AWSLogs/account_id/*
+  ```
++ Hive\-compatible S3 prefixes
 
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "AWSLogDeliveryWrite",
-            "Effect": "Allow",
-            "Principal": {"Service": "delivery.logs.amazonaws.com"},
-            "Action": "s3:PutObject",
-            "Resource": [
-            	"arn:aws:s3:::log-bucket/flow-logs/AWSLogs/123123123123/*",
-            	"arn:aws:s3:::log-bucket/flow-logs/AWSLogs/456456456456/*"
-            	],
-            "Condition": {"StringEquals": {"s3:x-amz-acl": "bucket-owner-full-control"}}
-        },
-        {
-            "Sid": "AWSLogDeliveryCheck",
-            "Effect": "Allow",
-            "Principal": {"Service": "delivery.logs.amazonaws.com"},
-            "Action": ["s3:GetBucketAcl", "s3:ListBucket"],
-            "Resource": "arn:aws:s3:::log-bucket"
-        }
-    ]
-}
-```
+  ```
+  arn:aws:s3:::bucket_name/optional_folder/AWSLogs/aws-account-id=account_id/*
+  ```
+
+It is a best practice to grant these permissions to the log delivery service principal instead of individual AWS account ARNs\. It is also a best practice to use the `aws:SourceAccount` and `aws:SourceArn` condition keys to protect against [the confused deputy problem](https://docs.aws.amazon.com/IAM/latest/UserGuide/confused-deputy.html)\. The source account is the owner of the flow log and the source ARN is the wildcard \(\*\) ARN of the logs service\.
 
 ## Required key policy for use with SSE\-KMS<a name="flow-logs-s3-cmk-policy"></a>
 
@@ -250,7 +256,6 @@ After you have created and configured your Amazon S3 bucket, you can create flow
 1. For **Log record format**, specify the format for the flow log record\.
    + To use the default flow log record format, choose **AWS default format**\.
    + To create a custom format, choose **Custom format**\. For **Log format**, choose the fields to include in the flow log record\.
-   + To create a custom flow log that includes the default format fields, choose **AWS default format**, copy the fields in **Format preview**, and then choose **Custom format** and paste the fields in the text box\.
 
 1. For **Log file format**, specify the format for the log file\.
    + **Text** – Plain text\. This is the default format\.

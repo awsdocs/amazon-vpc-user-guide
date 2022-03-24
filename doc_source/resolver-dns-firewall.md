@@ -1,4 +1,4 @@
-# Route 53 Resolver DNS Firewall<a name="resolver-dns-firewall"></a>
+# Filter DNS traffic using Route 53 Resolver DNS Firewall<a name="resolver-dns-firewall"></a>
 
 With DNS Firewall, you define domain name filtering rules in rule groups that you associate with your VPCs\. You can specify lists of domain names to allow or block, and you can customize the responses for the DNS queries that you block\. For more information, see the [Route 53 Resolver DNS Firewall Documentation](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-dns-firewall.html)\.
 

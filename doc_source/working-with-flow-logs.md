@@ -97,7 +97,7 @@ You can add or remove tags for a flow log in the Amazon EC2 and Amazon VPC conso
 
 ## View flow log records<a name="view-flow-log-records"></a>
 
-You can view your flow log records using the CloudWatch Logs console or Amazon S3 console, depending on the chosen destination type\. It may take a few minutes after you've created your flow log for it to be visible in the console\.
+You can view your flow log records using the CloudWatch Logs console or Amazon S3 console, depending on the chosen destination type\. It might take a few minutes after you've created your flow log for it to be visible in the console\.
 
 **To view flow log records published to CloudWatch Logs**
 

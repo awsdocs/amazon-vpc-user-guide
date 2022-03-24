@@ -1,8 +1,9 @@
-# Amazon VPC console wizard configurations<a name="VPC_wizard"></a>
+# Create VPCs using the wizard<a name="VPC_wizard"></a>
 
-You can use the Amazon VPC Console wizard to create one of the following nondefault VPC configurations\.
+The following tutorials show you how to create VPCs using the wizard in Amazon Virtual Private Cloud\.
 
 **Topics**
++ [VPC that supports IPv6 addressing](get-started-ipv6.md)
 + [VPC with a single public subnet](VPC_Scenario1.md)
 + [VPC with public and private subnets \(NAT\)](VPC_Scenario2.md)
 + [VPC with public and private subnets and AWS Site\-to\-Site VPN access](VPC_Scenario3.md)

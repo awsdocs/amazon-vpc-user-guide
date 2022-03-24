@@ -1,4 +1,4 @@
-# Get started with IPv6 for Amazon VPC<a name="get-started-ipv6"></a>
+# VPC that supports IPv6 addressing<a name="get-started-ipv6"></a>
 
 The following steps describe how to create a nondefault VPC that supports IPv6 addressing\.
 
@@ -10,7 +10,7 @@ To complete this exercise, do the following:
 
 For more information about IPv4 and IPv6 addressing, see [IP addressing in your VPC](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-ip-addressing.html)\.
 
-If you want to use a Local Zone for your VPC, create a VPC, and then create a subnet in the Local Zone\. For more information, see [Create a VPC](working-with-vpcs.md#Create-VPC) and [Create a subnet in your VPC](working-with-vpcs.md#AddaSubnet)\.
+If you want to use a Local Zone for your VPC, create a VPC, and then create a subnet in the Local Zone\. For more information, see [Create a VPC](working-with-vpcs.md#Create-VPC) and [Create a subnet in your VPC](working-with-subnets.md#create-subnets)\.
 
 **Topics**
 + [Step 1: Create the VPC](#get-started-ipv6-vpc)
@@ -27,7 +27,7 @@ In this step, you use the Amazon VPC wizard in the Amazon VPC console to create 
 + Associates an IPv6 Amazon\-provided CIDR block with a network border group\. For more information, see [Extend your VPC resources to Local Zones](Extend_VPCs.md#local-zone)\.
 
 **Note**  
-This exercise covers the first scenario in the VPC wizard\. For more information about the other scenarios, see [Scenarios for Amazon VPC](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenarios.html)\.
+This exercise covers the first scenario in the VPC wizard\. For information about the other scenarios, see [Create VPCs using the wizard](VPC_wizard.md)\.
 
 **To create a VPC in the default Availability Zone**
 
@@ -69,11 +69,9 @@ Do not choose **Your VPCs** in the navigation pane; you cannot access the VPC wi
 
 1. On the configuration page, enter a name for your VPC for **VPC name**; for example, `my-vpc`, and enter a name for your subnet for **Subnet name**\. This helps you to identify the VPC and subnet in the Amazon VPC console after you've created them\. 
 
-1. \(For **IPv4 CIDR block**, specify the CIDR block\. For more information, see [VPC sizing](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html#VPC_Sizing)\. 
+1. For **IPv4 CIDR block**, specify the CIDR block\. For more information, see [VPC sizing](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html#VPC_Sizing)\. 
 
 1. For **IPv6 CIDR block**, choose **Amazon\-provided IPv6 CIDR block**\.
-
-1. For **Network Border Group**, choose the group from where AWS advertises the IP addresses\.
 
 1. Leave the rest of the default configurations on the page, and choose **Create VPC**\.
 
@@ -140,13 +138,13 @@ If you use `::/0`, you enable all IPv6 addresses to access your instance using S
 
 ## Step 3: Launch an instance<a name="get-started-ipv6-instance"></a>
 
-When you launch an EC2 instance into a VPC, you must specify the subnet in which to launch the instance\. In this case, you'll launch an instance into the public subnet of the VPC you created\. Use the Amazon EC2 launch wizard in the Amazon EC2 console to launch your instance\.
+When you launch an EC2 instance into a VPC, you must specify the subnet in which to launch the instance\. In this case, you'll launch an instance into the public subnet of the VPC you created\. Use the Amazon EC2 launch wizard in the Amazon EC2 console to launch your instance\. Not all of the Amazon EC2 launch wizard options are detailed here\. For more information, see [Launching an instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/launching-instance.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 To ensure that your instance is accessible from the internet, assign an IPv6 address from the subnet range to the instance during launch\. This ensures that your instance can communicate with the internet over IPv6\.
 
 **To launch an EC2 instance into a VPC**
 
-Before you launch the EC2 instance into the VPC, configure the subnet of the VPC to automatically assign IPv6 IP addresses\. For more information, see [Modify the IPv6 addressing attribute for your subnet](vpc-ip-addressing.md#subnet-ipv6)\.
+Before you launch the EC2 instance into the VPC, configure the subnet of the VPC to automatically assign IPv6 IP addresses\. For more information, see [Modify the IPv6 addressing attribute for your subnet](working-with-subnets.md#subnet-ipv6)\.
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -175,8 +173,6 @@ Before you launch the EC2 instance into the VPC, configure the subnet of the VPC
    To launch your instance, select the acknowledgment check box and choose **Launch Instances**\.
 
 1. On the confirmation page, choose **View Instances** to view your instance on the **Instances** page\. Select your instance, and view its details in the **Description** tab\. The **Private IPs** field displays the private IPv4 address that's assigned to your instance from the range of IPv4 addresses in your subnet\. The **IPv6 IPs** field displays the IPv6 address that's assigned to your instance from the range of IPv6 addresses in your subnet\. 
-
-For more information about the options available in the Amazon EC2 launch wizard, see [Launching an instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/launching-instance.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 You can connect to your instance through its IPv6 address using SSH or Remote Desktop from your home network\. Your local computer must have an IPv6 address and must be configured to use IPv6\. For more information about how to connect to a Linux instance, see [Connecting to your Linux instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html) in the *Amazon EC2 User Guide for Linux Instances*\. For more information about how to connect to a Windows instance, see [Connect to your Windows instance using RDP](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/connecting_to_windows_instance.html) in the *Amazon EC2 User Guide for Windows Instances*\.
 

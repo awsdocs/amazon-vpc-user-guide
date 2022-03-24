@@ -1,4 +1,4 @@
-# Work with shared VPCs<a name="vpc-sharing"></a>
+# Share your VPC with other accounts<a name="vpc-sharing"></a>
 
 VPC sharing allows multiple AWS accounts to create their application resources, such as Amazon EC2 instances, Amazon Relational Database Service \(RDS\) databases, Amazon Redshift clusters, and AWS Lambda functions, into shared, centrally\-managed virtual private clouds \(VPCs\)\. In this model, the account that owns the VPC \(owner\) shares one or more subnets with other accounts \(participants\) that belong to the same organization from AWS Organizations\. After a subnet is shared, the participants can view, create, modify, and delete their application resources in the subnets shared with them\. Participants cannot view, modify, or delete resources that belong to other participants or the VPC owner\.
 
@@ -12,6 +12,7 @@ You can share your VPCs to leverage the implicit routing within a VPC for applic
 + [Shared subnets permissions](#vpc-sharing-permissions)
 + [Billing and metering for the owner and participants](#vpc-share-billing)
 + [Limitations](#vpc-share-limitations)
++ [Example of sharing public subnets and private subnets](example-vpc-share.md)
 
 ## Shared VPCs prerequisites<a name="vpc-share-prerequisites"></a>
 
@@ -38,7 +39,13 @@ Use the [create\-resource\-share](https://docs.aws.amazon.com/cli/latest/referen
 
 To ensure that resources are distributed across the Availability Zones for a Region, we independently map Availability Zones to names for each account\. For example, the Availability Zone `us-east-1a` for your AWS account might not have the same location as `us-east-1a` for another AWS account\.
 
-To coordinate Availability Zones across accounts for VPC sharing, you must use the *AZ ID*, which is a unique and consistent identifier for an Availability Zone\. For example, `use1-az1` is one of the Availability Zones in the `us-east-1` Region\. Availability Zone IDs enable you to determine the location of resources in one account relative to the resources in another account\. For more information, see [AZ IDs for your resources](https://docs.aws.amazon.com/ram/latest/userguide/working-with-az-ids.html) in the *AWS RAM User Guide*\.
+To coordinate Availability Zones across accounts for VPC sharing, you must use an *AZ ID*, which is a unique and consistent identifier for an Availability Zone\. For example, `use1-az1` is the AZ ID for one of the Availability Zones in the `us-east-1` Region\. Use AZ IDs to determine the location of resources in one account relative to another account\. You can view the AZ ID for each subnet in the Amazon VPC console\.
+
+The following diagram illustrates two accounts with different mappings of Availability Zone code to AZ ID\.
+
+![\[Two accounts with different mappings of Availability Zone code to AZ ID.\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/availability-zone-mapping.png)
+
+
 
 ## Unshare a shared subnet<a name="vpc-sharing-stop-share-subnet"></a>
 

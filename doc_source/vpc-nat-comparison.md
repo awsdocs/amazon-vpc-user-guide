@@ -21,3 +21,9 @@ The following is a high\-level summary of the differences between NAT gateways a
 | Traffic metrics | View [CloudWatch metrics for the NAT gateway](vpc-nat-gateway-cloudwatch.md)\. | View CloudWatch metrics for the instance\. | 
 | Timeout behavior | When a connection times out, a NAT gateway returns an RST packet to any resources behind the NAT gateway that attempt to continue the connection \(it does not send a FIN packet\)\. | When a connection times out, a NAT instance sends a FIN packet to resources behind the NAT instance to close the connection\. | 
 | IP fragmentation | Supports forwarding of IP fragmented packets for the UDP protocol\. Does not support fragmentation for the TCP and ICMP protocols\. Fragmented packets for these protocols will get dropped\.  | Supports reassembly of IP fragmented packets for the UDP, TCP, and ICMP protocols\. | 
+
+## Migrate from a NAT instance to a NAT gateway<a name="nat-instance-migrate"></a>
+
+If you're already using a NAT instance, we recommend that you replace it with a NAT gateway\. You can create a NAT gateway in the same subnet as your NAT instance, and then replace the existing route in your route table that points to the NAT instance with a route that points to the NAT gateway\. To use the same Elastic IP address for the NAT gateway that you currently use for your NAT instance, you must first disassociate the Elastic IP address from your NAT instance and then associate it with your NAT gateway when you create the gateway\.
+
+If you change your routing from a NAT instance to a NAT gateway, or if you disassociate the Elastic IP address from your NAT instance, any current connections are dropped and have to be re\-established\. Ensure that you do not have any critical tasks \(or any other tasks that operate through the NAT instance\) running\.

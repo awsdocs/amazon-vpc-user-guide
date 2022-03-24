@@ -1,25 +1,26 @@
-# Migrate to IPv6<a name="vpc-migrate-ipv6"></a>
+# Migrate existing VPCs from IPv4 to IPv6<a name="vpc-migrate-ipv6"></a>
 
 If you have an existing VPC that supports IPv4 only, and resources in your subnet that are configured to use IPv4 only, you can enable IPv6 support for your VPC and resources\. Your VPC can operate in dual\-stack mode — your resources can communicate over IPv4, or IPv6, or both\. IPv4 and IPv6 communication are independent of each other\.
 
 You cannot disable IPv4 support for your VPC and subnets; this is the default IP addressing system for Amazon VPC and Amazon EC2\.
 
 **Note**  
-This information assumes that you have an existing VPC with public and private subnets\. For information about setting up a new VPC for use with IPv6, see [Overview for IPv6](VPC_Scenario1.md#vpc-scenario-1-overview-ipv6)\.
+There is no migration path currently from IPv4\-only subnets to IPv6\-only subnets\. For information about creating IPv6\-only subnets, see [Create a subnet in your VPC](working-with-subnets.md#create-subnets)\.
+This section assumes that you have an existing VPC with public and private subnets\. For information about setting up a new VPC for use with IPv6, see [Overview for IPv6](VPC_Scenario1.md#vpc-scenario-1-overview-ipv6)\.
 
 The following table provides an overview of the steps to enable your VPC and subnets to use IPv6\.
 
 
 | Step | Notes | 
 | --- | --- | 
-| [Step 1: Associate an IPv6 CIDR block with your VPC and subnets](#vpc-migrate-ipv6-cidr) | Associate an Amazon\-provided IPv6 CIDR block with your VPC and with your subnets\. | 
+| [Step 1: Associate an IPv6 CIDR block with your VPC and subnets](#vpc-migrate-ipv6-cidr) | Associate an Amazon\-provided or BYOIP IPv6 CIDR block with your VPC and with your subnets\. | 
 | [Step 2: Update your route tables](#vpc-migrate-ipv6-routes) | Update your route tables to route your IPv6 traffic\. For a public subnet, create a route that routes all IPv6 traffic from the subnet to the internet gateway\. For a private subnet, create a route that routes all internet\-bound IPv6 traffic from the subnet to an egress\-only internet gateway\. | 
 | [Step 3: Update your security group rules](#vpc-migrate-ipv6-sg-rules) | Update your security group rules to include rules for IPv6 addresses\. This enables IPv6 traffic to flow to and from your instances\. If you've created custom network ACL rules to control the flow of traffic to and from your subnet, you must include rules for IPv6 traffic\. | 
 | [Step 4: Change your instance type](#vpc-migrate-ipv6-instance-types) | If your instance type does not support IPv6, change the instance type\. | 
 | [Step 5: Assign IPv6 addresses to your instances](#vpc-migrate-assign-ipv6-address) | Assign IPv6 addresses to your instances from the IPv6 address range of your subnet\. | 
 | [Step 6: \(Optional\) Configure IPv6 on your instances](#vpc-migrate-ipv6-dhcpv6) | If your instance was launched from an AMI that is not configured to use DHCPv6, you must manually configure your instance to recognize an IPv6 address assigned to the instance\. | 
 
-Before you migrate to using IPv6, ensure that you have read the features of IPv6 addressing for Amazon VPC: [IPv4 and IPv6 characteristics and restrictions](vpc-ip-addressing.md#vpc-ipv4-ipv6-comparison)\.
+Before you migrate to using IPv6, ensure that you have read the features of IPv6 addressing for Amazon VPC: [](how-it-works.md#vpc-ipv4-ipv6-comparison)\.
 
 **Topics**
 + [Example: Enable IPv6 in a VPC with a public and private subnet](#vpc-migrate-ipv6-example)
@@ -91,7 +92,7 @@ You can associate an IPv6 CIDR block with your VPC, and then associate a `/64` C
 
 1. Choose **Close**\. Repeat the steps for the other subnets in your VPC\.
 
-For more information, see [VPC and subnet sizing for IPv6](VPC_Subnets.md#vpc-sizing-ipv6)\.
+For more information, see [VPC sizing for IPv6](configure-your-vpc.md#vpc-sizing-ipv6)\.
 
 ## Step 2: Update your route tables<a name="vpc-migrate-ipv6-routes"></a>
 
@@ -113,7 +114,7 @@ For a private subnet, you must update the route table to enable instances \(such
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. If you're using a NAT device in your private subnet, it does not support IPv6 traffic\. Instead, create an egress\-only internet gateway for your private subnet to enable outbound communication to the internet over IPv6 and prevent inbound communication\. An egress\-only internet gateway supports IPv6 traffic only\. For more information, see [Egress\-only internet gateways](egress-only-internet-gateway.md)\.
+1. If you're using a NAT device in your private subnet, it does not support IPv6 traffic\. Instead, create an egress\-only internet gateway for your private subnet to enable outbound communication to the internet over IPv6 and prevent inbound communication\. An egress\-only internet gateway supports IPv6 traffic only\. For more information, see [Enable outbound IPv6 traffic using an egress\-only internet gateway](egress-only-internet-gateway.md)\.
 
 1. In the navigation pane, choose **Route Tables** and select the route table that's associated with the private subnet\.
 
@@ -139,11 +140,11 @@ For example, in the example above, you can update the web server security group 
 
 1. For each rule, choose **Add another rule**, and choose **Save** when you're done\. For example, to add a rule that allows all HTTP traffic over IPv6, for **Type**, select **HTTP** and for **Source**, enter `::/0`\.
 
-By default, an outbound rule that allows all IPv6 traffic is automatically added to your security groups when you associate an IPv6 CIDR block with your VPC\. However, if you modified the original outbound rules for your security group, this rule is not automatically added, and you must add equivalent outbound rules for IPv6 traffic\. For more information, see [Security groups for your VPC](VPC_SecurityGroups.md)\.
+By default, an outbound rule that allows all IPv6 traffic is automatically added to your security groups when you associate an IPv6 CIDR block with your VPC\. However, if you modified the original outbound rules for your security group, this rule is not automatically added, and you must add equivalent outbound rules for IPv6 traffic\. For more information, see [Control traffic to resources using security groups](VPC_SecurityGroups.md)\.
 
 ### Update your network ACL rules<a name="vpc-migrate-ipv6-nacl-rules"></a>
 
-If you associate an IPv6 CIDR block with your VPC, we automatically add rules to the default network ACL to allow IPv6 traffic, provided you haven't modified its default rules\. If you've modified your default network ACL or if you've created a custom network ACL with rules to control the flow of traffic to and from your subnet, you must manually add rules for IPv6 traffic\. For more information, see [Network ACLs](vpc-network-acls.md)\.
+If you associate an IPv6 CIDR block with your VPC, we automatically add rules to the default network ACL to allow IPv6 traffic, provided you haven't modified its default rules\. If you've modified your default network ACL or if you've created a custom network ACL with rules to control the flow of traffic to and from your subnet, you must manually add rules for IPv6 traffic\. For more information, see [Control traffic to subnets using Network ACLs](vpc-network-acls.md)\.
 
 ## Step 4: Change your instance type<a name="vpc-migrate-ipv6-instance-types"></a>
 

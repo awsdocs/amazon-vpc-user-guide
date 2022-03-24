@@ -1,4 +1,4 @@
-# Prefix lists<a name="managed-prefix-lists"></a>
+# Group CIDR blocks using prefix lists<a name="managed-prefix-lists"></a>
 
 A prefix list is a set of one or more CIDR blocks\. You can use prefix lists to make it easier to configure and maintain your security groups and route tables\. You can create a prefix list from the IP addresses that you frequently use, and reference them as a set in security group rules and routes instead of referencing them individually\. For example, you can consolidate security group rules with different CIDR blocks but the same port and protocol into a single rule that uses a prefix list\. If you scale your network and need to allow traffic from another CIDR block, you can update the relevant prefix list and all security groups that use the prefix list are updated\.
 
@@ -10,6 +10,7 @@ There are two types of prefix lists:
 + [Prefix lists concepts and rules](#managed-prefix-lists-concepts)
 + [Identity and access management for prefix lists](#managed-prefix-lists-iam)
 + [Work with customer\-managed prefix lists](working-with-managed-prefix-lists.md)
++ [Work with AWS\-managed prefix lists](working-with-aws-managed-prefix-lists.md)
 + [Work with shared prefix lists](sharing-managed-prefix-lists.md)
 
 ## Prefix lists concepts and rules<a name="managed-prefix-lists-concepts"></a>
@@ -31,7 +32,7 @@ The following rules apply to customer\-managed prefix lists:
 
 The following rules apply to AWS\-managed prefix lists:
 + You cannot create, modify, share, or delete an AWS\-managed prefix list\.
-+ When you reference an AWS\-managed prefix list in a resource, it counts as a single rule or entry for the resource\.
++ Different AWS\-managed prefix lists have a different weight when you use them\. For more information, see [AWS\-managed prefix list weight](working-with-aws-managed-prefix-lists.md#aws-managed-prefix-list-weights)\.
 + You cannot view the version number of an AWS\-managed prefix list\.
 
 ## Identity and access management for prefix lists<a name="managed-prefix-lists-iam"></a>
