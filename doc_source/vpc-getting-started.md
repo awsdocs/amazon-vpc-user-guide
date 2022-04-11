@@ -10,7 +10,7 @@ In this exercise, you'll create a VPC and two subnets\. Within one of the subnet
 + [Step 1: Create a VPC](#create-vpc)
 + [Step 2: View information about your VPC](#verify-vpc-components)
 + [Step 3: Launch an instance into your VPC](#getting-started-launch-instance)
-+ [Step 4: Connect to the E2 instance in your public subnet](#getting-started-assign-eip)
++ [Step 4: Connect to the EC2 instance in your public subnet](#getting-started-assign-eip)
 + [Step 5: Clean up](#getting-started-delete-vpc)
 + [Next steps](#getting-started-next-steps)
 
@@ -91,7 +91,7 @@ When you configure your EC2 instance to launch into a VPC, choose the VPC and pu
 When you configure your EC2 instance to launch into your public subnet, ensure **Auto\-assign Public IP** is set to **Enable**\. By default, an instance in a nondefault VPC is not assigned a public IPv4 address, and we want to assign a public IPv4 address so that we can connect to our instance in the subnet over the internet\.
 The EC2 launch wizard creates a security group rule that allows all IP addresses \(`0.0.0.0/0`\) to access your instance using SSH or RDP\. This is acceptable for this exercise, but it's unsafe for production environments\. In production, you'll authorize only a specific IP address or range of addresses to access your instance\.
 
-## Step 4: Connect to the E2 instance in your public subnet<a name="getting-started-assign-eip"></a>
+## Step 4: Connect to the EC2 instance in your public subnet<a name="getting-started-assign-eip"></a>
 
 The EC2 instance in your public subnet is accessible from the internet\. You can connect to your instance using SSH or Remote Desktop from your home network\.
 + For more information about how to connect to a Linux instance in your public subnet, see [Connecting to your Linux instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html) in the *Amazon EC2 User Guide for Linux Instances*\.
