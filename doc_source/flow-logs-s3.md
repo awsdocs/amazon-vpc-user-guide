@@ -4,7 +4,7 @@ Flow logs can publish flow log data to Amazon S3\.
 
 When publishing to Amazon S3, flow log data is published to an existing Amazon S3 bucket that you specify\. Flow log records for all of the monitored network interfaces are published to a series of log file objects that are stored in the bucket\. If the flow log captures data for a VPC, the flow log publishes flow log records for all of the network interfaces in the selected VPC\.
 
-Data ingestion and archival charges for vended logs apply when you publish flow logs to Amazon S3\. For more information, see [Amazon CloudWatch Pricing](http://aws.amazon.com/https://aws.amazon.com/cloudwatch/pricing)\.
+Data ingestion and archival charges for vended logs apply when you publish flow logs to Amazon S3\. For more information, see [Amazon CloudWatch Pricing](http://aws.amazon.com/cloudwatch/pricing)\.
 
 To create an Amazon S3 bucket for use with flow logs, see [Create a bucket](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html) in the *Amazon Simple Storage Service User Guide*\.
 
@@ -83,7 +83,7 @@ The following is an example of a log file for a flow log created by AWS account 
 
 ## IAM policy for IAM principals that publish flow logs to Amazon S3<a name="flow-logs-s3-iam"></a>
 
-An IAM principal in your account, such as an IAM user, must have sufficient permissions to publish flow logs to the Amazon S3 bucket\. This includes permissions to work with specific `logs:` actions to create and publish the flow logs\. The IAM policy must include the following permissions\.
+The IAM principal that creates the flow log, such as an IAM user, must have the following permissions, which are required to publish flow logs to the destination Amazon S3 bucket\.
 
 ```
 {

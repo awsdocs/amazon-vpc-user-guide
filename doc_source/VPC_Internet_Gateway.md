@@ -36,13 +36,13 @@ The following table provides an overview of whether your VPC automatically comes
 
 | Component | Default VPC | Nondefault VPC | 
 | --- | --- | --- | 
-| Internet gateway | Yes | Yes, if you created the VPC using the first or second option in the VPC wizard\. Otherwise, you must manually create and attach the internet gateway\. | 
-| Route table with route to internet gateway for IPv4 traffic \(0\.0\.0\.0/0\) | Yes | Yes, if you created the VPC using the first or second option in the VPC wizard\. Otherwise, you must manually create the route table and add the route\. | 
-| Route table with route to internet gateway for IPv6 traffic \(::/0\) | No | Yes, if you created the VPC using the first or second option in the VPC wizard, and if you specified the option to associate an IPv6 CIDR block with the VPC\. Otherwise, you must manually create the route table and add the route\. | 
+| Internet gateway | Yes | Yes if you [Create a VPC, subnets, and other VPC resources](working-with-vpcs.md#create-vpc-and-other-resources)\. No if you [Create a VPC only](working-with-vpcs.md#create-vpc-vpc-only)\. | 
+| Route table with route to internet gateway for IPv4 traffic \(0\.0\.0\.0/0\) | Yes | Yes if you [Create a VPC, subnets, and other VPC resources](working-with-vpcs.md#create-vpc-and-other-resources)\. No if you [Create a VPC only](working-with-vpcs.md#create-vpc-vpc-only)\. | 
+| Route table with route to internet gateway for IPv6 traffic \(::/0\) | No | Yes if you [Create a VPC, subnets, and other VPC resources](working-with-vpcs.md#create-vpc-and-other-resources)\. No if you [Create a VPC only](working-with-vpcs.md#create-vpc-vpc-only)\. | 
 | Public IPv4 address automatically assigned to instance launched into subnet | Yes \(default subnet\) | No \(nondefault subnet\) | 
 | IPv6 address automatically assigned to instance launched into subnet | No \(default subnet\) | No \(nondefault subnet\) | 
 
-For more information about default VPCs, see [Default VPCs](default-vpc.md)\. For more information about using the VPC wizard to create a VPC with an internet gateway, see [VPC with a single public subnet](VPC_Scenario1.md) or [VPC with public and private subnets \(NAT\)](VPC_Scenario2.md)\. 
+For more information about default VPCs, see [Default VPCs](default-vpc.md)\. For more information about creating a VPC, see [Create a VPC](working-with-vpcs.md#Create-VPC)\.
 
 For more information about IP addressing in your VPC, and controlling how instances are assigned public IPv4 or IPv6 addresses, see [IP addressing](how-it-works.md#vpc-ip-addressing)\.
 

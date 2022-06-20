@@ -6,9 +6,7 @@ If you use an existing NAT AMI, AWS recommends that you [migrate to a NAT gatewa
 
 You can create your own AMI that provides network address translation and use your AMI to launch an EC2 instance as a NAT instance\. You launch a NAT instance in a public subnet to enable instances in the private subnet to initiate outbound IPv4 traffic to the internet or other AWS services, but prevent the instances from receiving inbound traffic initiated on the internet\.
 
-**Limitations**
-+ Your NAT instance quota depends on your instance quota for the Region\. For more information, see [Amazon EC2 service quotas](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-resource-limits.html) in the *Amazon EC2 User Guide for Linux Instances*\.
-+ NAT is not supported for IPv6 traffic—use an egress\-only internet gateway instead\. For more information, see [Enable outbound IPv6 traffic using an egress\-only internet gateway](egress-only-internet-gateway.md)\.
+Your NAT instance quota depends on your instance quota for the Region\. For more information, see [Amazon EC2 service quotas](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-resource-limits.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **Topics**
 + [NAT instance basics](#basics)
@@ -24,7 +22,7 @@ The following figure illustrates the NAT instance basics\. The main route table 
 
 Internet traffic from the instances in the private subnet is routed to the NAT instance, which then communicates with the internet\. Therefore, the NAT instance must have internet access\. It must be in a public subnet \(a subnet that has a route table with a route to the internet gateway\), and it must have a public IP address or an Elastic IP address\.
 
-![\[NAT instance setup\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/nat-instance.png)
+![\[NAT instance setup\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/nat-instance_updated.png)
 
 ## Set up the NAT instance<a name="NATInstance"></a>
 

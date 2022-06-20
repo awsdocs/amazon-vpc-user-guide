@@ -12,7 +12,7 @@ A *network access control list \(ACL\)* is an optional layer of security for you
 + [Path MTU Discovery](#path_mtu_discovery)
 + [Work with network ACLs](#nacl-tasks)
 + [Example: Control access to instances in a subnet](#nacl-examples)
-+ [Recommended rules for VPC wizard scenarios](#vpc-recommended-nacl-rules)
++ [Recommended rules for VPC scenarios](#vpc-recommended-nacl-rules)
 
 ## Network ACL basics<a name="nacl-basics"></a>
 
@@ -153,7 +153,7 @@ The following table shows the same example of a custom network ACL for a VPC tha
 |  \*  | All traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  |  Denies all outbound IPv4 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
 |  \*  |  All traffic  |  All  |  All  |  ::/0  |  DENY  |  Denies all outbound IPv6 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
 
-For more examples, see [Recommended rules for VPC wizard scenarios](#vpc-recommended-nacl-rules)\.
+For more examples, see [Recommended rules for VPC scenarios](#vpc-recommended-nacl-rules)\.
 
 ## Custom network ACLs and other AWS services<a name="nacl-other-services"></a>
 
@@ -422,10 +422,6 @@ If you accidentally make your security group rules too permissive, the network A
 | Type | Protocol | Port range | Destination | Comments | 
 | All traffic | All | All | 0\.0\.0\.0/0 | Allows all outbound traffic\. | 
 
-## Recommended rules for VPC wizard scenarios<a name="vpc-recommended-nacl-rules"></a>
+## Recommended rules for VPC scenarios<a name="vpc-recommended-nacl-rules"></a>
 
-You can use the VPC wizard in the Amazon VPC console to implement common scenarios for Amazon VPC\. If you implement these scenarios as described in the documentation, you use the default network access control list \(ACL\), which allows all inbound and outbound traffic\. If you need an additional layer of security, you can create a network ACL and add rules\. For more information, see one of the following:
-+ [Recommended network ACL rules for a VPC with a single public subnet](VPC_Scenario1.md#nacl-rules-scenario-1)
-+ [Recommended network ACL rules for a VPC with public and private subnets \(NAT\)](VPC_Scenario2.md#nacl-rules-scenario-2)
-+ [Recommended network ACL rules for a VPC with public and private subnets and AWS Site\-to\-Site VPN access](VPC_Scenario3.md#nacl-rules-scenario-3)
-+ [Recommended network ACL rules for a VPC with a private subnet only and AWS Site\-to\-Site VPN access](VPC_Scenario4.md#nacl-rules-scenario-4)
+You can follow the processes in [Scenarios](vpc-scenarios-intro.md) to implement common scenarios for Amazon VPC\. Each scenario in that section includes recommended network ACL rules\. If you implement these scenarios as described in the documentation, you use the default network access control list \(ACL\) which allows all inbound and outbound traffic\. If you need an additional layer of security, you can create a network ACL and add rules\.

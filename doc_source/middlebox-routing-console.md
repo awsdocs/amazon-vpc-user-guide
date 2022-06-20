@@ -127,7 +127,7 @@ Take the following into consideration when you use the middlebox routing wizard:
 + The appliance must be configured in a separate subnet from the source or destination subnet\. 
 + You must disable source/destination checking on the appliance\. For more information, see [Changing the Source or Destination Checking](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#change_source_dest_check) in the *Amazon EC2 User Guide for Linux Instances*\.
 + The route tables and routes that the middlebox routing wizard creates count toward your quotas\. For more information, see [Route tables](amazon-vpc-limits.md#vpc-limits-route-tables)\.
-+ If you delete a resource, for example a network interface, the route table associations with the resource are removed\. If the resource is a target, the route detestation is set to blackhole\. The route tables are not deleted\.
++ If you delete a resource, for example a network interface, the route table associations with the resource are removed\. If the resource is a target, the route destination is set to blackhole\. The route tables are not deleted\.
 + The middlebox subnet and the destination subnet must be associated with a non\-default route table\.
 **Note**  
 We recommend that you use the middlebox routing wizard to modify or delete any route tables that you created using the middlebox routing wizard\.

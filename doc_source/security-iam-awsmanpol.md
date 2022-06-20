@@ -18,6 +18,12 @@ You can attach the `AmazonVPCReadOnlyAccess` policy to your IAM identities\. Thi
 
 To view the permissions for this policy, see [AmazonVPCReadOnlyAccess](https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AmazonVPCReadOnlyAccess) in the AWS Management Console\.
 
+## AWS managed policy: AmazonVPCCrossAccountNetworkInterfaceOperations<a name="security-iam-awsmanpol-AmazonVPCCrossAccountNetworkInterfaceOperations"></a>
+
+You can attach the `AmazonVPCCrossAccountNetworkInterfaceOperations` policy to your IAM identities\. This policy grants permissions that allow the identity to create network interfaces and attach them to cross\-account resources\.
+
+To view the permissions for this policy, see [AmazonVPCCrossAccountNetworkInterfaceOperations](https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AmazonVPCCrossAccountNetworkInterfaceOperations) in the AWS Management Console\.
+
 ## Amazon VPC updates to AWS managed policies<a name="security-iam-awsmanpol-updates"></a>
 
 View details about updates to AWS managed policies for Amazon VPC since this service began tracking these changes in March 2021\.

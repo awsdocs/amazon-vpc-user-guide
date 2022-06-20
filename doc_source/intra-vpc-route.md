@@ -1,8 +1,10 @@
 # Inspect traffic between subnets<a name="intra-vpc-route"></a>
 
-Consider the scenario where you have multiple subnets in a VPC and you want to inspect the traffic between subnets A and B by a firewall appliance installed in an EC2 instance\. Configure and install the firewall appliance on an EC2 instance in a separate subnet C in your VPC\. The appliance inspects all traffic that travels between subnets A and B\.
+Consider the scenario where you have multiple subnets in a VPC and you want to inspect the traffic between subnets A and B by a firewall appliance installed in an EC2 instance\. Configure and install the firewall appliance on an EC2 instance in a separate subnet C in your VPC\. The appliance inspects all traffic that travels from subnet A to subnet B \(1\) and from subnet B to subnet A \(2\)\.
 
-You use the main route for the VPC and the middlebox subnet\. Subnets A and B each have a custom route table\. 
+![\[Inspect subnet traffic\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/middlebox-intra-vpc_updated.png)
+
+You use the main route table for the VPC and the middlebox subnet\. Subnets A and B each have a custom route table\. 
 
 The middlebox routing wizard, automatically performs the following operations:
 + Creates the route tables\.
@@ -14,10 +16,6 @@ The middlebox routing wizard, automatically performs the following operations:
 The middlebox routing wizard does not modify your existing route tables\. It creates new route tables, and then associates them with your gateway and subnet resources\. If your resources are already explicitly associated with existing route tables, the existing route tables are first disassociated, and then the new route tables are associated with your resources\. Your existing route tables are not deleted\.
 
 If you do not use the middlebox routing wizard, you must manually configure, and then assign the route tables to the subnets and internet gateway\.
-
- 
-
-![\[Inspect subnet traffic\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/middlebox-intra-vpc.png)
 
 ## Custom subnet A route table<a name="subneta-route-table-table"></a>
 

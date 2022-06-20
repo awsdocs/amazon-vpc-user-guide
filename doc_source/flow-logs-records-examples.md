@@ -74,13 +74,18 @@ The following is an example of a default flow log record\. In the example, SSH t
 
 ## TCP flag sequence<a name="flow-log-example-tcp-flag"></a>
 
-The following is an example of a custom flow log that captures the following fields in the following order\.
+This section contains examples of custom flow logs that capture the following fields in the following order\.
 
 ```
 version vpc-id subnet-id instance-id interface-id account-id type srcaddr dstaddr srcport dstport pkt-srcaddr pkt-dstaddr protocol bytes packets start end action tcp-flags log-status
 ```
 
-The tcp\-flags field can help you identify the direction of the traffic, for example, which server initiated the connection\. In the following records \(starting at 7:47:55 PM and ending at 7:48:53 PM\), two connections were started by a client to a server running on port 5001\. Two SYN flags \(2\) were received by server from the client from different source ports on the client \(43416 and 43418\)\. For each SYN, a SYN\-ACK was sent from the server to the client \(18\) on the corresponding port\.
+The tcp\-flags field in the examples in this section are represented by the second\-to\-last value in the flow log\. TCP flags can help you identify the direction of the traffic, for example, which server initiated the connection\.
+
+**Note**  
+For more information about the tcp\-flags option and an explanation of each of the TCP flags, see [Available fields](flow-logs.md#flow-logs-fields)\.
+
+In the following records \(starting at 7:47:55 PM and ending at 7:48:53 PM\), two connections were started by a client to a server running on port 5001\. Two SYN flags \(2\) were received by server from the client from different source ports on the client \(43416 and 43418\)\. For each SYN, a SYN\-ACK was sent from the server to the client \(18\) on the corresponding port\.
 
 ```
 3 vpc-abcdefab012345678 subnet-aaaaaaaa012345678 i-01234567890123456 eni-1235b8ca123456789 123456789010 IPv4 52.213.180.42 10.0.0.62 43416 5001 52.213.180.42 10.0.0.62 6 568 8 1566848875 1566848933 ACCEPT 2 OK
@@ -107,7 +112,7 @@ For short connections \(for example, a few seconds\) that are opened and closed 
 
 In this example, an instance in a private subnet accesses the internet through a NAT gateway that's in a public subnet\.
 
-![\[Accessing the internet through a NAT gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/flow-log-nat-gateway.png)
+![\[Accessing the internet through a NAT gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/flow-log-nat-gateway_updated.png)
 
 The following custom flow log for the NAT gateway network interface captures the following fields in the following order\.
 
@@ -143,9 +148,9 @@ i-01234567890123456 eni-1111aaaa2222bbbb3 203.0.113.5 10.0.1.5 203.0.113.5 10.0.
 
 ## Traffic through a transit gateway<a name="flow-log-example-tgw"></a>
 
-In this example, a client in VPC A connects to a web server in VPC B through a transit gateway\. The client and server are in different Availability Zones\. Therefore, traffic arrives at the server in VPC B using eni\-11111111111111111 and leaves VPC B using eni\-22222222222222222\.
+In this example, a client in VPC A connects to a web server in VPC B through a transit gateway\. The client and server are in different Availability Zones\. Traffic arrives at the server in VPC B using one elastic network interface ID \(in this example, let's say the ID is eni\-11111111111111111\) and leaves VPC B using another \(for example eni\-22222222222222222\)\.
 
-![\[Traffic through a transit gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/flow-log-tgw.png)
+![\[Traffic through a transit gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/flow-log-tgw_updated.png)
 
 You create a custom flow log for VPC B with the following format\.
 

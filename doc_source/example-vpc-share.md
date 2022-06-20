@@ -4,7 +4,7 @@ Consider this scenario where you want an account to be responsible for the infra
 
 Account A manages the IP infrastructure, including the route tables for the public subnets, and the private subnets\. There is no additional configuration required for shared subnets, so the route tables are the same as unshared subnet route tables\. 
 
-![\[Image NOT FOUND\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-share-internet-gateway-example.png)
+![\[Image NOT FOUND\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-share-internet-gateway-example_updated.png)
 
 Account A \(Account ID 111111111111\) shares the public subnet with Account D \(444444444444\)\. Account D sees the following subnet, and the **Owner** column provides two indicators that the subnet is shared\.
 + The Account ID is the VPC owner \(111111111111\) and is different from Account D's ID \(444444444444\)\.

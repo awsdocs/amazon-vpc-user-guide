@@ -34,11 +34,11 @@ If you have resources in multiple Availability Zones and they share one NAT gate
 The following characteristics and rules apply to NAT gateways:
 + A NAT gateway supports the following protocols: TCP, UDP, and ICMP\.
 + NAT gateways are supported for IPv4 or IPv6 traffic\. For IPv6 traffic, NAT gateway performs NAT64\. By using this in conjunction with DNS64 \(available on Route 53 resolver\), your IPv6 workloads in a subnet in Amazon VPC can communicate with IPv4 resources\. These IPv4 services may be present in the same VPC \(in a separate subnet\) or a different VPC, on your on\-premises environment or on the internet\.
-+ A NAT gateway supports 5 Gbps of bandwidth and automatically scales up to 45 Gbps\. If you require more bandwidth, you can split your resources into multiple subnets and create a NAT gateway in each subnet\.
-+ A NAT gateway can process one million packets per second and automatically scales up to four million packets per second\. Beyond this limit, a NAT gateway will drop packets\. To prevent packet loss, split your resources into multiple subnets and create a separate NAT gateway for each subnet\.
++ A NAT gateway supports 5 Gbps of bandwidth and automatically scales up to 100 Gbps\. If you require more bandwidth, you can split your resources into multiple subnets and create a NAT gateway in each subnet\.
++ A NAT gateway can process one million packets per second and automatically scales up to ten million packets per second\. Beyond this limit, a NAT gateway will drop packets\. To prevent packet loss, split your resources into multiple subnets and create a separate NAT gateway for each subnet\.
 + A NAT gateway can support up to 55,000 simultaneous connections to each unique destination\. This limit also applies if you create approximately 900 connections per second to a single destination \(about 55,000 connections per minute\)\. If the destination IP address, the destination port, or the protocol \(TCP/UDP/ICMP\) changes, you can create an additional 55,000 connections\. For more than 55,000 connections, there is an increased chance of connection errors due to port allocation errors\. These errors can be monitored by viewing the `ErrorPortAllocation` CloudWatch metric for your NAT gateway\. For more information, see [Monitor NAT gateways with Amazon CloudWatch](vpc-nat-gateway-cloudwatch.md)\.
 + You can associate exactly one Elastic IP address with a public NAT gateway\. You cannot disassociate an Elastic IP address from a NAT gateway after it's created\. To use a different Elastic IP address for your NAT gateway, you must create a new NAT gateway with the required address, update your route tables, and then delete the existing NAT gateway if it's no longer required\.
-+ A private NAT gateway receives an available private IP address from the subnet in which it is configured\. You cannot detach this private IP address and you cannot attach additional private IP addresses\.
++ A private NAT gateway receives an available private IP address from the subnet in which it is configured\. The assigned private IP address persists until you delete the private NAT gateway\. You cannot detach the private IP address and you cannot attach additional private IP addresses\.
 + You cannot associate a security group with a NAT gateway\. You can associate security groups with your instances to control inbound and outbound traffic\.
 + You can use a network ACL to control the traffic to and from the subnet for your NAT gateway\. NAT gateways use ports 1024–65535\. For more information, see [Control traffic to subnets using Network ACLs](vpc-network-acls.md)\.
 + A NAT gateway receives a network interface that's automatically assigned a private IP address from the IP address range of the subnet\. You can view the network interface for the NAT gateway using the Amazon EC2 console\. For more information, see [Viewing details about a network interface](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#view_eni_details)\. You cannot modify the attributes of this network interface\.
@@ -51,7 +51,7 @@ By default, IAM users do not have permission to work with NAT gateways\. You can
 
 ## Work with NAT gateways<a name="nat-gateway-working-with"></a>
 
-You can use the Amazon VPC console to create and manage your NAT gateways\. You can also use the Amazon VPC wizard to create a VPC with a public subnet, a private subnet, and a NAT gateway\. For more information, see [VPC with public and private subnets \(NAT\)](VPC_Scenario2.md)\.
+You can use the Amazon VPC console to create and manage your NAT gateways\.
 
 **Topics**
 + [Create a NAT gateway](#nat-gateway-creating)
@@ -90,7 +90,7 @@ To create a NAT gateway, enter an optional name, a subnet, and an optional conne
 
 You can tag your NAT gateway to help you identify it or categorize it according to your organization's needs\. For information about working with tags, see [Tagging your Amazon EC2 resources](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-Cost allocation tags are supported for NAT gateways\. Therefore, you can also use tags to organize your AWS bill and reflect your own cost structure\. For more information, see [Using cost allocation tags](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html) in the *AWS Billing and Cost Management User Guide*\. For more information about setting up a cost allocation report with tags, see [Monthly cost allocation report](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/configurecostallocreport.html) in *About AWS Account Billing*\. 
+Cost allocation tags are supported for NAT gateways\. Therefore, you can also use tags to organize your AWS bill and reflect your own cost structure\. For more information, see [Using cost allocation tags](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html) in the *AWS Billing User Guide*\. For more information about setting up a cost allocation report with tags, see [Monthly cost allocation report](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/configurecostallocreport.html) in *About AWS Account Billing*\. 
 
 ### Delete a NAT gateway<a name="nat-gateway-deleting"></a>
 

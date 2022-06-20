@@ -11,7 +11,7 @@ To protect the AWS resources in each subnet, you can use multiple layers of secu
 + [Subnet security](#subnet-security)
 + [Work with subnets](working-with-subnets.md)
 + [Use subnet CIDR reservations](subnet-cidr-reservation.md)
-+ [Group CIDR blocks using prefix lists](managed-prefix-lists.md)
++ [Group CIDR blocks using managed prefix lists](managed-prefix-lists.md)
 + [Configure route tables](VPC_Route_Tables.md)
 + [Control traffic to subnets using Network ACLs](vpc-network-acls.md)
 
@@ -28,15 +28,15 @@ You can optionally add subnets in a Local Zone, which is an AWS infrastructure d
 
 ### Subnet types<a name="subnet-types"></a>
 
-When you create a subnet, depending on the configurations set for the VPC and the configurations you set for the subnet, you have the following IPv4 and IPv6 options:
-+ **IPv4\-only**: Your VPC is associated with an IPv4 CIDR or both IPv4 and IPv6 CIDRs\. If the subnet CIDRs you choose are IPv4 CIDR ranges, any EC2 instances launched within the subnet will communicate over IPv4\-only\.
-+ **Dual\-stack \(IPv4 and IPv6\)**: Your VPC is associated with an IPv4 CIDR or both IPv4 and IPv6 CIDRs\. As a result, any subnets you create in the VPC can be dual\-stack subnets\. Any EC2 instances launched within the subnet will communicate over the IP of the subnet\.
-+ **IPv6\-only**: Your VPC is associated with both IPv4 and IPv6 CIDRs\. If you select the IPv6\-only option when you create the subnet, any EC2 instances launched within the subnet will communicate over IPv6\-only\.
+Depending on how you configure your VPC, subnets are considered public, private, or VPN\-only:
++ **Public subnet**: The subnet traffic is routed to the public internet through an internet gateway or an egress\-only internet gateway\. For more information, see [Connect to the internet using an internet gateway](VPC_Internet_Gateway.md)\.
++ **Private subnet**: The subnet traffic can't reach the public internet through an internet gateway or egress\-only internet gateway\. Access to the public internet requires a NAT device\.
++ **VPN\-only subnet**: The subnet traffic is routed to a Site\-to\-Site VPN connection through a virtual private gateway\. The subnet traffic can't reach the public internet through an internet gateway\. For more information, see the [AWS Site\-to\-Site VPN User Guide](https://docs.aws.amazon.com/vpn/latest/s2svpn/)\.
 
-Depending on how you configure your VPC, subnets can be considered public, private, or VPN\-only:
-+ **Public subnet**: The subnet's IPv4 or IPv6 traffic is routed to an internet gateway or an egress\-only internet gateway and can reach the public internet\. For more information, see [Connect to the internet using an internet gateway](VPC_Internet_Gateway.md)\.
-+ **Private subnet**: The subnet’s IPv4 or IPv6 traffic is not routed to an internet gateway or egress\-only internet gateway and cannot reach the public internet\.
-+ **VPN\-only subnet**: The subnet doesn't have a route to the internet gateway, but it has its traffic routed to a virtual private gateway for a Site\-to\-Site VPN connection\. For more information, see the [AWS Site\-to\-Site VPN User Guide](https://docs.aws.amazon.com/vpn/latest/s2svpn/)\.
+When you create a subnet, you specify its IP addresses, depending on the configuration of the VPC:
++ **IPv4 only**: The subnet has an IPv4 CIDR block but does not have an IPv6 CIDR block\. Resources in an IPv4\-only subnet must communicate over IPv4\.
++ **Dual stack**: The subnet has both an IPv4 CIDR block and an IPv6 CIDR block\. The VPC must have both an IPv4 CIDR block and an IPv6 CIDR block\. Resources in a dual\-stack subnet can communicate over IPv4 and IPv6\.
++ **IPv6 only**: The subnet has an IPv6 CIDR block but does not have an IPv4 CIDR block\. The VPC must have an IPv6 CIDR block\. Resources in an IPv6\-only subnet must communicate over IPv6\.
 
 Regardless of the type of subnet, the internal IPv4 address range of the subnet is always private—we do not announce the address block to the internet\. For more information about private IP addressing in VPCs, see [IP addressing](how-it-works.md#vpc-ip-addressing)\.
 
@@ -50,7 +50,7 @@ After you create a subnet, you can modify the following settings for the subnet\
 
 ### Subnet diagram<a name="subnet-diagram"></a>
 
-The following diagram shows two VPCs in a Region\. Each VPC has public and private subnets and an internet gateway\. The VPC on the right also spans a Local Zone and has subnets in the Local Zone\.
+The following diagram shows two VPCs in a Region\. Each VPC has public and private subnets and an internet gateway\. The VPC also spans a [Local Zone](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-local-zones)\.
 
 ![\[A VPC with subnets in Availability Zones and a Local Zone.\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/subnet-diagram.png)
 
@@ -87,14 +87,6 @@ The first four IPv6 addresses and the last IPv6 address in each subnet CIDR bloc
 ## Subnet routing<a name="subnet-routing"></a>
 
 Each subnet must be associated with a route table, which specifies the allowed routes for outbound traffic leaving the subnet\. Every subnet that you create is automatically associated with the main route table for the VPC\. You can change the association, and you can change the contents of the main route table\. For more information, see [Configure route tables](VPC_Route_Tables.md)\.
-
-In the previous diagram, the route table associated with subnet 1 routes all IPv4 traffic \(`0.0.0.0/0`\) and IPv6 traffic \(`::/0`\) to an internet gateway \(for example, `igw-1a2b3c4d`\)\. Because instance 1A has an IPv4 Elastic IP address and an IPv6 address, it can be reached from the internet over both IPv4 and IPv6\. 
-
-\(IPv4 only\) The Elastic IPv4 address or public IPv4 address that's associated with your instance is accessed through the internet gateway of your VPC\. Traffic that goes through an AWS Site\-to\-Site VPN connection between your instance and another network traverses a virtual private gateway, not the internet gateway, and therefore does not access the Elastic IPv4 address or public IPv4 address\. 
-
-The instance 2A can't reach the internet, but can reach other instances in the VPC\. You can allow an instance in your VPC to initiate outbound connections to the internet over IPv4 but prevent unsolicited inbound connections from the internet using a network address translation \(NAT\) gateway or instance\. Because you can allocate a limited number of Elastic IP addresses, we recommend that you use a NAT device if you have more instances that require a static public IP address\. For more information, see [Connect to the internet or other networks using NAT devices](vpc-nat.md)\. To initiate outbound\-only communication to the internet over IPv6, you can use an egress\-only internet gateway\. For more information, see [Enable outbound IPv6 traffic using an egress\-only internet gateway](egress-only-internet-gateway.md)\.
-
-The route table associated with subnet 3 routes all IPv4 traffic \(`0.0.0.0/0`\) to a virtual private gateway \(for example, `vgw-1a2b3c4d`\)\. Instance 3A can reach computers in the corporate network over the Site\-to\-Site VPN connection\.
 
 ## Subnet security<a name="subnet-security"></a>
 

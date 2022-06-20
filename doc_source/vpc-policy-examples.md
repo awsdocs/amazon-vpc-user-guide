@@ -117,7 +117,7 @@ The following example enables users to create VPCs, subnets, route tables, and i
 }
 ```
 
-The preceding policy also enables users to create a VPC using the first VPC wizard configuration option in the Amazon VPC console\. To view the VPC wizard, users must also have permission to use the `ec2:DescribeVpcEndpointServices`\. This ensures that the VPC endpoints section of the VPC wizard loads correctly\.
+The preceding policy also enables users to create a VPC in the Amazon VPC console\.
 
 ## Modify and delete VPC resources<a name="modify-vpc-resources-iam"></a>
 
@@ -158,67 +158,69 @@ You might want to control which VPC resources users can modify or delete\. For e
 
 ## Manage security groups<a name="vpc-security-groups-iam"></a>
 
-The following policy allows to view any security group and security group rule\. The second statement allows users to delete any security group with the tag `Stack=test` and to manage the inbound and outbound rules for any security group with the tag `Stack=test`\. The third statement requires users to tag any security groups that they create with the tag `Stack=Test`\. The fourth statement allows users to create tags when creating a security group\.
+The following policy allows users to manage security groups\. The first statement allows users to delete any security group with the tag `Stack=test` and to manage the inbound and outbound rules for any security group with the tag `Stack=test`\. The second statement requires users to tag any security groups that they create with the tag `Stack=Test`\. The third statement allows users to create tags when creating a security group\. The fourth statement allows users to view any security group and security group rule\. The fifth statement allows users to create a security group in a VPC\.
 
 ```
 {
-   "Version": "2012-10-17",
-   "Statement": [{
-      "Effect": "Allow",
-      "Action": [
-         "ec2:DescribeSecurityGroups", 
-         "ec2:DescribeSecurityGroupRules", 
-         "ec2:DescribeVpcs"
-      ],
-      "Resource": "*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-         "ec2:AuthorizeSecurityGroupIngress",
-         "ec2:RevokeSecurityGroupIngress",
-         "ec2:UpdateSecurityGroupRuleDescriptionsIngress",
-         "ec2:AuthorizeSecurityGroupEgress",
-         "ec2:RevokeSecurityGroupEgress",
-         "ec2:UpdateSecurityGroupRuleDescriptionsEgress",
-         "ec2:ModifySecurityGroupRules",
-         "ec2:DeleteSecurityGroup" 
-      ],
-      "Resource": "arn:aws:ec2:*:*:security-group/*",
-      "Condition":{
-         "StringEquals": {
-            "ec2:ResourceTag/Stack": "test"
-         }
-      }
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-         "ec2:CreateSecurityGroup"
-      ],
-      "Resource": "arn:aws:ec2:*:*:security-group/*",
-      "Condition": {
-         "StringEquals": {
-           "aws:RequestTag/Stack": "test"
-         },
-         "ForAllValues:StringEquals": {
-           "aws:TagKeys": ["Stack"]
-         }
-      }
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-         "ec2:CreateTags"
-      ],
-      "Resource": "arn:aws:ec2:*:*:security-group/*",
-      "Condition": {
-        "StringEquals": {
-           "ec2:CreateAction" : "CreateSecurityGroup"
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:RevokeSecurityGroupIngress",
+                "ec2:AuthorizeSecurityGroupEgress",
+                "ec2:AuthorizeSecurityGroupIngress",
+                "ec2:UpdateSecurityGroupRuleDescriptionsEgress",
+                "ec2:RevokeSecurityGroupEgress",
+                "ec2:DeleteSecurityGroup",
+                "ec2:ModifySecurityGroupRules",
+                "ec2:UpdateSecurityGroupRuleDescriptionsIngress"
+            ],
+            "Resource": "arn:aws:ec2:*:*:security-group/*",
+            "Condition": {
+                "StringEquals": {
+                    "ec2:ResourceTag/Stack": "test"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Action": "ec2:CreateSecurityGroup",
+            "Resource": "arn:aws:ec2:*:*:security-group/*",
+            "Condition": {
+                "StringEquals": {
+                    "aws:RequestTag/Stack": "test"
+                },
+                "ForAllValues:StringEquals": {
+                    "aws:TagKeys": "Stack"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Action": "ec2:CreateTags",
+            "Resource": "arn:aws:ec2:*:*:security-group/*",
+            "Condition": {
+                "StringEquals": {
+                    "ec2:CreateAction": "CreateSecurityGroup"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeSecurityGroupRules",
+                "ec2:DescribeVpcs",
+                "ec2:DescribeSecurityGroups"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "ec2:CreateSecurityGroup",
+            "Resource": "arn:aws:ec2:*:*:vpc/*"
         }
-      }
-    }
-  ]
+    ]
 }
 ```
 

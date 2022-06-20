@@ -38,7 +38,7 @@ The following are the characteristics of security group rules:
 
 ## Default security groups for your VPCs<a name="DefaultSecurityGroup"></a>
 
-Your default VPCs and any VPCs that you create come with a default security group\. With some resources, if you don't associate a security group when you create the resource, we associate the default security group\. For example, if you do not specify a security group when you launch an EC2 instance, we associate the default security group \.
+Your default VPCs and any VPCs that you create come with a default security group\. With some resources, if you don't associate a security group when you create the resource, we associate the default security group\. For example, if you do not specify a security group when you launch an EC2 instance, we associate the default security group\.
 
 You can change the rules for a default security group\. You can't delete a default security group\. If you try to delete the default security group, you get the following error: `Client.CannotDelete`\.
 
@@ -72,7 +72,7 @@ For each rule, you specify the following:
   + A single IPv6 address\. You must use the `/128` prefix length\. For example, `2001:db8:1234:1a00::123/128`\.
   + A range of IPv4 addresses, in CIDR block notation\. For example, `203.0.113.0/24`\.
   + A range of IPv6 addresses, in CIDR block notation\. For example, `2001:db8:1234:1a00::/64`\.
-  + The ID of a prefix list\. For example, `pl-1234abc1234abc123`\. For more information, see [Group CIDR blocks using prefix lists](managed-prefix-lists.md)\.
+  + The ID of a prefix list\. For example, `pl-1234abc1234abc123`\. For more information, see [Group CIDR blocks using managed prefix lists](managed-prefix-lists.md)\.
   + The ID of a security group \(referred to here as the specified security group\)\. For example, the current security group, a security group from the same VPC, or a security group for a peered VPC\. This allows traffic based on the private IP addresses of the resources associated with the specified security group\. This does not add rules from the specified security group to the current security group\. †
 + **\(Optional\) Description**: You can add a description for the rule, which can help you identify it later\. A description can be up to 255 characters in length\. Allowed characters are a\-z, A\-Z, 0\-9, spaces, and \.\_\-:/\(\)\#,@\[\]\+=;\{\}\!$\*\.
 
@@ -256,13 +256,14 @@ For information about the permissions required to manage security group rules, s
       + For custom ICMP, you must choose the ICMP type name from **Protocol**, and, if applicable, the code name from **Port range**\.
       + For any other type, the protocol and port range are configured automatically\.
 
-   1. For **Source** \(inbound rules\) or **Destination** \(outbound rules\), do one of the following to allow traffic:
+   1. For **Source type** \(inbound rules\) or **Destination type** \(outbound rules\), do one of the following to allow traffic:
       + Choose **Custom** and then enter an IP address in CIDR notation, a CIDR block, another security group, or a prefix list\.
-      + Choose **Anywhere** to allow traffic from any IP address \(inbound rules\) or to allow traffic to reach all IP addresses \(outbound rules\)\. This automatically adds a rule for the 0\.0\.0\.0/0 IPv4 CIDR block\.
-
-        If your security group is in a VPC that's enabled for IPv6, this automatically adds a rule for the ::/0 IPv6 CIDR block\.
-
-        For inbound rules, this option is acceptable for a short time in a test environment, but is unsafe for production environments\. In production, authorize access only for a specific IP address or range of IP addresses\.
+      + Choose **Anywhere\-IPv4** to allow traffic from any IPv4 address \(inbound rules\) or to allow traffic to reach all IPv4 addresses \(outbound rules\)\. This automatically adds a rule for the 0\.0\.0\.0/0 IPv4 CIDR block\.
+**Warning**  
+If you choose **Anywhere\-IPv4**, you enable all IPv4 addresses to access your instance using the specified protocol\. If you are adding rules for ports 22 \(SSH\) or 3389 \(RDP\), you should authorize only a specific IP address or range of addresses to access your instance\.
+      + Choose **Anywhere\-IPv6** to allow traffic from any IPv6 address \(inbound rules\) or to allow traffic to reach all IPv6 addresses \(outbound rules\)\. This automatically adds a rule for the ::/0 IPv6 CIDR block\.
+**Warning**  
+If you choose **Anywhere\-IPv6**, you enable all IPv6 addresses to access your instance using the specified protocol\. If you are adding rules for ports 22 \(SSH\) or 3389 \(RDP\), you should authorize only a specific IP address or range of addresses to access your instance\.
       + Choose **My IP** to allow traffic only from \(inbound rules\) or to \(outbound rules\) your local computer's public IPv4 address\.
 
    1. \(Optional\) For **Description**, specify a brief description for the rule\.

@@ -1,9 +1,6 @@
 # Work with route tables<a name="WorkWithRouteTables"></a>
 
-The following tasks show you how to work with route tables\.
-
-**Note**  
-When you use the VPC wizard in the console to create a VPC with a gateway, the wizard automatically updates the route tables to use the gateway\. If you're using the command line tools or API to set up your VPC, you must update the route tables yourself\.
+This section explains how to work with route tables\.
 
 **Topics**
 + [Determine the route table for a subnet](#SubnetRouteTables)

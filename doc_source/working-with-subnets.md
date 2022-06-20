@@ -2,8 +2,6 @@
 
 Use the following procedures to create and configure subnets for your virtual private cloud \(VPC\)\. Depending on the connectivity that you need, you might also need to add gateways and route tables\.
 
-Alternatively, you can create a VPC plus its subnets, gateways, and routing tables in one step\. For more information, see [Create VPCs using the wizard](VPC_wizard.md)\.
-
 **Topics**
 + [Create a subnet in your VPC](#create-subnets)
 + [View your subnets](#view-subnet)

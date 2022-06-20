@@ -2,7 +2,7 @@
 
 The configuration for this scenario includes a virtual private cloud \(VPC\) with a single public subnet, and an internet gateway to enable communication over the internet\. We recommend this configuration if you need to run a single\-tier, public\-facing web application, such as a blog or a simple website\.
 
-This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnet with associated IPv6 CIDR blocks\. Instances launched into the public subnet can receive IPv6 addresses, and communicate using IPv6\. For more information about IPv4 and IPv6 addressing, see [IP addressing](how-it-works.md#vpc-ip-addressing)\.
+This scenario can also be optionally configured for IPv6\. Instances launched into the public subnet can receive IPv6 addresses, and communicate using IPv6\. For more information about IPv4 and IPv6 addressing, see [IP addressing](how-it-works.md#vpc-ip-addressing)\.
 
 For information about managing your EC2 instance software, see [Managing software on your Linux instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-software.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
@@ -15,10 +15,7 @@ For information about managing your EC2 instance software, see [Managing softwar
 
 The following diagram shows the key components of the configuration for this scenario\.
 
-![\[Diagram for scenario 1: VPC with a public subnet\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/case-1.png)
-
-**Note**  
-If you completed [Get started with Amazon VPC](vpc-getting-started.md), then you've already implemented this scenario using the VPC wizard in the Amazon VPC console\.
+![\[Diagram for scenario 1: VPC with a public subnet\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/case-1_updated.png)
 
 The configuration for this scenario includes the following:
 + A virtual private cloud \(VPC\) with a size /16 IPv4 CIDR block \(example: 10\.0\.0\.0/16\)\. This provides 65,536 private IPv4 addresses\.
@@ -37,11 +34,9 @@ You can optionally enable IPv6 for this scenario\. In addition to the components
 + An IPv6 address assigned to the instance from the subnet range \(example: 2001:db8:1234:1a00::123\)\.
 + Route table entries in the custom route table that enable instances in the VPC to use IPv6 to communicate with each other, and directly over the internet\.
 
-![\[IPv6-enabled VPC with a public subnet\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/getting-started-ipv6-1.png)
-
 ## Routing<a name="VPC_Scenario1_Routing"></a>
 
-Your VPC has an implied router \(shown in the configuration diagram above\)\. In this scenario, the VPC wizard creates a custom route table that routes all traffic destined for an address outside the VPC to the internet gateway, and associates this route table with the subnet\. 
+Your VPC has an implied router \(shown in the configuration diagram above\)\. In this scenario, Amazon VPC creates a custom route table that routes all traffic destined for an address outside the VPC to the internet gateway, and associates this route table with the subnet\. 
 
 The following table shows the route table for the example in the configuration diagram above\. The first entry is the default entry for local IPv4 routing in the VPC; this entry enables the instances in this VPC to communicate with each other\. The second entry routes all other IPv4 subnet traffic to the internet gateway \(for example, `igw-1a2b3c4d`\)\.
 
@@ -89,7 +84,7 @@ The following are the inbound and outbound rules for IPv4 traffic for the WebSer
 | **Outbound** \(Optional\) | 
 | --- |
 | Destination | Protocol | Port range | Comments | 
-| 0\.0\.0\.0/0 | All | All | Default rule to allow all outbound access to any IPv4 address\. If you want your web server to initiate outbound traffic, for example, to get software updates, you can keep the default outbound rule\. Otherwise, you can remove this rule\. | 
+| 0\.0\.0\.0/0 | All | All | Default rule to allow all outbound access to any IPv4 address\. If you remove this rule, your web server can't initiate outbound traffic, for example, to get software updates\. If you remove this rule, your web server can still send response traffic to requests, because security groups are stateful\. | 
 
 **Security group rules for IPv6**  
 If you associate an IPv6 CIDR block with your VPC and subnet, you must add separate rules to your security group to control inbound and outbound IPv6 traffic for your web server instance\. In this scenario, the web server will be able to receive all internet traffic over IPv6, and SSH or RDP traffic from your local network over IPv6\. 
@@ -109,7 +104,7 @@ The following are the IPv6\-specific rules for the WebServerSG security group \(
 | **Outbound** \(Optional\) | 
 | --- |
 | Destination | Protocol | Port range | Comments | 
-| ::/0 | All | All | Default rule to allow all outbound access to any IPv6 address\. If you want your web server to initiate outbound traffic, for example, to get software updates, you can keep the default outbound rule\. Otherwise, you can remove this rule\. | 
+| ::/0 | All | All | Default rule to allow all outbound access to any IPv4 address\. If you remove this rule, your web server can't initiate outbound traffic, for example, to get software updates\. If you remove this rule, your web server can still send response traffic to requests, because security groups are stateful\. | 
 
 ### Recommended network ACL rules for a VPC with a single public subnet<a name="nacl-rules-scenario-1"></a>
 

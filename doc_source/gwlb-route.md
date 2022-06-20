@@ -13,7 +13,7 @@ The middlebox routing wizard does not modify your existing route tables\. It cre
 
 If you do not use the middlebox routing wizard, you must manually configure, and then assign the route tables to the subnets and internet gateway\. 
 
-![\[Using a Gateway Load Balancer endpoint to access an endpoint service\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-service-gwlbe.png)
+![\[Using a Gateway Load Balancer endpoint to access an endpoint service\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-service-gwlbe_updated.png)
 
 ## Gateway route table<a name="igw-route-table-table"></a>
 
@@ -25,15 +25,15 @@ The internet gateway route table has the following routes:
 | 10\.0\.0\.0/16 | Local | Local | 
 | 10\.0\.1\.0/24 | vpc\-endpoint\-id | Routes traffic destined for subnet 1 to the Gateway Load Balancer endpoint\. | 
 
-There is an edge association with the gateway\. 
+There is an edge association with the gateway\.
 
 When you use the middlebox routing wizard, the following tags are associated with the route table:
 + A tag with a Key set to "Origin" and a Value set to "Middlebox wizard"\.
 + A tag with a Key set to "date\_created" and a Value set to the creation time, for example, "2021\-02\-18T22:25:49\.137Z "\.
 
-## Subnet 1 route table<a name="subnet1-route-table-table"></a>
+## Subnet A route table<a name="subnet1-route-table-table"></a>
 
-Subnet 1 route table has the following routes\.
+Subnet A route table has the following routes\.
 
 
 | Destination | Target | Purpose | 
@@ -41,23 +41,23 @@ Subnet 1 route table has the following routes\.
 | 10\.0\.0\.0/16 | Local | Local route | 
 | 0\.0\.0\.0/0 | vpc\-endpoint\-id | Route non\-local traffic to the Gateway Load Balancer endpoint\. This ensures that all traffic leaving the subnet \(destined for the internet\) is first routed to the Gateway Load Balancer endpoint\. | 
 
-There is a subnet association with subnet 1\. 
+There is a subnet association with subnet A\. 
 
 When you use the middlebox routing wizard, the following tags are associated with the route table:
 + A tag with a Key set to "Origin" and a Value set to "Middlebox wizard"\.
 + A tag with a Key set to "date\_created" and a Value set to the creation time, for example, "2021\-02\-18T22:25:49\.137Z "\.
 
-## Subnet 2 route table<a name="subnet2-route-table"></a>
+## Subnet B route table<a name="subnet2-route-table"></a>
 
-Subnet 2 route table has the following routes\. 
+Subnet B route table has the following routes\. 
 
 
 | Destination | Target | Purpose | 
 | --- | --- | --- | 
-| 10\.0\.0\.0/16 | Local | Local route \- for the traffic that originated from the internet, the local route ensures that it is routed to its destination in subnet 1 | 
+| 10\.0\.0\.0/16 | Local | Local route \- for the traffic that originated from the internet, the local route ensures that it is routed to its destination in subnet B | 
 | 0\.0\.0\.0/0 | igw\-id | Routes all traffic to the internet gateway | 
 
-There is a subnet association with subnet 2\. 
+There is a subnet association with subnet B\. 
 
 The following tags are associated with the route table:
 + A tag with a Key set to "Origin" and a Value set to "Middlebox wizard"\.

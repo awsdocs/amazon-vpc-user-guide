@@ -7,14 +7,14 @@ A *virtual private cloud* \(VPC\) is a virtual network dedicated to your AWS acc
 + [VPC sizing](#vpc-sizing)
 + [Work with VPCs](working-with-vpcs.md)
 + [Default VPCs](default-vpc.md)
-+ [DHCP options sets in Amazon VPC](VPC_DHCP_Options.md)
++ [DHCP option sets in Amazon VPC](VPC_DHCP_Options.md)
 + [DNS attributes for your VPC](vpc-dns.md)
 + [Share your VPC with other accounts](vpc-sharing.md)
 + [Extend a VPC to a Local Zone, Wavelength Zone, or Outpost](Extend_VPCs.md)
 
 ## VPC basics<a name="vpc-subnet-basics"></a>
 
-When you create a VPC, you must specify a range of IPv4 addresses for the VPC in the form of a Classless Inter\-Domain Routing \(CIDR\) block\. For example, 10\.0\.0\.0/16\. This is the primary CIDR block for your VPC\. For more information about CIDR notation, see [RFC 4632](https://datatracker.ietf.org/doc/html/rfc4632)\.
+When you create a VPC, you must specify a range of IPv4 addresses for the VPC in the form of a Classless Inter\-Domain Routing \(CIDR\) block\. For example, 10\.0\.0\.0/16\. This is the primary CIDR block for your VPC\. For more information, see [IP addressing](how-it-works.md#vpc-ip-addressing)\.
 
 A VPC spans all of the Availability Zones in the Region\. The following diagram shows a new VPC\. After you create a VPC, you can add one or more subnets in each Availability Zone\. For more information, see [Subnets for your VPC](configure-subnets.md)\.
 
@@ -22,9 +22,11 @@ A VPC spans all of the Availability Zones in the Region\. The following diagram 
 
 ## VPC sizing<a name="vpc-sizing"></a>
 
-Amazon VPC supports IPv4 and IPv6 addressing\. A VPC must have an IPv4 CIDR blocks\. You can optionally associate an IPv6 CIDR block with your VPC\.
+Amazon VPC supports IPv4 and IPv6 addressing\. For more information about IP addressing, see [IP addressing](how-it-works.md#vpc-ip-addressing)\.
 
-For more information about IP addressing, see [IP addressing](how-it-works.md#vpc-ip-addressing)\.
+A VPC must have an IPv4 CIDR block associated with it\. You can optionally associate multiple IPv4 CIDR blocks and multiple IPv6 CIDR blocks to your VPC\.
+
+
 
 **Topics**
 + [VPC sizing for IPv4](#vpc-sizing-ipv4)
@@ -33,7 +35,7 @@ For more information about IP addressing, see [IP addressing](how-it-works.md#vp
 
 ### VPC sizing for IPv4<a name="vpc-sizing-ipv4"></a>
 
-When you create a VPC, you must specify an IPv4 CIDR block for the VPC\. The allowed block size is between a `/16` netmask \(65,536 IP addresses\) and `/28` netmask \(16 IP addresses\)\. After you've created your VPC, you can associate secondary CIDR blocks with the VPC\. For more information, see [Manage IPv4 CIDR blocks for a VPC](#vpc-resize)\.
+When you create a VPC, you must specify an IPv4 CIDR block for the VPC\. The allowed block size is between a `/16` netmask \(65,536 IP addresses\) and `/28` netmask \(16 IP addresses\)\. After you've created your VPC, you can associate additional IPv4 CIDR blocks with the VPC\. For more information, see [Associate additional IPv4 CIDR blocks with your VPC](working-with-vpcs.md#add-ipv4-cidr)\.
 
 When you create a VPC, we recommend that you specify a CIDR block from the private IPv4 address ranges as specified in [RFC 1918](http://www.faqs.org/rfcs/rfc1918.html):
 
@@ -97,12 +99,12 @@ The following is example output\.
 
 #### IPv4 CIDR block association restrictions<a name="add-cidr-block-restrictions"></a>
 
-The following table provides an overview of permitted and restricted CIDR block associations, which depend on the IPv4 address range in which your VPC's primary CIDR block resides\.
+The following table provides an overview of permitted and restricted VPC CIDR block associations\.
 
 
-| IP address range of the primary CIDR block | Restricted associations | Permitted associations | 
+| IP address range | Restricted associations | Permitted associations | 
 | --- | --- | --- | 
-|  10\.0\.0\.0/8  |  CIDR blocks from other RFC 1918\* ranges \(172\.16\.0\.0/12 and 192\.168\.0\.0/16\)\. If your primary CIDR block is from the 10\.0\.0\.0/15 range \(10\.0\.0\.0 to 10\.1\.255\.255\), you cannot add a CIDR block from the 10\.0\.0\.0/16 range \(10\.0\.0\.0 to 10\.0\.255\.255\)\. CIDR blocks from the 198\.19\.0\.0/16 range\.  |  Any other CIDR block from the 10\.0\.0\.0/8 range that's not restricted\. Any publicly routable IPv4 CIDR block \(non\-RFC 1918\), or a CIDR block from the 100\.64\.0\.0/10 range\.  | 
+|  10\.0\.0\.0/8  |  CIDR blocks from other RFC 1918\* ranges \(172\.16\.0\.0/12 and 192\.168\.0\.0/16\)\. If any of the CIDR blocks associated with the VPC are from the 10\.0\.0\.0/15 range \(10\.0\.0\.0 to 10\.1\.255\.255\), you cannot add a CIDR block from the 10\.0\.0\.0/16 range \(10\.0\.0\.0 to 10\.0\.255\.255\)\. CIDR blocks from the 198\.19\.0\.0/16 range\.  |  Any other CIDR block from the 10\.0\.0\.0/8 range that's not restricted\. Any publicly routable IPv4 CIDR block \(non\-RFC 1918\), or a CIDR block from the 100\.64\.0\.0/10 range\.  | 
 |  172\.16\.0\.0/12  |  CIDR blocks from other RFC 1918\* ranges \(10\.0\.0\.0/8 and 192\.168\.0\.0/16\)\. CIDR blocks from the 172\.31\.0\.0/16 range\. CIDR blocks from the 198\.19\.0\.0/16 range\.  |  Any other CIDR block from the 172\.16\.0\.0/12 range that's not restricted\. Any publicly routable IPv4 CIDR block \(non\-RFC 1918\), or a CIDR block from the 100\.64\.0\.0/10 range\.  | 
 |  192\.168\.0\.0/16  |  CIDR blocks from other RFC 1918\* ranges \(10\.0\.0\.0/8 and 172\.16\.0\.0/12\)\. CIDR blocks from the 198\.19\.0\.0/16 range\.  |  Any other CIDR block from the 192\.168\.0\.0/16 range\. Any publicly routable IPv4 CIDR block \(non\-RFC 1918\), or a CIDR block from the 100\.64\.0\.0/10 range\.  | 
 |  198\.19\.0\.0/16  |  CIDR blocks from the RFC 1918\* ranges\.  |  Any publicly routable IPv4 CIDR block \(non\-RFC 1918\), or a CIDR block from the 100\.64\.0\.0/10 range\.  | 
@@ -112,9 +114,9 @@ The following table provides an overview of permitted and restricted CIDR block 
 
 ### VPC sizing for IPv6<a name="vpc-sizing-ipv6"></a>
 
-You can associate a single IPv6 CIDR block with an existing VPC in your account, or when you create a new VPC\. The CIDR block is a fixed prefix length of `/56`\. You can request an IPv6 CIDR block from Amazon's pool of IPv6 addresses\.
+You can associate a single IPv6 CIDR block when you create a new VPC with an existing VPC in your account or you can associate up to five by modifying an existing VPC\. The CIDR block is a fixed prefix length of `/56`\. You can request an IPv6 CIDR block from Amazon's pool of IPv6 addresses\. For more information, see [Associate IPv6 CIDR blocks with your VPC](working-with-vpcs.md#vpc-associate-ipv6-cidr)\.
 
-If you've associated an IPv6 CIDR block with your VPC, you can associate an IPv6 CIDR block with an existing subnet in your VPC, or when you create a new subnet\. For more information, see [Subnet sizing for IPv6](configure-subnets.md#subnet-sizing-ipv6)\.
+If you've associated an IPv6 CIDR block with your VPC, you can associate an IPv6 CIDR block with an existing subnet in your VPC or when you create a new subnet\. For more information, see [Subnet sizing for IPv6](configure-subnets.md#subnet-sizing-ipv6)\.
 
 For example, you create a VPC and specify that you want to associate an Amazon\-provided IPv6 CIDR block with the VPC\. Amazon assigns the following IPv6 CIDR block to your VPC: `2001:db8:1234:1a00::/56`\. You cannot choose the range of IP addresses yourself\. You can create a subnet and associate an IPv6 CIDR block from this range; for example, `2001:db8:1234:1a00::/64`\.
 

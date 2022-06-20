@@ -12,7 +12,7 @@ If you request a quota increase that applies per resource, we increase the quota
 | VPCs per Region | 5 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-F678F1CE) |  Increasing this quota increases the quota on internet gateways per Region by the same amount\. You can increase this limit so that you can have 100s of VPCs per Region\.  | 
 | Subnets per VPC | 200 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-407747CB) |  | 
 | IPv4 CIDR blocks per VPC | 5 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-83CA0A9D) \(up to 50\) | This primary CIDR block and all secondary CIDR blocks count toward this quota\. | 
-| IPv6 CIDR blocks per VPC | 1 | No |  | 
+| IPv6 CIDR blocks per VPC | 5 | No |  | 
 
 ## DNS<a name="vpc-limits-dns"></a>
 

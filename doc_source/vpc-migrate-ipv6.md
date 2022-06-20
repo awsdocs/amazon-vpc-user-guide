@@ -35,9 +35,9 @@ Before you migrate to using IPv6, ensure that you have read the features of IPv6
 
 In this example, your VPC has a public and a private subnet\. You have a database instance in your private subnet that has outbound communication with the internet through a NAT gateway in your VPC\. You have a public\-facing web server in your public subnet that has internet access through the internet gateway\. The following diagram represents the architecture of your VPC\.
 
-![\[VPC with public and private subnets\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-migrate-ipv6.png)
+![\[VPC with public and private subnets\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-migrate-ipv6_updated.png)
 
-The security group for your web server \(`sg-11aa22bb11aa22bb1`\) has the following inbound rules:
+The security group for your web server \(for example with the security group ID `sg-11aa22bb11aa22bb1`\) has the following inbound rules:
 
 
 | **Type** | **Protocol** | **Port range** | **Source** | **Comment** | 
@@ -47,7 +47,7 @@ The security group for your web server \(`sg-11aa22bb11aa22bb1`\) has the follow
 | HTTPS | TCP | 443 | 0\.0\.0\.0/0 | Allows inbound traffic from the internet over HTTPS\. | 
 | SSH | TCP | 22 | 203\.0\.113\.123/32 | Allows inbound SSH access from your local computer; for example, when you need to connect to your instance to perform administration tasks\. | 
 
-The security group for your database instance \(`sg-33cc44dd33cc44dd3`\) has the following inbound rule:
+The security group for your database instance \(for example with the security group ID `sg-33cc44dd33cc44dd3`\) has the following inbound rule:
 
 
 | **Type** | **Protocol** | **Port range** | **Source** | **Comment** | 
@@ -59,10 +59,6 @@ Both security groups have the default outbound rule that allows all outbound IPv
 Your web server is `t2.medium` instance type\. Your database server is an `m3.large`\.
 
 You want your VPC and resources to be enabled for IPv6, and you want them to operate in dual\-stack mode; in other words, you want to use both IPv6 and IPv4 addressing between resources in your VPC and resources over the internet\.
-
-After you've completed the steps, your VPC will have the following configuration\.
-
-![\[VPC with public and private subnets\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-migrate-ipv6-2.png)
 
 ## Step 1: Associate an IPv6 CIDR block with your VPC and subnets<a name="vpc-migrate-ipv6-cidr"></a>
 

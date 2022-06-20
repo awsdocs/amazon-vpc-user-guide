@@ -14,13 +14,9 @@ Amazon Virtual Private Cloud \(Amazon VPC\) enables you to launch AWS resources 
 
 ## VPCs and subnets<a name="how-it-works-subnet"></a>
 
-A *virtual private cloud* \(VPC\) is a virtual network dedicated to your AWS account\. It is logically isolated from other virtual networks in the AWS Cloud\. You can launch your AWS resources, such as Amazon EC2 instances, into your VPC\. You can specify an IP address range for the VPC, add subnets, associate security groups, and configure route tables\.
+A *virtual private cloud* \(VPC\) is a virtual network dedicated to your AWS account\. It is logically isolated from other virtual networks in the AWS Cloud\. You can specify an IP address range for the VPC, add subnets, add gateways, and associate security groups\.
 
-A *subnet* is a range of IP addresses in your VPC\. You can launch AWS resources into a specified subnet\. Use a public subnet for resources that must be connected to the internet, and a private subnet for resources that won't be connected to the internet\.
-
-To protect the AWS resources in each subnet, you can use multiple layers of security, including security groups and network access control lists \(ACL\)\.
-
-You can optionally associate an IPv6 CIDR block with your VPC, and assign IPv6 addresses to the instances in your VPC\.
+A *subnet* is a range of IP addresses in your VPC\. You launch AWS resources, such as Amazon EC2 instances, into your subnets\. You can connect a subnet to the internet, other VPCs, and your own data centers, and route traffic to and from your subnets using route tables\.
 
 **Learn more**
 + [VPC basics](configure-your-vpc.md#vpc-subnet-basics)
@@ -42,7 +38,17 @@ You can also create your own VPC, and configure it as you need\. This is known a
 
 IP addresses enable resources in your VPC to communicate with each other, and with resources over the internet\.
 
-When you create a VPC, you assign it an IPv4 CIDR block \(a range of private IPv4 addresses\), an IPv6 CIDR block, or both \(dual\-stack\)\. Private IPv4 addresses are not reachable over the internet\. IPv6 addresses are globally unique and can be configured to remain private or reachable over the internet\.
+Classless Inter\-Domain Routing \(CIDR\) notation is a way of representing an IP address and its network mask\. The format of these addresses is as follows:
++ An individual IPv4 address is 32 bits, with 4 groups of up to 3 decimal digits\. For example, 10\.0\.1\.0\.
++ An IPv4 CIDR block has a four groups of up to three decimal digits, 0\-255, separated by periods, followed by a slash and a number from 0 to 32\. For example, 10\.0\.0\.0/16\.
++ An individual IPv6 address is 128 bits, with 8 groups of 4 hexadecimal digits\. For example, 2001:0db8:85a3:0000:0000:8a2e:0370:7334\.
++ An IPv6 CIDR block has four groups of up to four hexadecimal digits, separated by colons, followed by a double colon, followed by a slash and a number from 1 to 128\. For example, 2001:db8:1234:1a00::/56\.
+
+For more information, see [Classless Inter\-Domain Routing](http://en.wikipedia.org/wiki/CIDR_notation) in Wikipedia\.
+
+When you create a VPC, you assign it an IPv4 CIDR block \(a range of private IPv4 addresses\), an IPv6 CIDR block, or both IPv4 and IPv6 CIDR blocks \(dual\-stack\)\.
+
+Private IPv4 addresses are not reachable over the internet\. IPv6 addresses are globally unique and can be configured to remain private or be reachable over the internet\.
 
 Your VPC can operate in dual\-stack mode\. This means that your resources can communicate over IPv4, IPv6, or both IPv4 and IPv6\. IPv4 and IPv6 addresses are independent of each other; you must add separate routes and security group rules for IPv4 and IPv6\.
 
@@ -60,7 +66,6 @@ The following table summarizes the differences between IPv4 and IPv6 in Amazon E
 
 | Characteristic | IPv4 | IPv6 | 
 | --- | --- | --- | 
-| Format | Is 32 bits, with 4 groups of up to 3 decimal digits | Is 128 bits, with 8 groups of 4 hexadecimal digits | 
 | VPC size | From /16 to /28 | Fixed at /56 | 
 | Subnet size | From /16 to /28 | Fixed at /64 | 
 | Address selection | You can choose the IPv4 CIDR block for your VPC or you can allocate a CIDR block from Amazon VPC IP Address Manager \(IPAM\)\. For more information, see [What is IPAM?](https://docs.aws.amazon.com/vpc/latest/ipam/what-is-it-ipam.html) in the Amazon VPC IPAM User Guide\.  | You can bring your own IPv6 CIDR block to AWS for your VPC, choose an Amazon\-provided IPv6 CIDR block, or you can allocate a CIDR block from Amazon VPC IP Address Manager \(IPAM\)\. For more information, see [What is IPAM?](https://docs.aws.amazon.com/vpc/latest/ipam/what-is-it-ipam.html) in the Amazon VPC IPAM User Guide\.  | 

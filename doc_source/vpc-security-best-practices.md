@@ -1,14 +1,9 @@
 # Security best practices for your VPC<a name="vpc-security-best-practices"></a>
 
  The following best practices are general guidelines and don’t represent a complete security solution\. Because these best practices might not be appropriate or sufficient for your environment, treat them as helpful considerations rather than prescriptions\.
++ When you add subnets to your VPC, choose multiple Availability Zones \(AZs\) to ensure that the resources hosted in those subnets are highly available\. An AZ is one or more discrete data centers with redundant power, networking, and connectivity in an AWS Region\. AZs enable you to make production applications highly available, fault tolerant, and scalable\. For more information on adding subnets to multiple AZs, see [Create a VPC](working-with-vpcs.md#Create-VPC)\.
++ Use network ACLs to control access to your subnets and use security groups to control traffic to EC2 instances in your subnets\. For more information, see [Control traffic to subnets using Network ACLs](vpc-network-acls.md) and [Control traffic to resources using security groups](VPC_SecurityGroups.md)\.
++ Manage access to AWS VPC resources and APIs using AWS Identity and Access Management \(IAM\) identity federation, users, and roles\. For more information, see [Identity and access management for Amazon VPC](security-iam.md)\.
++ Use Amazon CloudWatch with VPC flow logs to monitor the IP traffic going to and from network interfaces in your VPC\. For more information, see [Publish flow logs to CloudWatch Logs](flow-logs-cwl.md)\.
 
-The following are general best practices:
-+ Use multiple Availability Zone deployments so you have high availability\.
-+ Use security groups and network ACLs\. For more information, see [Control traffic to resources using security groups](VPC_SecurityGroups.md) and [Control traffic to subnets using Network ACLs](vpc-network-acls.md)\.
-+ Use IAM policies to control access\.
-+ Use Amazon CloudWatch to monitor your VPC components and VPN connections\.
-+ Use flow logs to capture information about IP traffic going to and from network interfaces in your VPC\. For more information, see [Logging IP traffic using VPC Flow Logs](flow-logs.md)\.
-
-## Additional resources<a name="seccurity-best-practices-additional-resources"></a>
-+ Manage access to AWS resources and APIs using identity federation, IAM users, and IAM roles\. Establish credential management policies and procedures for creating, distributing, rotating, and revoking AWS access credentials\. For more information, see [IAM best practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html) in the *IAM User Guide*\.
-+ For answers to frequently asked questions for VPC security, see [Amazon VPC FAQs](http://aws.amazon.com/vpc/faqs/)\.
+For answers to frequently asked questions related to VPC security, see *Security and Filtering* in the [Amazon VPC FAQs](http://aws.amazon.com/vpc/faqs/)\.

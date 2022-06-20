@@ -2,7 +2,7 @@
 
 The configuration for this scenario includes a virtual private cloud \(VPC\) with a single private subnet, and a virtual private gateway to enable communication with your own network over an IPsec VPN tunnel\. There is no internet gateway to enable communication over the internet\. We recommend this scenario if you want to extend your network into [the cloud](https://aws.amazon.com/what-is-cloud-computing/) using Amazon's infrastructure without exposing your network to the internet\.
 
-This scenario can also be optionally configured for IPv6—you can use the VPC wizard to create a VPC and subnet with associated IPv6 CIDR blocks\. Instances launched into the subnet can receive IPv6 addresses\. We do not support IPv6 communication over a AWS Site\-to\-Site VPN connection on a virtual private gateway; however, instances in the VPC can communicate with each other via IPv6\. For more information about IPv4 and IPv6 addressing, see [IP addressing](how-it-works.md#vpc-ip-addressing)\.
+This scenario can also be optionally configured for IPv6\. Instances launched into the subnet can receive IPv6 addresses\. We do not support IPv6 communication over a AWS Site\-to\-Site VPN connection on a virtual private gateway; however, instances in the VPC can communicate with each other via IPv6\. For more information about IPv4 and IPv6 addressing, see [IP addressing](how-it-works.md#vpc-ip-addressing)\.
 
 For information about managing your EC2 instance software, see [Managing software on your Linux instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-software.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
@@ -15,7 +15,7 @@ For information about managing your EC2 instance software, see [Managing softwar
 
 The following diagram shows the key components of the configuration for this scenario\.
 
-![\[Diagram for scenario 4: VPC with only a virtual private gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/case-4.png)
+![\[Diagram for scenario 4: VPC with only a virtual private gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/case-4_updated.png)
 
 **Important**  
 For this scenario, see [Your customer gateway device](https://docs.aws.amazon.com/vpn/latest/s2svpn/your-cgw.html) to configure the customer gateway device on your side of the Site\-to\-Site VPN connection\.
@@ -39,7 +39,7 @@ You can optionally enable IPv6 for this scenario\. In addition to the components
 
 ## Routing<a name="VPC_Scenario4_Routing"></a>
 
-Your VPC has an implied router \(shown in the configuration diagram for this scenario\)\. In this scenario, the VPC wizard creates a route table that routes all traffic destined for an address outside the VPC to the AWS Site\-to\-Site VPN connection, and associates the route table with the subnet\. 
+Your VPC has an implied router \(shown in the configuration diagram for this scenario\)\. In this scenario, Amazon VPC creates a route table that routes all traffic destined for an address outside the VPC to the AWS Site\-to\-Site VPN connection, and associates the route table with the subnet\. 
 
 The following describes the route table for this scenario\. The first entry is the default entry for local routing in the VPC; this entry enables the instances in this VPC to communicate with each other\. The second entry routes all other subnet traffic to the virtual private gateway \(for example, `vgw-1a2b3c4d`\)\.
 

@@ -82,7 +82,7 @@ In the following example, suppose that the VPC has both an IPv4 CIDR block and a
 
 When you create a VPC, it automatically has a main route table\. When a subnet does not have an explicit routing table associated with it, the main routing table is used by default\. On the **Route Tables** page in the Amazon VPC console, you can view the main route table for a VPC by looking for **Yes** in the **Main** column\. 
 
-By default, when you create a nondefault VPC, the main route table contains only a local route\. When you use the VPC wizard in the console to create a nondefault VPC with a NAT gateway or virtual private gateway, the wizard automatically adds routes to the main route table for those gateways\.
+By default, when you create a nondefault VPC, the main route table contains only a local route\. If you [Create a VPC, subnets, and other VPC resources](working-with-vpcs.md#create-vpc-and-other-resources) and choose a NAT gateway, Amazon VPC automatically adds routes to the main route table for the gateways\.
 
 The following rules apply to the main route table:
 + You cannot delete the main route table\.
@@ -95,7 +95,7 @@ The following rules apply to the main route table:
 
 ### Custom route tables<a name="custom-route-tables"></a>
 
-By default, a custom route table is empty and you add routes as needed\. When you use the VPC wizard in the console to create a VPC with an internet gateway, the wizard creates a custom route table and adds a route to the internet gateway\. One way to protect your VPC is to leave the main route table in its original default state\. Then, explicitly associate each new subnet that you create with one of the custom route tables you've created\. This ensures that you explicitly control how each subnet routes traffic\. 
+By default, a custom route table is empty and you add routes as needed\. If you [Create a VPC, subnets, and other VPC resources](working-with-vpcs.md#create-vpc-and-other-resources) and choose a public subnet, Amazon VPC creates a custom route table and adds a route that points to the internet gateway\. One way to protect your VPC is to leave the main route table in its original default state\. Then, explicitly associate each new subnet that you create with one of the custom route tables you've created\. This ensures that you explicitly control how each subnet routes traffic\. 
 
 You can add, remove, and modify routes in a custom route table\. You can delete a custom route table only if it has no associations\.
 
@@ -108,7 +108,7 @@ Subnets that are in VPCs associated with Outposts can have an additional target 
 **Example 1: Implicit and explicit subnet association**  
 The following diagram shows the routing for a VPC with an internet gateway, a virtual private gateway, a public subnet, and a VPN\-only subnet\. The main route table has a route to the virtual private gateway\. A custom route table is explicitly associated with the public subnet\. The custom route table has a route to the internet \(`0.0.0.0/0`\) through the internet gateway\.
 
-![\[Main route table and custom table\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/case-3.png)
+![\[Main route table and custom table\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/case-3_updated.png)
 
 If you create a new subnet in this VPC, it's automatically implicitly associated with the main route table, which routes traffic to the virtual private gateway\. If you set up the reverse configuration \(where the main route table has the route to the internet gateway, and the custom route table has the route to the virtual private gateway\), then a new subnet automatically has a route to the internet gateway\. 
 
@@ -117,19 +117,19 @@ You might want to make changes to the main route table\. To avoid any disruption
 
 The following diagram shows a VPC with two subnets that are implicitly associated with the main route table \(Route Table A\), and a custom route table \(Route Table B\) that isn't associated with any subnets\.
 
-![\[Replace main table: Start\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/routing-Route_Replace_Main_Start-diagram.png)
+![\[Replace main table: Start\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/routing-Route_Replace_Main_Start-diagram_updated.png)
 
 You can create an explicit association between Subnet 2 and Route Table B\.
 
-![\[Replace main table: New table\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/routing-Route_Replace_Main_New_Table-diagram.png)
+![\[Replace main table: New table\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/routing-Route_Replace_Main_New_Table-diagram_updated.png)
 
 After you've tested Route Table B, you can make it the main route table\. Note that Subnet 2 still has an explicit association with Route Table B, and Subnet 1 has an implicit association with Route Table B because it is the new main route table\. Route Table A is no longer in use\.
 
-![\[Replace main table: Replace\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/routing-Route_Replace_Main_Replace-diagram.png)
+![\[Replace main table: Replace\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/routing-Route_Replace_Main_Replace-diagram_updated.png)
 
 If you disassociate Subnet 2 from Route Table B, there's still an implicit association between Subnet 2 and Route Table B\. If you no longer need Route Table A, you can delete it\.
 
-![\[Replace main table: Disassociate\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/routing-Route_Replace_Main_Disassociate-diagram.png)
+![\[Replace main table: Disassociate\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/routing-Route_Replace_Main_Disassociate-diagram_updated.png)
 
 ## Gateway route tables<a name="gateway-route-tables"></a>
 
@@ -217,7 +217,7 @@ The following example subnet route table has a route for IPv4 internet traffic \
 
 If you've attached a virtual private gateway to your VPC and enabled route propagation on your subnet route table, routes representing your Site\-to\-Site VPN connection automatically appear as propagated routes in your route table\.
 
-If the destination of a propagated route overlaps the local route, the local route takes priority even if the propagated route is more specific\. If the destination of a propagated route overlaps a static route, the static route takes priority\.
+If the destination of a propagated route overlaps a static route, the static route takes priority\.
 
 If the destination of a propagated route is identical to the destination of a static route, the static route takes priority if the target is one of the following:
 + internet gateway
@@ -244,7 +244,7 @@ The following example route table has a static route to an internet gateway and 
 
 If your route table references a prefix list, the following rules apply: 
 + If your route table contains a static route with a destination CIDR block that overlaps a static route with a prefix list, the static route with the CIDR block takes priority\.
-+ If your route table contains a propagated route that overlaps a route with a prefix list, the route that references the prefix list takes priority\.
++ If your route table contains a propagated route that matches a route that references a prefix list, the route that references the prefix list takes priority\. Please note that for routes that overlap, more specific routes always take priority irrespective of whether they are propagated routes, static routes, or routes that reference prefix lists\.
 + If your route table references multiple prefix lists that have overlapping CIDR blocks to different targets, we randomly choose which route takes priority\. Thereafter, the same route always takes priority\.
 + If the CIDR block in a prefix list entry is not valid for the route table, that CIDR block is ignored\. 
 
