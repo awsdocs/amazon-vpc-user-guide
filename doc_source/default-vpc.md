@@ -17,7 +17,7 @@ You can add subnets to your default VPC\. For more information, see [Create a su
 ## Default VPC components<a name="default-vpc-components"></a>
 
 When we create a default VPC, we do the following to set it up for you:
-+ Create a VPC with a size `/16` IPv4 CIDR block \(`172.31.0.0/16`\)\. This provides up to 65,536 private IPv4 addresses\. 
++ Create a VPC with a size `/16` IPv4 CIDR block \(`10.0.0.0/16`\)\. This provides up to 65,536 private IPv4 addresses\. 
 + Create a size `/20` default subnet in each Availability Zone\. This provides up to 4,096 addresses per subnet, a few of which are reserved for our use\.
 + Create an [internet gateway](VPC_Internet_Gateway.md) and connect it to your default VPC\.
 + Add a route to the main route table that points all traffic \(`0.0.0.0/0`\) to the internet gateway\.
@@ -37,7 +37,7 @@ The following table shows the routes in the main route table for the default VPC
 
 | Destination | Target | 
 | --- | --- | 
-| 172\.31\.0\.0/16 | local | 
+| 10\.0\.0\.0/16 | local | 
 | 0\.0\.0\.0/0 | internet\_gateway\_id | 
 
 You can use a default VPC as you would use any other VPC: 
