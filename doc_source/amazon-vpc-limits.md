@@ -16,7 +16,7 @@ If you request a quota increase that applies per resource, we increase the quota
 
 ## DNS<a name="vpc-limits-dns"></a>
 
-Each EC2 instance can send 1024 packets per second per network interface to Route 53 Resolver \(specifically the \.2 address, such as 10\.0\.0\.2, and 169\.254\.169\.253\)\. This quota cannot be increased\. The number of DNS queries per second supported by Route 53 Resolver varies by the type of query, the size of the response, and the protocol in use\. For more information and recommendations for a scalable DNS architecture, see the [AWS Hybrid DNS with Active Directory](https://d1.awsstatic.com/whitepapers/aws-hybrid-dns-with-active-directory.pdf) Technical Guide\.
+Each EC2 instance can send 1024 packets per second per network interface to Route 53 Resolver \(specifically the \.2 address, such as 10\.0\.0\.2 and 169\.254\.169\.253\)\. This quota cannot be increased\. The number of DNS queries per second supported by Route 53 Resolver varies by the type of query, the size of the response, and the protocol in use\. For more information and recommendations for a scalable DNS architecture, see the [AWS Hybrid DNS with Active Directory](https://d1.awsstatic.com/whitepapers/aws-hybrid-dns-with-active-directory.pdf) Technical Guide\.
 
 ## Elastic IP addresses \(IPv4\)<a name="vpc-limits-eips"></a>
 
@@ -69,7 +69,7 @@ While the default quotas for customer\-managed prefix lists are adjustable, you 
 
 | Name | Default | Adjustable | Comments | 
 | --- | --- | --- | --- | 
-| Route tables per VPC | 200 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-589F43AA) | The main route table counts toward this quota\. | 
+| Route tables per VPC | 200 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-589F43AA) | The main route table counts toward this quota\. Note that if you request a quota increase for route tables, you may also want to request a quota increase for subnets\. While route tables can be shared with multiple subnets, a subnet can only be associated with a single route table\. | 
 | Routes per route table \(non\-propagated routes\) | 50 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-93826ACB) | You can increase this quota up to a maximum of 1,000; however, network performance might be impacted\. This quota is enforced separately for IPv4 routes and IPv6 routes\. If you have more than 125 routes, we recommend that you paginate calls to describe your route tables for better performance\. | 
 | BGP advertised routes per route table \(propagated routes\) | 100 | No | If you require additional prefixes, advertise a default route\. | 
 

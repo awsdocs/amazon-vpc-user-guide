@@ -1,4 +1,4 @@
-# Inspect all traffic destined for a subnet<a name="internet-gateway-subnet"></a>
+# Inspect traffic destined for a subnet<a name="internet-gateway-subnet"></a>
 
 Consider the scenario where you have traffic coming into the VPC through an internet gateway and you want to inspect all traffic that is destined for a subnet, say subnet B, using a firewall appliance installed on an EC2 instance\. The firewall appliance should be installed and configured on an EC2 instance in a separate subnet from subnet B in your VPC, say subnet C\. You can then use the middlebox routing wizard to configure routes for traffic between subnet B and the internet gateway\.
 
@@ -32,9 +32,9 @@ Add the following routes to the route table for the internet gateway\.
 
 There is an edge association between the internet gateway and the VPC\.
 
-When you use the middlebox routing wizard, the following tags are associated with the route table:
-+ A tag with a Key set to "Origin" and a Value set to "Middlebox wizard"\.
-+ A tag with a Key set to "date\_created" and a Value set to the creation time, for example, "2021\-02\-18T22:25:49\.137Z "\.
+When you use the middlebox routing wizard, it associates the following tags with the route table:
++ The key is "Origin" and the value is "Middlebox wizard"
++ The key is "date\_created" and the value is the creation time \(for example, "2021\-02\-18T22:25:49\.137Z"\)
 
 ## Destination subnet route table<a name="internet-gateway-subnet-route-table"></a>
 
@@ -50,9 +50,9 @@ Add the following routes to the route table for the destination subnet \(subnet 
 
 There is a subnet association with the middlebox subnet\.
 
-When you use the middlebox routing wizard, the following tags are associated with the route table:
-+ A tag with a Key set to "Origin" and a Value set to "Middlebox wizard"\.
-+ A tag with a Key set to "date\_created" and a Value set to the creation time, for example, "2021\-02\-18T22:25:49\.137Z "\.
+When you use the middlebox routing wizard, it associates the following tags with the route table:
++ The key is "Origin" and the value is "Middlebox wizard"
++ The key is "date\_created" and the value is the creation time \(for example, "2021\-02\-18T22:25:49\.137Z"\)
 
 ## Middlebox subnet route table<a name="internet-gateway-middlebox-subnet-route-table"></a>
 
@@ -68,6 +68,6 @@ Add the following routes to the route table for the middlebox subnet \(subnet C 
 
 There is a subnet association with the destination subnet\.
 
-When you use the middlebox routing wizard, the following tags are associated with the route table:
-+ A tag with a Key set to "Origin" and a Value set to "Middlebox wizard"\.
-+ A tag with a Key set to "date\_created" and a Value set to the creation time, for example, "2021\-02\-18T22:25:49\.137Z "\.
+When you use the middlebox routing wizard, it associates the following tags with the route table:
++ The key is "Origin" and the value is "Middlebox wizard"
++ The key is "date\_created" and the value is the creation time \(for example, "2021\-02\-18T22:25:49\.137Z"\)

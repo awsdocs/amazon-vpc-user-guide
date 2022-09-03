@@ -1,6 +1,6 @@
 # Control traffic to resources using security groups<a name="VPC_SecurityGroups"></a>
 
-A *security group* acts as a virtual firewall, controlling the traffic that is allowed to reach and leave the resources that it is associated with\. For example, after you associate a security group with an EC2 instance, it controls the inbound and outbound traffic for the instance\.
+A *security group* controls the traffic that is allowed to reach and leave the resources that it is associated with\. For example, after you associate a security group with an EC2 instance, it controls the inbound and outbound traffic for the instance\.
 
 When you create a VPC, it comes with a default security group\. You can create additional security groups for each VPC\. You can associate a security group only with resources in the VPC for which it is created\.
 

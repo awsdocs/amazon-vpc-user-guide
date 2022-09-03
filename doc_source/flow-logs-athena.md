@@ -19,8 +19,9 @@ You incur standard [Amazon Athena charges](http://aws.amazon.com/athena/pricing)
 After the first flow logs are delivered to your S3 bucket, you can integrate with Athena by generating a CloudFormation template and using the template to create a stack\.
 
 **Requirements**
-+ You must select a Region that supports AWS Lambda and Amazon Athena\.
++ The selected Region must support AWS Lambda and Amazon Athena\.
 + The Amazon S3 buckets must be in the selected Region\.
++ The log record format for the flow log must include the fields used by the specific predefined queries that you'd like to run\.
 
 **To generate the template using the console**
 
@@ -98,7 +99,7 @@ The generated CloudFormation template provides a set of predefined queries that 
 
 ### Predefined queries<a name="predefined-queries"></a>
 
-The following are the Athena named queries provided by the generated CloudFormation template:
+The following is the complete list of Athena named queries\. The predefined queries that are provided when you generate the template depend on the fields that are part of the log record format for the flow log\. Therefore, the template might not contain all of these predefined queries\.
 + **VpcFlowLogsAcceptedTraffic** – The TCP connections that were allowed based on your security groups and network ACLs\.
 + **VpcFlowLogsAdminPortTraffic** – The top 10 IP addresses with the most traffic, as recorded by applications serving requests on administrative ports\.
 + **VpcFlowLogsIPv4Traffic** – The total bytes of IPv4 traffic recorded\.

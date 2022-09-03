@@ -26,7 +26,7 @@ The configuration for this scenario includes the following:
 
 For more information, see [Subnets](configure-subnets.md)\. For more information about internet gateways, see [Connect to the internet using an internet gateway](VPC_Internet_Gateway.md)\.
 
-### Overview for IPv6<a name="vpc-scenario-1-overview-ipv6"></a>
+### IPv6 configuration<a name="vpc-scenario-1-overview-ipv6"></a>
 
 You can optionally enable IPv6 for this scenario\. In addition to the components listed above, the configuration includes the following:
 + A size /56 IPv6 CIDR block associated with the VPC \(example: 2001:db8:1234:1a00::/56\)\. Amazon automatically assigns the CIDR; you cannot choose the range yourself\.
@@ -43,8 +43,8 @@ The following table shows the route table for the example in the configuration d
 
 | Destination | Target | 
 | --- | --- | 
-|  10\.0\.0\.0/16  |  local  | 
-|  0\.0\.0\.0/0  |  *igw\-id*  | 
+|  10\.0\.0\.0/16  | local | 
+| 0\.0\.0\.0/0 | igw\-id | 
 
 ### Routing for IPv6<a name="vpc-scenario-1-routing-ipv6"></a>
 
@@ -53,10 +53,10 @@ If you associate an IPv6 CIDR block with your VPC and subnet, your route table m
 
 | Destination | Target | 
 | --- | --- | 
-|  10\.0\.0\.0/16  |  local  | 
-|  2001:db8:1234:1a00::/56  |  local  | 
-|  0\.0\.0\.0/0  |  *igw\-id*  | 
-|  ::/0  | igw\-id | 
+|  10\.0\.0\.0/16  | local | 
+|  2001:db8:1234:1a00::/56  | local | 
+| 0\.0\.0\.0/0 | igw\-id | 
+| ::/0 | igw\-id | 
 
 ## Security<a name="VPC_Scenario1_Security"></a>
 

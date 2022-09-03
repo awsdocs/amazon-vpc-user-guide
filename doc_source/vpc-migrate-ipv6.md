@@ -6,7 +6,7 @@ You cannot disable IPv4 support for your VPC and subnets; this is the default IP
 
 **Note**  
 There is no migration path currently from IPv4\-only subnets to IPv6\-only subnets\. For information about creating IPv6\-only subnets, see [Create a subnet in your VPC](working-with-subnets.md#create-subnets)\.
-This section assumes that you have an existing VPC with public and private subnets\. For information about setting up a new VPC for use with IPv6, see [Overview for IPv6](VPC_Scenario1.md#vpc-scenario-1-overview-ipv6)\.
+This section assumes that you have an existing VPC with public and private subnets\. For information about setting up a new VPC for use with IPv6, see [IPv6 configuration](VPC_Scenario1.md#vpc-scenario-1-overview-ipv6)\.
 
 The following table provides an overview of the steps to enable your VPC and subnets to use IPv6\.
 
@@ -20,7 +20,7 @@ The following table provides an overview of the steps to enable your VPC and sub
 | [Step 5: Assign IPv6 addresses to your instances](#vpc-migrate-assign-ipv6-address) | Assign IPv6 addresses to your instances from the IPv6 address range of your subnet\. | 
 | [Step 6: \(Optional\) Configure IPv6 on your instances](#vpc-migrate-ipv6-dhcpv6) | If your instance was launched from an AMI that is not configured to use DHCPv6, you must manually configure your instance to recognize an IPv6 address assigned to the instance\. | 
 
-Before you migrate to using IPv6, ensure that you have read the features of IPv6 addressing for Amazon VPC: [](how-it-works.md#vpc-ipv4-ipv6-comparison)\.
+Before you migrate to using IPv6, ensure that you have read the features of IPv6 addressing for Amazon VPC: [Compare IPv4 and IPv6](how-it-works.md#ipv4-ipv6-comparison)\.
 
 **Topics**
 + [Example: Enable IPv6 in a VPC with a public and private subnet](#vpc-migrate-ipv6-example)

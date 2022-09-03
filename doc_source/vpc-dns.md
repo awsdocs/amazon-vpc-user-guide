@@ -4,7 +4,7 @@ Domain Name System \(DNS\) is a standard by which names used on the internet are
 
 Public IPv4 addresses enable communication over the internet, while private IPv4 addresses enable communication within the network of the instance\. For more information, see [IP addressing](how-it-works.md#vpc-ip-addressing)\.
 
-Amazon provides a DNS server for \([the Amazon Route 53 Resolver](#AmazonDNS)\) for your VPC\. To use your own DNS server instead, create a new set of DHCP options for your VPC\. For more information, see [DHCP option sets in Amazon VPC](VPC_DHCP_Options.md)\.
+Amazon provides a DNS server \([the Amazon Route 53 Resolver](#AmazonDNS)\) for your VPC\. To use your own DNS server instead, create a new set of DHCP options for your VPC\. For more information, see [DHCP option sets in Amazon VPC](VPC_DHCP_Options.md)\.
 
 **Topics**
 + [Amazon DNS server](#AmazonDNS)
@@ -77,7 +77,7 @@ The following rules apply:
 
 ## DNS quotas<a name="vpc-dns-limits"></a>
 
-Each EC2 instance can send 1024 packets per second per network interface to Route 53 Resolver \(specifically the \.2 address, such as 10\.0\.0\.2, and 169\.254\.169\.253\)\. This quota cannot be increased\. The number of DNS queries per second supported by Route 53 Resolver varies by the type of query, the size of the response, and the protocol in use\. For more information and recommendations for a scalable DNS architecture, see the [AWS Hybrid DNS with Active Directory](https://d1.awsstatic.com/whitepapers/aws-hybrid-dns-with-active-directory.pdf) Technical Guide\.
+Each EC2 instance can send 1024 packets per second per network interface to Route 53 Resolver \(specifically the \.2 address, such as 10\.0\.0\.2 and 169\.254\.169\.253\)\. This quota cannot be increased\. The number of DNS queries per second supported by Route 53 Resolver varies by the type of query, the size of the response, and the protocol in use\. For more information and recommendations for a scalable DNS architecture, see the [AWS Hybrid DNS with Active Directory](https://d1.awsstatic.com/whitepapers/aws-hybrid-dns-with-active-directory.pdf) Technical Guide\.
 
 If you reach the quota, the Route 53 Resolver rejects traffic\. Some of the causes for reaching the quota might be a DNS throttling issue, or instance metadata queries that use the Route 53 Resolver network interface\. For information about how to solve VPC DNS throttling issues, see [How can I determine whether my DNS queries to the Amazon provided DNS server are failing due to VPC DNS throttling](http://aws.amazon.com/premiumsupport/knowledge-center/vpc-find-cause-of-failed-dns-queries/)\. For information about instance metadata retrieval, see [Retrieve instance metadata](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
@@ -101,7 +101,7 @@ The **Public DNS \(IPv4\)** and **Private DNS** fields are available when the DN
 
 **To view DNS hostnames for an instance using the command line**
 
-You can use one of the following commands\. For more information about these command line interfaces, see [Access Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+You can use one of the following commands\. For more information about these command line interfaces, see [Working with Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 + [describe\-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html) \(AWS CLI\)
 + [Get\-EC2Instance](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2Instance.html) \(AWS Tools for Windows PowerShell\)
 
@@ -119,7 +119,7 @@ You can use one of the following commands\. For more information about these com
 
 **To view DNS hostnames for a network interface using the command line**
 
-You can use one of the following commands\. For more information about these command line interfaces, see [Access Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+You can use one of the following commands\. For more information about these command line interfaces, see [Working with Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 + [describe\-network\-interfaces](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-network-interfaces.html) \(AWS CLI\)
 + [Get\-EC2NetworkInterface](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2NetworkInterface.html) \(AWS Tools for Windows PowerShell\)
 
@@ -142,13 +142,13 @@ You can view and update the DNS support attributes for your VPC using the Amazon
 
 **To describe DNS support for a VPC using the command line**
 
-You can use one of the following commands\. For more information about these command line interfaces, see [Access Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+You can use one of the following commands\. For more information about these command line interfaces, see [Working with Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 + [describe\-vpc\-attribute](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-attribute.html) \(AWS CLI\)
 + [Get\-EC2VpcAttribute](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2VpcAttribute.html) \(AWS Tools for Windows PowerShell\)
 
 **To update DNS support for a VPC using the command line**
 
-You can use one of the following commands\. For more information about these command line interfaces, see [Access Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+You can use one of the following commands\. For more information about these command line interfaces, see [Working with Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 + [modify\-vpc\-attribute](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-vpc-attribute.html) \(AWS CLI\)
 + [Edit\-EC2VpcAttribute](https://docs.aws.amazon.com/powershell/latest/reference/items/Edit-EC2VpcAttribute.html) \(AWS Tools for Windows PowerShell\)
 

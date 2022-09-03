@@ -1,6 +1,6 @@
 # Create an IPv6\-enabled VPC and IPv6\-only subnets using the AWS CLI<a name="vpc-subnets-commands-example-ipv6-v2"></a>
 
-The following example uses AWS CLI commands to create a nondefault VPC with an IPv6 CIDR block, a public IPv6\-only subnet, and a private IPv6\-only subnet with outbound internet access only\. After you've created the VPC and subnets, you can launch an instance in the public subnet and connect to it\. You can launch an instance in your private subnet and verify that it can connect to the internet\. To begin, you must first install and configure the AWS CLI\. For more information, see [Installing the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html)\.
+The following example uses AWS CLI commands to create a nondefault VPC with an IPv6 CIDR block, a public IPv6\-only subnet, and a private IPv6\-only subnet with outbound internet access only\. After you've created the VPC and subnets, you can launch an instance in the public subnet and connect to it\. You can launch an instance in your private subnet and verify that it can connect to the internet\.
 
 You will create the following AWS resources:
 + A VPC
@@ -10,6 +10,7 @@ You will create the following AWS resources:
 + An EC2 instance
 
 **Topics**
++ [Prerequisites](#vpc-subnets-commands-example-ipv6-v2-prereqs)
 + [Step 1: Create a VPC and subnets](#vpc-subnets-commands-example-create-ipv6-vpc-v2)
 + [Step 2: Configure a public subnet](#vpc-subnets-commands-example-public-subnet-ipv6-v2)
 + [Step 3: Configure an egress\-only private subnet](#vpc-subnets-commands-example-private-subnet-ipv6-v2)
@@ -17,6 +18,10 @@ You will create the following AWS resources:
 + [Step 5: Launch an instance into your public subnet](#vpc-subnets-commands-example-launch-instance-ipv6-v2)
 + [Step 6: Launch an instance into your private subnet](#vpc-subnets-commands-example-launch-instance-ipv6-private-v2)
 + [Step 7: Clean up](#vpc-subnets-commands-example-clean-up-ipv6-v2)
+
+## Prerequisites<a name="vpc-subnets-commands-example-ipv6-v2-prereqs"></a>
+
+Before you begin, install and configure the AWS CLI\. When you configure the AWS CLI, you specify your AWS credentials\. The examples in this tutorial assume you configured a default Region\. Otherwise, add the `--region` option to each command\. For more information, see [Installing or updating the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html) and [Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)\.
 
 ## Step 1: Create a VPC and subnets<a name="vpc-subnets-commands-example-create-ipv6-vpc-v2"></a>
 

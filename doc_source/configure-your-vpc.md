@@ -26,8 +26,6 @@ Amazon VPC supports IPv4 and IPv6 addressing\. For more information about IP add
 
 A VPC must have an IPv4 CIDR block associated with it\. You can optionally associate multiple IPv4 CIDR blocks and multiple IPv6 CIDR blocks to your VPC\.
 
-
-
 **Topics**
 + [VPC sizing for IPv4](#vpc-sizing-ipv4)
 + [Manage IPv4 CIDR blocks for a VPC](#vpc-resize)
@@ -37,18 +35,18 @@ A VPC must have an IPv4 CIDR block associated with it\. You can optionally assoc
 
 When you create a VPC, you must specify an IPv4 CIDR block for the VPC\. The allowed block size is between a `/16` netmask \(65,536 IP addresses\) and `/28` netmask \(16 IP addresses\)\. After you've created your VPC, you can associate additional IPv4 CIDR blocks with the VPC\. For more information, see [Associate additional IPv4 CIDR blocks with your VPC](working-with-vpcs.md#add-ipv4-cidr)\.
 
-When you create a VPC, we recommend that you specify a CIDR block from the private IPv4 address ranges as specified in [RFC 1918](http://www.faqs.org/rfcs/rfc1918.html):
+When you create a VPC, we recommend that you specify a CIDR block from the private IPv4 address ranges as specified in [RFC 1918](http://www.faqs.org/rfcs/rfc1918.html)\.
 
 
 | RFC 1918 range | Example CIDR block | 
 | --- | --- | 
-| 10\.0\.0\.0 \- 10\.255\.255\.255 \(10/8 prefix\) | Your VPC must be /16 or smaller, for example, 10\.0\.0\.0/16\. | 
-| 172\.16\.0\.0 \- 172\.31\.255\.255 \(172\.16/12 prefix\) | Your VPC must be /16 or smaller, for example, 172\.31\.0\.0/16\. | 
-| 192\.168\.0\.0 \- 192\.168\.255\.255 \(192\.168/16 prefix\) | Your VPC can be smaller, for example 192\.168\.0\.0/20\. | 
+| 10\.0\.0\.0 \- 10\.255\.255\.255 \(10/8 prefix\) | 10\.0\.0\.0/16 | 
+| 172\.16\.0\.0 \- 172\.31\.255\.255 \(172\.16/12 prefix\) | 172\.31\.0\.0/16 | 
+| 192\.168\.0\.0 \- 192\.168\.255\.255 \(192\.168/16 prefix\) | 192\.168\.0\.0/20 | 
 
-You can create a VPC with a publicly routable CIDR block that falls outside of the private IPv4 address ranges specified in RFC 1918; however, for the purposes of this documentation, we refer to *private IP addresses* as the IPv4 addresses that are within the CIDR range of your VPC\.
+You can create a VPC with a publicly routable CIDR block that falls outside of the private IPv4 address ranges specified in RFC 1918\. However, for the purposes of this documentation, we refer to *private IP addresses* as the IPv4 addresses that are within the CIDR range of your VPC\.
 
-If you're creating a VPC for use with another AWS service, check the service documentation to verify if there are specific requirements for the IP address range or networking components\.
+When you create a VPC for use with an AWS service, check the service documentation to verify if there are specific requirements for its configuration\.
 
 If you create a VPC using a command line tool or the Amazon EC2 API, the CIDR block is automatically modified to its canonical form\. For example, if you specify 100\.68\.0\.18/18 for the CIDR block, we create a CIDR block of 100\.68\.0\.0/18\.
 

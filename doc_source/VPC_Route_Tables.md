@@ -10,7 +10,7 @@ A *route table* contains a set of rules, called *routes*, that determine where n
 + [Route table quotas](#route-table-quotas)
 + [Example routing options](route-table-options.md)
 + [Work with route tables](WorkWithRouteTables.md)
-+ [Middlebox routing](middlebox-routing-middlebox-intro.md)
++ [Middlebox routing wizard](middlebox-routing-console.md)
 
 ## Route table concepts<a name="RouteTables"></a>
 
@@ -80,9 +80,9 @@ In the following example, suppose that the VPC has both an IPv4 CIDR block and a
 
 ### Main route table<a name="main-route-table"></a>
 
-When you create a VPC, it automatically has a main route table\. When a subnet does not have an explicit routing table associated with it, the main routing table is used by default\. On the **Route Tables** page in the Amazon VPC console, you can view the main route table for a VPC by looking for **Yes** in the **Main** column\. 
+When you create a VPC, it automatically has a main route table\. When a subnet does not have an explicit routing table associated with it, the main routing table is used by default\. On the **Route tables** page in the Amazon VPC console, you can view the main route table for a VPC by looking for **Yes** in the **Main** column\. 
 
-By default, when you create a nondefault VPC, the main route table contains only a local route\. If you [Create a VPC, subnets, and other VPC resources](working-with-vpcs.md#create-vpc-and-other-resources) and choose a NAT gateway, Amazon VPC automatically adds routes to the main route table for the gateways\.
+By default, when you create a nondefault VPC, the main route table contains only a local route\. If you [Create a VPC](working-with-vpcs.md#Create-VPC) and choose a NAT gateway, Amazon VPC automatically adds routes to the main route table for the gateways\.
 
 The following rules apply to the main route table:
 + You cannot delete the main route table\.
@@ -95,13 +95,13 @@ The following rules apply to the main route table:
 
 ### Custom route tables<a name="custom-route-tables"></a>
 
-By default, a custom route table is empty and you add routes as needed\. If you [Create a VPC, subnets, and other VPC resources](working-with-vpcs.md#create-vpc-and-other-resources) and choose a public subnet, Amazon VPC creates a custom route table and adds a route that points to the internet gateway\. One way to protect your VPC is to leave the main route table in its original default state\. Then, explicitly associate each new subnet that you create with one of the custom route tables you've created\. This ensures that you explicitly control how each subnet routes traffic\. 
+By default, a custom route table is empty and you add routes as needed\. If you [Create a VPC](working-with-vpcs.md#Create-VPC) and choose a public subnet, Amazon VPC creates a custom route table and adds a route that points to the internet gateway\. One way to protect your VPC is to leave the main route table in its original default state\. Then, explicitly associate each new subnet that you create with one of the custom route tables you've created\. This ensures that you explicitly control how each subnet routes traffic\. 
 
 You can add, remove, and modify routes in a custom route table\. You can delete a custom route table only if it has no associations\.
 
 ### Subnet route table association<a name="route-table-assocation"></a>
 
-Each subnet in your VPC must be associated with a route table\. A subnet can be explicitly associated with custom route table, or implicitly or explicitly associated with the main route table\. For more information about viewing your subnet and route table associations, see [Determine which subnets and or gateways are explicitly associated with a table](WorkWithRouteTables.md#Route_Which_Associations)\.
+Each subnet in your VPC must be associated with a route table\. A subnet can be explicitly associated with custom route table, or implicitly or explicitly associated with the main route table\. For more information about viewing your subnet and route table associations, see [Determine which subnets and or gateways are explicitly associated](WorkWithRouteTables.md#Route_Which_Associations)\.
 
 Subnets that are in VPCs associated with Outposts can have an additional target type of a local gateway\. This is the only routing difference from non\-Outposts subnets\.
 

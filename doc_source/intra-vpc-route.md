@@ -1,10 +1,12 @@
 # Inspect traffic between subnets<a name="intra-vpc-route"></a>
 
-Consider the scenario where you have multiple subnets in a VPC and you want to inspect the traffic between subnets A and B by a firewall appliance installed in an EC2 instance\. Configure and install the firewall appliance on an EC2 instance in a separate subnet C in your VPC\. The appliance inspects all traffic that travels from subnet A to subnet B \(1\) and from subnet B to subnet A \(2\)\.
+Consider the scenario where you have multiple subnets in a VPC and you want to inspect the traffic between them using a firewall appliance\. Configure and install the firewall appliance on an EC2 instance in a separate subnet in your VPC\.
+
+The following diagram shows a firewall appliance installed on an EC2 instance in subnet C\. The appliance inspects all traffic that travels from subnet A to subnet B \(see 1\) and from subnet B to subnet A \(see 2\)\.
 
 ![\[Inspect subnet traffic\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/middlebox-intra-vpc_updated.png)
 
-You use the main route table for the VPC and the middlebox subnet\. Subnets A and B each have a custom route table\. 
+You use the main route table for the VPC and the middlebox subnet\. Subnets A and B each have a custom route table\.
 
 The middlebox routing wizard, automatically performs the following operations:
 + Creates the route tables\.
@@ -17,49 +19,43 @@ The middlebox routing wizard does not modify your existing route tables\. It cre
 
 If you do not use the middlebox routing wizard, you must manually configure, and then assign the route tables to the subnets and internet gateway\.
 
-## Custom subnet A route table<a name="subneta-route-table-table"></a>
+## Custom route table for subnet A<a name="subneta-route-table-table"></a>
 
-The route table for subnet A has the following routes:
-
-
-| Destination | Target | Purpose | 
-| --- | --- | --- | 
-| 10\.0\.0\.0/16 | Local | Local route | 
-| 10\.0\.2\.0/24 | eni\-c | Route traffic destined for subnet B to the middlebox | 
-
-There is a subnet association with subnet A\. 
-
-When you use the middlebox routing wizard, the following tags are associated with the route table:
-+ A tag with a Key set to "Origin" and a Value set to "Middlebox wizard"\.
-+ A tag with a Key set to "date\_created" and a Value set to the creation time, for example, "2021\-02\-18T22:25:49\.137Z "\.
-
-## Custom subnet B route table<a name="subnetb-route-table-table"></a>
-
-The route table for subnet B has the following routes:
+The route table for subnet A has the following routes\.
 
 
 | Destination | Target | Purpose | 
 | --- | --- | --- | 
-| 10\.0\.0\.0/16 | Local | Local route | 
-| 10\.0\.1\.0/24 | eni\-c | Route traffic destined for subnet A to the middlebox | 
+| VPC CIDR | Local | Local route | 
+| Subnet B CIDR | appliance\-eni | Route traffic destined for subnet B to the middlebox | 
 
-There is a subnet association with subnet B\. 
+When you use the middlebox routing wizard, it associates the following tags with the route table:
++ The key is "Origin" and the value is "Middlebox wizard"
++ The key is "date\_created" and the value is the creation time \(for example, "2021\-02\-18T22:25:49\.137Z"\)
 
-When you use the middlebox routing wizard, the following tags are associated with the route table:
-+ A tag with a Key set to "Origin" and a Value set to "Middlebox wizard"\.
-+ A tag with a Key set to "date\_created" and a Value set to the creation time, for example, "2021\-02\-18T22:25:49\.137Z "\.
+## Custom route table for subnet B<a name="subnetb-route-table-table"></a>
+
+The route table for subnet B has the following routes\.
+
+
+| Destination | Target | Purpose | 
+| --- | --- | --- | 
+| VPC CIDR | Local | Local route | 
+| Subnet A CIDR | appliance\-eni | Route traffic destined for subnet A to the middlebox | 
+
+When you use the middlebox routing wizard, it associates the following tags with the route table:
++ The key is "Origin" and the value is "Middlebox wizard"
++ The key is "date\_created" and the value is the creation time \(for example, "2021\-02\-18T22:25:49\.137Z"\)
 
 ## Main route table<a name="main-route-table"></a>
 
-The main route table for the VPC and subnet C has the following route\.
+Subnet C uses the main route table\. The main route table has the following route\.
 
 
 | Destination | Target | Purpose | 
 | --- | --- | --- | 
-| 10\.0\.0\.0/16 | Local | Local route | 
+| VPC CIDR | Local | Local route | 
 
-There is a subnet association with subnet C\. 
-
-When you use the middlebox routing wizard, the following tags are associated with the route table:
-+ A tag with a Key set to "Origin" and a Value set to "Middlebox wizard"\.
-+ A tag with a Key set to "date\_created" and a Value set to the creation time, for example, "2021\-02\-18T22:25:49\.137Z "\.
+When you use the middlebox routing wizard, it associates the following tags with the route table:
++ The key is "Origin" and the value is "Middlebox wizard"
++ The key is "date\_created" and the value is the creation time \(for example, "2021\-02\-18T22:25:49\.137Z"\)

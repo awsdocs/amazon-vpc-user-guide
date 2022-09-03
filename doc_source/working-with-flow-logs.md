@@ -175,7 +175,7 @@ These procedures disable the flow log service for a resource\. Deleting a flow l
 
 ## API and CLI overview<a name="flow-logs-api-cli"></a>
 
-You can perform the tasks described on this page using the command line or API\. For more information about the command line interfaces and a list of available API actions, see [Access Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+You can perform the tasks described on this page using the command line or API\. For more information about the command line interfaces and a list of available API actions, see [Working with Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 
 **Create a flow log**
 + [create\-flow\-logs](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-flow-logs.html) \(AWS CLI\)

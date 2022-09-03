@@ -31,7 +31,7 @@ To add a new subnet to your VPC, you must specify an IPv4 CIDR block for the sub
 
 1. For **VPC ID**: Choose the VPC for the subnet\.
 
-1. \(Optional\) For **Subnet name**, enter a name for for your subnet\. Doing so creates a tag with a key of `Name` and the value that you specify\.
+1. \(Optional\) For **Subnet name**, enter a name for your subnet\. Doing so creates a tag with a key of `Name` and the value that you specify\.
 
 1. For **Availability Zone**, you can choose a Zone for your subnet, or leave the default **No Preference** to let AWS choose one for you\.
 
@@ -154,7 +154,7 @@ If you no longer need a subnet, you can delete it\. You cannot delete a subnet i
 
 ## API and command overview<a name="subnet-api-cli"></a>
 
-You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available API actions, see [Access Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available API actions, see [Working with Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 
 **Add a subnet**
 + [create\-subnet](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-subnet.html) \(AWS CLI\)

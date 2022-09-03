@@ -90,7 +90,7 @@ sudo service iptables save
 
 ### Launch a NAT instance using the command line<a name="launch-nat-instance-cli"></a>
 
-To launch a NAT instance into your subnet, use one of the following commands\. For more information, see [Access Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\. You can use the AMI ID of the AMI that you configured to run as a NAT instance\. For information about how to create an AMI on Amazon Linux 2, see [Creating Amazon EBS\-backed AMIs ](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html)in the* Amazon EC2 User Guide for Linux Instances*\.
+To launch a NAT instance into your subnet, use one of the following commands\. For more information, see [Working with Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\. You can use the AMI ID of the AMI that you configured to run as a NAT instance\. For information about how to create an AMI on Amazon Linux 2, see [Creating Amazon EBS\-backed AMIs ](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html)in the* Amazon EC2 User Guide for Linux Instances*\.
 + [run\-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html) \(AWS CLI\)
 + [New\-EC2Instance](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Instance.html) \(AWS Tools for Windows PowerShell\)
 
@@ -171,7 +171,7 @@ You can disable the `SrcDestCheck` attribute for a NAT instance that's either ru
 
 **To disable source/destination checking using the command line**
 
-You can use one of the following commands\. For more information, see [Access Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+You can use one of the following commands\. For more information, see [Working with Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 + [modify\-instance\-attribute](https://docs.aws.amazon.com/cli/latest/reference/ec2/modify-instance-attribute.html) \(AWS CLI\)
 + [Edit\-EC2InstanceAttribute](https://docs.aws.amazon.com/powershell/latest/reference/items/Edit-EC2InstanceAttribute.html) \(AWS Tools for Windows PowerShell\)
 

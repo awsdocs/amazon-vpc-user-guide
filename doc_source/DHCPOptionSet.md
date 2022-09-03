@@ -16,7 +16,7 @@ EC2 instances launched into VPC subnets automatically use the default DHCP optio
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **DHCP Option Sets**\.
+1. In the navigation pane, choose **DHCP option sets**\.
 
 1. Choose the option set that's available\.
 
@@ -31,7 +31,7 @@ EC2 instances launched into VPC subnets automatically use the default DHCP optio
 
 **Describe one or more sets of DHCP options using the AWS CLI or API**
 
-For more information about the command line interfaces and a list of available APIs, see [Access Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+For more information about the command line interfaces and a list of available APIs, see [Working with Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 + [describe\-dhcp\-options](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-dhcp-options.html) \(AWS CLI\)
 + [Get\-EC2DhcpOption](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2DhcpOption.html) \(AWS Tools for Windows PowerShell\)
 
@@ -46,7 +46,7 @@ After you create a DHCP option set, you can't modify it\. If you need your VPC t
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **DHCP Option Sets**\.
+1. In the navigation pane, choose **DHCP option sets**\.
 
 1. Choose **Create DHCP options set**\.
 
@@ -73,8 +73,6 @@ If your VPC has an internet gateway, make sure to specify your own DNS server or
 
      For EC2 instances running a Windows OS, this is the method that the instances use to resolve NetBIOS names to IP addresses\. In the default options set, there is no value for NetBIOS node type\.
 
-     
-
 1. Add **Tags**\.
 
 1. Choose **Create DHCP options set**\.
@@ -88,7 +86,7 @@ After you create a DHCP option set, you can't modify it\. If you need your VPC t
 
 **Create a set of DHCP options for your VPC using the AWS CLI or API**
 
-For more information about the command line interfaces and a list of available APIs, see [Access Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+For more information about the command line interfaces and a list of available APIs, see [Working with Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 + [create\-dhcp\-options](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-dhcp-options.html) \(AWS CLI\)
 + [New\-EC2DhcpOption](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2DhcpOption.html) \(AWS Tools for Windows PowerShell\)
 
@@ -115,7 +113,7 @@ You can have multiple sets of DHCP options, but you can associate only one set o
 
 **Associate a set of DHCP options with the specified VPC or no DHCP options using the AWS CLI or API**
 
-For more information about the command line interfaces and a list of available APIs, see [Access Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+For more information about the command line interfaces and a list of available APIs, see [Working with Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 + [associate\-dhcp\-options](https://docs.aws.amazon.com/cli/latest/reference/ec2/associate-dhcp-options.html) \(AWS CLI\)
 + [Register\-EC2DhcpOption](https://docs.aws.amazon.com/powershell/latest/reference/items/Register-EC2DhcpOption.html) \(AWS Tools for Windows PowerShell\)
 
@@ -127,7 +125,7 @@ When you no longer need a DHCP option set, use the following procedure to delete
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **DHCP Option Sets**\.
+1. In the navigation pane, choose **DHCP option sets**\.
 
 1. Select the radio button for the DHCP option set, and then choose **Actions**, **Delete DHCP options set**\.
 
@@ -135,6 +133,6 @@ When you no longer need a DHCP option set, use the following procedure to delete
 
 **Delete a DHCP option set using the AWS CLI or API**
 
-For more information about the command line interfaces and a list of available APIs, see [Access Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+For more information about the command line interfaces and a list of available APIs, see [Working with Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 + [delete\-dhcp\-options](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-dhcp-options.html) \(AWS CLI\)
 + [Remove\-EC2DhcpOption](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2DhcpOption.html) \(AWS Tools for Windows PowerShell\)

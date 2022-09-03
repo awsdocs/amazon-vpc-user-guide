@@ -26,7 +26,7 @@ A *subnet* is a range of IP addresses in your VPC\. You launch AWS resources, su
 
 ## Default and nondefault VPCs<a name="what-is-default-nondefault"></a>
 
-If your account was created after 2013\-12\-04, it comes with a *default VPC* that has a *default subnet* in each Availability Zone\. A default VPC has the benefits of the advanced features provided by EC2\-VPC, and is ready for you to use\. If you have a default VPC and don't specify a subnet when you launch an instance, the instance is launched into your default VPC\. You can launch instances into your default VPC without needing to know anything about Amazon VPC\. 
+If your account was created after 2013\-12\-04, it comes with a *default VPC* in each Region\. A default VPC is configured and ready for you to use\. For example, it has a *default subnet* in each Availability Zone in the Region, an attached internet gateway, a route in the main route table that sends all traffic to the internet gateway, and DNS settings that provide EC2 instances with public IP addresses and DNS hostnames\. Therefore, an EC2 instance that is launched in a default subnet automatically has access to the internet\. If you have a default VPC in a Region and you don't specify a subnet when you launch an EC2 instance into that Region, we choose one of the default subnets and launch the instance into that subnet\.
 
 You can also create your own VPC, and configure it as you need\. This is known as a *nondefault VPC*\. Subnets that you create in your nondefault VPC and additional subnets that you create in your default VPC are called *nondefault subnets*\.
 

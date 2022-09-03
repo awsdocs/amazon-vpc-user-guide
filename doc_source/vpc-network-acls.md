@@ -1,6 +1,12 @@
 # Control traffic to subnets using Network ACLs<a name="vpc-network-acls"></a>
 
-A *network access control list \(ACL\)* is an optional layer of security for your VPC that acts as a firewall for controlling traffic in and out of one or more subnets\. You might set up network ACLs with rules similar to your security groups in order to add an additional layer of security to your VPC\. For more information about the differences between security groups and network ACLs, see [Compare security groups and network ACLs](VPC_Security.md#VPC_Security_Comparison)\.
+A *network access control list \(ACL\)* allows or denies specific inbound or outbound traffic at the subnet level\. You can use the default network ACL for your VPC, or you can create a custom network ACL for your VPC with rules that are similar to the rules for your security groups in order to add an additional layer of security to your VPC\.
+
+The following diagram shows a VPC with two subnets\. Each subnet has a network ACL\. When traffic enters the VPC \(for example, from a peered VPCs, VPN connection, or the internet\), the router sends the traffic to its destination\. Network ACL A determines which traffic destined for subnet 1 is allowed to enter subnet 1, and which traffic destined for a location outside subnet 1 is allowed to leave subnet 1\. Similarly, network ACL B determines which traffic is allowed to enter and leave subnet 2\.
+
+![\[A VPC with two subnets and a network ACL for each subnet.\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/network-acl.png)
+
+For more information about the differences between security groups and network ACLs, see [Compare security groups and network ACLs](VPC_Security.md#VPC_Security_Comparison)\.
 
 **Topics**
 + [Network ACL basics](#nacl-basics)
@@ -21,11 +27,11 @@ The following are the basic things that you need to know about network ACLs:
 + You can create a custom network ACL and associate it with a subnet\. By default, each custom network ACL denies all inbound and outbound traffic until you add rules\. 
 + Each subnet in your VPC must be associated with a network ACL\. If you don't explicitly associate a subnet with a network ACL, the subnet is automatically associated with the default network ACL\.
 + You can associate a network ACL with multiple subnets\. However, a subnet can be associated with only one network ACL at a time\. When you associate a network ACL with a subnet, the previous association is removed\.
-+ A network ACL contains a numbered list of rules\. We evaluate the rules in order, starting with the lowest numbered rule, to determine whether traffic is allowed in or out of any subnet associated with the network ACL\. The highest number that you can use for a rule is 32766\. We recommend that you start by creating rules in increments \(for example, increments of 10 or 100\) so that you can insert new rules where you need to later on\.
-+ A network ACL has separate inbound and outbound rules, and each rule can either allow or deny traffic\. 
++ A network ACL has inbound rules and outbound rules\. Each rule can either allow or deny traffic\. Each rule has a number 1 from to 32766\. We evaluate the rules in order, starting with the lowest numbered rule, when deciding whether allow or deny traffic\. If the traffic matches a rule, the rule is applied and we do not evaluate any additional rules\. We recommend that you start by creating rules in increments \(for example, increments of 10 or 100\) so that you can insert new rules later on, if needed\.
++ We evaluate the network ACL rules when traffic enters and leaves the subnet, not as it is routed within a subnet\.
 + Network ACLs are stateless, which means that responses to allowed inbound traffic are subject to the rules for outbound traffic \(and vice versa\)\.
 
-There are quotas \(limits\) for the number of network ACLs per VPC, and the number of rules per network ACL\. For more information, see [Amazon VPC quotas](amazon-vpc-limits.md)\.
+There are quotas \(also known as limits\) for the number of network ACLs per VPC and the number of rules per network ACL\. For more information, see [Amazon VPC quotas](amazon-vpc-limits.md)\.
 
 ## Network ACL rules<a name="nacl-rules"></a>
 
@@ -340,7 +346,7 @@ You can delete a network ACL only if there are no subnets associated with it\. Y
 
 ### API and command overview<a name="nacl-api-cli"></a>
 
-You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Access Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available APIs, see [Working with Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 
 **Create a network ACL for your VPC**
 + [create\-network\-acl](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-network-acl.html) \(AWS CLI\)

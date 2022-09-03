@@ -4,7 +4,7 @@ This section explains how to work with route tables\.
 
 **Topics**
 + [Determine the route table for a subnet](#SubnetRouteTables)
-+ [Determine which subnets and or gateways are explicitly associated with a table](#Route_Which_Associations)
++ [Determine which subnets and or gateways are explicitly associated](#Route_Which_Associations)
 + [Create a custom route table](#CustomRouteTable)
 + [Add and remove routes from a route table](#AddRemoveRoutes)
 + [Enable or disable route propagation](#EnableDisableRouteProp)
@@ -27,9 +27,11 @@ You can determine which route table a subnet is associated with by looking at th
 
 1. In the navigation pane, choose **Subnets**\.
 
-1. Choose the **Route Table** tab to view the route table ID and its routes\. If it's the main route table, the console doesn't indicate whether the association is implicit or explicit\. To determine if the association to the main route table is explicit, see [Determine which subnets and or gateways are explicitly associated with a table](#Route_Which_Associations)\.
+1. Select the subnet\.
 
-## Determine which subnets and or gateways are explicitly associated with a table<a name="Route_Which_Associations"></a>
+1. Choose the **Route table** tab to view information about the route table and its routes\. To determine whether the association is to the main route table, and if that association is explicit, see [Determine which subnets and or gateways are explicitly associated](#Route_Which_Associations)\.
+
+## Determine which subnets and or gateways are explicitly associated<a name="Route_Which_Associations"></a>
 
 You can determine how many and which subnets or gateways are explicitly associated with a route table\. 
 
@@ -41,25 +43,21 @@ Subnets that aren't explicitly associated with any route table have an implicit 
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Route Tables**\.
+1. In the navigation pane, choose **Route tables**\.
 
-1. View the **Explicit subnet association** column to determine the explicitly associated subnets\.
+1. Check the **Explicit subnet association** column to determine the explicitly associated subnets and the **Main** column to determine whether this is the main route table\.
 
-1. Select the required route table\.
+1. Select the route table and choose the **Subnet associations** tab\.
 
-1. Choose the **Subnet Associations** tab in the details pane\. The subnets explicitly associated with the table are listed on the tab\. Any subnets not associated with any route table \(and thus implicitly associated with the main route table\) are also listed\.
+1. The subnets under **Explicit subnet associations** are explicitly associated with the route table\. The subnets under **Subnets without explicit associations** belong to the same VPC as the route table, but are not associated with any route table, so they are implicitly associated with the main route table for the VPC\.
 
 **To determine which gateways are explicitly associated using the console**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Route Tables**\.
+1. In the navigation pane, choose **Route tables**\.
 
-1. View the **Edge associations** column to determine the associated gateways\.
-
-1. Select the required route table\.
-
-1. Choose the **Edge Associations** tab in the details pane\. The gateways that are associated with the route table are listed\.
+1. Select the route table and choose the **Edge associations** tab\.
 
 **To describe one or more route tables and view its associations using the command line**
 + [describe\-route\-tables](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-route-tables.html) \(AWS CLI\)
@@ -73,7 +71,7 @@ You can create a custom route table for your VPC using the Amazon VPC console\.
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Route Tables**\.
+1. In the navigation pane, choose **Route tables**\.
 
 1. Choose **Create route table**\.
 
@@ -105,7 +103,7 @@ For more information about working with static routes for a Site\-to\-Site VPN c
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Route Tables**, and select the route table\.
+1. In the navigation pane, choose **Route tables**, and select the route table\.
 
 1. Choose **Actions**, **Edit routes**\.
 
@@ -130,7 +128,7 @@ If you add a route using a command line tool or the API, the destination CIDR bl
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Route Tables**, and select the route table\.
+1. In the navigation pane, choose **Route tables**, and select the route table\.
 
 1. Choose **Actions**, **Edit routes**\.
 
@@ -154,7 +152,7 @@ For more information about VPN routing options, see [Site\-to\-Site VPN routing 
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Route Tables**, and then select the route table\.
+1. In the navigation pane, choose **Route tables**, and then select the route table\.
 
 1. Choose **Actions**, **Edit route propagation**\.
 
@@ -168,7 +166,7 @@ For more information about VPN routing options, see [Site\-to\-Site VPN routing 
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Route Tables**, and then select the route table\.
+1. In the navigation pane, choose **Route tables**, and then select the route table\.
 
 1. Choose **Actions**, **Edit route propagation**\. 
 
@@ -186,7 +184,7 @@ To apply route table routes to a particular subnet, you must associate the route
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Route Tables**, and then select the route table\.
+1. In the navigation pane, choose **Route tables**, and then select the route table\.
 
 1. On the **Subnet associations** tab, choose **Edit subnet associations**\.
 
@@ -224,7 +222,7 @@ You can disassociate a subnet from a route table\. Until you associate the subne
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Route Tables**, and then select the route table\.
+1. In the navigation pane, choose **Route tables**, and then select the route table\.
 
 1. In the **Subnet associations** tab, choose **Edit subnet associations**\.
 
@@ -242,7 +240,7 @@ You can change which route table is the main route table in your VPC\.
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Route Tables**\.
+1. In the navigation pane, choose **Route tables**\.
 
 1. Select the subnet route table that should be the new main route table, and then choose **Actions**, **Set main route table**\.
 
@@ -258,7 +256,7 @@ The following procedure describes how to remove an explicit association between 
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Route Tables**, and then select the route table\.
+1. In the navigation pane, choose **Route tables**, and then select the route table\.
 
 1. In the **Subnet associations** tab, choose **Edit subnet associations**\.
 
@@ -272,7 +270,7 @@ You can associate an internet gateway or a virtual private gateway with a route 
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Route Tables**, and then select the route table\.
+1. In the navigation pane, choose **Route tables**, and then select the route table\.
 
 1. Choose **Actions**, **Edit edge associations**\.
 
@@ -293,7 +291,7 @@ You can disassociate an internet gateway or a virtual private gateway from a rou
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Route Tables**, and then select the route table\.
+1. In the navigation pane, choose **Route tables**, and then select the route table\.
 
 1. Choose **Actions**, **Edit edge associations**\.
 
@@ -313,7 +311,7 @@ You can change the target of the default local route\. If you replace the target
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Route Tables**, and then select the route table\.
+1. In the navigation pane, choose **Route tables**, and then select the route table\.
 
 1. Choose **Actions**, **Edit routes**\.
 
@@ -325,7 +323,7 @@ You can change the target of the default local route\. If you replace the target
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Route Tables**, and then select the route table\.
+1. In the navigation pane, choose **Route tables**, and then select the route table\.
 
 1. Choose **Actions**, **Edit routes**\.
 
@@ -355,7 +353,7 @@ You can delete a route table only if there are no subnets associated with it\. Y
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Route Tables**\.
+1. In the navigation pane, choose **Route tables**\.
 
 1. Select the route table, and then choose **Actions**, **Delete Route Table**\.
 

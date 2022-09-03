@@ -116,13 +116,15 @@ Otherwise, the bucket owner must add this policy to the bucket, specifying the A
         {
             "Sid": "AWSLogDeliveryWrite",
             "Effect": "Allow",
-            "Principal": {"Service": "delivery.logs.amazonaws.com"},
+            "Principal": {
+                "Service": "delivery.logs.amazonaws.com"
+            },
             "Action": "s3:PutObject",
             "Resource": "my-s3-arn",
             "Condition": {
                 "StringEquals": {
-                    "s3:x-amz-acl": "bucket-owner-full-control",
-                    "aws:SourceAccount": account_id
+                    "aws:SourceAccount": account_id,
+                    "s3:x-amz-acl": "bucket-owner-full-control"
                 },
                 "ArnLike": {
                     "aws:SourceArn": "arn:aws:logs:region:account_id:*"
@@ -130,10 +132,12 @@ Otherwise, the bucket owner must add this policy to the bucket, specifying the A
             }
         },
         {
-            "Sid": "AWSLogDeliveryCheck",
+            "Sid": "AWSLogDeliveryAclCheck",
             "Effect": "Allow",
-            "Principal": {"Service": "delivery.logs.amazonaws.com"},
-            "Action": ["s3:GetBucketAcl", "s3:ListBucket"],
+            "Principal": {
+                "Service": "delivery.logs.amazonaws.com"
+            },
+            "Action": "s3:GetBucketAcl",
             "Resource": "arn:aws:s3:::bucket_name",
             "Condition": {
                 "StringEquals": {
@@ -166,29 +170,9 @@ It is a best practice to grant these permissions to the log delivery service pri
 
 You can protect the data in your Amazon S3 bucket by enabling either Server\-Side Encryption with Amazon S3\-Managed Keys \(SSE\-S3\) or Server\-Side Encryption with KMS Keys \(SSE\-KMS\)\. For more information, see [Protecting data using server\-side encryption](https://docs.aws.amazon.com/AmazonS3/latest/userguide/serv-side-encryption.html) in the *Amazon S3 User Guide*\.
 
-With SSE\-KMS, you can use either an AWS managed key or a customer managed key\. With an AWS managed key, you can't use cross\-account delivery\. Flow logs are delivered from the log delivery account, so you must grant access for cross\-account delivery\. To grant cross\-account access to your S3 bucket, use a customer managed key and specify the Amazon Resource Name \(ARN\) of the customer managed key when you enable bucket encryption\. For more information, see [Specifying server\-side encryption with AWS KMS](https://docs.aws.amazon.com/AmazonS3/latest/userguide/specifying-kms-encryption.html) in the *Amazon S3 User Guide*\.
+If you choose SSE\-S3, no additional configuration is required\. Amazon S3 handles the encryption key\.
 
-When you use SSE\-KMS with a customer managed key, you must add the following to the key policy for your key \(not the bucket policy for your S3 bucket\), so that VPC Flow Logs can write to your S3 bucket\.
-
-```
-{
-    "Sid": "Allow VPC Flow Logs to use the key",
-    "Effect": "Allow",
-    "Principal": {
-        "Service": [
-            "delivery.logs.amazonaws.com"
-        ]
-    },
-   "Action": [
-       "kms:Encrypt",
-       "kms:Decrypt",
-       "kms:ReEncrypt*",
-       "kms:GenerateDataKey*",
-       "kms:DescribeKey"
-    ],
-    "Resource": "*"
-}
-```
+If you choose SSE\-KMS, you must use a customer managed key\. You must update the key policy for your customer managed key so that the log delivery account can write to your S3 bucket\. For more information about the required key policy for use with SSE\-KMS, see [Amazon S3 bucket server\-side encryption](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html#AWS-logs-SSE-KMS-S3) in the *Amazon CloudWatch Logs User Guide*\.
 
 ## Amazon S3 log file permissions<a name="flow-logs-file-permissions"></a>
 

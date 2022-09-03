@@ -12,6 +12,7 @@ There are two types of prefix lists:
 + [Work with customer\-managed prefix lists](working-with-managed-prefix-lists.md)
 + [Work with AWS\-managed prefix lists](working-with-aws-managed-prefix-lists.md)
 + [Work with shared prefix lists](sharing-managed-prefix-lists.md)
++ [Reference prefix lists in your AWS resources](managed-prefix-lists-referencing.md)
 
 ## Prefix lists concepts and rules<a name="managed-prefix-lists-concepts"></a>
 

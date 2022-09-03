@@ -19,17 +19,13 @@ To use a Local Zone, you follow a three\-step process:
 + Next, create a subnet in the Local Zone\.
 + Finally, launch select resources in the Local Zone subnet, so that your applications are closer to your end users\.
 
-A network border group is a unique set of Availability Zones or Local Zones from which AWS advertises public IP addresses\.
-
-When you create a VPC that has IPv6 addresses, you can choose to assign a set of Amazon\-provided public IP addresses to the VPC, and also set a network border group for the addresses that limits the addresses to the group\. When you set a network border group, the IP addresses cannot move between network border groups\. The `us-west-2` network border group contains the four US West \(Oregon\) Availability Zones\. The `us-west-2-lax-1` network border group contains the Los Angeles Local Zones\.
+When you create a VPC, you can choose to assign a set of Amazon\-provided public IP addresses to the VPC\. You can also set a network border group for the addresses that limits the addresses to the group\. When you set a network border group, the IP addresses can't move between network border groups\. Local Zone network traffic will go directly to the internet or to points\-of\-presence \(PoPs\) without traversing the Local Zone's parent Region, enabling access to low\-latency computing\. The complete list of Local Zones and their corresponding parent Regions can be found on the [AWS Local Zones](http://aws.amazon.com/about-aws/global-infrastructure/localzones/locations/) page\. 
 
 The following rules apply to Local Zones:
 + The Local Zone subnets follow the same routing rules as Availability Zone subnets, including route tables, security groups, and network ACLs\.
-+ You can assign Local Zones to subnets using the Amazon Virtual Private Cloud Console, AWS CLI, or API\.
++ You can assign subnets to Local Zones using the Amazon Virtual Private Cloud Console, AWS CLI, or API\.
 + You must provision public IP addresses for use in a Local Zone\. When you allocate addresses, you can specify the location from which the IP address is advertised\. We refer to this as a network border group, and you can set this parameter to limit the addresses to this location\. After you provision the IP addresses, you cannot move them between the Local Zone and the parent Region \(for example, from `us-west-2-lax-1a` to `us-west-2`\)\. 
-+ You can request the IPv6 Amazon\-provided IP addresses and associate them with the network border group for a new or existing VPC\. 
-**Note**  
-IPv6 is supported in the Los Angeles Local Zones only\.
++ You can request the IPv6 Amazon\-provided IP addresses and associate them with the network border group for a new or existing VPCs only for `us-west-2-lax-1a` and `use-west-2-lax-1b`\. All other Local Zones don't support IPv6\. 
 + Outbound internet traffic leaves a Local Zone from the Local Zone\.
 
 For information about working with Local Zones in Linux, see [Local Zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-local-zones) in the *Amazon EC2 User Guide for Linux Instances*\. For information about working with Local Zones in Windows, see [Local Zones](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/using-regions-availability-zones.html#concepts-local-zones) in the *Amazon EC2 User Guide for Windows Instances*\. Both guides contain a list of available Local Zones and the resources that you can launch in each Local Zone\.
@@ -47,18 +43,18 @@ Take the following information into account when you use internet gateways \(in 
 
 Consider the scenario where you want an on\-premises data center to access resources that are in a Local Zone\. You use a virtual private gateway for the VPC that's associated with the Local Zone to connect to a Direct Connect gateway\. The Direct Connect gateway connects to an AWS Direct Connect location in a Region\. The on\-premises data center has an AWS Direct Connect connection to the AWS Direct Connect location\.
 
+**Note**  
+Traffic within the US that is destined for a subnet in a Local Zone using Direct Connect does not travel through the parent Region of the Local Zone\. Instead, traffic takes the shortest path to the Local Zone\. This decreases latency and helps make your applications more responsive\.
+
 ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/dxgw-lz.png)
 
 You configure the following resources for this configuration:
 + A virtual private gateway for the VPC that is associated with the Local Zone subnet\. You can view the VPC for the subnet on the subnet details page in the Amazon Virtual Private Cloud Console, or use [describe\-subnets](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-subnets.html)\.
 
   For information about creating a virtual private gateway, see [Create a target gateway](https://docs.aws.amazon.com/vpn/latest/s2svpn/SetUpVPNConnections.html#vpn-create-target-gateway) in the *AWS Site\-to\-Site VPN User Guide*\.
-+ A Direct Connect connection\. AWS recommends that you use one of the following locations for the best latency performance to the LA Local Zones:
-  + T5 at El Segundo, Los Angeles, CA \(AWS recommends this location for the lowest latency to the LA Local Zone\)
-  + CoreSite LA1, Los Angeles, CA
-  + Equinix LA3, El Segundo, CA
++ A Direct Connect connection\. For the best latency performance, AWS recommends that you use the [Direct Connect location](https://aws.amazon.com/about-aws/global-infrastructure/localzones/locations) closest to the Local Zone to which you'll be extending your subnet\.
 
-  For information about ordering a connection, see [Cross connects](https://docs.aws.amazon.com/directconnect/latest/UserGuide/Colocation.html#cross-connect-us-west-1) in the *AWS Direct Connect User Guide*\.
+  For information about ordering a connection, see [Cross connects](https://docs.aws.amazon.com/directconnect/latest/UserGuide/Colocation.html#cross-connect-us-west-1) in the *AWS Direct Connect User Guide*\. 
 + A Direct Connect gateway\. For information about creating a Direct Connect gateway, see [Create a Direct Connect gateway](https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-gateways-intro.html#create-direct-connect-gateway) in the *AWS Direct Connect User Guide*\.
 + A virtual private gateway association to connect the VPC to the Direct Connect gateway\. For information about creating a virtual private gateway association, see [Associating and disassociating virtual private gateways](https://docs.aws.amazon.com/directconnect/latest/UserGuide/virtualgateways.html#associate-vgw-with-direct-connect-gateway) in the *AWS Direct Connect User Guide*\.
 + A private virtual interface on the connection from the AWS Direct Connect location to the on\-premises data center\. For information about creating a Direct Connect gateway, see [Creating a private virtual interface to the Direct Connect gateway ](https://docs.aws.amazon.com/directconnect/latest/UserGuide/virtualgateways.html#create-private-vif-for-gateway) in the *AWS Direct Connect User Guide*\.
@@ -66,6 +62,9 @@ You configure the following resources for this configuration:
 ### Connect Local Zone subnets to a transit gateway<a name="connect-local-zone-tgw"></a>
 
 You can't create a transit gateway attachment for a subnet in a Local Zone\. The following diagram shows how to configure your network so that subnets in the Local Zone connect to a transit gateway through the parent Availability Zone\. Create subnets in the Local Zones and subnets in the parent Availability Zones\. Connect the subnets in the parent Availability Zones to the transit gateway, and then create a route in the route table for each VPC that routes traffic destined for the other VPC CIDR to the network interface for the transit gateway attachment\.
+
+**Note**  
+Traffic destined for a subnet in a Local Zone that originates from a transit gateway will first traverse the parent Region\.
 
 ![\[Local Zone to transit gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/lz-tgw.png)
 
@@ -111,7 +110,7 @@ The following rules apply to Wavelength Zones:
 + By default, every subnet that you create in a VPC that spans a Wavelength Zone inherits the main VPC route table, including the local route\. 
 + When you launch an EC2 instance in a subnet in a Wavelength Zone, you assign a carrier IP address to it\. The carrier gateway uses the address for traffic from the interface to the internet, or mobile devices\. The carrier gateway uses NAT to translate the address, and then sends the traffic to the destination\. Traffic from the telecommunication carrier network routes through the carrier gateway\.
 + You can set the target of a VPC route table, or subnet route table in a Wavelength Zone to a carrier gateway, which allows inbound traffic from a carrier network in a specific location, and outbound traffic to the carrier network and internet\. For more information about routing options in a Wavelength Zone, see [Routing](https://docs.aws.amazon.com/wavelength/latest/developerguide/how-wavelengths-work.html#wavelength-routing-overview) in the *AWS Wavelength Developer Guide*\.
-+ Subnets in Wavelength Zones have the same networking components as subnets in Availability Zones, including IPv4 addresses, DHCP Option sets, and network ACLs\.
++ Subnets in Wavelength Zones have the same networking components as subnets in Availability Zones, including IPv4 addresses, DHCP option sets, and network ACLs\.
 + You can't create a transit gateway attachment to a subnet in a Wavelength Zone\. Instead, create the attachment through a subnet in the parent Availability Zone, and then route traffic to the desired destinations through the transit gateway\. For an example, see the next section\.
 
 ### Considerations for multiple Wavelength Zones<a name="multiple-wavelength-zones"></a>

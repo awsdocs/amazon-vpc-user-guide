@@ -169,7 +169,7 @@ For more information about transit gateway route tables, see [Routing](https://d
 ## Routing for a middlebox appliance<a name="route-tables-appliance-routing"></a>
 
 You can add middlebox appliances into the routing paths for your VPC\. The following are possible use cases:
-+ Intercept traffic that enters your VPC through an internet gateway or a virtual private gateway by directing it to a middlebox appliance in your VPC\. You can use the middlebox routing wizard to have AWS automatically configure the appropriate route tables for your gateway, middlebox, and destination subnet\. For more information, see [Work with the middlebox routing wizard](middlebox-routing-console.md)\.
++ Intercept traffic that enters your VPC through an internet gateway or a virtual private gateway by directing it to a middlebox appliance in your VPC\. You can use the middlebox routing wizard to have AWS automatically configure the appropriate route tables for your gateway, middlebox, and destination subnet\. For more information, see [Middlebox routing wizard](middlebox-routing-console.md)\.
 + Direct traffic between two subnets to a middlebox appliance\. You can do so by creating a route for one subnet route table that matches the subnet CIDR of the other subnet and specifies a Gateway Load Balancer endpoint, NAT gateway, Network Firewall endpoint, or the network interface for an appliance as a target\. Alternatively, to redirect all traffic from the subnet to any other subnet, replace the target of the local route with a Gateway Load Balancer endpoint, NAT gateway, or network interface\.
 
 You can configure the appliance to suit your needs\. For example, you can configure a security appliance that screens all traffic, or a WAN acceleration appliance\. The appliance is deployed as an Amazon EC2 instance in a subnet in your VPC, and is represented by an elastic network interface \(network interface\) in your subnet\.
@@ -178,7 +178,7 @@ If you enable route propagation for the destination subnet route table, be aware
 
 To route inbound VPC traffic to an appliance, you associate a route table with the internet gateway or virtual private gateway, and specify the network interface of your appliance as the target for VPC traffic\. For more information, see [Gateway route tables](VPC_Route_Tables.md#gateway-route-tables)\. You can also route outbound traffic from your subnet to a middlebox appliance in another subnet\.
 
-For middlebox routing examples, see [Middlebox routing scenarios](middlebox-routing-examples.md)\.
+For middlebox routing examples, see [Middlebox scenarios](middlebox-routing-examples.md)\.
 
 **Topics**
 + [Appliance considerations](#appliance-considerations)
@@ -289,7 +289,7 @@ A Gateway Load Balancer enables you to distribute traffic to a fleet of virtual 
 
 To route your traffic to the Gateway Load Balancer \(for example, for security inspection\), specify the Gateway Load Balancer endpoint as a target in your route tables\.
 
-For an example of a security appliances behind a Gateway Load Balancer, see [Security appliances behind a Gateway Load Balancer in the security VPC ](gwlb-route.md)\.
+For an example of a security appliances behind a Gateway Load Balancer, see [Inspect traffic using appliances in a security VPC](gwlb-route.md)\.
 
 To specify the Gateway Load Balancer endpoint in the route table, use the ID of the VPC endpoint\. For example to route traffic for 10\.0\.1\.0/24 to a Gateway Load Balancer endpoint, add the following route\.
 

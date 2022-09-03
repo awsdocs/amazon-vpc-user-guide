@@ -24,7 +24,7 @@ The following AWS\-managed prefix lists are available:
 |  com\.amazonaws\.*region*\.dynamodb  | DynamoDB | 
 |  com\.amazonaws\.global\.cloudfront\.origin\-facing  | Amazon CloudFront | 
 
-As with customer\-managed prefix lists, AWS\-managed prefix lists can be used with AWS resources such as security groups and route tables\. For more information, see [Reference prefix lists in your AWS resources](working-with-managed-prefix-lists.md#managed-prefix-lists-referencing)\.
+As with customer\-managed prefix lists, AWS\-managed prefix lists can be used with AWS resources such as security groups and route tables\. For more information, see [Reference prefix lists in your AWS resources](managed-prefix-lists-referencing.md)\.
 
 ## AWS\-managed prefix list weight<a name="aws-managed-prefix-list-weights"></a>
 

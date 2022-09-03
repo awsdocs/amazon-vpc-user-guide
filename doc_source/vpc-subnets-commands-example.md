@@ -1,6 +1,6 @@
 # Create an IPv4\-enabled VPC and subnets using the AWS CLI<a name="vpc-subnets-commands-example"></a>
 
-The following example uses AWS CLI commands to create a nondefault VPC with an IPv4 CIDR block, and a public and private subnet in the VPC\. After you've created the VPC and subnets, you can launch an instance in the public subnet and connect to it\. To begin, you must first install and configure the AWS CLI\. For more information, see [Installing the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html)\.
+The following example uses AWS CLI commands to create a nondefault VPC with an IPv4 CIDR block, and a public and private subnet in the VPC\. After you've created the VPC and subnets, you can launch an instance in the public subnet and connect to it\.
 
 You will create the following AWS resources:
 + A VPC
@@ -10,10 +10,15 @@ You will create the following AWS resources:
 + An EC2 instance
 
 **Topics**
++ [Prerequisites](#vpc-subnets-commands-example-prereqs)
 + [Step 1: Create a VPC and subnets](#vpc-subnets-commands-example-create-vpc)
 + [Step 2: Make your subnet public](#vpc-subnets-commands-example-public-subnet)
 + [Step 3: Launch an instance into your subnet](#vpc-subnets-commands-example-launch-instance)
 + [Step 4: Clean up](#vpc-subnets-commands-example-clean-up)
+
+## Prerequisites<a name="vpc-subnets-commands-example-prereqs"></a>
+
+Before you begin, install and configure the AWS CLI\. When you configure the AWS CLI, you specify your AWS credentials\. The examples in this tutorial assume you configured a default Region\. Otherwise, add the `--region` option to each command\. For more information, see [Installing or updating the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html) and [Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)\.
 
 ## Step 1: Create a VPC and subnets<a name="vpc-subnets-commands-example-create-vpc"></a>
 

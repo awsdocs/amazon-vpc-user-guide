@@ -21,7 +21,7 @@ Follow the steps in this section to create a VPC\.
 
 **To create a VPC:**
 
-1. Follow the steps in [Create a VPC, subnets, and other VPC resources](working-with-vpcs.md#create-vpc-and-other-resources) to create the VPC and additional resources\. When you create the VPC, do the following:
+1. Follow the steps in [Create a VPC](working-with-vpcs.md#Create-VPC) to create the VPC and additional resources\. When you create the VPC, do the following:
    + For **Number of Availability Zones \(AZs\)**, choose **1**\.
    + For **Number of public subnets**, choose **1**\.
    + For **Number of private subnets**, choose **0**\.
@@ -56,7 +56,7 @@ After you've created the VPC, you can view information about the subnet, interne
 
 ## Step 2: Create a security group<a name="get-started-ipv6-sg"></a>
 
-A security group acts as a virtual firewall to control the traffic for its associated instances\. To use a security group, add the inbound rules to control incoming traffic to the instance, and outbound rules to control the outgoing traffic from your instance\. To associate a security group with an instance, specify the security group when you launch the instance\. 
+A security group controls the traffic for its associated resources, such as EC2 instances\. To use a security group, add inbound rules to control the incoming traffic and outbound rules to control the outgoing traffic\. To associate a security group with an instance, specify the security group when you launch the instance\. You can also associate and disassociate security groups with your instances after you launch them\.
 
 Your VPC comes with a *default security group*\. Any instance not associated with another security group during launch is associated with the default security group\. In this exercise, you create a new security group, `WebServerSG`, and specify this security group when you launch an instance into your VPC\.
 

@@ -82,7 +82,7 @@ To create a NAT gateway, enter an optional name, a subnet, and an optional conne
 
    1. Choose **Create a NAT Gateway**\.
 
-1. The initial status of the NAT gateway is `Pending`\. After the status changes to `Available`, the NAT gateway is ready for you to use\. Add a route to the NAT gateway to the route tables for the private subnets and add routes to the route table for the NAT gateway\.
+1. The initial status of the NAT gateway is `Pending`\. After the status changes to `Available`, the NAT gateway is ready for you to use\. Be sure to update your route tables as needed\. For examples, see [NAT gateway use cases](nat-gateway-scenarios.md)\.
 
    If the status of the NAT gateway changes to `Failed`, there was an error during creation\. For more information, see [NAT gateway creation fails](nat-gateway-troubleshooting.md#nat-gateway-troubleshooting-failed)\.
 
@@ -112,7 +112,7 @@ Deleting a NAT gateway disassociates its Elastic IP address, but does not releas
 
 ## API and CLI overview<a name="nat-gateway-api-cli"></a>
 
-You can perform the tasks described on this page using the command line or API\. For more information about the command line interfaces and a list of available API operations, see [Access Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+You can perform the tasks described on this page using the command line or API\. For more information about the command line interfaces and a list of available API operations, see [Working with Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 
 **Create a NAT gateway**
 + [create\-nat\-gateway](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-nat-gateway.html) \(AWS CLI\)

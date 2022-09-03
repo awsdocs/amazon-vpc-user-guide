@@ -11,7 +11,6 @@ You can create and manage customer\-managed prefix lists\. You can view AWS\-man
 + [Resize a prefix list](#resize-managed-prefix-list)
 + [Restore a previous version of a prefix list](#restore-managed-prefix-list)
 + [Delete a prefix list](#delete-managed-prefix-list)
-+ [Reference prefix lists in your AWS resources](#managed-prefix-lists-referencing)
 
 ## Create a prefix list<a name="create-managed-prefix-list"></a>
 
@@ -181,60 +180,3 @@ You cannot delete an AWS\-managed prefix list\.
 
 **To delete a prefix list using the AWS CLI**  
 Use the [delete\-managed\-prefix\-list](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-managed-prefix-list.html) command\.
-
-## Reference prefix lists in your AWS resources<a name="managed-prefix-lists-referencing"></a>
-
-You can reference a prefix list in the following AWS resources\.
-
-**Topics**
-+ [VPC security groups](#prefix-list-vpc-security-group)
-+ [Subnet route tables](#prefix-list-subnet-route-table)
-+ [Transit gateway route tables](#prefix-list-tgw-route-table)
-
-### VPC security groups<a name="prefix-list-vpc-security-group"></a>
-
-You can specify a prefix list as the source for an inbound rule, or as the destination for an outbound rule\. For more information about security groups, see [Control traffic to resources using security groups](VPC_SecurityGroups.md)\.
-
-**To reference a prefix list in a security group rule using the console**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Security Groups**\.
-
-1. Select the security group to update\. 
-
-1. Choose **Actions**, **Edit inbound rules** or **Actions**, **Edit outbound rules**\.
-
-1. Choose **Add rule**\. For **Type**, select the traffic type\. For **Source** \(inbound rules\) or **Destination** \(outbound rules\), choose the ID of the prefix list\. 
-
-1. Choose **Save rules**\.
-
-**To reference a prefix list in a security group rule using the AWS CLI**  
-Use the [authorize\-security\-group\-ingress](https://docs.aws.amazon.com/cli/latest/reference/ec2/authorize-security-group-ingress.html) and [authorize\-security\-group\-egress](https://docs.aws.amazon.com/cli/latest/reference/ec2/authorize-security-group-egress.html) commands\. For the `--ip-permissions` parameter, specify the ID of the prefix list using `PrefixListIds`\.
-
-### Subnet route tables<a name="prefix-list-subnet-route-table"></a>
-
-You can specify a prefix list as the destination for route table entry\. You cannot reference a prefix list in a gateway route table\. For more information about route tables, see [Configure route tables](VPC_Route_Tables.md)\.
-
-**To reference a prefix list in a route table using the console**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Route Tables**, and select the route table\.
-
-1. Choose **Actions**, **Edit routes**\.
-
-1. To add a route, choose **Add route**\.
-
-1. For **Destination** enter the ID of a prefix list\. 
-
-1. For **Target**, choose a target\.
-
-1. Choose **Save changes**\.
-
-**To reference a prefix list in a route table using the AWS CLI**  
-Use the [create\-route](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-route.html) \(AWS CLI\) command\. Use the `--destination-prefix-list-id` parameter to specify the ID of a prefix list\.
-
-### Transit gateway route tables<a name="prefix-list-tgw-route-table"></a>
-
-You can specify a prefix list as the destination for a route\. For more information, see [Prefix list references](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-prefix-lists.html) in *Amazon VPC Transit Gateways*\.

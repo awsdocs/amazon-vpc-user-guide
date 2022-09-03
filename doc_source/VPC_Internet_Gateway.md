@@ -1,26 +1,28 @@
 # Connect to the internet using an internet gateway<a name="VPC_Internet_Gateway"></a>
 
-An internet gateway is a horizontally scaled, redundant, and highly available VPC component that allows communication between your VPC and the internet\. An internet gateway enables resources \(like EC2 instances\) in your public subnets to connect to the internet if the resource has a public IPv4 address or an IPv6 address\. Similarly, resources on the internet can initiate a connection to resources in your subnet using the public IPv4 address or IPv6 address\. For example, an internet gateway enables you to connect to an EC2 instance in AWS using your local computer\.
+An internet gateway is a horizontally scaled, redundant, and highly available VPC component that allows communication between your VPC and the internet\. It supports IPv4 and IPv6 traffic\. It does not cause availability risks or bandwidth constraints on your network traffic\.
 
-An internet gateway serves two purposes: to provide a target in your VPC route tables for internet\-routable traffic, and to perform network address translation \(NAT\) for instances that have been assigned public IPv4 addresses\. For more information, see [Enable internet access](#vpc-igw-internet-access)\.
+An internet gateway enables resources in your public subnets \(such as EC2 instances\) to connect to the internet if the resource has a public IPv4 address or an IPv6 address\. Similarly, resources on the internet can initiate a connection to resources in your subnet using the public IPv4 address or IPv6 address\. For example, an internet gateway enables you to connect to an EC2 instance in AWS using your local computer\.
 
-An internet gateway supports IPv4 and IPv6 traffic\. It does not cause availability risks or bandwidth constraints on your network traffic\. There's no additional charge for having an internet gateway in your account\.
+An internet gateway provides a target in your VPC route tables for internet\-routable traffic\. For communication using IPv4, the internet gateway also performs network address translation \(NAT\)\. For communication using IPv6, NAT is not needed because IPv6 addresses are public\. For more information, see [IP addresses and NAT](#ip-addresses-and-nat)\.
+
+There's no additional charge for creating an internet gateway\.
 
 ## Enable internet access<a name="vpc-igw-internet-access"></a>
 
-To enable access to or from the internet for instances in a subnet in a VPC, you must do the following\.
+To enable access to or from the internet for instances in a subnet in a VPC using an internet gateway, you must do the following\.
 + Create an internet gateway and attach it to your VPC\.
-+ Add a route to your subnet's route table that directs internet\-bound traffic to the internet gateway\. 
-+ Ensure that instances in your subnet have a globally unique IP address \(public IPv4 address, Elastic IP address, or IPv6 address\)\.
-+ Ensure that your network access control lists and security group rules allow the relevant traffic to flow to and from your instance\.
++ Add a route to your subnet's route table that directs internet\-bound traffic to the internet gateway\.
++ Ensure that instances in your subnet have a public IPv4 address or an IPv6 address\.
++ Ensure that your network access control lists and security group rules allow the desired internet traffic to flow to and from your instance\.
 
 **Public and private subnets**  
 If a subnet is associated with a route table that has a route to an internet gateway, it's known as a *public subnet*\. If a subnet is associated with a route table that does not have a route to an internet gateway, it's known as a *private subnet*\.
 
-In your public subnet's route table, you can specify a route for the internet gateway to all destinations not explicitly known to the route table \(`0.0.0.0/0` for IPv4 or `::/0` for IPv6\)\. Alternatively, you can scope the route to a narrower range of IP addresses; for example, the public IPv4 addresses of your company’s public endpoints outside of AWS, or the Elastic IP addresses of other Amazon EC2 instances outside your VPC\.
+In your public subnet's route table, you can specify a route for the internet gateway to all destinations not explicitly known to the route table \(`0.0.0.0/0` for IPv4 or `::/0` for IPv6\)\. Alternatively, you can scope the route to a narrower range of IP addresses; for example, the public IPv4 addresses of your company’s public endpoints outside of AWS, or the Elastic IP addresses of other Amazon EC2 instances outside your VPC\.<a name="ip-addresses-and-nat"></a>
 
 **IP addresses and NAT**  
-To enable communication over the internet for IPv4, your instance must have a public IPv4 address or an Elastic IP address that's associated with a private IPv4 address on your instance\. Your instance is only aware of the private \(internal\) IP address space defined within the VPC and subnet\. The internet gateway logically provides the one\-to\-one NAT on behalf of your instance, so that when traffic leaves your VPC subnet and goes to the internet, the reply address field is set to the public IPv4 address or Elastic IP address of your instance, and not its private IP address\. Conversely, traffic that's destined for the public IPv4 address or Elastic IP address of your instance has its destination address translated into the instance's private IPv4 address before the traffic is delivered to the VPC\.
+To enable communication over the internet for IPv4, your instance must have a public IPv4 address\. You can either configure your VPC to automatically assign public IPv4 addresses to your instances, or you can assign Elastic IP addresses to your instances\. Your instance is only aware of the private \(internal\) IP address space defined within the VPC and subnet\. The internet gateway logically provides the one\-to\-one NAT on behalf of your instance, so that when traffic leaves your VPC subnet and goes to the internet, the reply address field is set to the public IPv4 address or Elastic IP address of your instance, and not its private IP address\. Conversely, traffic that's destined for the public IPv4 address or Elastic IP address of your instance has its destination address translated into the instance's private IPv4 address before the traffic is delivered to the VPC\.
 
 To enable communication over the internet for IPv6, your VPC and subnet must have an associated IPv6 CIDR block, and your instance must be assigned an IPv6 address from the range of the subnet\. IPv6 addresses are globally unique, and therefore public by default\.
 
@@ -36,9 +38,9 @@ The following table provides an overview of whether your VPC automatically comes
 
 | Component | Default VPC | Nondefault VPC | 
 | --- | --- | --- | 
-| Internet gateway | Yes | Yes if you [Create a VPC, subnets, and other VPC resources](working-with-vpcs.md#create-vpc-and-other-resources)\. No if you [Create a VPC only](working-with-vpcs.md#create-vpc-vpc-only)\. | 
-| Route table with route to internet gateway for IPv4 traffic \(0\.0\.0\.0/0\) | Yes | Yes if you [Create a VPC, subnets, and other VPC resources](working-with-vpcs.md#create-vpc-and-other-resources)\. No if you [Create a VPC only](working-with-vpcs.md#create-vpc-vpc-only)\. | 
-| Route table with route to internet gateway for IPv6 traffic \(::/0\) | No | Yes if you [Create a VPC, subnets, and other VPC resources](working-with-vpcs.md#create-vpc-and-other-resources)\. No if you [Create a VPC only](working-with-vpcs.md#create-vpc-vpc-only)\. | 
+| Internet gateway | Yes | No | 
+| Route table with route to internet gateway for IPv4 traffic \(0\.0\.0\.0/0\) | Yes | No | 
+| Route table with route to internet gateway for IPv6 traffic \(::/0\) | No | No | 
 | Public IPv4 address automatically assigned to instance launched into subnet | Yes \(default subnet\) | No \(nondefault subnet\) | 
 | IPv6 address automatically assigned to instance launched into subnet | No \(default subnet\) | No \(nondefault subnet\) | 
 
@@ -90,7 +92,7 @@ After you create an internet gateway, attach it to your VPC\.
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Internet Gateways**, and then choose **Create internet gateway**\.
+1. In the navigation pane, choose **Internet gateways**, and then choose **Create internet gateway**\.
 
 1. Optionally name your internet gateway\.
 
@@ -193,7 +195,7 @@ If you no longer need internet access for instances that you launch into a nonde
 
 1. Choose **Actions**, **Disassociate address**\. Choose **Disassociate address**\.
 
-1. In the navigation pane, choose **Internet Gateways**\.
+1. In the navigation pane, choose **Internet gateways**\.
 
 1. Select the internet gateway and choose **Actions, Detach from VPC**\.
 
@@ -207,7 +209,7 @@ If you no longer need an internet gateway, you can delete it\. You can't delete 
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Internet Gateways**\.
+1. In the navigation pane, choose **Internet gateways**\.
 
 1. Select the internet gateway and choose **Actions**, **Delete internet gateway**\.
 
@@ -215,7 +217,7 @@ If you no longer need an internet gateway, you can delete it\. You can't delete 
 
 ## API and command overview<a name="api_cli_overview"></a>
 
-You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available API actions, see [Access Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
+You can perform the tasks described on this page using the command line or an API\. For more information about the command line interfaces and a list of available API actions, see [Working with Amazon VPC](what-is-amazon-vpc.md#VPCInterfaces)\.
 
 **Create an internet gateway**
 + [create\-internet\-gateway](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-internet-gateway.html) \(AWS CLI\)

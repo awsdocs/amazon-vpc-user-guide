@@ -4,13 +4,13 @@
 *****Copyright &copy; Amazon Web Services, Inc. and/or its affiliates. All rights reserved.*****
 
 -----
-Amazon's trademarks and trade dress may not be used in 
-     connection with any product or service that is not Amazon's, 
-     in any manner that is likely to cause confusion among customers, 
-     or in any manner that disparages or discredits Amazon. All other 
-     trademarks not owned by Amazon are the property of their respective
-     owners, who may or may not be affiliated with, connected to, or 
-     sponsored by Amazon.
+Amazon's trademarks and trade dress may not be used in
+connection with any product or service that is not Amazon's,
+in any manner that is likely to cause confusion among customers,
+or in any manner that disparages or discredits Amazon. All other
+trademarks not owned by Amazon are the property of their respective
+owners, who may or may not be affiliated with, connected to, or
+sponsored by Amazon.
 
 -----
 ## Contents
@@ -34,16 +34,16 @@ Amazon's trademarks and trade dress may not be used in
       + [Work with customer-managed prefix lists](working-with-managed-prefix-lists.md)
       + [Work with AWS-managed prefix lists](working-with-aws-managed-prefix-lists.md)
       + [Work with shared prefix lists](sharing-managed-prefix-lists.md)
+      + [Reference prefix lists in your AWS resources](managed-prefix-lists-referencing.md)
    + [Configure route tables](VPC_Route_Tables.md)
       + [Example routing options](route-table-options.md)
       + [Work with route tables](WorkWithRouteTables.md)
-      + [Middlebox routing](middlebox-routing-middlebox-intro.md)
-         + [Middlebox routing scenarios](middlebox-routing-examples.md)
-            + [Inspect all traffic destined for a subnet](internet-gateway-subnet.md)
-            + [Security appliances behind a Gateway Load Balancer in the security VPC](gwlb-route.md)
+      + [Middlebox routing wizard](middlebox-routing-console.md)
+         + [Manage middlebox routes](working-with-routing-console.md)
+         + [Middlebox scenarios](middlebox-routing-examples.md)
+            + [Inspect traffic destined for a subnet](internet-gateway-subnet.md)
+            + [Inspect traffic using appliances in a security VPC](gwlb-route.md)
             + [Inspect traffic between subnets](intra-vpc-route.md)
-            + [Multiple middleboxes in the same VPC](multiple-middlebox-configurations.md)
-         + [Work with the middlebox routing wizard](middlebox-routing-console.md)
    + [Control traffic to subnets using Network ACLs](vpc-network-acls.md)
 + [Connect your VPC to other networks](extend-intro.md)
    + [Connect to the internet using an internet gateway](VPC_Internet_Gateway.md)

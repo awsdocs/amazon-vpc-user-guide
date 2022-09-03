@@ -17,9 +17,6 @@ The following diagram shows the key components of the configuration for this sce
 
 ![\[Diagram for scenario 4: VPC with only a virtual private gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/case-4_updated.png)
 
-**Important**  
-For this scenario, see [Your customer gateway device](https://docs.aws.amazon.com/vpn/latest/s2svpn/your-cgw.html) to configure the customer gateway device on your side of the Site\-to\-Site VPN connection\.
-
 The configuration for this scenario includes the following:
 + A virtual private cloud \(VPC\) with a size /16 CIDR \(example: 10\.0\.0\.0/16\)\. This provides 65,536 private IP addresses\.
 + A VPN\-only subnet with a size /24 CIDR \(example: 10\.0\.0\.0/24\)\. This provides 256 private IP addresses\.
@@ -29,7 +26,7 @@ The configuration for this scenario includes the following:
 
 For more information, see [Subnets](configure-subnets.md)\. For more information about your Site\-to\-Site VPN connection, see the [AWS Site\-to\-Site VPN User Guide](https://docs.aws.amazon.com/vpn/latest/s2svpn/)\. For more information about configuring a customer gateway device, see [Your customer gateway device](https://docs.aws.amazon.com/vpn/latest/s2svpn/your-cgw.html)\.
 
-### Overview for IPv6<a name="vpc-scenario-4-overview-ipv6"></a>
+### IPv6 configuration<a name="vpc-scenario-4-overview-ipv6"></a>
 
 You can optionally enable IPv6 for this scenario\. In addition to the components listed above, the configuration includes the following:
 + A size /56 IPv6 CIDR block associated with the VPC \(example: 2001:db8:1234:1a00::/56\)\. AWS automatically assigns the CIDR; you cannot choose the range yourself\.
@@ -46,8 +43,8 @@ The following describes the route table for this scenario\. The first entry is t
 
 | Destination | Target | 
 | --- | --- | 
-|  10\.0\.0\.0/16  |  local  | 
-|  0\.0\.0\.0/0  |  *vgw\-id*  | 
+|  10\.0\.0\.0/16  | local | 
+| 0\.0\.0\.0/0 |  vgw\-id  | 
 
 The AWS Site\-to\-Site VPN connection is configured either as a statically\-routed Site\-to\-Site VPN connection or as a dynamically routed Site\-to\-Site VPN connection \(using BGP\)\. If you select static routing, you'll be prompted to manually enter the IP prefix for your network when you create the Site\-to\-Site VPN connection\. If you select dynamic routing, the IP prefix is advertised automatically to your VPC through BGP\.
 
@@ -60,9 +57,9 @@ If you associate an IPv6 CIDR block with your VPC and subnets, your route table 
 
 | Destination | Target | 
 | --- | --- | 
-|  10\.0\.0\.0/16  |  local  | 
-|  2001:db8:1234:1a00::/56  |  local  | 
-|  0\.0\.0\.0/0  |  *vgw\-id*  | 
+|  10\.0\.0\.0/16  | local | 
+|  2001:db8:1234:1a00::/56  | local | 
+| 0\.0\.0\.0/0 |  vgw\-id  | 
 
 ## Security<a name="VPC_Scenario4_Security"></a>
 

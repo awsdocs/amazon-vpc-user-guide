@@ -11,16 +11,13 @@ For information about managing your EC2 instance software, see [Managing softwar
 + [Routing](#VPC_Scenario3_Routing)
 + [Security](#VPC_Scenario3_Security)
 + [Implement scenario 3](#VPC_Scenario3_Implementation)
-+ [Recommended network ACL rules for a VPC with public and private subnets and AWS Site\-to\-Site VPN access](#nacl-rules-scenario-3)
++ [Recommended network ACL rules](#nacl-rules-scenario-3)
 
 ## Overview<a name="Configuration-3"></a>
 
 The following diagram shows the key components of the configuration for this scenario\.
 
 ![\[Diagram for scenario 3: VPC with public and private subnets and VPN access\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/case-3_updated.png)
-
-**Important**  
-For this scenario, see [Your customer gateway device](https://docs.aws.amazon.com/vpn/latest/s2svpn/your-cgw.html) in the *AWS Site\-to\-Site VPN User Guide* for information about configuring the customer gateway device on your side of the Site\-to\-Site VPN connection\.
 
 The configuration for this scenario includes the following:
 + A virtual private cloud \(VPC\) with a size /16 IPv4 CIDR \(example: 10\.0\.0\.0/16\)\. This provides 65,536 private IPv4 addresses\.
@@ -33,9 +30,9 @@ The configuration for this scenario includes the following:
 + A custom route table associated with the public subnet\. This route table contains an entry that enables instances in the subnet to communicate with other instances in the VPC, and an entry that enables instances in the subnet to communicate directly with the internet\.
 + The main route table associated with the VPN\-only subnet\. The route table contains an entry that enables instances in the subnet to communicate with other instances in the VPC, and an entry that enables instances in the subnet to communicate directly with your network\.
 
-For more information, see [Subnets](configure-subnets.md)\. For more information about internet gateways, see [Connect to the internet using an internet gateway](VPC_Internet_Gateway.md)\. For more information about your AWS Site\-to\-Site VPN connection, see the [AWS Site\-to\-Site VPN User Guide](https://docs.aws.amazon.com/vpn/latest/s2svpn/)\.
+For more information, see [Subnets](configure-subnets.md)\. For more information about internet gateways, see [Connect to the internet using an internet gateway](VPC_Internet_Gateway.md)\. For more information about NAT gateways, see [NAT gateways](vpc-nat-gateway.md)\. For more information about your AWS Site\-to\-Site VPN connection, see the [AWS Site\-to\-Site VPN User Guide](https://docs.aws.amazon.com/vpn/latest/s2svpn/)\.
 
-### Overview for IPv6<a name="vpc-scenario-3-overview-ipv6"></a>
+### IPv6 configuration<a name="vpc-scenario-3-overview-ipv6"></a>
 
 You can optionally enable IPv6 for this scenario\. In addition to the components listed above, the configuration includes the following:
 + A size /56 IPv6 CIDR block associated with the VPC \(example: 2001:db8:1234:1a00::/56\)\. AWS automatically assigns the CIDR; you cannot choose the range yourself\.
@@ -83,8 +80,8 @@ The first entry is the default entry for local routing in the VPC; this entry en
 
 | Destination | Target | 
 | --- | --- | 
-|  `10.0.0.0/16`  |  local  | 
-|  `0.0.0.0/0`  |  *vgw\-id*  | 
+|  10\.0\.0\.0/16  | local | 
+| 0\.0\.0\.0/0 |  vgw\-id  | 
 
 ### Custom route table<a name="scenario-3-custom-route-table"></a>
 
@@ -93,8 +90,8 @@ The first entry is the default entry for local routing in the VPC; this entry en
 
 | Destination | Target | 
 | --- | --- | 
-|  `10.0.0.0/16`  |  local  | 
-|  `0.0.0.0/0`  |  *igw\-id*  | 
+|  10\.0\.0\.0/16  | local | 
+| 0\.0\.0\.0/0 |  igw\-id  | 
 
 ### Alternate routing<a name="Case3_Alternate_Routing"></a>
 
@@ -109,9 +106,9 @@ The first entry is the default entry for local routing in the VPC\. The second e
 
 | Destination | Target | 
 | --- | --- | 
-|  `10.0.0.0/16`  |  local  | 
-|  `172.16.0.0/12`  |  *vgw\-id*  | 
-|  `0.0.0.0/0`  |  *nat\-gateway\-id*  | 
+|  10\.0\.0\.0/16  | local | 
+|  172\.16\.0\.0/12  |  vgw\-id  | 
+| 0\.0\.0\.0/0 |  nat\-gateway\-id  | 
 
 ### Routing for IPv6<a name="vpc-scenario-3-routing-ipv6"></a>
 
@@ -124,9 +121,9 @@ The second entry is the default route that's automatically added for local routi
 
 | Destination | Target | 
 | --- | --- | 
-|  10\.0\.0\.0/16  |  local  | 
-|  2001:db8:1234:1a00::/56  |  local  | 
-|  0\.0\.0\.0/0  |  *vgw\-id*  | 
+|  10\.0\.0\.0/16  | local | 
+|  2001:db8:1234:1a00::/56  | local | 
+| 0\.0\.0\.0/0 |  vgw\-id  | 
 
 **Custom route table**
 
@@ -135,16 +132,16 @@ The second entry is the default route that's automatically added for local routi
 
 | Destination | Target | 
 | --- | --- | 
-|  10\.0\.0\.0/16  |  local  | 
-|  2001:db8:1234:1a00::/56  |  local  | 
-|  0\.0\.0\.0/0  |  *igw\-id*  | 
-|  ::/0  | igw\-id | 
+|  10\.0\.0\.0/16  | local | 
+|  2001:db8:1234:1a00::/56  | local | 
+| 0\.0\.0\.0/0 |  igw\-id  | 
+| ::/0 | igw\-id | 
 
 ## Security<a name="VPC_Scenario3_Security"></a>
 
 AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Internetwork traffic privacy in Amazon VPC](VPC_Security.md)\. 
 
-For scenario 3, you'll use security groups but not network ACLs\. If you'd like to use a network ACL, see [Recommended network ACL rules for a VPC with public and private subnets and AWS Site\-to\-Site VPN access](#nacl-rules-scenario-3)\.
+For scenario 3, you'll use security groups but not network ACLs\. If you'd like to use a network ACL, see [Recommended network ACL rules](#nacl-rules-scenario-3)\.
 
 Your VPC comes with a [default security group](VPC_SecurityGroups.md#DefaultSecurityGroup)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. For this scenario, we recommend that you create the following security groups instead of using the default security group:
 + **WebServerSG**: Specify this security group when you launch web servers in the public subnet\.
@@ -248,9 +245,9 @@ These procedures include optional steps for enabling and configuring IPv6 commun
 
 For information about how to use Amazon VPC with IPv6, see [VPC that supports IPv6 addressing](get-started-ipv6.md)\.
 
-## Recommended network ACL rules for a VPC with public and private subnets and AWS Site\-to\-Site VPN access<a name="nacl-rules-scenario-3"></a>
+## Recommended network ACL rules<a name="nacl-rules-scenario-3"></a>
 
-For this scenario you have a network ACL for the public subnet, and a separate network ACL for the VPN\-only subnet\. The following table shows the rules that we recommend for each ACL\. They block all traffic except that which is explicitly required\.
+For this scenario, you can create a network ACL for the public subnet and a separate network ACL for the VPN\-only subnet\. The following table shows the rules that we recommend for each network ACL\. They block all traffic unless it is explicitly required\.
 
 
 **ACL rules for the public subnet**  

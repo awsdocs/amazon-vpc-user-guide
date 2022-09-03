@@ -1,14 +1,16 @@
 # Use subnet CIDR reservations<a name="subnet-cidr-reservation"></a>
 
-A *subnet CIDR reservation* is a range of IPv4 or IPv6 addresses in a subnet\. When you create the reservation, you specify how you will use the reserved range\. The following options are available:
-+ **Prefix** — You can assign IP addresses to network interfaces that are associated with an instance\. For more information, see [Assigning prefixes to Amazon EC2 network interfaces](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-prefix-eni.html) in the *Amazon EC2 User Guide for Linux Instances*\.
-+ **Explicit** — AWS does not use the IP addresses\. You manually assign the IP addresses to resources that reside in your subnet\.
+A *subnet CIDR reservation* is a range of IPv4 or IPv6 addresses that you set aside so that AWS can't assign them to your network interfaces\. This enables you to specify IPv4 or IPv6 prefixes for use with your network interfaces\.
+
+When you create a subnet CIDR reservation, you specify how you will use the reserved IP addresses\. The following options are available:
++ **Prefix** — AWS assigns addresses from the reserved IP address range to network interfaces\. For more information, see [Assigning prefixes to Amazon EC2 network interfaces](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-prefix-eni.html) in the *Amazon EC2 User Guide for Linux Instances*\.
++ **Explicit** — You manually assign IP addresses to network interfaces\.
 
 The following rules apply to subnet CIDR reservations:
-+ You can reserve multiple CIDR ranges per subnet\. The reservation types for each range can both be the same type \(for example **prefix**\), or different \(for example, **prefix** and **explicit**\)\.
-+ When you reserve multiple CIDR ranges within the same VPC, the CIDR ranges cannot overlap\.
-+ When you reserve more than one range in a subnet for Prefix Delegation, and Prefix Delegation is configured for automatic assignment, we randomly choose an IP address to assign to the network interface\.
-+ When you remove a reservation, the IP addresses that are assigned to resources are not changed\. Only the IP addresses that are not in use become available\.
++ When you create a subnet CIDR reservation, the IP address range can include addresses that are already in use\. Creating a subnet reservation does not unassign any IP addresses that are already in use\.
++ You can reserve multiple CIDR ranges per subnet\. When you reserve multiple CIDR ranges within the same VPC, the CIDR ranges cannot overlap\.
++ When you reserve more than one range in a subnet for Prefix Delegation, and Prefix Delegation is configured for automatic assignment, we choose the IP addresses to assign to network interfaces at random\.
++ When you delete a subnet reservation, the unused IP addresses are available for AWS to assign to your network interfaces\. Deleting a subnet reservation does not unassign any IP addresses that are in use\.
 
 ## Work with subnet CIDR reservations using the console<a name="edit-subnet-cidr-reservations"></a>
 

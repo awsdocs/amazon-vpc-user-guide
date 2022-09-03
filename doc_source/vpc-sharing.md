@@ -50,7 +50,7 @@ The following diagram illustrates two accounts with different mappings of Availa
 ## Unshare a shared subnet<a name="vpc-sharing-stop-share-subnet"></a>
 
 The owner can unshare a shared subnet with participants at any time\. After the owner unshares a shared subnet, the following rules apply:
-+ Existing participant resources continue to run in the unshared subnet\.
++ Existing participant resources continue to run in the unshared subnet\. AWS managed services \(for example, Elastic Load Balancing\) that have automated/managed workflows \(such as auto scaling or node replacement\) may require continuous access to the shared subnet for some resources\.
 + Participants can no longer create new resources in the unshared subnet\.
 + Participants can modify, describe, and delete their resources that are in the subnet\.
 + If participants still have resources in the unshared subnet, the owner cannot delete the shared subnet or the shared\-subnet VPC\. The owner can only delete the subnet or shared\-subnet VPC after the participants delete all the resources in the unshared subnet\.
