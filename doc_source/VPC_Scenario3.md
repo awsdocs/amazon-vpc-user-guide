@@ -10,14 +10,14 @@ For information about managing your EC2 instance software, see [Managing softwar
 + [Overview](#Configuration-3)
 + [Routing](#VPC_Scenario3_Routing)
 + [Security](#VPC_Scenario3_Security)
-+ [Implement scenario 3](#VPC_Scenario3_Implementation)
++ [Implement this scenario](#VPC_Scenario3_Implementation)
 + [Recommended network ACL rules](#nacl-rules-scenario-3)
 
 ## Overview<a name="Configuration-3"></a>
 
 The following diagram shows the key components of the configuration for this scenario\.
 
-![\[Diagram for scenario 3: VPC with public and private subnets and VPN access\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/case-3_updated.png)
+![\[Diagram for this scenario: VPC with public and private subnets and VPN access\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/case-3_updated.png)
 
 The configuration for this scenario includes the following:
 + A virtual private cloud \(VPC\) with a size /16 IPv4 CIDR \(example: 10\.0\.0\.0/16\)\. This provides 65,536 private IPv4 addresses\.
@@ -141,7 +141,7 @@ The second entry is the default route that's automatically added for local routi
 
 AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Internetwork traffic privacy in Amazon VPC](VPC_Security.md)\. 
 
-For scenario 3, you'll use security groups but not network ACLs\. If you'd like to use a network ACL, see [Recommended network ACL rules](#nacl-rules-scenario-3)\.
+For this scenario, you'll use security groups but not network ACLs\. If you'd like to use a network ACL, see [Recommended network ACL rules](#nacl-rules-scenario-3)\.
 
 Your VPC comes with a [default security group](VPC_SecurityGroups.md#DefaultSecurityGroup)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. For this scenario, we recommend that you create the following security groups instead of using the default security group:
 + **WebServerSG**: Specify this security group when you launch web servers in the public subnet\.
@@ -229,9 +229,9 @@ The following are the IPv6\-specific rules for the WebServerSG security group \(
 | ::/0 | TCP | HTTP | Allow outbound HTTP access to any IPv6 address\. | 
 | ::/0 | TCP | HTTPS | Allow outbound HTTPS access to any IPv6 address\. | 
 
-## Implement scenario 3<a name="VPC_Scenario3_Implementation"></a>
+## Implement this scenario<a name="VPC_Scenario3_Implementation"></a>
 
-To implement scenario 3, get information about your customer gateway and create the VPC\.
+To implement this scenario, get information about your customer gateway and create the VPC\.
 
 These procedures include optional steps for enabling and configuring IPv6 communication for your VPC\. You do not have to perform these steps if you do not want to use IPv6 in your VPC\.
 

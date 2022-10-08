@@ -1,6 +1,6 @@
 # Logging IP traffic using VPC Flow Logs<a name="flow-logs"></a>
 
-VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC\. Flow log data can be published to Amazon CloudWatch Logs or Amazon S3\. After you create a flow log, you can retrieve and view its data in the chosen destination\.
+VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC\. Flow log data can be published to the following locations: Amazon CloudWatch Logs, Amazon S3, or Amazon Kinesis Data Firehose\. After you create a flow log, you can retrieve and view the flow log records in the log group, bucket, or delivery stream that you configured\.
 
 Flow logs can help you with a number of tasks, such as:
 + Diagnosing overly restrictive security group rules
@@ -17,6 +17,7 @@ Flow log data is collected outside of the path of your network traffic, and ther
 + [Flow logs pricing](#flow-logs-pricing)
 + [Publish flow logs to CloudWatch Logs](flow-logs-cwl.md)
 + [Publish flow logs to Amazon S3](flow-logs-s3.md)
++ [Publish flow logs to Kinesis Data Firehose](flow-logs-firehose.md)
 + [Work with flow logs](working-with-flow-logs.md)
 + [Query flow logs using Amazon Athena](flow-logs-athena.md)
 + [Troubleshoot VPC Flow Logs](flow-logs-troubleshooting.md)
@@ -57,7 +58,7 @@ Regardless of the type of network interface, you must use the Amazon EC2 console
 
 You can apply tags to your flow logs\. Each tag consists of a key and an optional value, both of which you define\. Tags can help you organize your flow logs, for example by purpose or owner\.
 
-If you no longer require a flow log, you can delete it\. Deleting a flow log disables the flow log service for the resource, and no new flow log records are created or published to CloudWatch Logs or Amazon S3\. Deleting the flow log does not delete any existing flow log records or log streams \(for CloudWatch Logs\) or log file objects \(for Amazon S3\) for a network interface\. To delete an existing log stream, use the CloudWatch Logs console\. To delete existing log file objects, use the Amazon S3 console\. After you've deleted a flow log, it can take several minutes to stop collecting data\. For more information, see [Delete a flow log](working-with-flow-logs.md#delete-flow-log)\.
+If you no longer require a flow log, you can delete it\. Deleting a flow log disables the flow log service for the resource, so that no new flow log records are created or published\. Deleting a flow log does not delete any existing flow log data\. After you delete a flow log, you can delete the flow log data directly from the destination when you are finished with it\. For more information, see [Delete a flow log](working-with-flow-logs.md#delete-flow-log)\.
 
 ## Flow log records<a name="flow-log-records"></a>
 
@@ -117,7 +118,7 @@ If a field is not applicable or could not be computed for a specific record, the
 |  vpc\-id  |  The ID of the VPC that contains the network interface for which the traffic is recorded\. **Parquet data type:** STRING  | 3 | 
 |  subnet\-id  |  The ID of the subnet that contains the network interface for which the traffic is recorded\. **Parquet data type:** STRING  | 3 | 
 |  instance\-id  |  The ID of the instance that's associated with network interface for which the traffic is recorded, if the instance is owned by you\. Returns a '\-' symbol for a [requester\-managed network interface](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/requester-managed-eni.html); for example, the network interface for a NAT gateway\. **Parquet data type:** STRING  | 3 | 
-|  tcp\-flags  |  The bitmask value for the following TCP flags: [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) When a flow log entry consists of only ACK packets, the flag value is 0, not 16\. For general information about TCP flags \(such as the meaning of flags like FIN, SYN, and ACK\), see [TCP segment structure ](https://en.wikipedia.org/wiki/Transmission_Control_Protocol#TCP_segment_structure) on Wikipedia\. TCP flags can be OR\-ed during the aggregation interval\. For short connections, the flags might be set on the same line in the flow log record, for example, 19 for SYN\-ACK and FIN, and 3 for SYN and FIN\. For an example, see [TCP flag sequence](flow-logs-records-examples.md#flow-log-example-tcp-flag)\. **Parquet data type:** INT\_32  | 3 | 
+|  tcp\-flags  |  The bitmask value for the following TCP flags: [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html) TCP flags can be OR\-ed during the aggregation interval\. For short connections, the flags might be set on the same line in the flow log record, for example, 19 for SYN\-ACK and FIN, and 3 for SYN and FIN\. For an example, see [TCP flag sequence](flow-logs-records-examples.md#flow-log-example-tcp-flag)\. **Parquet data type:** INT\_32  | 3 | 
 |  type  |  The type of traffic\. The possible values are: IPv4 \| IPv6 \| EFA\. For more information, see [Elastic Fabric Adapter](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html)\. **Parquet data type:** STRING  | 3 | 
 |  pkt\-srcaddr  |  The packet\-level \(original\) source IP address of the traffic\. Use this field with the srcaddr field to distinguish between the IP address of an intermediate layer through which traffic flows, and the original source IP address of the traffic\. For example, when traffic flows through [a network interface for a NAT gateway](flow-logs-records-examples.md#flow-log-example-nat), or where the IP address of a pod in Amazon EKS is different from the IP address of the network interface of the instance node on which the pod is running \(for communication within a VPC\)\. **Parquet data type:** STRING  | 3 | 
 |  pkt\-dstaddr  |  The packet\-level \(original\) destination IP address for the traffic\. Use this field with the dstaddr field to distinguish between the IP address of an intermediate layer through which traffic flows, and the final destination IP address of the traffic\. For example, when traffic flows through [a network interface for a NAT gateway](flow-logs-records-examples.md#flow-log-example-nat), or where the IP address of a pod in Amazon EKS is different from the IP address of the network interface of the instance node on which the pod is running \(for communication within a VPC\)\. **Parquet data type:** STRING  | 3 | 
@@ -154,6 +155,10 @@ Flow logs do not capture all IP traffic\. The following types of traffic are not
 
 ## Flow logs pricing<a name="flow-logs-pricing"></a>
 
-Data ingestion and archival charges for vended logs apply when you publish flow logs to CloudWatch Logs or to Amazon S3\. For more information and examples, see [Amazon CloudWatch Pricing](https://aws.amazon.com/cloudwatch/pricing)\.
+Data ingestion and archival charges for vended logs apply when you publish flow logs\. For more information about pricing when publishing vended logs, open [Amazon CloudWatch Pricing](http://aws.amazon.com/cloudwatch/pricing), select **Logs** and find **Vended Logs**\.
 
-To track charges from publishing flow logs to your Amazon S3 buckets, you can apply cost allocation tags to your flow log subscriptions\. To track charges from publishing flow logs to CloudWatch Logs, you can apply cost allocation tags to your destination CloudWatch Logs log group\. Thereafter, your AWS cost allocation report will include usage and costs aggregated by these tags\. You can apply tags that represent business categories \(such as cost centers, application names, or owners\) to organize your costs\. For more information, see [Using Cost Allocation Tags](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html) in the *AWS Billing User Guide*\.
+To track charges from publishing flow logs, you can apply cost allocation tags to your destination resource\. Thereafter, your AWS cost allocation report includes usage and costs aggregated by these tags\. You can apply tags that represent business categories \(such as cost centers, application names, or owners\) to organize your costs\. For more information, see the following:
++ [Using Cost Allocation Tags](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html) in the *AWS Billing User Guide*
++ [Tag log groups in Amazon CloudWatch Logs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/Working-with-log-groups-and-streams.html#log-group-tagging) in the *Amazon CloudWatch Logs User Guide*
++ [Using cost allocation S3 bucket tags](https://docs.aws.amazon.com/AmazonS3/latest/userguide/CostAllocTagging.html) in the *Amazon Simple Storage Service User Guide*
++ [Tagging Your Delivery Streams](https://docs.aws.amazon.com/firehose/latest/dev/firehose-tagging.html) in the *Amazon Kinesis Data Firehose Developer Guide*

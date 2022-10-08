@@ -105,7 +105,7 @@ You can have multiple sets of DHCP options, but you can associate only one set o
 
 1. In the navigation pane, choose **Your VPCs**\.
 
-1. Select the check box for the VPC, and then choose **Actions**, **Edit DHCP options set**\.
+1. Select the check box for the VPC, and then choose **Actions**, **Edit VPC settings**\.
 
 1. For **DHCP options set**, choose a new DHCP option set\. Alternatively, choose **No DHCP options set** to not use a DHCP option set in your VPC\.
 

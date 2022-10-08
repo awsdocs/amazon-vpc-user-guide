@@ -40,7 +40,7 @@ IP addresses enable resources in your VPC to communicate with each other, and wi
 
 Classless Inter\-Domain Routing \(CIDR\) notation is a way of representing an IP address and its network mask\. The format of these addresses is as follows:
 + An individual IPv4 address is 32 bits, with 4 groups of up to 3 decimal digits\. For example, 10\.0\.1\.0\.
-+ An IPv4 CIDR block has a four groups of up to three decimal digits, 0\-255, separated by periods, followed by a slash and a number from 0 to 32\. For example, 10\.0\.0\.0/16\.
++ An IPv4 CIDR block has four groups of up to three decimal digits, 0\-255, separated by periods, followed by a slash and a number from 0 to 32\. For example, 10\.0\.0\.0/16\.
 + An individual IPv6 address is 128 bits, with 8 groups of 4 hexadecimal digits\. For example, 2001:0db8:85a3:0000:0000:8a2e:0370:7334\.
 + An IPv6 CIDR block has four groups of up to four hexadecimal digits, separated by colons, followed by a double colon, followed by a slash and a number from 1 to 128\. For example, 2001:db8:1234:1a00::/56\.
 
@@ -66,7 +66,7 @@ The following table summarizes the differences between IPv4 and IPv6 in Amazon E
 
 | Characteristic | IPv4 | IPv6 | 
 | --- | --- | --- | 
-| VPC size | From /16 to /28 | Fixed at /56 | 
+| VPC size | Up to 5 CIDRs from /16 to /28\. This [quota](amazon-vpc-limits.md#vpc-limits-vpcs-subnets) is adjustable\. | Up to 5 CIDRs fixed at /56\. This quota is not adjustable\. | 
 | Subnet size | From /16 to /28 | Fixed at /64 | 
 | Address selection | You can choose the IPv4 CIDR block for your VPC or you can allocate a CIDR block from Amazon VPC IP Address Manager \(IPAM\)\. For more information, see [What is IPAM?](https://docs.aws.amazon.com/vpc/latest/ipam/what-is-it-ipam.html) in the Amazon VPC IPAM User Guide\.  | You can bring your own IPv6 CIDR block to AWS for your VPC, choose an Amazon\-provided IPv6 CIDR block, or you can allocate a CIDR block from Amazon VPC IP Address Manager \(IPAM\)\. For more information, see [What is IPAM?](https://docs.aws.amazon.com/vpc/latest/ipam/what-is-it-ipam.html) in the Amazon VPC IPAM User Guide\.  | 
 | Elastic IP addresses | Supported | Not supported | 

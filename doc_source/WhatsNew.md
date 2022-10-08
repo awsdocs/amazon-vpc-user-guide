@@ -4,6 +4,8 @@ The following table describes the important changes in each release of the *Amaz
 
 | Change | Description | Date | 
 | --- |--- |--- |
+| [Network Address Usage metrics](https://docs.aws.amazon.com/vpc/latest/userguide/network-address-usage.html) | You can enable Network Address Usage metrics for your VPC to help you plan for and monitor the size of your VPC\. | October 4, 2022 | 
+| [Publish Flow Logs to Amazon Kinesis Data Firehose](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs-firehose.html) | You can specify a Kinesis Data Firehose delivery stream as a destination for flow log data\. | September 8, 2022 | 
 | [NAT gateway bandwidth](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html#nat-gateway-basics) | NAT gateways now support bandwidth up to 100 Gbps \(an increase from 45 Gbps\) and can process up to ten million packets per second \(up from four million packets\)\. | June 15, 2022 | 
 | [Multiple IPv6 CIDR blocks](https://docs.aws.amazon.com/vpc/latest/userguide/working-with-vpcs.html#vpc-associate-ipv6-cidr) | You can associate up to five IPv6 CIDR blocks to a VPC\. | May 12, 2022 | 
 | [Reorganization](#WhatsNew) | General reorganization of this Amazon Virtual Private Cloud User Guide\. | January 2, 2022 | 

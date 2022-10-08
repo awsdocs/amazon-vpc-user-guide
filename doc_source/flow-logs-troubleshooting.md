@@ -17,14 +17,14 @@ Your flow log records are incomplete, or are no longer being published\.
 There might be a problem delivering the flow logs to the CloudWatch Logs log group\.
 
 **Solution**  
-In either the Amazon EC2 console or the Amazon VPC console, choose the **Flow Logs** tab for the relevant resource\. For more information, see [View flow logs](working-with-flow-logs.md#view-flow-logs)\. The flow logs table displays any errors in the **Status** column\. Alternatively, use the [describe\-flow\-logs](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-flow-logs.html) command, and check the value that's returned in the `DeliverLogsErrorMessage` field\. One of the following errors might be displayed:
+In either the Amazon EC2 console or the Amazon VPC console, choose the **Flow Logs** tab for the relevant resource\. For more information, see [View a flow log](working-with-flow-logs.md#view-flow-logs)\. The flow logs table displays any errors in the **Status** column\. Alternatively, use the [describe\-flow\-logs](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-flow-logs.html) command, and check the value that's returned in the `DeliverLogsErrorMessage` field\. One of the following errors might be displayed:
 + `Rate limited`: This error can occur if CloudWatch Logs throttling has been applied — when the number of flow log records for a network interface is higher than the maximum number of records that can be published within a specific timeframe\. This error can also occur if you've reached the quota for the number of CloudWatch Logs log groups that you can create\. For more information, see [CloudWatch Service Quotas](https://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide/cloudwatch_limits.html) in the *Amazon CloudWatch User Guide*\.
 + `Access error`: This error can occur for one of the following reasons:
   + The IAM role for your flow log does not have sufficient permissions to publish flow log records to the CloudWatch log group
   + The IAM role does not have a trust relationship with the flow logs service
   + The trust relationship does not specify the flow logs service as the principal
 
-  For more information, see [IAM roles for publishing flow logs to CloudWatch Logs](flow-logs-cwl.md#flow-logs-iam)\.
+  For more information, see [IAM role for publishing flow logs to CloudWatch Logs](flow-logs-cwl.md#flow-logs-iam-role)\.
 + `Unknown error`: An internal error has occurred in the flow logs service\. 
 
 ## Flow log is active, but no flow log records or log group<a name="flow-logs-troubleshooting-no-log-group"></a>
@@ -50,7 +50,7 @@ You get a `Access Denied for LogDestination` or a `LogDestinationNotFoundExcepti
 
 **Solution**
 + When publishing to Amazon S3, ensure that you have specified the ARN for an existing S3 bucket, and that the ARN is in the correct format\. If you do not own the S3 bucket, verify that the [bucket policy](flow-logs-s3.md#flow-logs-s3-permissions) has the required permissions and uses the correct account ID and bucket name in the ARN\.
-+ When publishing to CloudWatch Logs, verify that the [IAM role](flow-logs-cwl.md#flow-logs-iam) has the required permissions\.
++ When publishing to CloudWatch Logs, verify that the [IAM role](flow-logs-cwl.md#flow-logs-iam-role) has the required permissions\.
 
 ## Exceeding the Amazon S3 bucket policy limit<a name="flow-logs-troubleshooting-policy-limit"></a>
 

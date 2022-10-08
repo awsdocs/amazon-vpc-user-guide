@@ -106,11 +106,27 @@ Each subnet in your VPC must be associated with a route table\. A subnet can be 
 Subnets that are in VPCs associated with Outposts can have an additional target type of a local gateway\. This is the only routing difference from non\-Outposts subnets\.
 
 **Example 1: Implicit and explicit subnet association**  
-The following diagram shows the routing for a VPC with an internet gateway, a virtual private gateway, a public subnet, and a VPN\-only subnet\. The main route table has a route to the virtual private gateway\. A custom route table is explicitly associated with the public subnet\. The custom route table has a route to the internet \(`0.0.0.0/0`\) through the internet gateway\.
+The following diagram shows the routing for a VPC with an internet gateway, a virtual private gateway, a public subnet, and a VPN\-only subnet\.
 
 ![\[Main route table and custom table\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/case-3_updated.png)
 
-If you create a new subnet in this VPC, it's automatically implicitly associated with the main route table, which routes traffic to the virtual private gateway\. If you set up the reverse configuration \(where the main route table has the route to the internet gateway, and the custom route table has the route to the virtual private gateway\), then a new subnet automatically has a route to the internet gateway\. 
+Route table A is a custom route table that is explicitly associated with the public subnet\. It has a route that sends all traffic to the internet gateway\.
+
+
+| Destination | Target | 
+| --- | --- | 
+| VPC CIDR | Local | 
+| 0\.0\.0\.0/0 | igw\-id | 
+
+Route table B is the main route table\. It has a route that sends all traffic to the virtual private gateway\.
+
+
+| Destination | Target | 
+| --- | --- | 
+| VPC CIDR | Local | 
+| 0\.0\.0\.0/0 | vgw\-id | 
+
+If you create a new subnet in this VPC, it's automatically implicitly associated with the main route table, which routes traffic to the virtual private gateway\. If you set up the reverse configuration \(where the main route table has the route to the internet gateway, and the custom route table has the route to the virtual private gateway\), then traffic to the new subnet is routed to the internet gateway\. 
 
 **Example 2: Replacing the main route table**  
 You might want to make changes to the main route table\. To avoid any disruption to your traffic, we recommend that you first test the route changes using a custom route table\. After you're satisfied with the testing, you can replace the main route table with the new custom table\.

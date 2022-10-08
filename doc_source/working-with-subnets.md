@@ -37,7 +37,7 @@ To add a new subnet to your VPC, you must specify an IPv4 CIDR block for the sub
 
 1. If the subnet should be an IPv6\-only subnet, choose **IPv6\-only**\. This option is only available if the VPC has an associated IPv6 CIDR block\. If you choose this option, you can't associate an IPv4 CIDR block with the subnet\.
 
-1. For **IPv4 CIDR block**, enter an IPv4 CIDR block for your subnet\. For example, `10.0.1.0/24`\. For more information, see [VPC sizing for IPv4](configure-your-vpc.md#vpc-sizing-ipv4)\. If you chose **IPv6\-only**, this option is unavailable\.
+1. For **IPv4 CIDR block**, enter an IPv4 CIDR block for your subnet\. For example, `10.0.1.0/24`\. For more information, see [IPv4 VPC CIDR blocks](configure-your-vpc.md#vpc-sizing-ipv4)\. If you chose **IPv6\-only**, this option is unavailable\.
 
 1. For **IPv6 CIDR block**, choose **Custom IPv6 CIDR** and specify the hexadecimal pair value \(for example, **00**\)\. This option is available only if the VPC has an associated IPv6 CIDR block\.
 

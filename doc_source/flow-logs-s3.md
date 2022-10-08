@@ -4,21 +4,23 @@ Flow logs can publish flow log data to Amazon S3\.
 
 When publishing to Amazon S3, flow log data is published to an existing Amazon S3 bucket that you specify\. Flow log records for all of the monitored network interfaces are published to a series of log file objects that are stored in the bucket\. If the flow log captures data for a VPC, the flow log publishes flow log records for all of the network interfaces in the selected VPC\.
 
-Data ingestion and archival charges for vended logs apply when you publish flow logs to Amazon S3\. For more information, see [Amazon CloudWatch Pricing](http://aws.amazon.com/cloudwatch/pricing)\.
-
 To create an Amazon S3 bucket for use with flow logs, see [Create a bucket](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html) in the *Amazon Simple Storage Service User Guide*\.
 
 For more information about multiple account logging, see [Central Logging](http://aws.amazon.com/solutions/implementations/centralized-logging/) in the AWS Solutions Library\.
 
 For more information about CloudWatch Logs, see [Logs sent to Amazon S3](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html#AWS-logs-infrastructure-S3) in the *Amazon CloudWatch Logs User Guide*\.
 
+**Pricing**  
+Data ingestion and archival charges for vended logs apply when you publish flow logs to Amazon S3\. For more information, open [Amazon CloudWatch Pricing](http://aws.amazon.com/cloudwatch/pricing), select **Logs** and find **Vended Logs**\.
+
 **Topics**
 + [Flow log files](#flow-logs-s3-path)
-+ [IAM policy for IAM principals that publish flow logs to Amazon S3](#flow-logs-s3-iam)
++ [Permissions for IAM principals that publish flow logs to Amazon S3](#flow-logs-s3-iam)
 + [Amazon S3 bucket permissions for flow logs](#flow-logs-s3-permissions)
 + [Required key policy for use with SSE\-KMS](#flow-logs-s3-cmk-policy)
 + [Amazon S3 log file permissions](#flow-logs-file-permissions)
 + [Create a flow log that publishes to Amazon S3](#flow-logs-s3-create-flow-log)
++ [View flow log records](#view-flow-log-records-s3)
 + [Process flow log records in Amazon S3](#process-records-s3)
 
 ## Flow log files<a name="flow-logs-s3-path"></a>
@@ -81,7 +83,7 @@ The following is an example of a log file for a flow log created by AWS account 
 123456789012_vpcflowlogs_us-east-1_fl-1234abcd_20180620T1620Z_fe123456.log.gz
 ```
 
-## IAM policy for IAM principals that publish flow logs to Amazon S3<a name="flow-logs-s3-iam"></a>
+## Permissions for IAM principals that publish flow logs to Amazon S3<a name="flow-logs-s3-iam"></a>
 
 The IAM principal that creates the flow log, such as an IAM user, must have the following permissions, which are required to publish flow logs to the destination Amazon S3 bucket\.
 
@@ -94,7 +96,7 @@ The IAM principal that creates the flow log, such as an IAM user, must have the 
       "Action": [
         "logs:CreateLogDelivery",
         "logs:DeleteLogDelivery"
-        ],
+      ],
       "Resource": "*"
     }
   ]
@@ -182,43 +184,14 @@ In addition to the required bucket policies, Amazon S3 uses access control lists
 
 After you have created and configured your Amazon S3 bucket, you can create flow logs for your network interfaces, subnets, and VPCs\.
 
-**To create a flow log for a network interface using the console**
+**To create a flow log using the console**
 
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-1. In the navigation pane, choose **Network Interfaces**\.
-
-1. Select the checkboxes for one or more network interfaces\.
-
-1. Choose **Actions**, **Create flow log**\.
-
-1. Configure the flow log settings\. For more information, see [To configure flow log settings](#configure-flow-log)\.
-
-**To create a flow log for a subnet using the console**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Subnets**\.
-
-1. Select the checkboxes for one or more subnets\.
+1. Do one of the following:
+   + Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\. In the navigation pane, choose **Network Interfaces**\. Select the checkbox for the network interface\.
+   + Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\. In the navigation pane, choose **Your VPCs**\. Select the checkbox for the VPC\.
+   + Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\. In the navigation pane, choose **Subnets**\. Select the checkbox for the subnet\.
 
 1. Choose **Actions**, **Create flow log**\.
-
-1. Configure the flow log settings\. For more information, see [To configure flow log settings](#configure-flow-log)\.
-
-**To create a flow log for a VPC using the console**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Your VPCs**\.
-
-1. Select the checkboxes for one or more VPCs\.
-
-1. Choose **Actions**, **Create flow log**\.
-
-1. Configure the flow log settings\. For more information, see [To configure flow log settings](#configure-flow-log)\.<a name="configure-flow-log"></a>
-
-**To configure flow log settings using the console**
 
 1. For **Filter**, specify the type of IP traffic data to log\.
    + **Accepted** – Log only accepted traffic\.
@@ -255,16 +228,29 @@ After you have created and configured your Amazon S3 bucket, you can create flow
 
 **To create a flow log that publishes to Amazon S3 using a command line tool**
 
-Use one of the following commands\.
+Use one of the following commands:
 + [create\-flow\-logs](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-flow-logs.html) \(AWS CLI\)
 + [New\-EC2FlowLogs](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2FlowLogs.html) \(AWS Tools for Windows PowerShell\)
-+ [CreateFlowLogs](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateFlowLogs.html) \(Amazon EC2 Query API\)
 
-The following AWS CLI example creates a flow log that captures all traffic for VPC `vpc-00112233344556677` and delivers the flow logs to an Amazon S3 bucket called `flow-log-bucket`\. The `--log-format` parameter specifies a custom format for the flow log records\.
+The following AWS CLI example creates a flow log that captures all traffic for the specified VPC and delivers the flow logs to the specified Amazon S3 bucket\. The `--log-format` parameter specifies a custom format for the flow log records\.
 
 ```
-aws ec2 create-flow-logs --resource-type VPC --resource-ids vpc-00112233344556677 --traffic-type ALL --log-destination-type s3 --log-destination arn:aws:s3:::flow-log-bucket/my-custom-flow-logs/ --log-format '${version} ${vpc-id} ${subnet-id} ${instance-id} ${srcaddr} ${dstaddr} ${srcport} ${dstport} ${protocol} ${tcp-flags} ${type} ${pkt-srcaddr} ${pkt-dstaddr}'
+aws ec2 create-flow-logs --resource-type VPC --resource-ids vpc-00112233344556677 --traffic-type ALL --log-destination-type s3 --log-destination arn:aws:s3:::flow-log-bucket/custom-flow-logs/ --log-format '${version} ${vpc-id} ${subnet-id} ${instance-id} ${srcaddr} ${dstaddr} ${srcport} ${dstport} ${protocol} ${tcp-flags} ${type} ${pkt-srcaddr} ${pkt-dstaddr}'
 ```
+
+## View flow log records<a name="view-flow-log-records-s3"></a>
+
+You can view your flow log records using the Amazon S3 console\. After you create your flow log, it might take a few minutes for it to be visible in the console\.
+
+**To view flow log records published to Amazon S3**
+
+1. Open the Amazon S3 console at [https://console\.aws\.amazon\.com/s3/](https://console.aws.amazon.com/s3/)\.
+
+1. Select the name of the bucket to open its details page\.
+
+1. Navigate to the folder with the log files\. For example, *prefix*/AWSLogs/*account\_id*/vpcflowlogs/*region*/*year*/*month*/*day*/\.
+
+1. Select the checkbox next to the file name, and then choose **Download**\.
 
 ## Process flow log records in Amazon S3<a name="process-records-s3"></a>
 

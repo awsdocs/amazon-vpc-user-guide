@@ -25,7 +25,7 @@ Before you begin, install and configure the AWS CLI\. When you configure the AWS
 
 ## Step 1: Create a VPC and subnets<a name="vpc-subnets-commands-example-create-ipv6-vpc"></a>
 
-The first step is to create a VPC and two subnets\. This example uses the IPv4 CIDR block `10.0.0.0/16` for the VPC, but you can choose a different CIDR block\. For more information, see [VPC sizing](configure-your-vpc.md#vpc-sizing)\.
+The first step is to create a VPC and two subnets\. This example uses the IPv4 CIDR block `10.0.0.0/16` for the VPC, but you can choose a different CIDR block\. For more information, see [VPC CIDR blocks](configure-your-vpc.md#vpc-cidr-blocks)\.
 
 **To create a VPC and subnets using the AWS CLI**
 

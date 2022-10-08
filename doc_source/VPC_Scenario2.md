@@ -12,7 +12,7 @@ For information about managing your EC2 instance software, see [Managing softwar
 + [Overview](#Configuration-2)
 + [Routing](#VPC_Scenario2_Routing)
 + [Security](#VPC_Scenario2_Security)
-+ [Implement scenario 2](#VPC_Scenario2_Implementation)
++ [Implement this scenario](#VPC_Scenario2_Implementation)
 + [Recommended network ACL rules](#nacl-rules-scenario-2)
 
 ## Overview<a name="Configuration-2"></a>
@@ -125,7 +125,7 @@ The second entry is the default route that's automatically added for local routi
 
 AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Internetwork traffic privacy in Amazon VPC](VPC_Security.md)\. 
 
-For scenario 2, you'll use security groups but not network ACLs\. If you'd like to use a network ACL, see [Recommended network ACL rules](#nacl-rules-scenario-2)\.
+For this scenario, you'll use security groups but not network ACLs\. If you'd like to use a network ACL, see [Recommended network ACL rules](#nacl-rules-scenario-2)\.
 
 Your VPC comes with a [default security group](VPC_SecurityGroups.md#DefaultSecurityGroup)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. For this scenario, we recommend that you create the following security groups instead of using the default security group:
 + **WebServerSG**: Specify this security group when you launch the web servers in the public subnet\.
@@ -225,7 +225,7 @@ The following are the IPv6\-specific rules for the DBServerSG security group \(w
 |  ::/0  |  TCP  |  80  |  Allow outbound HTTP access to any IPv6 address\.  | 
 |  ::/0  |  TCP  |  443  |  Allow outbound HTTPS access to any IPv6 address\.  | 
 
-## Implement scenario 2<a name="VPC_Scenario2_Implementation"></a>
+## Implement this scenario<a name="VPC_Scenario2_Implementation"></a>
 
 You can use Amazon VPC to create the VPC, subnets, NAT gateway, and optionally, an egress\-only internet gateway\. You must specify an Elastic IP address for your NAT gateway; if you don't have one, you must first allocate one to your account\. If you want to use an existing Elastic IP address, ensure that it's not currently associated with another instance or network interface\. The NAT gateway is automatically created in the public subnet of your VPC\.
 

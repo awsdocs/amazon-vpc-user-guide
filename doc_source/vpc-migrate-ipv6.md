@@ -88,7 +88,7 @@ You can associate an IPv6 CIDR block with your VPC, and then associate a `/64` C
 
 1. Choose **Close**\. Repeat the steps for the other subnets in your VPC\.
 
-For more information, see [VPC sizing for IPv6](configure-your-vpc.md#vpc-sizing-ipv6)\.
+For more information, see [IPv6 VPC CIDR blocks](configure-your-vpc.md#vpc-sizing-ipv6)\.
 
 ## Step 2: Update your route tables<a name="vpc-migrate-ipv6-routes"></a>
 

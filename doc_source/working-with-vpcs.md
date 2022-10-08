@@ -137,7 +137,7 @@ For more information about using Amazon EC2 Global View, see [List and filter re
 
 ## Associate additional IPv4 CIDR blocks with your VPC<a name="add-ipv4-cidr"></a>
 
-You can add up to five IPv4 CIDR blocks to your VPC by default, but the limit is adjustable\. For more information on increasing the limit, see [Amazon VPC quotas](amazon-vpc-limits.md)\. For information about restrictions on IPv4 CIDR blocks associated with a VPC, see [VPC sizing](configure-your-vpc.md#vpc-sizing)\.
+You can add up to five IPv4 CIDR blocks to your VPC by default, but the limit is adjustable\. For more information, see [Amazon VPC quotas](amazon-vpc-limits.md)\. For information about restrictions on IPv4 CIDR blocks associated with a VPC, see [VPC CIDR blocks](configure-your-vpc.md#vpc-cidr-blocks)\.
 
 After you associate an IPv4 CIDR block with the VPC, the status changes to `associating`\. The CIDR block is ready to use when it's in the `associated` state\. After you've added the CIDR blocks that you need, you can create subnets that use the new CIDR blocks\. For more information, see [Create a subnet in your VPC](working-with-subnets.md#create-subnets)\.
 
@@ -163,7 +163,7 @@ After you've added the IPv4 CIDR blocks that you need, you can create subnets\. 
 
 ## Associate IPv6 CIDR blocks with your VPC<a name="vpc-associate-ipv6-cidr"></a>
 
-You can associate up to five IPv6 CIDR blocks with any existing VPC\. The limit is not adjustable\. For more information, see [Amazon VPC quotas](amazon-vpc-limits.md)\. For information about restrictions on IPv6 CIDR blocks associated with a VPC, see [VPC sizing](configure-your-vpc.md#vpc-sizing)\.
+You can associate up to five IPv6 CIDR blocks with any existing VPC\. The limit is not adjustable\. For more information, see [Amazon VPC quotas](amazon-vpc-limits.md)\. For information about restrictions on IPv6 CIDR blocks associated with a VPC, see [VPC CIDR blocks](configure-your-vpc.md#vpc-cidr-blocks)\.
 
 **To associate an IPv6 CIDR block with a VPC using the console**
 

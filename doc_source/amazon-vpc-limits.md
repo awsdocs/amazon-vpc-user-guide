@@ -118,6 +118,18 @@ To increase these quota, contact AWS Support\. AWS recommends that you paginate 
 | Participant accounts per VPC | 100 | Yes | This is the number of distinct participant accounts that subnets in a VPC can be shared with\. This is a per VPC quota and applies across all the subnets shared in a VPC\. To increase this quota, contact AWS Support\. VPC owners can view the network interfaces and security groups that are attached to the participant resources\. | 
 | Subnets that can be shared with an account | 100 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-44499CD2) | This is the maximum number of subnets that can be shared with an AWS account\. | 
 
+## Network Address Usage<a name="vpc-size-limits"></a>
+
+Network Address Usage \(NAU\) is comprised of IP addresses, network interfaces, and CIDRs in managed prefix lists\. NAU is a metric applied to resources in a VPC to help you plan for and monitor the size of your VPC\. For more information, see [Network Address Usage](network-address-usage.md)\.
+
+The resources that make up the NAU count have their own individual service quotas\. Even if a VPC has NAU capacity available, you won't be able to launch resources into the VPC if the resources have exceeded their service quotas\.
+
+
+| Name | Default | Adjustable | Comments | 
+| --- | --- | --- | --- | 
+| Network Address Usage | 64,000 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-44499CD2) \(up to to 256,000\) | The maximum number of NAU units that a single VPC can have\. | 
+| Peered Network Address Usage | 128,000 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-44499CD2) \(up to 512,000\) | The maximum number of NAU units that a VPC and all of its peered VPCs can have in total\. VPCs that are peered across different Regions do not contribute to this limit\. | 
+
 ## Amazon EC2 API throttling<a name="api-limits"></a>
 
 For information about Amazon EC2 throttling, see [API Request Throttling](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/throttling.html) in the *Amazon EC2 API Reference*\.

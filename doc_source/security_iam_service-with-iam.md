@@ -141,4 +141,4 @@ Amazon VPC supports using temporary credentials\.
 
 This feature allows a service to assume a [service role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_terms-and-concepts.html#iam-term-service-role) on your behalf\. This role allows the service to access resources in other services to complete an action on your behalf\. Service roles appear in your IAM account and are owned by the account\. This means that an IAM administrator can change the permissions for this role\. However, doing so might break the functionality of the service\.
 
-Amazon VPC supports service roles for flow logs\. When you create a flow log, you must choose a role that allows the flow logs service to access CloudWatch Logs\. For more information, see [IAM roles for publishing flow logs to CloudWatch Logs](flow-logs-cwl.md#flow-logs-iam)\.
+Amazon VPC supports service roles for flow logs\. When you create a flow log, you must choose a role that allows the flow logs service to access CloudWatch Logs\. For more information, see [IAM role for publishing flow logs to CloudWatch Logs](flow-logs-cwl.md#flow-logs-iam-role)\.

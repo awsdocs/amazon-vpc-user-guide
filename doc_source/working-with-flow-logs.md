@@ -1,20 +1,18 @@
 # Work with flow logs<a name="working-with-flow-logs"></a>
 
-You can work with flow logs using the Amazon EC2, Amazon VPC, CloudWatch, and Amazon S3 consoles\.
+You can work with flow logs using consoles for Amazon EC2 and Amazon VPC\.
 
 **Topics**
 + [Control the use of flow logs](#controlling-use-of-flow-logs)
 + [Create a flow log](#create-flow-log)
-+ [View flow logs](#view-flow-logs)
-+ [Add or remove tags for flow logs](#modify-tags-flow-logs)
-+ [View flow log records](#view-flow-log-records)
-+ [Search flow log records](#search-flow-log-records)
++ [View a flow log](#view-flow-logs)
++ [Tag a flow log](#modify-tags-flow-logs)
 + [Delete a flow log](#delete-flow-log)
 + [API and CLI overview](#flow-logs-api-cli)
 
 ## Control the use of flow logs<a name="controlling-use-of-flow-logs"></a>
 
-By default, IAM users do not have permission to work with flow logs\. You can create an IAM user policy that grants users the permissions to create, describe, and delete flow logs\. For more information, see [Granting IAM Users Required Permissions for Amazon EC2 Resources](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/ec2-api-permissions.html) in the *Amazon EC2 API Reference*\.
+By default, IAM users do not have permission to work with flow logs\. You can create an IAM user policy that grants users the permissions to create, describe, and delete flow logs\.
 
 The following is an example policy that grants users full permissions to create, describe, and delete flow logs\.
 
@@ -35,143 +33,67 @@ The following is an example policy that grants users full permissions to create,
 }
 ```
 
-Some additional IAM role and permission configuration is required, depending on whether you're publishing to CloudWatch Logs or Amazon S3\. For more information, see [Publish flow logs to CloudWatch Logs](flow-logs-cwl.md) and [Publish flow logs to Amazon S3](flow-logs-s3.md)\.
+ For more information, see [How Amazon VPC works with IAM](security_iam_service-with-iam.md)\.
 
 ## Create a flow log<a name="create-flow-log"></a>
 
-You can create flow logs for your VPCs, subnets, or network interfaces\. Flow logs can publish data to CloudWatch Logs or Amazon S3\.
+You can create flow logs for your VPCs, subnets, or network interfaces\. When you create a flow log, you must specify a destination for the flow log\. For more information, see the following:
++ [Create a flow log that publishes to CloudWatch Logs](flow-logs-cwl.md#flow-logs-cwl-create-flow-log)
++ [Create a flow log that publishes to Amazon S3](flow-logs-s3.md#flow-logs-s3-create-flow-log)
++ [Create a flow log that publishes to Kinesis Data Firehose](flow-logs-firehose.md#flow-logs-firehose-create-flow-log)
 
-For more information, see [Create a flow log that publishes to CloudWatch Logs](flow-logs-cwl.md#flow-logs-cwl-create-flow-log) and [Create a flow log that publishes to Amazon S3](flow-logs-s3.md#flow-logs-s3-create-flow-log)\.
+## View a flow log<a name="view-flow-logs"></a>
 
-## View flow logs<a name="view-flow-logs"></a>
+You can view information about the flow logs for a resource, such as a network interface\. The information displayed includes the ID of the flow log, the flow log configuration, and information about the status of the flow log\.
 
-You can view information about your flow logs in the Amazon EC2 and Amazon VPC consoles by viewing the **Flow Logs** tab for a specific resource\. When you select the resource, all the flow logs for that resource are listed\. The information displayed includes the ID of the flow log, the flow log configuration, and information about the status of the flow log\.
+**To view information about flow logs**
 
-**To view information about flow logs for your network interfaces**
+1. Do one of the following:
+   + Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\. In the navigation pane, choose **Network Interfaces**\. Select the checkbox for the network interface\.
+   + Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\. In the navigation pane, choose **Your VPCs**\. Select the checkbox for the VPC\.
+   + Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\. In the navigation pane, choose **Subnets**\. Select the checkbox for the subnet\.
 
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+1. Choose **Flow Logs**\.
 
-1. In the navigation pane, choose **Network Interfaces**\.
+1. \(Optional\) To view the flow log data, open the log destination\.
 
-1. Select a network interface, and choose **Flow Logs**\. Information about the flow logs is displayed on the tab\. The **Destination type** column indicates the destination to which the flow logs are published\.
+## Tag a flow log<a name="modify-tags-flow-logs"></a>
 
-**To view information about flow logs for your VPCs or subnets**
+You can add or remove tags for a flow log at any time\.
 
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
+**To manage tags for a flow log**
 
-1. In the navigation pane, choose **Your VPCs** or **Subnets**\.
+1. Do one of the following:
+   + Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\. In the navigation pane, choose **Network Interfaces**\. Select the checkbox for the network interface\.
+   + Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\. In the navigation pane, choose **Your VPCs**\. Select the checkbox for the VPC\.
+   + Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\. In the navigation pane, choose **Subnets**\. Select the checkbox for the subnet\.
 
-1. Select your VPC or subnet, and choose **Flow Logs**\. Information about the flow logs is displayed on the tab\. The **Destination type** column indicates the destination to which the flow logs are published\.
+1. Choose **Flow Logs**\.
 
-## Add or remove tags for flow logs<a name="modify-tags-flow-logs"></a>
+1. Choose **Actions**, **Manage tags**\.
 
-You can add or remove tags for a flow log in the Amazon EC2 and Amazon VPC consoles\.
+1. To add a new tag, choose **Add new tag** and enter the key and value\. To remove a tag, choose **Remove**\.
 
-**To add or remove tags for a flow log for a network interface**
-
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-1. In the navigation pane, choose **Network Interfaces**\.
-
-1. Select a network interface, and choose **Flow Logs**\.
-
-1. Choose **Manage tags** for the required flow log\.
-
-1. To add a new tag, choose **Create Tag**\. To remove a tag, choose the delete button \(x\)\.
-
-1. Choose **Save**\.
-
-**To add or remove tags for a flow log for a VPC or subnet**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Your VPCs** or **Subnets**\.
-
-1. Select your VPC or subnet, and choose **Flow Logs**\.
-
-1. Select the flow log, and choose **Actions**, **Add/Edit Tags**\.
-
-1. To add a new tag, choose **Create Tag**\. To remove a tag, choose the delete button \(x\)\.
-
-1. Choose **Save**\.
-
-## View flow log records<a name="view-flow-log-records"></a>
-
-You can view your flow log records using the CloudWatch Logs console or Amazon S3 console, depending on the chosen destination type\. It might take a few minutes after you've created your flow log for it to be visible in the console\.
-
-**To view flow log records published to CloudWatch Logs**
-
-1. Open the CloudWatch console at [https://console\.aws\.amazon\.com/cloudwatch/](https://console.aws.amazon.com/cloudwatch/)\.
-
-1. In the navigation pane, choose **Logs**, and select the log group that contains your flow log\. A list of log streams for each network interface is displayed\.
-
-1.  Select the log stream that contains the ID of the network interface for which to view the flow log records\. For more information, see [Flow log records](flow-logs.md#flow-log-records)\.
-
-**To view flow log records published to Amazon S3**
-
-1. Open the Amazon S3 console at [https://console\.aws\.amazon\.com/s3/](https://console.aws.amazon.com/s3/)\.
-
-1. For **Bucket name**, select the bucket to which the flow logs are published\.
-
-1. For **Name**, select the check box next to the log file\. On the object overview panel, choose **Download**\.
-
-## Search flow log records<a name="search-flow-log-records"></a>
-
-You can search your flow log records that are published to CloudWatch Logs by using the CloudWatch Logs console\. You can use [metric filters](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html) to filter flow log records\. Flow log records are space delimited\.
-
-**To search flow log records using the CloudWatch Logs console**
-
-1. Open the CloudWatch console at [https://console\.aws\.amazon\.com/cloudwatch/](https://console.aws.amazon.com/cloudwatch/)\.
-
-1. In the navigation pane, choose **Log groups**, and select the log group that contains your flow log\. A list of log streams for each network interface is displayed\.
-
-1. Select the individual log stream if you know the network interface that you are searching for\. Alternatively, choose **Search Log Group** to search the entire log group\. This might take some time if there are many network interfaces in your log group, or depending on the time range that you select\.
-
-1. For **Filter events**, enter the following string\. This assumes that the flow log record uses the [default format](flow-logs.md#flow-logs-default)\.
-
-   ```
-   [version, accountid, interfaceid, srcaddr, dstaddr, srcport, dstport, protocol, packets, bytes, start, end, action, logstatus]
-   ```
-
-1. Modify the filter as needed by specifying values for the fields\. The following examples filter by specific source IP addresses\.
-
-   ```
-   [version, accountid, interfaceid, srcaddr = 10.0.0.1, dstaddr, srcport, dstport, protocol, packets, bytes, start, end, action, logstatus]
-   [version, accountid, interfaceid, srcaddr = 10.0.2.*, dstaddr, srcport, dstport, protocol, packets, bytes, start, end, action, logstatus]
-   ```
-
-   The following examples filter by destination port, the number of bytes, and whether the traffic was rejected\.
-
-   ```
-   [version, accountid, interfaceid, srcaddr, dstaddr, srcport, dstport = 80 || dstport = 8080, protocol, packets, bytes, start, end, action, logstatus]
-   [version, accountid, interfaceid, srcaddr, dstaddr, srcport, dstport = 80 || dstport = 8080, protocol, packets, bytes >= 400, start, end, action = REJECT, logstatus]
-   ```
+1. When you are finished adding or removing tags, choose **Save**\.
 
 ## Delete a flow log<a name="delete-flow-log"></a>
 
-You can delete a flow log using the Amazon EC2 and Amazon VPC consoles\. 
+You can delete a flow log at any time\. After you delete a flow log, it can take several minutes to stop collecting data\.
 
-These procedures disable the flow log service for a resource\. Deleting a flow log does not delete the existing log streams from CloudWatch Logs and log files from Amazon S3\. Existing flow log data must be deleted using the respective service's console\. In addition, deleting a flow log that publishes to Amazon S3 does not remove the bucket policies and log file access control lists \(ACLs\)\.
+Deleting a flow log does not delete the log data from the destination or modify the destination resource\. You must delete the existing flow log data directly from the destination, and clean up the destination resource, using the console for the destination service\.
 
-**To delete a flow log for a network interface**
+**To delete a flow log**
 
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+1. Do one of the following:
+   + Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\. In the navigation pane, choose **Network Interfaces**\. Select the checkbox for the network interface\.
+   + Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\. In the navigation pane, choose **Your VPCs**\. Select the checkbox for the VPC\.
+   + Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\. In the navigation pane, choose **Subnets**\. Select the checkbox for the subnet\.
 
-1. In the navigation pane, choose **Network Interfaces** and select the network interface\.
+1. Choose **Flow Logs**\.
 
-1. Choose **Flow Logs**, and then choose the delete button \(a cross\) for the flow log to delete\.
+1. Choose **Actions**, **Delete flow logs**\.
 
-1. In the confirmation dialog box, choose **Yes, Delete**\.
-
-**To delete a flow log for a VPC or subnet**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Your VPCs** or **Subnets**, and then select the resource\.
-
-1. Choose **Flow Logs**, and then choose the delete button \(a cross\) for the flow log to delete\.
-
-1. In the confirmation dialog box, choose **Yes, Delete**\.
+1. When prompted for confirmation, type **delete** and then choose **Delete**\.
 
 ## API and CLI overview<a name="flow-logs-api-cli"></a>
 
@@ -182,15 +104,15 @@ You can perform the tasks described on this page using the command line or API\.
 + [New\-EC2FlowLog](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2FlowLog.html) \(AWS Tools for Windows PowerShell\)
 + [CreateFlowLogs](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateFlowLogs.html) \(Amazon EC2 Query API\)
 
-**Describe your flow logs**
+**Describe a flow log**
 + [describe\-flow\-logs](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-flow-logs.html) \(AWS CLI\)
 + [Get\-EC2FlowLog](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-EC2FlowLog.html) \(AWS Tools for Windows PowerShell\)
 + [DescribeFlowLogs](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeFlowLogs.html) \(Amazon EC2 Query API\)
 
-**View your flow log records \(log events\)**
-+ [get\-log\-events](https://docs.aws.amazon.com/cli/latest/reference/logs/get-log-events.html) \(AWS CLI\)
-+ [Get\-CWLLogEvent](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-CWLLogEvent.html) \(AWS Tools for Windows PowerShell\)
-+ [GetLogEvents](https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetLogEvents.html) \(CloudWatch API\)
+**Tag a flow log**
++ [create\-tags](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-tags.html) and [delete\-tags](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-tags.html) \(AWS CLI\)
++ [New\-EC2Tag](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Tag.html) and [Remove\-EC2Tag](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2Tag.html) \(AWS Tools for Windows PowerShell\)
++ [CreateTags](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateTags.html) and [DeleteTags](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DeleteTags.html) \(Amazon EC2 Query API\)
 
 **Delete a flow log**
 + [delete\-flow\-logs](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-flow-logs.html) \(AWS CLI\)

@@ -15,7 +15,7 @@ For information about managing your EC2 instance software, see [Managing softwar
 
 The following diagram shows the key components of the configuration for this scenario\.
 
-![\[Diagram for scenario 1: VPC with a public subnet\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/case-1_updated.png)
+![\[Diagram for this scenario: VPC with a public subnet\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/case-1_updated.png)
 
 The configuration for this scenario includes the following:
 + A virtual private cloud \(VPC\) with a size /16 IPv4 CIDR block \(example: 10\.0\.0\.0/16\)\. This provides 65,536 private IPv4 addresses\.

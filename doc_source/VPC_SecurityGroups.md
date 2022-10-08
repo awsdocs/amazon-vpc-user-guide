@@ -6,8 +6,6 @@ When you create a VPC, it comes with a default security group\. You can create a
 
 For each security group, you add *rules* that control the traffic based on protocols and port numbers\. There are separate sets of rules for inbound traffic and outbound traffic\.
 
-You might set up network ACLs with rules similar to your security groups in order to add an additional layer of security to your VPC\. For more information about the differences between security groups and network ACLs, see [Compare security groups and network ACLs](VPC_Security.md#VPC_Security_Comparison)\.
-
 **Topics**
 + [Security group basics](#VPCSecurityGroups)
 + [Default security groups for your VPCs](#DefaultSecurityGroup)
@@ -18,7 +16,7 @@ You might set up network ACLs with rules similar to your security groups in orde
 
 ## Security group basics<a name="VPCSecurityGroups"></a>
 
-The following are the characteristics of security groups:
+**Characteristics of security groups**
 + When you create a security group, you must provide it with a name and a description\. The following rules apply:
   + A security group name must be unique within the VPC\.
   + Names and descriptions can be up to 255 characters in length\.
@@ -28,13 +26,20 @@ The following are the characteristics of security groups:
 + Security groups are stateful\. For example, if you send a request from an instance, the response traffic for that request is allowed to reach the instance regardless of the inbound security group rules\. Responses to allowed inbound traffic are allowed to leave the instance, regardless of the outbound rules\.
 + There are quotas on the number of security groups that you can create per VPC, the number of rules that you can add to each security group, and the number of security groups that you can associate with a network interface\. For more information, see [Amazon VPC quotas](amazon-vpc-limits.md)\.
 
-The following are the characteristics of security group rules:
+**Characteristics of security group rules**
 + You can specify allow rules, but not deny rules\.
 + When you first create a security group, it has no inbound rules\. Therefore, no inbound traffic is allowed until you add inbound rules to the security group\.
 + When you first create a security group, it has an outbound rule that allows all outbound traffic from the resource\. You can remove the rule and add outbound rules that allow specific outbound traffic only\. If your security group has no outbound rules, no outbound traffic is allowed\.
 + When you associate multiple security groups with a resource, the rules from each security group are aggregated to form a single set of rules that are used to determine whether to allow access\.
 + When you add, update, or remove rules, your changes are automatically applied to all resources associated with the security group\. The effect of some rule changes can depend on how the traffic is tracked\. For more information, see [Connection tracking](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html#security-group-connection-tracking) in the *Amazon EC2 User Guide for Linux Instances*\.
 + When you create a security group rule, AWS assigns a unique ID to the rule\. You can use the ID of a rule when you use the API or CLI to modify or delete the rule\.
+
+**Best practices**
++ Authorize only specific IAM principals to create and modify security groups\.
++ Create the minimum number of security groups that you need, to decrease the risk of error\. Use each security group to manage access to resources that have similar functions and security requirements\.
++ When you add inbound rules for ports 22 \(SSH\) or 3389 \(RDP\) so that you can access your EC2 instances, authorize only specific IP address ranges\. If you specify 0\.0\.0\.0/0 \(IPv4\) and ::/ \(IPv6\), this enables anyone to access your instances from any IP address using the specified protocol\.
++ Do not open large port ranges\. Ensure that access through each port is restricted to the sources or destinations that require it\.
++ Consider creating network ACLs with rules similar to your security groups, to add an additional layer of security to your VPC\. For more information about the differences between security groups and network ACLs, see [Compare security groups and network ACLs](VPC_Security.md#VPC_Security_Comparison)\.
 
 ## Default security groups for your VPCs<a name="DefaultSecurityGroup"></a>
 
@@ -62,6 +67,9 @@ The following table describes the default rules for a default security group\.
 The rules of a security group control the inbound traffic that's allowed to reach the resources that are associated with the security group\. The rules also control the outbound traffic that's allowed to leave them\.
 
 You can add or remove rules for a security group \(also referred to as *authorizing* or *revoking* inbound or outbound access\)\. A rule applies either to inbound traffic \(ingress\) or outbound traffic \(egress\)\. You can grant access to a specific CIDR range, or to another security group in your VPC or in a peer VPC \(requires a VPC peering connection\)\.
+
+**Warning**  
+When you add rules for ports 22 \(SSH\) or 3389 \(RDP\) so that you can access your EC2 instances, we recommend that you authorize only specific IP address ranges\. If you specify 0\.0\.0\.0/0 \(IPv4\) and ::/ \(IPv6\), this enables anyone to access your instances from any IP address using the specified protocol\.
 
 For each rule, you specify the following:
 + **Protocol**: The protocol to allow\. The most common protocols are 6 \(TCP\), 17 \(UDP\), and 1 \(ICMP\)\.
