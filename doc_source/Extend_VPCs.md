@@ -27,6 +27,7 @@ The following rules apply to Local Zones:
 + You must provision public IP addresses for use in a Local Zone\. When you allocate addresses, you can specify the location from which the IP address is advertised\. We refer to this as a network border group, and you can set this parameter to limit the addresses to this location\. After you provision the IP addresses, you cannot move them between the Local Zone and the parent Region \(for example, from `us-west-2-lax-1a` to `us-west-2`\)\. 
 + You can request the IPv6 Amazon\-provided IP addresses and associate them with the network border group for a new or existing VPCs only for `us-west-2-lax-1a` and `use-west-2-lax-1b`\. All other Local Zones don't support IPv6\. 
 + Outbound internet traffic leaves a Local Zone from the Local Zone\.
++ You cannot create VPC endpoints inside Local Zone subnets\.
 
 For information about working with Local Zones in Linux, see [Local Zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-local-zones) in the *Amazon EC2 User Guide for Linux Instances*\. For information about working with Local Zones in Windows, see [Local Zones](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/using-regions-availability-zones.html#concepts-local-zones) in the *Amazon EC2 User Guide for Windows Instances*\. Both guides contain a list of available Local Zones and the resources that you can launch in each Local Zone\.
 

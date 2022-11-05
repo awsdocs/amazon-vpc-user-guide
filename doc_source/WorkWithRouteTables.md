@@ -75,19 +75,13 @@ You can create a custom route table for your VPC using the Amazon VPC console\.
 
 1. Choose **Create route table**\.
 
-1. \(Optional\) For **Name tag**, enter a name for your route table\. 
+1. \(Optional\) For **Name**, enter a name for your route table\. 
 
 1. For **VPC**, choose your VPC\. 
 
-1. \(Optional\) Add or remove a tag\.
+1. \(Optional\) To add a tag, choose **Add new tag** and enter the tag key and tag value\.
 
-   \[Add a tag\] Choose **Add tag** and do the following:
-   + For **Key**, enter the key name\.
-   + For **Value**, enter the key value\.
-
-   \[Remove a tag\] Choose the Delete button \("X"\) to the right of the tag’s Key and Value\.
-
-1. Choose **Create**\.
+1. Choose **Create route table**\.
 
 **To create a custom route table using the command line**
 + [create\-route\-table](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-route-table.html) \(AWS CLI\)
@@ -99,7 +93,7 @@ You can add, delete, and modify routes in your route tables\. You can only modif
 
 For more information about working with static routes for a Site\-to\-Site VPN connection, see [Editing Static Routes for a Site\-to\-Site VPN Connection](https://docs.aws.amazon.com/vpn/latest/s2svpn/SetUpVPNConnections.html#vpn-edit-static-routes) in the *AWS Site\-to\-Site VPN User Guide*\.
 
-**To modify or add a route to a route table using the console**
+**To update the routes for a route table using the console**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
@@ -107,38 +101,24 @@ For more information about working with static routes for a Site\-to\-Site VPN c
 
 1. Choose **Actions**, **Edit routes**\.
 
-1. To add a route, choose **Add route**\. For **Destination** enter the destination CIDR block, a single IP address, or the ID of a prefix list\. 
+1. To add a route, choose **Add route**\. For **Destination** enter the destination CIDR block, a single IP address, or the ID of a prefix list\.
 
-1. To modify an existing route, for **Destination**, replace the destination CIDR block or single IP address\. For **Target**, choose a target\.
+1. To modify a route, for **Destination**, replace the destination CIDR block or single IP address\. For **Target**, choose a target\.
 
-1. Choose **Save routes**\.
+1. To delete a route, choose **Remove**\.
 
-**To add a route to a route table using the command line**
+1. Choose **Save changes**\.
+
+**To update the routes for a route table using the command line**
 + [create\-route](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-route.html) \(AWS CLI\)
++ [replace\-route](https://docs.aws.amazon.com/cli/latest/reference/ec2/replace-route.html) \(AWS CLI\)
++ [delete\-route](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-route.html) \(AWS CLI\)
 + [New\-EC2Route](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2Route.html) \(AWS Tools for Windows PowerShell\)
++ [Set\-EC2Route](https://docs.aws.amazon.com/powershell/latest/reference/items/Set-EC2Route.html) \(AWS Tools for Windows PowerShell\)
++ [Remove\-EC2Route](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2Route.html) \(AWS Tools for Windows PowerShell\)
 
 **Note**  
 If you add a route using a command line tool or the API, the destination CIDR block is automatically modified to its canonical form\. For example, if you specify `100.68.0.18/18` for the CIDR block, we create a route with a destination CIDR block of `100.68.0.0/18`\.
-
-**To replace an existing route in a route table using the command line**
-+ [replace\-route](https://docs.aws.amazon.com/cli/latest/reference/ec2/replace-route.html) \(AWS CLI\)
-+ [Set\-EC2Route](https://docs.aws.amazon.com/powershell/latest/reference/items/Set-EC2Route.html) \(AWS Tools for Windows PowerShell\)
-
-**To delete a route from a route table using the console**
-
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
-
-1. In the navigation pane, choose **Route tables**, and select the route table\.
-
-1. Choose **Actions**, **Edit routes**\.
-
-1. Choose the delete button \(x\) to the right of the route that you want to delete\.
-
-1. Choose **Save routes** when you are done\.
-
-**To delete a route from a route table using the command line**
-+ [delete\-route](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-route.html) \(AWS CLI\)
-+ [Remove\-EC2Route](https://docs.aws.amazon.com/powershell/latest/reference/items/Remove-EC2Route.html) \(AWS Tools for Windows PowerShell\)
 
 ## Enable or disable route propagation<a name="EnableDisableRouteProp"></a>
 
@@ -170,7 +150,7 @@ For more information about VPN routing options, see [Site\-to\-Site VPN routing 
 
 1. Choose **Actions**, **Edit route propagation**\. 
 
-1. Clear the **Propagate** check box, and then choose **Save**\.
+1. Clear the **Enable** check box next to the virtual private gateway, and then choose **Save**\.
 
 **To disable route propagation using the command line**
 + [disable\-vgw\-route\-propagation](https://docs.aws.amazon.com/cli/latest/reference/ec2/disable-vgw-route-propagation.html) \(AWS CLI\)
@@ -188,7 +168,9 @@ To apply route table routes to a particular subnet, you must associate the route
 
 1. On the **Subnet associations** tab, choose **Edit subnet associations**\.
 
-1. Select the check box for the subnet to associate with the route table, and then choose **Save associations**\.
+1. Select the check box for the subnet to associate with the route table\.
+
+1. Choose **Save associations**\.
 
 **To associate a subnet with a route table using the command line**
 + [associate\-route\-table](https://docs.aws.amazon.com/cli/latest/reference/ec2/associate-route-table.html) \(AWS CLI\)
@@ -206,9 +188,11 @@ When you change the route table, your existing connections in the subnet are dro
 
 1. In the navigation pane, choose **Subnets**, and then select the subnet\.
 
-1. In the **Route Table** tab, choose **Edit route table association**\.
+1. From the **Route table** tab, choose **Edit route table association**\.
 
-1. From the **Route Table ID** list, select the new route table with which to associate the subnet, and then choose **Save**\.
+1. For **Route table ID**, select the new route table\.
+
+1. Choose **Save**\.
 
 **To change the route table associated with a subnet using the command line**
 + [replace\-route\-table\-association](https://docs.aws.amazon.com/cli/latest/reference/ec2/replace-route-table-association.html) \(AWS CLI\)
@@ -224,9 +208,11 @@ You can disassociate a subnet from a route table\. Until you associate the subne
 
 1. In the navigation pane, choose **Route tables**, and then select the route table\.
 
-1. In the **Subnet associations** tab, choose **Edit subnet associations**\.
+1. From the **Subnet associations** tab, choose **Edit subnet associations**\.
 
-1. Clear the check box for the subnet, and then choose **Save associations**\.
+1. Clear the check box for the subnet\.
+
+1. Choose **Save associations**\.
 
 **To disassociate a subnet from a route table using the command line**
 + [disassociate\-route\-table](https://docs.aws.amazon.com/cli/latest/reference/ec2/disassociate-route-table.html) \(AWS CLI\)
@@ -240,11 +226,11 @@ You can change which route table is the main route table in your VPC\.
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Route tables**\.
+1. In the navigation pane, choose **Route tables**, and then select the new main route table\.
 
-1. Select the subnet route table that should be the new main route table, and then choose **Actions**, **Set main route table**\.
+1. Choose **Actions**, **Set main route table**\.
 
-1. In the confirmation dialog box, choose **Ok**\.
+1. When prompted for confirmation, enter **set**, and then choose **OK**\.
 
 **To replace the main route table using the command line**
 + [replace\-route\-table\-association](https://docs.aws.amazon.com/cli/latest/reference/ec2/replace-route-table-association.html) \(AWS CLI\)
@@ -258,9 +244,11 @@ The following procedure describes how to remove an explicit association between 
 
 1. In the navigation pane, choose **Route tables**, and then select the route table\.
 
-1. In the **Subnet associations** tab, choose **Edit subnet associations**\.
+1. From the **Subnet associations** tab, choose **Edit subnet associations**\.
 
-1. Choose the subnet, and then choose **Save**\.
+1. Clear the checkbox for the subnet\.
+
+1. Choose **Save associations**\.
 
 ## Associate a gateway with a route table<a name="associate-route-table-gateway"></a>
 
@@ -272,9 +260,11 @@ You can associate an internet gateway or a virtual private gateway with a route 
 
 1. In the navigation pane, choose **Route tables**, and then select the route table\.
 
-1. Choose **Actions**, **Edit edge associations**\.
+1. From the **Edge associations** tab, choose **Edit edge associations**\.
 
-1. Choose the gateway, and then choose **Save**\.
+1. Select the checkbox for the gateway\.
+
+1. Choose **Save changes**\.
 
 **To associate a gateway with a route table using the AWS CLI**  
 Use the [associate\-route\-table](https://docs.aws.amazon.com/cli/latest/reference/ec2/associate-route-table.html) command\. The following example associates internet gateway `igw-11aa22bb33cc44dd1` with route table `rtb-01234567890123456`\.
@@ -293,11 +283,11 @@ You can disassociate an internet gateway or a virtual private gateway from a rou
 
 1. In the navigation pane, choose **Route tables**, and then select the route table\.
 
-1. Choose **Actions**, **Edit edge associations**\.
+1. From the **Edge associations** tab, choose **Edit edge associations**\.
 
-1. Choose the gateway you want to disassociate\. 
+1. Clear the checkbox for the gateway\. 
 
-1. Choose **Save**\.
+1. Choose **Save changes**\.
 
 **To disassociate a gateway from a route table using the command line**
 + [disassociate\-route\-table](https://docs.aws.amazon.com/cli/latest/reference/ec2/disassociate-route-table.html) \(AWS CLI\)
@@ -307,17 +297,17 @@ You can disassociate an internet gateway or a virtual private gateway from a rou
 
 You can change the target of the default local route\. If you replace the target of a local route, you can later restore it to the default `local` target\. If your VPC has [multiple CIDR blocks](configure-your-vpc.md#vpc-resize), your route tables have multiple local routes—one per CIDR block\. You can replace or restore the target of each of the local routes as needed\.
 
-**To replace the target for a local route using the console**
+**To update the local route using the console**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
 1. In the navigation pane, choose **Route tables**, and then select the route table\.
 
-1. Choose **Actions**, **Edit routes**\.
+1. From the **Routes** tab, choose **Edit routes**\.
 
-1. For **Target**, choose a target\.
+1. For the local route, clear **Target** and then choose a new target\.
 
-1. Choose **Save routes**\.
+1. Choose **Save changes**\.
 
 **To restore the target for a local route using the console**
 
@@ -327,9 +317,9 @@ You can change the target of the default local route\. If you replace the target
 
 1. Choose **Actions**, **Edit routes**\.
 
-1. For **Target**, choose **local**\.
+1. For the route, clear **Target**, and then choose **local**\.
 
-1. Choose **Save routes**\.
+1. Choose **Save changes**\.
 
 **To replace the target for a local route using the AWS CLI**  
 Use the [replace\-route](https://docs.aws.amazon.com/cli/latest/reference/ec2/replace-route.html) command\. The following example replaces the target of the local route with `eni-11223344556677889`\.
@@ -353,11 +343,11 @@ You can delete a route table only if there are no subnets associated with it\. Y
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
 
-1. In the navigation pane, choose **Route tables**\.
+1. In the navigation pane, choose **Route tables**, and then select the route table\.
 
-1. Select the route table, and then choose **Actions**, **Delete Route Table**\.
+1. Choose **Actions**, **Delete route table**\.
 
-1. In the confirmation dialog box, choose **Delete Route Table**\.
+1. When prompted for confirmation, enter **delete**, and then choose **Delete**\.
 
 **To delete a route table using the command line**
 + [delete\-route\-table](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-route-table.html) \(AWS CLI\)

@@ -93,11 +93,13 @@ VPC owners cannot modify or delete resources created by participants, such as EC
 
 ### Participant resources<a name="vpc-participant-permissions"></a>
 
-Participants can create, manage, and delete resources in a shared VPC\. Participants own the resources that they create in the VPC, such as EC2 instances, Amazon RDS databases, and Elastic Load Balancing load balancers\.
+Participants can create a limited set of VPC resources in a shared VPC\. For example, participants can create network interfaces, security groups, and flow logs for the network interfaces that they own\.
 
-Participants can view the details of resources that the VPC owners are responsible for, such as route tables and network ACLs, but they can't modify them\. Participants can't view or modify resources that belong to other participant accounts\. Participants can create flow log subscriptions only for the network interfaces that they own\.
+Participants can modify or delete only the resources in a shared VPC that they created\. For example, participants can associate or disassociate IP addresses with the network interfaces that they created and add or remove rules from the security groups that they created\.
 
-Participants can reference security groups that belong to other participants or the owner as follows:
+Participants can describe resources in a shared VPC that they did not create\. This is so that they can effectively use the shared VPC\. For example, participants can describe the VPC and its subnets, security groups, route tables, network ACLs, gateways, network interfaces, and DHCP option sets\.
+
+Participants can create rules in the security groups that they own that reference security groups that belong to other participants or the owner as follows:
 
 ```
 account-number/security-group-id

@@ -21,9 +21,9 @@ The following table explains which resources make up the NAU count in a VPC and 
 | --- | --- | 
 | IPv4 or IPv6 address assigned to a network interface for an EC2 instance in the VPC | 1 | 
 | Additional network interfaces attached to an EC2 instance | 1 | 
-| CIDR in a managed prefix list | 1 | 
-| Network Load Balancer | 6 | 
-| VPC endpoint | 6 | 
+| Prefix assigned to a network interface | 1 | 
+| Network Load Balancer per AZ | 6 | 
+| VPC endpoint per AZ | 6 | 
 | Transit gateway attachment | 6 | 
 | Lambda function | 6 | 
 | NAT gateway | 6 | 

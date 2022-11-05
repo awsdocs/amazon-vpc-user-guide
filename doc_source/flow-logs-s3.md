@@ -37,6 +37,9 @@ You can specify one of the following formats for the log files\. Each file is co
 + **Text** – Plain text\. This is the default format\.
 + **Parquet** – Apache Parquet is a columnar data format\. Queries on data in Parquet format are 10 to 100 times faster compared to queries on data in plain text\. Data in Parquet format with Gzip compression takes 20 percent less storage space than plain text with Gzip compression\.
 
+**Note**  
+If data in Parquet format with Gzip compression is less than 100 KB per aggregation period, storing data in Parquet format may take up more space than plain text with Gzip compression due to Parquet file memory requirements\.
+
 **Log file options**
 
 You can optionally specify the following options\.
@@ -204,7 +207,7 @@ After you have created and configured your Amazon S3 bucket, you can create flow
 
 1. For **S3 bucket ARN**, specify the Amazon Resource Name \(ARN\) of an existing Amazon S3 bucket\. You can optionally include a subfolder\. For example, to specify a subfolder named `my-logs` in a bucket named `my-bucket`, use the following ARN:
 
-   `arn:aws::s3:::my-bucket/my-logs/`
+   `arn:aws:s3:::my-bucket/my-logs/`
 
    The bucket cannot use `AWSLogs` as a subfolder name, as this is a reserved term\.
 

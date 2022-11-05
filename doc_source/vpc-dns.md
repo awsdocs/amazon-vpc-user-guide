@@ -63,8 +63,6 @@ To check whether these attributes are enabled for your VPC, see [View and update
 | enableDnsSupport |  Determines whether the VPC supports DNS resolution through the Amazon provided DNS server\. If this attribute is `true`, queries to the Amazon provided DNS server succeed\. For more information, see [Amazon DNS server](#AmazonDNS)\. The default for this attribute is `true`\.  | 
 
 **Rules and considerations**
-
-The following rules apply:
 + If both attributes are set to `true`, the following occurs:
   + Instances with public IP addresses receive corresponding public DNS hostnames\.
   + The Amazon Route 53 Resolver server can resolve Amazon\-provided private DNS hostnames\.
@@ -74,6 +72,7 @@ The following rules apply:
   + Instances receive custom private DNS hostnames if there is a custom domain name in the [DHCP options set](VPC_DHCP_Options.md)\. If you are not using the Amazon Route 53 Resolver server, your custom domain name servers must resolve the hostname as appropriate\.
 + If you use custom DNS domain names defined in a private hosted zone in Amazon Route 53, or use private DNS with interface VPC endpoints \(AWS PrivateLink\), you must set both the `enableDnsHostnames` and `enableDnsSupport` attributes to `true`\.
 + The Amazon Route 53 Resolver can resolve private DNS hostnames to private IPv4 addresses for all address spaces, including where the IPv4 address range of your VPC falls outside of the private IPv4 addresses ranges specified by [RFC 1918](https://tools.ietf.org/html/rfc1918)\. However, if you created your VPC before October 2016, the Amazon Route 53 Resolver does not resolve private DNS hostnames if your VPC's IPv4 address range falls outside of these ranges\. To enable support for this, contact [AWS Support](https://aws.amazon.com/contact-us/)\.
++ If you use VPC peering, you must enable both attributes for both VPCs, and you must enable DNS resolution for the peering connection\. For more information, see [Enable DNS resolution for a VPC peering connection](https://docs.aws.amazon.com/vpc/latest/peering/modify-peering-connections.html#vpc-peering-dns)\.
 
 ## DNS quotas<a name="vpc-dns-limits"></a>
 
