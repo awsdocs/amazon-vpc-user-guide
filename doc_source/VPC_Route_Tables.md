@@ -51,7 +51,7 @@ CIDR blocks for IPv4 and IPv6 are treated separately\. For example, a route with
 
 If you frequently reference the same set of CIDR blocks across your AWS resources, you can create a [customer\-managed prefix list](managed-prefix-lists.md) to group them together\. You can then specify the prefix list as the destination in your route table entry\. 
 
-Every route table contains a local route for communication within the VPC\. This route is added by default to all route tables\. If your VPC has more than one IPv4 CIDR block, your route tables contain a local route for each IPv4 CIDR block\. If you've associated an IPv6 CIDR block with your VPC, your route tables contain a local route for the IPv6 CIDR block\. You cannot delete these routes in a subnet route table or in the main route table. You can however modify the target to an AWS Network Firewall endpoint\. <a name="route-table-rule-considerations"></a>
+Every route table contains a local route for communication within the VPC\. This route is added by default to all route tables\. If your VPC has more than one IPv4 CIDR block, your route tables contain a local route for each IPv4 CIDR block\. If you've associated an IPv6 CIDR block with your VPC, your route tables contain a local route for the IPv6 CIDR block\. You can replace or restore the target of each local route as needed\. <a name="route-table-rule-considerations"></a>
 
 **Rules and considerations**
 + You can add a route to your route tables that is more specific than the local route\. The destination must match the entire IPv4 or IPv6 CIDR block of a subnet in your VPC\. The target must be a NAT gateway, network interface, or Gateway Load Balancer endpoint\.
