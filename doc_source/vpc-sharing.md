@@ -123,8 +123,9 @@ The following limitations apply to working with VPC sharing:
 + Owners cannot launch resources using security groups that are owned by other participants\.
 + When participants launch resources in a shared subnet, they should make sure they attach their security group to the resource, and not rely on the default security group\. Participants cannot use the default security group because it belongs to the VPC owner\.
 + Participants cannot create Route 53 Resolver endpoints in a VPC that they do not own\. Only the VPC owner can create VPC\-level resources such as inbound endpoints\.
-+ VPC tags, and tags for the resources within the shared VPC are not shared with the participants\.
++ VPC tags and tags for the resources within the shared VPC are not shared with the participants\.
 + Only a subnet owner can attach a transit gateway to the shared subnet\. Participants cannot\.
 + Participants can create Application Load Balancers and Network Load Balancers in a shared VPC, but they cannot register targets running in subnets that were not shared with them\.
 + Only a subnet owner can select a shared subnet when creating a Gateway Load Balancer\. Participants cannot\.
 + Service quotas apply per individual account\.
++ Participants cannot create interface or gateway endpoints in a VPC that they do not own\. Only the VPC owner can create interface or gateway endpoints\.

@@ -123,7 +123,7 @@ Use the [modify\-managed\-prefix\-list](https://docs.aws.amazon.com/cli/latest/r
 
 ## Resize a prefix list<a name="resize-managed-prefix-list"></a>
 
-You can resize a prefix list and modify the maximum number of entries for the prefix list\. The value must be greater than or equal to the number of prefix list entries\. The new value must be different than the current value\.
+You can resize a prefix list and modify the maximum number of entries for the prefix list up to 1000\. For more information about customer\-managed prefix list quotas, see [Customer\-managed prefix lists](amazon-vpc-limits.md#vpc-quotas-managed-prefix-lists)\.
 
 **To resize a prefix list using the console**
 

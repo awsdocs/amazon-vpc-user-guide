@@ -29,7 +29,7 @@ The following rules apply to Local Zones:
 + Outbound internet traffic leaves a Local Zone from the Local Zone\.
 + You cannot create VPC endpoints inside Local Zone subnets\.
 
-For information about working with Local Zones in Linux, see [Local Zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-local-zones) in the *Amazon EC2 User Guide for Linux Instances*\. For information about working with Local Zones in Windows, see [Local Zones](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/using-regions-availability-zones.html#concepts-local-zones) in the *Amazon EC2 User Guide for Windows Instances*\. Both guides contain a list of available Local Zones and the resources that you can launch in each Local Zone\.
+For more information about working with Local Zones, see the [AWS Local Zones User Guide](https://docs.aws.amazon.com/local-zones/latest/ug/)\.
 
 ### Considerations for internet gateways<a name="internet-gateway-local-zone-considerations"></a>
 

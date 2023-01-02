@@ -20,8 +20,8 @@ The `AWS/EC2`namespace includes the following metrics for monitoring NAU\.
 
 | Metric | Description | 
 | --- | --- | 
-|  NetworkAddressUsage  |  The percentage of the NAU quota that is currently in use in a single VPC\. **Reporting criteria** [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/vpc-cloudwatch.html) **Dimensions** [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/vpc-cloudwatch.html)  | 
-|  NetworkAddressUsagePeered  |  The percentage of the peered NAU quota that is currently in use between a VPC and all VPCs that it's peered with\. **Reporting criteria** [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/vpc-cloudwatch.html) **Dimensions** [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/vpc-cloudwatch.html)  | 
+|  NetworkAddressUsage  |  The NAU count per VPC\. **Reporting criteria** [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/vpc-cloudwatch.html) **Dimensions** [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/vpc-cloudwatch.html)  | 
+|  NetworkAddressUsagePeered  | The NAU count for the VPC and all VPCs that it's peered with\.**Reporting criteria**[\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/vpc-cloudwatch.html)**Dimensions**[\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vpc/latest/userguide/vpc-cloudwatch.html) | 
 
 The `AWS/Usage`namespace includes the following metrics for monitoring NAU\.
 

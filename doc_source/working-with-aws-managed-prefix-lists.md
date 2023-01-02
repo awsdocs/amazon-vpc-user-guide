@@ -30,8 +30,9 @@ The following services provide AWS\-managed prefix lists\.
 | --- | --- | --- | 
 | [Amazon CloudFront](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/LocationsOfEdgeServers.html#managed-prefix-list) | com\.amazonaws\.global\.cloudfront\.origin\-facing | 55 | 
 | Amazon DynamoDB | com\.amazonaws\.region\.dynamodb | 1 | 
-| AWS Ground Station | com\.amazonaws\.global\.groundstation | 5 | 
 | Amazon S3 | com\.amazonaws\.region\.s3 | 1 | 
+| Amazon VPC Lattice | com\.amazonaws\.region\.vpc\-lattice | 10 | 
+| AWS Ground Station | com\.amazonaws\.global\.groundstation | 5 | 
 
 **To view the AWS\-managed prefix lists using the console**
 

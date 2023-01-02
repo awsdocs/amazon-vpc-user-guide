@@ -11,8 +11,8 @@ You can use IPAM to plan, track, and monitor IP addresses for your workloads\. F
 **Traffic Mirroring**  
 You can use this feature to copy network traffic from a network interface of an Amazon EC2 instance and send it to out\-of\-band security and monitoring appliances for deep packet inspection\. You can detect network and security anomalies, gain operational insights, implement compliance and security controls, and troubleshoot issues\. For more information, see [Traffic Mirroring](https://docs.aws.amazon.com/vpc/latest/mirroring/)\.
 
-**VPC Reachability Analyzer**  
-You can use this tool to analyze and debug network reachability between two resources in your VPC\. After you specify the source and destination resources, Reachability Analyzer produces hop\-by\-hop details of the virtual path between them when they are reachable, and identifies the blocking component when they are unreachable\. For more information, see [VPC Reachability Analyzer](https://docs.aws.amazon.com/vpc/latest/reachability/)\.
+**Reachability Analyzer**  
+You can use this tool to analyze and debug network reachability between two resources in your VPC\. After you specify the source and destination resources, Reachability Analyzer produces hop\-by\-hop details of the virtual path between them when they are reachable, and identifies the blocking component when they are unreachable\. For more information, see [Reachability Analyzer](https://docs.aws.amazon.com/vpc/latest/reachability/)\.
 
 **Network Access Analyzer**  
 You can use Network Access Analyzer to understand network access to your resources\. This helps you identify improvements to your network security posture and demonstrate that your network meets specific compliance requirements\. For more information, see [Network Access Analyzer](https://docs.aws.amazon.com/vpc/latest/network-access-analyzer/)\.

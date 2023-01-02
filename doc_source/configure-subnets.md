@@ -1,8 +1,6 @@
 # Subnets for your VPC<a name="configure-subnets"></a>
 
-A *subnet* is a range of IP addresses in your VPC\. You can launch AWS resources into a specified subnet\. Use a public subnet for resources that must be connected to the internet, and a private subnet for resources that won't be connected to the internet\.
-
-To protect the AWS resources in each subnet, you can use multiple layers of security, including security groups and network access control lists \(ACL\)\.
+A *subnet* is a range of IP addresses in your VPC\. You can launch AWS resources into your subnets\.
 
 **Topics**
 + [Subnet basics](#subnet-basics)
@@ -28,10 +26,10 @@ You can optionally add subnets in a Local Zone, which is an AWS infrastructure d
 
 ### Subnet types<a name="subnet-types"></a>
 
-Depending on how you configure your VPC, subnets are considered public, private, or VPN\-only:
-+ **Public subnet**: The subnet traffic is routed to the public internet through an internet gateway or an egress\-only internet gateway\. For more information, see [Connect to the internet using an internet gateway](VPC_Internet_Gateway.md)\.
-+ **Private subnet**: The subnet traffic can't reach the public internet through an internet gateway or egress\-only internet gateway\. Access to the public internet requires a NAT device\.
-+ **VPN\-only subnet**: The subnet traffic is routed to a Site\-to\-Site VPN connection through a virtual private gateway\. The subnet traffic can't reach the public internet through an internet gateway\. For more information, see the [AWS Site\-to\-Site VPN User Guide](https://docs.aws.amazon.com/vpn/latest/s2svpn/)\.
+Depending on how you configure routing for your subnets, they are considered either public, private, or VPN\-only:
++ **Public subnet**: The subnet has a direct route to an [internet gateway](VPC_Internet_Gateway.md)\. Resources in a public subnet can access the public internet\.
++ **Private subnet**: The subnet does not have a direct route to an internet gateway\. Resources in a private subnet require a [NAT device](vpc-nat.md) to access the public internet\.
++ **VPN\-only subnet**: The subnet has a route to a [Site\-to\-Site VPN connection](https://docs.aws.amazon.com/vpn/latest/s2svpn/) through a virtual private gateway\. The subnet does not have a route to an internet gateway\.
 
 When you create a subnet, you specify its IP addresses, depending on the configuration of the VPC:
 + **IPv4 only**: The subnet has an IPv4 CIDR block but does not have an IPv6 CIDR block\. Resources in an IPv4\-only subnet must communicate over IPv4\.
@@ -79,10 +77,16 @@ There are tools available on the internet to help you calculate and create IPv6 
 
 The first four IPv6 addresses and the last IPv6 address in each subnet CIDR block are not available for your use, and they cannot be assigned to an EC2 instance\. For example, in a subnet with CIDR block `2001:db8:1234:1a00/64`, the following five IP addresses are reserved:
 + `2001:db8:1234:1a00::`
-+ `2001:db8:1234:1a00::1`
++ `2001:db8:1234:1a00::1`: Reserved by AWS for the VPC router\.
 + `2001:db8:1234:1a00::2`
 + `2001:db8:1234:1a00::3`
 + `2001:db8:1234:1a00:ffff:ffff:ffff:ffff`
+
+In addition to the IP address reserved by AWS for the VPC router in the example above, the following IPv6 addresses are reserved for the default VPC router:
++ A link\-local IPv6 address in the FE80::/10 range generated using EUI\-64\. For more information about link\-local addresses, see [Link\-local address](https://en.wikipedia.org/wiki/Link-local_address)\.
++ The link\-local IPv6 address `FE80:ec2::1`\.
+
+If you need to communicate with the VPC router over IPv6, you can configure your applications to communicate with whichever address best fits your need\.
 
 ## Subnet routing<a name="subnet-routing"></a>
 
@@ -90,8 +94,10 @@ Each subnet must be associated with a route table, which specifies the allowed r
 
 ## Subnet security<a name="subnet-security"></a>
 
-AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Internetwork traffic privacy in Amazon VPC](VPC_Security.md)\. 
+To protect your AWS resources, we recommend that you use private subnets\. Use a bastion host or NAT device to provide internet access to resources, such as EC2 instances, in a private subnet\.
 
-By design, each subnet must be associated with a network ACL\. Every subnet that you create is automatically associated with the default network ACL for the VPC\. You can change the association, and you can change the contents of the default network ACL\. For more information, see [Control traffic to subnets using Network ACLs](vpc-network-acls.md)\.
+AWS provides features that you can use to increase security for the resources in your VPC\. *Security groups* allow inbound and outbound traffic for associated resources, such as EC2 instances\. *Network ACLs* allow or deny inbound and outbound traffic at the subnet level\. In most cases, security groups can meet your needs\. However, you can use network ACLs if you want an additional layer of security\. For more information, see [Compare security groups and network ACLs](VPC_Security.md#VPC_Security_Comparison)\.
+
+By design, each subnet must be associated with a network ACL\. Every subnet that you create is automatically associated with the default network ACL for the VPC\. The default network ACL allows all inbound and outbound traffic\. You can update the default network ACL, or create custom network ACLs and associate them with your subnets\. For more information, see [Control traffic to subnets using Network ACLs](vpc-network-acls.md)\.
 
 You can create a flow log on your VPC or subnet to capture the traffic that flows to and from the network interfaces in your VPC or subnet\. You can also create a flow log on an individual network interface\. For more information, see [Logging IP traffic using VPC Flow Logs](flow-logs.md)\.

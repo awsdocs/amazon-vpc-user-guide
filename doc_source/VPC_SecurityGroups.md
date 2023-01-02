@@ -81,10 +81,13 @@ For each rule, you specify the following:
   + A range of IPv4 addresses, in CIDR block notation\. For example, `203.0.113.0/24`\.
   + A range of IPv6 addresses, in CIDR block notation\. For example, `2001:db8:1234:1a00::/64`\.
   + The ID of a prefix list\. For example, `pl-1234abc1234abc123`\. For more information, see [Group CIDR blocks using managed prefix lists](managed-prefix-lists.md)\.
-  + The ID of a security group \(referred to here as the specified security group\)\. For example, the current security group, a security group from the same VPC, or a security group for a peered VPC\. This allows traffic based on the private IP addresses of the resources associated with the specified security group\. This does not add rules from the specified security group to the current security group\. †
+  + The ID of a security group\.
+**Note**  
+The ID of the security group can be the ID of another security group in the same VPC or a security group for a peered VPC \(if the VPC is peered with another VPC\)\. 
+For outbound rules, this means that EC2 instances associated with the current security group can send outbound traffic to the private IP address of EC2 instances associated with the specified security group\. For inbound rules, this means that EC2 instances associated with the current security group can receive inbound traffic from the private IP address of EC2 instances associated with the specified security group\. 
+If you add a security group as source or destination, no rules from the specified security group are added to the current security group\. 
+If you configure routes to forward the traffic between two instances in different subnets through a middlebox appliance, you must ensure that the security groups for both instances allow traffic to flow between the instances\. The security group for each instance must reference the private IP address of the other instance or the CIDR range of the subnet that contains the other instance as the source\. If you reference the security group of the other instance as the source, this does not allow traffic to flow between the instances\.
 + **\(Optional\) Description**: You can add a description for the rule, which can help you identify it later\. A description can be up to 255 characters in length\. Allowed characters are a\-z, A\-Z, 0\-9, spaces, and \.\_\-:/\(\)\#,@\[\]\+=;\{\}\!$\*\.
-
-† If you configure routes to forward the traffic between two instances in different subnets through a middlebox appliance, you must ensure that the security groups for both instances allow traffic to flow between the instances\. The security group for each instance must reference the private IP address of the other instance, or the CIDR range of the subnet that contains the other instance, as the source\. If you reference the security group of the other instance as the source, this does not allow traffic to flow between the instances\.
 
 ### Example rules<a name="security-group-rule-examples"></a>
 

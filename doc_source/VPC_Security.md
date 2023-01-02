@@ -28,10 +28,10 @@ The following table summarizes the basic differences between security groups and
 | Applies to an instance only if it is associated with the instance | Applies to all instances deployed in the associated subnet \(providing an additional layer of defense if security group rules are too permissive\) | 
 | Supports allow rules only | Supports allow rules and deny rules | 
 | Evaluates all rules before deciding whether to allow traffic | Evaluates rules in order, starting with the lowest numbered rule, when deciding whether to allow traffic | 
-| Stateful: Return traffic is allowed, regardless of the rules | Stateless: Return traffic must be explicitly allowed by rules | 
+| Stateful: Return traffic is allowed, regardless of the rules | Stateless: Return traffic must be explicitly allowed by the rules | 
 
 The following diagram illustrates the layers of security provided by security groups and network ACLs\. For example, traffic from an internet gateway is routed to the appropriate subnet using the routes in the routing table\. The rules of the network ACL that is associated with the subnet control which traffic is allowed to the subnet\. The rules of the security group that is associated with an instance control which traffic is allowed to the instance\.
 
 ![\[Traffic is controlled using security groups and network ACLs\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/security-diagram_updated.png)
 
-You can secure your instances using only security groups\. However, you can add network ACLs as an additional layer of defense\. For an example, see [Example: Control access to instances in a subnet](vpc-network-acls.md#nacl-examples)\.
+You can secure your instances using only security groups\. However, you can add network ACLs as an additional layer of defense\. For more information, see [Example: Control access to instances in a subnet](vpc-network-acls.md#nacl-examples)\.

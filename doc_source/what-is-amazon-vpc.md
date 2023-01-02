@@ -52,4 +52,4 @@ You can create and manage your VPCs using any of the following interfaces:
 
 ## Pricing for Amazon VPC<a name="pricing"></a>
 
-There's no additional charge for using a VPC\. There are charges for some VPC components, such as NAT gateways, Reachability Analyzer, and traffic mirroring\. For more information, see [Amazon VPC Pricing](http://aws.amazon.com/vpc/pricing/)\.
+There's no additional charge for using a VPC\. There are charges for some VPC components, such as NAT gateways, IP Address Manager, traffic mirroring, Reachability Analyzer, and Network Access Analyzer\. For more information, see [Amazon VPC Pricing](http://aws.amazon.com/vpc/pricing/)\.

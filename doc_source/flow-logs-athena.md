@@ -91,11 +91,13 @@ The generated CloudFormation template provides a set of predefined queries that 
 
 **To run a predefined query using the console**
 
-1. Open the Athena console\. In the **Workgroups** panel, select the workgroup created by the CloudFormation template\.
+1. Open the Athena console\.
 
-1. Select one of the [predefined queries](#predefined-queries), modify the parameters as needed, and then run the query\.
+1. In the left nav, choose **Query editor**\. Under **Workgroup**, select the workgroup created by the CloudFormation template\.
 
-1. Open the Amazon S3 console\. Navigate to the bucket that you specified for the query results, and view the results of the query\.
+1. Select **Saved queries**, select a query, modify the parameters as needed, and run the query\. For a list of available predefined queries, see [Predefined queries](#predefined-queries)\.
+
+1. Under **Query results**, view the query results\.
 
 ### Predefined queries<a name="predefined-queries"></a>
 

@@ -4,6 +4,8 @@ The following table describes the important changes in each release of the *Amaz
 
 | Change | Description | Date | 
 | --- |--- |--- |
+| [Pick the private IP address of your NAT gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html#nat-gateway-creating) | When you create a NAT gateway, you can now choose to pick the private IP address that's assigned to the NAT gateway\. Previously, the private IP address was automatically assigned from the IP address range of the subnet\. | November 17, 2022 | 
+| [IPv6 default gateway router configuration](https://docs.aws.amazon.com/vpc/latest/userguide/configure-subnets.html#subnet-sizing) | Three IPv6 addresses are now reserved for use by the default VPC router\. | November 11, 2022 | 
 | [Transfer Elastic IP addresses](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-eips.html#transfer-EIPs-intro) | You can now transfer Elastic IP addresses from one AWS account to another\. | October 31, 2022 | 
 | [Network Address Usage metrics](https://docs.aws.amazon.com/vpc/latest/userguide/network-address-usage.html) | You can enable Network Address Usage metrics for your VPC to help you plan for and monitor the size of your VPC\. | October 4, 2022 | 
 | [Publish Flow Logs to Amazon Kinesis Data Firehose](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs-firehose.html) | You can specify a Kinesis Data Firehose delivery stream as a destination for flow log data\. | September 8, 2022 | 

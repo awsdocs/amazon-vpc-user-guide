@@ -38,10 +38,10 @@ The following characteristics and rules apply to NAT gateways:
 + A NAT gateway can process one million packets per second and automatically scales up to ten million packets per second\. Beyond this limit, a NAT gateway will drop packets\. To prevent packet loss, split your resources into multiple subnets and create a separate NAT gateway for each subnet\.
 + A NAT gateway can support up to 55,000 simultaneous connections to each unique destination\. This limit also applies if you create approximately 900 connections per second to a single destination \(about 55,000 connections per minute\)\. If the destination IP address, the destination port, or the protocol \(TCP/UDP/ICMP\) changes, you can create an additional 55,000 connections\. For more than 55,000 connections, there is an increased chance of connection errors due to port allocation errors\. These errors can be monitored by viewing the `ErrorPortAllocation` CloudWatch metric for your NAT gateway\. For more information, see [Monitor NAT gateways with Amazon CloudWatch](vpc-nat-gateway-cloudwatch.md)\.
 + You can associate exactly one Elastic IP address with a public NAT gateway\. You cannot disassociate an Elastic IP address from a NAT gateway after it's created\. To use a different Elastic IP address for your NAT gateway, you must create a new NAT gateway with the required address, update your route tables, and then delete the existing NAT gateway if it's no longer required\.
-+ A private NAT gateway receives an available private IP address from the subnet in which it is configured\. The assigned private IP address persists until you delete the private NAT gateway\. You cannot detach the private IP address and you cannot attach additional private IP addresses\.
++ You can pick the private IP address to assign to the NAT gateway or have it automatically assigned from the IP address range of the subnet\. The assigned private IP address persists until you delete the private NAT gateway\. You cannot detach the private IP address and you cannot attach additional private IP addresses\.
 + You cannot associate a security group with a NAT gateway\. You can associate security groups with your instances to control inbound and outbound traffic\.
 + You can use a network ACL to control the traffic to and from the subnet for your NAT gateway\. NAT gateways use ports 1024–65535\. For more information, see [Control traffic to subnets using Network ACLs](vpc-network-acls.md)\.
-+ A NAT gateway receives a network interface that's automatically assigned a private IP address from the IP address range of the subnet\. You can view the network interface for the NAT gateway using the Amazon EC2 console\. For more information, see [Viewing details about a network interface](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#view_eni_details)\. You cannot modify the attributes of this network interface\.
++ A NAT gateway receives a network interface\. You can pick the private IP address to assign to the interface or have it automatically assigned from the IP address range of the subnet\. You can view the network interface for the NAT gateway using the Amazon EC2 console\. For more information, see [Viewing details about a network interface](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#view_eni_details)\. You cannot modify the attributes of this network interface\.
 + A NAT gateway cannot be accessed through a ClassicLink connection that is associated with your VPC\.
 + You cannot route traffic to a NAT gateway through a VPC peering connection, a Site\-to\-Site VPN connection, or AWS Direct Connect\. A NAT gateway cannot be used by resources on the other side of these connections\.
 
@@ -60,7 +60,10 @@ You can use the Amazon VPC console to create and manage your NAT gateways\.
 
 ### Create a NAT gateway<a name="nat-gateway-creating"></a>
 
-To create a NAT gateway, enter an optional name, a subnet, and an optional connectivity type\. With a public NAT gateway, you must specify an available elastic IP address\. A private NAT gateway receives a primary private IP address selected at random from its subnet\. You cannot detach the primary private IP address or add secondary private IP addresses\.
+Complete the steps in this section to create a NAT gateway\.
+
+**Note**  
+You won't be able to create a public NAT gateway if you've exhausted the number of EIPs allocated to your account\. For more information on EIP quotas and how to adjust them, see [Elastic IP addresses \(IPv4\)](amazon-vpc-limits.md#vpc-limits-eips)\.
 
 **To create a NAT gateway**
 
@@ -68,23 +71,27 @@ To create a NAT gateway, enter an optional name, a subnet, and an optional conne
 
 1. In the navigation pane, choose **NAT Gateways**\.
 
-1. Choose **Create NAT Gateway** and do the following:
+1. Choose **Create NAT Gateway**\.
 
-   1. \(Optional\) Specify a name for the NAT gateway\. This creates a tag where the key is **Name** and the value is the name that you specify\.
+1. \(Optional\) Specify a name for the NAT gateway\. This creates a tag where the key is **Name** and the value is the name that you specify\.
 
-   1. Select the subnet in which to create the NAT gateway\.
+1. Select the subnet in which to create the NAT gateway\.
 
-   1. For **Connectivity type**, select **Private** to create a private NAT gateway or **Public** \(the default\) to create a public NAT gateway\.
+1. For **Connectivity type**, select **Public** \(which is the default\) to create a public NAT gateway or **Private** to create a private NAT gateway\.
 
-   1. \(Public NAT gateway only\) For **Elastic IP allocation ID**, select an Elastic IP address to associate with the NAT gateway\.
+1. If you chose **Private**, skip this step\. If you chose **Public**, choose an **Elastic IP allocation ID** to assign an EIP to the NAT gateway or choose **Allocate Elastic IP** to automatically allocate an elastic IP address to use for your public NAT gateway\. 
+**Note**  
+You won't be able to create a public NAT gateway if you've exhausted the number of EIPs allocated to your account\. For more information on EIP quotas and how to adjust them, see [Elastic IP addresses \(IPv4\)](amazon-vpc-limits.md#vpc-limits-eips)\.
 
-   1. \(Optional\) For each tag, choose **Add new tag** and enter the key name and value\.
+1. \(Optional\) Choose **Additional settings** and, under **Primary private IPv4 address \- optional**, enter a private IPv4 address for the NAT gateway\. If you don't enter an address, one will be automatically assigned to your NAT gateway at random from the subnet that your NAT gateway is in\.
 
-   1. Choose **Create a NAT Gateway**\.
+1. \(Optional\) To add a tag to the NAT gateway, choose **Add new tag** and enter the key name and value\. You can add up to 50 tags\.
+
+1. Choose **Create NAT Gateway**\.
 
 1. The initial status of the NAT gateway is `Pending`\. After the status changes to `Available`, the NAT gateway is ready for you to use\. Be sure to update your route tables as needed\. For examples, see [NAT gateway use cases](nat-gateway-scenarios.md)\.
 
-   If the status of the NAT gateway changes to `Failed`, there was an error during creation\. For more information, see [NAT gateway creation fails](nat-gateway-troubleshooting.md#nat-gateway-troubleshooting-failed)\.
+If the status of the NAT gateway changes to `Failed`, there was an error during creation\. For more information, see [NAT gateway creation fails](nat-gateway-troubleshooting.md#nat-gateway-troubleshooting-failed)\.
 
 ### Tag a NAT gateway<a name="nat-gateway-tagging"></a>
 

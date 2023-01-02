@@ -45,7 +45,7 @@ While the default quotas for customer\-managed prefix lists are adjustable, you 
 | --- | --- | --- | --- | 
 | Prefix lists per Region | 100 | Yes |  | 
 | Versions per prefix list | 1,000 | Yes | If a prefix list has 1,000 stored versions and you add a new version, the oldest version is removed so that the new version can be added\. | 
-| Maximum number of entries per prefix list | 1,000 | Yes |  The default quota for customer\-managed prefix lists is 10 unless you resize the prefix list\. You can resize it up to 1000\. For more information, see [Resize a prefix list](working-with-managed-prefix-lists.md#resize-managed-prefix-list)\. When you reference a prefix list in a resource, the maximum number of entries for the prefix lists counts against the quota for the number of entries for the resource\. For example, if you create a prefix list with 20 maximum entries and you reference that prefix list in a security group rule, this counts as 20 security group rules\.  | 
+| Maximum number of entries per prefix list | 1,000 | Yes |  You can resize a customer\-managed prefix list up to 1000\. For more information, see [Resize a prefix list](working-with-managed-prefix-lists.md#resize-managed-prefix-list)\. When you reference a prefix list in a resource, the maximum number of entries for the prefix lists counts against the quota for the number of entries for the resource\. For example, if you create a prefix list with 20 maximum entries and you reference that prefix list in a security group rule, this counts as 20 security group rules\.  | 
 | References to a prefix list per resource type | 5,000 | Yes | This quota applies per resource type that can reference a prefix list\. For example, you can have 5,000 references to a prefix list across all of your security groups plus 5,000 references to a prefix list across all of your subnet route tables\. If you share a prefix list with other AWS accounts, the other accounts' references to your prefix list count toward this quota\. | 
 
 ## Network ACLs<a name="vpc-limits-nacls"></a>
@@ -91,6 +91,8 @@ While the default quotas for customer\-managed prefix lists are adjustable, you 
 | Outstanding VPC peering connection requests | 25 | [Yes](https://console.aws.amazon.com/servicequotas/home/services/vpc/quotas/L-DC9F7029) | This is the number of outstanding VPC peering connection requests made from your account\. | 
 | Expiry time for an unaccepted VPC peering connection request | 1 week \(168 hours\) | No |  | 
 
+For more information, see [VPC peering limitations](https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-basics.html#vpc-peering-limitations) in the *Amazon VPC Peering Guide*\.
+
 ## VPC endpoints<a name="vpc-limits-endpoints"></a>
 
 
@@ -100,11 +102,7 @@ While the default quotas for customer\-managed prefix lists are adjustable, you 
 | Interface and Gateway Load Balancer endpoints per VPC | 50 | Yes | This is the combined quota for the maximum number of interface endpoints and Gateway Load Balancer endpoints in a VPC\. To increase this quota, contact AWS Support\.  | 
 |  VPC endpoint policy size  | 20,480 characters | No | This quota includes white space\. | 
 
-The following maximum transmission unit \(MTU\) rules apply to traffic that passes through a VPC endpoint\.
-+ The maximum transmission unit \(MTU\) of a network connection is the size, in bytes, of the largest permissible packet that can be passed through the VPC endpoint\. The larger the MTU, the more data that can be passed in a single packet\. A VPC endpoint supports an MTU of 8500 bytes\.
-+ Packets with a size larger than 8500 bytes that arrive at the VPC endpoint are dropped\.
-+ The VPC endpoint does not generate the FRAG\_NEEDEDICMP packet, so Path MTU Discovery \(PMTUD\) is not supported\.
-+ The VPC endpoint enforces Maximum Segment Size \(MSS\) clamping for all packets\. For more information, see [RFC879](https://tools.ietf.org/html/rfc879)\.
+For more information about the traffic that passes through a VPC endpoint, see [AWS PrivateLink quotas](https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-limits-endpoints.html) in the *AWS PrivateLink Guide*\.
 
 ## VPC sharing<a name="vpc-share-limits"></a>
 

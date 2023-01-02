@@ -63,7 +63,7 @@ If you associate an IPv6 CIDR block with your VPC and subnets, your route table 
 
 ## Security<a name="VPC_Scenario4_Security"></a>
 
-AWS provides two features that you can use to increase security in your VPC: *security groups* and *network ACLs*\. Security groups control inbound and outbound traffic for your instances, and network ACLs control inbound and outbound traffic for your subnets\. In most cases, security groups can meet your needs; however, you can also use network ACLs if you want an additional layer of security for your VPC\. For more information, see [Internetwork traffic privacy in Amazon VPC](VPC_Security.md)\. 
+AWS provides features that you can use to increase security for the resources in your VPC\. *Security groups* allow inbound and outbound traffic for associated resources, such as EC2 instances\. *Network ACLs* allow or deny inbound and outbound traffic at the subnet level\. In most cases, security groups can meet your needs\. However, you can use network ACLs if you want an additional layer of security\. For more information, see [Compare security groups and network ACLs](VPC_Security.md#VPC_Security_Comparison)\.
 
 For this scenario, you'll use the default security group for your VPC but not a network ACL\. If you'd like to use a network ACL, see [Recommended network ACL rules for a VPC with a private subnet only and AWS Site\-to\-Site VPN access](#nacl-rules-scenario-4)\.
 
