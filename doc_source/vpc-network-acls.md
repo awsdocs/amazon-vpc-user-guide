@@ -30,7 +30,7 @@ The following are the basic things that you need to know about network ACLs:
 + A network ACL has inbound rules and outbound rules\. Each rule can either allow or deny traffic\. Each rule has a number from 1 to 32766\. We evaluate the rules in order, starting with the lowest numbered rule, when deciding whether allow or deny traffic\. If the traffic matches a rule, the rule is applied and we do not evaluate any additional rules\. We recommend that you start by creating rules in increments \(for example, increments of 10 or 100\) so that you can insert new rules later on, if needed\.
 + We evaluate the network ACL rules when traffic enters and leaves the subnet, not as it is routed within a subnet\.
 + Network ACLs are stateless, which means that responses to allowed inbound traffic are subject to the rules for outbound traffic \(and vice versa\)\.
-
++ Network ACLs do not apply to traffic to [IMDS](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html) and the [Route53 Resolver](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver.html) (formerly known as Amazon DNS server). Traffic to IMDS is managed by the [Instance Metadata Options](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-options.html) and requests to Route53 Resolver is managed through [Route53 DNS Firewall](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-dns-firewall.html)\.
 There are quotas \(also known as limits\) for the number of network ACLs per VPC and the number of rules per network ACL\. For more information, see [Amazon VPC quotas](amazon-vpc-limits.md)\.
 
 ## Network ACL rules<a name="nacl-rules"></a>
