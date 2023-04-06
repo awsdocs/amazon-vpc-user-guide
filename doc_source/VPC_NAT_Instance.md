@@ -29,20 +29,13 @@ Internet traffic from the instances in the private subnet is routed to the NAT i
 Use the following procedure to set up a VPC and a NAT instance\.
 
 **Requirement**  
-Before you begin, create an AMI that's configured to run NAT on your instance\. The specific commands to configure NAT depend on the operating system that you use\. For example, for Amazon Linux 2, use the following commands:
-
-```
-sudo sysctl -w net.ipv4.ip_forward=1
-sudo /sbin/iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-sudo yum install iptables-services
-sudo service iptables save
-```
+Before you begin, create an AMI that's configured to run NAT on your instance\. Be sure to save these settings so that they persist even after an instance reboot\. Refer to the documentation for the specific operating system you're using on your instance to learn how to configure NAT\.
 
 **To set up a NAT instance**
 
 1. Create a VPC with two subnets\.
 
-   1. Create a VPC \(see [Create a VPC](working-with-vpcs.md#Create-VPC)\)\.
+   1. Create a VPC \(see [Create a VPC](create-vpc.md)\)\.
 
    1. Create two subnets \(see [Create a subnet](VPC_Internet_Gateway.md#Add_IGW_Create_Subnet)\)\.
 
@@ -147,7 +140,7 @@ The following are the recommended rules\.
 
    1. Choose **Save**\.
 
-For more information, see [Control traffic to resources using security groups](VPC_SecurityGroups.md)\.
+For more information, see [Security groups](vpc-security-groups.md)\.
 
 ## Disable source/destination checks<a name="EIP_Disable_SrcDestCheck"></a>
 

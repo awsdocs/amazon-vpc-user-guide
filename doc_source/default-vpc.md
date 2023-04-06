@@ -4,7 +4,7 @@ When you start using Amazon VPC, you have a default VPC in each AWS Region\. A d
 
 A default VPC is suitable for getting started quickly and for launching public instances such as a blog or simple website\. You can modify the components of your default VPC as needed\.
 
-You can add subnets to your default VPC\. For more information, see [Create a subnet in your VPC](working-with-subnets.md#create-subnets)\.
+You can add subnets to your default VPC\. For more information, see [Create a subnet](create-subnets.md)\.
 
 **Topics**
 + [Default VPC components](#default-vpc-components)
@@ -52,13 +52,13 @@ You can use a default VPC as you would use any other VPC:
 
 You can use a default subnet as you would use any other subnet; add custom route tables and set network ACLs\. You can also specify a specific default subnet when you launch an EC2 instance\.
 
-You can optionally associate an IPv6 CIDR block with your default VPC\. For more information, [Work with VPCs](working-with-vpcs.md)\.
+You can optionally associate an IPv6 CIDR block with your default VPC\.
 
 ## Default subnets<a name="default-subnet"></a>
 
 By default, a default subnet is a public subnet, because the main route table sends the subnet's traffic that is destined for the internet to the internet gateway\. You can make a default subnet into a private subnet by removing the route from the destination 0\.0\.0\.0/0 to the internet gateway\. However, if you do this, no EC2 instance running in that subnet can access the internet\. 
 
-Instances that you launch into a default subnet receive both a public IPv4 address and a private IPv4 address, and both public and private DNS hostnames\. Instances that you launch into a nondefault subnet in a default VPC don't receive a public IPv4 address or a DNS hostname\. You can change your subnet's default public IP addressing behavior\. For more information, see [Modify the public IPv4 addressing attribute for your subnet](working-with-subnets.md#subnet-public-ip)\.
+Instances that you launch into a default subnet receive both a public IPv4 address and a private IPv4 address, and both public and private DNS hostnames\. Instances that you launch into a nondefault subnet in a default VPC don't receive a public IPv4 address or a DNS hostname\. You can change your subnet's default public IP addressing behavior\. For more information, see [Modify the public IPv4 addressing attribute for your subnet](modify-subnets.md#subnet-public-ip)\.
 
 From time to time, AWS may add a new Availability Zone to a Region\. In most cases, we automatically create a new default subnet in this Availability Zone for your default VPC within a few days\. However, if you made any modifications to your default VPC, we do not add a new default subnet\. If you want a default subnet for the new Availability Zone, you can create one yourself\. For more information, see [Create a default subnet](#create-default-subnet)\.
 
@@ -146,9 +146,9 @@ When you create a default subnet, it is created with a size `/20` IPv4 CIDR bloc
 + You can have only one default subnet per Availability Zone\.
 + You cannot create a default subnet in a nondefault VPC\.
 
-If there is not enough address space in your default VPC to create a size `/20` CIDR block, the request fails\. If you need more address space, you can [add an IPv4 CIDR block to your VPC](configure-your-vpc.md#vpc-resize)\.
+If there is not enough address space in your default VPC to create a size `/20` CIDR block, the request fails\. If you need more address space, you can [add an IPv4 CIDR block to your VPC](vpc-cidr-blocks.md#vpc-resize)\.
 
-If you've associated an IPv6 CIDR block with your default VPC, the new default subnet does not automatically receive an IPv6 CIDR block\. Instead, you can associate an IPv6 CIDR block with the default subnet after you create it\. For more information, see [Associate an IPv6 CIDR block with your subnet](working-with-subnets.md#subnet-associate-ipv6-cidr)\.
+If you've associated an IPv6 CIDR block with your default VPC, the new default subnet does not automatically receive an IPv6 CIDR block\. Instead, you can associate an IPv6 CIDR block with the default subnet after you create it\. For more information, see [Add an IPv6 CIDR block to your subnet](modify-subnets.md#subnet-associate-ipv6-cidr)\.
 
 You cannot create a default subnet using the AWS Management Console\.
 
@@ -185,8 +185,8 @@ Alternatively, you can use the [New\-EC2DefaultSubnet](https://docs.aws.amazon.c
 
 ## Delete your default subnets and default VPC<a name="deleting-default-vpc"></a>
 
-You can delete a default subnet or default VPC just as you can delete any other subnet or VPC\. For more information, see [Work with VPCs](working-with-vpcs.md)\. However, if you delete your default subnets or default VPC, you must explicitly specify a subnet in another VPC in which to launch your instance, because you can't launch instances into EC2\-Classic\. If you do not have another VPC, you must create a nondefault VPC and nondefault subnet\. For more information, see [Create a VPC](working-with-vpcs.md#Create-VPC)\. 
+You can delete a default subnet or default VPC just as you can delete any other subnet or VPC\. However, if you delete your default subnets or default VPC, you must explicitly specify a subnet in one of your VPCs when you launch instances\. If you do not have another VPC, you must create a VPC with a subnet in at least one Availability Zone\. For more information, see [Create a VPC](create-vpc.md)\. 
 
 If you delete your default VPC, you can create a new one\. For more information, see [Create a default VPC](#create-default-vpc)\. 
 
-If you delete a default subnet, you can create a new one\. For more information, see [Create a default subnet](#create-default-subnet)\. To ensure that your new default subnet behaves as expected, modify the subnet attribute to assign public IP addresses to instances that are launched in that subnet\. For more information, see [Modify the public IPv4 addressing attribute for your subnet](working-with-subnets.md#subnet-public-ip)\. You can only have one default subnet per Availability Zone\. You cannot create a default subnet in a nondefault VPC\. 
+If you delete a default subnet, you can create a new one\. For more information, see [Create a default subnet](#create-default-subnet)\. To ensure that your new default subnet behaves as expected, modify the subnet attribute to assign public IP addresses to instances that are launched in that subnet\. For more information, see [Modify the public IPv4 addressing attribute for your subnet](modify-subnets.md#subnet-public-ip)\. You can only have one default subnet per Availability Zone\. You cannot create a default subnet in a nondefault VPC\. 

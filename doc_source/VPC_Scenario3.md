@@ -2,7 +2,7 @@
 
 The configuration for this scenario includes a virtual private cloud \(VPC\) with a public subnet and a private subnet, and a virtual private gateway to enable communication with your own network over an IPsec VPN tunnel\. We recommend this scenario if you want to extend your network into the cloud and also directly access the internet from your VPC\. This scenario enables you to run a multi\-tiered application with a scalable web front end in a public subnet, and to house your data in a private subnet that is connected to your network by an IPsec AWS Site\-to\-Site VPN connection\.
 
-This scenario can also be optionally configured for IPv6\. Instances launched into the subnets can receive IPv6 addresses\. We do not support IPv6 communication over a Site\-to\-Site VPN connection on a virtual private gateway; however, instances in the VPC can communicate with each other via IPv6, and instances in the public subnet can communicate over the internet via IPv6\. For more information about IPv4 and IPv6 addressing, see [IP addressing](how-it-works.md#vpc-ip-addressing)\.
+This scenario can also be optionally configured for IPv6\. Instances launched into the subnets can receive IPv6 addresses\. We do not support IPv6 communication over a Site\-to\-Site VPN connection on a virtual private gateway; however, instances in the VPC can communicate with each other via IPv6, and instances in the public subnet can communicate over the internet via IPv6\. For more information about IPv4 and IPv6 addressing, see [IP addressing for your VPCs and subnets](vpc-ip-addressing.md)\.
 
 For information about managing your EC2 instance software, see [Managing software on your Linux instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-software.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
@@ -36,8 +36,8 @@ For more information, see [Subnets](configure-subnets.md)\. For more information
 
 You can optionally enable IPv6 for this scenario\. In addition to the components listed above, the configuration includes the following:
 + A size /56 IPv6 CIDR block associated with the VPC \(example: 2001:db8:1234:1a00::/56\)\. AWS automatically assigns the CIDR; you cannot choose the range yourself\.
-+ A size /64 IPv6 CIDR block associated with the public subnet \(example: 2001:db8:1234:1a00::/64\)\. You can choose the range for your subnet from the range allocated to the VPC\. You cannot choose the size of the IPv6 CIDR\.
-+ A size /64 IPv6 CIDR block associated with the VPN\-only subnet \(example: 2001:db8:1234:1a01::/64\)\. You can choose the range for your subnet from the range allocated to the VPC\. You cannot choose the size of the IPv6 CIDR\.
++ A size /64 IPv6 CIDR block associated with the public subnet \(example: 2001:db8:1234:1a00::/64\)\. You can choose the range for your subnet from the range allocated to the VPC\. You cannot choose the size of the subnet IPv6 CIDR\.
++ A size /64 IPv6 CIDR block associated with the VPN\-only subnet \(example: 2001:db8:1234:1a01::/64\)\. You can choose the range for your subnet from the range allocated to the VPC\. You cannot choose the size of the subnet IPv6 CIDR\.
 + IPv6 addresses assigned to the instances from the subnet range \(example: 2001:db8:1234:1a00::1a\)\.
 + Route table entries in the custom route table that enable instances in the public subnet to use IPv6 to communicate with each other, and directly over the internet\.
 + A route table entry in the main route table that enable instances in the VPN\-only subnet to use IPv6 to communicate with each other\.
@@ -143,7 +143,7 @@ AWS provides features that you can use to increase security for the resources in
 
 For this scenario, you'll use security groups but not network ACLs\. If you'd like to use a network ACL, see [Recommended network ACL rules](#nacl-rules-scenario-3)\.
 
-Your VPC comes with a [default security group](VPC_SecurityGroups.md#DefaultSecurityGroup)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. For this scenario, we recommend that you create the following security groups instead of using the default security group:
+Your VPC comes with a [default security group](default-security-group.md)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. For this scenario, we recommend that you create the following security groups instead of using the default security group:
 + **WebServerSG**: Specify this security group when you launch web servers in the public subnet\.
 + **DBServerSG**: Specify this security group when you launch database servers in the VPN\-only subnet\.
 
@@ -242,8 +242,6 @@ These procedures include optional steps for enabling and configuring IPv6 commun
 1. Obtain the internet\-routable IP address for the customer gateway device's external interface\. The address must be static and may be behind a device performing network address translation \(NAT\)\.
 
 1. If you want to create a statically\-routed Site\-to\-Site VPN connection, get the list of internal IP ranges \(in CIDR notation\) that should be advertised across the Site\-to\-Site VPN connection to the virtual private gateway\. For more information, see [Route tables and VPN route priority](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html#vpn-route-priority) in the *AWS Site\-to\-Site VPN User Guide*\.
-
-For information about how to use Amazon VPC with IPv6, see [VPC that supports IPv6 addressing](get-started-ipv6.md)\.
 
 ## Recommended network ACL rules<a name="nacl-rules-scenario-3"></a>
 

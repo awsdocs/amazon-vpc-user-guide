@@ -1,6 +1,6 @@
 # How Amazon VPC works with IAM<a name="security_iam_service-with-iam"></a>
 
-Before you use IAM to manage access to Amazon VPC, you should understand what IAM features are available to use with Amazon VPC\. To get a high\-level view of how Amazon VPC and other AWS services work with IAM, see [AWS Services That Work with IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-services-that-work-with-iam.html) in the *IAM User Guide*\.
+Before you use IAM to manage access to Amazon VPC, you should understand what IAM features are available to use with Amazon VPC\. To get a high\-level view of how Amazon VPC and other AWS services work with IAM, see [AWS services that work with IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-services-that-work-with-iam.html) in the *IAM User Guide*\.
 
 **Topics**
 + [Actions](#security_iam_service-with-iam-id-based-policies-actions)
@@ -10,7 +10,7 @@ Before you use IAM to manage access to Amazon VPC, you should understand what IA
 + [Authorization based on tags](#security_iam_service-with-iam-tags)
 + [IAM roles](#security_iam_service-with-iam-roles)
 
-With IAM identity\-based policies, you can specify allowed or denied actions\. For some actions, you can specify the resources and conditions under which actions are allowed or denied\. Amazon VPC supports specific actions, resources, and condition keys\. To learn about all of the elements that you use in a JSON policy, see [IAM JSON Policy Elements Reference](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements.html) in the *IAM User Guide*\.
+With IAM identity\-based policies, you can specify allowed or denied actions\. For some actions, you can specify the resources and conditions under which actions are allowed or denied\. Amazon VPC supports specific actions, resources, and condition keys\. To learn about all of the elements that you use in a JSON policy, see [IAM JSON policy elements reference](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements.html) in the *IAM User Guide*\.
 
 ## Actions<a name="security_iam_service-with-iam-id-based-policies-actions"></a>
 
@@ -20,7 +20,7 @@ The `Action` element of a JSON policy describes the actions that you can use to 
 
 Include actions in a policy to grant permissions to perform the associated operation\.
 
-Amazon VPC shares its API namespace with Amazon EC2\. Policy actions in Amazon VPC use the following prefix before the action: `ec2:`\. For example, to grant someone permission to create a VPC with the Amazon EC2 `CreateVpc` API operation, you include the `ec2:CreateVpc` action in their policy\. Policy statements must include either an `Action` or `NotAction` element\.
+Amazon VPC shares its API namespace with Amazon EC2\. Policy actions in Amazon VPC use the following prefix before the action: `ec2:`\. For example, to grant a user permission to create a VPC using the `CreateVpc` API operation, you grant access to the `ec2:CreateVpc` action\. Policy statements must include either an `Action` or `NotAction` element\.
 
 To specify multiple actions in a single statement, separate them with commas as shown in the following example\.
 
@@ -37,7 +37,7 @@ You can specify multiple actions using wildcards \(\*\)\. For example, to specif
 "Action": "ec2:Describe*"
 ```
 
-To see a list of Amazon VPC actions, see [Actions, Resources, and Condition Keys for Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html) in the *IAM User Guide*\.
+To see a list of Amazon VPC actions, see [Actions defined by Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html#amazonec2-actions-as-permissions) in the *Service Authorization Reference*\.
 
 ## Resources<a name="security_iam_service-with-iam-id-based-policies-resources"></a>
 
@@ -51,16 +51,11 @@ For actions that don't support resource\-level permissions, such as listing oper
 "Resource": "*"
 ```
 
-**Important**  
-Currently, not all Amazon EC2 API actions support resource\-level permissions\. If an Amazon EC2 API action does not support resource\-level permissions, you can grant users permission to use the action, but you have to specify a \* for the resource element of your policy statement\. To view the actions for which you can specify an ARN for the resource element, see [Actions Defined by Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html#amazonec2-actions-as-permissions)\.
-
 The VPC resource has the ARN shown in the following example\.
 
 ```
 arn:${Partition}:ec2:${Region}:${Account}:vpc/${VpcId}
 ```
-
-For more information about the format of ARNs, see [Amazon Resource Names \(ARNs\)](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)\.
 
 For example, to specify the `vpc-1234567890abcdef0` VPC in your statement, use the ARN shown in the following example\.
 
@@ -89,7 +84,7 @@ Many Amazon EC2 API actions involve multiple resources\. To specify multiple res
 ]
 ```
 
-To see a list of Amazon VPC resource types and their ARNs, see [Resources Defined by Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html#amazonec2-resources-for-iam-policies) in the *IAM User Guide*\.
+To see a list of Amazon VPC resource types and their ARNs, see [Resource types defined by Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html#amazonec2-resources-for-iam-policies) in the *Service Authorization Reference*\.
 
 ## Condition keys<a name="security_iam_service-with-iam-id-based-policies-conditionkeys"></a>
 
@@ -103,21 +98,19 @@ If you specify multiple `Condition` elements in a statement, or multiple keys in
 
 AWS supports global condition keys and service\-specific condition keys\. To see all AWS global condition keys, see [AWS global condition context keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html) in the *IAM User Guide*\.
 
-Amazon VPC defines its own set of condition keys and also supports using some global condition keys\. To see all AWS global condition keys, see [AWS Global Condition Context Keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html) in the *IAM User Guide*\. 
+All Amazon EC2 actions support the `aws:RequestedRegion` and `ec2:Region` condition keys\. For more information, see [Example: Restrict access to a specific Region](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html#iam-example-region)\.
 
-All Amazon EC2 actions support the `aws:RequestedRegion` and `ec2:Region` condition keys\. For more information, see [Example: Restricting Access to a Specific Region](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html#iam-example-region)\. 
-
-To see a list of Amazon VPC condition keys, see [Condition Keys for Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html#amazonec2-policy-keys) in the *IAM User Guide*\. To learn with which actions and resources you can use a condition key, see [Actions Defined by Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html#amazonec2-actions-as-permissions)\.
+Amazon VPC defines its own set of condition keys and also supports using some global condition keys\. To see a list of Amazon VPC condition keys, see [Condition keys for Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html#amazonec2-policy-keys) in the *Service Authorization Reference*\. To learn with which actions and resources you can use a condition key, see [Actions defined by Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html#amazonec2-actions-as-permissions)\.
 
 ## Amazon VPC resource\-based policies<a name="security_iam_service-with-iam-resource-based-policies"></a>
 
 Resource\-based policies are JSON policy documents that specify what actions a specified principal can perform on the Amazon VPC resource and under what conditions\.
 
-To enable cross\-account access, you can specify an entire account or IAM entities in another account as the [principal in a resource\-based policy](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html)\. Adding a cross\-account principal to a resource\-based policy is only half of establishing the trust relationship\. When the principal and the resource are in different AWS accounts, you must also grant the principal entity permission to access the resource\. Grant permission by attaching an identity\-based policy to the entity\. However, if a resource\-based policy grants access to a principal in the same account, no additional identity\-based policy is required\. For more information, see [How IAM Roles Differ from Resource\-based Policies ](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_compare-resource-policies.html)in the *IAM User Guide*\. 
+To enable cross\-account access, you can specify an entire account or IAM entities in another account as the [principal in a resource\-based policy](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html)\. Adding a cross\-account principal to a resource\-based policy is only half of establishing the trust relationship\. When the principal and the resource are in different AWS accounts, you must also grant the principal entity permission to access the resource\. Grant permission by attaching an identity\-based policy to the entity\. However, if a resource\-based policy grants access to a principal in the same account, no additional identity\-based policy is required\. For more information, see [How IAM roles differ from resource\-based policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_compare-resource-policies.html) in the *IAM User Guide*\.
 
 ## Authorization based on tags<a name="security_iam_service-with-iam-tags"></a>
 
-You can attach tags to Amazon VPC resources or pass tags in a request\. To control access based on tags, you provide tag information in the [condition element](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition.html) of a policy using the `ec2:ResourceTag/key-name`, `aws:RequestTag/key-name`, or `aws:TagKeys` condition keys\. For more information, see [Resource\-Level Permissions for Tagging](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-supported-iam-actions-resources.html#supported-iam-actions-tagging) in the *Amazon EC2 User Guide*\.
+You can attach tags to Amazon VPC resources or pass tags in a request\. To control access based on tags, you provide tag information in the [condition element](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition.html) of a policy using condition keys\. For more information, see [Tag resources during creation](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/supported-iam-actions-tagging.html) and [Control access to EC2 resources using resource tags](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/control-access-with-tags.html) in the *Amazon EC2 User Guide*\.
 
 To view an example identity\-based policy for limiting access to a resource based on the tags on that resource, see [Launch instances into a specific VPC](vpc-policy-examples.md#subnet-ami-example-iam)\.
 

@@ -133,10 +133,9 @@ Users must have permissions to use the `iam:PassRole` action for the IAM role th
 
 ## Create a flow log that publishes to CloudWatch Logs<a name="flow-logs-cwl-create-flow-log"></a>
 
-You can create flow logs for your VPCs, subnets, or network interfaces\. If you perform these steps as an IAM user, ensure that you have permissions to use the `iam:PassRole` action\. For more information, see [Permissions for IAM principals that publish flow logs to CloudWatch Logs](#flow-logs-iam-user)\.
+You can create flow logs for your VPCs, subnets, or network interfaces\. If you perform these steps as a user using a particular IAM role, ensure that the role has permissions to use the `iam:PassRole` action\. For more information, see [Permissions for IAM principals that publish flow logs to CloudWatch Logs](#flow-logs-iam-user)\.
 
-**Prerequisites**
-+ Create the destination log group\. Open the [Log groups page](https://console.aws.amazon.com/cloudwatch/home#logsV2:log-groups) in the CloudWatch console and choose **Create log group**\. Enter a name for the log group and choose **Create**\.
+**Prerequisite**
 + Create an IAM role, as described in [IAM role for publishing flow logs to CloudWatch Logs](#flow-logs-iam-role)\.
 
 **To create a flow log using the console**
@@ -154,7 +153,7 @@ You can create flow logs for your VPCs, subnets, or network interfaces\. If you 
 
 1. For **Destination**, choose **Send to CloudWatch Logs**\.
 
-1. For **Destination log group**, choose the name of the destination log group that you created\.
+1. For **Destination log group**, choose the name of an existing log group or enter the name of a new log group that will be created when you create this flow log\.
 
 1. For **IAM role**, specify the name of the role that has permissions to publish logs to CloudWatch Logs\.
 

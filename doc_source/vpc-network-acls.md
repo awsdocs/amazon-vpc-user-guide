@@ -2,11 +2,13 @@
 
 A *network access control list \(ACL\)* allows or denies specific inbound or outbound traffic at the subnet level\. You can use the default network ACL for your VPC, or you can create a custom network ACL for your VPC with rules that are similar to the rules for your security groups in order to add an additional layer of security to your VPC\.
 
+There is no additional charge for using network ACLs\.
+
 The following diagram shows a VPC with two subnets\. Each subnet has a network ACL\. When traffic enters the VPC \(for example, from a peered VPCs, VPN connection, or the internet\), the router sends the traffic to its destination\. Network ACL A determines which traffic destined for subnet 1 is allowed to enter subnet 1, and which traffic destined for a location outside subnet 1 is allowed to leave subnet 1\. Similarly, network ACL B determines which traffic is allowed to enter and leave subnet 2\.
 
 ![\[A VPC with two subnets and a network ACL for each subnet.\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/network-acl.png)
 
-For more information about the differences between security groups and network ACLs, see [Compare security groups and network ACLs](VPC_Security.md#VPC_Security_Comparison)\.
+For information about the differences between security groups and network ACLs, see [Compare security groups and network ACLs](VPC_Security.md#VPC_Security_Comparison)\.
 
 **Topics**
 + [Network ACL basics](#nacl-basics)
@@ -18,13 +20,12 @@ For more information about the differences between security groups and network A
 + [Path MTU Discovery](#path_mtu_discovery)
 + [Work with network ACLs](#nacl-tasks)
 + [Example: Control access to instances in a subnet](#nacl-examples)
-+ [Recommended rules for VPC scenarios](#vpc-recommended-nacl-rules)
 
 ## Network ACL basics<a name="nacl-basics"></a>
 
 The following are the basic things that you need to know about network ACLs:
 + Your VPC automatically comes with a modifiable default network ACL\. By default, it allows all inbound and outbound IPv4 traffic and, if applicable, IPv6 traffic\.
-+ You can create a custom network ACL and associate it with a subnet\. By default, each custom network ACL denies all inbound and outbound traffic until you add rules\. 
++ You can create a custom network ACL and associate it with a subnet to allow or deny specific inbound or outbound traffic at the subnet level\.
 + Each subnet in your VPC must be associated with a network ACL\. If you don't explicitly associate a subnet with a network ACL, the subnet is automatically associated with the default network ACL\.
 + You can associate a network ACL with multiple subnets\. However, a subnet can be associated with only one network ACL at a time\. When you associate a network ACL with a subnet, the previous association is removed\.
 + A network ACL has inbound rules and outbound rules\. Each rule can either allow or deny traffic\. Each rule has a number from 1 to 32766\. We evaluate the rules in order, starting with the lowest numbered rule, when deciding whether allow or deny traffic\. If the traffic matches a rule, the rule is applied and we do not evaluate any additional rules\. We recommend that you start by creating rules in increments \(for example, increments of 10 or 100\) so that you can insert new rules later on, if needed\.
@@ -160,8 +161,6 @@ The following table shows the same example of a custom network ACL for a VPC tha
 |  145  |  Custom TCP  |  TCP  |  32768\-65535  |  ::/0  |  ALLOW  |  Allows outbound IPv6 responses to clients on the internet \(for example, serving webpages to people visiting the web servers in the subnet\)\. This range is an example only\. For more information about how to select the appropriate ephemeral port range, see [Ephemeral ports](#nacl-ephemeral-ports)\.  | 
 |  \*  | All traffic |  All  |  All  | 0\.0\.0\.0/0 |  DENY  |  Denies all outbound IPv4 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
 |  \*  |  All traffic  |  All  |  All  |  ::/0  |  DENY  |  Denies all outbound IPv6 traffic not already handled by a preceding rule \(not modifiable\)\.  | 
-
-For more examples, see [Recommended rules for VPC scenarios](#vpc-recommended-nacl-rules)\.
 
 ## Custom network ACLs and other AWS services<a name="nacl-other-services"></a>
 
@@ -429,7 +428,3 @@ If you accidentally make your security group rules too permissive, the network A
 | --- |
 | Type | Protocol | Port range | Destination | Comments | 
 | All traffic | All | All | 0\.0\.0\.0/0 | Allows all outbound traffic\. | 
-
-## Recommended rules for VPC scenarios<a name="vpc-recommended-nacl-rules"></a>
-
-You can follow the processes in [Scenarios](vpc-scenarios-intro.md) to implement common scenarios for Amazon VPC\. Each scenario in that section includes recommended network ACL rules\. If you implement these scenarios as described in the documentation, you use the default network access control list \(ACL\) which allows all inbound and outbound traffic\. If you need an additional layer of security, you can create a network ACL and add rules\.

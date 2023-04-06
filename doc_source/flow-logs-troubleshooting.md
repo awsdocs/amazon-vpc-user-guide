@@ -7,6 +7,7 @@ The following are possible issues you might have when working with flow logs\.
 + [Flow log is active, but no flow log records or log group](#flow-logs-troubleshooting-no-log-group)
 + ['LogDestinationNotFoundException' or 'Access Denied for LogDestination' error](#flow-logs-troubleshooting-not-found)
 + [Exceeding the Amazon S3 bucket policy limit](#flow-logs-troubleshooting-policy-limit)
++ [LogDestination undeliverable](#flow-logs-troubleshooting-kms-id)
 
 ## Incomplete flow log records<a name="flow-logs-troubleshooting-incomplete-records"></a>
 
@@ -73,3 +74,14 @@ Creating multiple flow logs that publish to the same bucket could cause you to e
   ```
 
   If you grant permissions to the entire bucket, new flow log subscriptions do not add new permissions to the bucket policy\.
+
+## LogDestination undeliverable<a name="flow-logs-troubleshooting-kms-id"></a>
+
+**Problem**  
+You get the following error when you try to create a flow log: `LogDestination <bucket name> is undeliverable`\.
+
+**Possible causes**  
+The target Amazon S3 bucket is encrypted using server\-side encryption with AWS KMS \(SSE\-KMS\) and the default encryption of the bucket is a KMS key ID\.
+
+**Solution**  
+The value must be a KMS key ARN\. Change the default S3 encryption type from KMS key ID to KMS key ARN\. For more information, see [Configuring default encryption](https://docs.aws.amazon.com/AmazonS3/latest/userguide/default-bucket-encryption.html) in the *Amazon Simple Storage Service User Guide*\.

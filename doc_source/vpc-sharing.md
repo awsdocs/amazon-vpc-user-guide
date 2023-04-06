@@ -97,7 +97,7 @@ Participants can create a limited set of VPC resources in a shared VPC\. For exa
 
 Participants can modify or delete only the resources in a shared VPC that they created\. For example, participants can associate or disassociate IP addresses with the network interfaces that they created and add or remove rules from the security groups that they created\.
 
-Participants can describe resources in a shared VPC that they did not create\. This is so that they can effectively use the shared VPC\. For example, participants can describe the VPC and its subnets, security groups, route tables, network ACLs, gateways, network interfaces, and DHCP option sets\.
+Participants can describe resources in a shared VPC that they did not create\. This is so that they can effectively use the shared VPC\. For example, participants can describe the VPC and its subnets, security groups, route tables, network ACLs, gateways, and DHCP option sets\.
 
 Participants can create rules in the security groups that they own that reference security groups that belong to other participants or the owner as follows:
 
@@ -129,3 +129,4 @@ The following limitations apply to working with VPC sharing:
 + Only a subnet owner can select a shared subnet when creating a Gateway Load Balancer\. Participants cannot\.
 + Service quotas apply per individual account\.
 + Participants cannot create interface or gateway endpoints in a VPC that they do not own\. Only the VPC owner can create interface or gateway endpoints\.
++ There are quotas related to VPC sharing\. For more information, see [VPC sharing](amazon-vpc-limits.md#vpc-share-limits)\.

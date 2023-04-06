@@ -112,7 +112,7 @@ For short connections \(for example, a few seconds\) that are opened and closed 
 
 In this example, an instance in a private subnet accesses the internet through a NAT gateway that's in a public subnet\.
 
-![\[Accessing the internet through a NAT gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/flow-log-nat-gateway_updated.png)
+![\[Accessing the internet through a NAT gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/flow-log-nat-gateway.png)
 
 The following custom flow log for the NAT gateway network interface captures the following fields in the following order\.
 
@@ -150,7 +150,7 @@ i-01234567890123456 eni-1111aaaa2222bbbb3 203.0.113.5 10.0.1.5 203.0.113.5 10.0.
 
 In this example, a client in VPC A connects to a web server in VPC B through a transit gateway\. The client and server are in different Availability Zones\. Traffic arrives at the server in VPC B using one elastic network interface ID \(in this example, let's say the ID is eni\-11111111111111111\) and leaves VPC B using another \(for example eni\-22222222222222222\)\.
 
-![\[Traffic through a transit gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/flow-log-tgw_updated.png)
+![\[Traffic through a transit gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/flow-log-tgw.png)
 
 You create a custom flow log for VPC B with the following format\.
 

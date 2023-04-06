@@ -38,7 +38,7 @@ The following rules apply to AWS\-managed prefix lists:
 
 ## Identity and access management for prefix lists<a name="managed-prefix-lists-iam"></a>
 
-By default, IAM users do not have permission to create, view, modify, or delete prefix lists\. You can create an IAM policy that allows users to work with prefix lists\.
+By default, users do not have permission to create, view, modify, or delete prefix lists\. You can create an IAM policy and attach it to a role that allows users to work with prefix lists\.
 
 To see a list of Amazon VPC actions and the resources and condition keys that you can use in an IAM policy, see [Actions, Resources, and Condition Keys for Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html) in the *IAM User Guide*\.
 

@@ -2,7 +2,7 @@
 
 The configuration for this scenario includes a virtual private cloud \(VPC\) with a single private subnet, and a virtual private gateway to enable communication with your own network over an IPsec VPN tunnel\. There is no internet gateway to enable communication over the internet\. We recommend this scenario if you want to extend your network into [the cloud](https://aws.amazon.com/what-is-cloud-computing/) using Amazon's infrastructure without exposing your network to the internet\.
 
-This scenario can also be optionally configured for IPv6\. Instances launched into the subnet can receive IPv6 addresses\. We do not support IPv6 communication over a AWS Site\-to\-Site VPN connection on a virtual private gateway; however, instances in the VPC can communicate with each other via IPv6\. For more information about IPv4 and IPv6 addressing, see [IP addressing](how-it-works.md#vpc-ip-addressing)\.
+This scenario can also be optionally configured for IPv6\. Instances launched into the subnet can receive IPv6 addresses\. We do not support IPv6 communication over a AWS Site\-to\-Site VPN connection on a virtual private gateway; however, instances in the VPC can communicate with each other via IPv6\. For more information about IPv4 and IPv6 addressing, see [IP addressing for your VPCs and subnets](vpc-ip-addressing.md)\.
 
 For information about managing your EC2 instance software, see [Managing software on your Linux instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-software.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
@@ -30,7 +30,7 @@ For more information, see [Subnets](configure-subnets.md)\. For more information
 
 You can optionally enable IPv6 for this scenario\. In addition to the components listed above, the configuration includes the following:
 + A size /56 IPv6 CIDR block associated with the VPC \(example: 2001:db8:1234:1a00::/56\)\. AWS automatically assigns the CIDR; you cannot choose the range yourself\.
-+ A size /64 IPv6 CIDR block associated with the VPN\-only subnet \(example: 2001:db8:1234:1a00::/64\)\. You can choose the range for your subnet from the range allocated to the VPC\. You cannot choose the size of the IPv6 CIDR\.
++ A size /64 IPv6 CIDR block associated with the VPN\-only subnet \(example: 2001:db8:1234:1a00::/64\)\. You can choose the range for your subnet from the range allocated to the VPC\. You cannot choose the size of the subnet IPv6 CIDR\.
 + IPv6 addresses assigned to the instances from the subnet range \(example: 2001:db8:1234:1a00::1a\)\.
 + A route table entry in the main route table that enables instances in the private subnet to use IPv6 to communicate with each other\.
 

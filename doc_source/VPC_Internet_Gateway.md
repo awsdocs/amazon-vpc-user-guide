@@ -44,9 +44,9 @@ The following table provides an overview of whether your VPC automatically comes
 | Public IPv4 address automatically assigned to instance launched into subnet | Yes \(default subnet\) | No \(nondefault subnet\) | 
 | IPv6 address automatically assigned to instance launched into subnet | No \(default subnet\) | No \(nondefault subnet\) | 
 
-For more information about default VPCs, see [Default VPCs](default-vpc.md)\. For more information about creating a VPC, see [Create a VPC](working-with-vpcs.md#Create-VPC)\.
+For more information about default VPCs, see [Default VPCs](default-vpc.md)\. For more information about creating a VPC, see [Create a VPC](create-vpc.md)\.
 
-For more information about IP addressing in your VPC, and controlling how instances are assigned public IPv4 or IPv6 addresses, see [IP addressing](how-it-works.md#vpc-ip-addressing)\.
+For more information about IP addressing in your VPC, and controlling how instances are assigned public IPv4 or IPv6 addresses, see [IP addressing for your VPCs and subnets](vpc-ip-addressing.md)\.
 
 When you add a new subnet to your VPC, you must set up the routing and security that you want for the subnet\.
 
@@ -77,7 +77,7 @@ The following describes how to support internet access from a subnet in your VPC
    + **Availability Zone**: Optionally choose an Availability Zone or Local Zone in which your subnet will reside, or leave the default **No Preference** to let AWS choose an Availability Zone for you\.
 
      For information about the Regions that support Local Zones, see [Available Regions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions) in the *Amazon EC2 User Guide for Linux Instances*\. 
-   + **IPv4 CIDR block**: Specify an IPv4 CIDR block for your subnet, for example, `10.0.1.0/24`\. For more information, see [IPv4 VPC CIDR blocks](configure-your-vpc.md#vpc-sizing-ipv4)\.
+   + **IPv4 CIDR block**: Specify an IPv4 CIDR block for your subnet, for example, `10.0.1.0/24`\. For more information, see [IPv4 VPC CIDR blocks](vpc-cidr-blocks.md#vpc-sizing-ipv4)\.
    + **IPv6 CIDR block**: \(Optional\) If you've associated an IPv6 CIDR block with your VPC, choose **Specify a custom IPv6 CIDR**\. Specify the hexadecimal pair value for the subnet, or leave the default value\. 
 
 1. Choose **Create**\.
@@ -156,14 +156,14 @@ By default, a VPC security group allows all outbound traffic\. You can create a 
 
 1. For **Associated security groups**, select an existing security group and then choose **Add security group**\. To remove a security group that's already associated, choose **Remove**\. When you're finished making changes, choose **Save**\.
 
-For more information, see [Control traffic to resources using security groups](VPC_SecurityGroups.md)\.
+For more information, see [Security groups](vpc-security-groups.md)\.
 
 ### Assign an Elastic IP address to an instance<a name="Add_IG_EIPs"></a>
 
 After you've launched an instance into the subnet, you must assign it an Elastic IP address if you want it to be reachable from the internet over IPv4\.
 
 **Note**  
-If you assigned a public IPv4 address to your instance during launch, then your instance is reachable from the internet, and you do not need to assign it an Elastic IP address\. For more information about IP addressing for your instance, see [IP addressing](how-it-works.md#vpc-ip-addressing)\.
+If you assigned a public IPv4 address to your instance during launch, then your instance is reachable from the internet, and you do not need to assign it an Elastic IP address\. For more information about IP addressing for your instance, see [IP addressing for your VPCs and subnets](vpc-ip-addressing.md)\.
 
 **To allocate an Elastic IP address and assign it to an instance using the console**
 

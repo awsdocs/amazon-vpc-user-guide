@@ -12,6 +12,7 @@ For more information, see [Amazon Virtual Private Cloud Connectivity Options](ht
 + [Connect to the internet using an internet gateway](VPC_Internet_Gateway.md)
 + [Enable outbound IPv6 traffic using an egress\-only internet gateway](egress-only-internet-gateway.md)
 + [Connect to the internet or other networks using NAT devices](vpc-nat.md)
++ [Associate Elastic IP addresses with resources in your VPC](vpc-eips.md)
 + [Connect your VPC to other VPCs and networks using a transit gateway](extend-tgw.md)
 + [Connect your VPC to remote networks using AWS Virtual Private Network](vpn-connections.md)
 + [Connect VPCs using VPC peering](vpc-peering.md)

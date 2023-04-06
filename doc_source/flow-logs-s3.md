@@ -58,7 +58,7 @@ bucket-and-optional-prefix/AWSLogs/account_id/vpcflowlogs/region/year/month/day/
 If you enable Hive\-compatible S3 prefixes, the files are delivered to the following location\.
 
 ```
-bucket-and-optional-prefix/AWSLogs/aws-account-id=account_id/service=vpcflowlogs/aws-region=region/year=year/month=month/day=day/
+bucket-and-optional-prefix/AWSLogs/aws-account-id=account_id/aws-service=vpcflowlogs/aws-region=region/year=year/month=month/day=day/
 ```
 
 If you enable hourly partitions, the files are delivered to the following location\.
@@ -70,7 +70,7 @@ bucket-and-optional-prefix/AWSLogs/account_id/vpcflowlogs/region/year/month/day/
 If you enable Hive\-compatible partitions and partition the flow log per hour, the files are delivered to the following location\.
 
 ```
-bucket-and-optional-prefix/AWSLogs/aws-account-id=account_id/service=vpcflowlogs/aws-region=region/year=year/month=month/day=day/hour=hour/
+bucket-and-optional-prefix/AWSLogs/aws-account-id=account_id/aws-service=vpcflowlogs/aws-region=region/year=year/month=month/day=day/hour=hour/
 ```
 
 **Log file names**  
@@ -88,7 +88,7 @@ The following is an example of a log file for a flow log created by AWS account 
 
 ## Permissions for IAM principals that publish flow logs to Amazon S3<a name="flow-logs-s3-iam"></a>
 
-The IAM principal that creates the flow log, such as an IAM user, must have the following permissions, which are required to publish flow logs to the destination Amazon S3 bucket\.
+The IAM principal that creates the flow log must be using an IAM role that has the following permissions, which are required to publish flow logs to the destination Amazon S3 bucket\.
 
 ```
 {
@@ -142,7 +142,10 @@ Otherwise, the bucket owner must add this policy to the bucket, specifying the A
             "Principal": {
                 "Service": "delivery.logs.amazonaws.com"
             },
-            "Action": "s3:GetBucketAcl",
+            "Action": [
+                "s3:GetBucketAcl",
+                "s3:ListBucket"
+            ],
             "Resource": "arn:aws:s3:::bucket_name",
             "Condition": {
                 "StringEquals": {
@@ -177,7 +180,7 @@ You can protect the data in your Amazon S3 bucket by enabling either Server\-Sid
 
 If you choose SSE\-S3, no additional configuration is required\. Amazon S3 handles the encryption key\.
 
-If you choose SSE\-KMS, you must use a customer managed key\. You must update the key policy for your customer managed key so that the log delivery account can write to your S3 bucket\. For more information about the required key policy for use with SSE\-KMS, see [Amazon S3 bucket server\-side encryption](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html#AWS-logs-SSE-KMS-S3) in the *Amazon CloudWatch Logs User Guide*\.
+If you choose SSE\-KMS, you must use a customer managed key ARN\. If you use a key ID, you can run into a [LogDestination undeliverable](flow-logs-troubleshooting.md#flow-logs-troubleshooting-kms-id) error when creating a flow log\. Also, you must update the key policy for your customer managed key so that the log delivery account can write to your S3 bucket\. For more information about the required key policy for use with SSE\-KMS, see [Amazon S3 bucket server\-side encryption](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html#AWS-logs-SSE-KMS-S3) in the *Amazon CloudWatch Logs User Guide*\.
 
 ## Amazon S3 log file permissions<a name="flow-logs-file-permissions"></a>
 

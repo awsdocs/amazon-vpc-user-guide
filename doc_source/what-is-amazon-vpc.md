@@ -2,6 +2,10 @@
 
 Amazon Virtual Private Cloud \(Amazon VPC\) enables you to launch AWS resources into a virtual network that you've defined\. This virtual network closely resembles a traditional network that you'd operate in your own data center, with the benefits of using the scalable infrastructure of AWS\.
 
+The following diagram shows an example VPC\. The VPC has one subnet in each of the Availability Zones in the Region, EC2 instances in each subnet, and an internet gateway\.
+
+![\[A VPC with an internet gateway and subnets in three Availability Zones.\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/how-it-works.png)
+
 ## Features<a name="amazon-vpc-features"></a>
 
 The following features help you configure a VPC to provide the connectivity that your applications need:
@@ -13,7 +17,7 @@ A [VPC](configure-your-vpc.md) is a virtual network that closely resembles a tra
 A [subnet](configure-subnets.md) is a range of IP addresses in your VPC\. A subnet must reside in a single Availability Zone\. After you add subnets, you can deploy AWS resources in your VPC\.
 
 **IP addressing**  
-You can assign IPv4 addresses and IPv6 addresses to your VPCs and subnets\. You can also bring your public IPv4 and IPv6 GUA addresses to AWS and allocate them to resources in your VPC, such as EC2 instances, NAT gateways, and Network Load Balancers\.
+You can assign [IP addresses](vpc-ip-addressing.md), both IPv4 and IPv6, to your VPCs and subnets\. You can also bring your public IPv4 and IPv6 GUA addresses to AWS and allocate them to resources in your VPC, such as EC2 instances, NAT gateways, and Network Load Balancers\.
 
 **Routing**  
 Use [route tables](VPC_Route_Tables.md) to determine where network traffic from your subnet or gateway is directed\.
@@ -40,7 +44,7 @@ Connect your VPCs to your on\-premises networks using [AWS Virtual Private Netwo
 
 Your AWS account includes a [default VPC](default-vpc.md) in each AWS Region\. Your default VPCs are configured such that you can immediately start launching and connecting to EC2 instances\. For more information, see [Get started with Amazon VPC](vpc-getting-started.md)\.
 
-You can choose to create additional VPCs with the subnets, IP addresses, gateways and routing that you need\. For more information, see [Create a VPC](working-with-vpcs.md#Create-VPC)\.
+You can choose to create additional VPCs with the subnets, IP addresses, gateways and routing that you need\. For more information, see [Create a VPC](create-vpc.md)\.
 
 ## Working with Amazon VPC<a name="VPCInterfaces"></a>
 

@@ -193,7 +193,7 @@ You can choose a third\-party appliance from [AWS Marketplace](https://aws.amazo
 + You cannot route traffic between hosts in the same subnet through an appliance\.
 + The appliance does not have to perform network address translation \(NAT\)\.
 + You can add a route to your route tables that is more specific than the local route\. You can use more specific routes to redirect traffic between subnets within a VPC \(East\-West traffic\) to a middlebox appliance\. The destination of the route must match the entire IPv4 or IPv6 CIDR block of a subnet in your VPC\.
-+ To intercept IPv6 traffic, ensure that you configure your VPC, subnet, and appliance for IPv6\. For more information, see [Work with VPCs](working-with-vpcs.md)\. Virtual private gateways do not support IPv6 traffic\.
++ To intercept IPv6 traffic, ensure that your VPC, subnet, and appliance support IPv6\. Virtual private gateways do not support IPv6 traffic\.
 
 ### Routing traffic between a gateway and an appliance<a name="appliance-routing-configuration"></a>
 

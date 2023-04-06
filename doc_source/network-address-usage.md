@@ -38,14 +38,14 @@ Peered VPCs in the same Region contribute to a combined NAU quota\.
 + 
 
 **VPC 1**
-  + 50 Network Load Balancers in 2 zones \- 600 NAU units
-  + 5,000 instances in 2 zones with both IPv4 and IPv6 addresses assigned \(1 NAU per IP address associated with each instance network interface\) \- 20,000 NAU units
+  + 50 Network Load Balancers in 2 subnets in separate Availability Zones \- 600 NAU units
+  + 5,000 instances in 2 subnets in separate Availability Zones with both IPv4 and IPv6 addresses assigned \(1 NAU per IP address associated with each instance network interface\) \- 20,000 NAU units
   + 100 Lambda functions \- 600 NAU units
 + 
 
 **VPC 2**
-  + 50 Network Load Balancers in 2 zones \- 600 NAU units
-  + 5,000 instances in 2 zones with both IPv4 and IPv6 addresses assigned \(1 NAU per IP address associated with each instance network interface\) \- 20,000 NAU units
+  + 50 Network Load Balancers in 2 subnets in separate Availability Zones \- 600 NAU units
+  + 5,000 instances in 2 subnets in separate Availability Zones with both IPv4 and IPv6 addresses assigned \(1 NAU per IP address associated with each instance network interface\) \- 20,000 NAU units
   + 100 Lambda functions \- 600 NAU units
 + Total peering NAU count: 42,400 units
 + Default peering NAU quota: 128,000 units
@@ -55,14 +55,14 @@ VPCs that are connected using a transit gateway do not contribute to a combined 
 + 
 
 **VPC 1**
-  + 50 Network Load Balancers in 2 zones \- 600 NAU units
-  + 5,000 instances in 2 zones with both IPv4 and IPv6 addresses assigned \(1 NAU per IP address associated with each instance network interface\) \- 20,000 NAU units
+  + 50 Network Load Balancers in 2 subnets in separate Availability Zones \- 600 NAU units
+  + 5,000 instances in 2 subnets in separate Availability Zones with both IPv4 and IPv6 addresses assigned \(1 NAU per IP address associated with each instance network interface\) \- 20,000 NAU units
   + 100 Lambda functions \- 600 NAU units
 + 
 
 **VPC 2**
-  + 50 Network Load Balancers in 2 zones \- 600 NAU units
-  + 5,000 instances in 2 zones with both IPv4 and IPv6 addresses assigned \(1 NAU per IP addressed associated with each instance network interface\) \- 20,000 NAU units
+  + 50 Network Load Balancers in 2 subnets in separate Availability Zones \- 600 NAU units
+  + 5,000 instances in 2 subnets in separate Availability Zones with both IPv4 and IPv6 addresses assigned \(1 NAU per IP addressed associated with each instance network interface\) \- 20,000 NAU units
   + 100 Lambda functions \- 600 NAU units
 + Total NAU count per VPC: 21,200 units
 + Default NAU quota per VPC: 64,000 units

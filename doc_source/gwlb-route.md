@@ -13,7 +13,7 @@ The middlebox routing wizard does not modify your existing route tables\. It cre
 
 If you do not use the middlebox routing wizard, you must manually configure, and then assign the route tables to the subnets and internet gateway\.
 
-![\[Using a Gateway Load Balancer endpoint to access an endpoint service\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-service-gwlbe_updated.png)
+![\[Using a Gateway Load Balancer endpoint to access an endpoint service\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-endpoint-service-gwlbe.png)
 
 ## Internet gateway route table<a name="igw-route-table-table"></a>
 

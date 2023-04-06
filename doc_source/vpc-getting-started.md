@@ -1,25 +1,21 @@
 # Get started with Amazon VPC<a name="vpc-getting-started"></a>
 
-You can create AWS resources in the subnets of your virtual private cloud \(VPC\)\. For example, to get started with Amazon EC2 quickly, you can launch an EC2 instance into the default subnets of a default VPC\. For more information, see [Default VPCs](default-vpc.md)\.
-
-Alternatively, you can create subnets in a custom VPC for your AWS resources\. For more information, see [Create a VPC](working-with-vpcs.md#Create-VPC)\.
-
-**Note**  
-In this tutorial, you'll launch an EC2 instance into a default subnet, connect to the instance, and then terminate the instance\. If you are within the AWS Free Tier, there is no charge for launching an On\-Demand instance\. For more information, see [Amazon EC2 Pricing](http://aws.amazon.com/ec2/pricing/)\.
+Complete the following tasks to prepare to create and connect your VPCs\. When you are finished, you will be ready to deploy your application on AWS\.
 
 **Topics**
-+ [Prerequisites](#create-vpc-prereq)
-+ [Step 1: Get to know your default VPC](#verify-vpc-components)
-+ [Step 2: Launch an instance into your VPC](#getting-started-launch-instance)
-+ [Step 3: Connect to an EC2 instance in your public subnet](#getting-started-assign-eip)
-+ [Step 4: Clean up](#getting-started-delete-vpc)
-+ [Next steps](#getting-started-next-steps)
++ [Sign up for an AWS account](#sign-up-for-aws)
++ [Verify permissions](#vpc-verify-permissions)
++ [Determine your IP address ranges](#plan-ip-addresses)
++ [Select your Availability Zones](#select-azs)
++ [Plan your internet connectivity](#plan-internet-connectivity)
++ [Create your VPC](#create-configure-vpc)
++ [Deploy your application](#vpc-deploy-application)
 
-## Prerequisites<a name="create-vpc-prereq"></a>
+## Sign up for an AWS account<a name="sign-up-for-aws"></a>
 
-If this is your first time using AWS, you must sign up for an account\. When you sign up, your AWS account is automatically signed up for all services in AWS, including Amazon VPC\. If you haven't created an AWS account already, use the following procedure to create one\.
+If you do not have an AWS account, complete the following steps to create one\.
 
-**To create an AWS account**
+**To sign up for an AWS account**
 
 1. Open [https://portal\.aws\.amazon\.com/billing/signup](https://portal.aws.amazon.com/billing/signup)\.
 
@@ -29,82 +25,55 @@ If this is your first time using AWS, you must sign up for an account\. When you
 
    When you sign up for an AWS account, an *AWS account root user* is created\. The root user has access to all AWS services and resources in the account\. As a security best practice, [assign administrative access to an administrative user](https://docs.aws.amazon.com/singlesignon/latest/userguide/getting-started.html), and use only the root user to perform [tasks that require root user access](https://docs.aws.amazon.com/accounts/latest/reference/root-user-tasks.html)\.
 
+AWS sends you a confirmation email after the sign\-up process is complete\. At any time, you can view your current account activity and manage your account by going to [https://aws\.amazon\.com/](https://aws.amazon.com/) and choosing **My Account**\.
+
+## Verify permissions<a name="vpc-verify-permissions"></a>
+
 Before you can use Amazon VPC, you must have the required permissions\. For more information, see [Identity and access management for Amazon VPC](security-iam.md) and [Amazon VPC policy examples](vpc-policy-examples.md)\.
 
-## Step 1: Get to know your default VPC<a name="verify-vpc-components"></a>
+## Determine your IP address ranges<a name="plan-ip-addresses"></a>
 
-If you are new to Amazon VPC, use the following procedure to view the configuration of your default VPC, including its default subnets, main route table, and internet gateway\. All default subnets use the main route table, which has a route to the internet gateway\. This means that the resources that you launch into a default subnet have access to the internet\.
+The resources in your VPC communicate with each other and with resources over the internet using IP addresses\. When you create VPCs and subnets, you can select their IP address ranges\. When you deploy resources in a subnet, such as EC2 instances, they receive IP addresses from the IP address range of the subnet\. For more information, see [IP addressing for your VPCs and subnets](vpc-ip-addressing.md)\.
 
-**To view the configuration of your default VPC**
+As you choose a size for your VPC, consider how many IP addresses you'll need across your AWS accounts and VPCs\. Ensure that the IP address ranges for your VPCs don't overlap with the IP address ranges for your own network\. If you need connectivity between multiple VPCs, you must ensure that they have no overlapping IP addresses\.
 
-1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
+IP Address Manager \(IPAM\) makes it easier to plan, track, and monitor the IP addresses for your application\. For more information, see the [IP Address Manager Guide](https://docs.aws.amazon.com/vpc/latest/ipam/)\.
 
-1. In the navigation pane, choose **Your VPCs**\. For the default VPC, the **Default VPC** column is **Yes**\. If you've created other VPCs, **Default VPC** is **No**\.
+## Select your Availability Zones<a name="select-azs"></a>
 
-1. Each VPC has a main route table\. The default subnets use the main route table, as they are not associated with another route table\. To view the main route table, select the checkbox for the default VPC and choose the ID under **Route table**\. Alternatively, choose **Route tables** from the navigation pane and find the route table where the **Main** column is **Yes** and the **VPC** column displays the ID of the VPC followed by the name, **default**\.
+An AWS Region is a physical location where we cluster data centers, known as Availability Zones\. Each Availability Zone has independent power, cooling, and physical security, with redundant power, networking, and connectivity\. The Availability Zones in a Region are physically separated by a meaningful distance, and interconnected through high\-bandwidth, low\-latency networking\. You can design your application to run in multiple Availability Zones to achieve even greater fault tolerance\.
 
-   On the **Routes** tab, there is a local route that allows the resources in the VPC to communicate with each other and another route that allows all other traffic to reach the internet through the internet gateway\.
+**Production environment**  
+For a production environment, we recommend that you select at least two Availability Zones and deploy your AWS resources evenly in each active Availability Zone\.
 
-1. In the navigation pane, choose **Subnets**\. For the default VPC, there is one subnet per Availability Zone\. For these default subnets, the **Default subnet** column is **Yes**\. If you select each subnet, you can view information such as its CIDR block, the routes for the route table, and the rules for the default network ACL\.
+**Development or test environment**  
+For a development or test environment, you might choose to save money by deploying your resources in only one Availability Zone\.
 
-1. In the navigation pane, choose **Internet gateways**\. For the internet gateway attached to the default VPC, the **VPC ID** column displays the ID of the VPC followed by the name, **default**\.
+## Plan your internet connectivity<a name="plan-internet-connectivity"></a>
 
-## Step 2: Launch an instance into your VPC<a name="getting-started-launch-instance"></a>
+Plan to divide each VPC into subnets based on your connectivity requirements\. For example:
++ If you have web servers that will receive traffic from clients on the internet, create a subnet for these servers in each Availability Zone\.
++ If you also have servers that will receive traffic only from other servers in the VPC, create a separate subnet for these servers in each Availability Zone\.
++ If you have servers that will receive traffic only through a VPN connection to your network, create a separate subnet for these servers in each Availability Zone\.
 
-The Amazon EC2 console provides default values for your instance configuration, which makes it easy to get started quickly\. For example, after you choose an AWS Region, we automatically choose the default VPC for this Region\.
+If your application will receive traffic from the internet, the VPC must have an internet gateway\. Attaching an internet gateway to a VPC does not automatically make your instances accessible from the internet\. In addition, the subnet route table must include a route to the internet gateway, which turns the subnet from a private subnet to a public subnet\. The instances must also have a public IP address and be associated with a security group with a rule that allows traffic from the internet over specific ports and protocols\.
 
-**To launch an instance in a default subnet**
+Alternatively, register your instances with an internet\-facing load balancer\. The load balancer receives traffic from the clients and distributes it across the registered instances in one or more Availability Zones\. For more information, see [Elastic Load Balancing](http://aws.amazon.com/elasticloadbalancing/)\. To allow instances in a private subnet to access the internet \(for example, to download updates\) without allowing unsolicited inbound connections from the internet, add a public NAT gateway in each active Availability Zone and update the route table to send internet traffic to the NAT gateway\. For more information, see [Access the internet from a private subnet](nat-gateway-scenarios.md#public-nat-internet-access)\.
 
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+## Create your VPC<a name="create-configure-vpc"></a>
 
-1. From the dashboard, choose **Launch instance**\.
+After you've determined the number of VPCs and subnets that you need, what CIDR blocks to assign to your VPCs and subnets, and how to connect your VPC to the internet, you are ready to create your VPC\. If you create your VPC using the AWS Management Console and include public subnets in your configuration, we create a route table for the subnet and add the routes required for direct access to the internet\. For more information, see [Create a VPC](create-vpc.md)\.
 
-1. From the navigation bar at the top of the screen, select a Region in which to launch the instance\.
+## Deploy your application<a name="vpc-deploy-application"></a>
 
-1. \(Optional\) Under **Name and tags**, enter a descriptive name for your instance\.
+After you've created your VPC, you can deploy your application\.
 
-1. Under **Application and OS Images \(Amazon Machine Image\)**, choose **Quick Start**, and then choose an operating system \(OS\) for your instance\.
+**Production environment**
 
-1. Under **Instance type**, keep the default value, **t2\.micro**, which is free tier eligible\.
+For a production environment, you can use one of the following services to deploy servers in multiple Availability Zones, configure scaling so that you maintain the minimum number of servers required by your application, and register your servers with a load balancer to distribute traffic evenly across your servers\.
++ [Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/autoscaling/ec2/userguide/get-started-with-ec2-auto-scaling.html)
++ [EC2 Fleet](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-fleet.html)
++ [Amazon Elastic Container Service \(Amazon ECS\)](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/)
 
-1. Under **Key pair \(login\)**, choose an existing key pair, create a new key pair, or choose **Proceed without a key pair** if you do not intend to connect to the new instance that you create as part of this exercise\.
-
-1. Under **Network settings**, notice that we've selected the default VPC for the Region that you selected, we will select a default subnet for you, and we will assign your instance a public IP address\. You can keep these settings\. We also create a default security group with a rule that allows SSH traffic \(Linux instances\) or RDP traffic \(Windows instances\) to your instance from anywhere\.
-**Important**  
-Rules that allow SSH or RDP traffic to your instance from anywhere are acceptable if you are launching a test instance and plan to stop or terminate it after completing this exercise\. In a production environment, you should authorize only specific address ranges for SSH or RDP traffic\.
-
-1. In the **Summary** panel, choose **Launch instance**\.
-
-For more information, see [Launch an instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-instance-wizard.html) in the *Amazon EC2 User Guide for Linux Instances*\.
-
-## Step 3: Connect to an EC2 instance in your public subnet<a name="getting-started-assign-eip"></a>
-
-The EC2 instance in your default public subnet is accessible from the internet\. You can connect to your instance using SSH or Remote Desktop from your home network\.
-+ For more information about how to connect to a Linux instance in your public subnet, see [Connecting to your Linux instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html) in the *Amazon EC2 User Guide for Linux Instances*\.
-+ For more information about how to connect to a Windows instance in your public subnet, see [Connect to your Windows instance](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/connecting_to_windows_instance.html) in the *Amazon EC2 User Guide for Windows Instances*\.
-
-## Step 4: Clean up<a name="getting-started-delete-vpc"></a>
-
-When you are finished, you can terminate an instance\. As soon as the instance state changes, you stop incurring any charges for that instance\. After the instance is terminated, it remains visible in the console for a short while\.
-
-Do not delete your default VPC\.
-
-**To terminate an instance using the console**
-
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-1. In the navigation pane, choose **Instances**\.
-
-1. Select the instance, and choose **Instance state**, **Terminate instance**\.
-
-1. When prompted for confirmation, choose **Terminate**\.
-
-For more information, see [Terminate an instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html#terminating-instances-console) in the *Amazon EC2 User Guide for Linux Instances*\.
-
-## Next steps<a name="getting-started-next-steps"></a>
-
-Now that you've worked with your default VPC and the default public subnets, you might want to do the following:
-+ Learn more about VPCs: [Virtual private clouds \(VPC\)](configure-your-vpc.md)\.
-+ Add a private subnet to your VPC: [Create a subnet in your VPC](working-with-subnets.md#create-subnets)\.
-+ Enable IPv6 support for your VPC and subnets: [Associate an IPv6 CIDR block with your subnet](working-with-subnets.md#subnet-associate-ipv6-cidr)\.
-+ Enable instances in a private subnet to access the internet: [Connect to the internet or other networks using NAT devices](vpc-nat.md)\.
+**Development or test environment**  
+For a development or test environment, you might choose to launch a single EC2 instance\. For more information, see [Get started with Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html) in the *Amazon EC2 User Guide*\.

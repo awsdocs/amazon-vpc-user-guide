@@ -2,7 +2,7 @@
 
 Domain Name System \(DNS\) is a standard by which names used on the internet are resolved to their corresponding IP addresses\. A DNS hostname is a name that uniquely and absolutely names a computer; it's composed of a host name and a domain name\. DNS servers resolve DNS hostnames to their corresponding IP addresses\. 
 
-Public IPv4 addresses enable communication over the internet, while private IPv4 addresses enable communication within the network of the instance\. For more information, see [IP addressing](how-it-works.md#vpc-ip-addressing)\.
+Public IPv4 addresses enable communication over the internet, while private IPv4 addresses enable communication within the network of the instance\. For more information, see [IP addressing for your VPCs and subnets](vpc-ip-addressing.md)\.
 
 Amazon provides a DNS server \([the Amazon Route 53 Resolver](#AmazonDNS)\) for your VPC\. To use your own DNS server instead, create a new set of DHCP options for your VPC\. For more information, see [DHCP option sets in Amazon VPC](VPC_DHCP_Options.md)\.
 
@@ -17,9 +17,7 @@ Amazon provides a DNS server \([the Amazon Route 53 Resolver](#AmazonDNS)\) for
 
 ## Amazon DNS server<a name="AmazonDNS"></a>
 
-The Amazon DNS server is an Amazon Route 53 Resolver server\. This server enables DNS for instances that need to communicate over the VPC's internet gateway\.
-
-The Amazon DNS server does not reside within a specific subnet or Availability Zone in a VPC\. It's located at the address 169\.254\.169\.253 \(and the reserved IP address at the base of the VPC IPv4 network range, plus two\) and fd00:ec2::253\. For example, the Amazon DNS Server on a 10\.0\.0\.0/16 network is located at 10\.0\.0\.2\. For VPCs with multiple IPv4 CIDR blocks, the DNS server IP address is located in the primary CIDR block\.
+The Route 53 Resolver \(also called "Amazon DNS server" or "AmazonProvidedDNS"\) is a DNS Resolver service which is built into each availability zone within an AWS Region\. The Route 53 Resolver is located at `169.254.169.253` \(IPv4\), `fd00:ec2::253` \(IPv6\), and at the primary private IPV4 CIDR range provisioned to your VPC plus two\. For example, if you have a VPC with an IPv4 CIDR of `10.0.0.0/16` and an IPv6 CIDR of `fd00:ec2::253`, you can reach the Route 53 Resolver at `169.254.169.253` \(IPv4\), `fd00:ec2::253` \(IPv6\), or `10.0.0.2` \(IPv4\)\.
 
 When you launch an instance into a VPC, we provide the instance with a private DNS hostname\. We also provide a public DNS hostname if the instance is configured with a public IPv4 address and the VPC DNS attributes are enabled\.
 

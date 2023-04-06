@@ -122,11 +122,11 @@ If you add a route using a command line tool or the API, the destination CIDR bl
 
 ## Enable or disable route propagation<a name="EnableDisableRouteProp"></a>
 
-Route propagation allows a virtual private gateway to automatically propagate routes to the route tables\. This means that you don't need to manually enter VPN routes to your route tables\. You can enable or disable route propagation\.
+Route propagation allows a virtual private gateway to automatically propagate routes to your route tables\. This means that you don't need to manually add or remove VPN routes\.
 
 To complete this process, you must have a virtual private gateway\.
 
-For more information about VPN routing options, see [Site\-to\-Site VPN routing options](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html) in the *Site\-to\-Site VPN User Guide*\.
+For more information, see [Site\-to\-Site VPN routing options](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html) in the *Site\-to\-Site VPN User Guide*\.
 
 **To enable route propagation using the console**
 
@@ -295,7 +295,7 @@ You can disassociate an internet gateway or a virtual private gateway from a rou
 
 ## Replace or restore the target for a local route<a name="replace-local-route-target"></a>
 
-You can change the target of the default local route\. If you replace the target of a local route, you can later restore it to the default `local` target\. If your VPC has [multiple CIDR blocks](configure-your-vpc.md#vpc-resize), your route tables have multiple local routes—one per CIDR block\. You can replace or restore the target of each of the local routes as needed\.
+You can change the target of the default local route\. If you replace the target of a local route, you can later restore it to the default `local` target\. If your VPC has [multiple CIDR blocks](vpc-cidr-blocks.md#vpc-resize), your route tables have multiple local routes—one per CIDR block\. You can replace or restore the target of each of the local routes as needed\.
 
 **To update the local route using the console**
 

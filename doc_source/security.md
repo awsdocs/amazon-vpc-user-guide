@@ -10,10 +10,11 @@ This documentation helps you understand how to apply the shared responsibility m
 
 **Topics**
 + [Data protection in Amazon Virtual Private Cloud](data-protection.md)
-+ [Infrastructure security in Amazon VPC](infrastructure-security.md)
 + [Identity and access management for Amazon VPC](security-iam.md)
-+ [Control traffic to resources using security groups](VPC_SecurityGroups.md)
++ [Internetwork traffic privacy in Amazon VPC](VPC_Security.md)
++ [Control traffic to resources using security groups](vpc-security-groups.md)
++ [Control traffic to subnets using Network ACLs](vpc-network-acls.md)
++ [Infrastructure security in Amazon VPC](infrastructure-security.md)
 + [Resilience in Amazon Virtual Private Cloud](disaster-recovery-resiliency.md)
 + [Compliance validation for Amazon Virtual Private Cloud](VPC-compliance.md)
-+ [Configuration and vulnerability analysis in Amazon Virtual Private Cloud](ConfigAndVulnerability.md)
 + [Security best practices for your VPC](vpc-security-best-practices.md)

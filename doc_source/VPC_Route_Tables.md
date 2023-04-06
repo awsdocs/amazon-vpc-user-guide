@@ -22,7 +22,7 @@ The following are the key concepts for route tables\.
 + **Route table association**—The association between a route table and a subnet, internet gateway, or virtual private gateway\.
 + **Subnet route table**—A route table that's associated with a subnet\.
 + **Local route**—A default route for communication within the VPC\.
-+ **Propagation**—Route propagation allows a virtual private gateway to automatically propagate routes to the route tables\. This means that you don't need to manually enter VPN routes to your route tables\. For more information about VPN routing options, see [Site\-to\-Site VPN routing options](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html) in the *Site\-to\-Site VPN User Guide*\.
++ **Propagation**—If you've attached a virtual private gateway to your VPC and enable route propagation, we automatically add routes for your VPN connection to your subnet route tables\. This means that you don't need to manually add or remove VPN routes\. For more information, see [Site\-to\-Site VPN routing options](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNRoutingTypes.html) in the *Site\-to\-Site VPN User Guide*\.
 + **Gateway route table**—A route table that's associated with an internet gateway or virtual private gateway\.
 + **Edge association**—A route table that you use to route inbound VPC traffic to an appliance\. You associate a route table with the internet gateway or virtual private gateway, and specify the network interface of your appliance as the target for VPC traffic\.
 + **Transit gateway route table**—A route table that's associated with a transit gateway\. For more information, see [Transit gateway route tables](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-route-tables.html) in *Amazon VPC Transit Gateways*\.
@@ -82,7 +82,7 @@ In the following example, suppose that the VPC has both an IPv4 CIDR block and a
 
 When you create a VPC, it automatically has a main route table\. When a subnet does not have an explicit routing table associated with it, the main routing table is used by default\. On the **Route tables** page in the Amazon VPC console, you can view the main route table for a VPC by looking for **Yes** in the **Main** column\. 
 
-By default, when you create a nondefault VPC, the main route table contains only a local route\. If you [Create a VPC](working-with-vpcs.md#Create-VPC) and choose a NAT gateway, Amazon VPC automatically adds routes to the main route table for the gateways\.
+By default, when you create a nondefault VPC, the main route table contains only a local route\. If you [Create a VPC](create-vpc.md) and choose a NAT gateway, Amazon VPC automatically adds routes to the main route table for the gateways\.
 
 The following rules apply to the main route table:
 + You cannot delete the main route table\.
@@ -95,7 +95,7 @@ The following rules apply to the main route table:
 
 ### Custom route tables<a name="custom-route-tables"></a>
 
-By default, a custom route table is empty and you add routes as needed\. If you [Create a VPC](working-with-vpcs.md#Create-VPC) and choose a public subnet, Amazon VPC creates a custom route table and adds a route that points to the internet gateway\. One way to protect your VPC is to leave the main route table in its original default state\. Then, explicitly associate each new subnet that you create with one of the custom route tables you've created\. This ensures that you explicitly control how each subnet routes traffic\. 
+By default, a custom route table is empty and you add routes as needed\. If you [Create a VPC](create-vpc.md) and choose a public subnet, Amazon VPC creates a custom route table and adds a route that points to the internet gateway\. One way to protect your VPC is to leave the main route table in its original default state\. Then, explicitly associate each new subnet that you create with one of the custom route tables you've created\. This ensures that you explicitly control how each subnet routes traffic\.
 
 You can add, remove, and modify routes in a custom route table\. You can delete a custom route table only if it has no associations\.
 

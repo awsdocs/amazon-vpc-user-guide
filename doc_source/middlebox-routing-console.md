@@ -16,7 +16,7 @@ For more information, see [Middlebox scenarios](middlebox-routing-examples.md)\.
 
 ## Middlebox routing wizard prerequisites<a name="routing-console-rules"></a>
 
-Review the [Middlebox routing wizard considerations](#console-routes-considerations)\. Then, make sure that you have the following information before you use the middlebox routing wizard\.
+Review [Middlebox routing wizard considerations](#console-routes-considerations)\. Then, make sure that you have the following information before you use the middlebox routing wizard\.
 + The VPC\.
 + The resource where traffic originates from or enters the VPC, for example, an internet gateway, virtual private gateway, or network interface\.
 + The middlebox network interface or Gateway Load Balancer endpoint\.

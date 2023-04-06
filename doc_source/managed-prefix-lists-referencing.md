@@ -7,10 +7,11 @@ You can reference a prefix list in the following AWS resources\.
 + [Subnet route tables](#prefix-list-subnet-route-table)
 + [Transit gateway route tables](#prefix-list-tgw-route-table)
 + [AWS Network Firewall rule groups](#prefix-list-nfw-rule-groups)
++ [Amazon Managed Grafana network access control](#prefix-list-grafana)
 
 ## VPC security groups<a name="prefix-list-vpc-security-group"></a>
 
-You can specify a prefix list as the source for an inbound rule, or as the destination for an outbound rule\. For more information about security groups, see [Control traffic to resources using security groups](VPC_SecurityGroups.md)\.
+You can specify a prefix list as the source for an inbound rule, or as the destination for an outbound rule\. For more information, see [Security groups](vpc-security-groups.md)\.
 
 **To reference a prefix list in a security group rule using the console**
 
@@ -59,3 +60,7 @@ You can specify a prefix list as the destination for a route\. For more informat
 ## AWS Network Firewall rule groups<a name="prefix-list-nfw-rule-groups"></a>
 
 An AWS Network Firewall rule group is a reusable set of criteria for inspecting and handling network traffic\. If you create Suricata\-compatible stateful rule groups in AWS Network Firewall, you can reference a prefix list from the rule group\. For more information, see [Referencing Amazon VPC prefix lists](https://docs.aws.amazon.com/network-firewall/latest/developerguide/rule-groups-ip-set-references.html#rule-groups-referencing-prefix-lists) and [Creating a stateful rule group](https://docs.aws.amazon.com/network-firewall/latest/developerguide/rule-group-stateful-creating.html) in the *AWS Network Firewall Developer Guide*\.
+
+## Amazon Managed Grafana network access control<a name="prefix-list-grafana"></a>
+
+You can specify one or more prefix lists as an inbound rule for requests to Amazon Managed Grafana workspaces\. For more information about Grafana workspace network access control, including how to reference prefix lists, see [Managing network access](https://docs.aws.amazon.com/grafana/latest/userguide/AMG-configure-nac.html) in the *Amazon Managed Grafana User Guide*\.

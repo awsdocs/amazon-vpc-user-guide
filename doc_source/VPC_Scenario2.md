@@ -2,9 +2,9 @@
 
 The configuration for this scenario includes a virtual private cloud \(VPC\) with a public subnet and a private subnet\. We recommend this scenario if you want to run a public\-facing web application, while maintaining back\-end servers that aren't publicly accessible\. A common example is a multi\-tier website, with the web servers in a public subnet and the database servers in a private subnet\. You can set up security and routing so that the web servers can communicate with the database servers\.
 
-The instances in the public subnet can send outbound traffic directly to the internet, whereas the instances in the private subnet can't\. Instead, the instances in the private subnet can access the internet by using a network address translation \(NAT\) gateway that resides in the public subnet\. The database servers can connect to the internet for software updates using the NAT gateway, but the internet cannot establish connections to the database servers\.
+Instances in a public subnet can connect directly to the internet through an internet gateway\. Instances in a private subnet can connect to the internet using a network address translation \(NAT\) gateway, but can't receive unsolicited inbound connections from the internet\.
 
-This scenario can also be optionally configured for IPv6\. Instances launched into the subnets can receive IPv6 addresses, and communicate using IPv6\. Instances in the private subnet can use an egress\-only internet gateway to connect to the internet over IPv6, but the internet cannot establish connections to the private instances over IPv6\. For more information about IPv4 and IPv6 addressing, see [IP addressing](how-it-works.md#vpc-ip-addressing)\.
+This scenario can also be optionally configured for IPv6\. Instances launched into the subnets can receive IPv6 addresses, and communicate using IPv6\. Instances in the private subnet can use an egress\-only internet gateway to connect to the internet over IPv6, but the internet cannot establish connections to the private instances over IPv6\. For more information about IPv4 and IPv6 addressing, see [IP addressing for your VPCs and subnets](vpc-ip-addressing.md)\.
 
 For information about managing your EC2 instance software, see [Managing software on your Linux instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-software.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
@@ -38,7 +38,7 @@ For more information, see [Subnets](configure-subnets.md)\. For more information
 
 You can optionally enable IPv6 for this scenario\. In addition to the components listed above, the configuration includes the following:
 + A size /56 IPv6 CIDR block associated with the VPC \(example: 2001:db8:1234:1a00::/56\)\. Amazon automatically assigns the CIDR; you cannot choose the range yourself\.
-+ A size /64 IPv6 CIDR block associated with the public subnet \(example: 2001:db8:1234:1a00::/64\)\. You can choose the range for your subnet from the range allocated to the VPC\. You cannot choose the size of the VPC IPv6 CIDR block\.
++ A size /64 IPv6 CIDR block associated with the public subnet \(example: 2001:db8:1234:1a00::/64\)\. You can choose the range for your subnet from the range allocated to the VPC\. You cannot choose the size of the subnet IPv6 CIDR block\.
 + A size /64 IPv6 CIDR block associated with the private subnet \(example: 2001:db8:1234:1a01::/64\)\. You can choose the range for your subnet from the range allocated to the VPC\. You cannot choose the size of the subnet IPv6 CIDR block\.
 + IPv6 addresses assigned to the instances from the subnet range \(example: 2001:db8:1234:1a00::1a\)\.
 + An egress\-only internet gateway\. You use the gateway to handle requests to the internet from instances in the private subnet over IPv6 \(for example, for software updates\)\. An egress\-only internet gateway is necessary if you want instances in the private subnet to be able to initiate communication with the internet over IPv6\. For more information, see [Enable outbound IPv6 traffic using an egress\-only internet gateway](egress-only-internet-gateway.md)\.
@@ -127,7 +127,7 @@ AWS provides features that you can use to increase security for the resources in
 
 For this scenario, you'll use security groups but not network ACLs\. If you'd like to use a network ACL, see [Recommended network ACL rules](#nacl-rules-scenario-2)\.
 
-Your VPC comes with a [default security group](VPC_SecurityGroups.md#DefaultSecurityGroup)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. For this scenario, we recommend that you create the following security groups instead of using the default security group:
+Your VPC comes with a [default security group](default-security-group.md)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. For this scenario, we recommend that you create the following security groups instead of using the default security group:
 + **WebServerSG**: Specify this security group when you launch the web servers in the public subnet\.
 + **DBServerSG**: Specify this security group when you launch the database servers in the private subnet\.
 

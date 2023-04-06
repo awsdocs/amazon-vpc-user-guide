@@ -2,7 +2,7 @@
 
 The configuration for this scenario includes a virtual private cloud \(VPC\) with a single public subnet, and an internet gateway to enable communication over the internet\. We recommend this configuration if you need to run a single\-tier, public\-facing web application, such as a blog or a simple website\.
 
-This scenario can also be optionally configured for IPv6\. Instances launched into the public subnet can receive IPv6 addresses, and communicate using IPv6\. For more information about IPv4 and IPv6 addressing, see [IP addressing](how-it-works.md#vpc-ip-addressing)\.
+This scenario can also be optionally configured for IPv6\. Instances launched into the public subnet can receive IPv6 addresses, and communicate using IPv6\. For more information about IPv4 and IPv6 addressing, see [IP addressing for your VPCs and subnets](vpc-ip-addressing.md)\.
 
 For information about managing your EC2 instance software, see [Managing software on your Linux instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-software.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
@@ -64,7 +64,7 @@ AWS provides features that you can use to increase security for the resources in
 
 For this scenario, you use a security group but not a network ACL\. If you'd like to use a network ACL, see [Recommended network ACL rules for a VPC with a single public subnet](#nacl-rules-scenario-1)\.
 
-Your VPC comes with a [default security group](VPC_SecurityGroups.md#DefaultSecurityGroup)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. You can add specific rules to the default security group, but the rules may not be suitable for other instances that you launch into the VPC\. Instead, we recommend that you create a custom security group for your web server\.
+Your VPC comes with a [default security group](default-security-group.md)\. An instance that's launched into the VPC is automatically associated with the default security group if you don't specify a different security group during launch\. You can add specific rules to the default security group, but the rules may not be suitable for other instances that you launch into the VPC\. Instead, we recommend that you create a custom security group for your web server\.
 
 For this scenario, create a security group named `WebServerSG`\. When you create a security group, it has a single outbound rule that allows all traffic to leave the instances\. You must modify the rules to enable inbound traffic and restrict the outbound traffic as needed\. You specify this security group when you launch instances into the VPC\. 
 

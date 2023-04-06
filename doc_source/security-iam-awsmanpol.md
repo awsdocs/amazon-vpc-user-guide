@@ -10,19 +10,19 @@ Additionally, AWS supports managed policies for job functions that span multiple
 
 You can attach the `AmazonVPCFullAccess` policy to your IAM identities\. This policy grants permissions that allow full access to Amazon VPC\.
 
-To view the permissions for this policy, see [AmazonVPCFullAccess](https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AmazonVPCFullAccess) in the AWS Management Console\.
+To view the permissions for this policy, see [AmazonVPCFullAccess](https://docs.aws.amazon.com/aws-managed-policy/latest/reference/AmazonVPCFullAccess.html) in the *AWS Managed Policy Reference*\.
 
 ## AWS managed policy: AmazonVPCReadOnlyAccess<a name="security-iam-awsmanpol-AmazonVPCReadOnlyAccess"></a>
 
 You can attach the `AmazonVPCReadOnlyAccess` policy to your IAM identities\. This policy grants permissions that allow read\-only access to Amazon VPC\.
 
-To view the permissions for this policy, see [AmazonVPCReadOnlyAccess](https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AmazonVPCReadOnlyAccess) in the AWS Management Console\.
+To view the permissions for this policy, see [AmazonVPCReadOnlyAccess](https://docs.aws.amazon.com/aws-managed-policy/latest/reference/AmazonVPCReadOnlyAccess.html) in the *AWS Managed Policy Reference*\.
 
 ## AWS managed policy: AmazonVPCCrossAccountNetworkInterfaceOperations<a name="security-iam-awsmanpol-AmazonVPCCrossAccountNetworkInterfaceOperations"></a>
 
 You can attach the `AmazonVPCCrossAccountNetworkInterfaceOperations` policy to your IAM identities\. This policy grants permissions that allow the identity to create network interfaces and attach them to cross\-account resources\.
 
-To view the permissions for this policy, see [AmazonVPCCrossAccountNetworkInterfaceOperations](https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/AmazonVPCCrossAccountNetworkInterfaceOperations) in the AWS Management Console\.
+To view the permissions for this policy, see [AmazonVPCCrossAccountNetworkInterfaceOperations](https://docs.aws.amazon.com/aws-managed-policy/latest/reference/AmazonVPCCrossAccountNetworkInterfaceOperations) in the *AWS Managed Policy Reference*\.
 
 ## Amazon VPC updates to AWS managed policies<a name="security-iam-awsmanpol-updates"></a>
 
@@ -31,7 +31,7 @@ View details about updates to AWS managed policies for Amazon VPC since this ser
 
 | Change | Description | Date | 
 | --- | --- | --- | 
-| [AWS managed policy: AmazonVPCReadOnlyAccess](#security-iam-awsmanpol-AmazonVPCReadOnlyAccess) \- Update to an existing policy | Added the DescribeSecurityGroupRules action, which enables an IAM user or role to view [security group rules](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules.html)\. | August 2, 2021 | 
-| [AWS managed policy: AmazonVPCFullAccess](#security-iam-awsmanpol-AmazonVPCFullAccess) \- Update to an existing policy | Added the DescribeSecurityGroupRules and the ModifySecurityGroupRules actions, which enable an IAM user or role to view and modify [security group rules](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules.html)\. | August 2, 2021 | 
+| [AWS managed policy: AmazonVPCReadOnlyAccess](#security-iam-awsmanpol-AmazonVPCReadOnlyAccess) \- Update to an existing policy | Added the DescribeSecurityGroupRules action, which enables an IAM role to view [security group rules](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules.html)\. | August 2, 2021 | 
+| [AWS managed policy: AmazonVPCFullAccess](#security-iam-awsmanpol-AmazonVPCFullAccess) \- Update to an existing policy | Added the DescribeSecurityGroupRules and the ModifySecurityGroupRules actions, which enable an IAM role to view and modify [security group rules](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules.html)\. | August 2, 2021 | 
 | [AWS managed policy: AmazonVPCFullAccess](#security-iam-awsmanpol-AmazonVPCFullAccess) \- Update to an existing policy | Added actions for carrier gateways, IPv6 pools, local gateways, and local gateway route tables\. | June 23, 2021 | 
 | [AWS managed policy: AmazonVPCReadOnlyAccess](#security-iam-awsmanpol-AmazonVPCReadOnlyAccess) \- Update to an existing policy | Added actions for carrier gateways, IPv6 pools, local gateways, and local gateway route tables\. | June 23, 2021 | 

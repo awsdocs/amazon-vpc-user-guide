@@ -12,7 +12,7 @@ You can work with flow logs using consoles for Amazon EC2 and Amazon VPC\.
 
 ## Control the use of flow logs<a name="controlling-use-of-flow-logs"></a>
 
-By default, IAM users do not have permission to work with flow logs\. You can create an IAM user policy that grants users the permissions to create, describe, and delete flow logs\.
+By default, users do not have permission to work with flow logs\. You can create an IAM role with a policy attached that grants users the permissions to create, describe, and delete flow logs\.
 
 The following is an example policy that grants users full permissions to create, describe, and delete flow logs\.
 

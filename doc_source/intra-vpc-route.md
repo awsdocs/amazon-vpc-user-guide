@@ -47,7 +47,7 @@ When you use the middlebox routing wizard, it associates the following tags with
 + The key is "Origin" and the value is "Middlebox wizard"
 + The key is "date\_created" and the value is the creation time \(for example, "2021\-02\-18T22:25:49\.137Z"\)
 
-## Main route table<a name="main-route-table"></a>
+## Main route table<a name="example-main-route-table"></a>
 
 Subnet C uses the main route table\. The main route table has the following route\.
 
