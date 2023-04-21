@@ -8,18 +8,20 @@ Your default VPCs and any VPCs that you create come with a default security grou
 + With some resources, if you don't associate a security group when you create the resource, we associate the default security group\. For example, if you don't specify a security group when you launch an EC2 instance, we associate the instance with the default security group\.
 
 **Default rules**  
-The following table describes the default rules for a default security group\.
+The following tables describe the default rules for a default security group\.
 
 
-| 
-| 
-| Inbound | 
-| --- |
+**Inbound**  
+
 | Source | Protocol | Port range | Description | 
+| --- | --- | --- | --- | 
 | sg\-1234567890abcdef0  | All | All | Allows inbound traffic from all resources that are assigned to this security group\. The source is the ID of this security group\. | 
-|  Outbound  | 
-| --- |
+
+
+**Outbound**  
+
 | Destination | Protocol | Port range | Description | 
+| --- | --- | --- | --- | 
 | 0\.0\.0\.0/0 | All | All | Allows all outbound IPv4 traffic\. | 
 | ::/0 | All | All | Allows all outbound IPv6 traffic\. This rule is added only if your VPC has an associated IPv6 CIDR block\. | 
 

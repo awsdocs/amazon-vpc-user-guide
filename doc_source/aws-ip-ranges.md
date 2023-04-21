@@ -1,8 +1,12 @@
 # AWS IP address ranges<a name="aws-ip-ranges"></a>
 
-AWS publishes its current IP address ranges in JSON format\. To view the current ranges, download the `.json` file\. To maintain history, save successive versions of the `.json` file on your system\. To determine whether there have been changes since the last time that you saved the file, check the publication time in the current file and compare it to the publication time in the last file that you saved\.
+AWS publishes its current IP address ranges in JSON format\. With this information, you can identify traffic from AWS\. You can also allow or deny traffic to or from specific types of AWS resources\.
+
+To view the current ranges, download the `.json` file\. To maintain history, save successive versions of the `.json` file on your system\. To determine whether there have been changes since the last time that you saved the file, check the publication time in the current file and compare it to the publication time in the last file that you saved\.
 
 The IP address ranges that you bring to AWS through bring your own IP addresses \(BYOIP\) are not included in the `.json` file\.
+
+Alternatively, some services publish their address ranges using AWS\-managed prefix lists\. For more information, see [Available AWS\-managed prefix lists](working-with-aws-managed-prefix-lists.md#available-aws-managed-prefix-lists)\.
 
 **Topics**
 + [Download](#aws-ip-download)
@@ -264,7 +268,9 @@ $ jq -r '.prefixes[] | select(.region=="us-west-2") | select(.network_border_gro
 
 ## Implementing egress control<a name="aws-ip-egress-control"></a>
 
-To allow an instance to access only AWS services, create a security group with rules that allow outbound traffic to the CIDR blocks in the `AMAZON` list, minus the CIDR blocks that are also in the `EC2` list\. IP addresses in the `EC2` list can be assigned to EC2 instances\.
+To allow an instance to access only AWS services, create security groups with rules that allow outbound traffic to the CIDR blocks in the `AMAZON` list, minus the CIDR blocks that are also in the `EC2` list\. IP addresses in the `EC2` list can be assigned to EC2 instances\.
+
+There are [quotas for security groups](amazon-vpc-limits.md#vpc-limits-security-groups)\. Depending on the number of IP address ranges in each Region, you might need multiple security groups per Region\.
 
 ### Windows PowerShell<a name="filter-addresses-powershell"></a>
 

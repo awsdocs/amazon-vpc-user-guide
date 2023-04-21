@@ -94,17 +94,19 @@ Define the NATSG security group as described in the following table to enable yo
 The following are the recommended rules\.
 
 
-| 
-| 
-| **Inbound** | 
-| --- |
+**Inbound**  
+
 | Source | Protocol | Port range | Comments | 
+| --- | --- | --- | --- | 
 | Private subnet CIDR | TCP | 80 | Allow inbound HTTP traffic from servers in the private subnet | 
 | Private subnet CIDR | TCP | 443 | Allow inbound HTTPS traffic from servers in the private subnet | 
 | Public IP address range of your network | TCP | 22 | Allow inbound SSH access to the NAT instance from your network \(over the internet gateway\) | 
-| **Outbound** | 
-| --- |
+
+
+**Outbound**  
+
 | Destination | Protocol | Port range | Comments | 
+| --- | --- | --- | --- | 
 | 0\.0\.0\.0/0 | TCP | 80 | Allow outbound HTTP access to the internet | 
 | 0\.0\.0\.0/0 | TCP | 443 | Allow outbound HTTPS access to the internet | 
 

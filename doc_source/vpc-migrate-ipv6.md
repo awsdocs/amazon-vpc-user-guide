@@ -4,9 +4,9 @@ If you have an existing VPC that supports IPv4 only, and resources in your subne
 
 You cannot disable IPv4 support for your VPC and subnets; this is the default IP addressing system for Amazon VPC and Amazon EC2\.
 
-**Note**  
-There is no migration path currently from IPv4\-only subnets to IPv6\-only subnets\. For information about creating IPv6\-only subnets, see [Create a subnet](create-subnets.md)\.
-This section assumes that you have an existing VPC with public and private subnets\. For information about setting up a new VPC for use with IPv6, see [Create a VPC](create-vpc.md)\.
+**Considerations**
++ There is no migration path from IPv4\-only subnets to IPv6\-only subnets\. For information about creating IPv6\-only subnets, see [Create a subnet](create-subnets.md)\.
++ This example assumes that you have an existing VPC with public and private subnets\. For information about creating a new VPC for use with IPv6, see [Create a VPC](create-vpc.md)\.
 
 The following table provides an overview of the steps to enable your VPC and subnets to use IPv6\.
 
@@ -35,7 +35,7 @@ Before you migrate to using IPv6, ensure that you have read the features of IPv6
 
 In this example, your VPC has a public and a private subnet\. You have a database instance in your private subnet that has outbound communication with the internet through a NAT gateway in your VPC\. You have a public\-facing web server in your public subnet that has internet access through the internet gateway\. The following diagram represents the architecture of your VPC\.
 
-![\[VPC with public and private subnets\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-migrate-ipv6_updated.png)
+![\[A VPC with a public, a private subnet, a NAT gateway, and an internet gateway\]](http://docs.aws.amazon.com/vpc/latest/userguide/images/vpc-migrate-ipv6.png)
 
 The security group for your web server \(for example with the security group ID `sg-11aa22bb11aa22bb1`\) has the following inbound rules:
 

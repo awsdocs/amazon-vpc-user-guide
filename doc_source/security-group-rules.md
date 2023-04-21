@@ -4,17 +4,14 @@ The rules of a security group control the inbound traffic that's allowed to reac
 
 You can add or remove rules for a security group \(also referred to as *authorizing* or *revoking* inbound or outbound access\)\. A rule applies either to inbound traffic \(ingress\) or outbound traffic \(egress\)\. You can grant access to a specific source or destination\.
 
-**Warning**  
-When you add rules for ports 22 \(SSH\) or 3389 \(RDP\) so that you can access your EC2 instances, we recommend that you authorize only specific IP address ranges\. If you specify 0\.0\.0\.0/0 \(IPv4\) and ::/ \(IPv6\), this enables anyone to access your instances from any IP address using the specified protocol\.
-
 **Topics**
 + [Characteristics of security group rules](#security-group-rule-characteristics)
 + [Components of a security group rule](#security-group-rule-components)
 + [Security group referencing](#security-group-referencing)
 + [Security group size](#security-group-size)
 + [Stale security group rules](#vpc-stale-security-group-rules)
-+ [Example rules](#security-group-rule-examples)
 + [Work with security group rules](#working-with-security-group-rules)
++ [Example rules](#security-group-rule-examples)
 
 ## Characteristics of security group rules<a name="security-group-rule-characteristics"></a>
 + You can specify allow rules, but not deny rules\.
@@ -24,8 +21,8 @@ When you add rules for ports 22 \(SSH\) or 3389 \(RDP\) so that you can access y
 + When you add, update, or remove rules, your changes are automatically applied to all resources associated with the security group\. The effect of some rule changes can depend on how the traffic is tracked\. For more information, see [Connection tracking](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html#security-group-connection-tracking) in the *Amazon EC2 User Guide for Linux Instances*\.
 + When you create a security group rule, AWS assigns a unique ID to the rule\. You can use the ID of a rule when you use the API or CLI to modify or delete the rule\.
 
-**Note**  
-Security groups cannot block DNS requests to or from the Route 53 Resolver, sometimes referred to as the 'VPC\+2 IP address' \(see [Amazon Route 53 Resolver](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver.html) in the *Amazon Route 53 Developer Guide*, or as [AmazonProvidedDNS](DHCPOptionSet.md)\. To filter DNS requests through the Route 53 Resolver, use [Route 53 Resolver DNS Firewall](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-dns-firewall.html)\.
+**Limitation**  
+Security groups cannot block DNS requests to or from the Route 53 Resolver, sometimes referred to as the 'VPC\+2 IP address' \(see [Amazon Route 53 Resolver](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver.html) in the *Amazon Route 53 Developer Guide*, or as [AmazonProvidedDNS](DHCPOptionSet.md)\. To filter DNS requests through the Route 53 Resolver, use [Route 53 Resolver DNS Firewall](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-dns-firewall.html)\.
 
 ## Components of a security group rule<a name="security-group-rule-components"></a>
 + **Protocol**: The protocol to allow\. The most common protocols are 6 \(TCP\), 17 \(UDP\), and 1 \(ICMP\)\.
@@ -47,10 +44,9 @@ When you specify a security group as the source or destination for a rule, the r
 For example, the following table shows an inbound rule for security group sg\-11111111111111111 that references security group sg\-22222222222222222 and allows SSH access\.
 
 
-|  |  |  | 
-| --- |--- |--- |
-|  Source  |  Protocol  |  Port range  | 
-|  sg\-22222222222222222  |  TCP  |  22  | 
+| Source | Protocol | Port range | 
+| --- | --- | --- | 
+| sg\-22222222222222222 | TCP | 22 | 
 
 When referencing a security group in a security group rule, note the following:
 + Both security groups must belong to the same VPC or to peered VPCs\.
@@ -75,30 +71,6 @@ If your VPC has a VPC peering connection with another VPC, or if it uses a VPC s
 
 If the security group in the shared VPC is deleted, or if the VPC peering connection is deleted, the security group rule is marked as stale\. You can delete stale security group rules as you would any other security group rule\. For more information, see [Work with stale security group rules](https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-security-groups.html#vpc-peering-stale-groups) in the *Amazon VPC Peering Guide*\.
 
-## Example rules<a name="security-group-rule-examples"></a>
-
-The rules that you add to a security group often depend on the purpose of the security group\. The following table describes example rules for a security group that's associated with web servers\. Your web servers can receive HTTP and HTTPS traffic from all IPv4 and IPv6 addresses and send SQL or MySQL traffic to your database servers\.
-
-
-| 
-| 
-| Inbound | 
-| --- |
-|  Source  |  Protocol  |  Port range  |  Description  | 
-|  0\.0\.0\.0/0  |  TCP  |  80  |  Allows inbound HTTP access from all IPv4 addresses  | 
-| ::/0 | TCP | 80 | Allows inbound HTTP access from all IPv6 addresses | 
-|  0\.0\.0\.0/0  |  TCP  |  443  |  Allows inbound HTTPS access from all IPv4 addresses  | 
-| ::/0 | TCP | 443 | Allows inbound HTTPS access from all IPv6 addresses | 
-|  Public IPv4 address range of your network  |  TCP  |  22  |  Allows inbound SSH access from IPv4 IP addresses in your network  | 
-|  Public IPv4 address range of your network  |  TCP  |  3389  |  Allows inbound RDP access from IPv4 IP addresses in your network  | 
-|   Outbound   | 
-| --- |
-|  Destination  |  Protocol  |  Port range  |  Description  | 
-|  ID of the security group for instances running Microsoft SQL Server  |  TCP  |  1433  |  Allow outbound Microsoft SQL Server access  | 
-|  ID of the security group for instances running MySQL  |  TCP  |  3306  |  Allow outbound MySQL access  | 
-
-Database servers need rules that allow inbound specific protocols, such as MySQL or Microsoft SQL Server\. For examples, see [Database server rules](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules-reference.html#sg-rules-db-server) in the *Amazon EC2 User Guide*\. For more information about security groups for Amazon RDS DB instances, see [Controlling access with security groups](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html) in the *Amazon RDS User Guide*\.
-
 ## Work with security group rules<a name="working-with-security-group-rules"></a>
 
 The following tasks show you how to work with security group rules\.
@@ -120,6 +92,9 @@ If you have a VPC peering connection, you can reference security groups from the
 
 For information about the permissions required to manage security group rules, see [Manage security group rules](vpc-policy-examples.md#vpc-security-group-rules-iam)\.
 
+**Warning**  
+If you choose **Anywhere\-IPv4**, you allow traffic from all IPv4 addresses\. If you choose **Anywhere\-IPv6**, you allow traffic from all IPv6 addresses\. When you add rules for ports 22 \(SSH\) or 3389 \(RDP\), authorize only a specific IP address range to access your instances\.
+
 **To add a rule using the console**
 
 1. Open the Amazon VPC console at [https://console\.aws\.amazon\.com/vpc/](https://console.aws.amazon.com/vpc/)\.
@@ -140,11 +115,7 @@ For information about the permissions required to manage security group rules, s
    1. For **Source type** \(inbound rules\) or **Destination type** \(outbound rules\), do one of the following to allow traffic:
       + Choose **Custom** and then enter an IP address in CIDR notation, a CIDR block, another security group, or a prefix list\.
       + Choose **Anywhere\-IPv4** to allow traffic from any IPv4 address \(inbound rules\) or to allow traffic to reach all IPv4 addresses \(outbound rules\)\. This automatically adds a rule for the 0\.0\.0\.0/0 IPv4 CIDR block\.
-**Warning**  
-If you choose **Anywhere\-IPv4**, you enable all IPv4 addresses to access your instance using the specified protocol\. If you are adding rules for ports 22 \(SSH\) or 3389 \(RDP\), you should authorize only a specific IP address or range of addresses to access your instance\.
       + Choose **Anywhere\-IPv6** to allow traffic from any IPv6 address \(inbound rules\) or to allow traffic to reach all IPv6 addresses \(outbound rules\)\. This automatically adds a rule for the ::/0 IPv6 CIDR block\.
-**Warning**  
-If you choose **Anywhere\-IPv6**, you enable all IPv6 addresses to access your instance using the specified protocol\. If you are adding rules for ports 22 \(SSH\) or 3389 \(RDP\), you should authorize only a specific IP address or range of addresses to access your instance\.
       + Choose **My IP** to allow traffic only from \(inbound rules\) or to \(outbound rules\) your local computer's public IPv4 address\.
 
    1. \(Optional\) For **Description**, specify a brief description for the rule\.
@@ -218,3 +189,37 @@ When you delete a rule from a security group, the change is automatically applie
 
 **To delete a security group rule using the AWS CLI**  
 Use the [revoke\-security\-group\-ingress](https://docs.aws.amazon.com/cli/latest/reference/ec2/revoke-security-group-ingress.html) and [revoke\-security\-group\-egress](https://docs.aws.amazon.com/cli/latest/reference/ec2/revoke-security-group-egress.html) commands\.
+
+## Example rules<a name="security-group-rule-examples"></a>
+
+**Web servers**  
+The following are example rules for a security group for your web servers\. The web servers can receive HTTP and HTTPS traffic from all IPv4 and IPv6 addresses and send SQL or MySQL traffic to your database servers\.
+
+**Warning**  
+When you add rules for ports 22 \(SSH\) or 3389 \(RDP\) so that you can access your EC2 instances, we recommend that you authorize only specific IP address ranges\. If you specify 0\.0\.0\.0/0 \(IPv4\) and ::/ \(IPv6\), this enables anyone to access your instances from any IP address using the specified protocol\.
+
+
+**Inbound**  
+
+| Source | Protocol | Port range | Description | 
+| --- | --- | --- | --- | 
+|  0\.0\.0\.0/0  |  TCP  |  80  |  Allows inbound HTTP access from all IPv4 addresses  | 
+| ::/0 | TCP | 80 | Allows inbound HTTP access from all IPv6 addresses | 
+|  0\.0\.0\.0/0  |  TCP  |  443  |  Allows inbound HTTPS access from all IPv4 addresses  | 
+| ::/0 | TCP | 443 | Allows inbound HTTPS access from all IPv6 addresses | 
+|  Public IPv4 address range of your network  |  TCP  |  22  |  \(Optional\) Allows inbound SSH access from IPv4 IP addresses in your network  | 
+| IPv6 address range of your network | TCP | 22 | \(Optional\) Allows inbound SSH access from IPv6 IP addresses in your network | 
+|  Public IPv4 address range of your network  |  TCP  |  3389  |  \(Optional\) Allows inbound RDP access from IPv4 IP addresses in your network  | 
+| IPv6 address range of your network | TCP | 3389 | \(Optional\) Allows inbound RDP access from IPv6 IP addresses in your network | 
+| ID of this security group | All | All | \(Optional\) Allows inbound traffic from other servers associated with this security group | 
+
+
+**Outbound**  
+
+| Destination | Protocol | Port range | Description | 
+| --- | --- | --- | --- | 
+|  ID of the security group for instances running Microsoft SQL Server  |  TCP  |  1433  |  Allows outbound Microsoft SQL Server access  | 
+|  ID of the security group for instances running MySQL  |  TCP  |  3306  |  Allows outbound MySQL access  | 
+
+**Database servers**  
+Database servers require rules that allow inbound specific protocols, such as MySQL or Microsoft SQL Server\. For examples, see [Database server rules](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules-reference.html#sg-rules-db-server) in the *Amazon EC2 User Guide*\. For more information about security groups for Amazon RDS DB instances, see [Controlling access with security groups](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html) in the *Amazon RDS User Guide*\.
