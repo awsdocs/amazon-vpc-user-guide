@@ -30,7 +30,7 @@ The following is an example of the route table associated with the subnet\. Ther
 | Destination | Target | 
 | --- | --- | 
 | 10\.0\.0\.0/16 | Local | 
-| 2001:db8:1234:1a00:/64 | Local | 
+| 2001:db8:1234:1a00:/56 | Local | 
 | ::/0 | eigw\-id | 
 
 ## Work with egress\-only internet gateways<a name="egress-only-internet-gateway-working-with"></a>
